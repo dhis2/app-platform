@@ -1,9 +1,13 @@
 {
   "name": "@dhis2/app-shell-scripts",
   "version": "0.1.0",
-  "main": "index.js",
+  "main": "src/index.js",
   "repository": "https://github.com/amcgee/dhis2-app-platform",
   "author": "Austin McGee <austin@dhis2.org>",
   "license": "BSD-3-Clause",
-  "private": true
+  "private": true,
+  "dependencies": {
+    "@dhis2/cli-helpers-engine": "^0.11.0"
+  },
+  "bin": "./bin/d2-app-scripts"
 }
