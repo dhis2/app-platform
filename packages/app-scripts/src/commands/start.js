@@ -1,5 +1,5 @@
 const bootstrapShell = require('../lib/bootstrapShell');
-const { reporter, exec } = require('@dhis2/cli-helpers-engine');
+const { reporter } = require('@dhis2/cli-helpers-engine');
 const concurrently = require('concurrently');
 const makePaths = require('../lib/paths');
 
@@ -20,12 +20,6 @@ const handler = async ({ ...argv }) => {
     }], {
       killOthers: ['failure', 'failure']
     })
-    // await exec({
-    //   cmd: 'yarn',
-    //   args: ['run', 'start'],
-    //   cwd: shellDir,
-    //   pipe: true
-    // });
   } catch (err) {
     reporter.error('Start script exited with non-zero exit code');
     reporter.debugErr(err);
