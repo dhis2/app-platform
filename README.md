@@ -3,6 +3,7 @@
 TODO
 
 - [x] Working POC
+- [ ] Support app-specific dependencies
 - [ ] Build app component bundles with WebPack (using SplitChunks for shared code)
 - [ ] Support simple configuration (`d2.config.js` or `.d2rc`)
 - [ ] Support specifying appShell for testing
