@@ -2,7 +2,7 @@ const path = require('path');
 
 const shellAppDirname = 'src/current-d2-app'
 
-module.exports = makePaths = async cwd => ({
+module.exports = makePaths = cwd => ({
   webpackConfig: path.join(__dirname, '../../config/webpack.config.js'),
   babelConfig: path.join(__dirname, '../../config/babel.config.js'),
   

@@ -5,7 +5,7 @@ const makePaths = require('../lib/paths');
 
 const handler = async ({ ...argv }) => {
   const shellDir = await bootstrapShell(argv);
-  const paths = await makePaths(argv.cwd);
+  const paths = makePaths(argv.cwd);
 
   reporter.info('Starting app shell...');
   try {

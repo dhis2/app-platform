@@ -5,7 +5,7 @@ const fs = require('fs-extra')
 
 const handler = async ({ ...argv }) => {
   const shellDir = await bootstrapShell(argv);
-  const paths = await makePaths(argv.cwd);
+  const paths = makePaths(argv.cwd);
 
   reporter.info('Building app...');
   try {

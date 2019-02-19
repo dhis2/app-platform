@@ -3,7 +3,7 @@ const fs = require('fs-extra');
 const { reporter, exec } = require('@dhis2/cli-helpers-engine');
 
 const bootstrapShell = async ({ cwd, force }) => {
-  const paths = await makePaths(cwd);
+  const paths = makePaths(cwd);
   const source = paths.shellSource,
         dest = paths.shell;
   reporter.debug(`Bootstrapping appShell from ${source} to ${dest}`)
