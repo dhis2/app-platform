@@ -1,5 +1,5 @@
 {
-  "name": "@dhis2/app-shell-scripts",
+  "name": "@dhis2/app-scripts",
   "version": "0.1.0",
   "main": "src/index.js",
   "repository": "https://github.com/amcgee/dhis2-app-platform",
@@ -7,7 +7,16 @@
   "license": "BSD-3-Clause",
   "private": true,
   "dependencies": {
-    "@dhis2/cli-helpers-engine": "^0.11.0"
+    "@babel/cli": "^7.2.3",
+    "@babel/core": "^7.3.3",
+    "@babel/preset-react": "^7.0.0",
+    "@dhis2/app-shell": "0.1.0",
+    "@dhis2/cli-helpers-engine": "^0.11.0",
+    "concurrently": "^4.1.0",
+    "fs-extra": "^7.0.1"
   },
-  "bin": "./bin/d2-app-scripts"
+  "bin": {
+    "d2-app-scripts": "./bin/d2-app-scripts",
+    "babel": "babel"
+  }
 }

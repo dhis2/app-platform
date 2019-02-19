@@ -1,5 +1,5 @@
 {
-  "name": "shell-runtime",
+  "name": "@dhis2/app-shell",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
