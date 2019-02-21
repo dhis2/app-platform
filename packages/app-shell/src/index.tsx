@@ -4,6 +4,10 @@ import './index.css';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
 
+import 'typeface-roboto/index.css'
+import '@dhis2/ui/defaults/reset.css'
+import '@dhis2/ui/defaults/common.css'
+
 ReactDOM.render(<App />, document.getElementById('root'));
 
 // If you want your app to work offline and load faster, you can change

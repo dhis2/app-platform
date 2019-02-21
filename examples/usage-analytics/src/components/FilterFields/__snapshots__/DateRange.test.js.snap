@@ -1,0 +1,34 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<DateRange/> matches the snapshot with default props 1`] = `
+<div
+  className="uaa-date-range"
+>
+  <div
+    className="uaa-date-field uaa-fieldwrap"
+  >
+    <label>
+      Start Date
+    </label>
+    <input
+      className="startDate"
+      onChange={[Function]}
+      type="date"
+      value="2018-09-30"
+    />
+  </div>
+  <div
+    className="uaa-date-field uaa-fieldwrap"
+  >
+    <label>
+      End date
+    </label>
+    <input
+      className="endDate"
+      onChange={[Function]}
+      type="date"
+      value="2018-12-30"
+    />
+  </div>
+</div>
+`;

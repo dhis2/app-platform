@@ -1,30 +1,27 @@
-const bootstrapShell = require('../lib/bootstrapShell');
 const { reporter } = require('@dhis2/cli-helpers-engine');
-const concurrently = require('concurrently');
-const makePaths = require('../lib/paths');
 
-const handler = async ({ ...argv }) => {
-  const shellDir = await bootstrapShell(argv);
-  const paths = makePaths(argv.cwd);
+const compile = require('../lib/compile');
+const makePaths = require('../lib/paths');
+const makeShell = require('../lib/shell');
+const exitOnCatch = require('../lib/exitOnCatch');
+
+const handler = async ({ cwd }) => {
+  const paths = makePaths(cwd);
+  
+  const shell = makeShell(paths);
+  await shell.bootstrap();
 
   reporter.info('Starting app shell...');
-  try {
-    await concurrently([{
-      command: `yarn --cwd ${shellDir} run start`,
-      name: 'Run',
-      color: 'blue'
-    }, {
-      command: `yarn exec babel -- src --out-dir ${paths.devOut} --no-babelrc --config-file ${paths.babelConfig} --watch`,
-      name: 'Compile',
-      color: 'red'
-    }], {
-      killOthers: ['failure', 'failure']
-    })
-  } catch (err) {
-    reporter.error('Start script exited with non-zero exit code');
-    reporter.debugErr(err);
+
+  exitOnCatch(async () => {
+    const compilePromise = compile({ paths, watch: true });
+    const startPromise = shell.start();
+    await Promise.all([compilePromise, startPromise]);
     process.exit(1);
-  }
+  }, {
+    name: 'start',
+    onError: () => reporter.error('Start script exited with non-zero exit code')
+  });
 }
 
 const command = {

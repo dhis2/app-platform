@@ -1,0 +1,815 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<Chart/> Produces a correct chart for category DATA_VALUES 1`] = `
+<div
+  className="uua-data-container uua-chart-container"
+>
+  <h4
+    className="uaa-chart-title"
+  >
+    Data values
+  </h4>
+  <h6
+    className="uaa-chart-subtitle"
+  >
+    Number of data values saved in the system
+  </h6>
+  <div
+    className="uaa-chart-wrap"
+  >
+    <Line
+      data={
+        Object {
+          "datasets": Array [
+            Object {
+              "backgroundColor": "rgba(0, 0, 0, 0)",
+              "borderColor": "#7cb5ec",
+              "data": Array [
+                11751,
+                11520,
+              ],
+              "fill": false,
+              "label": "Data Values",
+              "lineTension": 0,
+            },
+          ],
+          "labels": Array [
+            "Week 22 / 2016",
+            "Week 23 / 2016",
+          ],
+        }
+      }
+      options={
+        Object {
+          "animation": Object {
+            "duration": 180,
+          },
+          "legend": Object {
+            "position": "bottom",
+          },
+          "maintainAspectRatio": false,
+          "onResize": [Function],
+          "responsive": true,
+          "scales": Object {
+            "xAxes": Array [
+              Object {
+                "display": true,
+                "scaleLabel": Object {
+                  "display": true,
+                },
+                "ticks": Object {
+                  "maxRotation": 45,
+                  "minRotation": 45,
+                },
+              },
+            ],
+            "yAxes": Array [
+              Object {
+                "display": true,
+                "scaleLabel": Object {
+                  "display": true,
+                  "labelString": "Values",
+                },
+                "ticks": Object {
+                  "precision": 0,
+                  "suggestedMax": 11751,
+                  "suggestedMin": 11520,
+                },
+              },
+            ],
+          },
+          "tooltips": Object {
+            "mode": "nearest",
+          },
+        }
+      }
+    />
+  </div>
+</div>
+`;
+
+exports[`<Chart/> Produces a correct chart for category FAVORITE_VIEWS, aggregationLevel AVERAGE, and chartType ALL 1`] = `
+<div
+  className="uua-data-container uua-chart-container"
+>
+  <h4
+    className="uaa-chart-title"
+  >
+    Favorite views
+  </h4>
+  <h6
+    className="uaa-chart-subtitle"
+  >
+    Number of times users looked at analysis favorites
+  </h6>
+  <div
+    className="uaa-chart-wrap"
+  >
+    <Line
+      data={
+        Object {
+          "datasets": Array [
+            Object {
+              "backgroundColor": "rgba(0, 0, 0, 0)",
+              "borderColor": "#7cb5ec",
+              "data": Array [
+                19,
+                17,
+              ],
+              "fill": false,
+              "label": "Average Map",
+              "lineTension": 0,
+            },
+            Object {
+              "backgroundColor": "rgba(0, 0, 0, 0)",
+              "borderColor": "#CC6600",
+              "data": Array [
+                22,
+                22,
+              ],
+              "fill": false,
+              "label": "Average Chart",
+              "lineTension": 0,
+            },
+            Object {
+              "backgroundColor": "rgba(0, 0, 0, 0)",
+              "borderColor": "#CCCC00",
+              "data": Array [
+                18,
+                18,
+              ],
+              "fill": false,
+              "label": "Average Pivot Table",
+              "lineTension": 0,
+            },
+            Object {
+              "backgroundColor": "rgba(0, 0, 0, 0)",
+              "borderColor": "#66CC00",
+              "data": Array [
+                20,
+                20,
+              ],
+              "fill": false,
+              "label": "Average Event Report",
+              "lineTension": 0,
+            },
+            Object {
+              "backgroundColor": "rgba(0, 0, 0, 0)",
+              "borderColor": "#ff0066",
+              "data": Array [
+                20,
+                20,
+              ],
+              "fill": false,
+              "label": "Average Event Chart",
+              "lineTension": 0,
+            },
+            Object {
+              "backgroundColor": "rgba(0, 0, 0, 0)",
+              "borderColor": "#000000",
+              "data": Array [
+                28,
+                26,
+              ],
+              "fill": false,
+              "label": "Average Dashboard",
+              "lineTension": 0,
+            },
+          ],
+          "labels": Array [
+            "Week 22 / 2016",
+            "Week 23 / 2016",
+          ],
+        }
+      }
+      options={
+        Object {
+          "animation": Object {
+            "duration": 180,
+          },
+          "legend": Object {
+            "position": "bottom",
+          },
+          "maintainAspectRatio": false,
+          "onResize": [Function],
+          "responsive": true,
+          "scales": Object {
+            "xAxes": Array [
+              Object {
+                "display": true,
+                "scaleLabel": Object {
+                  "display": true,
+                },
+                "ticks": Object {
+                  "maxRotation": 45,
+                  "minRotation": 45,
+                },
+              },
+            ],
+            "yAxes": Array [
+              Object {
+                "display": true,
+                "scaleLabel": Object {
+                  "display": true,
+                  "labelString": "Values",
+                },
+                "ticks": Object {
+                  "precision": 0,
+                  "suggestedMax": 28,
+                  "suggestedMin": 17,
+                },
+              },
+            ],
+          },
+          "tooltips": Object {
+            "mode": "nearest",
+          },
+        }
+      }
+    />
+  </div>
+</div>
+`;
+
+exports[`<Chart/> Produces a correct chart for category FAVORITE_VIEWS, aggregationLevel AVERAGE, and chartType TOTAL 1`] = `
+<div
+  className="uua-data-container uua-chart-container"
+>
+  <h4
+    className="uaa-chart-title"
+  >
+    Favorite views
+  </h4>
+  <h6
+    className="uaa-chart-subtitle"
+  >
+    Number of times users looked at analysis favorites
+  </h6>
+  <div
+    className="uaa-chart-wrap"
+  >
+    <Line
+      data={
+        Object {
+          "datasets": Array [
+            Object {
+              "backgroundColor": "rgba(0, 0, 0, 0)",
+              "borderColor": "#7cb5ec",
+              "data": Array [
+                104,
+                101,
+              ],
+              "fill": false,
+              "label": "Average",
+              "lineTension": 0,
+            },
+          ],
+          "labels": Array [
+            "Week 22 / 2016",
+            "Week 23 / 2016",
+          ],
+        }
+      }
+      options={
+        Object {
+          "animation": Object {
+            "duration": 180,
+          },
+          "legend": Object {
+            "position": "bottom",
+          },
+          "maintainAspectRatio": false,
+          "onResize": [Function],
+          "responsive": true,
+          "scales": Object {
+            "xAxes": Array [
+              Object {
+                "display": true,
+                "scaleLabel": Object {
+                  "display": true,
+                },
+                "ticks": Object {
+                  "maxRotation": 45,
+                  "minRotation": 45,
+                },
+              },
+            ],
+            "yAxes": Array [
+              Object {
+                "display": true,
+                "scaleLabel": Object {
+                  "display": true,
+                  "labelString": "Values",
+                },
+                "ticks": Object {
+                  "precision": 0,
+                  "suggestedMax": 104,
+                  "suggestedMin": 101,
+                },
+              },
+            ],
+          },
+          "tooltips": Object {
+            "mode": "nearest",
+          },
+        }
+      }
+    />
+  </div>
+</div>
+`;
+
+exports[`<Chart/> Produces a correct chart for category FAVORITE_VIEWS, aggregationLevel SUM, and chartType ALL 1`] = `
+<div
+  className="uua-data-container uua-chart-container"
+>
+  <h4
+    className="uaa-chart-title"
+  >
+    Favorite views
+  </h4>
+  <h6
+    className="uaa-chart-subtitle"
+  >
+    Number of times users looked at analysis favorites
+  </h6>
+  <div
+    className="uaa-chart-wrap"
+  >
+    <Line
+      data={
+        Object {
+          "datasets": Array [
+            Object {
+              "backgroundColor": "rgba(0, 0, 0, 0)",
+              "borderColor": "#7cb5ec",
+              "data": Array [
+                4457,
+                4093,
+              ],
+              "fill": false,
+              "label": "Map",
+              "lineTension": 0,
+            },
+            Object {
+              "backgroundColor": "rgba(0, 0, 0, 0)",
+              "borderColor": "#CC6600",
+              "data": Array [
+                5047,
+                5179,
+              ],
+              "fill": false,
+              "label": "Chart",
+              "lineTension": 0,
+            },
+            Object {
+              "backgroundColor": "rgba(0, 0, 0, 0)",
+              "borderColor": "#CCCC00",
+              "data": Array [
+                4281,
+                4275,
+              ],
+              "fill": false,
+              "label": "Pivot Table",
+              "lineTension": 0,
+            },
+            Object {
+              "backgroundColor": "rgba(0, 0, 0, 0)",
+              "borderColor": "#66CC00",
+              "data": Array [
+                4649,
+                4856,
+              ],
+              "fill": false,
+              "label": "Event Report",
+              "lineTension": 0,
+            },
+            Object {
+              "backgroundColor": "rgba(0, 0, 0, 0)",
+              "borderColor": "#ff0066",
+              "data": Array [
+                4716,
+                4782,
+              ],
+              "fill": false,
+              "label": "Event Chart",
+              "lineTension": 0,
+            },
+            Object {
+              "backgroundColor": "rgba(0, 0, 0, 0)",
+              "borderColor": "#000000",
+              "data": Array [
+                6460,
+                6193,
+              ],
+              "fill": false,
+              "label": "Dashboard",
+              "lineTension": 0,
+            },
+            Object {
+              "backgroundColor": "rgba(0, 0, 0, 0)",
+              "borderColor": "#00CCCC",
+              "data": Array [
+                4414,
+                4242,
+              ],
+              "fill": false,
+              "label": "Data Set Report",
+              "lineTension": 0,
+            },
+          ],
+          "labels": Array [
+            "Week 22 / 2016",
+            "Week 23 / 2016",
+          ],
+        }
+      }
+      options={
+        Object {
+          "animation": Object {
+            "duration": 180,
+          },
+          "legend": Object {
+            "position": "bottom",
+          },
+          "maintainAspectRatio": false,
+          "onResize": [Function],
+          "responsive": true,
+          "scales": Object {
+            "xAxes": Array [
+              Object {
+                "display": true,
+                "scaleLabel": Object {
+                  "display": true,
+                },
+                "ticks": Object {
+                  "maxRotation": 45,
+                  "minRotation": 45,
+                },
+              },
+            ],
+            "yAxes": Array [
+              Object {
+                "display": true,
+                "scaleLabel": Object {
+                  "display": true,
+                  "labelString": "Values",
+                },
+                "ticks": Object {
+                  "precision": 0,
+                  "suggestedMax": 6460,
+                  "suggestedMin": 4093,
+                },
+              },
+            ],
+          },
+          "tooltips": Object {
+            "mode": "nearest",
+          },
+        }
+      }
+    />
+  </div>
+</div>
+`;
+
+exports[`<Chart/> Produces a correct chart for category FAVORITE_VIEWS, aggregationLevel SUM, and chartType TOTAL 1`] = `
+<div
+  className="uua-data-container uua-chart-container"
+>
+  <h4
+    className="uaa-chart-title"
+  >
+    Favorite views
+  </h4>
+  <h6
+    className="uaa-chart-subtitle"
+  >
+    Number of times users looked at analysis favorites
+  </h6>
+  <div
+    className="uaa-chart-wrap"
+  >
+    <Line
+      data={
+        Object {
+          "datasets": Array [
+            Object {
+              "backgroundColor": "rgba(0, 0, 0, 0)",
+              "borderColor": "#7cb5ec",
+              "data": Array [
+                23669,
+                23840,
+              ],
+              "fill": false,
+              "label": "Total",
+              "lineTension": 0,
+            },
+          ],
+          "labels": Array [
+            "Week 22 / 2016",
+            "Week 23 / 2016",
+          ],
+        }
+      }
+      options={
+        Object {
+          "animation": Object {
+            "duration": 180,
+          },
+          "legend": Object {
+            "position": "bottom",
+          },
+          "maintainAspectRatio": false,
+          "onResize": [Function],
+          "responsive": true,
+          "scales": Object {
+            "xAxes": Array [
+              Object {
+                "display": true,
+                "scaleLabel": Object {
+                  "display": true,
+                },
+                "ticks": Object {
+                  "maxRotation": 45,
+                  "minRotation": 45,
+                },
+              },
+            ],
+            "yAxes": Array [
+              Object {
+                "display": true,
+                "scaleLabel": Object {
+                  "display": true,
+                  "labelString": "Values",
+                },
+                "ticks": Object {
+                  "precision": 0,
+                  "suggestedMax": 23840,
+                  "suggestedMin": 23669,
+                },
+              },
+            ],
+          },
+          "tooltips": Object {
+            "mode": "nearest",
+          },
+        }
+      }
+    />
+  </div>
+</div>
+`;
+
+exports[`<Chart/> Produces a correct chart for category FAVORITES_SAVED 1`] = `
+<div
+  className="uua-data-container uua-chart-container"
+>
+  <h4
+    className="uaa-chart-title"
+  >
+    Favorites saved
+  </h4>
+  <h6
+    className="uaa-chart-subtitle"
+  >
+    Number of analysis favorites created by users
+  </h6>
+  <div
+    className="uaa-chart-wrap"
+  >
+    <Line
+      data={
+        Object {
+          "datasets": Array [
+            Object {
+              "backgroundColor": "rgba(0, 0, 0, 0)",
+              "borderColor": "#7cb5ec",
+              "data": Array [
+                1658,
+                1593,
+              ],
+              "fill": false,
+              "label": "Maps",
+              "lineTension": 0,
+            },
+            Object {
+              "backgroundColor": "rgba(0, 0, 0, 0)",
+              "borderColor": "#CC6600",
+              "data": Array [
+                1723,
+                1668,
+              ],
+              "fill": false,
+              "label": "Charts",
+              "lineTension": 0,
+            },
+            Object {
+              "backgroundColor": "rgba(0, 0, 0, 0)",
+              "borderColor": "#CCCC00",
+              "data": Array [
+                1642,
+                1643,
+              ],
+              "fill": false,
+              "label": "Pivot Tables",
+              "lineTension": 0,
+            },
+            Object {
+              "backgroundColor": "rgba(0, 0, 0, 0)",
+              "borderColor": "#66CC00",
+              "data": Array [
+                1748,
+                1745,
+              ],
+              "fill": false,
+              "label": "Event Reports",
+              "lineTension": 0,
+            },
+            Object {
+              "backgroundColor": "rgba(0, 0, 0, 0)",
+              "borderColor": "#ff0066",
+              "data": Array [
+                1613,
+                1672,
+              ],
+              "fill": false,
+              "label": "Event Charts",
+              "lineTension": 0,
+            },
+            Object {
+              "backgroundColor": "rgba(0, 0, 0, 0)",
+              "borderColor": "#000000",
+              "data": Array [
+                1873,
+                1853,
+              ],
+              "fill": false,
+              "label": "Dashboards",
+              "lineTension": 0,
+            },
+            Object {
+              "backgroundColor": "rgba(0, 0, 0, 0)",
+              "borderColor": "#00CCCC",
+              "data": Array [
+                1826,
+                1905,
+              ],
+              "fill": false,
+              "label": "Indicators",
+              "lineTension": 0,
+            },
+          ],
+          "labels": Array [
+            "Week 22 / 2016",
+            "Week 23 / 2016",
+          ],
+        }
+      }
+      options={
+        Object {
+          "animation": Object {
+            "duration": 180,
+          },
+          "legend": Object {
+            "position": "bottom",
+          },
+          "maintainAspectRatio": false,
+          "onResize": [Function],
+          "responsive": true,
+          "scales": Object {
+            "xAxes": Array [
+              Object {
+                "display": true,
+                "scaleLabel": Object {
+                  "display": true,
+                },
+                "ticks": Object {
+                  "maxRotation": 45,
+                  "minRotation": 45,
+                },
+              },
+            ],
+            "yAxes": Array [
+              Object {
+                "display": true,
+                "scaleLabel": Object {
+                  "display": true,
+                  "labelString": "Values",
+                },
+                "ticks": Object {
+                  "precision": 0,
+                  "suggestedMax": 1905,
+                  "suggestedMin": 1593,
+                },
+              },
+            ],
+          },
+          "tooltips": Object {
+            "mode": "nearest",
+          },
+        }
+      }
+    />
+  </div>
+</div>
+`;
+
+exports[`<Chart/> Produces a correct chart for category USERS 1`] = `
+<div
+  className="uua-data-container uua-chart-container"
+>
+  <h4
+    className="uaa-chart-title"
+  >
+    Users
+  </h4>
+  <h6
+    className="uaa-chart-subtitle"
+  >
+    Number of users in the system
+  </h6>
+  <div
+    className="uaa-chart-wrap"
+  >
+    <Line
+      data={
+        Object {
+          "datasets": Array [
+            Object {
+              "backgroundColor": "rgba(0, 0, 0, 0)",
+              "borderColor": "#7cb5ec",
+              "data": Array [
+                227,
+                234,
+              ],
+              "fill": false,
+              "label": "Active Users",
+              "lineTension": 0,
+            },
+            Object {
+              "backgroundColor": "rgba(0, 0, 0, 0)",
+              "borderColor": "#CC6600",
+              "data": Array [
+                262,
+                262,
+              ],
+              "fill": false,
+              "label": "Total Users",
+              "lineTension": 0,
+            },
+          ],
+          "labels": Array [
+            "Week 22 / 2016",
+            "Week 23 / 2016",
+          ],
+        }
+      }
+      options={
+        Object {
+          "animation": Object {
+            "duration": 180,
+          },
+          "legend": Object {
+            "position": "bottom",
+          },
+          "maintainAspectRatio": false,
+          "onResize": [Function],
+          "responsive": true,
+          "scales": Object {
+            "xAxes": Array [
+              Object {
+                "display": true,
+                "scaleLabel": Object {
+                  "display": true,
+                },
+                "ticks": Object {
+                  "maxRotation": 45,
+                  "minRotation": 45,
+                },
+              },
+            ],
+            "yAxes": Array [
+              Object {
+                "display": true,
+                "scaleLabel": Object {
+                  "display": true,
+                  "labelString": "Values",
+                },
+                "ticks": Object {
+                  "precision": 0,
+                  "suggestedMax": 262,
+                  "suggestedMin": 227,
+                },
+              },
+            ],
+          },
+          "tooltips": Object {
+            "mode": "nearest",
+          },
+        }
+      }
+    />
+  </div>
+</div>
+`;

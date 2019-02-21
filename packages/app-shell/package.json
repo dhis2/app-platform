@@ -6,13 +6,16 @@
   "license": "BSD-3-Clause",
   "private": true,
   "dependencies": {
+    "@dhis2/ui": "^1.0.0-beta.12",
     "@types/jest": "24.0.5",
     "@types/node": "11.9.4",
     "@types/react": "16.8.3",
     "@types/react-dom": "16.8.1",
+    "prop-types": "^15.7.2",
     "react": "^16.8.2",
     "react-dom": "^16.8.2",
     "react-scripts": "2.1.5",
+    "typeface-roboto": "^0.0.54",
     "typescript": "3.3.3"
   },
   "scripts": {
@@ -23,6 +26,9 @@
   },
   "eslintConfig": {
     "extends": "react-app"
+  },
+  "installConfig": {
+    "pnp": true
   },
   "browserslist": [
     ">0.2%",

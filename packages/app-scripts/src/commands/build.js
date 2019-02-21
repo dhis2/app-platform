@@ -1,32 +1,34 @@
-const bootstrapShell = require('../lib/bootstrapShell');
-const { reporter, exec } = require('@dhis2/cli-helpers-engine');
-const makePaths = require('../lib/paths');
-const fs = require('fs-extra')
+const { reporter } = require('@dhis2/cli-helpers-engine');
 
-const handler = async ({ ...argv }) => {
-  const shellDir = await bootstrapShell(argv);
-  const paths = makePaths(argv.cwd);
+const fs = require('fs-extra')
+const chalk = require('chalk');
+
+const compile = require('../lib/compile');
+const makePaths = require('../lib/paths');
+const makeShell = require('../lib/shell');
+const exitOnCatch = require('../lib/exitOnCatch');
+
+const handler = async ({ cwd }) => {
+  const paths = makePaths(cwd);
+  
+  const shell = makeShell(paths);
+  await shell.bootstrap();
 
   reporter.info('Building app...');
-  try {
-    await exec({
-      cmd: 'yarn',
-      args: ['exec', 'babel', '--', 'src', '--out-dir', paths.devOut, '--no-babelrc', '--config-file', paths.babelConfig],
-      pipe: true
-    })
-    await exec({
-      cmd: 'yarn',
-      args: ['run', 'build'],
-      cwd: shellDir,
-      pipe: true
-    });
-  } catch (err) {
-    reporter.error('Build script exited with non-zero exit code');
-    reporter.debugErr(err);
-    process.exit(1);
-  }
 
-  console.log(paths.shellBuildOutput);
+  exitOnCatch(async () => {
+    const mode = 'production';
+    await compile({ paths, mode });
+    reporter.info(` - Built in mode ${chalk.bold(mode)}`);
+
+    reporter.info('Building appShell...');
+    await shell.build()
+    reporter.info(` - Built in mode ${chalk.bold(mode)}`);
+  }, {
+    name: 'build',
+    onError: () => reporter.error('Build script failed')
+  });
+
   if (!fs.pathExistsSync(paths.shellBuildOutput)) {
     reporter.error('No build output found');
     process.exit(1);
@@ -39,7 +41,6 @@ const handler = async ({ ...argv }) => {
 }
 
 const command = {
-  command: 'build',
   aliases: 'b',
   desc: 'Build a production app bundle for use with the DHIS2 app-shell in production',
   handler

@@ -1,2 +1,4 @@
 node_modules
 .d2
+.pnp
+.pnp.js

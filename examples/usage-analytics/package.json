@@ -1,0 +1,34 @@
+{
+  "name": "usage-analytics-app",
+  "version": "32.0.1",
+  "private": true,
+  "scripts": {
+    "start": "d2-app-scripts start",
+    "build": "d2-app-scripts build"
+  },
+  "husky": {
+    "hooks": {
+      "commit-msg": "d2-style commit check",
+      "pre-commit": "d2-style js apply && yarn extract-pot && git add ./i18n/"
+    }
+  },
+  "dependencies": {
+    "@dhis2/d2-i18n": "^1.0.4",
+    "@dhis2/ui": "^1.0.0-beta.8",
+    "chart.js": "^2.7.3",
+    "lodash.debounce": "^4.0.8",
+    "prop-types": "^15.6.2",
+    "react": "^16.6.3",
+    "react-app-polyfill": "^0.1.3",
+    "react-chartjs-2": "^2.7.4",
+    "react-dom": "^16.6.3",
+    "react-redux": "^6.0.0",
+    "redux": "^4.0.1",
+    "redux-logger": "^3.0.6",
+    "redux-thunk": "^2.3.0"
+  },
+  "devDependencies": {
+    "@dhis2/app-scripts": "0.1.0",
+    "@dhis2/cli-style": "2.0.1"
+  }
+}

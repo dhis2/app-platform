@@ -1,0 +1,20 @@
+.uaa-data-table {
+    width: 100%;
+}
+.uaa-data-table thead {
+    border-bottom: 2px solid #e0e0e0;
+}
+
+.uaa-data-table tbody tr {
+    border-bottom: 1px solid #e0e0e0;
+}
+
+.uaa-data-table th,
+.uaa-data-table td {
+    font-size: 14px;
+    padding: 16px 16px;
+}
+.uaa-data-table th {
+    text-align: left;
+    font-weight: bold;
+}

@@ -1,0 +1,9 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<Error/> Matches the snapshot 1`] = `
+<div
+  className="uaa-error"
+>
+  Test error message
+</div>
+`;
