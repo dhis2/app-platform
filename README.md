@@ -7,7 +7,8 @@ TODO
     -   [x] WORKING!
 -   [/] Support app-specific dependencies
     -   [ ] Enable pnp for appShell install (again)
--   [ ] Build app component bundles with WebPack (using SplitChunks for shared code)
+-   [ ] Don't use CRA to build
+    -   [ ] Build app component bundles with WebPack (using SplitChunks for shared code)
     -   [ ] Audit package sizes
 -   [ ] Support simple configuration (`d2.config.js` or `.d2rc`)
 -   [ ] Support specifying appShell for testing
@@ -15,6 +16,7 @@ TODO
 -   [x] Support non-js app includes (images, static files, etc.)
 -   [x] Reference React from appShell instead of bundling a second local version
     -   [ ] ReactDOM too
+    -   [ ] Others?
 -   [ ] Support bundle analysis
 -   [ ] Name bundles based on application name
 -   [ ] Support plugin entrypoint
@@ -31,4 +33,7 @@ TODO
 -   [ ] `d2-app-scripts deploy`, `d2-app-scripts release`, `d2-app-scripts publish` ?
 -   [ ] Do we need a `runtime` peer dependency?
 -   [ ] Support static files in app builds
--   [ ] Generate app manifest, customize shell with app-provided data (name in headerbar, title, Head overloads)
+-   [ ] Generate app manifest, customize shell with app-provided data (name in headerbar, title)
+-   [ ] Support SSR
+-   [ ] Support `<Head></Head>` overrides in JSX
+-   [ ] `appShell`-level router
