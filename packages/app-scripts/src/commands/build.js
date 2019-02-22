@@ -3,20 +3,24 @@ const { reporter } = require('@dhis2/cli-helpers-engine');
 const fs = require('fs-extra')
 const chalk = require('chalk');
 
+const i18n = require('../lib/i18n');
 const compile = require('../lib/compile');
 const makePaths = require('../lib/paths');
 const makeShell = require('../lib/shell');
 const exitOnCatch = require('../lib/exitOnCatch');
 
-const handler = async ({ cwd }) => {
+const handler = async ({ cwd, force }) => {
   const paths = makePaths(cwd);
   
   const shell = makeShell(paths);
-  await shell.bootstrap();
-
-  reporter.info('Building app...');
+  await shell.bootstrap({ force });
 
   exitOnCatch(async () => {
+    reporter.info('Generating internationalization strings...');
+    await i18n.extract({ input: paths.src, output: paths.i18nStrings });
+    await i18n.generate({ input: paths.i18nStrings, output: paths.i18nLocales, namespace: 'default' });
+    
+    reporter.info('Building app...');
     const mode = 'production';
     await compile({ paths, mode });
     reporter.info(` - Built in mode ${chalk.bold(mode)}`);

@@ -4,6 +4,7 @@ import { Provider } from 'react-redux'
 import HeaderBar from '@dhis2/ui/widgets/HeaderBar'
 import store from './store'
 import UsageAnalytics from './components/UsageAnalytics'
+import './App.css'
 
 function App() {
     return (

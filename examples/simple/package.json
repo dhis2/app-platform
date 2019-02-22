@@ -6,14 +6,13 @@
   "author": "Austin McGee <austin@dhis2.org>",
   "license": "BSD-3-Clause",
   "private": true,
-  "dependencies": {
-    
-  },
+  "dependencies": {},
   "devDependencies": {
     "@dhis2/app-scripts": "0.1.0"
   },
   "scripts": {
     "start": "d2-app-scripts start",
-    "build": "d2-app-scripts build"
+    "build": "d2-app-scripts build",
+    "test": "d2-app-scripts test"
   }
 }

@@ -1,31 +1,28 @@
 const { reporter } = require('@dhis2/cli-helpers-engine');
 const fs = require('fs-extra');
-var path = require('path');
+const path = require('path');
+const chalk = require('chalk');
 
-var supportedExtensions = ['.js', '.jsx', '.ts', '.tsx'];
+const supportedExtensions = ['.js', '.jsx', '.ts', '.tsx'];
 
 module.exports.ensureDirectoryExists = dir => {
+  const dirPath = path.normalize(dir);
   try {
-    var dirPath = path.normalize(input);
-    var stat = fs.lstatSync(dirPath);
+    const stat = fs.lstatSync(dirPath);
 
     if (!stat.isDirectory()) {
-      reporter.error(`${dirPath} is not a directory.`);
+      reporter.error(`Directory ${chalk.bold(dirPath)} is not a directory.`);
       process.exit(1);
     }
   } catch (e) {
-    reporter.error(`${dirPath} does not exist.`);
+    reporter.error(`Directory ${chalk.bold(dirPath)} does not exist.`);
     process.exit(1);
   }
-}
+};
 
 // src from component/array-equal
-module.exports.arrayEqual = (arr1, arr2) => {
-  var length = arr1.length;
-  if (length !== arr2.length) return false;
-  for (var i = 0; i < length; i++) if (arr1[i] !== arr2[i]) return false;
-  return true;
-}
+module.exports.arrayEqual = (arr1, arr2) =>
+  arr1.length === arr2.length && arr1.some((item, idx) => item === arr2[idx]);
 
 function walkDirectory(dirPath, files = []) {
   const list = fs.readdirSync(dirPath);
@@ -46,6 +43,6 @@ function walkDirectory(dirPath, files = []) {
   });
 
   return files;
-};
+}
 
 module.exports.walkDirectory = walkDirectory;

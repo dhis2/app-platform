@@ -5,10 +5,6 @@ const fs = require('fs-extra');
 module.exports = paths => ({
   bootstrap: async ({ force } = {}) => {
     await bootstrap(paths, { force })
-    if (force) {
-      reporter.info('Linking app into appShell');
-      await fs.symlink(paths.devOut, paths.shellApp);
-    }
   },
   // link: async srcPath => {
   //   reporter.info('Linking app into appShell');
@@ -19,7 +15,7 @@ module.exports = paths => ({
       cmd: 'yarn',
       args: ['run', 'build'],
       cwd: paths.shell,
-      pipe: false
+      pipe: true
     });
   },
   start: async () => {
@@ -27,7 +23,7 @@ module.exports = paths => ({
       cmd: 'yarn',
       args: ['run', 'start'],
       cwd: paths.shell,
-      pipe: false
+      pipe: true
     });
   }
 })

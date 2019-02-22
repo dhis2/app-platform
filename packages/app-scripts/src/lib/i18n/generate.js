@@ -1,5 +1,6 @@
 const fs = require('fs-extra');
 const path = require('path');
+const { reporter } = require('@dhis2/cli-helpers-engine');
 const { gettextToI18next } = require('i18next-conv');
 const handlebars = require('handlebars');
 
@@ -8,12 +9,12 @@ const { langToLocale } = require('./locales');
 
 
 const writeTemplate = (outFile, data) => {
-  var localesHBS = fs.readFileSync(path.join(__dirname, 'templates', 'locales.hbs'), 'utf8');
-  var localesTemplate = handlebars.compile(localesHBS);
+  const localesHBS = fs.readFileSync(path.join(__dirname, 'templates', 'locales.hbs'), 'utf8');
+  const localesTemplate = handlebars.compile(localesHBS);
   fs.writeFileSync(outFile, localesTemplate(data));
 }
 
-const generate = ({ input, output, namespace }) => {
+const generate = async ({ input, output, namespace }) => {
   ensureDirectoryExists(input);
 
   // clean-up and create destination dir.
@@ -32,24 +33,25 @@ const generate = ({ input, output, namespace }) => {
   writeTemplate(outFile, { locales, langs, namespace });
 
   reporter.info('> Generating translation .JSON files');
-  files.forEach(f => {
+  const promises = files.map(async f => {
     const ext = path.extname(f);
     const lang = path.basename(f, ext);
 
-    if (ext === 'po' || ext === 'pot') {
-      var filePath = path.join(input, fileName);
-      var contents = fs.readFileSync(filePath, 'utf8');
-      gettextToI18next(lang, contents)
-        .then((lang, json) => {
-          var target = path.join(dst, lang);
-          fs.ensureDirSync(target);
+    if (ext === '.po' || ext === '.pot') {
+      const filePath = path.join(input, f);
+      const contents = fs.readFileSync(filePath, 'utf8');
+      const json = await gettextToI18next(lang, contents);
+      
+      const target = path.join(dst, lang);
+      fs.ensureDirSync(target);
 
-          var translationsPath = path.join(target, 'translations.json');
-          fs.writeFileSync(translationsPath, json, { encoding: 'utf8' });
-          reporter.info(`> writing JSON translation file for language: ${lang}`);
-        });
+      const translationsPath = path.join(target, 'translations.json');
+      fs.writeFileSync(translationsPath, json, { encoding: 'utf8' });
+      reporter.info(`> writing JSON translation file for language: ${lang}`);
     }
   });
+
+  await Promise.all(promises);
 }
 
 module.exports = generate;

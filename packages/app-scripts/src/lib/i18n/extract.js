@@ -1,5 +1,6 @@
 const fs = require('fs-extra');
-const { ensureDirectoryExists, walkDirectory } = require('./helpers');
+const path = require('path');
+const { ensureDirectoryExists, walkDirectory, arrayEqual } = require('./helpers');
 const { reporter } = require('@dhis2/cli-helpers-engine');
 const scanner = require('i18next-scanner');
 const { i18nextToPot, gettextToI18next } = require('i18next-conv');
@@ -7,11 +8,11 @@ const { i18nextToPot, gettextToI18next } = require('i18next-conv');
 const extract = async ({ input, output }) => {
   ensureDirectoryExists(input);
 
-  reporter.info(`> reading ${dirPath}`);
+  reporter.info(`> reading ${input}`);
 
-  const files = walkDirectory(dirPath);
+  const files = walkDirectory(input);
   if (files.length === 0) {
-    reporter.error(`${dirPath} has no strings to translate.`);
+    reporter.error(`Directory ${input} has no files to translate.`);
     process.exit(1);
   }
 
@@ -21,7 +22,7 @@ const extract = async ({ input, output }) => {
     sort: true
   });
 
-  reporter.info(`> parsing ${files.length} 'files'`);
+  reporter.info(`> parsing ${files.length} files`);
   
   files.forEach(filePath => {
     var contents = fs.readFileSync(filePath, 'utf8');
@@ -41,7 +42,7 @@ const extract = async ({ input, output }) => {
   //   fs.closeSync(fs.openSync(targetPath, 'w'));
   // }
 
-  if (fs.existsSync(output)) {
+  if (fs.existsSync(targetPath)) {
     // validate, diff translation keys b/w en.pot vs now
     const json = await gettextToI18next('en', fs.readFileSync(targetPath, 'utf8'))
     
@@ -55,9 +56,10 @@ const extract = async ({ input, output }) => {
     }
   }
   
-  reporter.info(`> writing: ${Object.keys(strings).length} language strings to ${targetPath}`);
+  reporter.info(`> writing: ${Object.keys(en).length} language strings to ${targetPath}`);
   const result = await i18nextToPot('en', JSON.stringify(en))
 
+  fs.ensureFileSync(targetPath);
   fs.writeFileSync(targetPath, result + "\n");
   reporter.info('> complete');
 }

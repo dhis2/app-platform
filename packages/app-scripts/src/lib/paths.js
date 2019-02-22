@@ -9,12 +9,15 @@ module.exports = makePaths = cwd => ({
   shellSource: path.dirname(require.resolve('@dhis2/app-shell/package.json')),
 
   base: path.join(cwd, './'),
+  package: path.join(cwd, './package.json'),
   src: path.join(cwd, './src'),
   appEntry: path.join(cwd, './src/App.js'),
-  appOutputFilename: 'App.js',
+  i18nStrings: path.join(cwd, './i18n'),
+  i18nLocales: path.join(cwd, './src/locales'),
 
   d2: path.join(cwd, './.d2/'),
   devOut: path.join(cwd, './.d2/devOut'),
+  appOutputFilename: 'App.js',
   shell: path.join(cwd, './.d2/shell'),
   shellAppDirname,
   shellApp: path.join(cwd, `./.d2/shell/${shellAppDirname}`),

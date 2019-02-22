@@ -36,6 +36,9 @@ const bootstrapShell = async (paths, { force = false } = {}) => {
     args: ['install', '--frozen-lockfile'],
     cwd: dest
   });
+
+  reporter.info('Linking app into appShell');
+  await fs.symlink(paths.devOut, paths.shellApp);
 };
 
 module.exports = bootstrapShell;
