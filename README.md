@@ -30,3 +30,5 @@ TODO
 -   [ ] `d2-app-scripts style apply` ?
 -   [ ] `d2-app-scripts deploy`, `d2-app-scripts release`, `d2-app-scripts publish` ?
 -   [ ] Do we need a `runtime` peer dependency?
+-   [ ] Support static files in app builds
+-   [ ] Generate app manifest, customize shell with app-provided data (name in headerbar, title, Head overloads)
