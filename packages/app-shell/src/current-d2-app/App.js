@@ -1,5 +1,3 @@
-import React from 'react';
+import React from 'react'
 
-export default () => (
-  <h2>PLACEHOLDER</h2>
-)
+export default () => <h2>PLACEHOLDER</h2>
