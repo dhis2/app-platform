@@ -9,7 +9,7 @@
     "husky": {
         "hooks": {
             "commit-msg": "d2-style commit check",
-            "pre-commit": "d2-style js apply && yarn extract-pot && git add ./i18n/"
+            "pre-commit": "d2-style js apply"
         }
     },
     "dependencies": {
