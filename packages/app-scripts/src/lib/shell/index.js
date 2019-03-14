@@ -1,6 +1,7 @@
-const { reporter, exec } = require('@dhis2/cli-helpers-engine')
+const { exec } = require('@dhis2/cli-helpers-engine')
+
 const bootstrap = require('./bootstrap')
-const fs = require('fs-extra')
+const getEnv = require('./env')
 
 module.exports = paths => ({
     bootstrap: async (args = {}) => {
@@ -15,6 +16,7 @@ module.exports = paths => ({
             cmd: 'yarn',
             args: ['run', 'build'],
             cwd: paths.shell,
+            env: getEnv(),
             pipe: true,
         })
     },
@@ -23,6 +25,7 @@ module.exports = paths => ({
             cmd: 'yarn',
             args: ['run', 'start'],
             cwd: paths.shell,
+            env: getEnv(),
             pipe: true,
         })
     },
@@ -31,6 +34,7 @@ module.exports = paths => ({
             cmd: 'yarn',
             args: ['run', 'test', '--', '--all'],
             cwd: paths.shell,
+            env: getEnv(),
             pipe: true,
         })
     },
