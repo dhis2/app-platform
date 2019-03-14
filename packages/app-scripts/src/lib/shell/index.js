@@ -3,8 +3,8 @@ const bootstrap = require('./bootstrap')
 const fs = require('fs-extra')
 
 module.exports = paths => ({
-    bootstrap: async ({ force } = {}) => {
-        await bootstrap(paths, { force })
+    bootstrap: async (args = {}) => {
+        await bootstrap(paths, args)
     },
     // link: async srcPath => {
     //   reporter.info('Linking app into appShell');
@@ -22,6 +22,14 @@ module.exports = paths => ({
         await exec({
             cmd: 'yarn',
             args: ['run', 'start'],
+            cwd: paths.shell,
+            pipe: true,
+        })
+    },
+    test: async () => {
+        await exec({
+            cmd: 'yarn',
+            args: ['run', 'test', '--', '--all'],
             cwd: paths.shell,
             pipe: true,
         })

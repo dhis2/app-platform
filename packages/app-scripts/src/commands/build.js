@@ -9,11 +9,12 @@ const makePaths = require('../lib/paths')
 const makeShell = require('../lib/shell')
 const exitOnCatch = require('../lib/exitOnCatch')
 
-const handler = async ({ cwd, force }) => {
+const handler = async ({ cwd, shell: shellSource, force }) => {
     const paths = makePaths(cwd)
 
     const shell = makeShell(paths)
-    await shell.bootstrap({ force })
+    console.log(shellSource)
+    await shell.bootstrap({ shell: shellSource, force })
 
     exitOnCatch(
         async () => {

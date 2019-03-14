@@ -1,15 +1,15 @@
-const makePaths = require('../paths')
 const fs = require('fs-extra')
+const path = require('path')
 const { reporter, exec } = require('@dhis2/cli-helpers-engine')
 
-const bootstrapShell = async (paths, { force = false } = {}) => {
-    const source = paths.shellSource,
+const bootstrapShell = async (paths, { shell, force = false } = {}) => {
+    const source = shell ? path.resolve(shell) : paths.shellSource,
         dest = paths.shell
 
     reporter.debug(`Bootstrapping appShell from ${source} to ${dest}`)
 
     if (fs.pathExistsSync(dest)) {
-        if (!force) {
+        if (!shell && !force) {
             reporter.info(
                 'An existing version of the appShell exists, skipping bootstrap...'
             )
@@ -35,7 +35,7 @@ const bootstrapShell = async (paths, { force = false } = {}) => {
 
     await exec({
         cmd: 'yarn',
-        args: ['install', '--frozen-lockfile'],
+        args: ['install', '--frozen-lockfile', '--prefer-offline'],
         cwd: dest,
     })
 

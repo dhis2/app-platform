@@ -36,5 +36,10 @@
         "Firefox ESR",
         "ie 11",
         "not dead"
-    ]
+    ],
+    "devDependencies": {
+        "jest-enzyme": "^7.0.2",
+        "enzyme": "^3.7.0",
+        "enzyme-adapter-react-16": "^1.7.0"
+    }
 }

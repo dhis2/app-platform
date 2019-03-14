@@ -12,24 +12,17 @@ const handler = async ({ cwd, force, shell: shellSource }) => {
     const shell = makeShell(paths)
     await shell.bootstrap({ force, shell: shellSource })
 
-    reporter.info('Starting app shell...')
+    reporter.info('Running tests...')
 
     exitOnCatch(
         async () => {
-            await i18n.extract({ input: paths.src, output: paths.i18nStrings })
-            await i18n.generate({
-                input: paths.i18nStrings,
-                output: paths.i18nLocales,
-                namespace: 'default',
-            })
             const compilePromise = compile({
                 mode: 'development',
                 paths,
-                watch: true,
+                watch: false,
             })
-            const startPromise = shell.start()
-            await Promise.all([compilePromise, startPromise])
-            process.exit(1)
+            const testPromise = shell.test()
+            await Promise.all([compilePromise, testPromise])
         },
         {
             name: 'start',
@@ -40,10 +33,9 @@ const handler = async ({ cwd, force, shell: shellSource }) => {
 }
 
 const command = {
-    command: 'start',
-    aliases: 's',
-    desc:
-        'Start a development server running a DHIS2 app within the DHIS2 app-shell',
+    command: 'test',
+    aliases: 't',
+    desc: 'Run app-shell and application tests',
     handler,
 }
 
