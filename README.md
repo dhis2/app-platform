@@ -24,11 +24,17 @@ TODO
 -   [x] Support i18n extract/generate/runtime
     -   [ ] Add runtime dependencies (`d2-i18n`, `moment`) to `appShell`
     -   [ ] Set locale in `appShell`
--   [ ] Native jest testing support
+-   [x] Native jest testing support
+    -   [ ] Add `jest-enzyme` to `appShell`
+    -   [ ] Test independent of `appShell`
+    -   [ ] Support tests and mocks in application package
 -   [ ] Native cypress testing support
 -   [ ] Editor integrations
+    -   [ ] Prettier
+    -   [ ] ESLint?
+    -   [ ] tsconfig?
 -   [ ] Enable pre-compiled appShell
--   [ ] Auto-install hooks
+-   [ ] Auto-install git hooks
 -   [ ] `d2-app-scripts style apply` ?
 -   [ ] `d2-app-scripts deploy`, `d2-app-scripts release`, `d2-app-scripts publish` ?
 -   [ ] Do we need a `runtime` peer dependency?
