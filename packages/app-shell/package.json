@@ -38,8 +38,8 @@
         "not dead"
     ],
     "devDependencies": {
-        "jest-enzyme": "^7.0.2",
         "enzyme": "^3.7.0",
-        "enzyme-adapter-react-16": "^1.7.0"
+        "enzyme-adapter-react-16": "^1.7.0",
+        "jest-enzyme": "^7.0.2"
     }
 }

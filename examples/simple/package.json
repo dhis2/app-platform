@@ -14,5 +14,9 @@
         "start": "d2-app-scripts start",
         "build": "d2-app-scripts build",
         "test": "d2-app-scripts test"
+    },
+    "peerDependencies": {
+        "react": "^16.8",
+        "react-dom": "^16.8"
     }
 }
