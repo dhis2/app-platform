@@ -40,18 +40,10 @@ const extract = async ({ input, output }) => {
 
     var targetPath = path.join(output, 'en.pot')
 
-    // var checkExisting = true;
-    // if (!fs.existsSync(output)) {
-    //   (checkExisting = false), fs.mkdirSync(output);
-    //   fs.closeSync(fs.openSync(targetPath, 'w'));
-    // }
-
     if (fs.existsSync(targetPath)) {
         // validate, diff translation keys b/w en.pot vs now
-        const json = await gettextToI18next(
-            'en',
-            fs.readFileSync(targetPath, 'utf8')
-        )
+        const content = fs.readFileSync(targetPath, 'utf8')
+        const json = await gettextToI18next('en', content)
 
         var msgIds = Object.keys(en)
         var newMsgIds = Object.keys(JSON.parse(json))

@@ -14,7 +14,7 @@ const handler = async ({ cwd, force, shell: shellSource }) => {
 
     reporter.info('Running tests...')
 
-    exitOnCatch(
+    await exitOnCatch(
         async () => {
             const compilePromise = compile({
                 mode: 'development',

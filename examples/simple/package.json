@@ -1,7 +1,7 @@
 {
-    "name": "example-cra",
+    "name": "simple-app",
     "version": "1.0.0",
-    "main": "index.js",
+    "main": "src/App.js",
     "repository": "https://github.com/amcgee/dhis2-app-platform",
     "author": "Austin McGee <austin@dhis2.org>",
     "license": "BSD-3-Clause",

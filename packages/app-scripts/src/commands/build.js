@@ -16,7 +16,7 @@ const handler = async ({ cwd, shell: shellSource, force }) => {
     console.log(shellSource)
     await shell.bootstrap({ shell: shellSource, force })
 
-    exitOnCatch(
+    await exitOnCatch(
         async () => {
             reporter.info('Generating internationalization strings...')
             await i18n.extract({ input: paths.src, output: paths.i18nStrings })
@@ -54,8 +54,7 @@ const handler = async ({ cwd, shell: shellSource, force }) => {
 
 const command = {
     aliases: 'b',
-    desc:
-        'Build a production app bundle for use with the DHIS2 app-shell in production',
+    desc: 'Build a production app bundle for use with the DHIS2 app-shell',
     handler,
 }
 

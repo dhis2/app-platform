@@ -14,7 +14,7 @@ const handler = async ({ cwd, force, shell: shellSource }) => {
 
     reporter.info('Starting app shell...')
 
-    exitOnCatch(
+    await exitOnCatch(
         async () => {
             await i18n.extract({ input: paths.src, output: paths.i18nStrings })
             await i18n.generate({
