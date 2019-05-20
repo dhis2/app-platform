@@ -6,7 +6,7 @@ import locale from './reducers/locale'
 import usageData from './reducers/usageData'
 import filter from './reducers/filter'
 
-let middlewares = [ReduxThunk]
+const middlewares = [ReduxThunk]
 
 const shouldLog = false
 

@@ -12,7 +12,7 @@ const exitOnCatch = require('../lib/exitOnCatch')
 const handler = async ({ cwd, shell: shellSource, force }) => {
     const paths = makePaths(cwd)
 
-    const shell = makeShell(paths)
+    const shell = makeShell({ name: 'TestApp', paths })
     console.log(shellSource)
     await shell.bootstrap({ shell: shellSource, force })
 

@@ -44,10 +44,20 @@ const envFromDHISConfig = config => ({
     DHIS2_AUTHORIZATION: config.authorization,
 })
 
-module.exports = () => {
+const makeShellEnv = vars =>
+    Object.entries(vars).reduce(
+        (out, [key, value]) => ({
+            ...out,
+            [`DHIS2_APP_${key.toUpperCase()}`]: value,
+        }),
+        {}
+    )
+
+module.exports = vars => {
     const env = prefixEnvForCRA({
         ...envFromDHISConfig(getDHISConfig()),
         ...filterEnv(),
+        ...makeShellEnv(vars),
     })
     reporter.debug('Env passed to app-shell:', env)
     return env

@@ -39,7 +39,7 @@ export function getInitialState(endDate) {
 }
 
 export function parseDate(date) {
-    let year = date.getFullYear()
+    const year = date.getFullYear()
     let month = '' + (date.getMonth() + 1)
     let day = '' + date.getDate()
 
