@@ -3,7 +3,7 @@ const { exec } = require('@dhis2/cli-helpers-engine')
 const bootstrap = require('./bootstrap')
 const getEnv = require('./env')
 
-module.exports = ({ name, paths }) => ({
+module.exports = ({ config, paths }) => ({
     bootstrap: async (args = {}) => {
         await bootstrap(paths, args)
     },
@@ -16,7 +16,7 @@ module.exports = ({ name, paths }) => ({
             cmd: 'yarn',
             args: ['run', 'build'],
             cwd: paths.shell,
-            env: getEnv({ name }),
+            env: getEnv({ name: config.title }),
             pipe: true,
         })
     },
@@ -25,7 +25,7 @@ module.exports = ({ name, paths }) => ({
             cmd: 'yarn',
             args: ['run', 'start'],
             cwd: paths.shell,
-            env: getEnv({ name }),
+            env: getEnv({ name: config.title }),
             pipe: true,
         })
     },
@@ -34,7 +34,7 @@ module.exports = ({ name, paths }) => ({
             cmd: 'yarn',
             args: ['run', 'test', '--', '--watchAll', '--ci'],
             cwd: paths.shell,
-            env: getEnv({ name }),
+            env: getEnv({ name: config.title }),
             pipe: true,
         })
     },

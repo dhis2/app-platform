@@ -8,8 +8,9 @@ const exitOnCatch = require('../lib/exitOnCatch')
 
 const handler = async ({ cwd, force, shell: shellSource }) => {
     const paths = makePaths(cwd)
+    const config = parseConfig(paths).app
+    const shell = makeShell({ config, paths })
 
-    const shell = makeShell({ name: 'TestApp', paths })
     await shell.bootstrap({ force, shell: shellSource })
 
     reporter.info('Running tests...')

@@ -10,6 +10,7 @@ module.exports = makePaths = cwd => ({
 
     base: path.join(cwd, './'),
     package: path.join(cwd, './package.json'),
+    config: path.join(cwd, './d2.config.js'),
     src: path.join(cwd, './src'),
     appEntry: path.join(cwd, './src/App.js'),
     i18nStrings: path.join(cwd, './i18n'),
@@ -23,6 +24,5 @@ module.exports = makePaths = cwd => ({
     shellApp: path.join(cwd, `./.d2/shell/${shellAppDirname}`),
     shellBuildOutput: path.join(cwd, './.d2/shell/build'),
 
-    config: path.join(cwd, './d2.config.js'),
     buildOutput: path.join(cwd, './build'),
 })
