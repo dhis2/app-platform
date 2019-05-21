@@ -21,7 +21,7 @@ const FailureMessage = ({ baseUrl }) => (
     >
         {i18n.t('Failed to load!')}
         <br />
-        <a target="_blank" href={`${baseUrl}`}>
+        <a target="_blank" rel="noopener noreferrer" href={`${baseUrl}`}>
             {i18n.t('Click here to login')}
         </a>
     </span>

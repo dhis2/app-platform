@@ -8,7 +8,7 @@
     "private": true,
     "dependencies": {},
     "devDependencies": {
-        "@dhis2/app-scripts": "0.1.0"
+        "@dhis2/app-scripts": "file:../../packages/app-scripts"
     },
     "scripts": {
         "start": "d2-app-scripts start",

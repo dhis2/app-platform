@@ -32,7 +32,7 @@ module.exports = ({ config, paths }) => ({
     test: async () => {
         await exec({
             cmd: 'yarn',
-            args: ['run', 'test', '--', '--watchAll', '--ci'],
+            args: ['run', 'test', '--', '--all'],
             cwd: paths.shell,
             env: getEnv({ name: config.title }),
             pipe: true,

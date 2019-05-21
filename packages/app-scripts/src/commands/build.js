@@ -7,6 +7,7 @@ const i18n = require('../lib/i18n')
 const compile = require('../lib/compile')
 const makePaths = require('../lib/paths')
 const makeShell = require('../lib/shell')
+const parseConfig = require('../lib/parseConfig')
 const exitOnCatch = require('../lib/exitOnCatch')
 
 const handler = async ({ cwd, shell: shellSource, force }) => {
