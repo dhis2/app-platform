@@ -1343,8 +1343,8 @@
   dependencies:
     "@dhis2/app-runtime" "^1.1.0"
     "@dhis2/d2-i18n" "^1.0.4"
-    "@dhis2/ui-core" "^2.2.0"
     "@dhis2/ui-widgets" "^1.0.2"
+    moment "^2.24.0"
     react "^16.8.6"
     react-dom "^16.8.6"
     react-scripts "3.0.1"
@@ -1390,14 +1390,6 @@
   version "2.0.2"
   resolved "https://registry.yarnpkg.com/@dhis2/ui-core/-/ui-core-2.0.2.tgz#ef71d18ebe7ca8b0070fef3ead4a05087fafea0c"
   integrity sha512-Vacm6NQ3UF4Iss7X5n17ggXQ5l2gdRMFw/VrVriaGWSZ4At9Br6C7QNnZ/OK6t+6D9B0ETTXaahbDmCyUXMAhA==
-  dependencies:
-    classnames "^2.2.6"
-    styled-jsx "^3.2.1"
-
-"@dhis2/ui-core@^2.2.0":
-  version "2.2.0"
-  resolved "https://registry.yarnpkg.com/@dhis2/ui-core/-/ui-core-2.2.0.tgz#9122403623c9f84127ad3e89134b6d08948e550a"
-  integrity sha512-uhu9WUDyYY+v5nnO0Nhu/x0Rey6okZHFTNKvndvHk4Gm/qSrpNvINHOFAC930I5MdVvCP0UHKrqas1JXAJ3nqg==
   dependencies:
     classnames "^2.2.6"
     styled-jsx "^3.2.1"
@@ -9323,7 +9315,7 @@ prompts@^2.0.1:
     kleur "^3.0.2"
     sisteransi "^1.0.0"
 
-prop-types@^15.6.2:
+prop-types@^15.6.2, prop-types@^15.7.2:
   version "15.7.2"
   resolved "https://registry.yarnpkg.com/prop-types/-/prop-types-15.7.2.tgz#52c41e75b8c87e72b9d9360e0206b99dcbffa6c5"
   integrity sha512-8QQikdH7//R2vurIJSutZ1smHYTcLpRWEOlHnzcWHmBYrOGUysKwSsrC89BCiFj3CbrfJ/nXFdJepOVrY1GCHQ==

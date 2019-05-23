@@ -1,22 +1,19 @@
 import React from 'react'
-import { HeaderBar } from '@dhis2/ui-widgets'
-import { DataProvider } from '@dhis2/app-runtime'
+import AppAdapter from './adapter'
 
 const D2App = React.lazy(() => import('./current-d2-app/App')) // Automatic bundle splitting!
 
-const url = process.env.REACT_APP_DHIS2_BASE_URL || 'http://localhost:8080'
+const appConfig = {
+    url: process.env.REACT_APP_DHIS2_BASE_URL || 'http://localhost:8080',
+    appName: process.env.REACT_APP_DHIS2_APP_NAME || '',
+}
 
 const App = () => (
-    <DataProvider baseUrl={url} apiVersion={32}>
-        <HeaderBar appName={process.env.REACT_APP_DHIS2_APP_NAME || ''} />
+    <AppAdapter {...appConfig}>
         <React.Suspense fallback={<div />}>
-            <D2App
-                config={{
-                    url,
-                }}
-            />
+            <D2App config={appConfig} />
         </React.Suspense>
-    </DataProvider>
+    </AppAdapter>
 )
 
 export default App
