@@ -1,0 +1,11 @@
+{
+    "files.exclude": {
+        ".d2": true,
+        ".env": true,
+        ".gitignore": true,
+        ".vscode": true,
+        "build": true,
+        "node_modules": true,
+        "src/locales": true
+    }
+}

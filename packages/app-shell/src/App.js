@@ -1,7 +1,7 @@
 import React from 'react'
-import AppAdapter from './adapter'
+import AppAdapter from '@dhis2/app-shell-adapter'
 
-const D2App = React.lazy(() => import('./current-d2-app/App')) // Automatic bundle splitting!
+const D2App = React.lazy(() => import('./current-d2-app/app')) // Automatic bundle splitting!
 
 const appConfig = {
     url: process.env.REACT_APP_DHIS2_BASE_URL || 'http://localhost:8080',

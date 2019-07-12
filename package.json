@@ -1,9 +1,14 @@
 {
     "name": "root",
     "private": true,
-    "workspaces": [
-        "packages/*"
-    ],
+    "workspaces": {
+        "packages": [
+            "packages/*"
+        ],
+        "nohoist": [
+            "@dhis2/app-shell/**"
+        ]
+    },
     "devDependencies": {
         "@dhis2/cli-style": "^3.2.2",
         "husky": "^1.3.1"

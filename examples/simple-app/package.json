@@ -6,17 +6,20 @@
     "author": "Austin McGee <austin@dhis2.org>",
     "license": "BSD-3-Clause",
     "private": true,
-    "dependencies": {},
+    "dependencies": {
+        "@dhis2/app-runtime": "1.2.0"
+    },
     "devDependencies": {
         "@dhis2/app-scripts": "file:../../packages/app-scripts"
     },
     "scripts": {
         "start": "d2-app-scripts start",
         "build": "d2-app-scripts build",
-        "test": "d2-app-scripts test"
+        "test": "d2-app-scripts test --no-cypress"
     },
     "peerDependencies": {
         "@dhis2/app-runtime": "*",
+        "@dhis2/d2-i18n": "*",
         "react": "^16.8",
         "react-dom": "^16.8"
     }

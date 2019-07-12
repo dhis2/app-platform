@@ -1,0 +1,29 @@
+{
+    "name": "@dhis2/app-shell-adapter",
+    "version": "1.0.0",
+    "private": true,
+    "main": "build/cjs/index.js",
+    "module": "build/es/index.js",
+    "dependencies": {
+        "@dhis2/app-runtime": "^1.2.0",
+        "@dhis2/ui-core": "3.1.0",
+        "@dhis2/ui-widgets": "^1.0.4",
+        "moment": "^2.24.0",
+        "prop-types": "^15.7.2",
+        "react": "^16.8.6",
+        "react-dom": "^16.8.6"
+    },
+    "devDependencies": {
+        "@dhis2/app-scripts": "0.1.0"
+    },
+    "scripts": {
+        "build": "d2-app-scripts build"
+    },
+    "peerDependencies": {
+        "prop-types": "^15.7.2",
+        "react": "^16.8.6",
+        "react-dom": "^16.8.6",
+        "styled-jsx": "*",
+        "@dhis2/d2-i18n": "*"
+    }
+}

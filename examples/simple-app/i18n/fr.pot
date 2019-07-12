@@ -8,11 +8,5 @@ msgstr ""
 "POT-Creation-Date: 2019-05-20T12:03:17.005Z\n"
 "PO-Revision-Date: 2019-05-20T12:03:17.005Z\n"
 
-msgid "Failed to load!"
-msgstr "Échec du chargement!"
-
-msgid "Click here to login"
-msgstr "Cliquez ici pour vous identifier"
-
 msgid "Hello {{name}}"
 msgstr "Bonjour {{name}}"

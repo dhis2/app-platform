@@ -9,7 +9,7 @@ const exitOnCatch = require('../lib/exitOnCatch')
 
 const handler = async ({ cwd, force, shell: shellSource }) => {
     const paths = makePaths(cwd)
-    const config = parseConfig(paths).app
+    const config = parseConfig(paths)
     const shell = makeShell({ config, paths })
 
     await shell.bootstrap({ force, shell: shellSource })
@@ -25,11 +25,13 @@ const handler = async ({ cwd, force, shell: shellSource }) => {
                 namespace: 'default',
             })
             const compilePromise = compile({
+                config,
                 mode: 'development',
                 paths,
                 watch: true,
             })
             const startPromise = shell.start()
+
             await Promise.all([compilePromise, startPromise])
             process.exit(1)
         },
