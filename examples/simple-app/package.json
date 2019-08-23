@@ -6,9 +6,7 @@
     "author": "Austin McGee <austin@dhis2.org>",
     "license": "BSD-3-Clause",
     "private": true,
-    "dependencies": {
-        "@dhis2/app-runtime": "1.2.0"
-    },
+    "dependencies": {},
     "devDependencies": {
         "@dhis2/app-scripts": "file:../../packages/app-scripts"
     },

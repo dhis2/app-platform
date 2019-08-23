@@ -44,11 +44,13 @@ const bundle = ({
                 file: path.join(outDir, 'es', `${entryPointName}.js`),
                 format: 'es',
                 sourcemap,
+                banner: '/* eslint-disable */',
             },
             {
                 file: path.join(outDir, 'cjs', `${entryPointName}.js`),
                 format: 'cjs',
                 sourcemap,
+                banner: '/* eslint-disable */',
             },
         ],
         external: id => externals.test(id),

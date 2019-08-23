@@ -54,9 +54,7 @@ const compile = async ({
                         reporter.debug(
                             chunkOrAsset.isAsset
                                 ? `[${outputConfig.format}] - ASSET - `
-                                : `[${outputConfig.format}] - CHUNK ${
-                                      chunkOrAsset.name
-                                  } - MODULES - `,
+                                : `[${outputConfig.format}] - CHUNK ${chunkOrAsset.name} - MODULES - `,
                             chunkOrAsset.isAsset
                                 ? chunkOrAsset
                                 : Object.keys(chunkOrAsset.modules)
@@ -84,8 +82,8 @@ const compile = async ({
                 reporter.print('Rebuilding...')
             } else if (event.code === 'BUNDLE_END') {
                 await fs.copy(
-                    path.join(outDir, 'es/app.js'),
-                    path.join(paths.shellApp, 'app.js')
+                    path.join(outDir, `es/${config.type}.js`),
+                    path.join(paths.shellApp, `${config.type}.js`)
                 )
                 reporter.print('DONE')
             }
@@ -104,8 +102,12 @@ const compile = async ({
     await fs.ensureDir(paths.shellApp)
 
     await fs.copy(
-        path.join(outDir, 'es/index.js'),
-        path.join(paths.shellApp, 'app.js')
+        path.join(outDir, 'es/${config.type}.js'),
+        path.join(paths.shellApp, '${config.type}.js')
+    )
+    await fs.copy(
+        path.join(outDir, `es/${config.type}.js.map`),
+        path.join(paths.shellApp, `${config.type}.js.map`)
     )
 }
 

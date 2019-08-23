@@ -45,8 +45,12 @@ const handler = async ({
             await i18n.generate({
                 input: paths.i18nStrings,
                 output: paths.i18nLocales,
-                namespace: 'default',
+                namespace: config.name || 'default',
             })
+
+            if (config.type === 'app') {
+                await shell.bootstrap({ shell: shellSource, force })
+            }
 
             reporter.info('Building app...')
             await compile({

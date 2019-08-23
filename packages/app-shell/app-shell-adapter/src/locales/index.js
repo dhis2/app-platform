@@ -11,7 +11,7 @@ import moment from 'moment'
 import 'moment/locale/fr'
 import enTranslations from './en/translations.json'
 import frTranslations from './fr/translations.json'
-const namespace = 'default'
+const namespace = 'app-shell-adapter'
 moment.locale('en')
 i18n.addResources('en', namespace, enTranslations)
 i18n.addResources('fr', namespace, frTranslations)
