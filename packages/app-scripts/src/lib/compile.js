@@ -1,117 +1,114 @@
-const path = require('path')
-const webpack = require('webpack')
-const webpackConfigBuilder = require('../../config/webpack.configBuilder')
 const { reporter } = require('@dhis2/cli-helpers-engine')
+
+const path = require('path')
 const fs = require('fs-extra')
-const gaze = require('gaze')
+const rollup = require('rollup')
 
-const babel = require('@babel/core')
+const rollupConfigBuilder = require('../../config/rollup.config')
 
-const babelCompile = async (file, dest) => {
-    try {
-        const result = await babel.transformFileAsync(
-            file,
-            require('../../config/babel.config')
-        )
-        await fs.writeFile(dest, result.code)
-    } catch (e) {
-        reporter.error(`Transpilation error <${path.basename(file)}: ${e}`)
-    }
-}
+const compile = async ({
+    config,
+    paths,
+    mode = 'development',
+    watch = false,
+} = {}) => {
+    const input =
+        (config.entryPoints && config.entryPoints[config.type]) ||
+        'src/index.js'
+    const outDir = mode === 'production' ? paths.buildOutput : paths.devOut
 
-const walkTree = async (tree, cb) => {
-    const promises = []
-    Object.keys(tree).forEach(dir => {
-        tree[dir].forEach(name => {
-            if (
-                name[name.length - 1] !== '/' &&
-                name[name.length - 1] !== '\\'
-            ) {
-                promises.push(cb(name))
+    reporter.info(`Compiling ${input} to ${outDir}`)
+
+    fs.removeSync(outDir)
+    fs.ensureDirSync(outDir)
+
+    const pkg = require(paths.package)
+
+    const rollupConfig = rollupConfigBuilder({
+        cwd: paths.base,
+        entryPointName: config.type,
+        entryPoint: path.join(paths.base, input),
+        outDir,
+        mode,
+        bundleDeps: config.type === 'app',
+        pkg,
+    })
+
+    reporter.debug('Rollup config', rollupConfig)
+
+    if (!watch) {
+        // create a bundle
+        try {
+            const bundle = await rollup.rollup(rollupConfig)
+
+            // or write the bundle to disk
+            const outputs = Array.isArray(rollupConfig.output)
+                ? rollupConfig.output
+                : [rollupConfig.output]
+            reporter.debug('outputs', outputs)
+
+            await Promise.all(
+                outputs.map(async outputConfig => {
+                    const { output } = await bundle.generate(outputConfig)
+                    for (const chunkOrAsset of output) {
+                        reporter.debug(
+                            chunkOrAsset.isAsset
+                                ? `[${outputConfig.format}] - ASSET - `
+                                : `[${outputConfig.format}] - CHUNK ${chunkOrAsset.name} - MODULES - `,
+                            chunkOrAsset.isAsset
+                                ? chunkOrAsset
+                                : Object.keys(chunkOrAsset.modules)
+                        )
+                    }
+                    return await bundle.write(outputConfig)
+                })
+            )
+        } catch (e) {
+            reporter.error(e)
+            process.exit(1)
+        }
+    } else {
+        reporter.debug('watching...')
+        const watcher = rollup.watch({
+            ...rollupConfig,
+            watch: {
+                clearScreen: true,
+            },
+        })
+
+        watcher.on('event', async event => {
+            reporter.debug('[watch]', event.code)
+            if (event.code === 'BUNDLE_START') {
+                reporter.print('Rebuilding...')
+            } else if (event.code === 'BUNDLE_END') {
+                await fs.copy(
+                    path.join(outDir, `es/${config.type}.js`),
+                    path.join(paths.shellApp, `${config.type}.js`)
+                )
+                reporter.print('DONE')
             }
         })
-    })
-    await Promise.all(promises)
-}
 
-const compile = async ({ paths, mode = 'development', watch = false } = {}) => {
-    const outputDir = paths.shellApp
+        process.on('SIGINT', function() {
+            reporter.debug('Caught interrupt signal')
 
-    reporter.info(`Copying ${paths.src} to ${outputDir}`)
-
-    fs.removeSync(outputDir)
-    fs.ensureDirSync(outputDir)
-
-    await fs.copy(paths.src, outputDir)
-
-    if (watch) {
-        return new Promise((resolve, reject) => {
-            gaze(`${paths.src}/**/*`, async function(err, watcher) {
-                if (err) {
-                    reject(err)
-                }
-
-                this.on('all', async (event, f) => {
-                    const dest =
-                        f && path.join(outputDir, path.relative(paths.src, f))
-                    reporter.debug(`Gaze event ${event} - ${f} -> ${dest}`)
-
-                    switch (event) {
-                        case 'added':
-                            await fs.ensureDir(path.dirname(f))
-                            await fs.copyFile(f, dest)
-                            break
-                        case 'changed':
-                            await fs.remove(dest)
-                            await fs.copyFile(f, dest, { overwrite: true })
-                            break
-                        case 'removed':
-                            await fs.remove(dest)
-                            break
-                        default:
-                            return
-                    }
-                })
-            })
+            watcher.close()
+            process.exit()
         })
+        await new Promise(() => null) // Wait forever
     }
 
-    // reporter.debug('Initializing webpack compiler...');
-    // const compiler = webpack(webpackConfigBuilder({
-    //   name: 'DHIS2App',
-    //   entry: paths.appEntry,
-    //   mode,
-    //   outputDir,
-    //   outputFilename: paths.appOutputFilename
-    // }));
+    await fs.remove(paths.shellApp)
+    await fs.ensureDir(paths.shellApp)
 
-    // reporter.debug('Running webpack compiler...');
-    // return new Promise(async (resolve, reject) => {
-    //   await fs.remove(outputDir);
-    //   if (watch) {
-    //     reporter.debug('Watching files for changes...');
-    //     compiler.watch({
-    //       aggregateTimeout: 300,
-    //     }, (err, stats) => {
-    //       reporter.debug('File change detected!');
-    //       reporter.print(stats);
-    //       if (err) {
-    //         reject('An error occurred during compilation');
-    //       }
-    //     });
-    //   } else {
-    //     compiler.run((err, stats) => {
-    //       reporter.print(stats);
-    //       if (err) {
-    //         reject('An error occurred during compilation');
-    //       } else if (stats.hasErrors()) {
-    //         reject('Compilation failed');
-    //       } else {
-    //         resolve(stats);
-    //       }
-    //     })
-    //   }
-    // });
+    await fs.copy(
+        path.join(outDir, `es/${config.type}.js`),
+        path.join(paths.shellApp, `${config.type}.js`)
+    )
+    await fs.copy(
+        path.join(outDir, `es/${config.type}.js.map`),
+        path.join(paths.shellApp, `${config.type}.js.map`)
+    )
 }
 
 module.exports = compile

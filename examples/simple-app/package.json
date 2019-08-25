@@ -13,10 +13,11 @@
     "scripts": {
         "start": "d2-app-scripts start",
         "build": "d2-app-scripts build",
-        "test": "d2-app-scripts test"
+        "test": "d2-app-scripts test --no-cypress"
     },
     "peerDependencies": {
         "@dhis2/app-runtime": "*",
+        "@dhis2/d2-i18n": "*",
         "react": "^16.8",
         "react-dom": "^16.8"
     }

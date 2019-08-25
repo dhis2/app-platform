@@ -3,16 +3,19 @@
     "version": "0.1.0",
     "private": true,
     "dependencies": {
-        "@dhis2/app-runtime": "^1.1.0",
-        "@dhis2/d2-i18n": "^1.0.4",
-        "@dhis2/ui-widgets": "^1.0.2",
-        "moment": "^2.24.0",
+        "@dhis2/app-runtime": "^1.5.1",
+        "@dhis2/app-shell-adapter": "file:./app-shell-adapter",
+        "@dhis2/ui-core": "^3.7.1",
         "prop-types": "^15.7.2",
         "react": "^16.8.6",
         "react-dom": "^16.8.6",
-        "react-scripts": "3.0.1"
+        "react-scripts": "latest",
+        "styled-jsx": "^3.2.1"
     },
     "scripts": {
+        "adapter:install": "cd app-shell-adapter && yarn install",
+        "adapter:build": "cd app-shell-adapter && yarn build",
+        "adapter:clean": "rimraf ./node_modules/@dhis2-local/app-shell-adapter",
         "start": "react-scripts start",
         "build": "react-scripts build",
         "test": "react-scripts test",
@@ -32,5 +35,11 @@
             "last 1 firefox version",
             "last 1 safari version"
         ]
+    },
+    "devDependencies": {
+        "enzyme": "^3.10.0",
+        "enzyme-adapter-react-16": "^1.14.0",
+        "react-test-renderer": "^16.8.6",
+        "rimraf": "^3.0.0"
     }
 }

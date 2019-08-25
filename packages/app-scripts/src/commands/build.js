@@ -10,13 +10,33 @@ const makeShell = require('../lib/shell')
 const parseConfig = require('../lib/parseConfig')
 const exitOnCatch = require('../lib/exitOnCatch')
 
-const handler = async ({ cwd, shell: shellSource, force }) => {
-    const paths = makePaths(cwd)
-    const config = parseConfig(paths).app
-    const shell = makeShell({ config, paths })
+const buildModes = ['development', 'production']
 
-    console.log(shellSource)
-    await shell.bootstrap({ shell: shellSource, force })
+const getNodeEnv = () => {
+    let nodeEnv = process.env['NODE_ENV']
+    if (nodeEnv) {
+        nodeEnv = nodeEnv.toLowerCase()
+        if (buildModes.includes(nodeEnv)) {
+            return nodeEnv
+        }
+    }
+    return null
+}
+
+const handler = async ({
+    cwd,
+    mode,
+    dev,
+    watch,
+    shell: shellSource,
+    force,
+}) => {
+    mode = mode || (dev && 'development') || getNodeEnv() || 'production'
+
+    reporter.info(`Build mode: ${chalk.bold(mode)}`)
+    const paths = makePaths(cwd)
+    const config = parseConfig(paths)
+    const shell = makeShell({ config, paths })
 
     await exitOnCatch(
         async () => {
@@ -25,17 +45,27 @@ const handler = async ({ cwd, shell: shellSource, force }) => {
             await i18n.generate({
                 input: paths.i18nStrings,
                 output: paths.i18nLocales,
-                namespace: 'default',
+                namespace: config.name || 'default',
             })
 
+            if (config.type === 'app') {
+                await shell.bootstrap({ shell: shellSource, force })
+            }
+
             reporter.info('Building app...')
-            const mode = 'production'
-            await compile({ paths, mode })
+            await compile({
+                config,
+                paths,
+                mode,
+                watch,
+            })
             reporter.info(` - Built in mode ${chalk.bold(mode)}`)
 
-            reporter.info('Building appShell...')
-            await shell.build()
-            reporter.info(` - Built in mode ${chalk.bold(mode)}`)
+            if (config.type === 'app') {
+                reporter.info('Building appShell...')
+                await shell.build()
+                reporter.info(` - Built in mode ${chalk.bold(mode)}`)
+            }
         },
         {
             name: 'build',
@@ -43,20 +73,40 @@ const handler = async ({ cwd, shell: shellSource, force }) => {
         }
     )
 
-    if (!fs.pathExistsSync(paths.shellBuildOutput)) {
-        reporter.error('No build output found')
-        process.exit(1)
-    }
+    if (config.type === 'app') {
+        if (!fs.pathExistsSync(paths.shellBuildOutput)) {
+            reporter.error('No build output found')
+            process.exit(1)
+        }
 
-    if (fs.pathExistsSync(paths.buildOutput)) {
-        await fs.remove(paths.buildOutput)
+        if (fs.pathExistsSync(paths.buildOutput)) {
+            await fs.remove(paths.buildOutput)
+        }
+        await fs.copy(paths.shellBuildOutput, paths.buildOutput)
     }
-    await fs.copy(paths.shellBuildOutput, paths.buildOutput)
 }
 
 const command = {
     aliases: 'b',
     desc: 'Build a production app bundle for use with the DHIS2 app-shell',
+    builder: {
+        mode: {
+            description: 'Specify the target build environment',
+            aliases: 'm',
+            choices: buildModes,
+            defaultDescription: 'production',
+        },
+        dev: {
+            type: 'boolean',
+            description: 'Build in development mode',
+            conflicts: 'mode',
+        },
+        watch: {
+            type: 'boolean',
+            description: 'Watch source files for changes',
+            default: false,
+        },
+    },
     handler,
 }
 

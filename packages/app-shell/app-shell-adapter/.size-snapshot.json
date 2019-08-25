@@ -1,0 +1,21 @@
+{
+  "build/cjs/index.js": {
+    "bundled": 66396,
+    "minified": 45364,
+    "gzipped": 11398
+  },
+  "build/es/index.js": {
+    "bundled": 64537,
+    "minified": 43543,
+    "gzipped": 11378,
+    "treeshaked": {
+      "rollup": {
+        "code": 33582,
+        "import_statements": 291
+      },
+      "webpack": {
+        "code": 38727
+      }
+    }
+  }
+}

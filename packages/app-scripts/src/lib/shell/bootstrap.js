@@ -39,8 +39,8 @@ const bootstrapShell = async (paths, { shell, force = false } = {}) => {
         cwd: dest,
     })
 
-    reporter.info('Linking app into appShell')
-    await fs.symlink(paths.devOut, paths.shellApp)
+    // reporter.info('Linking app into appShell')
+    // await fs.symlink(paths.devOut, paths.shellApp)
 }
 
 module.exports = bootstrapShell
