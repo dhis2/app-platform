@@ -1110,7 +1110,7 @@
     "@babel/preset-env" "^7.3.1"
     "@babel/preset-react" "^7.0.0"
     "@babel/preset-typescript" "^7.3.3"
-    "@dhis2/app-shell" "link:../../../../../../Library/Caches/Yarn/v4/npm-@dhis2-app-scripts-0.1.0-54c88f82-493a-4dc2-b9c2-31e726165cb4-1566594957935/node_modules/@dhis2/app-shell"
+    "@dhis2/app-shell" "link:../../../../../../Library/Caches/Yarn/v4/npm-@dhis2-app-scripts-0.1.0-5b1bb787-d8d6-496a-8cf2-ccc9c83c2fb9-1566676244503/node_modules/@dhis2/app-shell"
     "@dhis2/cli-helpers-engine" "^1.2.0"
     babel-loader "^8.0.5"
     chalk "^2.4.2"
@@ -1138,6 +1138,7 @@
     "@dhis2/ui-core" "3.1.0"
     "@dhis2/ui-widgets" "^1.0.4"
     moment "^2.24.0"
+    styled-jsx "^3.2.1"
 
 "@dhis2/app-shell@link:../../packages/app-shell":
   version "0.0.0"

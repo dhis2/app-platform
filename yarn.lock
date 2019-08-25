@@ -931,12 +931,18 @@
   resolved "https://registry.yarnpkg.com/@dhis2/app-runtime/-/app-runtime-1.5.0.tgz#1c1c0305295adaa4a727e70bca91781355d646ca"
   integrity sha512-M44XFy3Px4xtAeJlqeiIayaS57ieNt5wFrj8dkbNpCXIk2hoQaicN9bDuGeTOAofU7OdAjEAc4UCKgOi5G7OPg==
 
+"@dhis2/app-runtime@^1.5.1":
+  version "1.5.1"
+  resolved "https://registry.yarnpkg.com/@dhis2/app-runtime/-/app-runtime-1.5.1.tgz#2e32efd3f704411d5ef970c07d531155f8978f04"
+  integrity sha512-2HWuvdTvb574rV0WuHmj0muhqyeWzvmDwkxAsesSKuAwB3O+Jd+LgeALsXADH3GOmh1/Q32C0udg6nl60CyCbA==
+
 "@dhis2/app-shell-adapter@file:./packages/app-shell/app-shell-adapter":
   version "1.0.0"
   dependencies:
     "@dhis2/ui-core" "3.1.0"
     "@dhis2/ui-widgets" "^1.0.4"
     moment "^2.24.0"
+    styled-jsx "^3.2.1"
 
 "@dhis2/app-shell@link:packages/app-shell":
   version "0.1.0"

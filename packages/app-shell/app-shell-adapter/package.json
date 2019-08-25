@@ -16,7 +16,7 @@
         "build": "d2-app-scripts build"
     },
     "peerDependencies": {
-        "@dhis2/app-runtime": "^1.5.0",
+        "@dhis2/app-runtime": "^1.5.1",
         "@dhis2/d2-i18n": "*",
         "prop-types": "^15.7.2",
         "react": "^16.8.6",

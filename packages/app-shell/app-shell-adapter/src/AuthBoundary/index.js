@@ -6,7 +6,6 @@ import { ScreenCover, CircularLoader } from '@dhis2/ui-core'
 import { LoginModal } from './LoginModal'
 
 export const AuthBoundary = ({ url, children }) => {
-    console.log(window.navigator.language)
     i18n.changeLanguage(window.navigator.language)
     const { loading, error, data } = useDataQuery({
         userSettings: {

@@ -102,8 +102,8 @@ const compile = async ({
     await fs.ensureDir(paths.shellApp)
 
     await fs.copy(
-        path.join(outDir, 'es/${config.type}.js'),
-        path.join(paths.shellApp, '${config.type}.js')
+        path.join(outDir, `es/${config.type}.js`),
+        path.join(paths.shellApp, `${config.type}.js`)
     )
     await fs.copy(
         path.join(outDir, `es/${config.type}.js.map`),

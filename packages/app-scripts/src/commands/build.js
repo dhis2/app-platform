@@ -73,15 +73,17 @@ const handler = async ({
         }
     )
 
-    if (!fs.pathExistsSync(paths.shellBuildOutput)) {
-        reporter.error('No build output found')
-        process.exit(1)
-    }
+    if (config.type === 'app') {
+        if (!fs.pathExistsSync(paths.shellBuildOutput)) {
+            reporter.error('No build output found')
+            process.exit(1)
+        }
 
-    // if (fs.pathExistsSync(paths.buildOutput)) {
-    //     await fs.remove(paths.buildOutput)
-    // }
-    // await fs.copy(paths.shellBuildOutput, paths.buildOutput)
+        if (fs.pathExistsSync(paths.buildOutput)) {
+            await fs.remove(paths.buildOutput)
+        }
+        await fs.copy(paths.shellBuildOutput, paths.buildOutput)
+    }
 }
 
 const command = {
