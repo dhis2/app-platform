@@ -1096,10 +1096,10 @@
   resolved "https://registry.yarnpkg.com/@csstools/normalize.css/-/normalize.css-9.0.1.tgz#c27b391d8457d1e893f1eddeaf5e5412d12ffbb5"
   integrity sha512-6It2EVfGskxZCQhuykrfnALg7oVeiI6KclWSmGDqB0AiInVrTGB9Jp9i4/Ad21u9Jde/voVQz6eFX/eSg/UsPA==
 
-"@dhis2/app-runtime@^1.5.0":
-  version "1.5.0"
-  resolved "https://registry.yarnpkg.com/@dhis2/app-runtime/-/app-runtime-1.5.0.tgz#1c1c0305295adaa4a727e70bca91781355d646ca"
-  integrity sha512-M44XFy3Px4xtAeJlqeiIayaS57ieNt5wFrj8dkbNpCXIk2hoQaicN9bDuGeTOAofU7OdAjEAc4UCKgOi5G7OPg==
+"@dhis2/app-runtime@^1.5.1":
+  version "1.5.1"
+  resolved "https://registry.yarnpkg.com/@dhis2/app-runtime/-/app-runtime-1.5.1.tgz#2e32efd3f704411d5ef970c07d531155f8978f04"
+  integrity sha512-2HWuvdTvb574rV0WuHmj0muhqyeWzvmDwkxAsesSKuAwB3O+Jd+LgeALsXADH3GOmh1/Q32C0udg6nl60CyCbA==
 
 "@dhis2/app-scripts@file:../../packages/app-scripts":
   version "0.1.0"
@@ -1110,7 +1110,7 @@
     "@babel/preset-env" "^7.3.1"
     "@babel/preset-react" "^7.0.0"
     "@babel/preset-typescript" "^7.3.3"
-    "@dhis2/app-shell" "link:../../../../../../Library/Caches/Yarn/v4/npm-@dhis2-app-scripts-0.1.0-5b1bb787-d8d6-496a-8cf2-ccc9c83c2fb9-1566676244503/node_modules/@dhis2/app-shell"
+    "@dhis2/app-shell" "link:../../../../../../Library/Caches/Yarn/v4/npm-@dhis2-app-scripts-0.1.0-bf90122d-15c5-4948-b04f-a2a186a44059-1566827304096/node_modules/@dhis2/app-shell"
     "@dhis2/cli-helpers-engine" "^1.2.0"
     babel-loader "^8.0.5"
     chalk "^2.4.2"
@@ -1138,7 +1138,6 @@
     "@dhis2/ui-core" "3.1.0"
     "@dhis2/ui-widgets" "^1.0.4"
     moment "^2.24.0"
-    styled-jsx "^3.2.1"
 
 "@dhis2/app-shell@link:../../packages/app-shell":
   version "0.0.0"

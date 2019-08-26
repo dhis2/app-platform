@@ -34,26 +34,26 @@ export default css`
         color: black;
     }
 
-    .icon: {
+    .icon {
         width: 96px;
         height: 96px;
         color: ${iconColor};
         margin-bottom: 24px;
     }
 
-    .message: {
+    .message {
         font-size: 24px;
         margin-bottom: 24px;
     }
 
-    .link: {
+    .link {
         font-size: 18px;
         text-decoration: underline;
         cursor: pointer;
         margin-bottom: 24px;
     }
 
-    .drawertoggle: {
+    .drawerToggle {
         font-size: 12px;
         color: ${secondaryTextColor};
         text-decoration: underline;
@@ -61,7 +61,7 @@ export default css`
         margin-bottom: 12px;
     }
 
-    .drawervisible: {
+    .drawerVisible {
         padding: 8px;
         display: block;
         height: 150px;
@@ -72,11 +72,11 @@ export default css`
         text-align: left;
     }
 
-    .drawerhidden: {
+    .drawerHidden {
         display: none;
     }
 
-    .errorintro: {
+    .errorIntro {
         font-size: 12px;
         line-height: 1.2;
         color: ${secondaryTextColor};
@@ -84,7 +84,7 @@ export default css`
         font-family: Menlo, Courier, monospace !important;
     }
 
-    .errordetails: {
+    .errorDetails {
         font-size: 12px;
         line-height: 1.2;
         color: ${errorColor};
