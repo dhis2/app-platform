@@ -5,5 +5,5 @@
   command = "yarn docs:build"
 
 [[redirects]]
-  from = "/*.md"
-  to = "/404.md"
+  from = "/*"
+  to = "/index.html"
