@@ -1,3 +1,10 @@
+## [1.1.2](https://github.com/dhis2/app-platform/compare/v1.1.1...v1.1.2) (2019-08-27)
+
+
+### Bug Fixes
+
+* use a flat workspaces array ([6b6a7be](https://github.com/dhis2/app-platform/commit/6b6a7be))
+
 ## [1.1.1](https://github.com/dhis2/app-platform/compare/v1.1.0...v1.1.1) (2019-08-27)
 
 
