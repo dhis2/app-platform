@@ -27,7 +27,7 @@
   "devDependencies": {
     "enzyme": "^3.10.0",
     "enzyme-adapter-react-16": "^1.14.0",
-    "eslint": "^5",
+    "eslint": "^6",
     "react-scripts": "latest",
     "react-test-renderer": "^16.8.6",
     "rimraf": "^3.0.0",
