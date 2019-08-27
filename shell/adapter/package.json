@@ -10,7 +10,7 @@
         "moment": "^2.24.0"
     },
     "devDependencies": {
-        "@dhis2/cli-app": "1.0.0"
+        "@dhis2/cli-app": "2.1.2"
     },
     "scripts": {
         "build": "d2-app build"

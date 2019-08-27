@@ -2,14 +2,14 @@
 # yarn lockfile v1
 
 
-"@dhis2/cli-app@1.0.0":
-  version "1.0.0"
-  resolved "https://registry.yarnpkg.com/@dhis2/cli-app/-/cli-app-1.0.0.tgz#1757f651ce6da65521e63959c3bb92aa23a0eaad"
-  integrity sha512-WI9jh8fYPe0wJpZPLWKFvR8cLf8VOGJrYMP338MJuUv2HhERbDAhufvXH9SZ2xMdex8u+qkO5fzl1wuQWf0evw==
+"@dhis2/cli-app@2.1.2":
+  version "2.1.2"
+  resolved "https://registry.yarnpkg.com/@dhis2/cli-app/-/cli-app-2.1.2.tgz#0786a1ae2e2cf37e97a9cfa7b6ddc32486b28bbb"
+  integrity sha512-zKrRbLXyDsdmdDW3U6MZhpydU7U+0Ww/QD8CXp9FATXrWcrP0k63qQUnQD4vjh+8gwKI3YlJPlwATG1vVPIJLg==
   dependencies:
-    "@dhis2/cli-helpers-engine" "^1.0.0"
+    "@dhis2/cli-helpers-engine" "1.4.0"
 
-"@dhis2/cli-helpers-engine@^1.0.0":
+"@dhis2/cli-helpers-engine@1.4.0":
   version "1.4.0"
   resolved "https://registry.yarnpkg.com/@dhis2/cli-helpers-engine/-/cli-helpers-engine-1.4.0.tgz#6371bce3017a5bc0c2b8ea84b77f253d75b8771e"
   integrity sha512-2WLWJ5DcIiECmUlX2ChU2Wbqe/iJ42nDPQGjQXK1YzryNdnXyftUjJRwrLYWwaKGmWzfnPvpu8tvp+Yjysl78A==
