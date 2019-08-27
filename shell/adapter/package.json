@@ -5,7 +5,7 @@
     "main": "build/cjs/lib.js",
     "module": "build/es/lib.js",
     "dependencies": {
-        "@dhis2/ui-core": "3.1.0",
+        "@dhis2/ui-core": "3.9.0",
         "@dhis2/ui-widgets": "^1.0.4",
         "moment": "^2.24.0"
     },
