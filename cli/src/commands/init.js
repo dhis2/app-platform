@@ -25,15 +25,6 @@ const handler = async ({ force, name, cwd, lib }) => {
 
     if (!fs.existsSync(paths.package)) {
         reporter.info('No package.json found, creating one...')
-        // await exec({
-        //     cmd: 'yarn',
-        //     args: [
-        //         'init'
-        //     ],
-        //     cwd: target || cwd,
-        //     stdio: 'inherit',
-        //     pipe: true
-        // })
 
         const pkg = require(path.join(
             __dirname,
@@ -43,15 +34,6 @@ const handler = async ({ force, name, cwd, lib }) => {
         fs.writeJSONSync(paths.package, pkg, {
             spaces: 2,
         })
-
-        // await exec({
-        //     cmd: 'yarn',
-        //     args: [
-        //         'install',
-        //         '--pnp' // Let's be FANCY!
-        //     ],
-        //     cwd: paths.base
-        // })
     }
 
     reporter.info('Creating package scripts...')
@@ -140,9 +122,9 @@ const handler = async ({ force, name, cwd, lib }) => {
     } else {
         reporter.info(`Creating entrypoint ${chalk.bold(entrypoint)}`)
         fs.mkdirpSync(path.join(paths.base, 'src'))
-        fs.writeFileSync(
-            path.join(paths.base, entrypoint),
-            "export default () => 'Welcome to DHIS2!'"
+        fs.copyFileSync(
+            path.join(__dirname, '../../config/init.entrypoint.js'),
+            path.join(paths.base, entrypoint)
         )
     }
 
