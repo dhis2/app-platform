@@ -9,15 +9,20 @@ const json = require('rollup-plugin-json')
 
 const { reporter } = require('@dhis2/cli-helpers-engine')
 
-const standardExternals = {
-    react: true,
-    'react-dom': true,
-    'prop-types': true,
-    'styled-jsx': true,
-    classnames: true,
-    '@dhis2/app-runtime': true,
-    '@dhis2/ui-core': true,
-}
+const standardExternals = [
+    '@dhis2/app-runtime',
+    '@dhis2/d2-i18n',
+    '@dhis2/ui-core',
+    'classnames',
+    'moment',
+    'prop-types',
+    'react',
+    'react-dom',
+    'styled-jsx',
+].reduce((out, dep) => {
+    out[dep] = true
+    return out
+}, {})
 
 const bundle = ({
     entryPointName,

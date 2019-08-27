@@ -5,12 +5,13 @@
     "dependencies": {
         "@dhis2/app-adapter": "file:./adapter",
         "@dhis2/app-runtime": "^1.5.1",
+        "@dhis2/d2-i18n": "^1.0.5",
         "@dhis2/ui-core": "^3.7.1",
+        "classnames": "^2.2.6",
         "moment": "^2.24.0",
         "prop-types": "^15.7.2",
         "react": "^16.8.6",
         "react-dom": "^16.8.6",
-        "react-scripts": "latest",
         "styled-jsx": "^3.2.1"
     },
     "scripts": {
@@ -41,8 +42,14 @@
     "devDependencies": {
         "enzyme": "^3.10.0",
         "enzyme-adapter-react-16": "^1.14.0",
+        "eslint": "^5",
+        "react-scripts": "latest",
         "react-test-renderer": "^16.8.6",
         "rimraf": "^3.0.0",
-        "source-map-explorer": "^2.0.1"
+        "source-map-explorer": "^2.0.1",
+        "typescript": "^3.5.3"
+    },
+    "installConfig": {
+        "pnp": true
     }
 }
