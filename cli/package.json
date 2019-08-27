@@ -1,6 +1,6 @@
 {
   "name": "@dhis2/cli-app",
-  "version": "1.0.0",
+  "version": "0.9.1",
   "main": "src/index.js",
   "repository": "https://github.com/amcgee/dhis2-app-platform",
   "author": "Austin McGee <austin@dhis2.org>",
@@ -26,13 +26,13 @@
     "i18next-conv": "^7",
     "i18next-scanner": "^2.9.1",
     "lodash": "^4.17.11",
+    "react": "*",
     "rollup": "^1.15.1",
     "rollup-plugin-babel": "^4.3.2",
     "rollup-plugin-commonjs": "^10.0.0",
     "rollup-plugin-json": "^4.0.0",
     "rollup-plugin-node-resolve": "^5.0.1",
-    "styled-jsx": "^3.2.1",
-    "react": "*"
+    "styled-jsx": "^3.2.1"
   },
   "bin": {
     "d2-app": "./bin/d2-app"
