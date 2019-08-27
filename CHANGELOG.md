@@ -1,3 +1,10 @@
+## [1.1.3](https://github.com/dhis2/app-platform/compare/v1.1.2...v1.1.3) (2019-08-27)
+
+
+### Bug Fixes
+
+* build adapter before bundling ([861844f](https://github.com/dhis2/app-platform/commit/861844f))
+
 ## [1.1.2](https://github.com/dhis2/app-platform/compare/v1.1.1...v1.1.2) (2019-08-27)
 
 
