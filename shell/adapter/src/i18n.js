@@ -1,5 +1,4 @@
 import React, { useEffect } from 'react'
-
 import i18n from '@dhis2/d2-i18ns'
 
 export const addResources = (namespace, translations) => {

@@ -2,8 +2,4 @@
   publish = "docs"
 
   # Default build command.
-  command = "yarn docs:build"
-
-[[redirects]]
-  from = "/*"
-  to = "/index.html"
+  command = "yarn build:docs"

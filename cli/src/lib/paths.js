@@ -6,7 +6,6 @@ const shellAppDirname = 'src/current-d2-app'
 module.exports = makePaths = (cwd = process.cwd()) => {
     const base = path.resolve(cwd)
     const paths = {
-        webpackConfig: path.join(__dirname, '../../config/webpack.config.js'),
         babelConfig: path.join(__dirname, '../../config/babel.config.js'),
 
         shellSource: path.join(__dirname, '../../assets/shell'),

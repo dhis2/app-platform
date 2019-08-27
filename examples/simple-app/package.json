@@ -1,25 +1,25 @@
 {
-    "name": "simple-app",
-    "version": "1.0.0",
-    "main": "src/index.js",
-    "repository": "https://github.com/amcgee/dhis2-app-platform",
-    "author": "Austin McGee <austin@dhis2.org>",
-    "license": "BSD-3-Clause",
-    "private": true,
-    "dependencies": {},
-    "devDependencies": {
-        "@dhis2/cli-app": "file:../../cli"
-    },
-    "scripts": {
-        "start": "d2-app start",
-        "build": "d2-app build",
-        "test": "d2-app test --no-cypress"
-    },
-    "peerDependencies": {
-        "@dhis2/app-runtime": "*",
-        "@dhis2/d2-i18n": "*",
-        "react": "^16.8",
-        "react-dom": "^16.8",
-        "moment": "*"
-    }
+  "name": "simple-app",
+  "version": "1.0.0",
+  "main": "src/index.js",
+  "repository": "https://github.com/amcgee/dhis2-app-platform",
+  "author": "Austin McGee <austin@dhis2.org>",
+  "license": "BSD-3-Clause",
+  "private": true,
+  "dependencies": {},
+  "devDependencies": {
+    "@dhis2/cli-app": "file:../../cli"
+  },
+  "scripts": {
+    "start": "d2-app start",
+    "build": "d2-app build",
+    "test": "d2-app test --no-cypress"
+  },
+  "peerDependencies": {
+    "@dhis2/app-runtime": "*",
+    "@dhis2/d2-i18n": "*",
+    "moment": "*",
+    "react": "^16.8",
+    "react-dom": "^16.8"
+  }
 }
