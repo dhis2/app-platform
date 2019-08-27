@@ -5,7 +5,10 @@ const chalk = require('chalk')
 
 const makePaths = require('../lib/paths')
 
-const handler = async ({ force, name, title, cwd, lib }) => {
+const handler = async ({ force, name, cwd, lib }) => {
+    cwd = cwd || process.cwd()
+    cwd = path.join(cwd, name)
+    fs.mkdirpSync(cwd)
     const paths = makePaths(cwd)
 
     if (fs.existsSync(paths.config) && !force) {
@@ -145,7 +148,12 @@ const handler = async ({ force, name, title, cwd, lib }) => {
 
     reporter.print('')
     reporter.info('SUCCESS!')
-    reporter.print('Run `yarn start` to launch your new DHIS2 application')
+    const cdCmd = name != '.' ? `cd ${name} && ` : ''
+    reporter.print(
+        `Run ${chalk.bold(
+            `${cdCmd}yarn start`
+        )} to launch your new DHIS2 application`
+    )
 }
 
 const command = {
@@ -161,11 +169,6 @@ const command = {
             description: 'Create a library',
             type: 'boolean',
             default: false,
-        },
-        title: {
-            description:
-                'The human-readable title of the application or library',
-            type: 'string',
         },
     },
     handler,
