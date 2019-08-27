@@ -1,5 +1,5 @@
 {
-  "name": "@dhis2/cli-app",
+  "name": "@dhis2/cli-app-scripts",
   "version": "0.9.1",
   "main": "src/index.js",
   "repository": "https://github.com/amcgee/dhis2-app-platform",
@@ -35,7 +35,7 @@
     "styled-jsx": "^3.2.1"
   },
   "bin": {
-    "d2-app": "./bin/d2-app"
+    "d2-app-scripts": "./bin/d2-app-scripts"
   },
   "scripts": {
     "copy:shell": "mkdir -p assets && rm -rf assets/shell && cp -rf ../shell assets/shell && rm -rf assets/shell/node_modules",

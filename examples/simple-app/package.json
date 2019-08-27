@@ -8,12 +8,12 @@
   "private": true,
   "dependencies": {},
   "devDependencies": {
-    "@dhis2/cli-app": "file:../../cli"
+    "@dhis2/cli-app-scripts": "file:../../cli"
   },
   "scripts": {
-    "start": "d2-app start",
-    "build": "d2-app build",
-    "test": "d2-app test --no-cypress"
+    "start": "d2-app-scripts start",
+    "build": "d2-app-scripts build",
+    "test": "d2-app-scripts test --no-cypress"
   },
   "peerDependencies": {
     "@dhis2/app-runtime": "*",

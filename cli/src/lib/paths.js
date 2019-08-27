@@ -7,6 +7,14 @@ module.exports = makePaths = (cwd = process.cwd()) => {
     const base = path.resolve(cwd)
     const paths = {
         babelConfig: path.join(__dirname, '../../config/babel.config.js'),
+        configDefaultsApp: path.join(
+            __dirname,
+            '../../config/d2.config.app.js'
+        ),
+        configDefaultsLib: path.join(
+            __dirname,
+            '../../config/d2.config.lib.js'
+        ),
 
         shellSource: path.join(__dirname, '../../assets/shell'),
 

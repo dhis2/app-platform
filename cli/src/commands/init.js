@@ -1,0 +1,174 @@
+const { reporter, exec } = require('@dhis2/cli-helpers-engine')
+const path = require('path')
+const fs = require('fs-extra')
+const chalk = require('chalk')
+
+const makePaths = require('../lib/paths')
+
+const handler = async ({ force, name, title, cwd, lib }) => {
+    const paths = makePaths(cwd)
+
+    if (fs.existsSync(paths.config) && !force) {
+        reporter.warn(
+            'A config file already exists, use --force to overwrite it'
+        )
+    } else {
+        reporter.info('Importing d2.config.js defaults')
+        fs.copyFileSync(
+            lib ? paths.configDefaultsLib : paths.configDefaultsApp,
+            paths.config
+        )
+    }
+
+    if (!fs.existsSync(paths.package)) {
+        reporter.info('No package.json found, creating one...')
+        // await exec({
+        //     cmd: 'yarn',
+        //     args: [
+        //         'init'
+        //     ],
+        //     cwd: target || cwd,
+        //     stdio: 'inherit',
+        //     pipe: true
+        // })
+
+        const pkg = require(path.join(
+            __dirname,
+            '../../config/init.package.json'
+        ))
+        pkg.name = name
+        fs.writeJSONSync(paths.package, pkg, {
+            spaces: 2,
+        })
+
+        // await exec({
+        //     cmd: 'yarn',
+        //     args: [
+        //         'install',
+        //         '--pnp' // Let's be FANCY!
+        //     ],
+        //     cwd: paths.base
+        // })
+    }
+
+    reporter.info('Creating package scripts...')
+    const pkg = require(paths.package)
+    if (pkg.scripts && pkg.scripts.build && !force) {
+        reporter.warn(
+            'A script called "build" already exists, use --force to overwrite it'
+        )
+    } else {
+        pkg.scripts = pkg.scripts || {}
+        pkg.scripts.build = 'yarn run d2-app-scripts build'
+    }
+
+    if (pkg.scripts && pkg.scripts.start && !force) {
+        reporter.warn(
+            'A script called "start" already exists, use --force to overwrite it'
+        )
+    } else {
+        pkg.scripts = pkg.scripts || {}
+        pkg.scripts.start = 'yarn run d2-app-scripts start'
+    }
+
+    if (pkg.scripts && pkg.scripts.test && !force) {
+        reporter.warn(
+            'A script called "test" already exists, use --force to overwrite it'
+        )
+    } else {
+        pkg.scripts = pkg.scripts || {}
+        pkg.scripts.test = 'yarn run d2-app-scripts test'
+    }
+
+    fs.writeJSONSync(paths.package, pkg, {
+        spaces: 2,
+    })
+
+    if (
+        !force &&
+        ((pkg.devDependencies &&
+            Object.keys(pkg.devDependencies).includes(
+                '@dhis2/cli-app-scripts'
+            )) ||
+            (pkg.dependencies &&
+                Object.keys(pkg.dependencies).includes(
+                    '@dhis2/cli-app-scripts'
+                )))
+    ) {
+        reporter.warn(
+            'A version of `@dhis2/cli-app-scripts` is already listed as a dependency, use --force to overwrite it'
+        )
+    } else {
+        reporter.info('Installing @dhis2/cli-app-scripts...')
+        await exec({
+            cmd: 'yarn',
+            args: ['add', '--dev', '@dhis2/cli-app-scripts'],
+            cwd: paths.base,
+        })
+    }
+
+    if (
+        !force &&
+        ((pkg.dependencies &&
+            Object.keys(pkg.dependencies).includes('@dhis2/app-runtime')) ||
+            (pkg.peerDependencies &&
+                Object.keys(pkg.peerDependencies).includes(
+                    '@dhis2/app-runtime'
+                )))
+    ) {
+        reporter.warn(
+            'A version of `@dhis2/app-runtime` is already listed as a dependency, use --force to overwrite it'
+        )
+    } else {
+        reporter.info('Installing @dhis2/app-runtime...')
+        await exec({
+            cmd: 'yarn',
+            args: ['add', '@dhis2/app-runtime'],
+            cwd: paths.base,
+        })
+    }
+
+    const entrypoint = lib ? 'src/index.js' : 'src/App.js'
+
+    if (!force && fs.existsSync(path.join(paths.base, entrypoint))) {
+        reporter.warn(
+            `An entrypoint file at ${entrypoint} already exists, use --force to overwrite it`
+        )
+    } else {
+        reporter.info(`Creating entrypoint ${chalk.bold(entrypoint)}`)
+        fs.mkdirpSync(path.join(paths.base, 'src'))
+        fs.writeFileSync(
+            path.join(paths.base, entrypoint),
+            "export default () => 'Welcome to DHIS2!'"
+        )
+    }
+
+    reporter.print('')
+    reporter.info('SUCCESS!')
+    reporter.print('Run `yarn start` to launch your new DHIS2 application')
+}
+
+const command = {
+    command: 'init <name>',
+    desc: 'Setup an app ',
+    builder: {
+        force: {
+            description: 'Overwrite existing files and configurations',
+            type: 'boolean',
+            default: false,
+        },
+        lib: {
+            description: 'Create a library',
+            type: 'boolean',
+            default: false,
+        },
+        title: {
+            description:
+                'The human-readable title of the application or library',
+            type: 'string',
+        },
+    },
+    handler,
+}
+
+module.exports = command
