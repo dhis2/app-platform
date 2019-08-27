@@ -1,5 +1,5 @@
 module.exports = {
-    name: 'app-shell-adapter',
+    name: 'app-adapter',
     type: 'lib',
     entryPoints: {
         lib: 'src/index.js',

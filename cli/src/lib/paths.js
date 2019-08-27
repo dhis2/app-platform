@@ -9,9 +9,7 @@ module.exports = makePaths = (cwd = process.cwd()) => {
         webpackConfig: path.join(__dirname, '../../config/webpack.config.js'),
         babelConfig: path.join(__dirname, '../../config/babel.config.js'),
 
-        shellSource: path.dirname(
-            require.resolve('@dhis2/app-shell/package.json')
-        ),
+        shellSource: path.join(__dirname, '../../assets/shell'),
 
         base,
         package: path.join(base, './package.json'),

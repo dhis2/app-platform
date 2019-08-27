@@ -1,5 +1,5 @@
 {
-    "name": "@dhis2/app-shell-adapter",
+    "name": "@dhis2/app-adapter",
     "version": "1.0.0",
     "private": true,
     "main": "build/cjs/lib.js",
@@ -10,10 +10,10 @@
         "moment": "^2.24.0"
     },
     "devDependencies": {
-        "@dhis2/app-scripts": "link:../../app-scripts"
+        "@dhis2/cli-app": "1.0.0"
     },
     "scripts": {
-        "build": "d2-app-scripts build"
+        "build": "d2-app build"
     },
     "peerDependencies": {
         "@dhis2/app-runtime": "^1.5.1",

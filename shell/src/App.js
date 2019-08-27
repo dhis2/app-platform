@@ -1,5 +1,5 @@
 import React from 'react'
-import AppAdapter from '@dhis2/app-shell-adapter'
+import AppAdapter from '@dhis2/app-adapter'
 
 const D2App = React.lazy(() => import('./current-d2-app/app')) // Automatic bundle splitting!
 

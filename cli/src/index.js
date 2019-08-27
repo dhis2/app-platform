@@ -1,6 +1,6 @@
 const { namespace } = require('@dhis2/cli-helpers-engine')
 
-module.exports = namespace('scripts', {
+module.exports = namespace('app', {
     desc: 'Scripts for development of DHIS2 applications',
     builder: yargs => {
         yargs.option('cwd', {

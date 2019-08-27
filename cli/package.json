@@ -1,11 +1,17 @@
 {
-    "name": "@dhis2/app-scripts",
-    "version": "0.1.0",
+    "name": "@dhis2/cli-app",
+    "version": "1.0.0",
     "main": "src/index.js",
     "repository": "https://github.com/amcgee/dhis2-app-platform",
     "author": "Austin McGee <austin@dhis2.org>",
     "license": "BSD-3-Clause",
     "private": true,
+    "files": [
+        "assets",
+        "bin",
+        "config",
+        "src"
+    ],
     "dependencies": {
         "@babel/core": "^7.3.3",
         "@babel/plugin-proposal-class-properties": "^7.4.4",
@@ -13,7 +19,6 @@
         "@babel/preset-env": "^7.3.1",
         "@babel/preset-react": "^7.0.0",
         "@babel/preset-typescript": "^7.3.3",
-        "@dhis2/app-shell": "link:../app-shell",
         "@dhis2/cli-helpers-engine": "^1.2.0",
         "babel-loader": "^8.0.5",
         "chalk": "^2.4.2",
@@ -36,6 +41,10 @@
         "webpack": "^4.29.5"
     },
     "bin": {
-        "d2-app-scripts": "./bin/d2-app-scripts"
+        "d2-app": "./bin/d2-app"
+    },
+    "scripts": {
+        "copy:shell": "mkdir -p assets && rm -rf assets/shell && cp -rf ../shell assets/shell && rm -rf assets/shell/node_modules",
+        "build": "yarn copy:shell"
     }
 }

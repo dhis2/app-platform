@@ -3,9 +3,10 @@
     "version": "0.1.0",
     "private": true,
     "dependencies": {
+        "@dhis2/app-adapter": "file:./adapter",
         "@dhis2/app-runtime": "^1.5.1",
-        "@dhis2/app-shell-adapter": "file:./app-shell-adapter",
         "@dhis2/ui-core": "^3.7.1",
+        "moment": "^2.24.0",
         "prop-types": "^15.7.2",
         "react": "^16.8.6",
         "react-dom": "^16.8.6",
@@ -13,9 +14,9 @@
         "styled-jsx": "^3.2.1"
     },
     "scripts": {
-        "adapter:install": "cd app-shell-adapter && yarn install",
-        "adapter:build": "cd app-shell-adapter && yarn build",
-        "adapter:clean": "rimraf ./node_modules/@dhis2-local/app-shell-adapter",
+        "adapter:install": "cd ./adapter && yarn install",
+        "adapter:build": "cd ./adapter && yarn build",
+        "adapter:clean": "rimraf ./node_modules/@dhis2/app-adapter",
         "start": "react-scripts start",
         "build": "react-scripts build",
         "test": "react-scripts test",
