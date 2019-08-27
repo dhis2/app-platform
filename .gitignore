@@ -5,3 +5,4 @@ yarn-error.log
 .pnp
 .pnp.js
 .vscode
+docs/CHANGELOG.md

@@ -1,0 +1,11 @@
+-   [**Getting Started**](getting-started.md)
+-   [**CLI**](cli)
+    -   [`d2 app build`](cli/build.md)
+    -   [`d2 app start`](cli/start.md)
+    -   [`d2 app test`](cli/test.md)
+-   [**Configuration**](config.md)
+    -   [Types - `app`, `lib`](config/apps-and-libs)
+    -   [`d2.config.js` Reference](config/d2-config-js-reference.md)
+-   [**Architecture**](architecture.md)
+-   &nbsp;
+-   [Changelog](CHANGELOG.md)

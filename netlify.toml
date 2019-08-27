@@ -1,0 +1,9 @@
+[build]
+  publish = "docs"
+
+  # Default build command.
+  command = "yarn docs:build"
+
+[[redirects]]
+  from = "/*.md"
+  to = "/404.md"
