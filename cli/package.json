@@ -53,7 +53,7 @@
     "scripts": {
         "assets:prep": "rm -rf assets && mkdir -p assets",
         "assets:copy": "cp -rf ../shell assets/shell",
-        "assets:clean": "cd assets/shell && rm -rf node_modules .pnp.js .pnp adapter/node_modules adapter/.pnp.js adapter/.pnp standard-libs/node_modules standard-libs/.pnp.js standard-libs/.pnp",
+        "assets:clean": "cd assets/shell && rm -rf node_modules .pnp.js .pnp adapter/node_modules adapter/.pnp.js adapter/.pnp",
         "build": "yarn assets:prep && yarn assets:copy && yarn assets:clean",
         "prepublishOnly": "yarn build"
     }
