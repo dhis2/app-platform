@@ -2,15 +2,18 @@ const browsersList = require('./.browserlistrc')
 
 module.exports = {
     presets: [
-        '@babel/preset-react',
-        '@babel/preset-typescript',
-        ['@babel/preset-env', { modules: false, targets: browsersList }],
+        require('@babel/preset-react'),
+        require('@babel/preset-typescript'),
+        [
+            require('@babel/preset-env'),
+            { modules: 'auto', targets: browsersList },
+        ],
     ],
     plugins: [
-        '@babel/plugin-proposal-class-properties',
-        '@babel/plugin-proposal-object-rest-spread',
+        require('@babel/plugin-proposal-class-properties'),
+        require('@babel/plugin-proposal-object-rest-spread'),
 
         // Always build in "production" mode even when styled-jsx runtime may select "development"
-        ['styled-jsx/babel', { optimizeForSpeed: true }],
+        [require('styled-jsx/babel'), { optimizeForSpeed: true }],
     ],
 }

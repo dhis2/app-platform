@@ -817,7 +817,7 @@
 "@dhis2/app-adapter@file:./adapter":
   version "1.0.0"
   dependencies:
-    "@dhis2/ui-core" "3.1.0"
+    "@dhis2/ui-core" "3.9.0"
     "@dhis2/ui-widgets" "^1.0.4"
     moment "^2.24.0"
 
@@ -825,6 +825,19 @@
   version "1.5.1"
   resolved "https://registry.yarnpkg.com/@dhis2/app-runtime/-/app-runtime-1.5.1.tgz#2e32efd3f704411d5ef970c07d531155f8978f04"
   integrity sha512-2HWuvdTvb574rV0WuHmj0muhqyeWzvmDwkxAsesSKuAwB3O+Jd+LgeALsXADH3GOmh1/Q32C0udg6nl60CyCbA==
+
+"@dhis2/app-shell-standard-libs@file:./standard-libs":
+  version "1.0.0"
+  dependencies:
+    "@dhis2/app-runtime" "^1.5.1"
+    "@dhis2/d2-i18n" "^1.0.5"
+    "@dhis2/ui-core" "^3.7.1"
+    classnames "^2.2.6"
+    moment "^2.24.0"
+    prop-types "^15.7.2"
+    react "^16.8.6"
+    react-dom "^16.8.6"
+    styled-jsx "^3.2.1"
 
 "@dhis2/d2-i18n@1.0.5", "@dhis2/d2-i18n@^1.0.5":
   version "1.0.5"
@@ -839,14 +852,6 @@
   resolved "https://registry.yarnpkg.com/@dhis2/prop-types/-/prop-types-1.0.4.tgz#37eb55a3baf7bc9cf76e19222ad4e2d0e465be8f"
   integrity sha512-BiDR0KKn5fyUQ12u6XPq9pLs/tKR3hwiLzSWc+wVxN/enwgb8XUnLpt+Schc/ZBZq+sGozeUfPbFMRqIsifsIA==
 
-"@dhis2/ui-core@3.1.0":
-  version "3.1.0"
-  resolved "https://registry.yarnpkg.com/@dhis2/ui-core/-/ui-core-3.1.0.tgz#cd6b075b3df68e05148fbd635dc4721a67f5773c"
-  integrity sha512-/GVnsqpBdbVExDUSdGbTCC7vj527HyFeyVNz69BVNAYg26epdI1MDJ/GssDRQQ/AuiYAp9GAflVR0n4U7BSj/A==
-  dependencies:
-    classnames "^2.2.6"
-    styled-jsx "^3.2.1"
-
 "@dhis2/ui-core@3.5.0":
   version "3.5.0"
   resolved "https://registry.yarnpkg.com/@dhis2/ui-core/-/ui-core-3.5.0.tgz#439a2e18faf540c3b80156d19cf4c236abccecd5"
@@ -855,7 +860,7 @@
     classnames "^2.2.6"
     styled-jsx "^3.2.1"
 
-"@dhis2/ui-core@^3.7.1":
+"@dhis2/ui-core@3.9.0", "@dhis2/ui-core@^3.7.1":
   version "3.9.0"
   resolved "https://registry.yarnpkg.com/@dhis2/ui-core/-/ui-core-3.9.0.tgz#67711e7446e7045a9b90b094a616b11bb7a91514"
   integrity sha512-xZ58Z6RSuLCe2t06wWIB6uq9W65CkPJOtf0IQGeFTeelsGL9GTQVICUTZohE78g185qR94WxIEUIID/o1HK/sA==

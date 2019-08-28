@@ -22,12 +22,14 @@
         "@babel/preset-react": "^7.0.0",
         "@babel/preset-typescript": "^7.3.3",
         "@dhis2/cli-helpers-engine": "^1.4.0",
+        "babel-jest": "^24.9.0",
         "chalk": "^2.4.2",
         "fs-extra": "^8.1.0",
         "gaze": "^1.1.3",
         "handlebars": "^4.1.2",
         "i18next-conv": "^9",
         "i18next-scanner": "^2.9.1",
+        "jest-cli": "^24.9.0",
         "lodash": "^4.17.11",
         "react": "*",
         "rollup": "^1.20.2",
@@ -43,7 +45,7 @@
     "scripts": {
         "assets:prep": "rm -rf assets && mkdir -p assets",
         "assets:copy": "cp -rf ../shell assets/shell",
-        "assets:clean": "cd assets/shell && rm -rf node_modules .pnp.js .pnp adapter/node_modules adapter/.pnp.js adapter/.pnp",
+        "assets:clean": "cd assets/shell && rm -rf node_modules .pnp.js .pnp adapter/node_modules adapter/.pnp.js adapter/.pnp standard-libs/node_modules standard-libs/.pnp.js standard-libs/.pnp",
         "build": "yarn assets:prep && yarn assets:copy && yarn assets:clean",
         "prepublishOnly": "yarn build"
     }

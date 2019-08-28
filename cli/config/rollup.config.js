@@ -9,20 +9,8 @@ const json = require('rollup-plugin-json')
 
 const { reporter } = require('@dhis2/cli-helpers-engine')
 
-const standardExternals = [
-    '@dhis2/app-runtime',
-    '@dhis2/d2-i18n',
-    '@dhis2/ui-core',
-    'classnames',
-    'moment',
-    'prop-types',
-    'react',
-    'react-dom',
-    'styled-jsx',
-].reduce((out, dep) => {
-    out[dep] = true
-    return out
-}, {})
+const standardLibs = require('../assets/shell/standard-libs/package.json')
+    .dependencies
 
 const bundle = ({
     entryPointName,
@@ -35,7 +23,7 @@ const bundle = ({
 }) => {
     const externals = new RegExp(
         Object.keys({
-            ...standardExternals,
+            ...standardLibs,
             ...pkg.peerDependencies,
         }).join('|')
     )
