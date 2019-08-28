@@ -9,7 +9,7 @@ const json = require('rollup-plugin-json')
 
 const { reporter } = require('@dhis2/cli-helpers-engine')
 
-const standardLibs = require('../assets/shell/package.json').dependencies
+const standardLibs = require('./standard-libs.json')
 
 // Exclude local app-shell dependencies
 Object.entries(standardLibs).forEach(([dep, version]) => {
