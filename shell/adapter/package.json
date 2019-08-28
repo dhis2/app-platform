@@ -19,7 +19,15 @@
         "build": "d2-app-scripts build"
     },
     "peerDependencies": {
-        "@dhis2/app-shell-standard-libs": "file:../standard-libs"
+        "@dhis2/app-runtime": "^1.5.1",
+        "@dhis2/d2-i18n": "^1.0.5",
+        "@dhis2/ui-core": "^3.7.1",
+        "classnames": "^2.2.6",
+        "moment": "^2.24.0",
+        "prop-types": "^15.7.2",
+        "react": "^16.8.6",
+        "react-dom": "^16.8.6",
+        "styled-jsx": "^3.2.1"
     },
     "installConfig": {
         "pnp": true

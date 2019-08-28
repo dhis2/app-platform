@@ -4,7 +4,6 @@ const fs = require('fs-extra')
 const path = require('path')
 
 const makePaths = require('../lib/paths')
-const makeShell = require('../lib/shell')
 const parseConfig = require('../lib/parseConfig')
 const exitOnCatch = require('../lib/exitOnCatch')
 
@@ -15,10 +14,6 @@ const handler = async ({ cwd, force, shell: shellSource }) => {
     process.env.NODE_ENV = 'test'
 
     const paths = makePaths(cwd)
-    const config = parseConfig(paths)
-    const shell = makeShell({ config, paths })
-
-    await shell.bootstrap({ force, shell: shellSource })
 
     reporter.info('Running tests...')
 
