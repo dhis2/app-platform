@@ -1,32 +1,35 @@
 {
-  "name": "@dhis2/app-adapter",
-  "version": "1.0.0",
-  "private": true,
-  "main": "build/cjs/lib.js",
-  "module": "build/es/lib.js",
-  "files": [
-    "build"
-  ],
-  "dependencies": {
-    "@dhis2/ui-core": "3.9.0",
-    "@dhis2/ui-widgets": "^1.0.4",
-    "moment": "^2.24.0"
-  },
-  "devDependencies": {
-    "@dhis2/cli-app-scripts": "file:../../cli"
-  },
-  "scripts": {
-    "build": "d2-app-scripts build"
-  },
-  "peerDependencies": {
-    "@dhis2/app-runtime": "^1.5.1",
-    "@dhis2/d2-i18n": "*",
-    "prop-types": "^15.7.2",
-    "react": "^16.8.6",
-    "react-dom": "^16.8.6",
-    "styled-jsx": "*"
-  },
-  "installConfig": {
-    "pnp": true
-  }
+    "name": "@dhis2/app-adapter",
+    "version": "1.0.0",
+    "private": true,
+    "main": "build/cjs/lib.js",
+    "module": "build/es/lib.js",
+    "files": [
+        "build"
+    ],
+    "dependencies": {
+        "@dhis2/ui-core": "3.9.0",
+        "@dhis2/ui-widgets": "^1.0.4",
+        "moment": "^2.24.0"
+    },
+    "devDependencies": {
+        "@dhis2/cli-app-scripts": "file:../../cli"
+    },
+    "scripts": {
+        "build": "d2-app-scripts build"
+    },
+    "peerDependencies": {
+        "@dhis2/app-runtime": "^1.5.1",
+        "@dhis2/d2-i18n": "^1.0.5",
+        "@dhis2/ui-core": "^3.7.1",
+        "classnames": "^2.2.6",
+        "moment": "^2.24.0",
+        "prop-types": "^15.7.2",
+        "react": "^16.8.6",
+        "react-dom": "^16.8.6",
+        "styled-jsx": "^3.2.1"
+    },
+    "installConfig": {
+        "pnp": true
+    }
 }

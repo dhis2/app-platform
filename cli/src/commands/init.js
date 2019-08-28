@@ -44,7 +44,7 @@ const handler = async ({ force, name, cwd, lib }) => {
         )
     } else {
         pkg.scripts = pkg.scripts || {}
-        pkg.scripts.build = 'yarn run d2-app-scripts build'
+        pkg.scripts.build = 'd2-app-scripts build'
     }
 
     if (pkg.scripts && pkg.scripts.start && !force) {
@@ -53,7 +53,7 @@ const handler = async ({ force, name, cwd, lib }) => {
         )
     } else {
         pkg.scripts = pkg.scripts || {}
-        pkg.scripts.start = 'yarn run d2-app-scripts start'
+        pkg.scripts.start = 'd2-app-scripts start'
     }
 
     if (pkg.scripts && pkg.scripts.test && !force) {
@@ -62,7 +62,7 @@ const handler = async ({ force, name, cwd, lib }) => {
         )
     } else {
         pkg.scripts = pkg.scripts || {}
-        pkg.scripts.test = 'yarn run d2-app-scripts test'
+        pkg.scripts.test = 'd2-app-scripts test'
     }
 
     fs.writeJSONSync(paths.package, pkg, {
@@ -115,9 +115,9 @@ const handler = async ({ force, name, cwd, lib }) => {
 
     const entrypoint = lib ? 'src/index.js' : 'src/App.js'
 
-    if (!force && fs.existsSync(path.join(paths.base, entrypoint))) {
+    if (fs.existsSync(path.join(paths.base, entrypoint))) {
         reporter.warn(
-            `An entrypoint file at ${entrypoint} already exists, use --force to overwrite it`
+            `An entrypoint file at ${entrypoint} already exists, remove it to create the sample entrypoint`
         )
     } else {
         reporter.info(`Creating entrypoint ${chalk.bold(entrypoint)}`)
@@ -126,6 +126,13 @@ const handler = async ({ force, name, cwd, lib }) => {
             path.join(__dirname, '../../config/init.entrypoint.js'),
             path.join(paths.base, entrypoint)
         )
+
+        if (!lib) {
+            fs.copyFileSync(
+                path.join(__dirname, '../../config/init.App.test.js'),
+                path.join(paths.base, 'src/App.test.js')
+            )
+        }
     }
 
     reporter.print('')

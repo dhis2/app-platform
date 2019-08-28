@@ -105,10 +105,12 @@ const compile = async ({
         path.join(outDir, `es/${config.type}.js`),
         path.join(paths.shellApp, `${config.type}.js`)
     )
-    await fs.copy(
-        path.join(outDir, `es/${config.type}.js.map`),
-        path.join(paths.shellApp, `${config.type}.js.map`)
-    )
+    if (mode === 'production') {
+        await fs.copy(
+            path.join(outDir, `es/${config.type}.js.map`),
+            path.join(paths.shellApp, `${config.type}.js.map`)
+        )
+    }
 }
 
 module.exports = compile

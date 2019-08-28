@@ -15,6 +15,7 @@ module.exports = makePaths = (cwd = process.cwd()) => {
             __dirname,
             '../../config/d2.config.lib.js'
         ),
+        jestConfigDefaults: path.join(__dirname, '../../config/jest.config.js'),
 
         shellSource: path.join(__dirname, '../../assets/shell'),
 
@@ -23,6 +24,7 @@ module.exports = makePaths = (cwd = process.cwd()) => {
         config: path.join(base, './d2.config.js'),
         src: path.join(base, './src'),
         appEntry: path.join(base, './src/App.js'),
+        jestConfig: path.join(base, 'jest.config.js'),
         i18nStrings: path.join(base, './i18n'),
         i18nLocales: path.join(base, './src/locales'),
 
