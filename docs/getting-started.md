@@ -2,14 +2,14 @@
 
 ## Installation
 
-Either install the standard [D2 CLI](cli.dhis2.nu) globally:
+Either install the standard [D2 CLI](https://github.com/dhis2/cli) globally:
 
 ```sh
 > yarn global add @dhis2/cli
 > d2 app scripts --version
 ```
 
-OR Install the [App Platform CLI](./cli) as a devDependency in an existing package
+OR Install the [App Platform Scripts](scripts) tool `d2-app-scripts` as a devDependency in an existing package
 
 ```sh
 > yarn add --dev @dhis2/cli-app-scripts
@@ -19,7 +19,7 @@ When installed as a local devDependency, you can use the `d2-app-scripts` execut
 
 ## Bootstrapping
 
-To create a new template application (or upgrade and existing React app), us the [init](./cli/init) command.
+To create a new template application (or upgrade and existing React app), us the [init](scripts/init) command.
 
 ```sh
 > d2 app scripts init my-test-app
