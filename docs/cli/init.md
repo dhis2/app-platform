@@ -1,5 +1,7 @@
 # d2 app scripts init
 
+Bootraps a new (or updates an existing) DHIS2 application in the directory `./<name>`, installing all required dependencies.
+
 ```sh
 > d2 app scripts init --help
 d2-app-scripts init <name>

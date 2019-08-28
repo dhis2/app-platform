@@ -18,9 +18,9 @@
         "build:docs": "cp -f CHANGELOG.md docs/",
         "build:example": "cd examples/simple-app && yarn build --force",
         "build": "yarn build:adapter && yarn build:cli && yarn install:example",
+        "start:docs": "yarn build:docs && npx serve -s docs",
         "start:example": "cd examples/simple-app && yarn start --force",
-        "start": "yarn build && yarn start:example",
-        "docs": "yarn build:docs && npx serve -s docs"
+        "start": "yarn build && yarn start:example"
     },
     "version": "1.1.3"
 }

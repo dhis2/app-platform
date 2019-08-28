@@ -1,14 +1,14 @@
-# d2 app scripts start
+# d2 app scripts test
 
-Run a live-reloading development server on `localhost:3000`
+Runs all unit tests found in `/src` with `jest`.
 
-> **NOTE**: This command is currently unsupported for libraries
+Tests are transpiled with `babel-jest`, so it's fine to write modern javascript there.
 
 ```sh
-> d2 app scripts start --help
-d2-app-scripts start
+> d2 app scripts test --help
+d2-app-scripts test
 
-Start a development server running a DHIS2 app within the DHIS2 app-shell
+Run application unit tests
 
 Options:
   --cwd       working directory to use (defaults to cwd)

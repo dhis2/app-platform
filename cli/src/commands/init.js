@@ -44,7 +44,7 @@ const handler = async ({ force, name, cwd, lib }) => {
         )
     } else {
         pkg.scripts = pkg.scripts || {}
-        pkg.scripts.build = 'yarn run d2-app-scripts build'
+        pkg.scripts.build = 'd2-app-scripts build'
     }
 
     if (pkg.scripts && pkg.scripts.start && !force) {
@@ -53,7 +53,7 @@ const handler = async ({ force, name, cwd, lib }) => {
         )
     } else {
         pkg.scripts = pkg.scripts || {}
-        pkg.scripts.start = 'yarn run d2-app-scripts start'
+        pkg.scripts.start = 'd2-app-scripts start'
     }
 
     if (pkg.scripts && pkg.scripts.test && !force) {
@@ -62,7 +62,7 @@ const handler = async ({ force, name, cwd, lib }) => {
         )
     } else {
         pkg.scripts = pkg.scripts || {}
-        pkg.scripts.test = 'yarn run d2-app-scripts test'
+        pkg.scripts.test = 'd2-app-scripts test'
     }
 
     fs.writeJSONSync(paths.package, pkg, {
