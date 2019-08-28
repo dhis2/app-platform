@@ -19,7 +19,7 @@
         "build": "d2-app-scripts build"
     },
     "peerDependencies": {
-        "@dhis2/app-shell-standard-libs": "*"
+        "@dhis2/app-shell-standard-libs": "file:../standard-libs"
     },
     "installConfig": {
         "pnp": true
