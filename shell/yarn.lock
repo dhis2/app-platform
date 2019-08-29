@@ -826,19 +826,6 @@
   resolved "https://registry.yarnpkg.com/@dhis2/app-runtime/-/app-runtime-1.5.1.tgz#2e32efd3f704411d5ef970c07d531155f8978f04"
   integrity sha512-2HWuvdTvb574rV0WuHmj0muhqyeWzvmDwkxAsesSKuAwB3O+Jd+LgeALsXADH3GOmh1/Q32C0udg6nl60CyCbA==
 
-"@dhis2/app-shell-standard-libs@file:./standard-libs":
-  version "1.0.0"
-  dependencies:
-    "@dhis2/app-runtime" "^1.5.1"
-    "@dhis2/d2-i18n" "^1.0.5"
-    "@dhis2/ui-core" "^3.7.1"
-    classnames "^2.2.6"
-    moment "^2.24.0"
-    prop-types "^15.7.2"
-    react "^16.8.6"
-    react-dom "^16.8.6"
-    styled-jsx "^3.2.1"
-
 "@dhis2/d2-i18n@1.0.5", "@dhis2/d2-i18n@^1.0.5":
   version "1.0.5"
   resolved "https://registry.yarnpkg.com/@dhis2/d2-i18n/-/d2-i18n-1.0.5.tgz#9148af1bc95e9442bcae66136b8f80146406a43f"
@@ -9752,10 +9739,10 @@ typedarray@^0.0.6:
   resolved "https://registry.yarnpkg.com/typedarray/-/typedarray-0.0.6.tgz#867ac74e3864187b1d3d47d996a78ec5c8830777"
   integrity sha1-hnrHTjhkGHsdPUfZlqeOxciDB3c=
 
-typescript@^3.5.3:
-  version "3.5.3"
-  resolved "https://registry.yarnpkg.com/typescript/-/typescript-3.5.3.tgz#c830f657f93f1ea846819e929092f5fe5983e977"
-  integrity sha512-ACzBtm/PhXBDId6a6sDJfroT2pOWt/oOnk4/dElG5G33ZL776N3Y6/6bKZJBFpd+b05F3Ct9qDjMeJmRWtE2/g==
+typescript@^3.6.2:
+  version "3.6.2"
+  resolved "https://registry.yarnpkg.com/typescript/-/typescript-3.6.2.tgz#105b0f1934119dde543ac8eb71af3a91009efe54"
+  integrity sha512-lmQ4L+J6mnu3xweP8+rOrUwzmN+MRAj7TgtJtDaXE5PMyX2kCrklhg3rvOsOIfNeAWMQWO2F1GPc1kMD2vLAfw==
 
 uglify-js@3.4.x:
   version "3.4.10"
