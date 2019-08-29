@@ -885,10 +885,10 @@
     update-notifier "^3.0.0"
     yargs "^13.1.0"
 
-"@dhis2/cli-helpers-engine@^1.4.0":
-  version "1.4.0"
-  resolved "https://registry.yarnpkg.com/@dhis2/cli-helpers-engine/-/cli-helpers-engine-1.4.0.tgz#6371bce3017a5bc0c2b8ea84b77f253d75b8771e"
-  integrity sha512-2WLWJ5DcIiECmUlX2ChU2Wbqe/iJ42nDPQGjQXK1YzryNdnXyftUjJRwrLYWwaKGmWzfnPvpu8tvp+Yjysl78A==
+"@dhis2/cli-helpers-engine@^1.4.1":
+  version "1.4.1"
+  resolved "https://registry.yarnpkg.com/@dhis2/cli-helpers-engine/-/cli-helpers-engine-1.4.1.tgz#5464414186ce6650b7c03db33289db60b2773528"
+  integrity sha512-bKkNqlzouG/dCjeeRm3inZcInodewijasO0npRVVwS4ChtEXgiXtxmB0OU8iyMVhI87WYbDoARev9LVV8i49Jg==
   dependencies:
     chalk "^2.4.2"
     fs-extra "^8.0.1"

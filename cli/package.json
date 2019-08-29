@@ -23,7 +23,7 @@
         "@babel/preset-react": "^7.0.0",
         "@babel/preset-typescript": "^7.3.3",
         "@dhis2/app-runtime": "^1.5.1",
-        "@dhis2/cli-helpers-engine": "^1.4.0",
+        "@dhis2/cli-helpers-engine": "^1.4.1",
         "@dhis2/d2-i18n": "^1.0.5",
         "@dhis2/ui-core": "^3.7.1",
         "babel-jest": "^24.9.0",
