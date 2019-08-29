@@ -2,11 +2,16 @@
     "name": "root",
     "version": "1.2.1",
     "private": true,
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/dhis2/app-platform.git"
+    },
     "workspaces": [
         "cli"
     ],
     "devDependencies": {
         "@dhis2/cli-style": "^4.1.1",
+        "@dhis2/cli-utils-docsite": "^1.0.3",
         "babel-eslint": "^10.0.3",
         "concurrently": "^4.1.2",
         "eslint": "^6.2.2"
@@ -16,11 +21,17 @@
         "install:example": "cd examples/simple-app && yarn install --force --check-files",
         "build:adapter": "cd shell/adapter && yarn --force --check-files && yarn build",
         "build:cli": "cd cli && yarn build",
-        "build:docs": "cp -f CHANGELOG.md docs/",
+        "build:docs": "d2-utils-docsite build ./docs -o ./dist",
         "build:example": "cd examples/simple-app && yarn build --force",
         "build": "yarn build:adapter && yarn build:cli && yarn install:example",
-        "start:docs": "yarn build:docs && npx serve -s docs",
+        "start:docs": "d2-utils-docsite serve ./docs -o ./dist",
         "start:example": "cd examples/simple-app && yarn start --force",
         "start": "yarn build && yarn start:example"
+    },
+    "d2": {
+        "docsite": {
+            "name": "DHIS2 Application Platform",
+            "description": "Unified application architecture and build pipeline to simplify and standardize application development within the DHIS2 ecosystem."
+        }
     }
 }

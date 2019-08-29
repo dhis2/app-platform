@@ -1,8 +1,8 @@
 node_modules
 build
+dist
 yarn-error.log
 .d2
 .pnp
 .pnp.js
 .vscode
-docs/CHANGELOG.md

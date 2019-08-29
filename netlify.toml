@@ -1,5 +1,5 @@
 [build]
-  publish = "docs"
+  publish = "dist"
 
   # Default build command.
   command = "yarn build:docs"
