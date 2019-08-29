@@ -21,12 +21,12 @@
         "install:example": "cd examples/simple-app && yarn install --force --check-files",
         "build:adapter": "cd shell/adapter && yarn --force --check-files && yarn build",
         "build:cli": "cd cli && yarn build",
-        "build:docs": "d2-utils-docsite build ./docs -o ./dist",
         "build:example": "cd examples/simple-app && yarn build --force",
         "build": "yarn build:adapter && yarn build:cli && yarn install:example",
-        "start:docs": "d2-utils-docsite serve ./docs -o ./dist",
         "start:example": "cd examples/simple-app && yarn start --force",
-        "start": "yarn build && yarn start:example"
+        "start": "yarn build && yarn start:example",
+        "docs:serve": "d2-utils-docsite serve ./docs -o ./dist",
+        "docs:build": "d2-utils-docsite build ./docs -o ./dist"
     },
     "d2": {
         "docsite": {

@@ -2,4 +2,4 @@
   publish = "dist"
 
   # Default build command.
-  command = "yarn build:docs"
+  command = "yarn docs:build"
