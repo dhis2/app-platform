@@ -15,9 +15,6 @@
         "styled-jsx": "^3.2.1"
     },
     "scripts": {
-        "adapter:install": "cd ./adapter && yarn install",
-        "adapter:build": "cd ./adapter && yarn build",
-        "adapter:clean": "rimraf ./node_modules/@dhis2/app-adapter",
         "start": "react-scripts start",
         "build": "react-scripts build",
         "test": "react-scripts test",
