@@ -51,10 +51,15 @@
         "d2-app-scripts": "./bin/d2-app-scripts"
     },
     "scripts": {
-        "assets:prep": "rm -rf assets && mkdir -p assets",
-        "assets:copy": "cp -rf ../shell assets/shell",
-        "assets:clean": "cd assets/shell && rm -rf node_modules .pnp.js .pnp adapter/node_modules adapter/.pnp.js adapter/.pnp",
-        "build": "yarn assets:prep && yarn assets:copy && yarn assets:clean",
+        "assets:prep": "rimraf assets && mkdir -p assets",
+        "assets:copy": "copyfiles ../shell/* \"../shell/**/*\" assets/shell --exclude node_modules --exclude .pnp --exclude .pnp.js",
+        "assets:clean": "cd assets/shell && rimraf node_modules .pnp.js .pnp adapter/node_modules adapter/.pnp.js adapter/.pnp",
+        "build": "yarn assets:prep && yarn assets:copy",
         "prepublishOnly": "yarn build"
+    },
+    "devDependencies": {
+        "copyfiles": "^2.1.1",
+        "mkdirp": "^0.5.1",
+        "rimraf": "^3.0.0"
     }
 }
