@@ -885,18 +885,6 @@
     update-notifier "^3.0.0"
     yargs "^13.1.0"
 
-"@dhis2/cli-helpers-engine@1.4.0":
-  version "1.4.0"
-  resolved "https://registry.yarnpkg.com/@dhis2/cli-helpers-engine/-/cli-helpers-engine-1.4.0.tgz#6371bce3017a5bc0c2b8ea84b77f253d75b8771e"
-  integrity sha512-2WLWJ5DcIiECmUlX2ChU2Wbqe/iJ42nDPQGjQXK1YzryNdnXyftUjJRwrLYWwaKGmWzfnPvpu8tvp+Yjysl78A==
-  dependencies:
-    chalk "^2.4.2"
-    fs-extra "^8.0.1"
-    request "^2.88.0"
-    tar "^4.4.8"
-    update-notifier "^3.0.0"
-    yargs "^13.1.0"
-
 "@dhis2/cli-helpers-engine@^1.4.1":
   version "1.4.1"
   resolved "https://registry.yarnpkg.com/@dhis2/cli-helpers-engine/-/cli-helpers-engine-1.4.1.tgz#5464414186ce6650b7c03db33289db60b2773528"
@@ -941,12 +929,12 @@
     semver "^6.2.0"
     yargs "^13.3.0"
 
-"@dhis2/cli-utils-docsite@^1.0.3":
-  version "1.0.3"
-  resolved "https://registry.yarnpkg.com/@dhis2/cli-utils-docsite/-/cli-utils-docsite-1.0.3.tgz#6804e68a8a9bfde34fbdcc390eced24de8a7e84a"
-  integrity sha512-RdHl7uofRCASpZeqteVSFID5mY78LsaEOia0M0+CE0PvpHny7RQ0fkxZ1BIBKIJ5fidalowEmKocJUxI0HQsHA==
+"@dhis2/cli-utils-docsite@^1.0.4":
+  version "1.0.4"
+  resolved "https://registry.yarnpkg.com/@dhis2/cli-utils-docsite/-/cli-utils-docsite-1.0.4.tgz#c4c5675ebc6346e395f3c64119984fed59a940b6"
+  integrity sha512-a4aiRWaFyoqN8wyVN0BTucCk5+NXhpoPL6pZ7Hg0TZVBGhLM6o8UVQeNtcSlz6/Vr7NZaKcWr2LLJl3de7JY/w==
   dependencies:
-    "@dhis2/cli-helpers-engine" "1.4.0"
+    "@dhis2/cli-helpers-engine" "^1.4.1"
     "@dhis2/cli-helpers-template" "^1.0.1"
     chokidar "^3.0.2"
     front-matter "^3.0.2"
