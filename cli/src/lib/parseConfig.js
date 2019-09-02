@@ -52,6 +52,7 @@ const parseConfig = paths => {
 
         if (fs.existsSync(paths.package)) {
             config.name = config.name || require(paths.package).name
+            config.homepage = config.homepage || require(paths.package).homepage
         }
         config.title = config.title || config.name
 

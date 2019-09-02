@@ -17,7 +17,9 @@ const prefixEnvForCRA = env =>
             ...out,
             [`REACT_APP_${key}`]: env[key],
         }),
-        {}
+        {
+            "PUBLIC_URL": env["DHIS2_APP_HOMEPAGE"]
+        }
     )
 
 const getDHISConfig = () => {
