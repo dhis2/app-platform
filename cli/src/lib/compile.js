@@ -1,5 +1,6 @@
 const { reporter } = require('@dhis2/cli-helpers-engine')
 
+const chalk = require('chalk')
 const path = require('path')
 const fs = require('fs-extra')
 const rollup = require('rollup')
@@ -86,6 +87,14 @@ const compile = async ({
                     path.join(paths.shellApp, `${config.type}.js`)
                 )
                 reporter.print('DONE')
+            } else if (event.code === 'ERROR') {
+                reporter.error(event.error)
+            } else if (event.code === 'FATAL') {
+                reporter.error(event.error)
+                reporter.error('Fatal error, aborting...')
+                process.exit(1)
+            } else {
+                reporter.debug('[watch] Encountered an unknown event', event)
             }
         })
 
