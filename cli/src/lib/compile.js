@@ -36,6 +36,19 @@ const compile = async ({
 
     reporter.debug('Rollup config', rollupConfig)
 
+    const copyOutput = async () => {
+        await fs.copy(
+            path.join(outDir, `es/${config.type}.js`),
+            path.join(paths.shellApp, `${config.type}.js`)
+        )
+        if (mode === 'production') {
+            await fs.copy(
+                path.join(outDir, `es/${config.type}.js.map`),
+                path.join(paths.shellApp, `${config.type}.js.map`)
+            )
+        }
+    }
+
     if (!watch) {
         // create a bundle
         try {
@@ -67,6 +80,11 @@ const compile = async ({
             reporter.error(e)
             process.exit(1)
         }
+
+        await fs.remove(paths.shellApp)
+        await fs.ensureDir(paths.shellApp)
+
+        await copyOutput()
     } else {
         reporter.debug('watching...')
         const watcher = rollup.watch({
@@ -81,10 +99,7 @@ const compile = async ({
             if (event.code === 'BUNDLE_START') {
                 reporter.print('Rebuilding...')
             } else if (event.code === 'BUNDLE_END') {
-                await fs.copy(
-                    path.join(outDir, `es/${config.type}.js`),
-                    path.join(paths.shellApp, `${config.type}.js`)
-                )
+                await copyOutput()
                 reporter.print('DONE')
             }
         })
@@ -96,20 +111,6 @@ const compile = async ({
             process.exit()
         })
         await new Promise(() => null) // Wait forever
-    }
-
-    await fs.remove(paths.shellApp)
-    await fs.ensureDir(paths.shellApp)
-
-    await fs.copy(
-        path.join(outDir, `es/${config.type}.js`),
-        path.join(paths.shellApp, `${config.type}.js`)
-    )
-    if (mode === 'production') {
-        await fs.copy(
-            path.join(outDir, `es/${config.type}.js.map`),
-            path.join(paths.shellApp, `${config.type}.js.map`)
-        )
     }
 }
 
