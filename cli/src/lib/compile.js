@@ -1,6 +1,5 @@
 const { reporter } = require('@dhis2/cli-helpers-engine')
 
-const chalk = require('chalk')
 const path = require('path')
 const fs = require('fs-extra')
 const rollup = require('rollup')
