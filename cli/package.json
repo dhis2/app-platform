@@ -45,7 +45,6 @@
         "rollup-plugin-commonjs": "^10.1.0",
         "rollup-plugin-json": "^4.0.0",
         "rollup-plugin-node-resolve": "^5.0.1",
-        "rollup-plugin-postcss": "^2.0.3",
         "styled-jsx": "^3.2.2"
     },
     "bin": {

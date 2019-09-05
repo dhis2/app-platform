@@ -6,7 +6,6 @@ const resolve = require('rollup-plugin-node-resolve')
 const babel = require('rollup-plugin-babel')
 const commonjs = require('rollup-plugin-commonjs')
 const json = require('rollup-plugin-json')
-const postcss = require('rollup-plugin-postcss')
 
 const { reporter } = require('@dhis2/cli-helpers-engine')
 
@@ -56,9 +55,6 @@ const bundle = ({
         external: id => externals.test(id),
         plugins: [
             json(),
-            postcss({
-                extensions: ['.css'],
-            }),
             resolve({ mainFields: ['module', 'main'] }),
             commonjs({ include: /node_modules/ }),
             babel({
