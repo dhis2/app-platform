@@ -2,6 +2,7 @@ const { reporter } = require('@dhis2/cli-helpers-engine')
 
 const fs = require('fs-extra')
 const chalk = require('chalk')
+const path = require('path')
 
 const i18n = require('../lib/i18n')
 const compile = require('../lib/compile')
@@ -9,6 +10,8 @@ const makePaths = require('../lib/paths')
 const makeShell = require('../lib/shell')
 const parseConfig = require('../lib/parseConfig')
 const exitOnCatch = require('../lib/exitOnCatch')
+const generateManifest = require('../lib/generateManifest')
+const bundleApp = require('../lib/bundleApp')
 
 const buildModes = ['development', 'production']
 
@@ -22,6 +25,14 @@ const getNodeEnv = () => {
     }
     return null
 }
+
+// This is nasty and frankly wrong (also don't use long unweildy capitalized names in a URL!) but has to match the current DHIS2 app server
+// From https://github.com/dhis2/dhis2-core/blob/master/dhis-2/dhis-api/src/main/java/org/hisp/dhis/appmanager/App.java#L360-L371
+const getUrlFriendlyName = name =>
+    name
+        .trim()
+        .replace(/[^A-Za-z0-9\s-]/g, '')
+        .replace(/ /g, '-')
 
 const handler = async ({
     cwd,
@@ -37,6 +48,12 @@ const handler = async ({
     const paths = makePaths(cwd)
     const config = parseConfig(paths)
     const shell = makeShell({ config, paths })
+
+    process.env.PUBLIC_URL =
+        process.env.PUBLIC_URL ||
+        `/api/apps/${getUrlFriendlyName(config.title)}`
+
+    await fs.remove(paths.buildOutput)
 
     await exitOnCatch(
         async () => {
@@ -79,10 +96,25 @@ const handler = async ({
             process.exit(1)
         }
 
-        if (fs.pathExistsSync(paths.buildOutput)) {
-            await fs.remove(paths.buildOutput)
+        if (fs.pathExistsSync(paths.buildAppOutput)) {
+            await fs.remove(paths.buildAppOutput)
         }
-        await fs.copy(paths.shellBuildOutput, paths.buildOutput)
+        await fs.copy(paths.shellBuildOutput, paths.buildAppOutput)
+
+        reporter.info('Generating manifest...')
+        await generateManifest(paths, config, process.env.PUBLIC_URL)
+
+        const appBundle = paths.buildAppBundle
+            .replace(/{{name}}/, config.name)
+            .replace(/{{version}}/, config.version)
+        reporter.info(
+            `Creating app archive at ${chalk.bold(
+                path.relative(process.cwd(), appBundle)
+            )}...`
+        )
+        await bundleApp(paths.buildAppOutput, appBundle)
+
+        reporter.print(chalk.green('\n**** DONE! ****'))
     }
 }
 

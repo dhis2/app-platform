@@ -59,6 +59,8 @@ module.exports = vars => {
         ...filterEnv(),
         ...makeShellEnv(vars),
     })
+
+    env.PUBLIC_URL = process.env.PUBLIC_URL
     reporter.debug('Env passed to app-shell:', env)
     return env
 }

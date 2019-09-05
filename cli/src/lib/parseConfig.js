@@ -1,11 +1,29 @@
 const { reporter } = require('@dhis2/cli-helpers-engine')
-const { defaultsDeep, has } = require('lodash')
+const { defaultsDeep, has, isPlainObject } = require('lodash')
 const fs = require('fs-extra')
 const chalk = require('chalk')
+const getAuthorRegex = require('author-regex')
 
 const requiredConfigFields = {
-    app: ['name', 'title', 'entryPoints.app'],
-    lib: ['name', 'entryPoints.lib'],
+    app: ['name', 'version', 'title', 'entryPoints.app'],
+    lib: ['name', 'version', 'entryPoints.lib'],
+}
+
+const parseAuthor = author => {
+    if (isPlainObject(author)) {
+        return {
+            name: author.name,
+            email: author.email,
+            url: author.url,
+        }
+    }
+
+    const parsedAuthor = getAuthorRegex().exec(author)
+    if (!parsedAuthor) return {}
+    const out = { name: parsedAuthor[1] }
+    if (parsedAuthor[2] && parsedAuthor[2] !== '') out.email = parsedAuthor[2]
+    if (parsedAuthor[3] && parsedAuthor[3] !== '') out.url = parsedAuthor[3]
+    return out
 }
 
 const validateConfig = config => {
@@ -21,7 +39,7 @@ const validateConfig = config => {
             reporter.error(
                 `Required config field ${chalk.bold(
                     field
-                )} not found in d2.config.js`
+                )} not found in d2.config.js or package.json`
             )
             process.exit(1)
         }
@@ -51,7 +69,10 @@ const parseConfig = paths => {
         config = defaultsDeep(config, require(defaults))
 
         if (fs.existsSync(paths.package)) {
-            config.name = config.name || require(paths.package).name
+            const pkg = require(paths.package)
+            config.name = config.name || pkg.name
+            config.version = config.version || pkg.version
+            config.author = config.author || parseAuthor(pkg.author)
         }
         config.title = config.title || config.name
 
