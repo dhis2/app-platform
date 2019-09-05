@@ -101,6 +101,14 @@ const compile = async ({
             } else if (event.code === 'BUNDLE_END') {
                 await copyOutput()
                 reporter.print('DONE')
+            } else if (event.code === 'ERROR') {
+                reporter.error(event.error)
+            } else if (event.code === 'FATAL') {
+                reporter.error(event.error)
+                reporter.error('Fatal error, aborting...')
+                process.exit(1)
+            } else {
+                reporter.debug('[watch] Encountered an unknown event', event)
             }
         })
 
