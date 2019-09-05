@@ -96,9 +96,6 @@ const handler = async ({
             process.exit(1)
         }
 
-        if (fs.pathExistsSync(paths.buildAppOutput)) {
-            await fs.remove(paths.buildAppOutput)
-        }
         await fs.copy(paths.shellBuildOutput, paths.buildAppOutput)
 
         reporter.info('Generating manifest...')
