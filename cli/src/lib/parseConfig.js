@@ -2,7 +2,7 @@ const { reporter } = require('@dhis2/cli-helpers-engine')
 const { defaultsDeep, has, isPlainObject } = require('lodash')
 const fs = require('fs-extra')
 const chalk = require('chalk')
-const getAuthorRegex = require('author-regex')
+const parseAuthorString = require('parse-author')
 
 const requiredConfigFields = {
     app: ['name', 'version', 'title', 'entryPoints.app'],
@@ -18,12 +18,11 @@ const parseAuthor = author => {
         }
     }
 
-    const parsedAuthor = getAuthorRegex().exec(author)
-    if (!parsedAuthor) return {}
-    const out = { name: parsedAuthor[1] }
-    if (parsedAuthor[2] && parsedAuthor[2] !== '') out.email = parsedAuthor[2]
-    if (parsedAuthor[3] && parsedAuthor[3] !== '') out.url = parsedAuthor[3]
-    return out
+    if (typeof author === 'string') {
+        return parseAuthorString(author)
+    }
+
+    return undefined
 }
 
 const validateConfig = config => {
