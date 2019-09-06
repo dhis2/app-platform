@@ -1,5 +1,6 @@
 const fs = require('fs-extra')
 const path = require('path')
+const chalk = require('chalk')
 const {
     ensureDirectoryExists,
     walkDirectory,
@@ -12,7 +13,7 @@ const { i18nextToPot, gettextToI18next } = require('i18next-conv')
 const extract = async ({ input, output }) => {
     ensureDirectoryExists(input)
 
-    reporter.info(`> reading ${input}`)
+    reporter.debug(`[i18n-extract] Reading ${input}...`)
 
     const files = walkDirectory(input)
     if (files.length === 0) {
@@ -26,7 +27,7 @@ const extract = async ({ input, output }) => {
         sort: true,
     })
 
-    reporter.info(`> parsing ${files.length} files`)
+    reporter.debug(`[i18n-extract] Parsing ${files.length} files...`)
 
     files.forEach(filePath => {
         var contents = fs.readFileSync(filePath, 'utf8')
@@ -49,20 +50,23 @@ const extract = async ({ input, output }) => {
         var newMsgIds = Object.keys(JSON.parse(json))
 
         if (arrayEqual(newMsgIds, msgIds)) {
-            console.log('> no i18n updates found.')
-            console.log('> complete\n')
+            reporter.print(chalk.dim('No i18n updates found!'))
             return
         }
     }
 
-    reporter.info(
-        `> writing: ${Object.keys(en).length} language strings to ${targetPath}`
+    reporter.print(
+        chalk.dim(
+            `Writing ${
+                Object.keys(en).length
+            } language strings to ${targetPath}...`
+        )
     )
     const result = await i18nextToPot('en', JSON.stringify(en))
 
     fs.ensureFileSync(targetPath)
     fs.writeFileSync(targetPath, result + '\n')
-    reporter.info('> complete')
+    reporter.debug('[i18n-extract] complete')
 }
 
 module.exports = extract

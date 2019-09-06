@@ -1,27 +1,31 @@
 const fs = require('fs-extra')
 const path = require('path')
+const chalk = require('chalk')
 const { reporter, exec } = require('@dhis2/cli-helpers-engine')
 
 const bootstrapShell = async (paths, { shell, force = false } = {}) => {
     const source = shell ? path.resolve(shell) : paths.shellSource,
         dest = paths.shell
 
-    reporter.debug(`Bootstrapping appShell from ${source} to ${dest}`)
-
     if (fs.pathExistsSync(dest)) {
         if (!shell && !force) {
-            reporter.info(
-                'An existing version of the appShell exists, skipping bootstrap...'
+            reporter.print(
+                chalk.dim(
+                    `A local appShell exists, skipping bootstrap. ${chalk.bold(
+                        'Use --force to update.'
+                    )}`
+                )
             )
             return dest
         }
-        reporter.info('Removing existing directory')
+        reporter.print(chalk.dim('Removing existing directory'))
         await fs.remove(dest)
     }
 
+    reporter.debug(`Bootstrapping appShell from ${source} to ${dest}`)
     await fs.ensureDir(dest)
 
-    reporter.info('Copying appShell to temporary directory...')
+    reporter.print(chalk.dim('Copying appShell to temporary directory...'))
 
     await fs.copy(source, dest, {
         dereference: true,
@@ -31,16 +35,13 @@ const bootstrapShell = async (paths, { shell, force = false } = {}) => {
             src.indexOf(paths.shellAppDirname) === -1,
     })
 
-    reporter.info('Installing dependencies')
+    reporter.print(chalk.dim('Installing dependencies...'))
 
     await exec({
         cmd: 'yarn',
         args: ['install', '--frozen-lockfile', '--prefer-offline'],
         cwd: dest,
     })
-
-    // reporter.info('Linking app into appShell')
-    // await fs.symlink(paths.devOut, paths.shellApp)
 }
 
 module.exports = bootstrapShell

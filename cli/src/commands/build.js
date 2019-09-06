@@ -66,22 +66,23 @@ const handler = async ({
             })
 
             if (config.type === 'app') {
+                reporter.info('Bootstrapping local appShell...')
                 await shell.bootstrap({ shell: shellSource, force })
             }
 
-            reporter.info('Building app...')
+            reporter.info(`Building app ${chalk.bold(config.name)}...`)
             await compile({
                 config,
                 paths,
                 mode,
                 watch,
             })
-            reporter.info(` - Built in mode ${chalk.bold(mode)}`)
+            reporter.info(chalk.dim(` - Built in mode ${chalk.bold(mode)}`))
 
             if (config.type === 'app') {
                 reporter.info('Building appShell...')
                 await shell.build()
-                reporter.info(` - Built in mode ${chalk.bold(mode)}`)
+                reporter.info(chalk.dim(` - Built in mode ${chalk.bold(mode)}`))
             }
         },
         {

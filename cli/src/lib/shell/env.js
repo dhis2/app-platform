@@ -1,5 +1,8 @@
 const { reporter } = require('@dhis2/cli-helpers-engine')
 
+const defaultShellPort = 3000
+const getShellPort = () => process.env.PORT || defaultShellPort
+
 const filterEnv = () =>
     Object.keys(process.env)
         .filter(key => key.indexOf('DHIS2_') === 0)
@@ -54,13 +57,18 @@ const makeShellEnv = vars =>
     )
 
 module.exports = vars => {
-    const env = prefixEnvForCRA({
-        ...envFromDHISConfig(getDHISConfig()),
-        ...filterEnv(),
-        ...makeShellEnv(vars),
-    })
+    const env = {
+        ...prefixEnvForCRA({
+            ...envFromDHISConfig(getDHISConfig()),
+            ...filterEnv(),
+            ...makeShellEnv(vars),
+        }),
+        PORT: getShellPort(),
+        PUBLIC_URL: process.env.PUBLIC_URL,
+    }
 
-    env.PUBLIC_URL = process.env.PUBLIC_URL
     reporter.debug('Env passed to app-shell:', env)
     return env
 }
+module.exports.defaultShellPort = defaultShellPort
+module.exports.getShellPort = getShellPort
