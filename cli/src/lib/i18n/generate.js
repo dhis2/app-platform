@@ -24,6 +24,7 @@ const generate = async ({ input, output, namespace }) => {
     fs.removeSync(dst)
     fs.ensureDirSync(dst)
 
+    reporter.debug(`[i18n-generate] Reading translation sources...`)
     const files = fs.readdirSync(input)
 
     const langs = files.map(f => path.basename(f, path.extname(f)))
@@ -34,10 +35,14 @@ const generate = async ({ input, output, namespace }) => {
     const outFile = path.join(dst, 'index.js')
     writeTemplate(outFile, { locales, langs, namespace })
 
-    reporter.info('> Generating translation .JSON files')
+    reporter.debug(`[i18n-generate] Generating translation .json files...`)
     const promises = files.map(async f => {
         const ext = path.extname(f)
         const lang = path.basename(f, ext)
+
+        reporter.debug(
+            `[i18n-generate] Writing JSON translation file for language: ${lang}...`
+        )
 
         if (ext === '.po' || ext === '.pot') {
             const filePath = path.join(input, f)
@@ -49,9 +54,6 @@ const generate = async ({ input, output, namespace }) => {
 
             const translationsPath = path.join(target, 'translations.json')
             fs.writeFileSync(translationsPath, json, { encoding: 'utf8' })
-            reporter.info(
-                `> writing JSON translation file for language: ${lang}`
-            )
         }
     })
 

@@ -17,7 +17,7 @@ module.exports = ({ config, paths }) => ({
             args: ['run', 'build'],
             cwd: paths.shell,
             env: getEnv({ name: config.title }),
-            pipe: true,
+            pipe: false,
         })
     },
     start: async () => {
@@ -26,7 +26,7 @@ module.exports = ({ config, paths }) => ({
             args: ['run', 'start'],
             cwd: paths.shell,
             env: getEnv({ name: config.title }),
-            pipe: true,
+            pipe: false,
         })
     },
     test: async () => {

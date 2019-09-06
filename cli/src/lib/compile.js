@@ -1,10 +1,26 @@
 const { reporter } = require('@dhis2/cli-helpers-engine')
 
+const chalk = require('chalk')
 const path = require('path')
 const fs = require('fs-extra')
 const rollup = require('rollup')
 
 const rollupConfigBuilder = require('../../config/rollup.config')
+
+const printRollupError = error => {
+    reporter.debug('Rollup error', error)
+    reporter.error(String(error))
+    try {
+        const file = path.relative(process.cwd(), error.loc.file)
+        reporter.error(
+            chalk.dim(
+                `\tAt ${chalk.bold(file)}:${error.loc.line}:${error.loc.column}`
+            )
+        )
+    } catch (e) {
+        // ignore
+    }
+}
 
 const compile = async ({
     config,
@@ -16,8 +32,6 @@ const compile = async ({
         (config.entryPoints && config.entryPoints[config.type]) ||
         'src/index.js'
     const outDir = mode === 'production' ? paths.buildOutput : paths.devOut
-
-    reporter.info(`Compiling ${input} to ${outDir}`)
 
     fs.removeSync(outDir)
     fs.ensureDirSync(outDir)
@@ -34,16 +48,23 @@ const compile = async ({
         pkg,
     })
 
+    const outFile = path.join(outDir, `es/${config.type}.js`)
+
+    reporter.print(
+        chalk.dim(
+            `Compiling ${chalk.bold(input)} to ${chalk.bold(
+                path.relative(process.cwd(), outFile)
+            )}`
+        )
+    )
+
     reporter.debug('Rollup config', rollupConfig)
 
     const copyOutput = async () => {
-        await fs.copy(
-            path.join(outDir, `es/${config.type}.js`),
-            path.join(paths.shellApp, `${config.type}.js`)
-        )
+        await fs.copy(outFile, path.join(paths.shellApp, `${config.type}.js`))
         if (mode === 'production') {
             await fs.copy(
-                path.join(outDir, `es/${config.type}.js.map`),
+                outFile + '.map',
                 path.join(paths.shellApp, `${config.type}.js.map`)
             )
         }
@@ -77,7 +98,7 @@ const compile = async ({
                 })
             )
         } catch (e) {
-            reporter.error(e)
+            printRollupError(e)
             process.exit(1)
         }
 
@@ -86,39 +107,38 @@ const compile = async ({
 
         await copyOutput()
     } else {
-        reporter.debug('watching...')
-        const watcher = rollup.watch({
-            ...rollupConfig,
-            watch: {
-                clearScreen: true,
-            },
-        })
+        return new Promise((resolve, reject) => {
+            reporter.debug('watching...')
+            const watcher = rollup.watch({
+                ...rollupConfig,
+            })
 
-        watcher.on('event', async event => {
-            reporter.debug('[watch]', event.code)
-            if (event.code === 'BUNDLE_START') {
-                reporter.print('Rebuilding...')
-            } else if (event.code === 'BUNDLE_END') {
-                await copyOutput()
-                reporter.print('DONE')
-            } else if (event.code === 'ERROR') {
-                reporter.error(event.error)
-            } else if (event.code === 'FATAL') {
-                reporter.error(event.error)
-                reporter.error('Fatal error, aborting...')
-                process.exit(1)
-            } else {
-                reporter.debug('[watch] Encountered an unknown event', event)
-            }
-        })
+            watcher.on('event', async event => {
+                reporter.debug('[watch]', event.code, event)
+                if (event.code === 'START') {
+                    reporter.print(chalk.dim('Compiling...'))
+                } else if (event.code === 'END') {
+                    await copyOutput()
+                    reporter.print(chalk.dim(' Compiled successfully!'))
+                    resolve() // This lets us wait for the first successful compilation
+                } else if (event.code === 'ERROR') {
+                    printRollupError(event.error)
+                } else if (event.code === 'FATAL') {
+                    printRollupError(event.error)
+                    reject('Fatal error, aborting...')
+                } else {
+                    reporter.debug(
+                        '[watch] Encountered an unknown event',
+                        event
+                    )
+                }
+            })
 
-        process.on('SIGINT', function() {
-            reporter.debug('Caught interrupt signal')
-
-            watcher.close()
-            process.exit()
+            process.on('SIGINT', function() {
+                reporter.debug('Caught interrupt signal')
+                watcher.close()
+            })
         })
-        await new Promise(() => null) // Wait forever
     }
 }
 
