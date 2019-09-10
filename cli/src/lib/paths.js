@@ -37,6 +37,12 @@ module.exports = makePaths = (cwd = process.cwd()) => {
         shellBuildOutput: path.join(base, './.d2/shell/build'),
 
         buildOutput: path.join(base, './build'),
+        buildAppOutput: path.join(base, './build/app'),
+        buildAppManifest: path.join(base, './build/app/manifest.webapp'),
+        buildAppBundle: path.join(
+            base,
+            './build/bundle/dhis2-{{name}}-{{version}}.zip'
+        ),
     }
 
     reporter.debug('PATHS', paths)
