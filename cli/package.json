@@ -42,7 +42,7 @@
         "prop-types": "^15.7.2",
         "react": "^16.8.6",
         "react-dom": "^16.8.6",
-        "rollup": "^1.21.2",
+        "rollup": "^1.21.4",
         "rollup-plugin-babel": "^4.3.2",
         "rollup-plugin-commonjs": "^10.1.0",
         "rollup-plugin-json": "^4.0.0",
