@@ -1,0 +1,28 @@
+{
+    "name": "Usage Analytics App",
+    "short_name": "UAA",
+    "description": "Gain insights into the usage of your DHIS2 instance",
+    "icons": [
+        {
+            "src": "favicon-16x16.png",
+            "sizes": "16x16",
+            "type": "image/png"
+        },
+        {
+            "src": "favicon-32x32.png",
+            "sizes": "32x32",
+            "type": "image/png"
+        },
+        {
+            "src": "favicon-48x48.png",
+            "sizes": "48x48",
+            "type": "image/png"
+        }
+    ],
+    "developer": {
+        "name": "DHIS2"
+    },
+    "theme_color": "#ffffff",
+    "background_color": "#ffffff",
+    "display": "standalone"
+}
