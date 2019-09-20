@@ -21,6 +21,7 @@ module.exports = makePaths = (cwd = process.cwd()) => {
 
         base,
         package: path.join(base, './package.json'),
+        dotenv: path.join(base, './.env'),
         config: path.join(base, './d2.config.js'),
         src: path.join(base, './src'),
         appEntry: path.join(base, './src/App.js'),
