@@ -51,7 +51,7 @@ To create a new template application (or upgrade and existing React app), use th
     "@dhis2/cli-app-scripts": "1.4.1"
   },
   "dependencies": {
-    "@dhis2/app-runtime": "^2.0.0"
+    "@dhis2/app-runtime": "^2.0.1"
   }
 }
 
