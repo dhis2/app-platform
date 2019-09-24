@@ -1,4 +1,8 @@
-const browsersList = require('./.browserlistrc')
+const browserTargets = require('./.browserlistrc')
+const jestTargets = { node: 'current' }
+
+const isTest = process.env.NODE_ENV === 'test'
+const targets = isTest ? jestTargets : browserTargets
 
 module.exports = {
     presets: [
@@ -6,7 +10,10 @@ module.exports = {
         require('@babel/preset-typescript'),
         [
             require('@babel/preset-env'),
-            { modules: 'auto', targets: browsersList },
+            {
+                modules: 'auto',
+                targets,
+            },
         ],
     ],
     plugins: [

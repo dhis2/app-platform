@@ -6,6 +6,9 @@ const resolve = require('rollup-plugin-node-resolve')
 const babel = require('rollup-plugin-babel')
 const commonjs = require('rollup-plugin-commonjs')
 const json = require('rollup-plugin-json')
+const postcss = require('rollup-plugin-postcss')
+const replace = require('rollup-plugin-replace')
+const visualize = require('rollup-plugin-visualizer')
 
 const { reporter } = require('@dhis2/cli-helpers-engine')
 
@@ -31,7 +34,9 @@ const bundle = ({
         Object.keys({
             ...standardLibs,
             ...pkg.peerDependencies,
-        }).join('|')
+        })
+            .map(name => `^${name}(/.+)?$`)
+            .join('|')
     )
 
     const sourcemap = mode === 'production' ? true : 'inline'
@@ -52,14 +57,36 @@ const bundle = ({
                 banner: '/* eslint-disable */',
             },
         ],
-        external: id => externals.test(id),
+        external: bundleDeps
+            ? id => externals.test(id)
+            : id => !/^\.+\//.test(id),
         plugins: [
+            replace({
+                'process.env.NODE_ENV': `"${mode}"`,
+            }),
+            postcss({
+                autoModules: false,
+            }),
             json(),
-            resolve({ mainFields: ['module', 'main'] }),
-            commonjs({ include: /node_modules/ }),
             babel({
                 configFile: require.resolve('./babel.config.js'),
                 exclude: /node_modules/, // only transpile our source code
+            }),
+            resolve({
+                /*
+                 * TODO: Use of named exports (particularly `react-is` from `react-redux`)
+                 * means we can't actually use `module` entrypoints... We could also explicitly
+                 * add the CJS named exports to the `commonjs` options below, but that requires
+                 * fore-knowledge of all the libraries an app/lib could depend on.
+                 * See https://github.com/rollup/rollup-plugin-commonjs/issues/211#issuecomment-337897124
+                 */
+                mainFields: ['main'],
+            }),
+            commonjs({ include: /node_modules/ }),
+            visualize({
+                filename: path.join(outDir, 'stats.html'),
+                title: 'DHIS2 Build Analysis',
+                template: 'treemap',
             }),
         ],
         onwarn(warning, warn) {

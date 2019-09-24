@@ -12,6 +12,7 @@ const parseConfig = require('../lib/parseConfig')
 const exitOnCatch = require('../lib/exitOnCatch')
 const generateManifest = require('../lib/generateManifest')
 const bundleApp = require('../lib/bundleApp')
+const loadEnvFiles = require('../lib/loadEnvFiles')
 
 const buildModes = ['development', 'production']
 
@@ -42,10 +43,12 @@ const handler = async ({
     shell: shellSource,
     force,
 }) => {
+    const paths = makePaths(cwd)
+
     mode = mode || (dev && 'development') || getNodeEnv() || 'production'
+    loadEnvFiles(paths, mode)
 
     reporter.info(`Build mode: ${chalk.bold(mode)}`)
-    const paths = makePaths(cwd)
     const config = parseConfig(paths)
     const shell = makeShell({ config, paths })
 

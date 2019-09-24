@@ -7,10 +7,15 @@ const makePaths = require('../lib/paths')
 const makeShell = require('../lib/shell')
 const parseConfig = require('../lib/parseConfig')
 const exitOnCatch = require('../lib/exitOnCatch')
+const loadEnvFiles = require('../lib/loadEnvFiles')
 const { getShellPort } = require('../lib/shell/env')
 
 const handler = async ({ cwd, force, shell: shellSource }) => {
     const paths = makePaths(cwd)
+
+    const mode = 'development'
+    loadEnvFiles(paths, mode)
+
     const config = parseConfig(paths)
     const shell = makeShell({ config, paths })
 
@@ -39,7 +44,7 @@ const handler = async ({ cwd, force, shell: shellSource }) => {
             reporter.info(`Building app ${chalk.bold(config.name)}...`)
             await compile({
                 config,
-                mode: 'development',
+                mode,
                 paths,
                 watch: true,
             })
