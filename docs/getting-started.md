@@ -48,10 +48,10 @@ To create a new template application (or upgrade and existing React app), use th
     "test": "d2-app-scripts test"
   },
   "devDependencies": {
-    "@dhis2/cli-app-scripts": "1.2.2"
+    "@dhis2/cli-app-scripts": "1.4.1"
   },
   "dependencies": {
-    "@dhis2/app-runtime": "^1.5.1"
+    "@dhis2/app-runtime": "^2.0.0"
   }
 }
 
