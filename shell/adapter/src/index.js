@@ -4,9 +4,9 @@ import { DataProvider } from '@dhis2/app-runtime'
 import { FatalErrorBoundary } from './FatalErrorBoundary'
 import { AuthBoundary } from './AuthBoundary'
 
-const App = ({ url, appName, children }) => (
+const App = ({ url, apiVersion, appName, children }) => (
     <FatalErrorBoundary>
-        <DataProvider baseUrl={url} apiVersion={32}>
+        <DataProvider baseUrl={url} apiVersion={apiVersion}>
             <HeaderBar appName={appName} />
             <AuthBoundary url={url}>{children}</AuthBoundary>
         </DataProvider>

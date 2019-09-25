@@ -10,6 +10,7 @@ const D2App = React.lazy(() =>
 const appConfig = {
     url: process.env.REACT_APP_DHIS2_BASE_URL || 'http://localhost:8080',
     appName: process.env.REACT_APP_DHIS2_APP_NAME || '',
+    apiVersion: parseInt(process.env.REACT_APP_DHIS2_API_VERSION) || 32,
 }
 
 const App = () => (
