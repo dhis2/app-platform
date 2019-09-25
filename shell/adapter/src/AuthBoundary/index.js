@@ -5,13 +5,15 @@ import i18n from '../locales'
 import { ScreenCover, CircularLoader } from '@dhis2/ui-core'
 import { LoginModal } from './LoginModal'
 
+const settingsQuery = {
+    userSettings: {
+        resource: 'userSettings',
+    },
+}
+
 export const AuthBoundary = ({ url, children }) => {
     i18n.changeLanguage(window.navigator.language)
-    const { loading, error, data } = useDataQuery({
-        userSettings: {
-            resource: 'userSettings',
-        },
-    })
+    const { loading, error, data } = useDataQuery(settingsQuery)
 
     if (loading) {
         return (
