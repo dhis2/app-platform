@@ -851,7 +851,7 @@
   integrity sha512-+Rmw+QshbgiBielN7UH4VXfEeSnSj1N3d4HGqf3iekyUXCNdpZX2bD9QrH43KvdfH+lDp71Uh7y3FKEhzSbRLA==
 
 "@dhis2/cli-app-scripts@file:../../cli":
-  version "1.4.2"
+  version "1.4.3"
   dependencies:
     "@babel/core" "^7.6.0"
     "@babel/plugin-proposal-class-properties" "^7.4.4"

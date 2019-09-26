@@ -40,6 +40,7 @@ const handler = async ({
     mode,
     dev,
     watch,
+    standalone,
     shell: shellSource,
     force,
 }) => {
@@ -48,14 +49,31 @@ const handler = async ({
     mode = mode || (dev && 'development') || getNodeEnv() || 'production'
     loadEnvFiles(paths, mode)
 
-    reporter.info(`Build mode: ${chalk.bold(mode)}`)
+    reporter.print(chalk.green('\tbuild mode\t', chalk.yellow(mode)))
     const config = parseConfig(paths)
     const shell = makeShell({ config, paths })
 
     process.env.PUBLIC_URL = process.env.PUBLIC_URL || '.'
-    if (!config.standalone) {
+    reporter.print(
+        chalk.green('\tPUBLIC_URL\t'),
+        chalk.bold(process.env.PUBLIC_URL)
+    )
+
+    if (
+        standalone === false ||
+        (typeof standalone === 'undefined' && !config.standalone)
+    ) {
         process.env.DHIS2_BASE_URL =
             process.env.DHIS2_BASE_URL || config.coreApp ? `..` : `../../..`
+        reporter.print(
+            chalk.green('\tDHIS2_BASE_URL\t'),
+            chalk.yellow(process.env.DHIS2_BASE_URL)
+        )
+    } else {
+        reporter.print(
+            chalk.green('\tDHIS2_BASE_URL\t'),
+            chalk.yellow('standalone mode')
+        )
     }
 
     await fs.remove(paths.buildOutput)
@@ -140,6 +158,12 @@ const command = {
             type: 'boolean',
             description: 'Watch source files for changes',
             default: false,
+        },
+        standalone: {
+            type: 'boolean',
+            description:
+                'Build in standalone mode (overrides the d2.config.js setting)',
+            default: undefined,
         },
     },
     handler,
