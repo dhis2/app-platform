@@ -5,10 +5,13 @@ msgstr ""
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1)\n"
-"POT-Creation-Date: 2019-06-18T09:28:13.445Z\n"
-"PO-Revision-Date: 2019-06-18T09:28:13.445Z\n"
+"POT-Creation-Date: 2019-09-26T16:40:43.483Z\n"
+"PO-Revision-Date: 2019-09-26T16:40:43.483Z\n"
 
 msgid "Please sign in"
+msgstr ""
+
+msgid "Server"
 msgstr ""
 
 msgid "Username"
@@ -20,7 +23,7 @@ msgstr ""
 msgid "Sign in"
 msgstr ""
 
-msgid "An error occurred in the DHIS2 Maps application."
+msgid "An error occurred in the DHIS2 application."
 msgstr ""
 
 msgid "Something went wrong"

@@ -52,9 +52,11 @@ const handler = async ({
     const config = parseConfig(paths)
     const shell = makeShell({ config, paths })
 
-    process.env.PUBLIC_URL =
-        process.env.PUBLIC_URL ||
-        `/api/apps/${getUrlFriendlyName(config.title)}`
+    process.env.PUBLIC_URL = process.env.PUBLIC_URL || '.'
+    if (!config.standalone) {
+        process.env.DHIS2_BASE_URL =
+            process.env.DHIS2_BASE_URL || config.coreApp ? `..` : `../../..`
+    }
 
     await fs.remove(paths.buildOutput)
 
