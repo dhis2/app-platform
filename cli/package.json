@@ -16,7 +16,7 @@
     ],
     "//": "****** Includes standard libraries from app-shell, so that tests work ******",
     "dependencies": {
-        "@babel/core": "^7.6.0",
+        "@babel/core": "^7.6.2",
         "@babel/plugin-proposal-class-properties": "^7.4.4",
         "@babel/plugin-proposal-object-rest-spread": "^7.4.4",
         "@babel/preset-env": "^7.6.0",
