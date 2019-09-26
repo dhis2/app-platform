@@ -27,13 +27,24 @@ const getNodeEnv = () => {
     return null
 }
 
-// This is nasty and frankly wrong (also don't use long unweildy capitalized names in a URL!) but has to match the current DHIS2 app server
-// From https://github.com/dhis2/dhis2-core/blob/master/dhis-2/dhis-api/src/main/java/org/hisp/dhis/appmanager/App.java#L360-L371
-const getUrlFriendlyName = name =>
-    name
-        .trim()
-        .replace(/[^A-Za-z0-9\s-]/g, '')
-        .replace(/ /g, '-')
+const printBuildParam = (key, value) => {
+    reporter.print(chalk.green(` - ${key} =`), chalk.yellow(value))
+}
+const setAppParameters = (standalone, config) => {
+    process.env.PUBLIC_URL = process.env.PUBLIC_URL || '.'
+    printBuildParam('PUBLIC_URL', process.env.PUBLIC_URL)
+
+    if (
+        standalone === false ||
+        (typeof standalone === 'undefined' && !config.standalone)
+    ) {
+        process.env.DHIS2_BASE_URL =
+            process.env.DHIS2_BASE_URL || config.coreApp ? `..` : `../../..`
+        printBuildParam('DHIS2_BASE_URL', process.env.DHIS2_BASE_URL)
+    } else {
+        printBuildParam('DHIS2_BASE_URL', '<standalone>')
+    }
+}
 
 const handler = async ({
     cwd,
@@ -49,31 +60,13 @@ const handler = async ({
     mode = mode || (dev && 'development') || getNodeEnv() || 'production'
     loadEnvFiles(paths, mode)
 
-    reporter.print(chalk.green('\tbuild mode\t', chalk.yellow(mode)))
+    printBuildParam('Build Mode', mode)
+
     const config = parseConfig(paths)
     const shell = makeShell({ config, paths })
 
-    process.env.PUBLIC_URL = process.env.PUBLIC_URL || '.'
-    reporter.print(
-        chalk.green('\tPUBLIC_URL\t'),
-        chalk.bold(process.env.PUBLIC_URL)
-    )
-
-    if (
-        standalone === false ||
-        (typeof standalone === 'undefined' && !config.standalone)
-    ) {
-        process.env.DHIS2_BASE_URL =
-            process.env.DHIS2_BASE_URL || config.coreApp ? `..` : `../../..`
-        reporter.print(
-            chalk.green('\tDHIS2_BASE_URL\t'),
-            chalk.yellow(process.env.DHIS2_BASE_URL)
-        )
-    } else {
-        reporter.print(
-            chalk.green('\tDHIS2_BASE_URL\t'),
-            chalk.yellow('standalone mode')
-        )
+    if (config.type === 'app') {
+        setAppParameters(standalone, config)
     }
 
     await fs.remove(paths.buildOutput)
