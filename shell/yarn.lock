@@ -973,7 +973,7 @@
 "@dhis2/app-adapter@file:./adapter":
   version "1.0.0"
   dependencies:
-    "@dhis2/ui-core" "3.10.0"
+    "@dhis2/ui-core" "3.11.0"
     "@dhis2/ui-widgets" "^1.0.4"
     moment "^2.24.0"
 
@@ -995,10 +995,10 @@
   resolved "https://registry.yarnpkg.com/@dhis2/prop-types/-/prop-types-1.1.0.tgz#6144470f336fbcf0fd9142c5ea402d03dfb92c2a"
   integrity sha512-hHbkoqEbi7vcWcJG1VdBkjKBUFZGWj7VRkwr2GvRU3g1j7AXW5WzsrGGgd/4ejK4nQMardlkZmCrzw7+mkTcRg==
 
-"@dhis2/ui-core@3.10.0", "@dhis2/ui-core@^3.10.0":
-  version "3.10.0"
-  resolved "https://registry.yarnpkg.com/@dhis2/ui-core/-/ui-core-3.10.0.tgz#02f4e17ff1f08b25ba15a69526b06219085417ac"
-  integrity sha512-ER5mkihEm/jMKhmnI+9C29KaaEgJMyHFaX0C+il88jjEQL69jvY6HDnPtb1MJvYglkx8y5OSPuNXdSDwnHGy7A==
+"@dhis2/ui-core@3.11.0", "@dhis2/ui-core@^3.11.0":
+  version "3.11.0"
+  resolved "https://registry.yarnpkg.com/@dhis2/ui-core/-/ui-core-3.11.0.tgz#eb74e229192d53e26087f5f344abbbd5417ea1fd"
+  integrity sha512-d3iFXDSe9+BTvl70LlSfz3S+Ec+l7fNz+Qh8T7EcOg+MAKUEA1tNjRp+B5Fh8A6LElXWc1CMkJYcDZNcO285vQ==
   dependencies:
     "@dhis2/prop-types" "^1.1.0"
     classnames "^2.2.6"
