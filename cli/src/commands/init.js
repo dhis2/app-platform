@@ -5,6 +5,8 @@ const chalk = require('chalk')
 
 const makePaths = require('../lib/paths')
 
+const ignorePatterns = ['node_modules', '.d2', 'src/locales']
+
 const handler = async ({ force, name, cwd, lib }) => {
     cwd = cwd || process.cwd()
     cwd = path.join(cwd, name)
@@ -133,6 +135,32 @@ const handler = async ({ force, name, cwd, lib }) => {
                 path.join(paths.base, 'src/App.test.js')
             )
         }
+    }
+
+    const gitignoreFile = path.join(paths.base, '.gitignore')
+    let existingIgnoreContent = ''
+    let existingIgnorePatterns = []
+    if (fs.existsSync(gitignoreFile)) {
+        existingIgnoreContent = fs.readFileSync(gitignoreFile).toString()
+        existingIgnorePatterns = existingIgnoreContent
+            .split(/\r?\n/)
+            .map(s => s.trim())
+            .filter(s => s !== '' && s.charAt(0) !== '#')
+    }
+
+    const missingIgnorePatterns = ignorePatterns.filter(
+        pattern => !existingIgnorePatterns.includes(pattern)
+    )
+    if (missingIgnorePatterns.length) {
+        reporter.info('Updating .gitignore...')
+        fs.writeFileSync(
+            gitignoreFile,
+            existingIgnoreContent +
+                (existingIgnoreContent.length ? '\n\n' : '') +
+                '#DHIS2 Platform\n' +
+                missingIgnorePatterns.join('\n') +
+                '\n'
+        )
     }
 
     reporter.print('')
