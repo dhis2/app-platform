@@ -29,7 +29,7 @@
         "react-scripts": "latest",
         "react-test-renderer": "^16.8.6",
         "rimraf": "^3.0.0",
-        "source-map-explorer": "^2.0.1",
+        "source-map-explorer": "^2.1.0",
         "typescript": "^3.6.3"
     },
     "installConfig": {
