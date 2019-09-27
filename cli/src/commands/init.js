@@ -2,8 +2,46 @@ const { reporter, exec } = require('@dhis2/cli-helpers-engine')
 const path = require('path')
 const fs = require('fs-extra')
 const chalk = require('chalk')
+const gitignore = require('parse-gitignore')
 
 const makePaths = require('../lib/paths')
+
+const ignorePatterns = ['node_modules', '.d2', 'src/locales']
+
+const parseGitignore = gitignoreFile => {
+    const newSection = { name: 'DHIS2 Platform', patterns: [] }
+    if (fs.existsSync(gitignoreFile)) {
+        const content = fs.readFileSync(gitignoreFile)
+        const parsed = gitignore.parse(content)
+
+        const existingSection = parsed.sections.filter(
+            section => section.name === newSection.name
+        )[0]
+
+        if (existingSection) {
+            newSection.patterns = existingSection.patterns
+        }
+
+        ignorePatterns.forEach(pattern => {
+            if (!parsed.patterns.includes(pattern)) {
+                newSection.patterns.push(pattern)
+            }
+        })
+
+        if (existingSection) {
+            existingSection.patterns = newSection.patterns
+        } else {
+            if (newSection.patterns.length) {
+                parsed.sections.push(newSection)
+            }
+        }
+
+        return parsed.sections
+    }
+
+    newSection.patterns = ignorePatterns
+    return [newSection]
+}
 
 const handler = async ({ force, name, cwd, lib }) => {
     cwd = cwd || process.cwd()
@@ -134,6 +172,13 @@ const handler = async ({ force, name, cwd, lib }) => {
             )
         }
     }
+
+    const gitignoreFile = path.join(paths.base, '.gitignore')
+    reporter.info('Updating .gitignore...')
+    fs.writeFileSync(
+        gitignoreFile,
+        gitignore.stringify(parseGitignore(gitignoreFile))
+    )
 
     reporter.print('')
     reporter.info('SUCCESS!')
