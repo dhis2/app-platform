@@ -973,7 +973,7 @@
 "@dhis2/app-adapter@file:./adapter":
   version "1.0.0"
   dependencies:
-    "@dhis2/ui-core" "3.11.0"
+    "@dhis2/ui-core" "3.11.1"
     "@dhis2/ui-widgets" "^1.0.4"
     moment "^2.24.0"
 
@@ -990,19 +990,19 @@
     i18next "^10.3"
     moment "^2.24.0"
 
-"@dhis2/prop-types@^1.1.0", "@dhis2/prop-types@^1.1.1":
+"@dhis2/prop-types@^1.1.1":
   version "1.1.1"
   resolved "https://registry.yarnpkg.com/@dhis2/prop-types/-/prop-types-1.1.1.tgz#a70dd59e56cff13f6e49470677a4def0ac78ff6f"
   integrity sha512-ILyRcpPjFVtfxuZhyZ2yBp5NkIiTKBF/KfTtr6cSGqXnBIeV9XqHR+IT+C9jwcB96hxhuxBKmvfiaFQFT8uU6g==
   dependencies:
     prop-types "^15"
 
-"@dhis2/ui-core@3.11.0":
-  version "3.11.0"
-  resolved "https://registry.yarnpkg.com/@dhis2/ui-core/-/ui-core-3.11.0.tgz#eb74e229192d53e26087f5f344abbbd5417ea1fd"
-  integrity sha512-d3iFXDSe9+BTvl70LlSfz3S+Ec+l7fNz+Qh8T7EcOg+MAKUEA1tNjRp+B5Fh8A6LElXWc1CMkJYcDZNcO285vQ==
+"@dhis2/ui-core@3.11.1", "@dhis2/ui-core@^3.11.0":
+  version "3.11.1"
+  resolved "https://registry.yarnpkg.com/@dhis2/ui-core/-/ui-core-3.11.1.tgz#e7d053770675c30c9748e27360634aa78429ed3e"
+  integrity sha512-N2lr5Y8+ayl+cfFc/mOj6P9LkYqKM9jZAdWWvIhcexV4Jru2N0ZX4NqaxI4QlEFbKP9k1XoO5aNXlxr2A746ng==
   dependencies:
-    "@dhis2/prop-types" "^1.1.0"
+    "@dhis2/prop-types" "^1.1.1"
     classnames "^2.2.6"
     styled-jsx "^3.2.2"
 
@@ -1013,15 +1013,6 @@
   dependencies:
     classnames "^2.2.6"
     styled-jsx "^3.2.1"
-
-"@dhis2/ui-core@^3.11.0":
-  version "3.11.1"
-  resolved "https://registry.yarnpkg.com/@dhis2/ui-core/-/ui-core-3.11.1.tgz#e7d053770675c30c9748e27360634aa78429ed3e"
-  integrity sha512-N2lr5Y8+ayl+cfFc/mOj6P9LkYqKM9jZAdWWvIhcexV4Jru2N0ZX4NqaxI4QlEFbKP9k1XoO5aNXlxr2A746ng==
-  dependencies:
-    "@dhis2/prop-types" "^1.1.1"
-    classnames "^2.2.6"
-    styled-jsx "^3.2.2"
 
 "@dhis2/ui-widgets@^1.0.4":
   version "1.0.8"
@@ -8522,9 +8513,9 @@ react-test-renderer@^16.0.0-0, react-test-renderer@^16.8.6:
     scheduler "^0.15.0"
 
 react@^16.8.6:
-  version "16.9.0"
-  resolved "https://registry.yarnpkg.com/react/-/react-16.9.0.tgz#40ba2f9af13bc1a38d75dbf2f4359a5185c4f7aa"
-  integrity sha512-+7LQnFBwkiw+BobzOF6N//BdoNw0ouwmSJTEm9cglOOmsg/TMiFHZLe2sEoN5M7LgJTj9oHH0gxklfnQe66S1w==
+  version "16.10.1"
+  resolved "https://registry.yarnpkg.com/react/-/react-16.10.1.tgz#967c1e71a2767dfa699e6ba702a00483e3b0573f"
+  integrity sha512-2bisHwMhxQ3XQz4LiJJwG3360pY965pTl/MRrZYxIBKVj4fOHoDs5aZAkYXGxDRO1Li+SyjTAilQEbOmtQJHzA==
   dependencies:
     loose-envify "^1.1.0"
     object-assign "^4.1.1"
