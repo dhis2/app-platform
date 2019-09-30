@@ -6,7 +6,7 @@ const gitignore = require('parse-gitignore')
 
 const makePaths = require('../lib/paths')
 
-const ignorePatterns = ['node_modules', '.d2', 'src/locales']
+const ignorePatterns = ['node_modules', '.d2', 'src/locales', 'build']
 
 const parseGitignore = gitignoreFile => {
     const newSection = { name: 'DHIS2 Platform', patterns: [] }
@@ -36,11 +36,39 @@ const parseGitignore = gitignoreFile => {
             }
         }
 
+        const defaultSection = {
+            name: null,
+            patterns: parsed.patterns.filter(pattern => {
+                if (
+                    parsed.sections.some(section =>
+                        section.patterns.includes(pattern)
+                    )
+                ) {
+                    return false
+                }
+                return true
+            }),
+        }
+        parsed.sections.unshift(defaultSection)
+
         return parsed.sections
     }
 
     newSection.patterns = ignorePatterns
     return [newSection]
+}
+
+const writeGitignore = (gitignoreFile, sections) => {
+    const format = section => {
+        if (section.name === null && section.patterns.length) {
+            return section.patterns.join('\n') + '\n\n'
+        }
+        if (section.patterns.length) {
+            return gitignore.format(section)
+        }
+        return ''
+    }
+    fs.writeFileSync(gitignoreFile, gitignore.stringify(sections, format))
 }
 
 const handler = async ({ force, name, cwd, lib }) => {
@@ -175,10 +203,8 @@ const handler = async ({ force, name, cwd, lib }) => {
 
     const gitignoreFile = path.join(paths.base, '.gitignore')
     reporter.info('Updating .gitignore...')
-    fs.writeFileSync(
-        gitignoreFile,
-        gitignore.stringify(parseGitignore(gitignoreFile))
-    )
+    const sections = parseGitignore(gitignoreFile)
+    writeGitignore(gitignoreFile, sections)
 
     reporter.print('')
     reporter.info('SUCCESS!')
