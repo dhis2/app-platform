@@ -23,30 +23,6 @@ const prefixEnvForCRA = env =>
         {}
     )
 
-const getDHISConfig = () => {
-    const dhisConfigPath =
-        process.env.DHIS2_HOME && `${process.env.DHIS2_HOME}/config`
-
-    let dhisConfig
-    try {
-        dhisConfig = require(dhisConfigPath)
-    } catch (e) {
-        // Failed to load config file - use default config
-        reporter.debug(`\nWARNING! Failed to load DHIS config:`, e.message)
-        dhisConfig = {
-            baseUrl: 'http://localhost:8080',
-            authorization: 'Basic YWRtaW46ZGlzdHJpY3Q=', // admin:district
-        }
-    }
-
-    return dhisConfig
-}
-
-const envFromDHISConfig = config => ({
-    DHIS2_BASE_URL: config.baseUrl,
-    DHIS2_AUTHORIZATION: config.authorization,
-})
-
 const makeShellEnv = vars =>
     Object.entries(vars).reduce(
         (out, [key, value]) => ({
@@ -59,7 +35,6 @@ const makeShellEnv = vars =>
 module.exports = vars => {
     const env = {
         ...prefixEnvForCRA({
-            ...envFromDHISConfig(getDHISConfig()),
             ...filterEnv(),
             ...makeShellEnv(vars),
         }),

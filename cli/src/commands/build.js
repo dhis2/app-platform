@@ -27,19 +27,31 @@ const getNodeEnv = () => {
     return null
 }
 
-// This is nasty and frankly wrong (also don't use long unweildy capitalized names in a URL!) but has to match the current DHIS2 app server
-// From https://github.com/dhis2/dhis2-core/blob/master/dhis-2/dhis-api/src/main/java/org/hisp/dhis/appmanager/App.java#L360-L371
-const getUrlFriendlyName = name =>
-    name
-        .trim()
-        .replace(/[^A-Za-z0-9\s-]/g, '')
-        .replace(/ /g, '-')
+const printBuildParam = (key, value) => {
+    reporter.print(chalk.green(` - ${key} =`), chalk.yellow(value))
+}
+const setAppParameters = (standalone, config) => {
+    process.env.PUBLIC_URL = process.env.PUBLIC_URL || '.'
+    printBuildParam('PUBLIC_URL', process.env.PUBLIC_URL)
+
+    if (
+        standalone === false ||
+        (typeof standalone === 'undefined' && !config.standalone)
+    ) {
+        process.env.DHIS2_BASE_URL =
+            process.env.DHIS2_BASE_URL || config.coreApp ? `..` : `../../..`
+        printBuildParam('DHIS2_BASE_URL', process.env.DHIS2_BASE_URL)
+    } else {
+        printBuildParam('DHIS2_BASE_URL', '<standalone>')
+    }
+}
 
 const handler = async ({
     cwd,
     mode,
     dev,
     watch,
+    standalone,
     shell: shellSource,
     force,
 }) => {
@@ -48,13 +60,14 @@ const handler = async ({
     mode = mode || (dev && 'development') || getNodeEnv() || 'production'
     loadEnvFiles(paths, mode)
 
-    reporter.info(`Build mode: ${chalk.bold(mode)}`)
+    printBuildParam('Build Mode', mode)
+
     const config = parseConfig(paths)
     const shell = makeShell({ config, paths })
 
-    process.env.PUBLIC_URL =
-        process.env.PUBLIC_URL ||
-        `/api/apps/${getUrlFriendlyName(config.title)}`
+    if (config.type === 'app') {
+        setAppParameters(standalone, config)
+    }
 
     await fs.remove(paths.buildOutput)
 
@@ -138,6 +151,12 @@ const command = {
             type: 'boolean',
             description: 'Watch source files for changes',
             default: false,
+        },
+        standalone: {
+            type: 'boolean',
+            description:
+                'Build in standalone mode (overrides the d2.config.js setting)',
+            default: undefined,
         },
     },
     handler,

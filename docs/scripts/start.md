@@ -1,6 +1,6 @@
 # d2 app scripts start
 
-Run a live-reloading development server on `localhost:3000`
+Run a live-reloading development server on localhost
 
 > **NOTE**: This command is currently unsupported for libraries
 

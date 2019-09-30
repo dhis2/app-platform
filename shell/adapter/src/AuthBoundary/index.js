@@ -24,11 +24,7 @@ export const AuthBoundary = ({ url, children }) => {
     }
 
     if (error) {
-        if (error.type === 'access') {
-            return <LoginModal url={url} />
-        }
-        console.log(JSON.stringify(error, undefined, 2))
-        throw error
+        return <LoginModal url={url} />
     }
 
     i18n.changeLanguage(data.userSettings.keyUiLocale)
