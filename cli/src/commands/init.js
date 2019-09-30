@@ -6,7 +6,7 @@ const gitignore = require('parse-gitignore')
 
 const makePaths = require('../lib/paths')
 
-const ignorePatterns = ['node_modules', '.d2', 'src/locales']
+const ignorePatterns = ['node_modules', '.d2', 'src/locales', 'build']
 
 const parseGitignore = gitignoreFile => {
     const newSection = { name: 'DHIS2 Platform', patterns: [] }
