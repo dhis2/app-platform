@@ -962,17 +962,19 @@
     i18next "^10.3"
     moment "^2.24.0"
 
-"@dhis2/prop-types@^1.1.0":
-  version "1.1.0"
-  resolved "https://registry.yarnpkg.com/@dhis2/prop-types/-/prop-types-1.1.0.tgz#6144470f336fbcf0fd9142c5ea402d03dfb92c2a"
-  integrity sha512-hHbkoqEbi7vcWcJG1VdBkjKBUFZGWj7VRkwr2GvRU3g1j7AXW5WzsrGGgd/4ejK4nQMardlkZmCrzw7+mkTcRg==
+"@dhis2/prop-types@^1.1.1":
+  version "1.1.1"
+  resolved "https://registry.yarnpkg.com/@dhis2/prop-types/-/prop-types-1.1.1.tgz#a70dd59e56cff13f6e49470677a4def0ac78ff6f"
+  integrity sha512-ILyRcpPjFVtfxuZhyZ2yBp5NkIiTKBF/KfTtr6cSGqXnBIeV9XqHR+IT+C9jwcB96hxhuxBKmvfiaFQFT8uU6g==
+  dependencies:
+    prop-types "^15"
 
 "@dhis2/ui-core@^3.11.0":
-  version "3.11.0"
-  resolved "https://registry.yarnpkg.com/@dhis2/ui-core/-/ui-core-3.11.0.tgz#eb74e229192d53e26087f5f344abbbd5417ea1fd"
-  integrity sha512-d3iFXDSe9+BTvl70LlSfz3S+Ec+l7fNz+Qh8T7EcOg+MAKUEA1tNjRp+B5Fh8A6LElXWc1CMkJYcDZNcO285vQ==
+  version "3.11.1"
+  resolved "https://registry.yarnpkg.com/@dhis2/ui-core/-/ui-core-3.11.1.tgz#e7d053770675c30c9748e27360634aa78429ed3e"
+  integrity sha512-N2lr5Y8+ayl+cfFc/mOj6P9LkYqKM9jZAdWWvIhcexV4Jru2N0ZX4NqaxI4QlEFbKP9k1XoO5aNXlxr2A746ng==
   dependencies:
-    "@dhis2/prop-types" "^1.1.0"
+    "@dhis2/prop-types" "^1.1.1"
     classnames "^2.2.6"
     styled-jsx "^3.2.2"
 
@@ -7161,7 +7163,7 @@ prompts@^2.0.1:
     kleur "^3.0.3"
     sisteransi "^1.0.3"
 
-prop-types@^15.6.2, prop-types@^15.7.2:
+prop-types@^15, prop-types@^15.6.2, prop-types@^15.7.2:
   version "15.7.2"
   resolved "https://registry.yarnpkg.com/prop-types/-/prop-types-15.7.2.tgz#52c41e75b8c87e72b9d9360e0206b99dcbffa6c5"
   integrity sha512-8QQikdH7//R2vurIJSutZ1smHYTcLpRWEOlHnzcWHmBYrOGUysKwSsrC89BCiFj3CbrfJ/nXFdJepOVrY1GCHQ==
