@@ -1,5 +1,6 @@
 import React from 'react'
 import AppAdapter from '@dhis2/app-adapter'
+import { ScreenCover, CircularLoader } from '@dhis2/ui-core'
 
 const D2App = React.lazy(() =>
     import(/*webpackChunkName: 'app'*/ './current-d2-app/app')
@@ -15,7 +16,13 @@ const appConfig = {
 
 const App = () => (
     <AppAdapter {...appConfig}>
-        <React.Suspense fallback={<div />}>
+        <React.Suspense
+            fallback={
+                <ScreenCover>
+                    <CircularLoader />
+                </ScreenCover>
+            }
+        >
             <D2App config={appConfig} />
         </React.Suspense>
     </AppAdapter>
