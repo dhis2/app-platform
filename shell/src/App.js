@@ -1,8 +1,6 @@
 import React from 'react'
+import AppAdapter from '@dhis2/app-adapter'
 
-const AppAdapter = React.lazy(() =>
-    import(/*webpackChunkName: 'app-adapter'*/ '@dhis2/app-adapter')
-)
 const D2App = React.lazy(() =>
     import(/*webpackChunkName: 'app'*/ './current-d2-app/app')
 ) // Automatic bundle splitting!
@@ -16,11 +14,11 @@ const appConfig = {
 }
 
 const App = () => (
-    <React.Suspense fallback={<div />}>
-        <AppAdapter {...appConfig}>
+    <AppAdapter {...appConfig}>
+        <React.Suspense fallback={<div />}>
             <D2App config={appConfig} />
-        </AppAdapter>
-    </React.Suspense>
+        </React.Suspense>
+    </AppAdapter>
 )
 
 export default App
