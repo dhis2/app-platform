@@ -10,3 +10,6 @@ msgstr ""
 
 msgid "Hello {{name}}"
 msgstr "Bonjour {{name}}"
+
+msgid "Have a great {{dayOfTheWeek}}!"
+msgstr "Bonne {{dayOfTheWeek}}!"

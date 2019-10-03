@@ -1,5 +1,6 @@
 import React from 'react'
 import i18n from './locales'
+import moment from 'moment'
 import { useDataQuery } from '@dhis2/app-runtime'
 import style from './App.style'
 
@@ -16,7 +17,16 @@ const Component = () => {
             {error && <span>ERROR</span>}
             {loading && <span>...</span>}
             {data && (
-                <h1>{i18n.t('Hello {{name}}', { name: data.me.name })}</h1>
+                <>
+                    <h1>{i18n.t('Hello {{name}}', { name: data.me.name })}</h1>
+                    <h3>
+                        {i18n.t('Have a great {{dayOfTheWeek}}!', {
+                            dayOfTheWeek: moment.weekdays(true)[
+                                moment().weekday()
+                            ],
+                        })}
+                    </h3>
+                </>
             )}
         </div>
     )

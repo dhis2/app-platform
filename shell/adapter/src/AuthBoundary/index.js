@@ -1,9 +1,9 @@
 import React from 'react'
 import { useDataQuery } from '@dhis2/app-runtime'
-import i18n from '../locales'
 
 import { ScreenCover, CircularLoader } from '@dhis2/ui-core'
 import { LoginModal } from './LoginModal'
+import { useLocale } from './useLocale'
 
 const settingsQuery = {
     userSettings: {
@@ -12,8 +12,8 @@ const settingsQuery = {
 }
 
 export const AuthBoundary = ({ url, children }) => {
-    i18n.changeLanguage(window.navigator.language)
     const { loading, error, data } = useDataQuery(settingsQuery)
+    useLocale(data && data.userSettings.keyUiLocale)
 
     if (loading) {
         return (
@@ -27,6 +27,5 @@ export const AuthBoundary = ({ url, children }) => {
         return <LoginModal url={url} />
     }
 
-    i18n.changeLanguage(data.userSettings.keyUiLocale)
     return children
 }
