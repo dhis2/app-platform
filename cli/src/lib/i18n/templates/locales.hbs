@@ -7,18 +7,14 @@
   // </auto-generated>
 //------------------------------------------------------------------------------
 import i18n from '@dhis2/d2-i18n';
-import moment from 'moment';
-{{#each locales}}
-import 'moment/locale/{{ this }}';
-{{/each}}
+
 {{#each langs as |lang key|}}
 import {{ lang }}Translations from './{{ lang }}/translations.json';
 {{/each}}
+
 const namespace = '{{ namespace }}';
-moment.locale('en');
 {{#each langs as |lang key|}}
 i18n.addResources('{{ lang }}', namespace, {{ lang }}Translations);
 {{/each}}
-i18n.setDefaultNamespace(namespace);
-i18n.changeLanguage('en');
+
 export default i18n;

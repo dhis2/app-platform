@@ -9,18 +9,21 @@ msgstr ""
 "PO-Revision-Date: 2019-06-18T09:28:13.445Z\n"
 
 msgid "Please sign in"
-msgstr "Se connecter"
+msgstr "Por favor iniciar sesión"
+
+msgid "Server"
+msgstr "Servidor"
 
 msgid "Username"
-msgstr "Nom d'utilizateur"
+msgstr "Nombre de usuario"
 
 msgid "Password"
-msgstr "Mot de passe"
+msgstr "Contraseña"
 
 msgid "Sign in"
-msgstr "Se connecter"
+msgstr "Iniciar sesión"
 
-msgid "An error occurred in the DHIS2 Maps application."
+msgid "An error occurred in the DHIS2 application."
 msgstr ""
 
 msgid "Something went wrong"

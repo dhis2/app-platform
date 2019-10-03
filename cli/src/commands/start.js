@@ -35,7 +35,7 @@ const handler = async ({ cwd, force, shell: shellSource }) => {
             await i18n.generate({
                 input: paths.i18nStrings,
                 output: paths.i18nLocales,
-                namespace: config.name || 'default',
+                namespace: 'default',
             })
 
             reporter.info('Bootstrapping local appShell...')

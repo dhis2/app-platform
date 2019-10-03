@@ -78,7 +78,7 @@ const handler = async ({
             await i18n.generate({
                 input: paths.i18nStrings,
                 output: paths.i18nLocales,
-                namespace: config.name || 'default',
+                namespace: 'default',
             })
 
             if (config.type === 'app') {
