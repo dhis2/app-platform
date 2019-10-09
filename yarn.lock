@@ -958,9 +958,9 @@
     prop-types "^15"
 
 "@dhis2/ui-core@^3.11.0":
-  version "3.11.1"
-  resolved "https://registry.yarnpkg.com/@dhis2/ui-core/-/ui-core-3.11.1.tgz#e7d053770675c30c9748e27360634aa78429ed3e"
-  integrity sha512-N2lr5Y8+ayl+cfFc/mOj6P9LkYqKM9jZAdWWvIhcexV4Jru2N0ZX4NqaxI4QlEFbKP9k1XoO5aNXlxr2A746ng==
+  version "3.12.0"
+  resolved "https://registry.yarnpkg.com/@dhis2/ui-core/-/ui-core-3.12.0.tgz#6216868b1bd76b816df8c3272c2b9200972f0858"
+  integrity sha512-9JYl0TP6Wkb2yD5OkiN4juHYxW37UYZF1egbCAxuUCx7Uox5HqUkzxaKw25bQKN+4684vDnIJgh0Z2qSTszg1g==
   dependencies:
     "@dhis2/prop-types" "^1.1.1"
     classnames "^2.2.6"
