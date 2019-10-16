@@ -17,7 +17,9 @@ If you have a local instance running with [`d2 cluster`](https://github.com/dhis
 
 ---
 
-## Named Import Compilation Error ([#69](https://github.com/dhis2/app-platform/issues/69))
+## Named Import Compilation Error
+
+_See [Issue #69](https://github.com/dhis2/app-platform/issues/69)_
 
 > `'<ImportName>' is not exported by node_modules/<package>/<file>.js`
 
@@ -40,9 +42,9 @@ We are hoping to support dynamic imports in the future, but for now you can work
 
 ```js
 // Import the default export
-import reactRouterDom from "react-router-dom";
+import reactRouterDom from 'react-router-dom'
 
 // Dereference the named export property
 // You can dereference multiple named exports in a single line
-const { BrowserRouter } = reactRouterDom;
+const { BrowserRouter } = reactRouterDom
 ```
