@@ -16,5 +16,7 @@ Options:
                     [choices: "development", "production"] [default: production]
   --dev       Build in development mode                                [boolean]
   --watch     Watch source files for changes          [boolean] [default: false]
+  --standalone  Build in standalone mode (overrides the d2.config.js setting)
+                                                                       [boolean]
   -h, --help  Show help                                                [boolean]
 ```
