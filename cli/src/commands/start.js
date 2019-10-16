@@ -1,5 +1,6 @@
 const { reporter } = require('@dhis2/cli-helpers-engine')
 const chalk = require('chalk')
+const detectPort = require('detect-port')
 
 const i18n = require('../lib/i18n')
 const compile = require('../lib/compile')
@@ -8,9 +9,15 @@ const makeShell = require('../lib/shell')
 const parseConfig = require('../lib/parseConfig')
 const exitOnCatch = require('../lib/exitOnCatch')
 const loadEnvFiles = require('../lib/loadEnvFiles')
-const { getShellPort } = require('../lib/shell/env')
 
-const handler = async ({ cwd, force, shell: shellSource }) => {
+const defaultPort = 3000
+
+const handler = async ({
+    cwd,
+    force,
+    port = process.env.PORT || defaultPort,
+    shell: shellSource,
+}) => {
     const paths = makePaths(cwd)
 
     const mode = 'development'
@@ -49,15 +56,24 @@ const handler = async ({ cwd, force, shell: shellSource }) => {
                 watch: true,
             })
 
-            reporter.print(chalk.dim('\n---\n'))
+            const newPort = await detectPort(port)
+            if (newPort !== port) {
+                reporter.print('')
+                reporter.warn(
+                    `Something is already running on port ${port}, using ${newPort} instead.`
+                )
+            }
+
+            reporter.print('')
             reporter.info('Starting development server...')
             reporter.print(
                 `The app ${chalk.bold(
                     config.name
-                )} is now available on port ${getShellPort()}`
+                )} is now available on port ${newPort}`
             )
-            reporter.print(chalk.dim('\n---\n'))
-            await shell.start()
+            reporter.print('')
+
+            await shell.start({ port: newPort })
         },
         {
             name: 'start',
@@ -72,6 +88,13 @@ const command = {
     aliases: 's',
     desc:
         'Start a development server running a DHIS2 app within the DHIS2 app-shell',
+    builder: {
+        port: {
+            alias: 'p',
+            type: 'number',
+            description: 'The port to use when running the development server',
+        },
+    },
     handler,
 }
 

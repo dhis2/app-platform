@@ -14,5 +14,6 @@ Options:
   --cwd       working directory to use (defaults to cwd)
   --version   Show version number                                      [boolean]
   --config    Path to JSON config file
+  --port, -p  The port to use when running the development server       [number]
   -h, --help  Show help                                                [boolean]
 ```
