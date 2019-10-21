@@ -80,7 +80,7 @@ const bundle = ({
                  * fore-knowledge of all the libraries an app/lib could depend on.
                  * See https://github.com/rollup/rollup-plugin-commonjs/issues/211#issuecomment-337897124
                  */
-                mainFields: ['main'],
+                mainFields: ['browser', 'main'],
             }),
             commonjs({ include: /node_modules/ }),
             visualize({
