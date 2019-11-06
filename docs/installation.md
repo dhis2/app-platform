@@ -10,4 +10,6 @@ To install the [App Platform Scripts](scripts) tool `d2-app-scripts` as a devDep
 > yarn add --dev @dhis2/cli-app-scripts
 ```
 
-When installed as a local devDependency, you can use the `d2-app-scripts` executable from within scripts in you `package.json` file.
+When installed as a local devDependency, you can use the
+`d2-app-scripts` executable from within scripts in you `package.json`
+file.
