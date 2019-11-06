@@ -19,7 +19,7 @@
         "build": "d2-app-scripts build"
     },
     "peerDependencies": {
-        "@dhis2/app-runtime": "^2.0.2",
+        "@dhis2/app-runtime": "^2.0.4",
         "@dhis2/d2-i18n": "^1.0.5",
         "@dhis2/ui-core": "^3.7.1",
         "classnames": "^2.2.6",

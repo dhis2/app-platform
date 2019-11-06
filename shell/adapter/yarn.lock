@@ -862,8 +862,13 @@
   resolved "https://registry.yarnpkg.com/@dhis2/app-runtime/-/app-runtime-2.0.2.tgz#f156f8e337cdd9dc9ca67857252e7e2cdae21569"
   integrity sha512-rt2PZYZHwOq7qkkyczLYBgfReaENwauxx8iaTimTwdJrAXRUPkbhjlor63/00XgAY95tsZL7nMK7x3TwiSUfpQ==
 
+"@dhis2/app-runtime@^2.0.4":
+  version "2.0.4"
+  resolved "https://registry.yarnpkg.com/@dhis2/app-runtime/-/app-runtime-2.0.4.tgz#9ae202fef3313094aef33a3e38d2c6c5d799c808"
+  integrity sha512-w5+C/fHSsuF0am5Tpvz53+tigEZzfz9ahkjXH3BiWxGVxwZGtdHjWfso1T5bJRiKhDTgf76TxIsQiC11W20WyA==
+
 "@dhis2/cli-app-scripts@file:../../cli":
-  version "1.5.4"
+  version "1.5.5"
   dependencies:
     "@babel/core" "^7.6.2"
     "@babel/plugin-proposal-class-properties" "^7.4.4"
