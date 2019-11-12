@@ -19,10 +19,11 @@
     "scripts": {
         "format": "d2-style js apply --all --no-stage",
         "install:example": "cd examples/simple-app && yarn install --force --check-files",
+        "install:shell": "cd shell && yarn",
         "build:adapter": "cd shell/adapter && yarn --force --check-files && yarn build",
         "build:cli": "cd cli && yarn build",
         "build:example": "cd examples/simple-app && yarn build --force",
-        "build": "yarn build:adapter && yarn build:cli && yarn install:example",
+        "build": "yarn build:adapter && yarn install:shell && yarn build:cli && yarn install:example",
         "start:example": "cd examples/simple-app && yarn start --force",
         "start": "yarn build && yarn start:example",
         "docs:serve": "d2-utils-docsite serve ./docs -o ./dist",
