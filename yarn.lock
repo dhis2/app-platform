@@ -4336,9 +4336,9 @@ husky@^3.0.8:
     slash "^3.0.0"
 
 i18next-conv@^9:
-  version "9.1.0"
-  resolved "https://registry.yarnpkg.com/i18next-conv/-/i18next-conv-9.1.0.tgz#c943f68b8881e966c13852bcd3162c2943ed5a06"
-  integrity sha512-RXi64K753q2U9FMzCE1jzzU/W8hU62oljbcyej3xpBylX3fP2NhIRWZBToLGPPYYzvpaP4GGG4HIvdKBcTc3iw==
+  version "9.2.0"
+  resolved "https://registry.yarnpkg.com/i18next-conv/-/i18next-conv-9.2.0.tgz#4aa9e238d2c955a935e4e7b75121827e734a985a"
+  integrity sha512-36Y8hU0yzPQ365y2g5Sb/uz735ZxdYLE0g1X56T1F4SSBHXtoSPRrF+2/qYgYB/5TkwX/vOXj1a0TDm16a1OTA==
   dependencies:
     bluebird "^3.5.3"
     chalk "^2.4.2"
