@@ -1,7 +1,6 @@
-const { reporter } = require('@dhis2/cli-helpers-engine')
+const { reporter, chalk } = require('@dhis2/cli-helpers-engine')
 const fs = require('fs-extra')
 const path = require('path')
-const chalk = require('chalk')
 
 const supportedExtensions = ['.js', '.jsx', '.ts', '.tsx']
 

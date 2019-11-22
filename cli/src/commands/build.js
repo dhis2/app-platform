@@ -1,7 +1,6 @@
-const { reporter } = require('@dhis2/cli-helpers-engine')
+const { reporter, chalk } = require('@dhis2/cli-helpers-engine')
 
 const fs = require('fs-extra')
-const chalk = require('chalk')
 const path = require('path')
 
 const i18n = require('../lib/i18n')

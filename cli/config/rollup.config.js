@@ -1,7 +1,6 @@
 // rollup.config.js
 const path = require('path')
 
-const chalk = require('chalk')
 const resolve = require('rollup-plugin-node-resolve')
 const babel = require('rollup-plugin-babel')
 const commonjs = require('rollup-plugin-commonjs')
@@ -10,7 +9,7 @@ const postcss = require('rollup-plugin-postcss')
 const replace = require('rollup-plugin-replace')
 const visualize = require('rollup-plugin-visualizer')
 
-const { reporter } = require('@dhis2/cli-helpers-engine')
+const { reporter, chalk } = require('@dhis2/cli-helpers-engine')
 
 const standardLibs = require('./standard-libs.json')
 

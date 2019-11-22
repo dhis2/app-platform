@@ -1,7 +1,6 @@
-const { reporter, exec } = require('@dhis2/cli-helpers-engine')
+const { reporter, chalk, exec } = require('@dhis2/cli-helpers-engine')
 const path = require('path')
 const fs = require('fs-extra')
-const chalk = require('chalk')
 const gitignore = require('parse-gitignore')
 
 const makePaths = require('../lib/paths')
