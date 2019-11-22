@@ -1,12 +1,16 @@
-export default {
-    position: 'absolute',
-    top: 48,
-    bottom: 0,
-    left: 0,
-    right: 0,
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'center',
-    justifyContent: 'center',
-    fontSize: '1rem',
-}
+import css from 'styled-jsx/css'
+
+export default css`
+    div {
+        position: absolute;
+        top: 48px;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        font-size: 1rem;
+    }
+`

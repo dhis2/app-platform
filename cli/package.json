@@ -29,6 +29,7 @@
         "archiver": "^3.1.1",
         "babel-jest": "^24.9.0",
         "chalk": "^2.4.2",
+        "chokidar": "^3.3.0",
         "classnames": "^2.2.6",
         "detect-port": "^1.3.0",
         "dotenv": "^8.1.0",
@@ -61,7 +62,7 @@
     },
     "scripts": {
         "assets:prep": "rimraf assets && mkdir -p assets",
-        "assets:copy": "copyfiles ../shell/* \"../shell/**/*\" assets/shell --exclude node_modules --exclude .pnp --exclude .pnp.js",
+        "assets:copy": "copyfiles ../shell/* \"../shell/**/*\" assets/shell --exclude \"node_modules/**/*\" --exclude .pnp --exclude .pnp.js",
         "assets:clean": "cd assets/shell && rimraf node_modules .pnp.js .pnp adapter/node_modules adapter/.pnp.js adapter/.pnp",
         "build": "yarn assets:prep && yarn assets:copy",
         "prepublishOnly": "yarn build"

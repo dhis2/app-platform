@@ -13,7 +13,8 @@ const query = {
 const Component = () => {
     const { error, loading, data } = useDataQuery(query)
     return (
-        <div style={style}>
+        <div>
+            <style jsx>{style}</style>
             {error && <span>ERROR</span>}
             {loading && <span>...</span>}
             {data && (
@@ -33,3 +34,4 @@ const Component = () => {
 }
 
 export default Component
+//Test

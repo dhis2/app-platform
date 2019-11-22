@@ -1,7 +1,7 @@
 const path = require('path')
 const { reporter } = require('@dhis2/cli-helpers-engine')
 
-const shellAppDirname = 'src/current-d2-app'
+const shellAppDirname = 'src/D2App'
 
 module.exports = makePaths = (cwd = process.cwd()) => {
     const base = path.resolve(cwd)
