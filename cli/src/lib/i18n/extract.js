@@ -1,12 +1,11 @@
 const fs = require('fs-extra')
 const path = require('path')
-const chalk = require('chalk')
 const {
     ensureDirectoryExists,
     walkDirectory,
     arrayEqual,
 } = require('./helpers')
-const { reporter } = require('@dhis2/cli-helpers-engine')
+const { reporter, chalk } = require('@dhis2/cli-helpers-engine')
 const scanner = require('i18next-scanner')
 const { i18nextToPot, gettextToI18next } = require('i18next-conv')
 

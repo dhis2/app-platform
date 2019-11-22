@@ -1,5 +1,4 @@
-const { reporter } = require('@dhis2/cli-helpers-engine')
-const chalk = require('chalk')
+const { reporter, chalk } = require('@dhis2/cli-helpers-engine')
 const detectPort = require('detect-port')
 
 const i18n = require('../lib/i18n')
