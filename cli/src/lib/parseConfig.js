@@ -1,7 +1,6 @@
-const { reporter } = require('@dhis2/cli-helpers-engine')
+const { reporter, chalk } = require('@dhis2/cli-helpers-engine')
 const { defaultsDeep, has, isPlainObject } = require('lodash')
 const fs = require('fs-extra')
-const chalk = require('chalk')
 const parseAuthorString = require('parse-author')
 
 const requiredConfigFields = {

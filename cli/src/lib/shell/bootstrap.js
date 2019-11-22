@@ -1,7 +1,6 @@
 const fs = require('fs-extra')
 const path = require('path')
-const chalk = require('chalk')
-const { reporter, exec } = require('@dhis2/cli-helpers-engine')
+const { reporter, chalk, exec } = require('@dhis2/cli-helpers-engine')
 
 const bootstrapShell = async (paths, { shell, force = false } = {}) => {
     const source = shell ? path.resolve(shell) : paths.shellSource,
