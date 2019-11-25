@@ -61,7 +61,7 @@
     },
     "scripts": {
         "assets:prep": "rimraf assets && mkdir -p assets",
-        "assets:copy": "copyfiles ../shell/* \"../shell/**/*\" assets/shell --exclude \"node_modules/**/*\" --exclude .pnp --exclude .pnp.js",
+        "assets:copy": "copyfiles ../shell/* \"../shell/**/*\" assets/shell --exclude \"../shell/**/node_modules/**\" --exclude \"../shell/**/.pnp/**\" --exclude \"../shell/**/.pnp.js\"",
         "assets:clean": "cd assets/shell && rimraf node_modules .pnp.js .pnp adapter/node_modules adapter/.pnp.js adapter/.pnp",
         "build": "yarn assets:prep && yarn assets:copy",
         "prepublishOnly": "yarn build"
