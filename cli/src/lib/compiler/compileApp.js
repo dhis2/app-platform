@@ -100,7 +100,7 @@ const compileApp = async ({ config, paths, mode, watch }) => {
             const result = await babel.transformFileAsync(source, babelOptions)
             await fs.writeFile(destination, result.code)
         } else {
-            copyFile(source, destination)
+            await copyFile(source, destination)
         }
     }
 
