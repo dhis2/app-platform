@@ -22,12 +22,14 @@ module.exports = makePaths = (cwd = process.cwd()) => {
             __dirname,
             '../../assets/shell/src/App.js'
         ),
+        shellSourcePublic: path.join(__dirname, '../../assets/shell/public'),
 
         base,
         package: path.join(base, './package.json'),
         dotenv: path.join(base, './.env'),
         config: path.join(base, './d2.config.js'),
         src: path.join(base, './src'),
+        public: path.join(base, './public'),
         jestConfig: path.join(base, 'jest.config.js'),
         i18nStrings: path.join(base, './i18n'),
         i18nLocales: path.join(base, './src/locales'),
@@ -39,6 +41,7 @@ module.exports = makePaths = (cwd = process.cwd()) => {
         shellAppEntrypoint: path.join(base, './.d2/shell/src/App.js'),
         shellAppDirname,
         shellApp: path.join(base, `./.d2/shell/${shellAppDirname}`),
+        shellPublic: path.join(base, './.d2/shell/public'),
         shellBuildOutput: path.join(base, './.d2/shell/build'),
 
         buildOutput: path.join(base, './build'),

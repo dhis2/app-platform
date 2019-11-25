@@ -37,29 +37,16 @@ const overwriteEntrypoint = async ({ config, paths }) => {
     )
 }
 
-const compileApp = async ({ config, paths, mode, watch }) => {
-    const inputDir = paths.src
-    const outputDir = paths.shellApp
-
-    await overwriteEntrypoint({ config, paths })
-
-    fs.removeSync(outputDir)
-    fs.ensureDirSync(outputDir)
-
+const watchFiles = ({ inputDir, outputDir, processFileCallback, watch }) => {
     const compileFile = async source => {
         const relative = path.relative(inputDir, source)
         const destination = path.join(outputDir, relative)
         reporter.debug(
             `File ${relative} changed or added... dest: `,
-            path.relative(paths.base, destination)
+            path.relative(inputDir, relative)
         )
         await fs.ensureDir(path.dirname(destination))
-        if (path.extname(source) === '.js') {
-            const result = await babel.transformFileAsync(source, babelOptions)
-            await fs.writeFile(destination, result.code)
-        } else {
-            await fs.copy(source, destination)
-        }
+        await processFileCallback(source, destination)
     }
 
     const removeFile = async file => {
@@ -94,6 +81,43 @@ const compileApp = async ({ config, paths, mode, watch }) => {
             await watcher.close()
         })
     })
+}
+
+const compileApp = async ({ config, paths, mode, watch }) => {
+    await overwriteEntrypoint({ config, paths })
+
+    fs.removeSync(paths.shellApp)
+    fs.ensureDirSync(paths.shellApp)
+
+    fs.removeSync(paths.shellPublic)
+    fs.copySync(paths.shellSourcePublic, paths.shellPublic)
+
+    const copyFile = async (source, destination) => {
+        await fs.copy(source, destination)
+    }
+    const compileFile = async (source, destination) => {
+        if (path.extname(source) === '.js') {
+            const result = await babel.transformFileAsync(source, babelOptions)
+            await fs.writeFile(destination, result.code)
+        } else {
+            copyFile(source, destination)
+        }
+    }
+
+    return Promise.all([
+        watchFiles({
+            inputDir: paths.src,
+            outputDir: paths.shellApp,
+            processFileCallback: compileFile,
+            watch,
+        }),
+        watchFiles({
+            inputDir: paths.public,
+            outputDir: paths.shellPublic,
+            processFileCallback: copyFile,
+            watch,
+        }),
+    ])
 }
 
 module.exports = compileApp
