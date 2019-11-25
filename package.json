@@ -18,15 +18,18 @@
     },
     "scripts": {
         "format": "d2-style js apply --all --no-stage",
-        "install:shell": "cd shell && yarn",
-        "build:adapter": "cd shell/adapter && yarn --force --check-files && yarn build",
+        "install:shell": "cd shell && yarn --force --check-files",
+        "install:adapter": "cd shell/adapter && yarn --frozen-lockfile",
+        "install:example": "cd examples/simple-app && yarn --frozen-lockfile",
+        "build:adapter": "cd shell/adapter && yarn build",
         "build:cli": "cd cli && yarn build",
         "build:example": "cd examples/simple-app && yarn build --force",
         "build": "yarn build:adapter && yarn install:shell && yarn build:cli",
         "start:example": "cd examples/simple-app && yarn start --force",
         "start": "yarn build && yarn start:example",
         "docs:serve": "d2-utils-docsite serve ./docs -o ./dist",
-        "docs:build": "d2-utils-docsite build ./docs -o ./dist"
+        "docs:build": "d2-utils-docsite build ./docs -o ./dist",
+        "postinstall": "yarn install:adapter && yarn install:example"
     },
     "d2": {
         "docsite": {

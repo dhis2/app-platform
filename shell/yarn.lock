@@ -932,7 +932,7 @@
   version "1.0.0"
   dependencies:
     "@dhis2/ui-core" "^3.12.0"
-    "@dhis2/ui-widgets" "^2.0.1"
+    "@dhis2/ui-widgets" "^2.0.2"
     moment "^2.24.0"
 
 "@dhis2/app-runtime@^2.0.4":
@@ -964,10 +964,10 @@
     classnames "^2.2.6"
     styled-jsx "^3.2.2"
 
-"@dhis2/ui-widgets@^2.0.1":
-  version "2.0.1"
-  resolved "https://registry.yarnpkg.com/@dhis2/ui-widgets/-/ui-widgets-2.0.1.tgz#9c0a308ddaff265b6b06155f6838bfb7074b8183"
-  integrity sha512-Ncr+TORWdxylRnwjgoYtBjHsPozBTPMpt4lf/86mdH4RHnb1OaiDz6UXFApCjpwbxJBT6qf37z1dq2abV7Z3KQ==
+"@dhis2/ui-widgets@^2.0.2":
+  version "2.0.2"
+  resolved "https://registry.yarnpkg.com/@dhis2/ui-widgets/-/ui-widgets-2.0.2.tgz#6c60bd160d4f29d14d39761605e6482e049a836d"
+  integrity sha512-tNp1UpLGAP1vWNkRYMrKl6nYG2YzAUCWDoPGGqaj7upLDZ2TbCzjiqBIWPNO2oLDXpbCG/MnM/JbGmKnPlw6qQ==
   dependencies:
     "@dhis2/d2-i18n" "1.0.6"
     "@dhis2/ui-core" "3.12.0"
