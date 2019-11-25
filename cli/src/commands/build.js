@@ -4,7 +4,7 @@ const fs = require('fs-extra')
 const path = require('path')
 
 const i18n = require('../lib/i18n')
-const compile = require('../lib/compile')
+const compile = require('../lib/compiler')
 const makePaths = require('../lib/paths')
 const makeShell = require('../lib/shell')
 const parseConfig = require('../lib/parseConfig')
