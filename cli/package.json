@@ -22,6 +22,7 @@
         "@babel/preset-env": "^7.6.2",
         "@babel/preset-react": "^7.0.0",
         "@babel/preset-typescript": "^7.6.0",
+        "@comandeer/babel-plugin-banner": "^5.0.0",
         "@dhis2/app-runtime": "^2.0.4",
         "@dhis2/cli-helpers-engine": "^1.5.0",
         "@dhis2/d2-i18n": "^1.0.5",
