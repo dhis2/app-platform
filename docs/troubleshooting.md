@@ -19,6 +19,9 @@ If you have a local instance running with [`d2 cluster`](https://github.com/dhis
 
 ## Named Import Compilation Error
 
+!> **THIS ISSUE HAS BEEN RESOLVED**
+!> Prior to the release of version 1.6 this issue required a complicated and inefficient workaround. As of version 1.6.0 **you should no longer encounter this error** - please upgrade to the latest version of `@dhis2/cli-app-scripts` and open an [issue on GitHub](https://github.com/dhis2/app-platform/issues/new) if the problem persists.
+
 _See [Issue #69](https://github.com/dhis2/app-platform/issues/69)_
 
 > `'<ImportName>' is not exported by node_modules/<package>/<file>.js`
@@ -34,17 +37,4 @@ For example, when trying to import BrowserRouter from 'react-router-dom' you mig
 
 Line **4** of **src/App.js** is `import { BrowserRouter } from 'react-router-dom'`
 
-This is problematic because the re-export in `react-router-dom/index.js` is dynamic, rather than static. The compiler cannot easily resolve a static CommonJS import which is exported dynamically at runtime. See [this rollup issue](https://github.com/rollup/rollup-plugin-commonjs/issues/211#issuecomment-337897124) for the root cause.
-
-**Workaround**
-
-We are hoping to support dynamic imports in the future, but for now you can work around these named import errors by importing the **default export** and then _dereferencing the named export property_. Using the above example, this would look like so:
-
-```js
-// Import the default export
-import reactRouterDom from 'react-router-dom'
-
-// Dereference the named export property
-// You can dereference multiple named exports in a single line
-const { BrowserRouter } = reactRouterDom
-```
+To resolve, please upgrade to the latest version of `@dhis2/cli-app-scripts` (`yarn add @dhis2/cli-app-scripts`)
