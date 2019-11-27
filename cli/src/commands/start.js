@@ -2,7 +2,7 @@ const { reporter, chalk } = require('@dhis2/cli-helpers-engine')
 const detectPort = require('detect-port')
 
 const i18n = require('../lib/i18n')
-const compile = require('../lib/compiler')
+const { compile } = require('../lib/compiler')
 const makePaths = require('../lib/paths')
 const makeShell = require('../lib/shell')
 const parseConfig = require('../lib/parseConfig')
