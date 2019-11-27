@@ -27,7 +27,7 @@ const getNodeEnv = () => {
 }
 
 const printBuildParam = (key, value) => {
-    reporter.print(chalk.green(` - ${key} =`), chalk.yellow(value))
+    reporter.print(chalk.green(` - ${key} :`), chalk.yellow(value))
 }
 const setAppParameters = (standalone, config) => {
     process.env.PUBLIC_URL = process.env.PUBLIC_URL || '.'
@@ -59,7 +59,8 @@ const handler = async ({
     mode = mode || (dev && 'development') || getNodeEnv() || 'production'
     loadEnvFiles(paths, mode)
 
-    printBuildParam('Build Mode', mode)
+    reporter.print(chalk.green.bold('Build parameters:'))
+    printBuildParam('Mode', mode)
 
     const config = parseConfig(paths)
     const shell = makeShell({ config, paths })
@@ -85,19 +86,19 @@ const handler = async ({
                 await shell.bootstrap({ shell: shellSource, force })
             }
 
-            reporter.info(`Building app ${chalk.bold(config.name)}...`)
+            reporter.info(
+                `Building ${config.type} ${chalk.bold(config.name)}...`
+            )
             await compile({
                 config,
                 paths,
                 mode,
                 watch,
             })
-            reporter.info(chalk.dim(` - Built in mode ${chalk.bold(mode)}`))
 
             if (config.type === 'app') {
                 reporter.info('Building appShell...')
                 await shell.build()
-                reporter.info(chalk.dim(` - Built in mode ${chalk.bold(mode)}`))
             }
         },
         {

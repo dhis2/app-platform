@@ -22,7 +22,6 @@
         "@babel/preset-env": "^7.6.2",
         "@babel/preset-react": "^7.0.0",
         "@babel/preset-typescript": "^7.6.0",
-        "@comandeer/babel-plugin-banner": "^5.0.0",
         "@dhis2/app-runtime": "^2.0.4",
         "@dhis2/cli-helpers-engine": "^1.5.0",
         "@dhis2/d2-i18n": "^1.0.5",
@@ -62,7 +61,7 @@
     },
     "scripts": {
         "assets:prep": "rimraf assets && mkdir -p assets",
-        "assets:copy": "copyfiles ../shell/* \"../shell/**/*\" assets/shell --exclude \"../shell/**/node_modules/**\" --exclude \"../shell/**/.pnp/**\" --exclude \"../shell/**/.pnp.js\"",
+        "assets:copy": "copyfiles ../shell/* \"../shell/**/*\" assets/shell --all --exclude \"../shell/**/node_modules/**\" --exclude \"../shell/**/.pnp/**\" --exclude \"../shell/**/.pnp.js\"",
         "assets:clean": "cd assets/shell && rimraf node_modules .pnp.js .pnp adapter/node_modules adapter/.pnp.js adapter/.pnp",
         "build": "yarn assets:prep && yarn assets:copy",
         "prepublishOnly": "yarn build"

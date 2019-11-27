@@ -41,27 +41,13 @@ const compileLibrary = async ({ config, paths, mode, watch }) => {
         pkg,
     })
 
-    const outFile = path.join(outDir, `es/${config.type}.js`)
-
+    reporter.print(chalk.green(' - Entrypoint :'), chalk.yellow(input))
     reporter.print(
-        chalk.dim(
-            `Compiling ${chalk.bold(input)} to ${chalk.bold(
-                path.relative(process.cwd(), outFile)
-            )}`
-        )
+        chalk.green(' - Output Directory :'),
+        chalk.yellow(path.relative(paths.base, outDir))
     )
 
     reporter.debug('Rollup config', rollupConfig)
-
-    const copyOutput = async () => {
-        await fs.copy(outFile, path.join(paths.shellApp, `${config.type}.js`))
-        if (mode === 'production') {
-            await fs.copy(
-                outFile + '.map',
-                path.join(paths.shellApp, `${config.type}.js.map`)
-            )
-        }
-    }
 
     if (!watch) {
         // create a bundle
@@ -94,11 +80,6 @@ const compileLibrary = async ({ config, paths, mode, watch }) => {
             printRollupError(e)
             process.exit(1)
         }
-
-        await fs.remove(paths.shellApp)
-        await fs.ensureDir(paths.shellApp)
-
-        await copyOutput()
     } else {
         return new Promise((resolve, reject) => {
             reporter.debug('watching...')
@@ -111,7 +92,6 @@ const compileLibrary = async ({ config, paths, mode, watch }) => {
                 if (event.code === 'START') {
                     reporter.print(chalk.dim('Compiling...'))
                 } else if (event.code === 'END') {
-                    await copyOutput()
                     reporter.print(chalk.dim(' Compiled successfully!'))
                     resolve() // This lets us wait for the first successful compilation
                 } else if (event.code === 'ERROR') {

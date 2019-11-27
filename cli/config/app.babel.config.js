@@ -1,12 +1,5 @@
 module.exports = {
     plugins: [
-        [
-            require('@comandeer/babel-plugin-banner'),
-            {
-                banner: '/* eslint-disable */',
-            },
-        ],
-
         require('@babel/plugin-proposal-class-properties'),
 
         // Always build in "production" mode even when styled-jsx runtime may select "development"
