@@ -60,7 +60,7 @@
         "d2-app-scripts": "./bin/d2-app-scripts"
     },
     "scripts": {
-        "assets:prep": "rimraf assets && mkdir -p assets",
+        "assets:prep": "rimraf assets && mkdirp assets",
         "assets:copy": "copyfiles ../shell/* \"../shell/**/*\" assets/shell --all --exclude \"../shell/**/node_modules/**\" --exclude \"../shell/**/.pnp/**\" --exclude \"../shell/**/.pnp.js\"",
         "assets:clean": "cd assets/shell && rimraf node_modules .pnp.js .pnp adapter/node_modules adapter/.pnp.js adapter/.pnp",
         "build": "yarn assets:prep && yarn assets:copy",
