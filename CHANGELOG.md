@@ -1,3 +1,15 @@
+# [2.0.0](https://github.com/dhis2/app-platform/compare/v1.5.10...v2.0.0) (2019-11-28)
+
+
+### Features
+
+* remove rollup application compiler, delegate compilation to the shell ([#187](https://github.com/dhis2/app-platform/issues/187)) ([cae7a07](https://github.com/dhis2/app-platform/commit/cae7a070209e1e06e2e363ee24876ec8bf636d25))
+
+
+### BREAKING CHANGES
+
+* This may break some applications which use the former named import workaround, but removing that workaround should make treeshaking work!!
+
 ## [1.5.10](https://github.com/dhis2/app-platform/compare/v1.5.9...v1.5.10) (2019-11-22)
 
 
