@@ -10,7 +10,7 @@
         "cli"
     ],
     "devDependencies": {
-        "@dhis2/cli-style": "^4.1.1",
+        "@dhis2/cli-style": "^5.0.2",
         "@dhis2/cli-utils-docsite": "^1.1.2",
         "babel-eslint": "^10.0.3",
         "concurrently": "^5.0.0",
