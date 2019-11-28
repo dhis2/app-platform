@@ -26,13 +26,10 @@
         "enzyme": "^3.10.0",
         "enzyme-adapter-react-16": "^1.14.0",
         "eslint": "^5",
-        "react-scripts": "latest",
+        "react-scripts": "^3.2.0",
         "react-test-renderer": "^16.8.6",
         "rimraf": "^3.0.0",
         "source-map-explorer": "^2.1.0",
         "typescript": "^3.6.3"
-    },
-    "installConfig": {
-        "pnp": true
     }
 }

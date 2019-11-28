@@ -1,7 +1,7 @@
 const path = require('path')
 const { reporter } = require('@dhis2/cli-helpers-engine')
 
-const shellAppDirname = 'src/current-d2-app'
+const shellAppDirname = 'src/D2App'
 
 module.exports = makePaths = (cwd = process.cwd()) => {
     const base = path.resolve(cwd)
@@ -18,13 +18,18 @@ module.exports = makePaths = (cwd = process.cwd()) => {
         jestConfigDefaults: path.join(__dirname, '../../config/jest.config.js'),
 
         shellSource: path.join(__dirname, '../../assets/shell'),
+        shellSourceEntrypoint: path.join(
+            __dirname,
+            '../../assets/shell/src/App.js'
+        ),
+        shellSourcePublic: path.join(__dirname, '../../assets/shell/public'),
 
         base,
         package: path.join(base, './package.json'),
         dotenv: path.join(base, './.env'),
         config: path.join(base, './d2.config.js'),
         src: path.join(base, './src'),
-        appEntry: path.join(base, './src/App.js'),
+        public: path.join(base, './public'),
         jestConfig: path.join(base, 'jest.config.js'),
         i18nStrings: path.join(base, './i18n'),
         i18nLocales: path.join(base, './src/locales'),
@@ -33,8 +38,10 @@ module.exports = makePaths = (cwd = process.cwd()) => {
         devOut: path.join(base, './.d2/devOut'),
         appOutputFilename: 'App.js',
         shell: path.join(base, './.d2/shell'),
+        shellAppEntrypoint: path.join(base, './.d2/shell/src/App.js'),
         shellAppDirname,
         shellApp: path.join(base, `./.d2/shell/${shellAppDirname}`),
+        shellPublic: path.join(base, './.d2/shell/public'),
         shellBuildOutput: path.join(base, './.d2/shell/build'),
 
         buildOutput: path.join(base, './build'),

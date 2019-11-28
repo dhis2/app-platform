@@ -1,10 +1,9 @@
 const { reporter, chalk } = require('@dhis2/cli-helpers-engine')
-
 const path = require('path')
-const fs = require('fs-extra')
 const rollup = require('rollup')
+const fs = require('fs-extra')
 
-const rollupConfigBuilder = require('../../config/rollup.config')
+const rollupConfigBuilder = require('../../../config/rollup.config')
 
 const printRollupError = error => {
     reporter.debug('Rollup error', error)
@@ -21,12 +20,7 @@ const printRollupError = error => {
     }
 }
 
-const compile = async ({
-    config,
-    paths,
-    mode = 'development',
-    watch = false,
-} = {}) => {
+const compileLibrary = async ({ config, paths, mode, watch }) => {
     const input =
         (config.entryPoints && config.entryPoints[config.type]) ||
         'src/index.js'
@@ -43,31 +37,17 @@ const compile = async ({
         entryPoint: path.join(paths.base, input),
         outDir,
         mode,
-        bundleDeps: config.type === 'app',
+        bundleDeps: false,
         pkg,
     })
 
-    const outFile = path.join(outDir, `es/${config.type}.js`)
-
+    reporter.print(chalk.green(' - Entrypoint :'), chalk.yellow(input))
     reporter.print(
-        chalk.dim(
-            `Compiling ${chalk.bold(input)} to ${chalk.bold(
-                path.relative(process.cwd(), outFile)
-            )}`
-        )
+        chalk.green(' - Output Directory :'),
+        chalk.yellow(path.relative(paths.base, outDir))
     )
 
     reporter.debug('Rollup config', rollupConfig)
-
-    const copyOutput = async () => {
-        await fs.copy(outFile, path.join(paths.shellApp, `${config.type}.js`))
-        if (mode === 'production') {
-            await fs.copy(
-                outFile + '.map',
-                path.join(paths.shellApp, `${config.type}.js.map`)
-            )
-        }
-    }
 
     if (!watch) {
         // create a bundle
@@ -100,11 +80,6 @@ const compile = async ({
             printRollupError(e)
             process.exit(1)
         }
-
-        await fs.remove(paths.shellApp)
-        await fs.ensureDir(paths.shellApp)
-
-        await copyOutput()
     } else {
         return new Promise((resolve, reject) => {
             reporter.debug('watching...')
@@ -117,7 +92,6 @@ const compile = async ({
                 if (event.code === 'START') {
                     reporter.print(chalk.dim('Compiling...'))
                 } else if (event.code === 'END') {
-                    await copyOutput()
                     reporter.print(chalk.dim(' Compiled successfully!'))
                     resolve() // This lets us wait for the first successful compilation
                 } else if (event.code === 'ERROR') {
@@ -141,4 +115,4 @@ const compile = async ({
     }
 }
 
-module.exports = compile
+module.exports = compileLibrary
