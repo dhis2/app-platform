@@ -27,9 +27,9 @@
     styled-jsx "^3.2.2"
 
 "@dhis2/ui-widgets@^2.0.2":
-  version "2.0.2"
-  resolved "https://registry.yarnpkg.com/@dhis2/ui-widgets/-/ui-widgets-2.0.2.tgz#6c60bd160d4f29d14d39761605e6482e049a836d"
-  integrity sha512-tNp1UpLGAP1vWNkRYMrKl6nYG2YzAUCWDoPGGqaj7upLDZ2TbCzjiqBIWPNO2oLDXpbCG/MnM/JbGmKnPlw6qQ==
+  version "2.0.3"
+  resolved "https://registry.yarnpkg.com/@dhis2/ui-widgets/-/ui-widgets-2.0.3.tgz#cbdb7706ac4e9e17091d87ccd7b13287cb6e01a7"
+  integrity sha512-8Ssso/FQvhOjLOv2omfKBH7dWV9eRzWDOk9Mv7185qIWbUd7sjzfGOPaqZOuRiovh24++wGUjvr5SO6RFyJtcg==
   dependencies:
     "@dhis2/d2-i18n" "1.0.6"
     "@dhis2/ui-core" "3.12.0"
@@ -230,13 +230,6 @@ concurrently@^5.0.0:
     supports-color "^4.5.0"
     tree-kill "^1.2.1"
     yargs "^12.0.5"
-
-convert-source-map@1.6.0:
-  version "1.6.0"
-  resolved "https://registry.yarnpkg.com/convert-source-map/-/convert-source-map-1.6.0.tgz#51b537a8c43e0f04dec1993bffcdd504e758ac20"
-  integrity sha512-eFu7XigvxdZ1ETfbgPBohgyQ/Z++C0eEhTor0qRwBw9unw+L0/6V8wkSuGgzdThkiS5lSpdptOQPD8Ak40a+7A==
-  dependencies:
-    safe-buffer "~5.1.1"
 
 convert-source-map@1.7.0:
   version "1.7.0"
@@ -983,21 +976,7 @@ strip-eof@^1.0.0:
   resolved "https://registry.yarnpkg.com/strip-eof/-/strip-eof-1.0.0.tgz#bb43ff5598a6eb05d89b59fcd129c983313606bf"
   integrity sha1-u0P/VZim6wXYm1n80SnJgzE2Br8=
 
-styled-jsx@^3.2.2:
-  version "3.2.2"
-  resolved "https://registry.yarnpkg.com/styled-jsx/-/styled-jsx-3.2.2.tgz#03d02d26725195d17b6a979eb8d7c34761a16bf8"
-  integrity sha512-Xb9TPFY2REShznvHt/fw78wk+nxejTr8poepDeS5fRvkQ7lW49CDIWWGLzzALCLcKBIRFK/1Wi4PDZNetpig4w==
-  dependencies:
-    babel-plugin-syntax-jsx "6.18.0"
-    babel-types "6.26.0"
-    convert-source-map "1.6.0"
-    loader-utils "1.2.3"
-    source-map "0.7.3"
-    string-hash "1.1.3"
-    stylis "3.5.4"
-    stylis-rule-sheet "0.0.10"
-
-styled-jsx@^3.2.4:
+styled-jsx@^3.2.2, styled-jsx@^3.2.4:
   version "3.2.4"
   resolved "https://registry.yarnpkg.com/styled-jsx/-/styled-jsx-3.2.4.tgz#cbcdedcfb81d717fd355c4a0d8443f8e74527b60"
   integrity sha512-UMclQzI1lss38RhyjTf7SmtXJEMbB6Q9slDz8adGtzHjirYb1PPgeWLSP8SlZc8c9f3LF6axmtv+6K/553ANdg==
