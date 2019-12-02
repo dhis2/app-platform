@@ -962,21 +962,21 @@
     i18next "^10.3"
     moment "^2.24.0"
 
-"@dhis2/prop-types@^1.1.1":
-  version "1.1.1"
-  resolved "https://registry.yarnpkg.com/@dhis2/prop-types/-/prop-types-1.1.1.tgz#a70dd59e56cff13f6e49470677a4def0ac78ff6f"
-  integrity sha512-ILyRcpPjFVtfxuZhyZ2yBp5NkIiTKBF/KfTtr6cSGqXnBIeV9XqHR+IT+C9jwcB96hxhuxBKmvfiaFQFT8uU6g==
+"@dhis2/prop-types@^1.4.0":
+  version "1.4.0"
+  resolved "https://registry.yarnpkg.com/@dhis2/prop-types/-/prop-types-1.4.0.tgz#921e733bf55a03617414f60d303fa7eacee3ac52"
+  integrity sha512-vQomZH0sBLNrTVRMlwQ6HM8rn0kFiw6zt/Z8d6flTAuDuZrwD0Wi505dvbqbf7/bHDwpMnp4xz6v6ky1l+jfeg==
   dependencies:
     prop-types "^15"
 
-"@dhis2/ui-core@^3.11.0":
-  version "3.12.0"
-  resolved "https://registry.yarnpkg.com/@dhis2/ui-core/-/ui-core-3.12.0.tgz#6216868b1bd76b816df8c3272c2b9200972f0858"
-  integrity sha512-9JYl0TP6Wkb2yD5OkiN4juHYxW37UYZF1egbCAxuUCx7Uox5HqUkzxaKw25bQKN+4684vDnIJgh0Z2qSTszg1g==
+"@dhis2/ui-core@^4.0.3":
+  version "4.0.3"
+  resolved "https://registry.yarnpkg.com/@dhis2/ui-core/-/ui-core-4.0.3.tgz#1afd57dcb11f1f7a382846eccf06e5490026d002"
+  integrity sha512-DpgT/9UYAsuuI2yLAbIueGmo8WOrFwQLJ40UuKSSEHjtYGYp+XIZE0Py5ZSk87eMG2yzc3EwcmtqD2UpAAn2qg==
   dependencies:
-    "@dhis2/prop-types" "^1.1.1"
+    "@dhis2/prop-types" "^1.4.0"
     classnames "^2.2.6"
-    styled-jsx "^3.2.2"
+    styled-jsx "^3.2.4"
 
 "@jest/console@^24.7.1", "@jest/console@^24.9.0":
   version "24.9.0"
@@ -8593,7 +8593,7 @@ style-inject@^0.3.0:
   resolved "https://registry.yarnpkg.com/style-inject/-/style-inject-0.3.0.tgz#d21c477affec91811cc82355832a700d22bf8dd3"
   integrity sha512-IezA2qp+vcdlhJaVm5SOdPPTUu0FCEqfNSli2vRuSIBbu5Nq5UvygTk/VzeCqfLz2Atj3dVII5QBKGZRZ0edzw==
 
-styled-jsx@^3.2.2:
+styled-jsx@^3.2.2, styled-jsx@^3.2.4:
   version "3.2.4"
   resolved "https://registry.yarnpkg.com/styled-jsx/-/styled-jsx-3.2.4.tgz#cbcdedcfb81d717fd355c4a0d8443f8e74527b60"
   integrity sha512-UMclQzI1lss38RhyjTf7SmtXJEMbB6Q9slDz8adGtzHjirYb1PPgeWLSP8SlZc8c9f3LF6axmtv+6K/553ANdg==
