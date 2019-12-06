@@ -25,7 +25,7 @@
         "@dhis2/app-runtime": "^2.0.4",
         "@dhis2/cli-helpers-engine": "^1.5.0",
         "@dhis2/d2-i18n": "^1.0.5",
-        "@dhis2/ui-core": "^3.11.0",
+        "@dhis2/ui-core": "^4.1.1",
         "archiver": "^3.1.1",
         "babel-jest": "^24.9.0",
         "chokidar": "^3.3.0",

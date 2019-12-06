@@ -955,7 +955,14 @@
   dependencies:
     prop-types "^15"
 
-"@dhis2/ui-core@3.12.0", "@dhis2/ui-core@^3.11.0", "@dhis2/ui-core@^3.12.0":
+"@dhis2/prop-types@^1.4.0":
+  version "1.5.0"
+  resolved "https://registry.yarnpkg.com/@dhis2/prop-types/-/prop-types-1.5.0.tgz#7e69919f66698be373dd21940a8a770234ded6a1"
+  integrity sha512-dueFkkAMOIMbXiU7Mhr3Y+DBRyOd/rHA+5/IDiYWN1xttlUTSuGZLQ5AnJ7osBicEhx+qElaGbTdRYQj3SMBtA==
+  dependencies:
+    prop-types "^15"
+
+"@dhis2/ui-core@3.12.0", "@dhis2/ui-core@^3.12.0":
   version "3.12.0"
   resolved "https://registry.yarnpkg.com/@dhis2/ui-core/-/ui-core-3.12.0.tgz#6216868b1bd76b816df8c3272c2b9200972f0858"
   integrity sha512-9JYl0TP6Wkb2yD5OkiN4juHYxW37UYZF1egbCAxuUCx7Uox5HqUkzxaKw25bQKN+4684vDnIJgh0Z2qSTszg1g==
@@ -963,6 +970,15 @@
     "@dhis2/prop-types" "^1.1.1"
     classnames "^2.2.6"
     styled-jsx "^3.2.2"
+
+"@dhis2/ui-core@^4.1.1":
+  version "4.1.1"
+  resolved "https://registry.yarnpkg.com/@dhis2/ui-core/-/ui-core-4.1.1.tgz#d28b97446250ddeca683d0d00ada45f6f51a22a4"
+  integrity sha512-zFlU59c9eYPqp2VmEqeyNICFdRu+4wMzilAUdlVQ9h6pNUevAatzmsGaCoRO9mhny29n89Mm52pK8TGSGCDMHg==
+  dependencies:
+    "@dhis2/prop-types" "^1.4.0"
+    classnames "^2.2.6"
+    styled-jsx "^3.2.4"
 
 "@dhis2/ui-widgets@^2.0.2":
   version "2.0.2"
