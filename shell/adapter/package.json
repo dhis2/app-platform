@@ -8,7 +8,7 @@
         "build"
     ],
     "dependencies": {
-        "@dhis2/ui-core": "^3.12.0",
+        "@dhis2/ui-core": "^4.1.1",
         "@dhis2/ui-widgets": "^2.0.2",
         "moment": "^2.24.0"
     },
