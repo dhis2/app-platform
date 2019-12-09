@@ -1,6 +1,13 @@
 import React, { useState } from 'react'
 import i18n from '../locales'
-import { Modal, Button, InputField } from '@dhis2/ui-core'
+import {
+    Modal,
+    ModalTitle,
+    ModalContent,
+    ModalActions,
+    Button,
+    InputField,
+} from '@dhis2/ui-core'
 
 const staticUrl = process.env.REACT_APP_DHIS2_BASE_URL
 
@@ -47,8 +54,8 @@ export const LoginModal = ({ url }) => {
     return (
         <Modal open small>
             <form onSubmit={onSubmit}>
-                <Modal.Title>{i18n.t('Please sign in')}</Modal.Title>
-                <Modal.Content>
+                <ModalTitle>{i18n.t('Please sign in')}</ModalTitle>
+                <ModalContent>
                     {!staticUrl && (
                         <InputField
                             error={isDirty && !isValid(server)}
@@ -75,12 +82,12 @@ export const LoginModal = ({ url }) => {
                         value={password}
                         onChange={input => setPassword(input.value)}
                     />
-                </Modal.Content>
-                <Modal.Actions>
+                </ModalContent>
+                <ModalActions>
                     <Button primary type="submit">
                         {i18n.t('Sign in')}
                     </Button>
-                </Modal.Actions>
+                </ModalActions>
             </form>
         </Modal>
     )
