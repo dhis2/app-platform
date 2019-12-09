@@ -1,6 +1,13 @@
 import React, { useState } from 'react'
 import i18n from '../locales'
-import { Modal, Button, InputField } from '@dhis2/ui-core'
+import {
+    Modal,
+    ModalTitle,
+    ModalContent,
+    ModalActions,
+    Button,
+    InputField,
+} from '@dhis2/ui-core'
 
 const staticUrl = process.env.REACT_APP_DHIS2_BASE_URL
 
@@ -47,8 +54,8 @@ export const LoginModal = ({ url }) => {
     return (
         <Modal open small>
             <form onSubmit={onSubmit}>
-                <Modal.Title>{i18n.t('Please sign in')}</Modal.Title>
-                <Modal.Content>
+                <ModalTitle>{i18n.t('Please sign in')}</ModalTitle>
+                <ModalContent>
                     {!staticUrl && (
                         <InputField
                             error={isDirty && !isValid(server)}
@@ -56,7 +63,7 @@ export const LoginModal = ({ url }) => {
                             name="server"
                             type="text"
                             value={server}
-                            onChange={_ref => setServer(_ref.target.value)}
+                            onChange={input => setServer(input.value)}
                         />
                     )}
                     <InputField
@@ -65,7 +72,7 @@ export const LoginModal = ({ url }) => {
                         name="j_username"
                         type="text"
                         value={username}
-                        onChange={_ref => setUsername(_ref.target.value)}
+                        onChange={input => setUsername(input.value)}
                     />
                     <InputField
                         error={isDirty && !isValid(password)}
@@ -73,14 +80,14 @@ export const LoginModal = ({ url }) => {
                         name="j_password"
                         type="password"
                         value={password}
-                        onChange={_ref => setPassword(_ref.target.value)}
+                        onChange={input => setPassword(input.value)}
                     />
-                </Modal.Content>
-                <Modal.Actions>
+                </ModalContent>
+                <ModalActions>
                     <Button primary type="submit">
                         {i18n.t('Sign in')}
                     </Button>
-                </Modal.Actions>
+                </ModalActions>
             </form>
         </Modal>
     )
