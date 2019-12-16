@@ -10,11 +10,9 @@
         "cli"
     ],
     "devDependencies": {
-        "@dhis2/cli-style": "^5.0.3",
+        "@dhis2/cli-style": "^5.0.4",
         "@dhis2/cli-utils-docsite": "^1.1.2",
-        "babel-eslint": "^10.0.3",
-        "concurrently": "^5.0.0",
-        "eslint": "^6.4.0"
+        "concurrently": "^5.0.0"
     },
     "scripts": {
         "format": "d2-style js apply",
