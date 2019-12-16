@@ -1,1 +1,3 @@
 /cli/assets
+/shell/adapter/.pnp.js
+/shell/src/D2App/*

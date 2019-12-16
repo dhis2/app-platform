@@ -25,7 +25,6 @@ module.exports = (paths, config, publicUrl) => {
         display: 'standalone',
         theme_color: '#ffffff',
         background_color: '#ffffff',
-        display: 'standalone',
 
         scope: publicUrl,
     }
