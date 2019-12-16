@@ -947,7 +947,7 @@
     i18next "^10.3"
     moment "^2.24.0"
 
-"@dhis2/prop-types@^1.4.0":
+"@dhis2/prop-types@^1.4.0", "@dhis2/prop-types@^1.5.0":
   version "1.5.0"
   resolved "https://registry.yarnpkg.com/@dhis2/prop-types/-/prop-types-1.5.0.tgz#7e69919f66698be373dd21940a8a770234ded6a1"
   integrity sha512-dueFkkAMOIMbXiU7Mhr3Y+DBRyOd/rHA+5/IDiYWN1xttlUTSuGZLQ5AnJ7osBicEhx+qElaGbTdRYQj3SMBtA==
@@ -955,13 +955,12 @@
     prop-types "^15"
 
 "@dhis2/ui-core@^4.1.1":
-  version "4.1.1"
-  resolved "https://registry.yarnpkg.com/@dhis2/ui-core/-/ui-core-4.1.1.tgz#d28b97446250ddeca683d0d00ada45f6f51a22a4"
-  integrity sha512-zFlU59c9eYPqp2VmEqeyNICFdRu+4wMzilAUdlVQ9h6pNUevAatzmsGaCoRO9mhny29n89Mm52pK8TGSGCDMHg==
+  version "4.1.3"
+  resolved "https://registry.yarnpkg.com/@dhis2/ui-core/-/ui-core-4.1.3.tgz#540ab7f5e23967c206083aff8a9aef25dbe74e76"
+  integrity sha512-v4uhCs9xJO+Hj0XCIO/U6gV5KGUulwCiLFlHkFiaxLmi1iO/gtPseR+sUHgx9i06vRryszD8VTKpZFytz6/RPg==
   dependencies:
-    "@dhis2/prop-types" "^1.4.0"
+    "@dhis2/prop-types" "^1.5.0"
     classnames "^2.2.6"
-    styled-jsx "^3.2.4"
 
 "@dhis2/ui-widgets@^2.0.4":
   version "2.0.4"
