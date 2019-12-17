@@ -1,7 +1,16 @@
 {
     "name": "@dhis2/app-adapter",
-    "version": "1.0.0",
-    "private": true,
+    "version": "3.0.0",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/amcgee/dhis2-app-platform",
+        "directory": "adapter"
+    },
+    "author": "Austin McGee <austin@dhis2.org>",
+    "license": "BSD-3-Clause",
+    "publishConfig": {
+        "access": "public"
+    },
     "main": "build/cjs/lib.js",
     "module": "build/es/lib.js",
     "files": [
@@ -11,9 +20,11 @@
         "@dhis2/ui-widgets": "^2.0.4",
         "moment": "^2.24.0"
     },
-    "devDependencies": {},
+    "devDependencies": {
+        "@dhis2/cli-app-scripts": "3.0.0"
+    },
     "scripts": {
-        "build": "../../cli/bin/d2-app-scripts build"
+        "build": "d2-app-scripts build"
     },
     "peerDependencies": {
         "@dhis2/app-runtime": "^2.0.4",
@@ -25,8 +36,5 @@
         "react": "^16.8.6",
         "react-dom": "^16.8.6",
         "styled-jsx": "^3.2.1"
-    },
-    "installConfig": {
-        "pnp": true
     }
 }
