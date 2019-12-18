@@ -25,7 +25,7 @@
         "build:adapter": "cd adapter && yarn build",
         "build": "yarn build:adapter && yarn install:example",
         "install:example": "cd examples/simple-app && yarn --force --check-files",
-        "start:example": "cd examples/simple-app && yarn start",
+        "start:example": "cd examples/simple-app && yarn start --force",
         "start": "yarn build && yarn start:example",
         "docs:serve": "d2-utils-docsite serve ./docs -o ./dist",
         "docs:build": "d2-utils-docsite build ./docs -o ./dist"
