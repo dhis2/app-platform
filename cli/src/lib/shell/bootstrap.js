@@ -1,17 +1,17 @@
 const fs = require('fs-extra')
 const path = require('path')
-const { reporter, chalk, exec } = require('@dhis2/cli-helpers-engine')
+const { reporter, chalk } = require('@dhis2/cli-helpers-engine')
 
-const scriptsVersion = require(path.join(__dirname, '../../../package.json'))
-    .version
+const currentShellVersion = require('@dhis2/app-shell/package.json')
 
-const getShellVersion = metaFile => {
-    if (fs.existsSync(metaFile)) {
+const getShellVersion = shellDir => {
+    const shellPkg = path.join(shellDir, 'package.json')
+    if (fs.existsSync(shellPkg)) {
         try {
-            const meta = require(metaFile)
-            return meta.version
+            const pkg = require(shellPkg)
+            return pkg.version
         } catch (e) {
-            reporter.debug('Failed to load meta file', e)
+            reporter.debug('Failed to load shell package.json file', e)
             // ignore
         }
     }
@@ -20,31 +20,34 @@ const getShellVersion = metaFile => {
 
 const bootstrapShell = async (paths, { shell, force = false } = {}) => {
     const source = shell ? path.resolve(shell) : paths.shellSource,
-        dest = paths.shell,
-        metaFile = path.join(paths.d2, 'meta.json')
+        dest = paths.shell
 
     if (fs.pathExistsSync(dest)) {
-        const versionMismatch = getShellVersion(metaFile) !== scriptsVersion
-        if (versionMismatch) {
-            reporter.print(
-                chalk.dim(
-                    chalk.yellow(
-                        'Local shell version does not match scripts version'
+        if (!shell) {
+            const versionMismatch =
+                getShellVersion(dest) !== currentShellVersion
+            if (versionMismatch) {
+                reporter.print(
+                    chalk.dim(
+                        chalk.yellow(
+                            'Local shell version does not match scripts version'
+                        )
                     )
                 )
-            )
+            }
+
+            if (!force && !versionMismatch) {
+                reporter.print(
+                    chalk.dim(
+                        `A local appShell exists, skipping bootstrap. ${chalk.bold(
+                            'Use --force to update.'
+                        )}`
+                    )
+                )
+                return dest
+            }
         }
 
-        if (!shell && !force && !versionMismatch) {
-            reporter.print(
-                chalk.dim(
-                    `A local appShell exists, skipping bootstrap. ${chalk.bold(
-                        'Use --force to update.'
-                    )}`
-                )
-            )
-            return dest
-        }
         reporter.print(chalk.dim('Removing existing directory...'))
         await fs.remove(dest)
     }
@@ -60,18 +63,6 @@ const bootstrapShell = async (paths, { shell, force = false } = {}) => {
             src.indexOf('node_modules', source.length) === -1 &&
             src.indexOf('.pnp', source.length) === -1 &&
             src.indexOf(paths.shellAppDirname) === -1,
-    })
-
-    await fs.writeJSONSync(metaFile, {
-        version: scriptsVersion,
-    })
-
-    reporter.print(chalk.dim('Installing dependencies...'))
-
-    await exec({
-        cmd: 'yarn',
-        args: ['install', '--frozen-lockfile', '--prefer-offline'],
-        cwd: dest,
     })
 }
 
