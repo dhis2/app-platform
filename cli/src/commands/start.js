@@ -56,7 +56,7 @@ const handler = async ({
             })
 
             const newPort = await detectPort(port)
-            if (newPort !== port) {
+            if (String(newPort) !== String(port)) {
                 reporter.print('')
                 reporter.warn(
                     `Something is already running on port ${port}, using ${newPort} instead.`
