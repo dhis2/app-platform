@@ -11,7 +11,7 @@ import {
 
 const staticUrl = process.env.REACT_APP_DHIS2_BASE_URL
 
-export const LoginModal = ({ url }) => {
+export const LoginModal = () => {
     const [server, setServer] = useState(
         staticUrl || window.localStorage.DHIS2_BASE_URL || ''
     )
