@@ -939,9 +939,9 @@
     isbinaryfile "^4.0.2"
 
 "@dhis2/cli-style@^5.0.4":
-  version "5.0.4"
-  resolved "https://registry.yarnpkg.com/@dhis2/cli-style/-/cli-style-5.0.4.tgz#749498bccfd82e2b64e2e9eee871e18050d8d0a1"
-  integrity sha512-p3vUf3aLvDjC6VlFNb+L4H2bALFBj8kSwKmRCMIkDccXT6bi2EL6REdDAnqqEB2kN3skcPpw2G/+l/pT/vVuuQ==
+  version "5.1.0"
+  resolved "https://registry.yarnpkg.com/@dhis2/cli-style/-/cli-style-5.1.0.tgz#9f1411e7eec5daa890e93f1f6f8de77cb9ce0473"
+  integrity sha512-pREUO6Fi8U2vIyVKuMco67DU7HdvuMeH2Hc41QUQqVKL6houfkG/D9E7eTWsdQVoZT2l8IshGS2QHbkOZtoQGA==
   dependencies:
     "@commitlint/cli" "^8.3.3"
     "@commitlint/config-conventional" "^8.3.3"
@@ -956,7 +956,7 @@
     husky "^3.1.0"
     perfy "^1.1.5"
     prettier "^1.19.1"
-    semver "^6.3.0"
+    semver "^7.0.0"
     yargs "^14.2.0"
 
 "@dhis2/cli-utils-docsite@^1.1.2":
@@ -7867,6 +7867,11 @@ semver@6.3.0, semver@^6.0.0, semver@^6.1.2, semver@^6.2.0, semver@^6.3.0:
   version "6.3.0"
   resolved "https://registry.yarnpkg.com/semver/-/semver-6.3.0.tgz#ee0a64c8af5e8ceea67687b133761e1becbd1d3d"
   integrity sha512-b39TBaTSfV6yBrapU89p5fKekE2m/NwnDocOVruQFS1/veMgdzuPcnOM34M6CwxW8jH/lxEa5rBoDeUwu5HHTw==
+
+semver@^7.0.0:
+  version "7.1.1"
+  resolved "https://registry.yarnpkg.com/semver/-/semver-7.1.1.tgz#29104598a197d6cbe4733eeecbe968f7b43a9667"
+  integrity sha512-WfuG+fl6eh3eZ2qAf6goB7nhiCd7NPXhmyFxigB/TOkQyeLP8w8GsVehvtGNtnNmyboz4TgeK40B1Kbql/8c5A==
 
 send@latest:
   version "0.17.1"
