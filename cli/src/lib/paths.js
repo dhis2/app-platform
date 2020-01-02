@@ -6,7 +6,7 @@ const shellSource = path.dirname(
 )
 const shellAppDirname = 'src/D2App'
 
-module.exports = makePaths = (cwd = process.cwd()) => {
+module.exports = (cwd = process.cwd()) => {
     const base = path.resolve(cwd)
     const paths = {
         babelConfig: path.join(__dirname, '../../config/babel.config.js'),

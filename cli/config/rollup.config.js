@@ -27,7 +27,6 @@ const bundle = ({
     pkg,
     mode,
     bundleDeps,
-    cwd,
 }) => {
     const externals = new RegExp(
         Object.keys({
@@ -88,7 +87,7 @@ const bundle = ({
                 template: 'treemap',
             }),
         ],
-        onwarn(warning, warn) {
+        onwarn(warning) {
             // skip certain warnings
             if (warning.code === 'UNRESOLVED_IMPORT') {
                 reporter.error(

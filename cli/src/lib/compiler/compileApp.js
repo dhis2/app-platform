@@ -83,7 +83,7 @@ const watchFiles = ({ inputDir, outputDir, processFileCallback, watch }) => {
     })
 }
 
-const compileApp = async ({ config, paths, mode, watch }) => {
+const compileApp = async ({ config, paths, watch }) => {
     await overwriteEntrypoint({ config, paths })
 
     fs.removeSync(paths.shellApp)

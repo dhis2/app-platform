@@ -20,12 +20,12 @@ module.exports = ({ config, paths }) => ({
             pipe: false,
         })
     },
-    start: async () => {
+    start: async ({ port }) => {
         await exec({
             cmd: 'yarn',
             args: ['run', 'start'],
             cwd: paths.shell,
-            env: getEnv({ name: config.title }),
+            env: getEnv({ name: config.title, port }),
             pipe: false,
         })
     },

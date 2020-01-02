@@ -1,8 +1,7 @@
 const { config } = require('@dhis2/cli-style')
 
 module.exports = {
-    parser: 'babel-eslint',
-    extends: [config.eslint],
+    extends: [config.eslintReact],
     parserOptions: {
         allowImportExportEverywhere: true,
     },
