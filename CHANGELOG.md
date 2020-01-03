@@ -1,3 +1,10 @@
+# [3.1.0](https://github.com/dhis2/app-platform/compare/v3.0.2...v3.1.0) (2020-01-03)
+
+
+### Features
+
+* publish shell and adapter, fix dependency resolution ([#221](https://github.com/dhis2/app-platform/issues/221)) ([dd1c51a](https://github.com/dhis2/app-platform/commit/dd1c51a90843274d8b50c55a9818fc6b115dda02))
+
 ## [3.0.2](https://github.com/dhis2/app-platform/compare/v3.0.1...v3.0.2) (2019-12-20)
 
 
