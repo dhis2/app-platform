@@ -1,6 +1,9 @@
 const path = require('path')
 const { reporter } = require('@dhis2/cli-helpers-engine')
 
+const shellSource = path.dirname(
+    require.resolve('@dhis2/app-shell/package.json')
+)
 const shellAppDirname = 'src/D2App'
 
 module.exports = (cwd = process.cwd()) => {
@@ -17,12 +20,9 @@ module.exports = (cwd = process.cwd()) => {
         ),
         jestConfigDefaults: path.join(__dirname, '../../config/jest.config.js'),
 
-        shellSource: path.join(__dirname, '../../assets/shell'),
-        shellSourceEntrypoint: path.join(
-            __dirname,
-            '../../assets/shell/src/App.js'
-        ),
-        shellSourcePublic: path.join(__dirname, '../../assets/shell/public'),
+        shellSource,
+        shellSourceEntrypoint: path.join(shellSource, 'src/App.js'),
+        shellSourcePublic: path.join(shellSource, 'public'),
 
         base,
         package: path.join(base, './package.json'),

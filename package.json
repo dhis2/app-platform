@@ -6,28 +6,27 @@
         "type": "git",
         "url": "https://github.com/dhis2/app-platform.git"
     },
-    "workspaces": [
-        "cli"
-    ],
+    "workspaces": {
+        "packages": [
+            "cli",
+            "shell",
+            "adapter"
+        ]
+    },
     "devDependencies": {
         "@dhis2/cli-style": "^5.0.4",
         "@dhis2/cli-utils-docsite": "^1.1.2",
         "concurrently": "^5.0.0"
     },
     "scripts": {
-        "format": "d2-style js apply",
-        "install:shell": "cd shell && yarn --force --check-files",
-        "install:adapter": "cd shell/adapter && yarn --frozen-lockfile",
-        "install:example": "cd examples/simple-app && yarn --frozen-lockfile",
-        "build:adapter": "cd shell/adapter && yarn build",
-        "build:cli": "cd cli && yarn build",
-        "build:example": "cd examples/simple-app && yarn build --force",
-        "build": "yarn build:adapter && yarn install:shell && yarn build:cli",
+        "format": "d2-style js apply --all --no-stage",
+        "build:adapter": "cd adapter && yarn build",
+        "build": "yarn build:adapter && yarn install:example",
+        "install:example": "cd examples/simple-app && yarn --force --check-files",
         "start:example": "cd examples/simple-app && yarn start --force",
         "start": "yarn build && yarn start:example",
         "docs:serve": "d2-utils-docsite serve ./docs -o ./dist",
-        "docs:build": "d2-utils-docsite build ./docs -o ./dist",
-        "postinstall": "yarn install:adapter && yarn install:example"
+        "docs:build": "d2-utils-docsite build ./docs -o ./dist"
     },
     "d2": {
         "docsite": {

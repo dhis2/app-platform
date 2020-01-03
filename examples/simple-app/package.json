@@ -5,12 +5,17 @@
     "author": "Austin McGee <austin@dhis2.org>",
     "license": "BSD-3-Clause",
     "private": true,
-    "dependencies": {},
-    "devDependencies": {},
+    "devDependencies": {
+        "@dhis2/cli-app-scripts": "file:../../cli"
+    },
     "scripts": {
         "start": "../../cli/bin/d2-app-scripts start",
         "build": "../../cli/bin/d2-app-scripts build",
         "test": "../../cli/bin/d2-app-scripts test"
+    },
+    "resolutions": {
+        "@dhis2/app-shell": "file:../../shell",
+        "@dhis2/app-adapter": "file:../../adapter"
     },
     "peerDependencies": {
         "@dhis2/app-runtime": "*",
