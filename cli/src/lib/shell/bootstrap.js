@@ -2,7 +2,7 @@ const fs = require('fs-extra')
 const path = require('path')
 const { reporter, chalk } = require('@dhis2/cli-helpers-engine')
 
-const currentShellVersion = require('@dhis2/app-shell/package.json')
+const currentShellVersion = require('@dhis2/app-shell/package.json').version
 
 const getShellVersion = shellDir => {
     const shellPkg = path.join(shellDir, 'package.json')
@@ -64,6 +64,18 @@ const bootstrapShell = async (paths, { shell, force = false } = {}) => {
             src.indexOf('.pnp', source.length) === -1 &&
             src.indexOf(paths.shellAppDirname) === -1,
     })
+
+    const srcNodeModules = path.join(source, 'node_modules')
+    const destNodeModules = path.join(dest, 'node_modules')
+    if (fs.exists(srcNodeModules)) {
+        reporter.debug(
+            `Linking ${path.relative(
+                paths.base,
+                destNodeModules
+            )} to ${path.relative(paths.base, srcNodeModules)}...`
+        )
+        await fs.ensureSymlink(srcNodeModules, destNodeModules)
+    }
 }
 
 module.exports = bootstrapShell
