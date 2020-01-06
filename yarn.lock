@@ -1220,51 +1220,6 @@
   resolved "https://registry.yarnpkg.com/@dhis2/app-runtime/-/app-runtime-2.0.4.tgz#9ae202fef3313094aef33a3e38d2c6c5d799c808"
   integrity sha512-w5+C/fHSsuF0am5Tpvz53+tigEZzfz9ahkjXH3BiWxGVxwZGtdHjWfso1T5bJRiKhDTgf76TxIsQiC11W20WyA==
 
-"@dhis2/cli-app-scripts@3.0.0":
-  version "3.0.0"
-  resolved "https://registry.yarnpkg.com/@dhis2/cli-app-scripts/-/cli-app-scripts-3.0.0.tgz#db179e5c890259432012da70359bb1526092ab03"
-  integrity sha512-094+qpyRgdF0GvKklsspFWOgkV0qm9p6dAfuTvq/Dgi8ZtuDjSz10y+0bVJ4AtXKjS4yOoeUbQL3wGcqHPw9eA==
-  dependencies:
-    "@babel/core" "^7.6.2"
-    "@babel/plugin-proposal-class-properties" "^7.4.4"
-    "@babel/plugin-proposal-object-rest-spread" "^7.4.4"
-    "@babel/preset-env" "^7.6.2"
-    "@babel/preset-react" "^7.0.0"
-    "@babel/preset-typescript" "^7.6.0"
-    "@dhis2/app-runtime" "^2.0.4"
-    "@dhis2/cli-helpers-engine" "^1.5.0"
-    "@dhis2/d2-i18n" "^1.0.5"
-    "@dhis2/ui-core" "^4.1.1"
-    archiver "^3.1.1"
-    babel-jest "^24.9.0"
-    chokidar "^3.3.0"
-    classnames "^2.2.6"
-    detect-port "^1.3.0"
-    dotenv "^8.1.0"
-    dotenv-expand "^5.1.0"
-    fs-extra "^8.1.0"
-    gaze "^1.1.3"
-    handlebars "^4.3.3"
-    i18next-conv "^9"
-    i18next-scanner "^2.10.3"
-    jest-cli "^24.9.0"
-    lodash "^4.17.11"
-    moment "^2.24.0"
-    parse-author "^2.0.0"
-    parse-gitignore "^1.0.1"
-    prop-types "^15.7.2"
-    react "^16.8.6"
-    react-dom "^16.8.6"
-    rollup "^1.21.4"
-    rollup-plugin-babel "^4.3.2"
-    rollup-plugin-commonjs "^10.1.0"
-    rollup-plugin-json "^4.0.0"
-    rollup-plugin-node-resolve "^5.0.1"
-    rollup-plugin-postcss "^2.0.3"
-    rollup-plugin-replace "^2.2.0"
-    rollup-plugin-visualizer "^3.2.2"
-    styled-jsx "^3.2.2"
-
 "@dhis2/cli-helpers-engine@1.5.0", "@dhis2/cli-helpers-engine@^1.5.0":
   version "1.5.0"
   resolved "https://registry.yarnpkg.com/@dhis2/cli-helpers-engine/-/cli-helpers-engine-1.5.0.tgz#5bce097bcb226842d67cffae716b44f9b037390e"
@@ -6223,22 +6178,10 @@ glob@7.1.2:
     once "^1.3.0"
     path-is-absolute "^1.0.0"
 
-glob@^7.0.3, glob@^7.1.5, glob@^7.1.6:
+glob@^7.0.3, glob@^7.1.1, glob@^7.1.2, glob@^7.1.3, glob@^7.1.4, glob@^7.1.5, glob@^7.1.6, glob@~7.1.1:
   version "7.1.6"
   resolved "https://registry.yarnpkg.com/glob/-/glob-7.1.6.tgz#141f33b81a7c2492e125594307480c46679278a6"
   integrity sha512-LwaxwyZ72Lk7vZINtNNrywX0ZuLyStrdDtabefZKAY5ZGJhVtgdznluResxNmPitE0SAO+O26sWTHeKSI2wMBA==
-  dependencies:
-    fs.realpath "^1.0.0"
-    inflight "^1.0.4"
-    inherits "2"
-    minimatch "^3.0.4"
-    once "^1.3.0"
-    path-is-absolute "^1.0.0"
-
-glob@^7.1.1, glob@^7.1.2, glob@^7.1.3, glob@^7.1.4, glob@~7.1.1:
-  version "7.1.4"
-  resolved "https://registry.yarnpkg.com/glob/-/glob-7.1.4.tgz#aa608a2f6c577ad357e1ae5a5c26d9a8d1969255"
-  integrity sha512-hkLPepehmnKk41pUGm3sYxoFs/umurYfYJCerbXEyFIWcAzvpipAgVkBqqT9RBKMGjnq6kMuyYwha6csxbiM1A==
   dependencies:
     fs.realpath "^1.0.0"
     inflight "^1.0.4"
@@ -12272,9 +12215,9 @@ source-list-map@^2.0.0:
   integrity sha512-qnQ7gVMxGNxsiL4lEuJwe/To8UnK7fAnmbGEEH8RpLouuKbeEm0lhbQVFIrNSuB+G7tVrAlVsZgETT5nljf+Iw==
 
 source-map-explorer@^2.1.0:
-  version "2.1.2"
-  resolved "https://registry.yarnpkg.com/source-map-explorer/-/source-map-explorer-2.1.2.tgz#305d61efbb1d1ebbf24a9fffef718635054d509c"
-  integrity sha512-rgujHHHwf0/HCSTFbdTPJETGTgbGqVDD068Ob/wfV41u3AdU8iknSvGTDoU8vCIUeZuLnHX4JYsQ1RMd129XCQ==
+  version "2.2.1"
+  resolved "https://registry.yarnpkg.com/source-map-explorer/-/source-map-explorer-2.2.1.tgz#4bd236a1fe73e8b9db475f60197c48fc041928b8"
+  integrity sha512-vfjS5IRaENgXtTq2Bym0ctEorYGYNHLVCVZZeL1fvkD5iBoWKMlUhF/oFBTcTn9cxry1flplyvk0QGTROafB3Q==
   dependencies:
     btoa "^1.2.1"
     chalk "^3.0.0"
@@ -12286,7 +12229,7 @@ source-map-explorer@^2.1.0:
     open "^7.0.0"
     source-map "^0.7.3"
     temp "^0.9.1"
-    yargs "^15.0.2"
+    yargs "^15.1.0"
 
 source-map-resolve@^0.5.0, source-map-resolve@^0.5.2:
   version "0.5.2"
@@ -14244,10 +14187,10 @@ yargs@^14.2.0:
     y18n "^4.0.0"
     yargs-parser "^15.0.0"
 
-yargs@^15.0.0, yargs@^15.0.2:
-  version "15.0.2"
-  resolved "https://registry.yarnpkg.com/yargs/-/yargs-15.0.2.tgz#4248bf218ef050385c4f7e14ebdf425653d13bd3"
-  integrity sha512-GH/X/hYt+x5hOat4LMnCqMd8r5Cv78heOMIJn1hr7QPPBqfeC6p89Y78+WB9yGDvfpCvgasfmWLzNzEioOUD9Q==
+yargs@^15.0.0, yargs@^15.1.0:
+  version "15.1.0"
+  resolved "https://registry.yarnpkg.com/yargs/-/yargs-15.1.0.tgz#e111381f5830e863a89550bd4b136bb6a5f37219"
+  integrity sha512-T39FNN1b6hCW4SOIk1XyTOWxtXdcen0t+XYrysQmChzSipvhBO8Bj0nK1ozAasdk24dNWuMZvr4k24nz+8HHLg==
   dependencies:
     cliui "^6.0.0"
     decamelize "^1.2.0"
