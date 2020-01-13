@@ -1264,13 +1264,13 @@
     yargs "^14.2.0"
 
 "@dhis2/cli-utils-docsite@^1.1.2":
-  version "1.1.2"
-  resolved "https://registry.yarnpkg.com/@dhis2/cli-utils-docsite/-/cli-utils-docsite-1.1.2.tgz#5e46bad8682ea7ac06656b17dd25d3c962388db2"
-  integrity sha512-Vm8i+gM9bVHs2+nhqWDmzgkZA0KSPGvAxO/SQ3wFm2gnER3TS04e8a3qcb01QkckeiG/TZKw6FJb7KjQkf3uXA==
+  version "1.2.1"
+  resolved "https://registry.yarnpkg.com/@dhis2/cli-utils-docsite/-/cli-utils-docsite-1.2.1.tgz#045f892f40441c5c26c3671adf7179cbbbea2b68"
+  integrity sha512-OCfXsTBvbgKU5+Ni+xKFLnk4TYmefGiwpc/uAD/chRxRdkeFu4RVRKqs8G5gDpITJzJ4pCymaWhy1tchDZSMlA==
   dependencies:
     "@dhis2/cli-helpers-engine" "^1.5.0"
     "@dhis2/cli-helpers-template" "^1.0.2"
-    chokidar "^3.3.0"
+    chokidar "^3.3.1"
     front-matter "^3.0.2"
     fs-extra "^8.1.0"
     jsdoc-to-markdown "^5.0.3"
@@ -3364,7 +3364,7 @@ chokidar@^2.0.2, chokidar@^2.0.4, chokidar@^2.1.8:
   optionalDependencies:
     fsevents "^1.2.7"
 
-chokidar@^3.3.0:
+chokidar@^3.3.0, chokidar@^3.3.1:
   version "3.3.1"
   resolved "https://registry.yarnpkg.com/chokidar/-/chokidar-3.3.1.tgz#c84e5b3d18d9a4d77558fef466b1bf16bbeb3450"
   integrity sha512-4QYCEWOcK3OJrxwvyyAOxFuhpvOVCYkr33LPfFNBjAD/w3sEzWsp2BUOkI4l9bHvWioAd0rc6NlHUOEaWkTeqg==
