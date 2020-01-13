@@ -963,8 +963,8 @@
   resolved "https://registry.yarnpkg.com/@csstools/normalize.css/-/normalize.css-10.1.0.tgz#f0950bba18819512d42f7197e56c518aa491cf18"
   integrity sha512-ij4wRiunFfaJxjB0BdrYHIH8FxBJpOwNPhhAcunlmPdXudL1WQV1qoP9un6JsEBAgQH+7UXyyjh0g7jTxXK6tg==
 
-"@dhis2/app-adapter@3.0.2", "@dhis2/app-adapter@file:../../adapter":
-  version "3.0.2"
+"@dhis2/app-adapter@3.1.0", "@dhis2/app-adapter@file:../../adapter":
+  version "3.1.0"
   dependencies:
     "@dhis2/ui-widgets" "^2.0.4"
     moment "^2.24.0"
@@ -974,13 +974,13 @@
   resolved "https://registry.yarnpkg.com/@dhis2/app-runtime/-/app-runtime-2.0.4.tgz#9ae202fef3313094aef33a3e38d2c6c5d799c808"
   integrity sha512-w5+C/fHSsuF0am5Tpvz53+tigEZzfz9ahkjXH3BiWxGVxwZGtdHjWfso1T5bJRiKhDTgf76TxIsQiC11W20WyA==
 
-"@dhis2/app-shell@3.0.2", "@dhis2/app-shell@file:../../shell":
-  version "3.0.2"
+"@dhis2/app-shell@3.1.0", "@dhis2/app-shell@file:../../shell":
+  version "3.1.0"
   dependencies:
-    "@dhis2/app-adapter" "3.0.2"
+    "@dhis2/app-adapter" "3.1.0"
     "@dhis2/app-runtime" "^2.0.4"
     "@dhis2/d2-i18n" "^1.0.5"
-    "@dhis2/ui-core" "^4.1.1"
+    "@dhis2/ui-core" "^4.6.1"
     classnames "^2.2.6"
     moment "^2.24.0"
     prop-types "^15.7.2"
@@ -993,7 +993,7 @@
     typescript "^3.6.3"
 
 "@dhis2/cli-app-scripts@file:../../cli":
-  version "3.0.2"
+  version "3.1.0"
   dependencies:
     "@babel/core" "^7.6.2"
     "@babel/plugin-proposal-class-properties" "^7.4.4"
@@ -1001,7 +1001,7 @@
     "@babel/preset-env" "^7.6.2"
     "@babel/preset-react" "^7.0.0"
     "@babel/preset-typescript" "^7.6.0"
-    "@dhis2/app-shell" "3.0.2"
+    "@dhis2/app-shell" "3.1.0"
     "@dhis2/cli-helpers-engine" "^1.5.0"
     archiver "^3.1.1"
     babel-jest "^24.9.0"
@@ -1054,10 +1054,10 @@
   dependencies:
     prop-types "^15"
 
-"@dhis2/ui-core@^4.1.1":
-  version "4.3.1"
-  resolved "https://registry.yarnpkg.com/@dhis2/ui-core/-/ui-core-4.3.1.tgz#b2bfae8fc8e73a9a98580c9a6f3a32e4a5b5e459"
-  integrity sha512-QIWEbQuqW/6isYnRDzsBL3aYIgbU+W7J204eMgFH+qOYk+agpcOikI8lkaffNtxa7ziWSnK08ovsatfLlDq+dw==
+"@dhis2/ui-core@^4.6.1":
+  version "4.6.1"
+  resolved "https://registry.yarnpkg.com/@dhis2/ui-core/-/ui-core-4.6.1.tgz#62677590b3b32322dfa014b006e6226b637f0162"
+  integrity sha512-85ubddhmSRjDFPZqtSoTOZiPnfzHU1CyFyTXYmar/3lr8zl4mzY7aKScsEsTtJRWpN8ie86LWRqdGpbrV98VcQ==
   dependencies:
     "@dhis2/prop-types" "^1.5.0"
     classnames "^2.2.6"

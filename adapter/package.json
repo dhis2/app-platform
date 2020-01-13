@@ -29,7 +29,7 @@
     "peerDependencies": {
         "@dhis2/app-runtime": "^2.0.4",
         "@dhis2/d2-i18n": "^1.0.5",
-        "@dhis2/ui-core": "^4.1.1",
+        "@dhis2/ui-core": "^4.6.1",
         "classnames": "^2.2.6",
         "moment": "^2.24.0",
         "prop-types": "^15.7.2",
