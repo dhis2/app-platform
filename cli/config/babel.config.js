@@ -5,6 +5,7 @@ const isTest = process.env.NODE_ENV === 'test'
 const targets = isTest ? jestTargets : browserTargets
 
 module.exports = {
+    extends: './app.babel.config',
     presets: [
         require('@babel/preset-react'),
         require('@babel/preset-typescript'),
@@ -17,10 +18,13 @@ module.exports = {
         ],
     ],
     plugins: [
-        require('@babel/plugin-proposal-class-properties'),
-        require('@babel/plugin-proposal-object-rest-spread'),
+        /*
+         * Actually transform all the things we added syntax support for in app.babel.config.js
+         */
 
-        // Always build in "production" mode even when styled-jsx runtime may select "development"
-        [require('styled-jsx/babel'), { optimizeForSpeed: true }],
+        // plugin-proposal-dynamic-import will be handled by the bundler
+        require('@babel/plugin-proposal-class-properties'),
+        require('@babel/plugin-proposal-optional-chaining'),
+        require('@babel/plugin-proposal-nullish-coalescing-operator'),
     ],
 }
