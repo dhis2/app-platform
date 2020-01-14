@@ -1,6 +1,6 @@
 {
     "name": "@dhis2/app-adapter",
-    "version": "3.1.0",
+    "version": "3.1.1",
     "repository": {
         "type": "git",
         "url": "https://github.com/amcgee/dhis2-app-platform",
@@ -21,7 +21,7 @@
         "moment": "^2.24.0"
     },
     "devDependencies": {
-        "@dhis2/cli-app-scripts": "3.1.0"
+        "@dhis2/cli-app-scripts": "3.1.1"
     },
     "scripts": {
         "build": "d2-app-scripts build"
@@ -29,7 +29,7 @@
     "peerDependencies": {
         "@dhis2/app-runtime": "^2.0.4",
         "@dhis2/d2-i18n": "^1.0.5",
-        "@dhis2/ui-core": "^4.1.1",
+        "@dhis2/ui-core": "^4.6.1",
         "classnames": "^2.2.6",
         "moment": "^2.24.0",
         "prop-types": "^15.7.2",

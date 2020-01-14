@@ -1,3 +1,10 @@
+## [3.1.1](https://github.com/dhis2/app-platform/compare/v3.1.0...v3.1.1) (2020-01-13)
+
+
+### Bug Fixes
+
+* upgrade @dhis2/ui-core to v4.6.1 ([84b7669](https://github.com/dhis2/app-platform/commit/84b76696e059731357f3dd2ba86724ba9bacc17a))
+
 # [3.1.0](https://github.com/dhis2/app-platform/compare/v3.0.2...v3.1.0) (2020-01-03)
 
 
