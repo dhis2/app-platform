@@ -1,6 +1,6 @@
 {
     "name": "@dhis2/cli-app-scripts",
-    "version": "3.1.1",
+    "version": "3.1.2",
     "repository": {
         "type": "git",
         "url": "https://github.com/amcgee/dhis2-app-platform",
@@ -29,7 +29,7 @@
         "@babel/preset-env": "^7.6.2",
         "@babel/preset-react": "^7.0.0",
         "@babel/preset-typescript": "^7.6.0",
-        "@dhis2/app-shell": "3.1.1",
+        "@dhis2/app-shell": "3.1.2",
         "@dhis2/cli-helpers-engine": "^1.5.0",
         "archiver": "^3.1.1",
         "babel-jest": "^24.9.0",

@@ -1,3 +1,10 @@
+## [3.1.2](https://github.com/dhis2/app-platform/compare/v3.1.1...v3.1.2) (2020-01-14)
+
+
+### Bug Fixes
+
+* correctly support all CRA babel plugins ([#262](https://github.com/dhis2/app-platform/issues/262)) ([5f1d5dd](https://github.com/dhis2/app-platform/commit/5f1d5ddf4f62d172beecdc088c5ad558a24fec91))
+
 ## [3.1.1](https://github.com/dhis2/app-platform/compare/v3.1.0...v3.1.1) (2020-01-13)
 
 
