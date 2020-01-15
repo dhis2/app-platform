@@ -1,3 +1,10 @@
+## [3.1.3](https://github.com/dhis2/app-platform/compare/v3.1.2...v3.1.3) (2020-01-15)
+
+
+### Bug Fixes
+
+* **eslint:** allow eslint to internally require the custom config ([#264](https://github.com/dhis2/app-platform/issues/264)) ([27d6693](https://github.com/dhis2/app-platform/commit/27d66936ecb281981b6401312aa995fe4e3c3431)), closes [#263](https://github.com/dhis2/app-platform/issues/263)
+
 ## [3.1.2](https://github.com/dhis2/app-platform/compare/v3.1.1...v3.1.2) (2020-01-14)
 
 
