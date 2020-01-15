@@ -4,9 +4,7 @@ const fs = require('fs'),
 const customConfigFile = path.resolve('../../.eslintrc.js')
 const hasCustomConfig = fs.existsSync(customConfigFile)
 
-const extendsArray = hasCustomConfig
-    ? [require(customConfigFile)]
-    : ['react-app']
+const extendsArray = hasCustomConfig ? [customConfigFile] : ['react-app']
 
 module.exports = {
     extends: extendsArray,
