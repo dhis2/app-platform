@@ -16,7 +16,7 @@ module.exports = (paths, config, publicUrl) => {
             },
         },
         icons: {
-            '48': 'favicon-48x48.png',
+            '48': 'dhis2-app-icon.png',
         },
         developer: config.author,
 
