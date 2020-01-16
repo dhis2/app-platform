@@ -1,3 +1,10 @@
+# [3.2.0](https://github.com/dhis2/app-platform/compare/v3.1.4...v3.2.0) (2020-01-16)
+
+
+### Features
+
+* allow customization of the dhis2 app icon ([#265](https://github.com/dhis2/app-platform/issues/265)) ([86f1cd7](https://github.com/dhis2/app-platform/commit/86f1cd705678780e4eedd3210f2db3ff3cb14516))
+
 ## [3.1.4](https://github.com/dhis2/app-platform/compare/v3.1.3...v3.1.4) (2020-01-16)
 
 
