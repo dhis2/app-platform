@@ -29,16 +29,16 @@ The following configuration properties are supported:
 
 ```js
 const config = {
-  name: "my-app",
-  title: "My Application",
-  description: "A simple application for doing DHIS2 things",
+    name: 'my-app',
+    title: 'My Application',
+    description: 'A simple application for doing DHIS2 things',
 
-  type: "app",
+    type: 'app',
 
-  entryPoints: {
-    app: "./src/App"
-  }
-};
+    entryPoints: {
+        app: './src/App',
+    },
+}
 
-module.exports = config;
+module.exports = config
 ```

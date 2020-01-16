@@ -6,19 +6,19 @@ The Application Platform provides common build system, development tools, runtim
 
 The baseline features built-in to any platform application include:
 
-- Build and development tooling ([`@dhis2/cli-app-scripts`](scripts))
-  - I18n extract/generate
-  - Manifest generation
-  - Dependency injection
-  - Tests infrastructure
-  - Transpilation & Bundling
-  - App-shell encapsulation
-  - Publication & Release
-- Application runtime support ([`@dhis2/app-runtime`](https://runtime.dhis2.nu))
-  - UI Primitives ([@dhis2/ui-core](https://ui-core.dhis2.nu))
-  - API Data fetching
-  - Translations
-  - Configuration
-  - Server discovery
-  - Loading & Error handling
-  - Authentication
+-   Build and development tooling ([`@dhis2/cli-app-scripts`](scripts))
+    -   I18n extract/generate
+    -   Manifest generation
+    -   Dependency injection
+    -   Tests infrastructure
+    -   Transpilation & Bundling
+    -   App-shell encapsulation
+    -   Publication & Release
+-   Application runtime support ([`@dhis2/app-runtime`](https://runtime.dhis2.nu))
+    -   UI Primitives ([@dhis2/ui-core](https://ui-core.dhis2.nu))
+    -   API Data fetching
+    -   Translations
+    -   Configuration
+    -   Server discovery
+    -   Loading & Error handling
+    -   Authentication

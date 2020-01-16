@@ -14,6 +14,7 @@
     -   [Dependencies](usage/dependencies)
     -   [CSS](usage/css)
     -   [Static Files](usage/static-files)
+    -   [Custom App Icon](usage/app-icon)
 -   [**Architecture**](architecture)
 -   [**Troubleshooting**](troubleshooting.md)
 -   &nbsp;
