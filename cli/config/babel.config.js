@@ -1,11 +1,15 @@
+const path = require('path')
+
 const browserTargets = require('./.browserlistrc')
 const jestTargets = { node: 'current' }
 
 const isTest = process.env.NODE_ENV === 'test'
 const targets = isTest ? jestTargets : browserTargets
 
+const appBabelConfig = path.resolve(__dirname, 'app.babel.config')
+
 module.exports = {
-    extends: './app.babel.config',
+    extends: appBabelConfig,
     presets: [
         require('@babel/preset-react'),
         require('@babel/preset-typescript'),
