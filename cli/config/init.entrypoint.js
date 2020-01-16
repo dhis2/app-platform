@@ -12,11 +12,8 @@ const MyApp = () => (
     <div className="container">
         <style jsx>{`
             .container {
-                position: absolute;
-                top: 48px;
-                bottom: 0px;
-                left: 0px;
-                right: 0px;
+                width: 100%;
+                height: 100%;
                 display: flex;
                 flex-direction: column;
                 align-items: center;
