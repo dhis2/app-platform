@@ -1,3 +1,10 @@
+## [3.1.4](https://github.com/dhis2/app-platform/compare/v3.1.3...v3.1.4) (2020-01-16)
+
+
+### Bug Fixes
+
+* resolve the absolute path to the current directory ([#266](https://github.com/dhis2/app-platform/issues/266)) ([190c111](https://github.com/dhis2/app-platform/commit/190c1116389150d0064715acac63df61d6098aa9))
+
 ## [3.1.3](https://github.com/dhis2/app-platform/compare/v3.1.2...v3.1.3) (2020-01-15)
 
 
