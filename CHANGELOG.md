@@ -1,3 +1,10 @@
+## [3.2.1](https://github.com/dhis2/app-platform/compare/v3.2.0...v3.2.1) (2020-01-16)
+
+
+### Bug Fixes
+
+* control the viewport, always show the headerbar, size app container ([#267](https://github.com/dhis2/app-platform/issues/267)) ([3823d8a](https://github.com/dhis2/app-platform/commit/3823d8a76cbcbd248cf52289aee98c8300a18bc6))
+
 # [3.2.0](https://github.com/dhis2/app-platform/compare/v3.1.4...v3.2.0) (2020-01-16)
 
 
