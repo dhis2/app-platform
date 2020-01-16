@@ -14,9 +14,7 @@ const App = ({ url, apiVersion, appName, children }) => (
                 <style jsx>{styles}</style>
                 <HeaderBar appName={appName} />
                 <AuthBoundary url={url}>
-                    <div className="app-shell-app">
-                        {children}
-                    </div>
+                    <div className="app-shell-app">{children}</div>
                 </AuthBoundary>
             </div>
         </Provider>
