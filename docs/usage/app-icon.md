@@ -4,4 +4,4 @@ The App Icon should allow a user to quickly and uniquely identify your applicati
 
 ## Specifying a Custom App Icon
 
-To specify a custom App Icon, place the relevant file in the `public` directory and name it `dhis2-app-icon.png`. It must be in PNG format, and should include a transparent background. The recommended size of this image is 48x48 pixels. When no `public/dhis2-app-icon.png` is provided, a default icon (the DHIS2 logo) will be used.
+To specify a custom App Icon, place the relevant file in the `public` directory and name it `dhis2-app-icon.png`. It must be in PNG format, and should include a transparent background. The recommended size of this image is 48x48 pixels. When no `public/dhis2-app-icon.png` is provided, a default icon will be used.
