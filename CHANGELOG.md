@@ -1,3 +1,10 @@
+## [3.2.2](https://github.com/dhis2/app-platform/compare/v3.2.1...v3.2.2) (2020-01-17)
+
+
+### Bug Fixes
+
+* don't generate useless empty files if no translatable strings found ([#270](https://github.com/dhis2/app-platform/issues/270)) ([27a8ab8](https://github.com/dhis2/app-platform/commit/27a8ab8d13412b6831d45dcb0b105eaf1c8d4db6))
+
 ## [3.2.1](https://github.com/dhis2/app-platform/compare/v3.2.0...v3.2.1) (2020-01-16)
 
 
