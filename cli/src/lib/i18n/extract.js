@@ -1,22 +1,26 @@
 const fs = require('fs-extra')
 const path = require('path')
-const {
-    ensureDirectoryExists,
-    walkDirectory,
-    arrayEqual,
-} = require('./helpers')
+const { checkDirectoryExists, walkDirectory, arrayEqual } = require('./helpers')
 const { reporter, chalk } = require('@dhis2/cli-helpers-engine')
 const scanner = require('i18next-scanner')
 const { i18nextToPot, gettextToI18next } = require('i18next-conv')
 
 const extract = async ({ input, output }) => {
-    ensureDirectoryExists(input)
+    const relativeInput = './' + path.relative(process.cwd(), input)
+    if (!checkDirectoryExists(input)) {
+        reporter.error(
+            `I18n source directory ${chalk.bold(relativeInput)} does not exist.`
+        )
+        return false
+    }
 
-    reporter.debug(`[i18n-extract] Reading ${input}...`)
+    reporter.debug(`[i18n-extract] Reading ${chalk.bold(relativeInput)}...`)
 
     const files = walkDirectory(input)
     if (files.length === 0) {
-        reporter.error(`Directory ${input} has no files to translate.`)
+        reporter.error(
+            `Directory ${chalk.bold(relativeInput)} has no files to translate.`
+        )
         process.exit(1)
     }
 
@@ -35,8 +39,18 @@ const extract = async ({ input, output }) => {
 
     var parsed = parser.get()
     var en = {}
-
     Object.keys(parsed.en.translation).forEach(str => (en[str] = ''))
+
+    if (Object.keys(en).length === 0) {
+        reporter.print(
+            chalk.dim(
+                `No translatable strings found in directory ${chalk.bold(
+                    relativeInput
+                )}`
+            )
+        )
+        return true
+    }
 
     var targetPath = path.join(output, 'en.pot')
 
@@ -50,15 +64,15 @@ const extract = async ({ input, output }) => {
 
         if (arrayEqual(newMsgIds, msgIds)) {
             reporter.print(chalk.dim('No i18n updates found!'))
-            return
+            return true
         }
     }
 
     reporter.print(
         chalk.dim(
-            `Writing ${
-                Object.keys(en).length
-            } language strings to ${targetPath}...`
+            `Writing ${Object.keys(en).length} language strings to ${chalk.bold(
+                './' + targetPath
+            )}...`
         )
     )
     const result = await i18nextToPot('en', JSON.stringify(en))
@@ -66,6 +80,7 @@ const extract = async ({ input, output }) => {
     fs.ensureFileSync(targetPath)
     fs.writeFileSync(targetPath, result + '\n')
     reporter.debug('[i18n-extract] complete')
+    return true
 }
 
 module.exports = extract

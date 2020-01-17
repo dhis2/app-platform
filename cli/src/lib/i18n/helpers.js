@@ -4,21 +4,22 @@ const path = require('path')
 
 const supportedExtensions = ['.js', '.jsx', '.ts', '.tsx']
 
-module.exports.ensureDirectoryExists = dir => {
+module.exports.checkDirectoryExists = dir => {
     const dirPath = path.normalize(dir)
     try {
         const stat = fs.lstatSync(dirPath)
 
         if (!stat.isDirectory()) {
-            reporter.error(
+            reporter.debugErr(
                 `Directory ${chalk.bold(dirPath)} is not a directory.`
             )
-            process.exit(1)
+            return false
         }
     } catch (e) {
-        reporter.error(`Directory ${chalk.bold(dirPath)} does not exist.`)
-        process.exit(1)
+        reporter.debugErr(`Directory ${chalk.bold(dirPath)} does not exist.`)
+        return false
     }
+    return true
 }
 
 // src from component/array-equal
