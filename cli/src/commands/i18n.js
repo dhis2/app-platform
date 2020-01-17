@@ -1,4 +1,4 @@
-const { namespace } = require('@dhis2/cli-helpers-engine')
+const { namespace, reporter } = require('@dhis2/cli-helpers-engine')
 const i18n = require('../lib/i18n')
 
 const generate = {
@@ -19,15 +19,21 @@ const generate = {
         namespace: {
             alias: 'n',
             description: 'Namespace for app locale separation',
-            required: true,
+            default: 'default',
         },
     },
     handler: async argv => {
-        await i18n.generate({
+        const result = await i18n.generate({
             input: argv.path,
             output: argv.output,
             namespace: argv.namespace,
         })
+
+        if (!result) {
+            reporter.error('Failed to generate i18n code.')
+            process.exit(1)
+        }
+        reporter.info(`Done!`)
     },
 }
 const extract = {
@@ -46,7 +52,15 @@ const extract = {
         },
     },
     handler: async argv => {
-        await i18n.extract({ input: argv.path, output: argv.output })
+        const result = await i18n.extract({
+            input: argv.path,
+            output: argv.output,
+        })
+        if (!result) {
+            reporter.error('Failed to extract i18n strings.')
+            process.exit(1)
+        }
+        reporter.info(`Done!`)
     },
 }
 

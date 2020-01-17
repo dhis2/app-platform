@@ -1,10 +1,10 @@
 const fs = require('fs-extra')
 const path = require('path')
-const { reporter } = require('@dhis2/cli-helpers-engine')
+const { reporter, chalk } = require('@dhis2/cli-helpers-engine')
 const { gettextToI18next } = require('i18next-conv')
 const handlebars = require('handlebars')
 
-const { ensureDirectoryExists } = require('./helpers')
+const { checkDirectoryExists } = require('./helpers')
 const { langToLocale } = require('./locales')
 
 const writeTemplate = (outFile, data) => {
@@ -17,7 +17,15 @@ const writeTemplate = (outFile, data) => {
 }
 
 const generate = async ({ input, output, namespace }) => {
-    ensureDirectoryExists(input)
+    if (!checkDirectoryExists(input)) {
+        const relativeInput = './' + path.relative(process.cwd(), input)
+        reporter.debug(
+            `Source directory ${chalk.bold(
+                relativeInput
+            )} does not exist, skipping i18n generation`
+        )
+        return false
+    }
 
     // clean-up and create destination dir.
     const dst = path.normalize(output)
@@ -58,6 +66,7 @@ const generate = async ({ input, output, namespace }) => {
     })
 
     await Promise.all(promises)
+    return true
 }
 
 module.exports = generate
