@@ -71,6 +71,7 @@ const parseConfig = paths => {
             config.name = config.name || pkg.name
             config.version = config.version || pkg.version
             config.author = config.author || parseAuthor(pkg.author)
+            config.description = config.description || pkg.description
         }
         config.title = config.title || config.name
 
