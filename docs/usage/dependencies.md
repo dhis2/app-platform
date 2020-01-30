@@ -2,7 +2,7 @@
 
 ## DHIS2 Standard Libraries
 
-The following NPM packages are automatically provided by the platform, so their version is fixed and cannot be overwritten. You can reference these libraries from your source code, and can add them to your package's peer dependencies, but they should **not** be included as runtime dependencies (if they are, they will be ignored)
+The following NPM packages are automatically provided by the platform, so their version is fixed and cannot be overwritten. You can reference these libraries from your source code without specifying them as explicit dependencies.  If you specify a different version of one of these libraries as a runtime dependency in your `package.json`, particularly for dependencies like `react` and `@dhis2/app-runtime` which require stable references, you may need to add a `resolutions` field to ensure that you don't have duplicate versions in your application bundle.
 
 -   `@dhis2/app-runtime`
 -   `@dhis2/ui-core`
