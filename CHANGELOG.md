@@ -1,3 +1,10 @@
+## [3.2.3](https://github.com/dhis2/app-platform/compare/v3.2.2...v3.2.3) (2020-01-31)
+
+
+### Bug Fixes
+
+* pull description from package.json if not specified in config file ([#286](https://github.com/dhis2/app-platform/issues/286)) ([216d5d0](https://github.com/dhis2/app-platform/commit/216d5d07b94bc37208e1e54c10c111dcbbae13d3))
+
 ## [3.2.2](https://github.com/dhis2/app-platform/compare/v3.2.1...v3.2.2) (2020-01-17)
 
 
