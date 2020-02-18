@@ -1,3 +1,10 @@
+## [3.2.4](https://github.com/dhis2/app-platform/compare/v3.2.3...v3.2.4) (2020-02-18)
+
+
+### Bug Fixes
+
+* **cli-app-scripts:** use the same build dir for modes ([#302](https://github.com/dhis2/app-platform/issues/302)) ([dd2802b](https://github.com/dhis2/app-platform/commit/dd2802b854ac0759723e3e1b8f1a8225eb412029))
+
 ## [3.2.3](https://github.com/dhis2/app-platform/compare/v3.2.2...v3.2.3) (2020-01-31)
 
 

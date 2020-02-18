@@ -1,6 +1,6 @@
 {
     "name": "@dhis2/app-shell",
-    "version": "3.2.3",
+    "version": "3.2.4",
     "repository": {
         "type": "git",
         "url": "https://github.com/amcgee/dhis2-app-platform",
@@ -12,7 +12,7 @@
         "access": "public"
     },
     "dependencies": {
-        "@dhis2/app-adapter": "3.2.3",
+        "@dhis2/app-adapter": "3.2.4",
         "@dhis2/app-runtime": "^2.0.4",
         "@dhis2/d2-i18n": "^1.0.5",
         "@dhis2/ui-core": "^4.6.1",
