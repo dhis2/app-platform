@@ -24,10 +24,7 @@ const compileLibrary = async ({ config, paths, mode, watch }) => {
     const input =
         (config.entryPoints && config.entryPoints[config.type]) ||
         'src/index.js'
-    const outDir = mode === 'production' ? paths.buildOutput : paths.devOut
-
-    fs.removeSync(outDir)
-    fs.ensureDirSync(outDir)
+    const outDir = paths.buildOutput
 
     const pkg = require(paths.package)
 
@@ -50,6 +47,9 @@ const compileLibrary = async ({ config, paths, mode, watch }) => {
     reporter.debug('Rollup config', rollupConfig)
 
     if (!watch) {
+        fs.removeSync(outDir)
+        fs.ensureDirSync(outDir)
+
         // create a bundle
         try {
             const bundle = await rollup.rollup(rollupConfig)
@@ -81,6 +81,8 @@ const compileLibrary = async ({ config, paths, mode, watch }) => {
             process.exit(1)
         }
     } else {
+        fs.ensureDirSync(outDir)
+
         return new Promise((resolve, reject) => {
             reporter.debug('watching...')
             const watcher = rollup.watch({
