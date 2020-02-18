@@ -35,7 +35,6 @@ module.exports = (cwd = process.cwd()) => {
         i18nLocales: path.join(base, './src/locales'),
 
         d2: path.join(base, './.d2/'),
-        devOut: path.join(base, './.d2/devOut'),
         appOutputFilename: 'App.js',
         shell: path.join(base, './.d2/shell'),
         shellAppEntrypoint: path.join(base, './.d2/shell/src/App.js'),
