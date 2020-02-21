@@ -1,3 +1,10 @@
+## [3.2.5](https://github.com/dhis2/app-platform/compare/v3.2.4...v3.2.5) (2020-02-21)
+
+
+### Bug Fixes
+
+* height in safari (DHIS2-8277) ([#303](https://github.com/dhis2/app-platform/issues/303)) ([0a53aea](https://github.com/dhis2/app-platform/commit/0a53aea4c91bb9394ec667a1c6f17f13e230e5d5))
+
 ## [3.2.4](https://github.com/dhis2/app-platform/compare/v3.2.3...v3.2.4) (2020-02-18)
 
 
