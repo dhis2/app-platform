@@ -11,5 +11,6 @@ export const styles = css`
     div.app-shell-app {
         flex: 1 1 auto;
         overflow: auto;
+        height: 100%;
     }
 `
