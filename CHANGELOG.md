@@ -1,3 +1,10 @@
+## [3.2.6](https://github.com/dhis2/app-platform/compare/v3.2.5...v3.2.6) (2020-03-20)
+
+
+### Bug Fixes
+
+* explicitly include styled-jsx as cli dependency ([#322](https://github.com/dhis2/app-platform/issues/322)) ([c0eab17](https://github.com/dhis2/app-platform/commit/c0eab17540658f94e10e9ea203197ecb3ae39210))
+
 ## [3.2.5](https://github.com/dhis2/app-platform/compare/v3.2.4...v3.2.5) (2020-02-21)
 
 
