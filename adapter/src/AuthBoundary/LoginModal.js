@@ -19,7 +19,7 @@ export const LoginModal = () => {
     const [password, setPassword] = useState('')
     const [isDirty, setIsDirty] = useState(false)
 
-    const isValid = val => val && val.length > 3
+    const isValid = val => val && val.length >= 2
 
     const onSubmit = async e => {
         e.preventDefault()
