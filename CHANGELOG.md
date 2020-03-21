@@ -1,3 +1,10 @@
+## [3.2.7](https://github.com/dhis2/app-platform/compare/v3.2.6...v3.2.7) (2020-03-21)
+
+
+### Bug Fixes
+
+* allow usernames login username or password to be shorter than 4 characters ([#325](https://github.com/dhis2/app-platform/issues/325)) ([625dbfa](https://github.com/dhis2/app-platform/commit/625dbfa470696a7215eba52713be6e2a7f2e9302))
+
 ## [3.2.6](https://github.com/dhis2/app-platform/compare/v3.2.5...v3.2.6) (2020-03-20)
 
 
