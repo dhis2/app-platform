@@ -205,6 +205,13 @@ const handler = async ({ force, name, cwd, lib }) => {
     const sections = parseGitignore(gitignoreFile)
     writeGitignore(gitignoreFile, sections)
 
+    if (fs.existsSync(paths.readme) && !force) {
+        reporter.warn('A README already exists, use --force to overwrite it')
+    } else {
+        reporter.info('Writing README...')
+        fs.copyFileSync(paths.readmeDefault, paths.readme)
+    }
+
     reporter.print('')
     reporter.info('SUCCESS!')
     const cdCmd = name != '.' ? `cd ${name} && ` : ''
