@@ -24,8 +24,22 @@ module.exports = {
 
         // Automatically include a React import when JSX is present
         require('babel-plugin-react-require'),
-
-        // Always build in "production" mode even when styled-jsx runtime may select "development"
-        [require('styled-jsx/babel'), { optimizeForSpeed: true }],
     ],
+    env: {
+        production: {
+            plugins: [
+                [require('styled-jsx/babel'), { optimizeForSpeed: true }],
+            ]
+        },
+        development: {
+            plugins: [
+                [require('styled-jsx/babel'), { optimizeForSpeed: true }],
+            ]
+        },
+        test: {
+            plugins: [
+                require('styled-jsx/babel-test')
+            ]
+        }
+    }
 }
