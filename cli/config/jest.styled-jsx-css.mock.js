@@ -1,5 +1,5 @@
-function css() {
-    return ''
-}
+const css = () => ''
+css.global = () => ''
+css.resolve = () => ''
 
 module.exports = css
