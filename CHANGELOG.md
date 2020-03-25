@@ -1,3 +1,10 @@
+## [3.2.8](https://github.com/dhis2/app-platform/compare/v3.2.7...v3.2.8) (2020-03-25)
+
+
+### Bug Fixes
+
+* don't generate styled-jsx randomized classes in jest snapshots ([#332](https://github.com/dhis2/app-platform/issues/332)) ([eaafbab](https://github.com/dhis2/app-platform/commit/eaafbab1f320616fb3747da4340705f4905b210d))
+
 ## [3.2.7](https://github.com/dhis2/app-platform/compare/v3.2.6...v3.2.7) (2020-03-21)
 
 
