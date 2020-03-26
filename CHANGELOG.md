@@ -1,3 +1,10 @@
+## [3.2.9](https://github.com/dhis2/app-platform/compare/v3.2.8...v3.2.9) (2020-03-26)
+
+
+### Bug Fixes
+
+* **init:** add a default README.md file ([#335](https://github.com/dhis2/app-platform/issues/335)) ([49b85ec](https://github.com/dhis2/app-platform/commit/49b85ecec086da9d6cbe6274fa3a62eb8f3474b1))
+
 ## [3.2.8](https://github.com/dhis2/app-platform/compare/v3.2.7...v3.2.8) (2020-03-25)
 
 
