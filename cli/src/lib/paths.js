@@ -19,6 +19,7 @@ module.exports = (cwd = process.cwd()) => {
             '../../config/d2.config.lib.js'
         ),
         jestConfigDefaults: path.join(__dirname, '../../config/jest.config.js'),
+        readmeDefault: path.join(__dirname, '../../config/init.README.md'),
 
         shellSource,
         shellSourceEntrypoint: path.join(shellSource, 'src/App.js'),
@@ -28,6 +29,7 @@ module.exports = (cwd = process.cwd()) => {
         package: path.join(base, './package.json'),
         dotenv: path.join(base, './.env'),
         config: path.join(base, './d2.config.js'),
+        readme: path.join(base, './README.md'),
         src: path.join(base, './src'),
         public: path.join(base, './public'),
         jestConfig: path.join(base, 'jest.config.js'),
