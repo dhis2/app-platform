@@ -12,7 +12,7 @@ The following NPM packages are automatically provided by the platform, so their 
 -   `prop-types`
 -   `styled-jsx`
 
-> _Note_: You may optionally specify a different version of one of these libraries as a runtime dependency in your `package.json`.  To avoid duplicate versions in your application bundle, particularly for dependencies like `react` and `@dhis2/app-runtime` which require stable references, you may also need to add a [`resolutions` map entry](https://legacy.yarnpkg.com/en/docs/selective-version-resolutions/) to `package.json`.
+> _Note_: You may optionally specify a different version of one of these libraries as a runtime dependency in your `package.json`. To avoid duplicate versions in your application bundle, particularly for dependencies like `react` and `@dhis2/app-runtime` which require stable references, you may also need to add a [`resolutions` map entry](https://legacy.yarnpkg.com/en/docs/selective-version-resolutions/) to `package.json`.
 
 ## Custom dependencies
 
