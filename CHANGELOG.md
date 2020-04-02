@@ -1,3 +1,17 @@
+# [4.0.0](https://github.com/dhis2/app-platform/compare/v3.2.9...v4.0.0) (2020-04-02)
+
+
+### chore
+
+* update node engine to >= 10 ([#346](https://github.com/dhis2/app-platform/issues/346)) ([d29c11e](https://github.com/dhis2/app-platform/commit/d29c11e264d2bac58ce01d64715d877f0e388a0c))
+
+
+### BREAKING CHANGES
+
+* Require Node version 10 or above.
+
+* ci(actions): give checkout action our custom pat
+
 ## [3.2.9](https://github.com/dhis2/app-platform/compare/v3.2.8...v3.2.9) (2020-03-26)
 
 
