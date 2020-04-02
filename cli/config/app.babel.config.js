@@ -29,17 +29,15 @@ module.exports = {
         production: {
             plugins: [
                 [require('styled-jsx/babel'), { optimizeForSpeed: true }],
-            ]
+            ],
         },
         development: {
             plugins: [
                 [require('styled-jsx/babel'), { optimizeForSpeed: true }],
-            ]
+            ],
         },
         test: {
-            plugins: [
-                require('styled-jsx/babel-test')
-            ]
-        }
-    }
+            plugins: [require('styled-jsx/babel-test')],
+        },
+    },
 }
