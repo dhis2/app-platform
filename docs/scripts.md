@@ -4,4 +4,4 @@ The application platform comes with a set of scripts. This tool is packages as `
 
 To run the `init` script as a stand-alone tool, either install the D2 cli globally (`yarn global add @dhis2/cli`) and run `d2 app scripts init myapp`, or run the `init` script by itself with `npx` (`npx @dhis2/cli-app-scripts init myapp`)
 
-To install `d2-app-scripts` as a dev dependency (this is done for you by the `init` command) run `yarn add --dev @dhis2/cli-app-scripts`.
+To install `d2-app-scripts` as a dev dependency without having to install D2 cli globally or run the `npx` script, execute `yarn add --dev @dhis2/cli-app-scripts`.
