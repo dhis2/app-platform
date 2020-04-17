@@ -50,7 +50,7 @@
         "lodash": "^4.17.11",
         "parse-author": "^2.0.0",
         "parse-gitignore": "^1.0.1",
-        "rollup": "^1.21.4",
+        "rollup": "^2.6.1",
         "rollup-plugin-babel": "^4.3.2",
         "rollup-plugin-commonjs": "^10.1.0",
         "rollup-plugin-json": "^4.0.0",
