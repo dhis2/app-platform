@@ -1,6 +1,6 @@
 # Getting Started
 
-The Application Platform provides common build system, development tools, runtime support, and standard functionality for DHIS2 applications. The basic features of a modern, compliant, and functional application are all provided out-of-the-box.
+The Application Platform provides common build system, development tools, runtime support, and standard functionality for DHIS2 applications. The basic features of a modern, compliant, and functional application are all provided out-of-the-box. For a short deep dive into the Application Platform you can read [this artile](https://developers.dhis2.org/2019/07/what-is-this-app-platform/).
 
 ![Empty application shell](./images/empty-shell.gif)
 
