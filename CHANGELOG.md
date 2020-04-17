@@ -1,3 +1,10 @@
+## [4.0.1](https://github.com/dhis2/app-platform/compare/v4.0.0...v4.0.1) (2020-04-17)
+
+
+### Bug Fixes
+
+* correctly detect changes in i18n string extraction ([#363](https://github.com/dhis2/app-platform/issues/363)) ([49a2d9a](https://github.com/dhis2/app-platform/commit/49a2d9ac93625a1dec1a413039525de3d7de88d9))
+
 # [4.0.0](https://github.com/dhis2/app-platform/compare/v3.2.9...v4.0.0) (2020-04-02)
 
 
