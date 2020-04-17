@@ -46,7 +46,7 @@
         "handlebars": "^4.3.3",
         "i18next-conv": "^9",
         "i18next-scanner": "^2.10.3",
-        "jest-cli": "^24.9.0",
+        "jest-cli": "^25.3.0",
         "lodash": "^4.17.11",
         "parse-author": "^2.0.0",
         "parse-gitignore": "^1.0.1",
