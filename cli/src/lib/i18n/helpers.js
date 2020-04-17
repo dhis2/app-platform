@@ -24,7 +24,7 @@ module.exports.checkDirectoryExists = dir => {
 
 // src from component/array-equal
 module.exports.arrayEqual = (arr1, arr2) =>
-    arr1.length === arr2.length && arr1.some((item, idx) => item === arr2[idx])
+    arr1.length === arr2.length && arr1.every((item, idx) => item === arr2[idx])
 
 function walkDirectory(dirPath, files = []) {
     const list = fs.readdirSync(dirPath)
