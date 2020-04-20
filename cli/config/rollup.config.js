@@ -10,6 +10,7 @@ const replace = require('rollup-plugin-replace')
 const visualize = require('rollup-plugin-visualizer')
 
 const { reporter, chalk } = require('@dhis2/cli-helpers-engine')
+const extensions = ['.js', '.jsx', '.ts', '.tsx']
 
 const standardLibs = require('@dhis2/app-shell/package.json').dependencies
 
@@ -66,10 +67,6 @@ const bundle = ({
                 autoModules: false,
             }),
             json(),
-            babel({
-                configFile: require.resolve('./babel.config.js'),
-                exclude: /node_modules/, // only transpile our source code
-            }),
             resolve({
                 /*
                  * TODO: Use of named exports (particularly `react-is` from `react-redux`)
@@ -79,8 +76,15 @@ const bundle = ({
                  * See https://github.com/rollup/rollup-plugin-commonjs/issues/211#issuecomment-337897124
                  */
                 mainFields: ['browser', 'main'],
+                include: ['src/**/*'],
+                extensions,
             }),
             commonjs({ include: /node_modules/ }),
+            babel({
+                extensions,
+                configFile: require.resolve('./babel.config.js'),
+                exclude: /node_modules/, // only transpile our source code
+            }),
             visualize({
                 filename: path.join(outDir, 'stats.html'),
                 title: 'DHIS2 Build Analysis',

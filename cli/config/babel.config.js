@@ -4,7 +4,6 @@ const browserTargets = require('./.browserlistrc')
 const jestTargets = { node: 'current' }
 
 const isTest = process.env.NODE_ENV === 'test'
-const targets = isTest ? jestTargets : browserTargets
 
 const appBabelConfig = path.resolve(__dirname, 'app.babel.config')
 
@@ -16,8 +15,8 @@ module.exports = {
         [
             require('@babel/preset-env'),
             {
-                modules: 'auto',
-                targets,
+                modules: isTest ? 'commonjs' : 'auto',
+                targets: isTest ? jestTargets : browserTargets,
             },
         ],
     ],
