@@ -1,3 +1,10 @@
+## [4.0.2](https://github.com/dhis2/app-platform/compare/v4.0.1...v4.0.2) (2020-04-24)
+
+
+### Bug Fixes
+
+* support typescript source files in library builds ([#368](https://github.com/dhis2/app-platform/issues/368)) ([3ee69de](https://github.com/dhis2/app-platform/commit/3ee69de63c0dad443e5f01b68cfdc49d45dc5dcd))
+
 ## [4.0.1](https://github.com/dhis2/app-platform/compare/v4.0.0...v4.0.1) (2020-04-17)
 
 
