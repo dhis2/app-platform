@@ -1,3 +1,10 @@
+## [4.0.3](https://github.com/dhis2/app-platform/compare/v4.0.2...v4.0.3) (2020-05-01)
+
+
+### Bug Fixes
+
+* keep default values that may have been set ([#382](https://github.com/dhis2/app-platform/issues/382)) ([4b6e275](https://github.com/dhis2/app-platform/commit/4b6e275969713014a9958cef0be256a00f16ef9a))
+
 ## [4.0.2](https://github.com/dhis2/app-platform/compare/v4.0.1...v4.0.2) (2020-04-24)
 
 

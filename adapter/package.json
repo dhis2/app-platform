@@ -1,6 +1,6 @@
 {
     "name": "@dhis2/app-adapter",
-    "version": "4.0.2",
+    "version": "4.0.3",
     "repository": {
         "type": "git",
         "url": "https://github.com/amcgee/dhis2-app-platform",
@@ -21,7 +21,7 @@
         "moment": "^2.24.0"
     },
     "devDependencies": {
-        "@dhis2/cli-app-scripts": "4.0.2"
+        "@dhis2/cli-app-scripts": "4.0.3"
     },
     "scripts": {
         "build": "d2-app-scripts build"
