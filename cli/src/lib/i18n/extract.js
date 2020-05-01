@@ -39,7 +39,9 @@ const extract = async ({ input, output }) => {
 
     var parsed = parser.get()
     var en = {}
-    Object.keys(parsed.en.translation).forEach(str => (en[str] = ''))
+    Object.keys(parsed.en.translation).forEach(
+        str => (en[str] = parsed.en.translation[str])
+    )
 
     if (Object.keys(en).length === 0) {
         reporter.print(
