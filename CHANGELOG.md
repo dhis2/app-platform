@@ -1,3 +1,10 @@
+## [4.0.4](https://github.com/dhis2/app-platform/compare/v4.0.3...v4.0.4) (2020-05-06)
+
+
+### Bug Fixes
+
+* upgrade dependencies ([c64623e](https://github.com/dhis2/app-platform/commit/c64623e56dbe34e1f03e7cdba9e87a74005ec8dd))
+
 ## [4.0.3](https://github.com/dhis2/app-platform/compare/v4.0.2...v4.0.3) (2020-05-01)
 
 
