@@ -1276,7 +1276,7 @@
     i18next "^10.3"
     moment "^2.24.0"
 
-"@dhis2/prop-types@^1.5", "@dhis2/prop-types@^1.6.4":
+"@dhis2/prop-types@^1.6", "@dhis2/prop-types@^1.6.4":
   version "1.6.4"
   resolved "https://registry.yarnpkg.com/@dhis2/prop-types/-/prop-types-1.6.4.tgz#ec4d256c9440d4d00071524422a727c61ddaa6f6"
   integrity sha512-qkVj8OuyjDmSxzYDlCWZllvC9hIbrIImMp79/U5CVsIRbjUF0zA/tfbv4rWnsWALmwEHOQFbzl5GnO5D8RNneA==
@@ -1292,12 +1292,12 @@
     "@popperjs/core" "^2.1.0"
     classnames "^2.2.6"
 
-"@dhis2/ui-widgets@^2.0.4":
-  version "2.1.0"
-  resolved "https://registry.yarnpkg.com/@dhis2/ui-widgets/-/ui-widgets-2.1.0.tgz#2accfdfea4c9564d7d35f8748ff7e113cac14032"
-  integrity sha512-S/vs7UrJxKcFO0TQhXx0jkKP9MqRGA48vkuBMVston+aZneIpVjLUtPvwP4P87uyK97DvHPkZm4gzniN6Beazg==
+"@dhis2/ui-widgets@^2.1.1":
+  version "2.1.1"
+  resolved "https://registry.yarnpkg.com/@dhis2/ui-widgets/-/ui-widgets-2.1.1.tgz#23b1887c0190e83bb7a41e6b570dfd41ba99d838"
+  integrity sha512-tLLXgQ2x0IDVcCg2AdK4J8B0Zj6DHOimI/5xTtp/xoaLDYDwJN3VDIJU0TSh5YIEZPzUmh2nqmdmNHDUXereFw==
   dependencies:
-    "@dhis2/prop-types" "^1.5"
+    "@dhis2/prop-types" "^1.6"
     classnames "^2.2.6"
 
 "@hapi/address@2.x.x":
