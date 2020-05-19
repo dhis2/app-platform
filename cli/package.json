@@ -1,6 +1,6 @@
 {
     "name": "@dhis2/cli-app-scripts",
-    "version": "4.0.5",
+    "version": "4.0.6",
     "engines": {
         "node": ">=10"
     },
@@ -32,7 +32,7 @@
         "@babel/preset-env": "^7.6.2",
         "@babel/preset-react": "^7.0.0",
         "@babel/preset-typescript": "^7.6.0",
-        "@dhis2/app-shell": "4.0.5",
+        "@dhis2/app-shell": "4.0.6",
         "@dhis2/cli-helpers-engine": "^1.5.0",
         "archiver": "^3.1.1",
         "babel-jest": "^24.9.0",

@@ -1,3 +1,10 @@
+## [4.0.6](https://github.com/dhis2/app-platform/compare/v4.0.5...v4.0.6) (2020-05-19)
+
+
+### Bug Fixes
+
+* fix erroneous call to reporter.debugError ([#404](https://github.com/dhis2/app-platform/issues/404)) ([0b1840a](https://github.com/dhis2/app-platform/commit/0b1840a68564372d1cd912f2b8647cc62cdec672))
+
 ## [4.0.5](https://github.com/dhis2/app-platform/compare/v4.0.4...v4.0.5) (2020-05-19)
 
 
