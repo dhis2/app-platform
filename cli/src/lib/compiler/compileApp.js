@@ -72,7 +72,7 @@ const watchFiles = ({ inputDir, outputDir, processFileCallback, watch }) => {
             .on('change', compileFile)
             .on('unlink', removeFile)
             .on('error', error => {
-                reporter.debugError('Chokidar error:', error)
+                reporter.debugErr('Chokidar error:', error)
                 reject('Chokidar error!')
             })
 
