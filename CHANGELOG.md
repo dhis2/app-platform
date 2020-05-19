@@ -1,3 +1,10 @@
+## [4.0.5](https://github.com/dhis2/app-platform/compare/v4.0.4...v4.0.5) (2020-05-19)
+
+
+### Bug Fixes
+
+* upgrade ui-widgets to 2.1.1 for proper translations ([#402](https://github.com/dhis2/app-platform/issues/402)) ([46c5ecf](https://github.com/dhis2/app-platform/commit/46c5ecfd6a1a122d0c1e0d1114a8561728b54b66))
+
 ## [4.0.4](https://github.com/dhis2/app-platform/compare/v4.0.3...v4.0.4) (2020-05-06)
 
 
