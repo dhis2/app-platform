@@ -15,7 +15,7 @@
     },
     "devDependencies": {
         "@dhis2/cli-style": "^6.0.0",
-        "@dhis2/cli-utils-docsite": "^1.1.2",
+        "@dhis2/cli-utils-docsite": "^2.0.0",
         "concurrently": "^5.0.0"
     },
     "scripts": {
