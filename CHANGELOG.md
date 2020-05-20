@@ -1,3 +1,10 @@
+## [4.0.7](https://github.com/dhis2/app-platform/compare/v4.0.6...v4.0.7) (2020-05-20)
+
+
+### Bug Fixes
+
+* add login form data-test props ([#405](https://github.com/dhis2/app-platform/issues/405)) ([9a63548](https://github.com/dhis2/app-platform/commit/9a63548dfff57f649606c571d4ecd7107b587a5c))
+
 ## [4.0.6](https://github.com/dhis2/app-platform/compare/v4.0.5...v4.0.6) (2020-05-19)
 
 
