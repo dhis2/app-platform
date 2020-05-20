@@ -52,12 +52,14 @@ export const LoginModal = () => {
     }
 
     return (
-        <Modal open small>
+        <Modal open small dataTest="dhis2-adapter-loginmodal">
             <form onSubmit={onSubmit}>
                 <ModalTitle>{i18n.t('Please sign in')}</ModalTitle>
+
                 <ModalContent>
                     {!staticUrl && (
                         <InputField
+                            dataTest="dhis2-adapter-loginserver"
                             error={isDirty && !isValid(server)}
                             label={i18n.t('Server')}
                             name="server"
@@ -66,7 +68,9 @@ export const LoginModal = () => {
                             onChange={input => setServer(input.value)}
                         />
                     )}
+
                     <InputField
+                        dataTest="dhis2-adapter-loginname"
                         error={isDirty && !isValid(username)}
                         label={i18n.t('Username')}
                         name="j_username"
@@ -74,7 +78,9 @@ export const LoginModal = () => {
                         value={username}
                         onChange={input => setUsername(input.value)}
                     />
+
                     <InputField
+                        dataTest="dhis2-adapter-loginpassword"
                         error={isDirty && !isValid(password)}
                         label={i18n.t('Password')}
                         name="j_password"
@@ -83,8 +89,13 @@ export const LoginModal = () => {
                         onChange={input => setPassword(input.value)}
                     />
                 </ModalContent>
+
                 <ModalActions>
-                    <Button primary type="submit">
+                    <Button
+                        primary
+                        dataTest="dhis2-adapter-loginsubmit"
+                        type="submit"
+                    >
                         {i18n.t('Sign in')}
                     </Button>
                 </ModalActions>
