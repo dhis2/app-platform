@@ -17,7 +17,6 @@
         "build"
     ],
     "dependencies": {
-        "@dhis2/ui-widgets": "^2.1.1",
         "moment": "^2.24.0"
     },
     "devDependencies": {
@@ -29,7 +28,7 @@
     "peerDependencies": {
         "@dhis2/app-runtime": "^2.0.4",
         "@dhis2/d2-i18n": "^1.0.5",
-        "@dhis2/ui-core": "^4.6.1",
+        "@dhis2/ui": "^5.0.2",
         "classnames": "^2.2.6",
         "moment": "^2.24.0",
         "prop-types": "^15.7.2",

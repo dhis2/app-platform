@@ -5,7 +5,7 @@
 The following NPM packages are automatically provided by the platform, so their version is fixed and cannot be overwritten. You can reference these libraries from your source code without specifying them as explicit dependencies.
 
 -   `@dhis2/app-runtime`
--   `@dhis2/ui-core`
+-   `@dhis2/ui`
 -   `@dhis2/d2-i18n`
 -   `react` and `react-dom`
 -   `classnames`
