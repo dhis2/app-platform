@@ -1261,10 +1261,10 @@
     semver "^7.1.1"
     yargs "^15.1.0"
 
-"@dhis2/cli-utils-docsite@^1.1.2":
-  version "1.3.0"
-  resolved "https://registry.yarnpkg.com/@dhis2/cli-utils-docsite/-/cli-utils-docsite-1.3.0.tgz#62be0cfc0223f7cd766d8bb24248f21082e038c0"
-  integrity sha512-A5bpLawOa/+GuCj4BnqlOTA14tpKVPY7ShIAKFgmStW+SnE1XFZqhjs16ADWsnhG0M/2jFiaGjen9MGpmj3FGw==
+"@dhis2/cli-utils-docsite@^2.0.2":
+  version "2.0.2"
+  resolved "https://registry.yarnpkg.com/@dhis2/cli-utils-docsite/-/cli-utils-docsite-2.0.2.tgz#41823b3ff4813d4b94fe95281ba8fbfda7f8dae7"
+  integrity sha512-q2XZMss0oHERS0m9/5nZgD0UU9WGXGf81bf+csNNCMNav+cYIWqvdIIwB9dPaScBbPFCKjnT8/eBj+QlbvuLSA==
   dependencies:
     "@dhis2/cli-helpers-engine" "^1.5.0"
     "@dhis2/cli-helpers-template" "^1.0.2"

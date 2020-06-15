@@ -197,6 +197,10 @@ const handler = async ({ force, name, cwd, lib }) => {
                 path.join(__dirname, '../../config/init.App.test.js'),
                 path.join(paths.base, 'src/App.test.js')
             )
+            fs.copyFileSync(
+                path.join(__dirname, '../../config/init.App.module.css'),
+                path.join(paths.base, 'src/App.module.css')
+            )
         }
     }
 

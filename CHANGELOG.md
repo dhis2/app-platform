@@ -1,3 +1,10 @@
+## [4.0.8](https://github.com/dhis2/app-platform/compare/v4.0.7...v4.0.8) (2020-06-10)
+
+
+### Bug Fixes
+
+* **cli:** let init produce app using css-modules instead of styled-jsx ([#417](https://github.com/dhis2/app-platform/issues/417)) ([0c8c314](https://github.com/dhis2/app-platform/commit/0c8c3144cf1f6f9f6df520ca81b87a3050c039ca))
+
 ## [4.0.7](https://github.com/dhis2/app-platform/compare/v4.0.6...v4.0.7) (2020-05-20)
 
 

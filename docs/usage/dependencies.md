@@ -2,7 +2,7 @@
 
 ## DHIS2 Standard Libraries
 
-The following NPM packages are automatically provided by the platform, so their version is fixed and cannot be overwritten. You can reference these libraries from your source code without specifying them as explicit dependencies.
+The following NPM packages are automatically provided by the platform. You can reference these libraries from your source code without specifying them as explicit dependencies, though it is recommended that you also include them as dependencies in your application's `package.json`.
 
 -   `@dhis2/app-runtime`
 -   `@dhis2/ui`
@@ -12,7 +12,17 @@ The following NPM packages are automatically provided by the platform, so their 
 -   `prop-types`
 -   `styled-jsx`
 
-> _Note_: You may optionally specify a different version of one of these libraries as a runtime dependency in your `package.json`. To avoid duplicate versions in your application bundle, particularly for dependencies like `react` and `@dhis2/app-runtime` which require stable references, you may also need to add a [`resolutions` map entry](https://legacy.yarnpkg.com/en/docs/selective-version-resolutions/) to `package.json`.
+## Singleton Dependencies
+
+Several standard DHIS2 Application dependencies require that only one copy is present in the application bundle.  This also reduces the size of the final bundle which is beneficial for network performance.
+
+To de-duplicate singleton dependencies we recommend using [yarn-deduplicate](https://github.com/atlassian/yarn-deduplicate):
+
+```sh
+> npx yarn-deduplicate --packages react,react-dom,@dhis2/app-runtime,@dhis2/ui-core,@dhis2/d2-i18n,styled-jsx
+```
+
+You may optionally specify a different version of one of these libraries and avoid duplicate versions in your application bundle by adding a [`resolutions` map entry](https://legacy.yarnpkg.com/en/docs/selective-version-resolutions/) to `package.json`.  Use with caution, however, as this might force dependencies to use an incompatible version of one of the standard libraries, which can cause hard-to-debug issues. 
 
 ## Custom dependencies
 
