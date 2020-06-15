@@ -1,3 +1,19 @@
+# [5.0.0-alpha.1](https://github.com/dhis2/app-platform/compare/v4.0.8...v5.0.0-alpha.1) (2020-06-15)
+
+
+### chore
+
+* replace ui-core & ui-widgets v4 with ui v5 ([#416](https://github.com/dhis2/app-platform/issues/416)) ([401aa32](https://github.com/dhis2/app-platform/commit/401aa32b2123a5b4c32507de7958520a5f297e20))
+
+
+### BREAKING CHANGES
+
+* components should now be imported from `@dhis2/ui` and various components have had breaking changes in v5
+
+* chore: fix lint error, add text lint to format script
+
+Co-authored-by: Austin McGee <947888+amcgee@users.noreply.github.com>
+
 ## [4.0.8](https://github.com/dhis2/app-platform/compare/v4.0.7...v4.0.8) (2020-06-10)
 
 
