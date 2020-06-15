@@ -19,8 +19,8 @@
         "concurrently": "^5.0.0"
     },
     "scripts": {
-        "format": "d2-style js apply",
-        "lint": "d2-style js check",
+        "format": "d2-style js apply && d2-style text apply",
+        "lint": "d2-style js check && d2-style text check",
         "build:adapter": "cd adapter && yarn build",
         "build": "yarn build:adapter && yarn install:example",
         "install:example": "cd examples/simple-app && yarn --force --check-files",
