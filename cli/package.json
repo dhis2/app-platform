@@ -44,7 +44,7 @@
         "fs-extra": "^8.1.0",
         "gaze": "^1.1.3",
         "handlebars": "^4.3.3",
-        "i18next-conv": "^9",
+        "i18next-conv": "^10",
         "i18next-scanner": "^2.10.3",
         "jest-cli": "^24.9.0",
         "lodash": "^4.17.11",
