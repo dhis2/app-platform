@@ -1,3 +1,10 @@
+## [4.0.9](https://github.com/dhis2/app-platform/compare/v4.0.8...v4.0.9) (2020-06-22)
+
+
+### Bug Fixes
+
+* **dependency:** update babel-preset-env ([#421](https://github.com/dhis2/app-platform/issues/421)) ([09bcde7](https://github.com/dhis2/app-platform/commit/09bcde71b1258f0ee010a6b3dcec0df7ca323584))
+
 ## [4.0.8](https://github.com/dhis2/app-platform/compare/v4.0.7...v4.0.8) (2020-06-10)
 
 
