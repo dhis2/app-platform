@@ -11,5 +11,5 @@ To install the [App Platform Scripts](scripts) tool `d2-app-scripts` as a devDep
 ```
 
 When installed as a local devDependency, you can use the
-`d2-app-scripts` executable from within scripts in you `package.json`
+`d2-app-scripts` executable from within scripts in your `package.json`
 file.
