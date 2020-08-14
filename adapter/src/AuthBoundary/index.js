@@ -1,7 +1,7 @@
 import React from 'react'
 import { useDataQuery } from '@dhis2/app-runtime'
 
-import { ScreenCover, CircularLoader } from '@dhis2/ui-core'
+import { Layer, layers, CenteredContent, CircularLoader } from '@dhis2/ui'
 import { LoginModal } from './LoginModal'
 import { useLocale } from './useLocale'
 
@@ -17,9 +17,11 @@ export const AuthBoundary = ({ url, children }) => {
 
     if (loading) {
         return (
-            <ScreenCover>
-                <CircularLoader />
-            </ScreenCover>
+            <Layer translucent level={layers.alert}>
+                <CenteredContent>
+                    <CircularLoader />
+                </CenteredContent>
+            </Layer>
         )
     }
 

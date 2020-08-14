@@ -5,8 +5,7 @@
 The following NPM packages are automatically provided by the platform. You can reference these libraries from your source code without specifying them as explicit dependencies, though it is recommended that you also include them as dependencies in your application's `package.json`.
 
 -   `@dhis2/app-runtime`
--   `@dhis2/ui-core`
--   `@dhis2/ui-widgets`
+-   `@dhis2/ui`
 -   `@dhis2/d2-i18n`
 -   `react` and `react-dom`
 -   `classnames`

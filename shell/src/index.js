@@ -4,7 +4,7 @@ import App from './App'
 import * as serviceWorker from './serviceWorker'
 
 import 'typeface-roboto'
-import { CssReset } from '@dhis2/ui-core'
+import { CssReset } from '@dhis2/ui'
 
 ReactDOM.render(
     <>

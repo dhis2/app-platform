@@ -1,5 +1,5 @@
 import React from 'react'
-import { HeaderBar } from '@dhis2/ui-widgets'
+import { HeaderBar } from '@dhis2/ui'
 import { Provider } from '@dhis2/app-runtime'
 import { FatalErrorBoundary } from './FatalErrorBoundary'
 import { AuthBoundary } from './AuthBoundary'

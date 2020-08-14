@@ -7,7 +7,7 @@ import {
     ModalActions,
     Button,
     InputField,
-} from '@dhis2/ui-core'
+} from '@dhis2/ui'
 
 const staticUrl = process.env.REACT_APP_DHIS2_BASE_URL
 

@@ -1,6 +1,6 @@
 import React from 'react'
 import AppAdapter from '@dhis2/app-adapter'
-import { ScreenCover, CircularLoader } from '@dhis2/ui-core'
+import { Layer, layers, CenteredContent, CircularLoader } from '@dhis2/ui'
 
 const D2App = React.lazy(() =>
     import(/*webpackChunkName: 'app'*/ './D2App/app')
@@ -18,9 +18,11 @@ const App = () => (
     <AppAdapter {...appConfig}>
         <React.Suspense
             fallback={
-                <ScreenCover>
-                    <CircularLoader />
-                </ScreenCover>
+                <Layer translucent level={layers.alert}>
+                    <CenteredContent>
+                        <CircularLoader />
+                    </CenteredContent>
+                </Layer>
             }
         >
             <D2App config={appConfig} />
