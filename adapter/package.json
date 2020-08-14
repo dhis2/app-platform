@@ -26,14 +26,14 @@
         "build": "d2-app-scripts build"
     },
     "peerDependencies": {
-        "@dhis2/app-runtime": "^2.0.4",
-        "@dhis2/d2-i18n": "^1.0.5",
-        "@dhis2/ui": "^5.0.2",
-        "classnames": "^2.2.6",
-        "moment": "^2.24.0",
-        "prop-types": "^15.7.2",
-        "react": "^16.8.6",
-        "react-dom": "^16.8.6",
-        "styled-jsx": "^3.2.1"
+        "@dhis2/app-runtime": "^2",
+        "@dhis2/d2-i18n": "^1",
+        "@dhis2/ui": "^5",
+        "classnames": "^2",
+        "moment": "^2",
+        "prop-types": "^15",
+        "react": "^16.8",
+        "react-dom": "^16.8",
+        "styled-jsx": "^3"
     }
 }
