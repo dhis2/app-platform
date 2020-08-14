@@ -1,3 +1,15 @@
+# [5.0.0](https://github.com/dhis2/app-platform/compare/v4.0.9...v5.0.0) (2020-08-14)
+
+
+### Features
+
+* Require @dhis2/ui v5 ([#439](https://github.com/dhis2/app-platform/issues/439)) ([e600807](https://github.com/dhis2/app-platform/commit/e600807561a13abcc6ae58bb447625b3242e9d14))
+
+
+### BREAKING CHANGES
+
+* require @dhis2/ui v5 - components should now be imported from @dhis2/ui and various components have had breaking changes in v5
+
 ## [4.0.9](https://github.com/dhis2/app-platform/compare/v4.0.8...v4.0.9) (2020-06-22)
 
 
