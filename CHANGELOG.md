@@ -1,26 +1,3 @@
-# [5.0.0-alpha.2](https://github.com/dhis2/app-platform/compare/v5.0.0-alpha.1...v5.0.0-alpha.2) (2020-08-14)
-
-
-### Bug Fixes
-
-* **dependency:** update babel-preset-env ([#421](https://github.com/dhis2/app-platform/issues/421)) ([09bcde7](https://github.com/dhis2/app-platform/commit/09bcde71b1258f0ee010a6b3dcec0df7ca323584))
-
-# [5.0.0-alpha.1](https://github.com/dhis2/app-platform/compare/v4.0.8...v5.0.0-alpha.1) (2020-06-15)
-
-
-### chore
-
-* replace ui-core & ui-widgets v4 with ui v5 ([#416](https://github.com/dhis2/app-platform/issues/416)) ([401aa32](https://github.com/dhis2/app-platform/commit/401aa32b2123a5b4c32507de7958520a5f297e20))
-
-
-### BREAKING CHANGES
-
-* components should now be imported from `@dhis2/ui` and various components have had breaking changes in v5
-
-* chore: fix lint error, add text lint to format script
-
-Co-authored-by: Austin McGee <947888+amcgee@users.noreply.github.com>
-
 ## [4.0.9](https://github.com/dhis2/app-platform/compare/v4.0.8...v4.0.9) (2020-06-22)
 
 
