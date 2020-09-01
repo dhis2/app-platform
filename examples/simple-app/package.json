@@ -11,7 +11,8 @@
     "scripts": {
         "start": "../../cli/bin/d2-app-scripts start",
         "build": "../../cli/bin/d2-app-scripts build",
-        "test": "../../cli/bin/d2-app-scripts test"
+        "test": "../../cli/bin/d2-app-scripts test",
+        "deploy": "../../cli/bin/d2-app-scripts deploy"
     },
     "resolutions": {
         "@dhis2/app-shell": "file:../../shell",
