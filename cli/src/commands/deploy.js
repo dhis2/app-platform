@@ -2,6 +2,7 @@ const { reporter, chalk } = require('@dhis2/cli-helpers-engine')
 const path = require('path')
 const fs = require('fs-extra')
 const FormData = require('form-data')
+const inquirer = require('inquirer')
 
 const makePaths = require('../lib/paths')
 const parseConfig = require('../lib/parseConfig')
@@ -16,6 +17,11 @@ const constructAppUrl = (baseUrl, config, serverVersion) =>
     (serverVersion.minor < 35 ? '/index.html' : '/')
 
 const dumpHttpError = (message, response) => {
+    if (!response) {
+        reporter.error(message)
+        return
+    }
+
     reporter.error(
         message,
         response.status,
@@ -26,9 +32,52 @@ const dumpHttpError = (message, response) => {
     reporter.debugErr('Error details', response.data)
 }
 
-const handler = async ({ cwd = process.cwd(), dhis2baseUrl }) => {
+const promptForInputs = async params => {
+    if (
+        process.env.CI &&
+        (!params.baseUrl || !params.username || !params.password)
+    ) {
+        reporter.error(
+            'Prompt disabled in CI mode - missing baseUrl, username, or password parameter.'
+        )
+        process.exit(1)
+    }
+    return await inquirer.prompt([
+        {
+            type: 'input',
+            name: 'baseUrl',
+            message: 'DHIS2 instance URL:',
+            when: () => !params.baseUrl,
+            validate: input =>
+                !input ||
+                !input.length ||
+                (!input.startsWith('http://') && !input.startsWith('https://'))
+                    ? 'Please enter a valid URL'
+                    : true,
+        },
+        {
+            type: 'input',
+            name: 'username',
+            message: 'DHIS2 instance username:',
+            when: () => !params.username,
+        },
+        {
+            type: 'password',
+            name: 'password',
+            message: 'DHIS2 instance password:',
+            when: () => !params.password,
+        },
+    ])
+}
+
+const handler = async ({ cwd = process.cwd(), ...params }) => {
     const paths = makePaths(cwd)
     const config = parseConfig(paths)
+
+    params = {
+        ...params,
+        ...(await promptForInputs(params)),
+    }
 
     if (config.standalone) {
         reporter.error(`Standalone apps cannot be deployed to DHIS2 instances`)
@@ -52,10 +101,10 @@ const handler = async ({ cwd = process.cwd(), dhis2baseUrl }) => {
     }
 
     const dhis2config = {
-        baseUrl: dhis2baseUrl,
+        baseUrl: params.baseUrl,
         auth: {
-            username: 'admin',
-            password: 'district',
+            username: params.username,
+            password: params.password,
         },
     }
 
@@ -65,7 +114,7 @@ const handler = async ({ cwd = process.cwd(), dhis2baseUrl }) => {
 
     let serverVersion
     try {
-        reporter.print(`Pinging server ${dhis2baseUrl}...`)
+        reporter.print(`Pinging server ${params.baseUrl}...`)
         const rawServerVersion = (await client.get('/api/system/info.json'))
             .data.version
         const parsedServerVersion = /(\d+)\.(\d+)/.exec(rawServerVersion)
@@ -87,13 +136,13 @@ const handler = async ({ cwd = process.cwd(), dhis2baseUrl }) => {
         )
     } catch (e) {
         dumpHttpError(
-            `Server ${dhis2baseUrl} could not be contacted, HTTP error`,
+            `Server ${chalk.bold(params.baseUrl)} could not be contacted`,
             e.response
         )
         process.exit(1)
     }
 
-    const appUrl = constructAppUrl(dhis2baseUrl, config, serverVersion)
+    const appUrl = constructAppUrl(params.baseUrl, config, serverVersion)
 
     try {
         reporter.print('Uploading app bundle...')
@@ -102,7 +151,9 @@ const handler = async ({ cwd = process.cwd(), dhis2baseUrl }) => {
                 ...formData.getHeaders(),
             },
         })
-        reporter.info(`Successfully deployed ${config.name} to ${dhis2baseUrl}`)
+        reporter.info(
+            `Successfully deployed ${config.name} to ${params.baseUrl}`
+        )
     } catch (e) {
         dumpHttpError('Failed to upload app, HTTP error', e.response)
         process.exit(1)
@@ -119,9 +170,16 @@ const handler = async ({ cwd = process.cwd(), dhis2baseUrl }) => {
 }
 
 const command = {
-    command: 'deploy <dhis2baseUrl>',
+    command: 'deploy [baseUrl]',
     alias: 'd',
     desc: 'Deploy the built application to a specific DHIS2 instance',
+    builder: {
+        username: {
+            alias: 'u',
+            description:
+                'The username for authenticating with the DHIS2 instance',
+        },
+    },
     handler,
 }
 
