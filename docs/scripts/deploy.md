@@ -8,7 +8,7 @@ This command will prompt the user for the URL of the DHIS2 instance as well as a
 
 ```sh
 > d2 app scripts build
-> export D2_PASSWORD=district
+> export D2_PASSWORD=xyz
 > d2 app scripts deploy https://play.dhis2.org/dev --username admin
 ```
 
