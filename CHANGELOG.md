@@ -1,3 +1,10 @@
+# [5.1.0](https://github.com/dhis2/app-platform/compare/v5.0.0...v5.1.0) (2020-09-02)
+
+
+### Features
+
+* add d2-app-scripts deploy command ([#451](https://github.com/dhis2/app-platform/issues/451)) ([655a053](https://github.com/dhis2/app-platform/commit/655a053cb24f8a12ef3e89cafdb492f1e14c2de5))
+
 # [5.0.0](https://github.com/dhis2/app-platform/compare/v4.0.9...v5.0.0) (2020-08-14)
 
 
