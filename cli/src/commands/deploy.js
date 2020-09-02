@@ -7,14 +7,7 @@ const inquirer = require('inquirer')
 const makePaths = require('../lib/paths')
 const parseConfig = require('../lib/parseConfig')
 const { createClient } = require('../lib/httpClient')
-
-const constructAppUrl = (baseUrl, config, serverVersion) =>
-    baseUrl +
-    (config.coreApp ? '/dhis-web-' : '/api/apps/') +
-    (serverVersion.minor < 35 ? config.title : config.name)
-        .replace(/[^A-Za-z0-9\s-]/g, '')
-        .replace(/\s+/g, '-') +
-    (serverVersion.minor < 35 ? '/index.html' : '/')
+const { constructAppUrl } = require('../lib/constructAppUrl')
 
 const dumpHttpError = (message, response) => {
     if (!response) {
@@ -32,7 +25,7 @@ const dumpHttpError = (message, response) => {
     reporter.debugErr('Error details', response.data)
 }
 
-const promptForInputs = async params => {
+const promptForDhis2Config = async params => {
     if (
         process.env.CI &&
         (!params.baseUrl || !params.username || !params.password)
@@ -42,18 +35,20 @@ const promptForInputs = async params => {
         )
         process.exit(1)
     }
-    return await inquirer.prompt([
+
+    const isValidUrl = input =>
+        input && input.length && input.match(/^https?:\/\/[^/.]+/)
+
+    const responses = await inquirer.prompt([
         {
             type: 'input',
             name: 'baseUrl',
             message: 'DHIS2 instance URL:',
             when: () => !params.baseUrl,
             validate: input =>
-                !input ||
-                !input.length ||
-                (!input.startsWith('http://') && !input.startsWith('https://'))
-                    ? 'Please enter a valid URL'
-                    : true,
+                isValidUrl(input)
+                    ? true
+                    : 'Please enter a valid URL, it must start with http:// or https://',
         },
         {
             type: 'input',
@@ -68,16 +63,21 @@ const promptForInputs = async params => {
             when: () => !params.password,
         },
     ])
+
+    return {
+        baseUrl: responses.baseUrl || params.baseUrl,
+        auth: {
+            username: responses.username || params.username,
+            password: responses.password || params.password,
+        },
+    }
 }
 
 const handler = async ({ cwd = process.cwd(), ...params }) => {
     const paths = makePaths(cwd)
     const config = parseConfig(paths)
 
-    params = {
-        ...params,
-        ...(await promptForInputs(params)),
-    }
+    const dhis2Config = await promptForDhis2Config(params)
 
     if (config.standalone) {
         reporter.error(`Standalone apps cannot be deployed to DHIS2 instances`)
@@ -100,21 +100,13 @@ const handler = async ({ cwd = process.cwd(), ...params }) => {
         process.exit(1)
     }
 
-    const dhis2config = {
-        baseUrl: params.baseUrl,
-        auth: {
-            username: params.username,
-            password: params.password,
-        },
-    }
-
-    const client = createClient(dhis2config)
+    const client = createClient(dhis2Config)
     const formData = new FormData()
     formData.append('file', fs.createReadStream(appBundle))
 
     let serverVersion
     try {
-        reporter.print(`Pinging server ${params.baseUrl}...`)
+        reporter.print(`Pinging server ${dhis2Config.baseUrl}...`)
         const rawServerVersion = (await client.get('/api/system/info.json'))
             .data.version
         const parsedServerVersion = /(\d+)\.(\d+)/.exec(rawServerVersion)
@@ -136,13 +128,13 @@ const handler = async ({ cwd = process.cwd(), ...params }) => {
         )
     } catch (e) {
         dumpHttpError(
-            `Server ${chalk.bold(params.baseUrl)} could not be contacted`,
+            `Server ${chalk.bold(dhis2Config.baseUrl)} could not be contacted`,
             e.response
         )
         process.exit(1)
     }
 
-    const appUrl = constructAppUrl(params.baseUrl, config, serverVersion)
+    const appUrl = constructAppUrl(dhis2Config.baseUrl, config, serverVersion)
 
     try {
         reporter.print('Uploading app bundle...')
@@ -150,20 +142,21 @@ const handler = async ({ cwd = process.cwd(), ...params }) => {
             headers: {
                 ...formData.getHeaders(),
             },
+            timeout: 30000, // Ensure we have enough time to upload a large zip file
         })
         reporter.info(
-            `Successfully deployed ${config.name} to ${params.baseUrl}`
+            `Successfully deployed ${config.name} to ${dhis2Config.baseUrl}`
         )
     } catch (e) {
         dumpHttpError('Failed to upload app, HTTP error', e.response)
         process.exit(1)
     }
 
+    reporter.debug(`Testing app launch url at ${appUrl}...`)
     try {
-        reporter.debug(`Testing app launch url at ${appUrl}...`)
         await client.get(appUrl)
     } catch (e) {
-        dumpHttpError(`Uploaded app not responding at ${appUrl}`, e.response)
+        dumpHttpError(`Uploaded app not responding at ${appUrl}`)
         process.exit(1)
     }
     reporter.print(`App is available at ${appUrl}`)
