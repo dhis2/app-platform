@@ -8,7 +8,7 @@ module.exports.constructAppUrl = (baseUrl, config, serverVersion) => {
         .replace(/[^A-Za-z0-9\s-]/g, '')
         .replace(/\s+/g, '-')
 
-    // From core version 2.35, core apps are hosted at the server root under the /dhis-web-* namespace, whilst
+    // From core version 2.35, core apps are hosted at the server root under the /dhis-web-* namespace
     if (config.coreApp && isModernServer) {
         appUrl += `/dhis-web-${urlSafeAppSlug}/`
     } else {
