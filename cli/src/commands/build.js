@@ -46,7 +46,7 @@ const setAppParameters = (standalone, config) => {
 }
 
 const handler = async ({
-    cwd,
+    cwd = process.cwd(),
     mode,
     dev,
     watch,
@@ -123,7 +123,7 @@ const handler = async ({
             .replace(/{{version}}/, config.version)
         reporter.info(
             `Creating app archive at ${chalk.bold(
-                path.relative(process.cwd(), appBundle)
+                path.relative(cwd, appBundle)
             )}...`
         )
         await bundleApp(paths.buildAppOutput, appBundle)
