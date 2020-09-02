@@ -22,7 +22,6 @@ module.exports.constructAppUrl = (baseUrl, config, serverVersion) => {
 
     // Clean up any double slashes
     const scheme = appUrl.substr(0, appUrl.indexOf('://') + 3)
-    appUrl =
-        scheme + appUrl.substr(scheme.length).replace(/\/+/g, '/')
+    appUrl = scheme + appUrl.substr(scheme.length).replace(/\/+/g, '/')
     return appUrl
 }
