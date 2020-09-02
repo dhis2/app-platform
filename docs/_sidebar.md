@@ -6,6 +6,7 @@
     -   [`d2-app-scripts build`](scripts/build.md)
     -   [`d2-app-scripts start`](scripts/start.md)
     -   [`d2-app-scripts test`](scripts/test.md)
+    -   [`d2-app-scripts deploy`](scripts/test.md)
 -   [**Configuration**](config.md)
     -   [Types - `app`, `lib`](config/types)
     -   [`d2.config.js` Reference](config/d2-config-js-reference.md)
