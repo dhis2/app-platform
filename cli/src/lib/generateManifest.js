@@ -8,6 +8,7 @@ module.exports = (paths, config, publicUrl) => {
         name: config.title,
         description: config.description,
         version: config.version,
+        core_app: config.coreApp,
         launch_path: 'index.html',
         default_locale: 'en',
         activities: {
