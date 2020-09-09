@@ -37,8 +37,9 @@ const setAppParameters = (standalone, config) => {
         standalone === false ||
         (typeof standalone === 'undefined' && !config.standalone)
     ) {
-        process.env.DHIS2_BASE_URL =
-            process.env.DHIS2_BASE_URL || config.coreApp ? `..` : `../../..`
+        const defaultBase = config.coreApp ? `..` : `../../..`
+        process.env.DHIS2_BASE_URL = process.env.DHIS2_BASE_URL || defaultBase
+
         printBuildParam('DHIS2_BASE_URL', process.env.DHIS2_BASE_URL)
     } else {
         printBuildParam('DHIS2_BASE_URL', '<standalone>')
