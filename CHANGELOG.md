@@ -1,3 +1,15 @@
+# [5.2.0](https://github.com/dhis2/app-platform/compare/v5.1.0...v5.2.0) (2020-09-09)
+
+
+### Bug Fixes
+
+* base url should be overridden with env var if present ([#459](https://github.com/dhis2/app-platform/issues/459)) ([8768a1f](https://github.com/dhis2/app-platform/commit/8768a1f096355e33fab13e6fd8026b267ecba502))
+
+
+### Features
+
+* add core_app flag to app manifest ([#457](https://github.com/dhis2/app-platform/issues/457)) ([d32c0a1](https://github.com/dhis2/app-platform/commit/d32c0a1e19f6cc87a5b5ca471d01ca7ec57f8b5a))
+
 # [5.1.0](https://github.com/dhis2/app-platform/compare/v5.0.0...v5.1.0) (2020-09-02)
 
 
