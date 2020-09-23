@@ -129,6 +129,15 @@ const handler = async ({ force, name, cwd, lib }) => {
         pkg.scripts = pkg.scripts || {}
         pkg.scripts.test = 'd2-app-scripts test'
     }
+    
+    if (pkg.scripts && pkg.scripts.deploy && !force) {
+        reporter.warn(
+            'A script called "deploy" already exists, use --force to overwrite it'
+        )
+    } else {
+        pkg.scripts = pkg.scripts || {}
+        pkg.scripts.deploy = 'd2-app-scripts deploy'
+    }
 
     fs.writeJSONSync(paths.package, pkg, {
         spaces: 2,
