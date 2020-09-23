@@ -1,3 +1,10 @@
+## [5.2.1](https://github.com/dhis2/app-platform/compare/v5.2.0...v5.2.1) (2020-09-23)
+
+
+### Bug Fixes
+
+* add deploy script to package.json when initializing ([#463](https://github.com/dhis2/app-platform/issues/463)) ([11b310e](https://github.com/dhis2/app-platform/commit/11b310e6a1efcdb54173c609348c39ff7d283c63))
+
 # [5.2.0](https://github.com/dhis2/app-platform/compare/v5.1.0...v5.2.0) (2020-09-09)
 
 
