@@ -1,3 +1,11 @@
+## [5.2.2](https://github.com/dhis2/app-platform/compare/v5.2.1...v5.2.2) (2020-10-07)
+
+
+### Bug Fixes
+
+* adjust formatting in locales.hbs so it matches ESLint rules ([#466](https://github.com/dhis2/app-platform/issues/466)) ([658fa0b](https://github.com/dhis2/app-platform/commit/658fa0b72b13d46afefdeda1f73254a3390daa52))
+* encode username and password when posting to server in AuthBoundary ([#467](https://github.com/dhis2/app-platform/issues/467)) ([b0cc51d](https://github.com/dhis2/app-platform/commit/b0cc51d0351b5c1e787b28cb963eab9a08238298))
+
 ## [5.2.1](https://github.com/dhis2/app-platform/compare/v5.2.0...v5.2.1) (2020-09-23)
 
 
