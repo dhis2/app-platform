@@ -32,7 +32,9 @@ export const LoginModal = () => {
                     {
                         method: 'POST',
                         credentials: 'include',
-                        body: `j_username=${username}&j_password=${password}`,
+                        body: `j_username=${encodeURIComponent(
+                            username
+                        )}&j_password=${encodeURIComponent(password)}`,
                         headers: {
                             'X-Requested-With': 'XMLHttpRequest',
                             Accept: 'application/json',
