@@ -11,9 +11,7 @@ export const ServerVersionProvider = ({ url, apiVersion, children }) => {
     })
 
     useEffect(() => {
-        if (!loading) {
-            setState({ loading: true })
-        }
+        setState(state => (state.loading ? state : { loading: true }))
         const request = get(`${url}/api/system/info`)
         request
             .then(systemInfo => {
