@@ -2,10 +2,10 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { HeaderBar } from '@dhis2/ui'
 import { FatalErrorBoundary } from './components/FatalErrorBoundary'
+import { ServerVersionProvider } from './components/ServerVersionProvider'
 import { AuthBoundary } from './components/AuthBoundary'
 
 import { styles } from './styles.js'
-import { ServerVersionProvider } from './components/ServerVersionProvider'
 
 const App = ({ url, apiVersion, appName, children }) => (
     <FatalErrorBoundary>
