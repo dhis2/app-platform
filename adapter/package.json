@@ -40,6 +40,8 @@
         "styled-jsx": "^3"
     },
     "jest": {
-        "setupFilesAfterEnv": [ "<rootDir>/config/setupEnzyme.js" ]
+        "setupFilesAfterEnv": [
+            "<rootDir>/config/setupEnzyme.js"
+        ]
     }
 }
