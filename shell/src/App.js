@@ -11,7 +11,7 @@ const appConfig = {
         process.env.REACT_APP_DHIS2_BASE_URL ||
         window.localStorage.DHIS2_BASE_URL,
     appName: process.env.REACT_APP_DHIS2_APP_NAME || '',
-    apiVersion: parseInt(process.env.REACT_APP_DHIS2_API_VERSION) || 32,
+    apiVersion: parseInt(process.env.REACT_APP_DHIS2_API_VERSION),
 }
 
 const App = () => (
