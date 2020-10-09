@@ -2,10 +2,14 @@ name: 'DHIS2: Verify'
 
 on: push
 
+env:
+    CI: true
+
+if: "!contains(github.event.head_commit.message, '[skip ci]')"
+
 jobs:
     lint:
         runs-on: ubuntu-latest
-        if: "!contains(github.event.head_commit.message, '[skip ci]')"
         steps:
             - uses: actions/checkout@v2
             - uses: actions/setup-node@v1
@@ -30,12 +34,9 @@ jobs:
               run: |
                   yarn d2-style js check
                   yarn d2-style text check
-        env:
-            CI: true
 
     build:
         runs-on: ubuntu-latest
-        if: "!contains(github.event.head_commit.message, '[skip ci]')"
         steps:
             - uses: actions/checkout@v2
             - uses: actions/setup-node@v1
@@ -58,12 +59,9 @@ jobs:
 
             - name: Build
               run: yarn build
-        env:
-            CI: true
 
     test:
         runs-on: ubuntu-latest
-        if: "!contains(github.event.head_commit.message, '[skip ci]')"
         steps:
             - uses: actions/checkout@v2
             - uses: actions/setup-node@v1
@@ -86,5 +84,3 @@ jobs:
 
             - name: Test
               run: yarn test
-        env:
-            CI: true
