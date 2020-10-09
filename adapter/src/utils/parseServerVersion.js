@@ -1,11 +1,11 @@
 export const parseServerVersion = versionString => {
-    const [mainVersion, tag] = versionString.split('-')
-    const [major, minor, patch] = mainVersion.split('.')
+    const [mainVersion, tag] = versionString?.split('-') || []
+    const [major, minor, patch] = mainVersion?.split('.') || []
 
     const parsedVersion = {
-        major: parseInt(major) || 2, // 2
+        major: parseInt(major) || undefined, // 2
         minor: parseInt(minor) || undefined, // 34
-        patch: parseInt(patch) || undefined, // 0
+        patch: parseInt(patch) || undefined, // 1
         tag, // SNAPSHOT || undefined
     }
 
