@@ -1,15 +1,15 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import { HeaderBar } from '@dhis2/ui'
-import { Provider } from '@dhis2/app-runtime'
-import { FatalErrorBoundary } from './FatalErrorBoundary'
-import { AuthBoundary } from './AuthBoundary'
+import { FatalErrorBoundary } from './components/FatalErrorBoundary'
+import { ServerVersionProvider } from './components/ServerVersionProvider'
+import { AuthBoundary } from './components/AuthBoundary'
 
 import { styles } from './styles.js'
 
-// eslint-disable-next-line react/prop-types
 const App = ({ url, apiVersion, appName, children }) => (
     <FatalErrorBoundary>
-        <Provider config={{ baseUrl: url, apiVersion: apiVersion }}>
+        <ServerVersionProvider url={url} apiVersion={apiVersion}>
             <div className="app-shell-adapter">
                 <style jsx>{styles}</style>
                 <HeaderBar appName={appName} />
@@ -17,8 +17,15 @@ const App = ({ url, apiVersion, appName, children }) => (
                     <div className="app-shell-app">{children}</div>
                 </AuthBoundary>
             </div>
-        </Provider>
+        </ServerVersionProvider>
     </FatalErrorBoundary>
 )
+
+App.propTypes = {
+    appName: PropTypes.string.isRequired,
+    url: PropTypes.string.isRequired,
+    apiVersion: PropTypes.number,
+    children: PropTypes.element,
+}
 
 export default App
