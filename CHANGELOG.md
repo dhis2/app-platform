@@ -1,3 +1,10 @@
+# [5.3.0](https://github.com/dhis2/app-platform/compare/v5.2.2...v5.3.0) (2020-10-12)
+
+
+### Features
+
+* detect server version, use latest available api version ([#470](https://github.com/dhis2/app-platform/issues/470)) ([ef92456](https://github.com/dhis2/app-platform/commit/ef924565d30b242a818cc54b203d2a2d11e842bc))
+
 ## [5.2.2](https://github.com/dhis2/app-platform/compare/v5.2.1...v5.2.2) (2020-10-07)
 
 
