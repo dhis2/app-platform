@@ -1,3 +1,10 @@
+# [5.4.0](https://github.com/dhis2/app-platform/compare/v5.3.0...v5.4.0) (2020-10-19)
+
+
+### Features
+
+* generate d2.config.json from d2.config.js ([#471](https://github.com/dhis2/app-platform/issues/471)) ([2046074](https://github.com/dhis2/app-platform/commit/20460744dd6427097bad2350342a6fcba7d68377))
+
 # [5.3.0](https://github.com/dhis2/app-platform/compare/v5.2.2...v5.3.0) (2020-10-12)
 
 
