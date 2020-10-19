@@ -32,5 +32,12 @@ module.exports = (paths, config, publicUrl) => {
 
     reporter.debug('Generated manifest', manifest)
 
+    // For backwards compatibility, WILL BE DEPRECATED
     fs.writeJsonSync(paths.buildAppManifest, manifest, { spaces: 2 })
+
+    // Write config json
+    const appConfig = { ...config }
+    delete appConfig['entryPoints']
+
+    fs.writeJsonSync(paths.buildAppConfigJson, appConfig, { spaces: 2 })
 }

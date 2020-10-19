@@ -48,6 +48,7 @@ module.exports = (cwd = process.cwd()) => {
         buildOutput: path.join(base, './build'),
         buildAppOutput: path.join(base, './build/app'),
         buildAppManifest: path.join(base, './build/app/manifest.webapp'),
+        buildAppConfigJson: path.join(base, './build/app/d2.config.json'),
         buildAppBundle: path.join(
             base,
             './build/bundle/dhis2-{{name}}-{{version}}.zip'
