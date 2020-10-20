@@ -1,6 +1,6 @@
 {
     "name": "root",
-    "version": "5.2.2",
+    "version": "5.4.0",
     "private": true,
     "repository": {
         "type": "git",
@@ -27,7 +27,9 @@
         "start:example": "cd examples/simple-app && yarn start --force",
         "start": "yarn build && yarn start:example",
         "docs:serve": "d2-utils-docsite serve ./docs -o ./dist",
-        "docs:build": "d2-utils-docsite build ./docs -o ./dist"
+        "docs:build": "d2-utils-docsite build ./docs -o ./dist",
+        "test:adapter": "cd adapter && yarn test",
+        "test": "yarn test:adapter"
     },
     "d2": {
         "docsite": {

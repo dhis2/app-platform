@@ -8,6 +8,7 @@ import {
     Button,
     InputField,
 } from '@dhis2/ui'
+import { post } from '../utils/api'
 
 const staticUrl = process.env.REACT_APP_DHIS2_BASE_URL
 
@@ -27,20 +28,11 @@ export const LoginModal = () => {
         if (isValid(server) && isValid(username) && isValid(password)) {
             window.localStorage.DHIS2_BASE_URL = server
             try {
-                await fetch(
+                await post(
                     `${server}/dhis-web-commons-security/login.action`,
-                    {
-                        method: 'POST',
-                        credentials: 'include',
-                        body: `j_username=${encodeURIComponent(
-                            username
-                        )}&j_password=${encodeURIComponent(password)}`,
-                        headers: {
-                            'X-Requested-With': 'XMLHttpRequest',
-                            Accept: 'application/json',
-                            'Content-Type': 'application/x-www-form-urlencoded',
-                        },
-                    }
+                    `j_username=${encodeURIComponent(
+                        username
+                    )}&j_password=${encodeURIComponent(password)}`
                 )
             } catch (e) {
                 console.log(

@@ -1,9 +1,10 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import { useDataQuery } from '@dhis2/app-runtime'
 
-import { Layer, layers, CenteredContent, CircularLoader } from '@dhis2/ui'
 import { LoginModal } from './LoginModal'
-import { useLocale } from './useLocale'
+import { useLocale } from '../utils/useLocale'
+import { LoadingMask } from './LoadingMask'
 
 const settingsQuery = {
     userSettings: {
@@ -16,13 +17,7 @@ export const AuthBoundary = ({ url, children }) => {
     useLocale(data && data.userSettings.keyUiLocale)
 
     if (loading) {
-        return (
-            <Layer translucent level={layers.alert}>
-                <CenteredContent>
-                    <CircularLoader />
-                </CenteredContent>
-            </Layer>
-        )
+        return <LoadingMask />
     }
 
     if (error) {
@@ -30,4 +25,9 @@ export const AuthBoundary = ({ url, children }) => {
     }
 
     return children
+}
+
+AuthBoundary.propTypes = {
+    children: PropTypes.element,
+    url: PropTypes.string,
 }
