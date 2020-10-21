@@ -1,7 +1,7 @@
 import React from 'react'
-import i18n from './locales'
 import moment from 'moment'
 import { useDataQuery } from '@dhis2/app-runtime'
+import i18n from '@dhis2/d2-i18n'
 import style from './App.style'
 
 const query = {

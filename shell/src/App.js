@@ -3,7 +3,7 @@ import AppAdapter from '@dhis2/app-adapter'
 import { Layer, layers, CenteredContent, CircularLoader } from '@dhis2/ui'
 
 const D2App = React.lazy(() =>
-    import(/*webpackChunkName: 'app'*/ './D2App/app')
+    import(/*webpackChunkName: 'app'*/ './D2AppEntrypoint')
 ) // Automatic bundle splitting!
 
 const appConfig = {

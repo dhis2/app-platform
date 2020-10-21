@@ -5,6 +5,7 @@ const shellSource = path.dirname(
     require.resolve('@dhis2/app-shell/package.json')
 )
 const shellAppDirname = 'src/D2App'
+const shellAppLocalesDirname = 'src/D2AppLocales'
 
 module.exports = (cwd = process.cwd()) => {
     const base = path.resolve(cwd)
@@ -34,7 +35,7 @@ module.exports = (cwd = process.cwd()) => {
         public: path.join(base, './public'),
         jestConfig: path.join(base, 'jest.config.js'),
         i18nStrings: path.join(base, './i18n'),
-        i18nLocales: path.join(base, './src/locales'),
+        i18nLocales: path.join(base, `./.d2/shell/${shellAppLocalesDirname}`),
 
         d2: path.join(base, './.d2/'),
         appOutputFilename: 'App.js',

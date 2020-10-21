@@ -1926,8 +1926,8 @@
   resolved "https://registry.yarnpkg.com/@csstools/normalize.css/-/normalize.css-10.1.0.tgz#f0950bba18819512d42f7197e56c518aa491cf18"
   integrity sha512-ij4wRiunFfaJxjB0BdrYHIH8FxBJpOwNPhhAcunlmPdXudL1WQV1qoP9un6JsEBAgQH+7UXyyjh0g7jTxXK6tg==
 
-"@dhis2/app-adapter@5.2.2", "@dhis2/app-adapter@file:../../adapter":
-  version "5.2.2"
+"@dhis2/app-adapter@5.4.0", "@dhis2/app-adapter@file:../../adapter":
+  version "5.4.0"
   dependencies:
     moment "^2.24.0"
 
@@ -1949,10 +1949,10 @@
   resolved "https://registry.yarnpkg.com/@dhis2/app-service-data/-/app-service-data-2.2.2.tgz#093d45b8bb71b5b1e81876281379cda52b6632a7"
   integrity sha512-QJrYTFj+vINcqvr27yLIKunbNJTVmDPGr9fUliUdmTkCikTwlnK8fu6TPz3rhkOUYX0VrwzFJXp3ofKQajZ9mQ==
 
-"@dhis2/app-shell@5.2.2", "@dhis2/app-shell@file:../../shell":
-  version "5.2.2"
+"@dhis2/app-shell@5.4.0", "@dhis2/app-shell@file:../../shell":
+  version "5.4.0"
   dependencies:
-    "@dhis2/app-adapter" "5.2.2"
+    "@dhis2/app-adapter" "5.4.0"
     "@dhis2/app-runtime" "^2.2.2"
     "@dhis2/d2-i18n" "^1.0.5"
     "@dhis2/ui" "^5.4.2"
@@ -1968,7 +1968,7 @@
     typescript "^3.6.3"
 
 "@dhis2/cli-app-scripts@file:../../cli":
-  version "5.2.2"
+  version "5.4.0"
   dependencies:
     "@babel/core" "^7.6.2"
     "@babel/plugin-proposal-class-properties" "^7.8.3"
@@ -1981,7 +1981,7 @@
     "@babel/preset-env" "^7.9.0"
     "@babel/preset-react" "^7.0.0"
     "@babel/preset-typescript" "^7.6.0"
-    "@dhis2/app-shell" "5.2.2"
+    "@dhis2/app-shell" "5.4.0"
     "@dhis2/cli-helpers-engine" "^1.5.0"
     archiver "^3.1.1"
     axios "^0.20.0"

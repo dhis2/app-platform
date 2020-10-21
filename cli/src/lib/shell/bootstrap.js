@@ -4,6 +4,24 @@ const { reporter, chalk } = require('@dhis2/cli-helpers-engine')
 
 const currentShellVersion = require('@dhis2/app-shell/package.json').version
 
+const checkForBreakingUpgrades = (existingShellVersion, paths) => {
+    const [majorVersion] = existingShellVersion
+        ? existingShellVersion.split('.')
+        : []
+
+    reporter.debug('Existing shell major version', majorVersion)
+
+    if (
+        parseInt(majorVersion) < 6 &&
+        fs.existsSync(path.join(paths.src, 'locales'))
+    ) {
+        reporter.error(
+            'REQUIRED: Please remove the src/locales directory as well as any import statements referencing it - locale initialization is integrated into the application shell from version 6.0.0'
+        )
+        process.exit(1)
+    }
+}
+
 const getShellVersion = shellDir => {
     const shellPkg = path.join(shellDir, 'package.json')
     if (fs.existsSync(shellPkg)) {
@@ -23,9 +41,9 @@ const bootstrapShell = async (paths, { shell, force = false } = {}) => {
         dest = paths.shell
 
     if (fs.pathExistsSync(dest)) {
+        const shellVersion = getShellVersion(dest)
         if (!shell) {
-            const versionMismatch =
-                getShellVersion(dest) !== currentShellVersion
+            const versionMismatch = shellVersion !== currentShellVersion
             if (versionMismatch) {
                 reporter.print(
                     chalk.dim(
@@ -34,6 +52,8 @@ const bootstrapShell = async (paths, { shell, force = false } = {}) => {
                         )
                     )
                 )
+
+                checkForBreakingUpgrades(shellVersion, paths)
             }
 
             if (!force && !versionMismatch) {
