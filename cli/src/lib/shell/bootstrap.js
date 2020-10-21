@@ -6,15 +6,12 @@ const currentShellVersion = require('@dhis2/app-shell/package.json').version
 
 const checkForBreakingUpgrades = (existingShellVersion, paths) => {
     const [majorVersion] = existingShellVersion
-        ? existingShellVersion.split('.')
-        : []
+        ? existingShellVersion.split('.').map(parseInt)
+        : [0]
 
     reporter.debug('Existing shell major version', majorVersion)
 
-    if (
-        parseInt(majorVersion) < 6 &&
-        fs.existsSync(path.join(paths.src, 'locales'))
-    ) {
+    if (majorVersion < 6 && fs.existsSync(path.join(paths.src, 'locales'))) {
         reporter.error(
             'REQUIRED: Please remove the src/locales directory as well as any import statements referencing it - locale initialization is integrated into the application shell from version 6.0.0'
         )
