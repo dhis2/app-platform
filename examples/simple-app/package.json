@@ -6,17 +6,17 @@
     "license": "BSD-3-Clause",
     "private": true,
     "devDependencies": {
-        "@dhis2/cli-app-scripts": "file:../../cli"
+        "@dhis2/cli-app-scripts": "*"
     },
     "scripts": {
-        "start": "../../cli/bin/d2-app-scripts start",
-        "build": "../../cli/bin/d2-app-scripts build",
-        "test": "../../cli/bin/d2-app-scripts test",
-        "deploy": "../../cli/bin/d2-app-scripts deploy"
+        "start": "d2-app-scripts start",
+        "build": "d2-app-scripts build",
+        "test": "d2-app-scripts test",
+        "deploy": "d2-app-scripts deploy"
     },
     "resolutions": {
-        "@dhis2/app-shell": "file:../../shell",
-        "@dhis2/app-adapter": "file:../../adapter"
+        "@dhis2/app-shell": "*",
+        "@dhis2/app-adapter": "*"
     },
     "peerDependencies": {
         "@dhis2/app-runtime": "*",
