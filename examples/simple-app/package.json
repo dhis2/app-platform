@@ -14,10 +14,6 @@
         "test": "d2-app-scripts test",
         "deploy": "d2-app-scripts deploy"
     },
-    "resolutions": {
-        "@dhis2/app-shell": "*",
-        "@dhis2/app-adapter": "*"
-    },
     "peerDependencies": {
         "@dhis2/app-runtime": "*",
         "@dhis2/d2-i18n": "*",
