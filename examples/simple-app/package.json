@@ -1,22 +1,18 @@
 {
     "name": "simple-app",
-    "version": "1.0.0",
+    "version": "5.4.1-alpha.1",
     "repository": "https://github.com/amcgee/dhis2-app-platform",
     "author": "Austin McGee <austin@dhis2.org>",
     "license": "BSD-3-Clause",
     "private": true,
     "devDependencies": {
-        "@dhis2/cli-app-scripts": "file:../../cli"
+        "@dhis2/cli-app-scripts": "5.4.1-alpha.1"
     },
     "scripts": {
-        "start": "../../cli/bin/d2-app-scripts start",
-        "build": "../../cli/bin/d2-app-scripts build",
-        "test": "../../cli/bin/d2-app-scripts test",
-        "deploy": "../../cli/bin/d2-app-scripts deploy"
-    },
-    "resolutions": {
-        "@dhis2/app-shell": "file:../../shell",
-        "@dhis2/app-adapter": "file:../../adapter"
+        "start": "d2-app-scripts start",
+        "build": "d2-app-scripts build",
+        "test": "d2-app-scripts test",
+        "deploy": "d2-app-scripts deploy"
     },
     "peerDependencies": {
         "@dhis2/app-runtime": "*",
