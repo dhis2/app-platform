@@ -12,12 +12,12 @@ module.exports = (inDir, outFile) => {
             zlib: { level: 9 },
         })
 
-        output.on('close', function() {
+        output.on('close', function () {
             reporter.print(chalk.dim(`Total size: ${archive.pointer()} bytes`))
             resolve()
         })
 
-        archive.on('warning', function(err) {
+        archive.on('warning', function (err) {
             if (err.code === 'ENOENT') {
                 reporter.warn('[bundler]', err)
             } else {
@@ -25,7 +25,7 @@ module.exports = (inDir, outFile) => {
             }
         })
 
-        archive.on('error', function(err) {
+        archive.on('error', function (err) {
             reject(err)
         })
 

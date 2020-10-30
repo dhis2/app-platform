@@ -109,7 +109,7 @@ const compileLibrary = async ({ config, paths, mode, watch }) => {
                 }
             })
 
-            process.on('SIGINT', function() {
+            process.on('SIGINT', function () {
                 reporter.debug('Caught interrupt signal')
                 watcher.close()
             })

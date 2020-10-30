@@ -1,2 +1,5 @@
 /cli/assets
 **/locales/index.js
+cli/config/init.entrypoint.js
+cli/config/init.App.test.js
+
