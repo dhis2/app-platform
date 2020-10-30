@@ -35,8 +35,8 @@
         "classnames": "^2",
         "moment": "^2",
         "prop-types": "^15",
-        "react": "^16.8",
-        "react-dom": "^16.8",
+        "react": "^17",
+        "react-dom": "^17",
         "styled-jsx": "^3"
     },
     "jest": {
