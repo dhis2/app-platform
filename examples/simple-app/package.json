@@ -1,12 +1,12 @@
 {
     "name": "simple-app",
-    "version": "1.0.0",
+    "version": "5.4.1-alpha.1",
     "repository": "https://github.com/amcgee/dhis2-app-platform",
     "author": "Austin McGee <austin@dhis2.org>",
     "license": "BSD-3-Clause",
     "private": true,
     "devDependencies": {
-        "@dhis2/cli-app-scripts": "*"
+        "@dhis2/cli-app-scripts": "5.4.1-alpha.1"
     },
     "scripts": {
         "start": "d2-app-scripts start",
