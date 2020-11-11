@@ -1,3 +1,10 @@
+## [5.4.2](https://github.com/dhis2/app-platform/compare/v5.4.1...v5.4.2) (2020-11-11)
+
+
+### Bug Fixes
+
+* cut release to finish jira migration ([5aefe85](https://github.com/dhis2/app-platform/commit/5aefe85251b7902a128af0e905ec648868a701ef))
+
 ## [5.4.1](https://github.com/dhis2/app-platform/compare/v5.4.0...v5.4.1) (2020-10-30)
 
 
