@@ -28,6 +28,6 @@ export const AuthBoundary = ({ url, children }) => {
 }
 
 AuthBoundary.propTypes = {
-    children: PropTypes.element,
+    children: PropTypes.node,
     url: PropTypes.string,
 }

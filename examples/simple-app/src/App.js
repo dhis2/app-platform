@@ -2,6 +2,7 @@ import React from 'react'
 import i18n from './locales'
 import moment from 'moment'
 import { useDataQuery } from '@dhis2/app-runtime'
+import { Alerter } from './Alerter.js'
 import style from './App.style'
 
 const query = {
@@ -27,6 +28,7 @@ const Component = () => {
                             ],
                         })}
                     </h3>
+                    <Alerter />
                 </>
             )}
         </div>
