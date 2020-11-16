@@ -1,3 +1,16 @@
+# [5.5.0](https://github.com/dhis2/app-platform/compare/v5.4.2...v5.5.0) (2020-11-16)
+
+
+### Bug Fixes
+
+* **alerts:** make Alerts a sibling of AuthBoundary ([2b607b8](https://github.com/dhis2/app-platform/commit/2b607b8695693f9ffb7edc419b8ece57d931db08))
+
+
+### Features
+
+* introduce alerts component to show alerts as alert-bars in a stack ([9aea659](https://github.com/dhis2/app-platform/commit/9aea659cde05400b96bc0afca18c55ca6c0e886e))
+* introduce alerts component to show alerts as alert-bars in a stack ([#486](https://github.com/dhis2/app-platform/issues/486)) ([fd22504](https://github.com/dhis2/app-platform/commit/fd22504c2528fd1bab2034d019b480e1c290f063))
+
 ## [5.4.2](https://github.com/dhis2/app-platform/compare/v5.4.1...v5.4.2) (2020-11-11)
 
 
