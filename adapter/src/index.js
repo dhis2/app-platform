@@ -1,9 +1,10 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { HeaderBar } from '@dhis2/ui'
+import { Alerts } from './components/Alerts'
+import { AuthBoundary } from './components/AuthBoundary'
 import { FatalErrorBoundary } from './components/FatalErrorBoundary'
 import { ServerVersionProvider } from './components/ServerVersionProvider'
-import { AuthBoundary } from './components/AuthBoundary'
 
 import { styles } from './styles.js'
 
@@ -16,6 +17,7 @@ const App = ({ url, apiVersion, appName, children }) => (
                 <AuthBoundary url={url}>
                     <div className="app-shell-app">{children}</div>
                 </AuthBoundary>
+                <Alerts />
             </div>
         </ServerVersionProvider>
     </FatalErrorBoundary>
