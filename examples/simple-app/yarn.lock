@@ -2048,8 +2048,10 @@
   resolved "https://registry.yarnpkg.com/@csstools/normalize.css/-/normalize.css-10.1.0.tgz#f0950bba18819512d42f7197e56c518aa491cf18"
   integrity sha512-ij4wRiunFfaJxjB0BdrYHIH8FxBJpOwNPhhAcunlmPdXudL1WQV1qoP9un6JsEBAgQH+7UXyyjh0g7jTxXK6tg==
 
-"@dhis2/app-adapter@5.4.0", "@dhis2/app-adapter@file:../../adapter":
-  version "5.4.0"
+"@dhis2/app-adapter@5.4.2":
+  version "5.4.2"
+  resolved "https://registry.yarnpkg.com/@dhis2/app-adapter/-/app-adapter-5.4.2.tgz#aabdf1cbf586c7ab18a72758663bcc76cfbe6000"
+  integrity sha512-Va1gxpJlEtLOY7N01MshX4SGKrUEDcm9bkN341dy543Re0PHcUaaD2yqIdyAIMeoQLofPimSwbryU5n3QSGmsQ==
   dependencies:
     moment "^2.24.0"
 
@@ -2071,10 +2073,12 @@
   resolved "https://registry.yarnpkg.com/@dhis2/app-service-data/-/app-service-data-2.2.2.tgz#093d45b8bb71b5b1e81876281379cda52b6632a7"
   integrity sha512-QJrYTFj+vINcqvr27yLIKunbNJTVmDPGr9fUliUdmTkCikTwlnK8fu6TPz3rhkOUYX0VrwzFJXp3ofKQajZ9mQ==
 
-"@dhis2/app-shell@5.4.0", "@dhis2/app-shell@file:../../shell":
-  version "5.4.0"
+"@dhis2/app-shell@5.4.2":
+  version "5.4.2"
+  resolved "https://registry.yarnpkg.com/@dhis2/app-shell/-/app-shell-5.4.2.tgz#e609a92cfe8011a867e5f7519ec0c705fd777c5c"
+  integrity sha512-DPsTwe0wE9C64VSnafzCM1qwsSFswBjcwHb64xnoVh6DJUEtoV/u3jJsmgFBlAP+7kWIugNRpdfZfdzZn4ySVQ==
   dependencies:
-    "@dhis2/app-adapter" "5.4.0"
+    "@dhis2/app-adapter" "5.4.2"
     "@dhis2/app-runtime" "^2.2.2"
     "@dhis2/d2-i18n" "^1.0.5"
     "@dhis2/ui" "^5.4.2"
@@ -2089,8 +2093,10 @@
     typeface-roboto "^0.0.75"
     typescript "^3.6.3"
 
-"@dhis2/cli-app-scripts@file:../../cli":
-  version "5.4.0"
+"@dhis2/cli-app-scripts@5.4.2":
+  version "5.4.2"
+  resolved "https://registry.yarnpkg.com/@dhis2/cli-app-scripts/-/cli-app-scripts-5.4.2.tgz#b06c343ac99ddb886d508960052d3ae6dd906acc"
+  integrity sha512-8y8iKVm6gh398SY0jaAp+bl/CO1x4/6q/jJb0cxS2Z1rStQEUh/gsDZrGT8FSC0WKd4Aj3NfWPzUbIpN8vYthA==
   dependencies:
     "@babel/core" "^7.6.2"
     "@babel/plugin-proposal-class-properties" "^7.8.3"
@@ -2103,7 +2109,7 @@
     "@babel/preset-env" "^7.9.0"
     "@babel/preset-react" "^7.0.0"
     "@babel/preset-typescript" "^7.6.0"
-    "@dhis2/app-shell" "5.4.0"
+    "@dhis2/app-shell" "5.4.2"
     "@dhis2/cli-helpers-engine" "^1.5.0"
     archiver "^3.1.1"
     axios "^0.20.0"
@@ -4188,9 +4194,9 @@ bindings@^1.5.0:
     file-uri-to-path "1.0.0"
 
 bl@^3.0.0:
-  version "3.0.0"
-  resolved "https://registry.yarnpkg.com/bl/-/bl-3.0.0.tgz#3611ec00579fd18561754360b21e9f784500ff88"
-  integrity sha512-EUAyP5UHU5hxF8BPT0LKW8gjYLhq1DQIcneOX/pL/m2Alo+OYDQAJlHq+yseMP50Os2nHXOSic6Ss3vSQeyf4A==
+  version "3.0.1"
+  resolved "https://registry.yarnpkg.com/bl/-/bl-3.0.1.tgz#1cbb439299609e419b5a74d7fce2f8b37d8e5c6f"
+  integrity sha512-jrCW5ZhfQ/Vt07WX1Ngs+yn9BDqPL/gw28S7s9H6QK/gupnizNzJAss5akW20ISgOrbLTlXOOCTJeNUQqruAWQ==
   dependencies:
     readable-stream "^3.0.1"
 
@@ -12405,9 +12411,9 @@ read-pkg@^5.2.0:
     util-deprecate "~1.0.1"
 
 "readable-stream@2 || 3", readable-stream@^3.0.1, readable-stream@^3.0.6, readable-stream@^3.1.1, readable-stream@^3.2.0, readable-stream@^3.4.0:
-  version "3.4.0"
-  resolved "https://registry.yarnpkg.com/readable-stream/-/readable-stream-3.4.0.tgz#a51c26754658e0a3c21dbf59163bd45ba6f447fc"
-  integrity sha512-jItXPLmrSR8jmTRmRWJXCnGJsfy85mB3Wd/uINMXA65yrnFo0cPClFIUWzo2najVNSl+mx7/4W8ttlLWJe99pQ==
+  version "3.6.0"
+  resolved "https://registry.yarnpkg.com/readable-stream/-/readable-stream-3.6.0.tgz#337bbda3adc0706bd3e024426a286d4b4b2c9198"
+  integrity sha512-BViHy7LKeTz4oNnkcLJ+lVSL6vpiFeX6/d3oSH8zCW7UxP2onchk+vTGB143xuFjHS3deTgkKoXXymXqymiIdA==
   dependencies:
     inherits "^2.0.3"
     string_decoder "^1.1.1"
@@ -13063,10 +13069,15 @@ safe-buffer@5.1.2, safe-buffer@~5.1.0, safe-buffer@~5.1.1:
   resolved "https://registry.yarnpkg.com/safe-buffer/-/safe-buffer-5.1.2.tgz#991ec69d296e0313747d59bdfd2b745c35f8828d"
   integrity sha512-Gd2UZBJDkXlY7GbJxfsE8/nvKkUEU1G38c1siN6QP6a9PT9MmHB8GnpscSmMJSoF8LOIrt8ud/wPtojys4G6+g==
 
-safe-buffer@>=5.1.0, safe-buffer@^5.0.1, safe-buffer@^5.1.0, safe-buffer@^5.1.1, safe-buffer@^5.1.2, safe-buffer@~5.2.0:
+safe-buffer@>=5.1.0, safe-buffer@^5.0.1, safe-buffer@^5.1.0, safe-buffer@^5.1.1, safe-buffer@^5.1.2:
   version "5.2.0"
   resolved "https://registry.yarnpkg.com/safe-buffer/-/safe-buffer-5.2.0.tgz#b74daec49b1148f88c64b68d49b1e815c1f2f519"
   integrity sha512-fZEwUGbVl7kouZs1jCdMLdt95hdIv0ZeHg6L7qPeciMZhZ+/gdesW4wgTARkrFWEpspjEATAzUGPG8N2jJiwbg==
+
+safe-buffer@~5.2.0:
+  version "5.2.1"
+  resolved "https://registry.yarnpkg.com/safe-buffer/-/safe-buffer-5.2.1.tgz#1eaf9fa9bdb1fdd4ec75f58f9cdb4e6b7827eec6"
+  integrity sha512-rp3So07KcdmmKbGvgaNxQSJr7bGVSVk5S9Eq1F+ppbRo70+YeaDxkw5Dd8NPN+GD6bjnYm2VuPuCXmpuYvmCXQ==
 
 safe-regex@^1.1.0:
   version "1.1.0"
