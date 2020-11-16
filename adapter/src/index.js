@@ -16,8 +16,8 @@ const App = ({ url, apiVersion, appName, children }) => (
                 <HeaderBar appName={appName} />
                 <AuthBoundary url={url}>
                     <div className="app-shell-app">{children}</div>
-                    <Alerts />
                 </AuthBoundary>
+                <Alerts />
             </div>
         </ServerVersionProvider>
     </FatalErrorBoundary>
