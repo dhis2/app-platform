@@ -19,13 +19,6 @@
 
 * update react-scripts and cli-style at same time to use eslint 7 ([#475](https://github.com/dhis2/app-platform/issues/475)) ([8fd9225](https://github.com/dhis2/app-platform/commit/8fd9225624ab02565ea72a3f9a1170a1bb4655ba))
 
-## [5.4.1-alpha.1](https://github.com/dhis2/app-platform/compare/v5.4.0...v5.4.1-alpha.1) (2020-10-30)
-
-
-### Bug Fixes
-
-* update react-scripts and cli-style at same time to use eslint 7 ([#475](https://github.com/dhis2/app-platform/issues/475)) ([8fd9225](https://github.com/dhis2/app-platform/commit/8fd9225624ab02565ea72a3f9a1170a1bb4655ba))
-
 # [5.4.0](https://github.com/dhis2/app-platform/compare/v5.3.0...v5.4.0) (2020-10-19)
 
 
