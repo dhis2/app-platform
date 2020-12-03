@@ -17542,7 +17542,7 @@ opn@latest:
   languageName: node
   linkType: hard
 
-"prop-types@npm:*, prop-types@npm:^15, prop-types@npm:^15.6.2, prop-types@npm:^15.7.2":
+"prop-types@npm:^15, prop-types@npm:^15.6.2, prop-types@npm:^15.7.2":
   version: 15.7.2
   resolution: "prop-types@npm:15.7.2"
   dependencies:
