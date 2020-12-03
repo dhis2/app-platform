@@ -38,6 +38,7 @@ module.exports = (cwd = process.cwd()) => {
 
         d2: path.join(base, './.d2/'),
         appOutputFilename: 'App.js',
+        appOut: path.join(base, './.d2/app'),
         shell: path.join(base, './.d2/shell'),
         shellAppEntrypoint: path.join(base, './.d2/shell/src/App.js'),
         shellAppDirname,

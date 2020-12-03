@@ -5,8 +5,13 @@
     "author": "Austin McGee <austin@dhis2.org>",
     "license": "BSD-3-Clause",
     "private": true,
+    "module": ".d2/app/App.js",
     "devDependencies": {
-        "@dhis2/cli-app-scripts": "5.5.0"
+        "@babel/cli": "^7.12.8",
+        "@babel/core": "^7.12.9",
+        "@babel/preset-react": "^7.12.7",
+        "@dhis2/cli-app-scripts": "*",
+        "styled-jsx": "^3.3.2"
     },
     "scripts": {
         "start": "d2-app-scripts start",

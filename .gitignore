@@ -30,3 +30,11 @@ cli/assets
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+
+# yarn2
+.yarn/*
+!.yarn/releases
+!.yarn/plugins
+!.yarn/sdks
+!.yarn/versions
+.pnp.*

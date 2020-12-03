@@ -5,7 +5,7 @@ const fs = require('fs-extra')
 const chokidar = require('chokidar')
 const babel = require('@babel/core')
 
-const babelOptions = require('../../../config/app.babel.config')
+const babelOptions = require('../../../config/babel.config')
 
 const overwriteEntrypoint = async ({ config, paths }) => {
     const shellAppSource = await fs.readFile(paths.shellSourceEntrypoint)
@@ -86,8 +86,10 @@ const watchFiles = ({ inputDir, outputDir, processFileCallback, watch }) => {
 const compileApp = async ({ config, paths, watch }) => {
     await overwriteEntrypoint({ config, paths })
 
-    fs.removeSync(paths.shellApp)
-    fs.ensureDirSync(paths.shellApp)
+    const outDir = paths.appOut
+
+    fs.removeSync(outDir)
+    fs.ensureDirSync(outDir)
 
     fs.removeSync(paths.shellPublic)
     fs.copySync(paths.shellSourcePublic, paths.shellPublic)
@@ -107,7 +109,7 @@ const compileApp = async ({ config, paths, watch }) => {
     return Promise.all([
         watchFiles({
             inputDir: paths.src,
-            outputDir: paths.shellApp,
+            outputDir: paths.appOut,
             processFileCallback: compileFile,
             watch,
         }),

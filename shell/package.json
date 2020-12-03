@@ -16,12 +16,13 @@
         "@dhis2/app-runtime": "^2.6.1",
         "@dhis2/d2-i18n": "^1.0.5",
         "@dhis2/ui": "^5.7.2",
+        "D2App": "link:./src/D2App",
         "classnames": "^2.2.6",
         "moment": "^2.24.0",
         "prop-types": "^15.7.2",
         "react": "^16.8.6",
         "react-dom": "^16.8.6",
-        "react-scripts": "^4.0.0",
+        "react-scripts": "^4.0.1",
         "source-map-explorer": "^2.1.0",
         "styled-jsx": "^3.2.2",
         "typeface-roboto": "^0.0.75",
@@ -37,6 +38,10 @@
     "devDependencies": {
         "enzyme": "^3.10.0",
         "enzyme-adapter-react-16": "^1.14.0",
+        "eslint-config-react-app": "^6.0.0",
         "react-test-renderer": "^16.8.6"
+    },
+    "resolutions": {
+        "@pmmmwh/react-refresh-webpack-plugin": ">=0.4.3"
     }
 }

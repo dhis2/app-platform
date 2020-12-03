@@ -37,5 +37,8 @@
             "name": "DHIS2 Application Platform",
             "description": "Unified application architecture and build pipeline to simplify and standardize application development within the DHIS2 ecosystem."
         }
+    },
+    "resolutions": {
+        "@pmmmwh/react-refresh-webpack-plugin": ">=0.4.3"
     }
 }

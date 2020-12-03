@@ -1,6 +1,6 @@
 const fs = require('fs-extra')
 const path = require('path')
-const { reporter, chalk } = require('@dhis2/cli-helpers-engine')
+const { reporter, chalk, exec } = require('@dhis2/cli-helpers-engine')
 
 const currentShellVersion = require('@dhis2/app-shell/package.json').version
 
@@ -18,14 +18,13 @@ const getShellVersion = shellDir => {
     return '0'
 }
 
-const bootstrapShell = async (paths, { shell, force = false } = {}) => {
-    const source = shell ? path.resolve(shell) : paths.shellSource,
-        dest = paths.shell
-
-    if (fs.pathExistsSync(dest)) {
+const shellRequiresUpdate = (paths, { shell, force = false }) => {
+    const shellDir = paths.shell
+    if (fs.pathExistsSync(shellDir)) {
         if (!shell) {
             const versionMismatch =
-                getShellVersion(dest) !== currentShellVersion
+                getShellVersion(shellDir) !== currentShellVersion
+            
             if (versionMismatch) {
                 reporter.print(
                     chalk.dim(
@@ -44,13 +43,19 @@ const bootstrapShell = async (paths, { shell, force = false } = {}) => {
                         )}`
                     )
                 )
-                return dest
+                return false
             }
         }
-
-        reporter.print(chalk.dim('Removing existing directory...'))
-        await fs.remove(dest)
+        return true
     }
+}
+
+const updateShell = async (paths, { shell }) => {
+    const source = shell ? path.resolve(shell) : paths.shellSource,
+        dest = paths.shell
+
+    reporter.print(chalk.dim('Removing existing directory...'))
+    await fs.remove(dest)
 
     reporter.debug(`Bootstrapping appShell from ${source} to ${dest}`)
     await fs.ensureDir(dest)
@@ -64,18 +69,30 @@ const bootstrapShell = async (paths, { shell, force = false } = {}) => {
             src.indexOf('.pnp', source.length) === -1 &&
             src.indexOf(paths.shellAppDirname) === -1,
     })
+    
+    // Touch the lock file so that the directory is recognized as a package root
+    const yarnLockFile = path.join(dest, 'yarn.lock')
+    const handle = await fs.open(yarnLockFile, 'w')
+    await fs.close(handle)
 
-    const srcNodeModules = path.join(source, 'node_modules')
-    const destNodeModules = path.join(dest, 'node_modules')
-    if (fs.exists(srcNodeModules)) {
-        reporter.debug(
-            `Linking ${path.relative(
-                paths.base,
-                destNodeModules
-            )} to ${path.relative(paths.base, srcNodeModules)}...`
-        )
-        await fs.ensureSymlink(srcNodeModules, destNodeModules)
-    }
+    await exec({
+        cmd: 'yarn',
+        args: ['add', `D2App@portal:${paths.base}`],
+        cwd: dest,
+    })
 }
 
+const bootstrapShell = async (paths, opts = {}) => {
+    const updateRequired = shellRequiresUpdate(paths, opts)
+    if (updateRequired) {
+        await updateShell(paths, opts)
+    }
+
+    reporter.print(chalk.dim(`${updateRequired ? 'Installing' : 'Updating'} appShell dependencies...`))
+    await exec({
+        cmd: 'yarn',
+        args: ['install'],
+        cwd: paths.shell,
+    })
+}
 module.exports = bootstrapShell
