@@ -16,7 +16,7 @@ const handler = async ({
     force,
     port = process.env.PORT || defaultPort,
     shell: shellSource,
-    adapter
+    adapter,
 }) => {
     const paths = makePaths(cwd)
 

@@ -1,7 +1,6 @@
 name: 'dhis2: verify (lib)'
 
-on:
-    push
+on: push
 
 env:
     GIT_AUTHOR_NAME: '@dhis2-bot'

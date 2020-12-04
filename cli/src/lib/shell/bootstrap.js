@@ -50,11 +50,20 @@ const shellRequiresUpdate = (paths, { shell, force = false }) => {
 
 const resolveShellOverride = (paths, shell) => {
     reporter.print(chalk.dim(`Using custom shell source ${shell}`))
-    if (shell.startsWith('/') || shell.startsWith('.') || /^[A-Z]:/.test(shell)) {
+    if (
+        shell.startsWith('/') ||
+        shell.startsWith('.') ||
+        /^[A-Z]:/.test(shell)
+    ) {
         // This is a local filesystem path
         const absoluteShell = path.resolve(paths.base, shell)
-        if (!fs.existsSync(absoluteShell) || !fs.statSync(absoluteShell).isDirectory()) {
-            reporter.error(`Custom shell source ${absoluteShell} does not exist or is not a directory`)
+        if (
+            !fs.existsSync(absoluteShell) ||
+            !fs.statSync(absoluteShell).isDirectory()
+        ) {
+            reporter.error(
+                `Custom shell source ${absoluteShell} does not exist or is not a directory`
+            )
             process.exit(1)
         }
         return absoluteShell
@@ -62,13 +71,17 @@ const resolveShellOverride = (paths, shell) => {
     try {
         return path.dirname(require.resolve(`${shell}/package.json`))
     } catch {
-        reporter.error(`Could not resolve custom shell pacakge ${shell} - make sure it has already been installed`)
+        reporter.error(
+            `Could not resolve custom shell pacakge ${shell} - make sure it has already been installed`
+        )
         process.exit(1)
     }
 }
 
 const updateShell = async (paths, { shell }) => {
-    const source = shell ? resolveShellOverride(paths, shell) : paths.shellSource,
+    const source = shell
+            ? resolveShellOverride(paths, shell)
+            : paths.shellSource,
         dest = paths.shell
 
     reporter.print(chalk.dim('Removing existing directory...'))
@@ -105,7 +118,10 @@ const resolveOverride = (paths, override) => {
         const pathIndex = override.indexOf(':') + 1
         const protocol = override.substring(0, pathIndex)
 
-        const resolvedPath = path.relative(paths.shell, path.resolve(paths.base, override.substring(pathIndex)))
+        const resolvedPath = path.relative(
+            paths.shell,
+            path.resolve(paths.base, override.substring(pathIndex))
+        )
         reporter.debug(`Resolved relative override location to ${resolvedPath}`)
         return `${protocol}${resolvedPath}`
     }
@@ -127,7 +143,11 @@ const overrideAdapter = async (paths, { adapter }) => {
             cwd: paths.shell,
         })
     } catch (e) {
-        reporter.error(`Couldn't resolve custom adapter package ${adapter} with ${chalk.bold('yarn add')}`)
+        reporter.error(
+            `Couldn't resolve custom adapter package ${adapter} with ${chalk.bold(
+                'yarn add'
+            )}`
+        )
         process.exit(1)
     }
 }
@@ -140,7 +160,8 @@ const bootstrapShell = async (paths, opts = {}) => {
 
     reporter.print(
         chalk.dim(
-            `${updateRequired ? 'Installing' : 'Updating'
+            `${
+                updateRequired ? 'Installing' : 'Updating'
             } appShell dependencies...`
         )
     )
