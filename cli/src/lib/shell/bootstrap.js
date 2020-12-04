@@ -20,34 +20,32 @@ const getShellVersion = shellDir => {
 
 const shellRequiresUpdate = (paths, { shell, force = false }) => {
     const shellDir = paths.shell
-    if (fs.pathExistsSync(shellDir)) {
-        if (!shell) {
-            const versionMismatch =
-                getShellVersion(shellDir) !== currentShellVersion
-            
-            if (versionMismatch) {
-                reporter.print(
-                    chalk.dim(
-                        chalk.yellow(
-                            'Local shell version does not match scripts version'
-                        )
+    if (fs.pathExistsSync(shellDir) && !shell) {
+        const versionMismatch =
+            getShellVersion(shellDir) !== currentShellVersion
+        
+        if (versionMismatch) {
+            reporter.print(
+                chalk.dim(
+                    chalk.yellow(
+                        'Local shell version does not match scripts version'
                     )
                 )
-            }
-
-            if (!force && !versionMismatch) {
-                reporter.print(
-                    chalk.dim(
-                        `A local appShell exists, skipping bootstrap. ${chalk.bold(
-                            'Use --force to update.'
-                        )}`
-                    )
-                )
-                return false
-            }
+            )
         }
-        return true
+
+        if (!force && !versionMismatch) {
+            reporter.print(
+                chalk.dim(
+                    `A local appShell exists, skipping bootstrap. ${chalk.bold(
+                        'Use --force to update.'
+                    )}`
+                )
+            )
+            return false
+        }
     }
+    return true
 }
 
 const updateShell = async (paths, { shell }) => {

@@ -83,8 +83,8 @@ jobs:
                     **/node_modules
                   key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
 
-            - name: Build
-              run: yarn build
+            - name: Generate translations
+              run: yarn d2-app-scripts i18n generate
 
             - name: Lint
               run: yarn lint
