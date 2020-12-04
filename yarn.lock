@@ -3256,16 +3256,19 @@ __metadata:
   resolution: "@dhis2/app-adapter@workspace:adapter"
   dependencies:
     "@dhis2/cli-app-scripts": 5.5.0
+    "@dhis2/d2-i18n": ^1.0.6
     enzyme: ^3.11.0
     enzyme-adapter-react-16: ^1.15.5
     moment: ^2.24.0
+    prop-types: ^15.7.2
+    react: ^16
+    react-dom: ^16
   peerDependencies:
     "@dhis2/app-runtime": ^2
     "@dhis2/d2-i18n": ^1
     "@dhis2/ui": ^5
     classnames: ^2
     moment: ^2
-    prop-types: ^15
     react: ^16.8
     react-dom: ^16.8
     styled-jsx: ^3
@@ -3513,7 +3516,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@dhis2/d2-i18n@npm:^1.0.5":
+"@dhis2/d2-i18n@npm:^1.0.5, @dhis2/d2-i18n@npm:^1.0.6":
   version: 1.0.6
   resolution: "@dhis2/d2-i18n@npm:1.0.6"
   dependencies:
@@ -17878,6 +17881,20 @@ proxy-middleware@latest:
   languageName: node
   linkType: hard
 
+"react-dom@npm:^16":
+  version: 16.14.0
+  resolution: "react-dom@npm:16.14.0"
+  dependencies:
+    loose-envify: ^1.1.0
+    object-assign: ^4.1.1
+    prop-types: ^15.6.2
+    scheduler: ^0.19.1
+  peerDependencies:
+    react: ^16.14.0
+  checksum: a13558f0e7c6d1a98684214460bcd4b9005500015b5048fb1b0d2856786b8764dbc713e6b078a5b1a56e17866400e1d862183c7a0a513ae8351de11f6f6749d2
+  languageName: node
+  linkType: hard
+
 "react-dom@npm:^16.8.6":
   version: 16.13.1
   resolution: "react-dom@npm:16.13.1"
@@ -18040,6 +18057,17 @@ proxy-middleware@latest:
   peerDependencies:
     react: ^16.13.1
   checksum: e9c3c068d09a4252103eed270635d05897e23cbb86c6f0f74beced9345ed1b94a0fff44f16f97526e6f7a8337669156616e1e02eacb6d7b8f40295c92d91be12
+  languageName: node
+  linkType: hard
+
+"react@npm:^16":
+  version: 16.14.0
+  resolution: "react@npm:16.14.0"
+  dependencies:
+    loose-envify: ^1.1.0
+    object-assign: ^4.1.1
+    prop-types: ^15.6.2
+  checksum: 2769580b22952a52de3b5b2ea0f09cb904030b762d759739f49ab4da0b1f550e5c087ce3728c4be90f423d09481e0c075483c0c30b1ea9c549445c8b12020fd3
   languageName: node
   linkType: hard
 
