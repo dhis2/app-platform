@@ -16,6 +16,7 @@ const handler = async ({
     force,
     port = process.env.PORT || defaultPort,
     shell: shellSource,
+    adapter
 }) => {
     const paths = makePaths(cwd)
 
@@ -45,7 +46,7 @@ const handler = async ({
             })
 
             reporter.info('Bootstrapping local appShell...')
-            await shell.bootstrap({ shell: shellSource, force })
+            await shell.bootstrap({ shell: shellSource, adapter, force })
 
             reporter.info(`Building app ${chalk.bold(config.name)}...`)
             await compile({

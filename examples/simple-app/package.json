@@ -10,7 +10,6 @@
         "@babel/cli": "^7.12.8",
         "@babel/core": "^7.12.9",
         "@babel/preset-react": "^7.12.7",
-        "@dhis2/app-adapter": "workspace:adapter",
         "@dhis2/app-runtime": "^2.6.1",
         "@dhis2/cli-app-scripts": "*",
         "@dhis2/d2-i18n": "^1.0.6",
@@ -21,8 +20,8 @@
         "styled-jsx": "^3.3.2"
     },
     "scripts": {
-        "start": "d2-app-scripts start",
-        "build": "d2-app-scripts build",
+        "start": "d2-app-scripts start --shell ../../shell --adapter portal:../../adapter",
+        "build": "d2-app-scripts build --shell ../../shell --adapter portal:../../adapter",
         "test": "d2-app-scripts test",
         "deploy": "d2-app-scripts deploy"
     },

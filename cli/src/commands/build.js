@@ -53,6 +53,7 @@ const handler = async ({
     watch,
     standalone,
     shell: shellSource,
+    adapter,
     force,
 }) => {
     const paths = makePaths(cwd)
@@ -84,7 +85,7 @@ const handler = async ({
 
             if (config.type === 'app') {
                 reporter.info('Bootstrapping local appShell...')
-                await shell.bootstrap({ shell: shellSource, force })
+                await shell.bootstrap({ shell: shellSource, adapter, force })
             }
 
             reporter.info(

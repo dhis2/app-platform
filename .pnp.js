@@ -42,7 +42,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
     "enableTopLevelFallback": true,
     "ignorePatternData": "(^(?:\\.yarn\\/sdks(?:\\/(?!\\.)(?:(?:(?!(?:^|\\/)\\.).)*?)|$))$)",
     "fallbackExclusionList": [
-      ["@dhis2/app-adapter", ["virtual:4dd9f624cb6dd7b46ebcf1df9314c08b942eab0ed21097e597d038e58b16e71ac337b0fd33e37b463fb49147a625ebc9a798e1dbb5e2c77593bfe89b059a47e0#workspace:adapter", "virtual:59ce9460303ac6c68c4f77f3693daffbffa77a9695399c6c4be8e023bcc33c1e36ccb479fb7526c0848ef8050d0b24842f5a7ba42c97b7436978a8dfbf0a19c3#workspace:adapter", "workspace:adapter"]],
+      ["@dhis2/app-adapter", ["virtual:59ce9460303ac6c68c4f77f3693daffbffa77a9695399c6c4be8e023bcc33c1e36ccb479fb7526c0848ef8050d0b24842f5a7ba42c97b7436978a8dfbf0a19c3#workspace:adapter", "workspace:adapter"]],
       ["@dhis2/app-shell", ["workspace:shell"]],
       ["@dhis2/cli-app-scripts", ["workspace:cli"]],
       ["root", ["workspace:."]],
@@ -5525,51 +5525,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
         }]
       ]],
       ["@dhis2/app-adapter", [
-        ["virtual:4dd9f624cb6dd7b46ebcf1df9314c08b942eab0ed21097e597d038e58b16e71ac337b0fd33e37b463fb49147a625ebc9a798e1dbb5e2c77593bfe89b059a47e0#workspace:adapter", {
-          "packageLocation": "./.yarn/$$virtual/@dhis2-app-adapter-virtual-a358527656/1/adapter/",
-          "packageDependencies": [
-            ["@dhis2/app-adapter", "virtual:4dd9f624cb6dd7b46ebcf1df9314c08b942eab0ed21097e597d038e58b16e71ac337b0fd33e37b463fb49147a625ebc9a798e1dbb5e2c77593bfe89b059a47e0#workspace:adapter"],
-            ["@dhis2/app-runtime", "virtual:4dd9f624cb6dd7b46ebcf1df9314c08b942eab0ed21097e597d038e58b16e71ac337b0fd33e37b463fb49147a625ebc9a798e1dbb5e2c77593bfe89b059a47e0#npm:2.6.1"],
-            ["@dhis2/cli-app-scripts", "workspace:cli"],
-            ["@dhis2/d2-i18n", "npm:1.0.6"],
-            ["@dhis2/ui", "virtual:4dd9f624cb6dd7b46ebcf1df9314c08b942eab0ed21097e597d038e58b16e71ac337b0fd33e37b463fb49147a625ebc9a798e1dbb5e2c77593bfe89b059a47e0#npm:5.7.8"],
-            ["@types/classnames", null],
-            ["@types/dhis2__app-runtime", null],
-            ["@types/dhis2__d2-i18n", null],
-            ["@types/dhis2__ui", null],
-            ["@types/moment", null],
-            ["@types/react", null],
-            ["@types/react-dom", null],
-            ["@types/styled-jsx", null],
-            ["classnames", null],
-            ["enzyme", "npm:3.11.0"],
-            ["enzyme-adapter-react-16", "virtual:a35852765630e3382151a20698da4a21dd69794061b7a9ec50bb818bd550e9a29bc9e35899acf630b9333c8c44c97396c501019a3aaf8234cd5368fe29aa416a#npm:1.15.5"],
-            ["moment", "npm:2.29.1"],
-            ["prop-types", "npm:15.7.2"],
-            ["react", "npm:17.0.1"],
-            ["react-dom", "virtual:4dd9f624cb6dd7b46ebcf1df9314c08b942eab0ed21097e597d038e58b16e71ac337b0fd33e37b463fb49147a625ebc9a798e1dbb5e2c77593bfe89b059a47e0#npm:17.0.1"],
-            ["styled-jsx", "virtual:4dd9f624cb6dd7b46ebcf1df9314c08b942eab0ed21097e597d038e58b16e71ac337b0fd33e37b463fb49147a625ebc9a798e1dbb5e2c77593bfe89b059a47e0#npm:3.3.2"]
-          ],
-          "packagePeers": [
-            "@dhis2/app-runtime",
-            "@dhis2/d2-i18n",
-            "@dhis2/ui",
-            "@types/classnames",
-            "@types/dhis2__app-runtime",
-            "@types/dhis2__d2-i18n",
-            "@types/dhis2__ui",
-            "@types/moment",
-            "@types/react-dom",
-            "@types/react",
-            "@types/styled-jsx",
-            "classnames",
-            "moment",
-            "react-dom",
-            "react",
-            "styled-jsx"
-          ],
-          "linkType": "SOFT",
-        }],
         ["virtual:59ce9460303ac6c68c4f77f3693daffbffa77a9695399c6c4be8e023bcc33c1e36ccb479fb7526c0848ef8050d0b24842f5a7ba42c97b7436978a8dfbf0a19c3#workspace:adapter", {
           "packageLocation": "./.yarn/$$virtual/@dhis2-app-adapter-virtual-321f1481b8/1/adapter/",
           "packageDependencies": [
@@ -8932,28 +8887,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["prop-types", "npm:15.7.2"],
             ["prop-types-exact", "npm:1.2.0"],
             ["react", "npm:16.13.1"],
-            ["react-is", "npm:16.13.1"]
-          ],
-          "packagePeers": [
-            "@types/react",
-            "react"
-          ],
-          "linkType": "HARD",
-        }],
-        ["virtual:d176dbc944a697eec4c2a8e958dccbdcd398eec84ae0bb5e9bdec4c2b301100c5598ea500307814cd18045bdd7e325a9b4c23e0da1dd6803eb449233d7ed07f0#npm:2.16.0", {
-          "packageLocation": "./.yarn/$$virtual/airbnb-prop-types-virtual-80718ef51a/0/cache/airbnb-prop-types-npm-2.16.0-d794f5271c-41b34cf2d2.zip/node_modules/airbnb-prop-types/",
-          "packageDependencies": [
-            ["airbnb-prop-types", "virtual:d176dbc944a697eec4c2a8e958dccbdcd398eec84ae0bb5e9bdec4c2b301100c5598ea500307814cd18045bdd7e325a9b4c23e0da1dd6803eb449233d7ed07f0#npm:2.16.0"],
-            ["@types/react", null],
-            ["array.prototype.find", "npm:2.1.1"],
-            ["function.prototype.name", "npm:1.1.2"],
-            ["is-regex", "npm:1.1.1"],
-            ["object-is", "npm:1.1.3"],
-            ["object.assign", "npm:4.1.0"],
-            ["object.entries", "npm:1.1.2"],
-            ["prop-types", "npm:15.7.2"],
-            ["prop-types-exact", "npm:1.2.0"],
-            ["react", "npm:17.0.1"],
             ["react-is", "npm:16.13.1"]
           ],
           "packagePeers": [
@@ -13521,36 +13454,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             "react"
           ],
           "linkType": "HARD",
-        }],
-        ["virtual:a35852765630e3382151a20698da4a21dd69794061b7a9ec50bb818bd550e9a29bc9e35899acf630b9333c8c44c97396c501019a3aaf8234cd5368fe29aa416a#npm:1.15.5", {
-          "packageLocation": "./.yarn/$$virtual/enzyme-adapter-react-16-virtual-8d376932d5/0/cache/enzyme-adapter-react-16-npm-1.15.5-46a45a6e17-40920ef232.zip/node_modules/enzyme-adapter-react-16/",
-          "packageDependencies": [
-            ["enzyme-adapter-react-16", "virtual:a35852765630e3382151a20698da4a21dd69794061b7a9ec50bb818bd550e9a29bc9e35899acf630b9333c8c44c97396c501019a3aaf8234cd5368fe29aa416a#npm:1.15.5"],
-            ["@types/enzyme", null],
-            ["@types/react", null],
-            ["@types/react-dom", null],
-            ["enzyme", "npm:3.11.0"],
-            ["enzyme-adapter-utils", "virtual:8d376932d5031cc05a29ea89e233edceb9e9941abb29389ad21002291eba662620652fdda84844ab27eaec946e16e95162ffb82a46a7e71027994b06db0cab2c#npm:1.13.1"],
-            ["enzyme-shallow-equal", "npm:1.0.4"],
-            ["has", "npm:1.0.3"],
-            ["object.assign", "npm:4.1.0"],
-            ["object.values", "npm:1.1.1"],
-            ["prop-types", "npm:15.7.2"],
-            ["react", "npm:17.0.1"],
-            ["react-dom", "virtual:4dd9f624cb6dd7b46ebcf1df9314c08b942eab0ed21097e597d038e58b16e71ac337b0fd33e37b463fb49147a625ebc9a798e1dbb5e2c77593bfe89b059a47e0#npm:17.0.1"],
-            ["react-is", "npm:16.13.1"],
-            ["react-test-renderer", "virtual:8d376932d5031cc05a29ea89e233edceb9e9941abb29389ad21002291eba662620652fdda84844ab27eaec946e16e95162ffb82a46a7e71027994b06db0cab2c#npm:16.13.1"],
-            ["semver", "npm:5.7.1"]
-          ],
-          "packagePeers": [
-            "@types/enzyme",
-            "@types/react-dom",
-            "@types/react",
-            "enzyme",
-            "react-dom",
-            "react"
-          ],
-          "linkType": "HARD",
         }]
       ]],
       ["enzyme-adapter-utils", [
@@ -13617,25 +13520,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["object.fromentries", "npm:2.0.2"],
             ["prop-types", "npm:15.7.2"],
             ["react", "npm:16.14.0"],
-            ["semver", "npm:5.7.1"]
-          ],
-          "packagePeers": [
-            "@types/react",
-            "react"
-          ],
-          "linkType": "HARD",
-        }],
-        ["virtual:8d376932d5031cc05a29ea89e233edceb9e9941abb29389ad21002291eba662620652fdda84844ab27eaec946e16e95162ffb82a46a7e71027994b06db0cab2c#npm:1.13.1", {
-          "packageLocation": "./.yarn/$$virtual/enzyme-adapter-utils-virtual-d176dbc944/0/cache/enzyme-adapter-utils-npm-1.13.1-6ae1b81f5e-0c818df1fa.zip/node_modules/enzyme-adapter-utils/",
-          "packageDependencies": [
-            ["enzyme-adapter-utils", "virtual:8d376932d5031cc05a29ea89e233edceb9e9941abb29389ad21002291eba662620652fdda84844ab27eaec946e16e95162ffb82a46a7e71027994b06db0cab2c#npm:1.13.1"],
-            ["@types/react", null],
-            ["airbnb-prop-types", "virtual:d176dbc944a697eec4c2a8e958dccbdcd398eec84ae0bb5e9bdec4c2b301100c5598ea500307814cd18045bdd7e325a9b4c23e0da1dd6803eb449233d7ed07f0#npm:2.16.0"],
-            ["function.prototype.name", "npm:1.1.2"],
-            ["object.assign", "npm:4.1.0"],
-            ["object.fromentries", "npm:2.0.2"],
-            ["prop-types", "npm:15.7.2"],
-            ["react", "npm:17.0.1"],
             ["semver", "npm:5.7.1"]
           ],
           "packagePeers": [
@@ -23646,23 +23530,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             "react"
           ],
           "linkType": "HARD",
-        }],
-        ["virtual:8d376932d5031cc05a29ea89e233edceb9e9941abb29389ad21002291eba662620652fdda84844ab27eaec946e16e95162ffb82a46a7e71027994b06db0cab2c#npm:16.13.1", {
-          "packageLocation": "./.yarn/$$virtual/react-test-renderer-virtual-2b5882fe58/0/cache/react-test-renderer-npm-16.13.1-42049ddf16-e9c3c068d0.zip/node_modules/react-test-renderer/",
-          "packageDependencies": [
-            ["react-test-renderer", "virtual:8d376932d5031cc05a29ea89e233edceb9e9941abb29389ad21002291eba662620652fdda84844ab27eaec946e16e95162ffb82a46a7e71027994b06db0cab2c#npm:16.13.1"],
-            ["@types/react", null],
-            ["object-assign", "npm:4.1.1"],
-            ["prop-types", "npm:15.7.2"],
-            ["react", "npm:17.0.1"],
-            ["react-is", "npm:16.13.1"],
-            ["scheduler", "npm:0.19.1"]
-          ],
-          "packagePeers": [
-            "@types/react",
-            "react"
-          ],
-          "linkType": "HARD",
         }]
       ]],
       ["read-pkg", [
@@ -25336,7 +25203,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@babel/cli", "virtual:4dd9f624cb6dd7b46ebcf1df9314c08b942eab0ed21097e597d038e58b16e71ac337b0fd33e37b463fb49147a625ebc9a798e1dbb5e2c77593bfe89b059a47e0#npm:7.12.8"],
             ["@babel/core", "npm:7.12.9"],
             ["@babel/preset-react", "virtual:4dd9f624cb6dd7b46ebcf1df9314c08b942eab0ed21097e597d038e58b16e71ac337b0fd33e37b463fb49147a625ebc9a798e1dbb5e2c77593bfe89b059a47e0#npm:7.12.7"],
-            ["@dhis2/app-adapter", "virtual:4dd9f624cb6dd7b46ebcf1df9314c08b942eab0ed21097e597d038e58b16e71ac337b0fd33e37b463fb49147a625ebc9a798e1dbb5e2c77593bfe89b059a47e0#workspace:adapter"],
             ["@dhis2/app-runtime", "virtual:4dd9f624cb6dd7b46ebcf1df9314c08b942eab0ed21097e597d038e58b16e71ac337b0fd33e37b463fb49147a625ebc9a798e1dbb5e2c77593bfe89b059a47e0#npm:2.6.1"],
             ["@dhis2/cli-app-scripts", "workspace:cli"],
             ["@dhis2/d2-i18n", "npm:1.0.6"],
