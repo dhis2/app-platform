@@ -24,6 +24,14 @@ jobs:
               with:
                   node-version: 12.x
 
+            - uses: actions/cache@v2
+              id: yarn-cache # use this to check for `cache-hit` (`steps.yarn-cache.outputs.cache-hit != 'true'`)
+              with:
+                  path: |
+                    .yarn/**
+                    **/node_modules
+                  key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
+
             - name: Install
               if: steps.yarn-cache.outputs.cache-hit != 'true'
               run: yarn install --immutable --immutable-cache # Might also want --check-cache for PRs
@@ -37,6 +45,14 @@ jobs:
             - uses: actions/setup-node@v1
               with:
                   node-version: 12.x
+
+            - uses: actions/cache@v2
+              id: yarn-cache
+              with:
+                  path: |
+                    .yarn/**
+                    **/node_modules
+                  key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
 
             - name: Build
               run: yarn build
@@ -59,6 +75,14 @@ jobs:
               with:
                   node-version: 12.x
 
+            - uses: actions/cache@v2
+              id: yarn-cache
+              with:
+                  path: |
+                    .yarn/**
+                    **/node_modules
+                  key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
+
             - name: Build
               run: yarn build
 
@@ -74,6 +98,14 @@ jobs:
             - uses: actions/setup-node@v1
               with:
                   node-version: 12.x
+
+            - uses: actions/cache@v2
+              id: yarn-cache
+              with:
+                  path: |
+                    .yarn/**
+                    **/node_modules
+                  key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
 
             - name: Test
               run: yarn test
