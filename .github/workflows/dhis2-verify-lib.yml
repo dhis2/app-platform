@@ -28,8 +28,8 @@ jobs:
               id: yarn-cache # use this to check for `cache-hit` (`steps.yarn-cache.outputs.cache-hit != 'true'`)
               with:
                   path: |
-                    .yarn/**
-                    **/node_modules
+                      .yarn/**
+                      **/node_modules
                   key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
 
             - name: Install
@@ -50,8 +50,8 @@ jobs:
               id: yarn-cache
               with:
                   path: |
-                    .yarn/**
-                    **/node_modules
+                      .yarn/**
+                      **/node_modules
                   key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
 
             - name: Build
@@ -79,12 +79,12 @@ jobs:
               id: yarn-cache
               with:
                   path: |
-                    .yarn/**
-                    **/node_modules
+                      .yarn/**
+                      **/node_modules
                   key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
 
-            - name: Generate translations
-              run: yarn d2-app-scripts i18n generate
+            - name: Generate Translations
+              run: yarn i18n:Generate
 
             - name: Lint
               run: yarn lint
@@ -103,9 +103,12 @@ jobs:
               id: yarn-cache
               with:
                   path: |
-                    .yarn/**
-                    **/node_modules
+                      .yarn/**
+                      **/node_modules
                   key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
+
+            - name: Generate Translations
+              run: yarn i18n:Generate
 
             - name: Test
               run: yarn test

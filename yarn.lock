@@ -3255,14 +3255,17 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@dhis2/app-adapter@workspace:adapter"
   dependencies:
+    "@dhis2/app-runtime": ^2.6.1
     "@dhis2/cli-app-scripts": 5.5.0
     "@dhis2/d2-i18n": ^1.0.6
+    "@dhis2/ui": ^5.7.8
     enzyme: ^3.11.0
     enzyme-adapter-react-16: ^1.15.5
     moment: ^2.24.0
     prop-types: ^15.7.2
     react: ^16
     react-dom: ^16
+    styled-jsx: ^3.3.2
   peerDependencies:
     "@dhis2/app-runtime": ^2
     "@dhis2/d2-i18n": ^1
@@ -3546,6 +3549,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@dhis2/ui-constants@npm:5.7.8":
+  version: 5.7.8
+  resolution: "@dhis2/ui-constants@npm:5.7.8"
+  dependencies:
+    "@dhis2/prop-types": ^1.6.4
+  checksum: 44fdb94b2eb2121639451cf00c1028a0b8686e97fa65a4be87a09d7fa8cb5d997b75ba6c4594b230b6b0e3aa60a922d326bd4585369b39df79ebc8274fe92e26
+  languageName: node
+  linkType: hard
+
 "@dhis2/ui-core@npm:5.7.3":
   version: 5.7.3
   resolution: "@dhis2/ui-core@npm:5.7.3"
@@ -3565,6 +3577,25 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@dhis2/ui-core@npm:5.7.8":
+  version: 5.7.8
+  resolution: "@dhis2/ui-core@npm:5.7.8"
+  dependencies:
+    "@dhis2/prop-types": ^1.6.4
+    "@popperjs/core": ^2.5.3
+    classnames: ^2.2.6
+    react-popper: ^2.2.3
+    resize-observer-polyfill: ^1.5.1
+  peerDependencies:
+    "@dhis2/ui-constants": 5.7.8
+    "@dhis2/ui-icons": 5.7.8
+    react: ^16.8
+    react-dom: ^16.8
+    styled-jsx: ^3.2
+  checksum: e5aca1b4a5d8ee4ca8601357e0c943fb313ab6aba306ece4f780d8e0f818a081455a9cf5361caf372247dc6b2e5546fa91af1565b1751b3365311124ce682ce8
+  languageName: node
+  linkType: hard
+
 "@dhis2/ui-forms@npm:5.7.3":
   version: 5.7.3
   resolution: "@dhis2/ui-forms@npm:5.7.3"
@@ -3581,12 +3612,37 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@dhis2/ui-forms@npm:5.7.8":
+  version: 5.7.8
+  resolution: "@dhis2/ui-forms@npm:5.7.8"
+  dependencies:
+    "@dhis2/prop-types": ^1.6.4
+    classnames: ^2.2.6
+    final-form: ^4.20.1
+    react-final-form: ^6.5.1
+  peerDependencies:
+    "@dhis2/ui-core": 5.7.8
+    react: ^16.8
+    react-dom: ^16.8
+  checksum: e65d8c1005c573ba36cca7c86aec524e2aaaf3a7e233cbfd25eb64645c3ff3e8ee75b4700425a7f7fdb50084293058cad3bfb74c9ad38e93cbf1ce167affd822
+  languageName: node
+  linkType: hard
+
 "@dhis2/ui-icons@npm:5.7.3":
   version: 5.7.3
   resolution: "@dhis2/ui-icons@npm:5.7.3"
   dependencies:
     "@dhis2/prop-types": ^1.6.4
   checksum: 2ca0deb53b258f5187dea3803623dfab28cb76aaa6c507095fa7abfbebba270dae6a93a2a208b4d034f7bf0d21e4272d82d300c23c7c1a3bfbda41d216856f68
+  languageName: node
+  linkType: hard
+
+"@dhis2/ui-icons@npm:5.7.8":
+  version: 5.7.8
+  resolution: "@dhis2/ui-icons@npm:5.7.8"
+  dependencies:
+    "@dhis2/prop-types": ^1.6.4
+  checksum: f3d8929a850e45a9ab16f980484c8b7f398bf98e14ced8d81f6bacd72bed265bdc479dd049febe16cbbdcdf400f384544a9c9bed2f69c03144eb339d5eaad22d
   languageName: node
   linkType: hard
 
@@ -3609,6 +3665,25 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@dhis2/ui-widgets@npm:5.7.8":
+  version: 5.7.8
+  resolution: "@dhis2/ui-widgets@npm:5.7.8"
+  dependencies:
+    "@dhis2/prop-types": ^1.6.4
+    classnames: ^2.2.6
+  peerDependencies:
+    "@dhis2/app-runtime": ^2
+    "@dhis2/d2-i18n": ^1
+    "@dhis2/ui-constants": 5.7.8
+    "@dhis2/ui-core": 5.7.8
+    "@dhis2/ui-icons": 5.7.8
+    react: ^16.8
+    react-dom: ^16.8
+    styled-jsx: ^3.2
+  checksum: c271c16ab261efcdd03ee41db5b6e59be8b7bbea4624d626cf3bf90ecbe134c1b695636089e1ad8cb4e525fb3d008363b2bb1f6e6900d6ee5afc3bfe60dfaa85
+  languageName: node
+  linkType: hard
+
 "@dhis2/ui@npm:^5.7.2":
   version: 5.7.3
   resolution: "@dhis2/ui@npm:5.7.3"
@@ -3625,6 +3700,25 @@ __metadata:
     react-dom: ^16.8
     styled-jsx: ^3.2
   checksum: 7fe26302e8c2f3912f55c5b3c227e50c7d04d887064d37133e25434ee96e0ef45e324cd25491225009721cbe771b1132e67b39988c31dd72e37ba08b565cb97d
+  languageName: node
+  linkType: hard
+
+"@dhis2/ui@npm:^5.7.8":
+  version: 5.7.8
+  resolution: "@dhis2/ui@npm:5.7.8"
+  dependencies:
+    "@dhis2/ui-constants": 5.7.8
+    "@dhis2/ui-core": 5.7.8
+    "@dhis2/ui-forms": 5.7.8
+    "@dhis2/ui-icons": 5.7.8
+    "@dhis2/ui-widgets": 5.7.8
+  peerDependencies:
+    "@dhis2/app-runtime": ^2
+    "@dhis2/d2-i18n": ^1
+    react: ^16.8
+    react-dom: ^16.8
+    styled-jsx: ^3.2
+  checksum: 1aeb28e87450e5801d1cd6002a7bb8d3c85b76b3137e9889f341b2184e949d486b57901eb284bd92d907e377a4ffb89443e6d395748247301e12c4e62266ca10
   languageName: node
   linkType: hard
 
@@ -15103,6 +15197,13 @@ fsevents@^1.2.7:
   languageName: node
   linkType: hard
 
+"moment@npm:^2.29.1":
+  version: 2.29.1
+  resolution: "moment@npm:2.29.1"
+  checksum: 86729013febf7160de5b93da69273dd304d674b0224f9544b3abd09a87671ddd2cdd57598261ce57588910d63747ffd5590965e83c790d8bf327083c0e0a06e0
+  languageName: node
+  linkType: hard
+
 "moo@npm:^0.5.0":
   version: 0.5.1
   resolution: "moo@npm:0.5.1"
@@ -17909,6 +18010,19 @@ proxy-middleware@latest:
   languageName: node
   linkType: hard
 
+"react-dom@npm:^17.0.1":
+  version: 17.0.1
+  resolution: "react-dom@npm:17.0.1"
+  dependencies:
+    loose-envify: ^1.1.0
+    object-assign: ^4.1.1
+    scheduler: ^0.20.1
+  peerDependencies:
+    react: 17.0.1
+  checksum: 6a70028fbe3c95e0056c5e8ce065b4a9b8d4ff3bffde9b016454072bde5e4b012af7668ca45b7235ace428267d5be5237b68ea87ce8c296e54e81a8d678a4355
+  languageName: node
+  linkType: hard
+
 "react-error-overlay@npm:^6.0.8":
   version: 6.0.8
   resolution: "react-error-overlay@npm:6.0.8"
@@ -18079,6 +18193,16 @@ proxy-middleware@latest:
     object-assign: ^4.1.1
     prop-types: ^15.6.2
   checksum: 13dcc9ba8a7521ecc3d7e69998dbc5703ae9515308d06a94a474ad34b42f1fc109372265e924a8c9b11d20fa1828407c290b8f61617c36734c4ca907ae7e5f45
+  languageName: node
+  linkType: hard
+
+"react@npm:^17.0.1":
+  version: 17.0.1
+  resolution: "react@npm:17.0.1"
+  dependencies:
+    loose-envify: ^1.1.0
+    object-assign: ^4.1.1
+  checksum: a76d86ec973eb4b25a46071ac7f974adfd66ed89ad1db63043be1d976ec25417520a210e6d724b0ad937422b706afcf9962cedda9e92125992a8c0e8a95f2051
   languageName: node
   linkType: hard
 
@@ -19018,6 +19142,7 @@ resolve@1.1.7:
     "@dhis2/cli-style": "patch:@dhis2/cli-style@^7.2.1#./.yarn/patches/@dhis2-cli-style.diff"
     "@dhis2/cli-utils-docsite": ^2.0.2
     concurrently: ^5.0.0
+    eslint-import-resolver-node: ^0.3.4
   languageName: unknown
   linkType: soft
 
@@ -19190,6 +19315,16 @@ resolve@1.1.7:
     loose-envify: ^1.1.0
     object-assign: ^4.1.1
   checksum: 804f990b9f370cca6d42b65f3cba2cc2bfed4973ee5623bed1ea36a6627842db8c891e2e5ac003f06f9ee892d1d3396921e27fa077346caf0213af05776e8dee
+  languageName: node
+  linkType: hard
+
+"scheduler@npm:^0.20.1":
+  version: 0.20.1
+  resolution: "scheduler@npm:0.20.1"
+  dependencies:
+    loose-envify: ^1.1.0
+    object-assign: ^4.1.1
+  checksum: 377b4ad0d8313c4548bac7374bc38409e9d142799979ce396787efa04d1bcabf2591540f243f2131e3df8e56e7f5b29c5415248523e88ecb60f13a32db2e076f
   languageName: node
   linkType: hard
 
@@ -19527,7 +19662,14 @@ resolve@1.1.7:
     "@babel/cli": ^7.12.8
     "@babel/core": ^7.12.9
     "@babel/preset-react": ^7.12.7
+    "@dhis2/app-adapter": "workspace:adapter"
+    "@dhis2/app-runtime": ^2.6.1
     "@dhis2/cli-app-scripts": "*"
+    "@dhis2/d2-i18n": ^1.0.6
+    "@dhis2/ui": ^5.7.8
+    moment: ^2.29.1
+    react: ^17.0.1
+    react-dom: ^17.0.1
     styled-jsx: ^3.3.2
   peerDependencies:
     "@dhis2/app-runtime": "*"

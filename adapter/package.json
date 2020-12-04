@@ -21,12 +21,15 @@
         "prop-types": "^15.7.2"
     },
     "devDependencies": {
+        "@dhis2/app-runtime": "^2.6.1",
         "@dhis2/cli-app-scripts": "5.5.0",
         "@dhis2/d2-i18n": "^1.0.6",
+        "@dhis2/ui": "^5.7.8",
         "enzyme": "^3.11.0",
         "enzyme-adapter-react-16": "^1.15.5",
         "react": "^16",
-        "react-dom": "^16"
+        "react-dom": "^16",
+        "styled-jsx": "^3.3.2"
     },
     "scripts": {
         "build": "d2-app-scripts build",

@@ -23,7 +23,7 @@ const shellRequiresUpdate = (paths, { shell, force = false }) => {
     if (fs.pathExistsSync(shellDir) && !shell) {
         const versionMismatch =
             getShellVersion(shellDir) !== currentShellVersion
-        
+
         if (versionMismatch) {
             reporter.print(
                 chalk.dim(
@@ -67,7 +67,7 @@ const updateShell = async (paths, { shell }) => {
             src.indexOf('.pnp', source.length) === -1 &&
             src.indexOf(paths.shellAppDirname) === -1,
     })
-    
+
     // Touch the lock file so that the directory is recognized as a package root
     const yarnLockFile = path.join(dest, 'yarn.lock')
     const handle = await fs.open(yarnLockFile, 'w')
@@ -86,7 +86,13 @@ const bootstrapShell = async (paths, opts = {}) => {
         await updateShell(paths, opts)
     }
 
-    reporter.print(chalk.dim(`${updateRequired ? 'Installing' : 'Updating'} appShell dependencies...`))
+    reporter.print(
+        chalk.dim(
+            `${
+                updateRequired ? 'Installing' : 'Updating'
+            } appShell dependencies...`
+        )
+    )
     await exec({
         cmd: 'yarn',
         args: ['install'],
