@@ -1,8 +1,7 @@
 name: 'dhis2: verify (lib)'
 
 on:
-    push:
-        branches:
+    push
 
 env:
     GIT_AUTHOR_NAME: '@dhis2-bot'
@@ -84,7 +83,7 @@ jobs:
                   key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
 
             - name: Generate Translations
-              run: yarn i18n:Generate
+              run: yarn i18n:generate
 
             - name: Lint
               run: yarn lint
@@ -108,7 +107,7 @@ jobs:
                   key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
 
             - name: Generate Translations
-              run: yarn i18n:Generate
+              run: yarn i18n:generate
 
             - name: Test
               run: yarn test
