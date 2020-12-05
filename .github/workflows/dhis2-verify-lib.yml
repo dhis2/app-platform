@@ -84,11 +84,11 @@ jobs:
                       **/node_modules
                       .pnp.js
                   key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
-            
+
             - uses: actions/download-artifact@v2
               with:
                   name: lib-build
-            
+
             - name: Generate i18n
               run: yarn i18n:generate
 
