@@ -3327,7 +3327,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@dhis2/app-shell@5.5.0, @dhis2/app-shell@workspace:shell":
+"@dhis2/app-shell@workspace:shell":
   version: 0.0.0-use.local
   resolution: "@dhis2/app-shell@workspace:shell"
   dependencies:
@@ -3368,7 +3368,6 @@ __metadata:
     "@babel/preset-env": ^7.9.0
     "@babel/preset-react": ^7.0.0
     "@babel/preset-typescript": ^7.6.0
-    "@dhis2/app-shell": 5.5.0
     "@dhis2/cli-helpers-engine": ^1.5.0
     archiver: ^3.1.1
     axios: ^0.20.0
@@ -17675,7 +17674,7 @@ opn@latest:
   languageName: node
   linkType: hard
 
-"prop-types@npm:*, prop-types@npm:^15, prop-types@npm:^15.6.2, prop-types@npm:^15.7.2":
+"prop-types@npm:^15, prop-types@npm:^15.6.2, prop-types@npm:^15.7.2":
   version: 15.7.2
   resolution: "prop-types@npm:15.7.2"
   dependencies:
