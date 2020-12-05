@@ -128,4 +128,4 @@ jobs:
                   name: lib-build
 
             - name: Publish to NPM
-              run: yarn dlx d2-utils --package @dhis2/cli-utils release --publish npm
+              run: yarn dlx --package @dhis2/cli-utils d2-utils release --publish npm
