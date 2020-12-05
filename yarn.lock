@@ -7833,7 +7833,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"eslint-import-resolver-node@npm:*, eslint-import-resolver-node@npm:^0.3.4":
+"eslint-import-resolver-node@npm:^0.3.4":
   version: 0.3.4
   resolution: "eslint-import-resolver-node@npm:0.3.4"
   dependencies:
@@ -17523,7 +17523,6 @@ resolve@1.18.1:
     "@dhis2/cli-app-scripts": "*"
     "@dhis2/d2-i18n": ^1.0.6
     "@dhis2/ui": ^5.7.8
-    eslint-config-react-app: ^6.0.0
     moment: ^2.29.1
     react: ^17.0.1
     react-dom: ^17.0.1
