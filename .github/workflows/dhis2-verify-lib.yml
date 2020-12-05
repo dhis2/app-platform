@@ -28,6 +28,7 @@ jobs:
                   path: |
                       .yarn/**
                       **/node_modules
+                      .pnp.js
                   key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
 
             - name: Install
@@ -50,6 +51,7 @@ jobs:
                   path: |
                       .yarn/**
                       **/node_modules
+                      .pnp.js
                   key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
 
             - name: Build
@@ -79,6 +81,7 @@ jobs:
                   path: |
                       .yarn/**
                       **/node_modules
+                      .pnp.js
                   key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
 
             - name: Generate Translations
@@ -103,6 +106,7 @@ jobs:
                   path: |
                       .yarn/**
                       **/node_modules
+                      .pnp.js
                   key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
 
             - name: Generate Translations
