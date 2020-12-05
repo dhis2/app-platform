@@ -67,7 +67,7 @@ jobs:
 
     lint:
         runs-on: ubuntu-latest
-        needs: [install]
+        needs: [install, build]
         if: "!contains(github.event.head_commit.message, '[skip ci]')"
         steps:
             - uses: actions/checkout@v2
@@ -83,16 +83,17 @@ jobs:
                       **/node_modules
                       .pnp.js
                   key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
-
-            - name: Generate Translations
-              run: yarn i18n:generate
+            
+            - uses: actions/download-artifact@v2
+              with:
+                  name: lib-build
 
             - name: Lint
               run: yarn lint
 
     test:
         runs-on: ubuntu-latest
-        needs: [install]
+        needs: [install, build]
         if: "!contains(github.event.head_commit.message, '[skip ci]')"
         steps:
             - uses: actions/checkout@v2
@@ -109,8 +110,9 @@ jobs:
                       .pnp.js
                   key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
 
-            - name: Generate Translations
-              run: yarn i18n:generate
+            - uses: actions/download-artifact@v2
+              with:
+                  name: lib-build
 
             - name: Test
               run: yarn test
