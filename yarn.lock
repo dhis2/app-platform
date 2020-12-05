@@ -3474,7 +3474,7 @@ __metadata:
 
 "@dhis2/cli-style@patch:@dhis2/cli-style@^7.2.1#./.yarn/patches/@dhis2-cli-style.diff::locator=root%40workspace%3A.":
   version: 7.2.1
-  resolution: "@dhis2/cli-style@patch:@dhis2/cli-style@npm%3A7.2.1#./.yarn/patches/@dhis2-cli-style.diff::version=7.2.1&hash=19373d&locator=root%40workspace%3A."
+  resolution: "@dhis2/cli-style@patch:@dhis2/cli-style@npm%3A7.2.1#./.yarn/patches/@dhis2-cli-style.diff::version=7.2.1&hash=2ac1eb&locator=root%40workspace%3A."
   dependencies:
     "@commitlint/cli": ^11.0.0
     "@commitlint/config-conventional": ^11.0.0
@@ -3497,7 +3497,7 @@ __metadata:
     yargs: ^16.1.0
   bin:
     d2-style: bin/d2-style
-  checksum: 9c76b1fdc8af1d7e28496e996f704f0d34a12e7737820425c657674133f6a9f2d4e29d28fd7345881acf282819fef448e650fc4a61f973615e7965f057f5967e
+  checksum: 53f8e14ad263cfa6c16776889028e769024cae41f762db95773bf6f245caa7e7fc190bf37b8f5ba1f95bf17e53a037ad2150feeef5a7f216ceae0040ac131a5a
   languageName: node
   linkType: hard
 
@@ -17675,7 +17675,7 @@ opn@latest:
   languageName: node
   linkType: hard
 
-"prop-types@npm:^15, prop-types@npm:^15.6.2, prop-types@npm:^15.7.2":
+"prop-types@npm:*, prop-types@npm:^15, prop-types@npm:^15.6.2, prop-types@npm:^15.7.2":
   version: 15.7.2
   resolution: "prop-types@npm:15.7.2"
   dependencies:

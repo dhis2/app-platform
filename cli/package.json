@@ -18,7 +18,8 @@
     "files": [
         "bin",
         "config",
-        "src"
+        "src",
+        "assets"
     ],
     "dependencies": {
         "@babel/core": "^7.6.2",
@@ -32,7 +33,6 @@
         "@babel/preset-env": "^7.9.0",
         "@babel/preset-react": "^7.0.0",
         "@babel/preset-typescript": "^7.6.0",
-        "@dhis2/app-shell": "5.5.0",
         "@dhis2/cli-helpers-engine": "^1.5.0",
         "archiver": "^3.1.1",
         "axios": "^0.20.0",
@@ -65,5 +65,9 @@
     },
     "bin": {
         "d2-app-scripts": "./bin/d2-app-scripts"
+    },
+    "scripts": {
+        "build": "yarn node ./scripts/bundle-shell.js ../shell ./assets/shell",
+        "prepack": "yarn build"
     }
 }

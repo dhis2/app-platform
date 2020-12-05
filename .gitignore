@@ -29,6 +29,8 @@ npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 
+.eslintcache
+
 # yarn2
 .yarn/*
 !.yarn/patches

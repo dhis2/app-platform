@@ -95,9 +95,8 @@ const updateShell = async (paths, { shell }) => {
     await fs.copy(source, dest, {
         dereference: true,
         filter: src =>
-            src.indexOf('node_modules', source.length) === -1 &&
-            src.indexOf('.pnp', source.length) === -1 &&
-            src.indexOf(paths.shellAppDirname) === -1,
+            !src.match(`^${source}/(node_modules|build)/.*`) &&
+            !src.match(`^${source}/${paths.shellAppDirname}`)
     })
 
     // Touch the lock file so that the directory is recognized as a package root

@@ -1,25 +1,18 @@
 const path = require('path')
 const { reporter } = require('@dhis2/cli-helpers-engine')
 
-const shellSource = path.dirname(
-    require.resolve('@dhis2/app-shell/package.json')
-)
+const shellSource = path.join(__dirname, '../../assets/shell')
+const configDir = path.join(__dirname, '../../config')
 const shellAppDirname = 'src/D2App'
 
 module.exports = (cwd = process.cwd()) => {
     const base = path.resolve(cwd)
     const paths = {
-        babelConfig: path.join(__dirname, '../../config/babel.config.js'),
-        configDefaultsApp: path.join(
-            __dirname,
-            '../../config/d2.config.app.js'
-        ),
-        configDefaultsLib: path.join(
-            __dirname,
-            '../../config/d2.config.lib.js'
-        ),
-        jestConfigDefaults: path.join(__dirname, '../../config/jest.config.js'),
-        readmeDefault: path.join(__dirname, '../../config/init.README.md'),
+        babelConfig: path.join(configDir, 'babel.config.js'),
+        configDefaultsApp: path.join(configDir, 'd2.config.app.js'),
+        configDefaultsLib: path.join(configDir, 'd2.config.lib.js'),
+        jestConfigDefaults: path.join(configDir, 'jest.config.js'),
+        readmeDefault: path.join(configDir, 'init.README.md'),
 
         shellSource,
         shellSourceEntrypoint: path.join(shellSource, 'src/App.js'),
