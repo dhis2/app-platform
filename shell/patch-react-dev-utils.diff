@@ -1,0 +1,13 @@
+diff --git a/ModuleScopePlugin.js b/ModuleScopePlugin.js
+index e84d2b38aabbfc8e28515859417ae9652b711b57..c82932e417356e215bf2f4e32117f80e6fa3cef9 100644
+--- a/ModuleScopePlugin.js
++++ b/ModuleScopePlugin.js
+@@ -30,6 +30,8 @@ class ModuleScopePlugin {
+           // If this resolves to a node_module, we don't care what happens next
+           request.descriptionFileRoot.indexOf('/node_modules/') !== -1 ||
+           request.descriptionFileRoot.indexOf('\\node_modules\\') !== -1 ||
++          // Same if this resolves to a yarn virtual module
++          request.descriptionFileRoot.indexOf('.yarn/$$virtual') !== -1 ||
+           // Make sure this request was manual
+           !request.__innerRequest_request
+         ) {

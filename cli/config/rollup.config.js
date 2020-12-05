@@ -12,7 +12,7 @@ const visualize = require('rollup-plugin-visualizer')
 const { reporter, chalk } = require('@dhis2/cli-helpers-engine')
 const extensions = ['.js', '.jsx', '.ts', '.tsx']
 
-const standardLibs = require('@dhis2/app-shell/package.json').dependencies
+const standardLibs = require('../assets/shell/package.json').dependencies
 
 // Exclude local app-shell dependencies
 Object.entries(standardLibs).forEach(([dep, version]) => {

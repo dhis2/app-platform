@@ -42,6 +42,7 @@
         "react-test-renderer": "^16.8.6"
     },
     "resolutions": {
-        "@pmmmwh/react-refresh-webpack-plugin": ">=0.4.3"
+        "@pmmmwh/react-refresh-webpack-plugin": ">=0.4.3",
+        "react-dev-utils": "patch:react-dev-utils@^11.0.1#./patch-react-dev-utils.diff"
     }
 }

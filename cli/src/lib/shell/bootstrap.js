@@ -2,7 +2,8 @@ const fs = require('fs-extra')
 const path = require('path')
 const { reporter, chalk, exec } = require('@dhis2/cli-helpers-engine')
 
-const currentShellVersion = require('@dhis2/app-shell/package.json').version
+const currentShellVersion = require('../../../assets/shell/package.json')
+    .version
 
 const getShellVersion = shellDir => {
     const shellPkg = path.join(shellDir, 'package.json')
@@ -96,7 +97,7 @@ const updateShell = async (paths, { shell }) => {
         dereference: true,
         filter: src =>
             !src.match(`^${source}/(node_modules|build)/.*`) &&
-            !src.match(`^${source}/${paths.shellAppDirname}`)
+            !src.match(`^${source}/${paths.shellAppDirname}`),
     })
 
     // Touch the lock file so that the directory is recognized as a package root

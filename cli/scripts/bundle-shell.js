@@ -3,19 +3,13 @@
  */
 
 const fs = require('fs-extra')
-const path = require('path')
-const archiver = require('archiver')
-const { reporter, chalk } = require('@dhis2/cli-helpers-engine')
+const { reporter } = require('@dhis2/cli-helpers-engine')
 
 const bundleShell = (shellDir, shellAssetPath) => {
     fs.removeSync(shellAssetPath)
 
     fs.copySync(shellDir, shellAssetPath, {
-        filter: src => {
-            const filtered = !src.match(`^${shellDir}/(node_modules|build)($|/.*)`)
-            console.log(src, filtered)
-            return filtered
-        }
+        filter: src => !src.match(`^${shellDir}/(node_modules|build)($|/.*)`),
     })
 }
 
@@ -23,7 +17,9 @@ const shellDir = process.argv[2]
 const shellAssetPath = process.argv[3]
 
 if (!shellDir || !shellAssetPath) {
-    reporter.error(`Usage: yarn node ${process.argv[1]} <shellDir> <shellAssetPath>`)
+    reporter.error(
+        `Usage: yarn node ${process.argv[1]} <shellDir> <shellAssetPath>`
+    )
     process.exit(1)
 }
 
