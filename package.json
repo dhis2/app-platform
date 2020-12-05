@@ -26,7 +26,7 @@
         "i18n:generate": "yarn i18n:generate:adapter && yarn i18n:generate:example",
         "format": "d2-style js apply && d2-style text apply",
         "lint": "d2-style js check && d2-style text check",
-        "build": "yarn build:adapter && yarn build:cli && yarn build:example",
+        "build": "yarn build:cli && yarn build:adapter && yarn build:example",
         "build:adapter": "yarn workspace @dhis2/app-adapter build",
         "build:cli": "yarn workspace @dhis2/cli-app-scripts build",
         "build:example": "yarn workspace simple-app build",
