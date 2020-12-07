@@ -14,7 +14,7 @@
         "test": "d2-app-scripts test",
         "deploy": "d2-app-scripts deploy"
     },
-    "peerDependencies": {
+    "dependencies": {
         "@dhis2/app-runtime": "*",
         "@dhis2/d2-i18n": "*",
         "moment": "*",
