@@ -5,12 +5,11 @@ const fs = require('fs-extra')
 const chokidar = require('chokidar')
 const babel = require('@babel/core')
 
-const babelOptions = require('../../../config/babel.config')
+const makeBabelConfig = require('../../../config/makeBabelConfig.js')
 
 const overwriteEntrypoint = async ({ config, paths }) => {
-    const shellAppSource = await fs.readFile(paths.shellSourceEntrypoint)
-
-    const entrypoint = config.entryPoints.app
+    const isApp = config.type === 'app'
+    const entrypoint = isApp ? config.entryPoints.app : config.entryPoints.lib
     if (!entrypoint.match(/^(\.\/)?src\//)) {
         const msg = `App entrypoint ${chalk.bold(
             entrypoint
@@ -29,12 +28,15 @@ const overwriteEntrypoint = async ({ config, paths }) => {
         throw new Error(msg)
     }
 
-    await fs.writeFile(
-        paths.shellAppEntrypoint,
-        shellAppSource
-            .toString()
-            .replace(/'.\/D2App\/app'/g, `'./D2App/${relativeEntrypoint}'`)
-    )
+    if (isApp) {
+        const shellAppSource = await fs.readFile(paths.shellSourceEntrypoint)
+        await fs.writeFile(
+            paths.shellAppEntrypoint,
+            shellAppSource
+                .toString()
+                .replace(/'.\/D2App\/app'/g, `'./D2App/${relativeEntrypoint}'`)
+        )
+    }
 }
 
 const watchFiles = ({ inputDir, outputDir, processFileCallback, watch }) => {
@@ -86,20 +88,23 @@ const watchFiles = ({ inputDir, outputDir, processFileCallback, watch }) => {
 const compileApp = async ({ config, paths, watch }) => {
     await overwriteEntrypoint({ config, paths })
 
-    const outDir = paths.appOut
+    const isApp = config.type === 'app'
+    const outDir = isApp ? paths.appOut : paths.buildOutput
 
     fs.removeSync(outDir)
     fs.ensureDirSync(outDir)
 
-    fs.removeSync(paths.shellPublic)
-    fs.copySync(paths.shellSourcePublic, paths.shellPublic)
+    if (isApp) {
+        fs.removeSync(paths.shellPublic)
+        fs.copySync(paths.shellSourcePublic, paths.shellPublic)
+    }
 
     const copyFile = async (source, destination) => {
         await fs.copy(source, destination)
     }
     const compileFile = async (source, destination) => {
         if (path.extname(source) === '.js') {
-            const result = await babel.transformFileAsync(source, babelOptions)
+            const result = await babel.transformFileAsync(source, makeBabelConfig({ modules: false }))
             await fs.writeFile(destination, result.code)
         } else {
             await copyFile(source, destination)
@@ -109,11 +114,11 @@ const compileApp = async ({ config, paths, watch }) => {
     return Promise.all([
         watchFiles({
             inputDir: paths.src,
-            outputDir: paths.appOut,
+            outputDir: outDir,
             processFileCallback: compileFile,
             watch,
         }),
-        watchFiles({
+        isApp && watchFiles({
             inputDir: paths.public,
             outputDir: paths.shellPublic,
             processFileCallback: copyFile,
