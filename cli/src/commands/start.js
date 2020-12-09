@@ -27,7 +27,7 @@ const handler = async ({
     const config = parseConfig(paths)
     const shell = makeShell({ config, paths })
 
-    if (!await validateAppPackage(config, paths)) {
+    if (!(await validateAppPackage(config, paths))) {
         process.exit(1)
     }
 

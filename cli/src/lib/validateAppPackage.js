@@ -17,14 +17,20 @@ const singletonDependencies = [
 
 const validateAppPackage = async (config, paths, { offerFix = true } = {}) => {
     try {
-        const yarnVersion = (await exec({
-            cmd: 'yarn',
-            args: ['--version'],
-            cwd: paths.base,
-            captureOut: true
-        })).trim()
+        const yarnVersion = (
+            await exec({
+                cmd: 'yarn',
+                args: ['--version'],
+                cwd: paths.base,
+                captureOut: true,
+            })
+        ).trim()
         if (parseInt(yarnVersion.split('.')[0]) < 2) {
-            reporter.warn(chalk.dim('Modern yarn (v2) is recommendedx but not currently required.\nVisit https://yarnpkg.com/getting-started/migration for more information'))
+            reporter.warn(
+                chalk.dim(
+                    'Modern yarn (v2) is recommendedx but not currently required.\nVisit https://yarnpkg.com/getting-started/migration for more information'
+                )
+            )
         }
         reporter.debug(`Found yarn version ${yarnVersion}`)
     } catch (e) {
@@ -41,18 +47,34 @@ const validateAppPackage = async (config, paths, { offerFix = true } = {}) => {
     }
 
     if (pkg.dependencies) {
-        const extraneousDeps = singletonDependencies.filter(dep => !!pkg.dependencies[dep])
+        const extraneousDeps = singletonDependencies.filter(
+            dep => !!pkg.dependencies[dep]
+        )
         if (extraneousDeps.length) {
-            reporter.warn(`The following must not be specified as ${chalk.bold('dependencies')}\n${extraneousDeps.map(dep => `\t- ${dep}\n`)}Please move them to ${chalk.bold('peerDependencies')} (and optionally ${chalk.bold('devDependencies')})`)
+            reporter.warn(
+                `The following must not be specified as ${chalk.bold(
+                    'dependencies'
+                )}\n${extraneousDeps.map(
+                    dep => `\t- ${dep}\n`
+                )}Please move them to ${chalk.bold(
+                    'peerDependencies'
+                )} (and optionally ${chalk.bold('devDependencies')})`
+            )
 
             if (offerFix) {
-                const { fix } = await inquirer.prompt({ name: 'fix', type: 'confirm', message: 'Would you like to move these dependencies?' })
+                const { fix } = await inquirer.prompt({
+                    name: 'fix',
+                    type: 'confirm',
+                    message: 'Would you like to move these dependencies?',
+                })
 
                 if (!fix) {
-                    return false;
+                    return false
                 }
 
-                reporter.print('Moving dependencies to peerDependencies and devDependencies...')
+                reporter.print(
+                    'Moving dependencies to peerDependencies and devDependencies...'
+                )
                 await exec({
                     cmd: 'yarn',
                     args: ['remove', ...extraneousDeps],
@@ -61,13 +83,25 @@ const validateAppPackage = async (config, paths, { offerFix = true } = {}) => {
 
                 await exec({
                     cmd: 'yarn',
-                    args: ['add', '--peer', ...extraneousDeps.map(dep => `${dep}@${pkg.dependencies[dep]}`)],
+                    args: [
+                        'add',
+                        '--peer',
+                        ...extraneousDeps.map(
+                            dep => `${dep}@${pkg.dependencies[dep]}`
+                        ),
+                    ],
                     cwd: paths.base,
                 })
 
                 await exec({
                     cmd: 'yarn',
-                    args: ['add', '--peer', ...extraneousDeps.map(dep => `${dep}@${pkg.dependencies[dep]}`)],
+                    args: [
+                        'add',
+                        '--peer',
+                        ...extraneousDeps.map(
+                            dep => `${dep}@${pkg.dependencies[dep]}`
+                        ),
+                    ],
                     cwd: paths.base,
                 })
             } else {
