@@ -6,8 +6,8 @@ index e84d2b38aabbfc8e28515859417ae9652b711b57..c82932e417356e215bf2f4e32117f80e
            // If this resolves to a node_module, we don't care what happens next
            request.descriptionFileRoot.indexOf('/node_modules/') !== -1 ||
            request.descriptionFileRoot.indexOf('\\node_modules\\') !== -1 ||
-+          // Same if this resolves to a yarn virtual module
-+          request.descriptionFileRoot.indexOf('.yarn/$$virtual') !== -1 ||
++          // We don't actually need this functionality and it breaks on yarn portal: dependencies, so always abort 
++          true ||
            // Make sure this request was manual
            !request.__innerRequest_request
          ) {

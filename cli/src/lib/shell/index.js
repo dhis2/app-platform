@@ -1,7 +1,6 @@
-const { exec } = require('@dhis2/cli-helpers-engine')
-
 const bootstrap = require('./bootstrap')
 const getEnv = require('./env')
+const execShellYarn = require('./execShellYarn')
 
 module.exports = ({ config, paths }) => ({
     bootstrap: async (args = {}) => {
@@ -12,28 +11,22 @@ module.exports = ({ config, paths }) => ({
     //   await fs.symlink(srcPath, paths.shellApp);
     // },
     build: async () => {
-        await exec({
-            cmd: 'yarn',
-            args: ['run', 'build'],
-            cwd: paths.shell,
+        await execShellYarn(paths, {
+            args: 'run build',
             env: getEnv({ name: config.title }),
             pipe: false,
         })
     },
     start: async ({ port }) => {
-        await exec({
-            cmd: 'yarn',
+        await execShellYarn(paths, {
             args: ['run', 'start'],
-            cwd: paths.shell,
             env: getEnv({ name: config.title, port }),
             pipe: false,
         })
     },
     test: async () => {
-        await exec({
-            cmd: 'yarn',
+        await execShellYarn(paths, {
             args: ['run', 'test', '--', '--all'],
-            cwd: paths.shell,
             env: getEnv({ name: config.title }),
             pipe: true,
         })

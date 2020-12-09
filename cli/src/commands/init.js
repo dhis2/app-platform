@@ -1,9 +1,10 @@
-const { reporter, chalk, exec } = require('@dhis2/cli-helpers-engine')
+const { reporter, chalk } = require('@dhis2/cli-helpers-engine')
 const path = require('path')
 const fs = require('fs-extra')
 const gitignore = require('parse-gitignore')
 
 const makePaths = require('../lib/paths')
+const execShellYarn = require('../lib/shell/execShellYarn')
 
 const ignorePatterns = ['node_modules', '.d2', 'src/locales', 'build']
 
@@ -159,10 +160,9 @@ const handler = async ({ force, name, cwd, lib }) => {
         )
     } else {
         reporter.info('Installing @dhis2/cli-app-scripts...')
-        await exec({
-            cmd: 'yarn',
+
+        await execShellYarn(paths, {
             args: ['add', '--dev', '@dhis2/cli-app-scripts'],
-            cwd: paths.base,
         })
     }
 
@@ -180,11 +180,8 @@ const handler = async ({ force, name, cwd, lib }) => {
         )
     } else {
         reporter.info('Installing @dhis2/app-runtime...')
-        await exec({
-            cmd: 'yarn',
-            args: ['add', '@dhis2/app-runtime'],
-            cwd: paths.base,
-        })
+
+        await execShellYarn(paths, { args: ['add', '@dhis2/app-runtime'] })
     }
 
     const entrypoint = lib ? 'src/index.js' : 'src/App.js'

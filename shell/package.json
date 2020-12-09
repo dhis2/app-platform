@@ -42,7 +42,13 @@
         "react-test-renderer": "^16.8.6"
     },
     "resolutions": {
+        "@dhis2/ui-core": "^5.7.2",
+        "@dhis2/app-runtime": "^2.6.1",
+        "@dhis2/d2-i18n": "^1.0.5",
         "@pmmmwh/react-refresh-webpack-plugin": ">=0.4.3",
-        "react-dev-utils": "patch:react-dev-utils@^11.0.1#./patch-react-dev-utils.diff"
+        "react": "^17",
+        "react-dev-utils": "patch:react-dev-utils@^11.0.1#./patch-react-dev-utils.diff",
+        "react-dom": "^17",
+        "styled-jsx": "^3.2.2"
     }
 }

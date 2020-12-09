@@ -1,6 +1,7 @@
 const fs = require('fs-extra')
 const path = require('path')
-const { reporter, chalk, exec } = require('@dhis2/cli-helpers-engine')
+const { reporter, chalk } = require('@dhis2/cli-helpers-engine')
+const execShellYarn = require('./execShellYarn')
 
 const currentShellVersion = require('../../../assets/shell/package.json')
     .version
@@ -100,15 +101,15 @@ const updateShell = async (paths, { shell }) => {
             !src.match(`^${source}/${paths.shellAppDirname}`),
     })
 
+    reporter.print(chalk.dim('Initializing appShell...'))
+
     // Touch the lock file so that the directory is recognized as a package root
     const yarnLockFile = path.join(dest, 'yarn.lock')
     const handle = await fs.open(yarnLockFile, 'w')
     await fs.close(handle)
 
-    await exec({
-        cmd: 'yarn',
+    await execShellYarn(paths, {
         args: ['add', `D2App@portal:${paths.base}`],
-        cwd: dest,
     })
 }
 
@@ -137,10 +138,8 @@ const overrideAdapter = async (paths, { adapter }) => {
     const adapterResolution = resolveOverride(paths, adapter)
 
     try {
-        await exec({
-            cmd: 'yarn',
+        await execShellYarn(paths, {
             args: ['add', `@dhis2/app-adapter@${adapterResolution}`],
-            cwd: paths.shell,
         })
     } catch (e) {
         reporter.error(
@@ -158,19 +157,11 @@ const bootstrapShell = async (paths, opts = {}) => {
         await updateShell(paths, opts)
     }
 
-    reporter.print(
-        chalk.dim(
-            `${
-                updateRequired ? 'Installing' : 'Updating'
-            } appShell dependencies...`
-        )
-    )
+    reporter.print(chalk.dim(`Updating appShell dependencies...`))
 
     await overrideAdapter(paths, opts)
-    await exec({
-        cmd: 'yarn',
-        args: ['install'],
-        cwd: paths.shell,
+    await execShellYarn(paths, {
+        args: ['install', '--cwd', paths.shell],
     })
 }
 module.exports = bootstrapShell
