@@ -74,7 +74,6 @@ const validateAppPackage = async (config, paths, { offerFix = true } = {}) => {
                 }
 
                 await fixDeps(pkg, paths.package, extraneousDeps)
-                
             } else {
                 return false
             }
@@ -86,9 +85,11 @@ const validateAppPackage = async (config, paths, { offerFix = true } = {}) => {
 
 const sortByKey = obj => {
     const orderedObj = {}
-    Object.keys(obj).sort().forEach(key => {
-        orderedObj[key] = obj[key]
-    })
+    Object.keys(obj)
+        .sort()
+        .forEach(key => {
+            orderedObj[key] = obj[key]
+        })
     return orderedObj
 }
 
@@ -106,12 +107,15 @@ const fixDeps = async (pkg, packageFile, extraneousDeps) => {
         ...pkg,
     }
 
-    newPkg.dependencies = Object.entries(pkg.dependencies).reduce((acc, [dep, resolution]) => {
-        if (!extraneousDeps.includes(dep)) {
-            acc[dep] = resolution
-        }
-        return acc
-    }, {})
+    newPkg.dependencies = Object.entries(pkg.dependencies).reduce(
+        (acc, [dep, resolution]) => {
+            if (!extraneousDeps.includes(dep)) {
+                acc[dep] = resolution
+            }
+            return acc
+        },
+        {}
+    )
     newPkg.peerDependencies = sortByKey({
         ...depsToMove,
         ...pkg.peerDependencies,
@@ -120,7 +124,6 @@ const fixDeps = async (pkg, packageFile, extraneousDeps) => {
         ...depsToMove,
         ...pkg.devDependencies,
     })
-
 
     await writeJSON(packageFile, newPkg, { spaces: 4 })
 }

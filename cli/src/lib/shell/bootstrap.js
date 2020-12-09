@@ -3,9 +3,6 @@ const path = require('path')
 const { reporter, chalk } = require('@dhis2/cli-helpers-engine')
 const execShellYarn = require('./execShellYarn')
 
-const currentShellVersion = require('../../../assets/shell/package.json')
-    .version
-
 const getShellVersion = shellDir => {
     const shellPkg = path.join(shellDir, 'package.json')
     if (fs.existsSync(shellPkg)) {
@@ -149,7 +146,10 @@ const resolveCustomShell = (paths, shell) => {
     }
 }
 
-const bootstrapShell = async (paths, { shell: customShell, adapter, force } = {}) => {
+const bootstrapShell = async (
+    paths,
+    { shell: customShell, adapter, force } = {}
+) => {
     let shell = paths.shellSource
     if (customShell) {
         shell = resolveCustomShell(paths, customShell)
