@@ -5,7 +5,10 @@ const fs = require('fs-extra')
 const chokidar = require('chokidar')
 const babel = require('@babel/core')
 
-const babelOptions = require('../../../config/babel.config')
+const babelOptions = {
+    ...require('../../../config/babel.config'),
+    sourceMaps: 'inline',
+}
 
 const overwriteEntrypoint = async ({ config, paths }) => {
     const shellAppSource = await fs.readFile(paths.shellSourceEntrypoint)
