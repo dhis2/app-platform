@@ -8,6 +8,7 @@ const makeShell = require('../lib/shell')
 const parseConfig = require('../lib/parseConfig')
 const exitOnCatch = require('../lib/exitOnCatch')
 const loadEnvFiles = require('../lib/loadEnvFiles')
+const validateAppPackage = require('../lib/validateAppPackage')
 
 const defaultPort = 3000
 
@@ -25,6 +26,10 @@ const handler = async ({
 
     const config = parseConfig(paths)
     const shell = makeShell({ config, paths })
+
+    if (!await validateAppPackage(config, paths)) {
+        process.exit(1)
+    }
 
     if (config.type !== 'app') {
         reporter.error(

@@ -12,6 +12,7 @@ const exitOnCatch = require('../lib/exitOnCatch')
 const generateManifest = require('../lib/generateManifest')
 const bundleApp = require('../lib/bundleApp')
 const loadEnvFiles = require('../lib/loadEnvFiles')
+const validateAppPackage = require('../lib/validateAppPackage')
 
 const buildModes = ['development', 'production']
 
@@ -66,6 +67,10 @@ const handler = async ({
 
     const config = parseConfig(paths)
     const shell = makeShell({ config, paths })
+
+    if (!await validateAppPackage(config, paths)) {
+        process.exit(1)
+    }
 
     if (config.type === 'app') {
         setAppParameters(standalone, config)
