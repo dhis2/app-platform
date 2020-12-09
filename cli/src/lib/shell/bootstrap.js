@@ -20,11 +20,11 @@ const getShellVersion = shellDir => {
     return '0'
 }
 
-const shellRequiresUpdate = (paths, { shell, force = false }) => {
-    const shellDir = paths.shell
-    if (fs.pathExistsSync(shellDir) && !shell) {
+const shellRequiresUpdate = (paths, { shell: shellSource, force = false }) => {
+    const shellDest = paths.shell
+    if (fs.pathExistsSync(shellDest)) {
         const versionMismatch =
-            getShellVersion(shellDir) !== currentShellVersion
+            getShellVersion(shellDest) !== getShellVersion(shellSource)
 
         if (versionMismatch) {
             reporter.print(
@@ -50,40 +50,8 @@ const shellRequiresUpdate = (paths, { shell, force = false }) => {
     return true
 }
 
-const resolveShellOverride = (paths, shell) => {
-    reporter.print(chalk.dim(`Using custom shell source ${shell}`))
-    if (
-        shell.startsWith('/') ||
-        shell.startsWith('.') ||
-        /^[A-Z]:/.test(shell)
-    ) {
-        // This is a local filesystem path
-        const absoluteShell = path.resolve(paths.base, shell)
-        if (
-            !fs.existsSync(absoluteShell) ||
-            !fs.statSync(absoluteShell).isDirectory()
-        ) {
-            reporter.error(
-                `Custom shell source ${absoluteShell} does not exist or is not a directory`
-            )
-            process.exit(1)
-        }
-        return absoluteShell
-    }
-    try {
-        return path.dirname(require.resolve(`${shell}/package.json`))
-    } catch {
-        reporter.error(
-            `Could not resolve custom shell pacakge ${shell} - make sure it has already been installed`
-        )
-        process.exit(1)
-    }
-}
-
 const updateShell = async (paths, { shell }) => {
-    const source = shell
-            ? resolveShellOverride(paths, shell)
-            : paths.shellSource,
+    const source = shell,
         dest = paths.shell
 
     reporter.print(chalk.dim('Removing existing directory...'))
@@ -151,17 +119,52 @@ const overrideAdapter = async (paths, { adapter }) => {
     }
 }
 
-const bootstrapShell = async (paths, opts = {}) => {
-    const updateRequired = shellRequiresUpdate(paths, opts)
+const resolveCustomShell = (paths, shell) => {
+    reporter.print(chalk.dim(`Using custom shell source ${shell}`))
+    if (
+        shell.startsWith('/') ||
+        shell.startsWith('.') ||
+        /^[A-Z]:/.test(shell)
+    ) {
+        // This is a local filesystem path
+        const absoluteShell = path.resolve(paths.base, shell)
+        if (
+            !fs.existsSync(absoluteShell) ||
+            !fs.statSync(absoluteShell).isDirectory()
+        ) {
+            reporter.error(
+                `Custom shell source ${absoluteShell} does not exist or is not a directory`
+            )
+            process.exit(1)
+        }
+        return absoluteShell
+    }
+    try {
+        return path.dirname(require.resolve(`${shell}/package.json`))
+    } catch {
+        reporter.error(
+            `Could not resolve custom shell pacakge ${shell} - make sure it has already been installed`
+        )
+        process.exit(1)
+    }
+}
+
+const bootstrapShell = async (paths, { shell: customShell, adapter, force } = {}) => {
+    let shell = paths.shellSource
+    if (customShell) {
+        shell = resolveCustomShell(paths, customShell)
+    }
+
+    const updateRequired = shellRequiresUpdate(paths, { shell, force })
     if (updateRequired) {
-        await updateShell(paths, opts)
+        await updateShell(paths, { shell })
     }
 
     reporter.print(chalk.dim(`Updating appShell dependencies...`))
 
-    await overrideAdapter(paths, opts)
+    await overrideAdapter(paths, { adapter })
     await execShellYarn(paths, {
-        args: ['install', '--cwd', paths.shell],
+        args: 'install',
     })
 }
 module.exports = bootstrapShell
