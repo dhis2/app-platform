@@ -1,5 +1,5 @@
-const compileLibrary = require('./compileLibrary')
 const compileApp = require('./compileApp')
+const compileLibrary = require('./compileLibrary')
 
 const compile = async ({
     config,

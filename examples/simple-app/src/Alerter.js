@@ -1,6 +1,6 @@
-import React, { useState } from 'react'
 import { useAlert } from '@dhis2/app-runtime'
 import { InputField, Button } from '@dhis2/ui'
+import React, { useState } from 'react'
 
 export const Alerter = () => {
     const [message, setMessage] = useState('')

@@ -1,9 +1,9 @@
-import React, { useEffect, useState } from 'react'
-import PropTypes from 'prop-types'
 import { Provider } from '@dhis2/app-runtime'
+import PropTypes from 'prop-types'
+import React, { useEffect, useState } from 'react'
+import { get } from '../utils/api'
 import { parseServerVersion } from '../utils/parseServerVersion'
 import { LoadingMask } from './LoadingMask'
-import { get } from '../utils/api'
 
 export const ServerVersionProvider = ({ url, apiVersion, children }) => {
     const [{ loading, error, systemInfo }, setState] = useState({

@@ -1,5 +1,4 @@
 const { exec } = require('@dhis2/cli-helpers-engine')
-
 const bootstrap = require('./bootstrap')
 const getEnv = require('./env')
 

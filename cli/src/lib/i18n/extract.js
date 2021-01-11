@@ -1,9 +1,9 @@
-const fs = require('fs-extra')
 const path = require('path')
-const { checkDirectoryExists, walkDirectory, arrayEqual } = require('./helpers')
 const { reporter, chalk } = require('@dhis2/cli-helpers-engine')
-const scanner = require('i18next-scanner')
+const fs = require('fs-extra')
 const { i18nextToPot, gettextToI18next } = require('i18next-conv')
+const scanner = require('i18next-scanner')
+const { checkDirectoryExists, walkDirectory, arrayEqual } = require('./helpers')
 
 const extract = async ({ input, output }) => {
     const relativeInput = './' + path.relative(process.cwd(), input)

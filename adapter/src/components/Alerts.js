@@ -1,6 +1,6 @@
-import React from 'react'
 import { useAlerts } from '@dhis2/app-runtime'
 import { AlertBar, AlertStack } from '@dhis2/ui'
+import React from 'react'
 
 export const Alerts = () => {
     const alerts = useAlerts()

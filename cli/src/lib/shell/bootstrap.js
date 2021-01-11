@@ -1,8 +1,7 @@
-const fs = require('fs-extra')
 const path = require('path')
-const { reporter, chalk } = require('@dhis2/cli-helpers-engine')
-
 const currentShellVersion = require('@dhis2/app-shell/package.json').version
+const { reporter, chalk } = require('@dhis2/cli-helpers-engine')
+const fs = require('fs-extra')
 
 const getShellVersion = shellDir => {
     const shellPkg = path.join(shellDir, 'package.json')

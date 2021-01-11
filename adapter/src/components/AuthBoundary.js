@@ -1,10 +1,9 @@
-import React from 'react'
-import PropTypes from 'prop-types'
 import { useDataQuery } from '@dhis2/app-runtime'
-
-import { LoginModal } from './LoginModal'
+import PropTypes from 'prop-types'
+import React from 'react'
 import { useLocale } from '../utils/useLocale'
 import { LoadingMask } from './LoadingMask'
+import { LoginModal } from './LoginModal'
 
 const settingsQuery = {
     userSettings: {

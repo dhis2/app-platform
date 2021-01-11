@@ -1,5 +1,3 @@
-import React, { useState } from 'react'
-import i18n from '../locales'
 import {
     Modal,
     ModalTitle,
@@ -8,6 +6,8 @@ import {
     Button,
     InputField,
 } from '@dhis2/ui'
+import React, { useState } from 'react'
+import i18n from '../locales'
 import { post } from '../utils/api'
 
 const staticUrl = process.env.REACT_APP_DHIS2_BASE_URL
