@@ -1,6 +1,6 @@
-import React from 'react'
-import AppAdapter from '@dhis2/app-adapter'
+import AppAdapter from '@dhis2/app-adapter' // eslint-disable-line import/no-unresolved
 import { Layer, layers, CenteredContent, CircularLoader } from '@dhis2/ui'
+import React from 'react'
 
 const D2App = React.lazy(() =>
     import(/*webpackChunkName: 'app'*/ './D2App/app')

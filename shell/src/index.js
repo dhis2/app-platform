@@ -1,10 +1,9 @@
+import { CssReset } from '@dhis2/ui'
 import React from 'react'
 import ReactDOM from 'react-dom'
 import App from './App'
-import * as serviceWorker from './serviceWorker'
-
 import 'typeface-roboto'
-import { CssReset } from '@dhis2/ui'
+import * as serviceWorker from './serviceWorker'
 
 ReactDOM.render(
     <>
