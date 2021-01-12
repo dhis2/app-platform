@@ -1,4 +1,4 @@
-import AppAdapter from '@dhis2/app-adapter' // eslint-disable-line import/no-unresolved
+import AppAdapter from '@dhis2/app-adapter'
 import { Layer, layers, CenteredContent, CircularLoader } from '@dhis2/ui'
 import React from 'react'
 
