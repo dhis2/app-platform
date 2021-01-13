@@ -1,18 +1,16 @@
 // rollup.config.js
 const path = require('path')
-
-const resolve = require('rollup-plugin-node-resolve')
+const standardLibs = require('@dhis2/app-shell/package.json').dependencies
+const { reporter, chalk } = require('@dhis2/cli-helpers-engine')
 const babel = require('rollup-plugin-babel')
 const commonjs = require('rollup-plugin-commonjs')
 const json = require('rollup-plugin-json')
+const resolve = require('rollup-plugin-node-resolve')
 const postcss = require('rollup-plugin-postcss')
 const replace = require('rollup-plugin-replace')
 const visualize = require('rollup-plugin-visualizer')
 
-const { reporter, chalk } = require('@dhis2/cli-helpers-engine')
 const extensions = ['.js', '.jsx', '.ts', '.tsx']
-
-const standardLibs = require('@dhis2/app-shell/package.json').dependencies
 
 // Exclude local app-shell dependencies
 Object.entries(standardLibs).forEach(([dep, version]) => {

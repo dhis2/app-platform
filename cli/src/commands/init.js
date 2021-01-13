@@ -1,8 +1,7 @@
-const { reporter, chalk, exec } = require('@dhis2/cli-helpers-engine')
 const path = require('path')
+const { reporter, chalk, exec } = require('@dhis2/cli-helpers-engine')
 const fs = require('fs-extra')
 const gitignore = require('parse-gitignore')
-
 const makePaths = require('../lib/paths')
 
 const ignorePatterns = ['node_modules', '.d2', 'src/locales', 'build']

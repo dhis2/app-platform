@@ -1,8 +1,7 @@
-const { reporter, chalk } = require('@dhis2/cli-helpers-engine')
 const path = require('path')
-const rollup = require('rollup')
+const { reporter, chalk } = require('@dhis2/cli-helpers-engine')
 const fs = require('fs-extra')
-
+const rollup = require('rollup')
 const rollupConfigBuilder = require('../../../config/rollup.config')
 
 const printRollupError = error => {

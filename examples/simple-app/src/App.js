@@ -1,9 +1,9 @@
-import React from 'react'
-import i18n from './locales'
-import moment from 'moment'
 import { useDataQuery } from '@dhis2/app-runtime'
+import moment from 'moment'
+import React from 'react'
 import { Alerter } from './Alerter.js'
 import style from './App.style'
+import i18n from './locales'
 
 const query = {
     me: {

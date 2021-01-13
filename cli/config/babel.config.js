@@ -1,5 +1,4 @@
 const path = require('path')
-
 const browserTargets = require('./.browserlistrc')
 const jestTargets = { node: 'current' }
 

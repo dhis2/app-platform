@@ -1,12 +1,9 @@
 const { reporter } = require('@dhis2/cli-helpers-engine')
-
 const fs = require('fs-extra')
-
-const makePaths = require('../lib/paths')
+const { runCLI } = require('jest-cli')
 const exitOnCatch = require('../lib/exitOnCatch')
 const loadEnvFiles = require('../lib/loadEnvFiles')
-
-const { runCLI } = require('jest-cli')
+const makePaths = require('../lib/paths')
 
 const handler = async ({
     verbose,
