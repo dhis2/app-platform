@@ -1,3 +1,5 @@
 import React from 'react'
 
-export default () => <h2>PLACEHOLDER</h2>
+const PlaceholderApp = () => <h2>PLACEHOLDER</h2>
+
+export default PlaceholderApp
