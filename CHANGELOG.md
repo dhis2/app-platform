@@ -3,9 +3,7 @@
 
 ### Bug Fixes
 
-* disable eslint for all installed shell files, lint in dev ([1933eca](https://github.com/dhis2/app-platform/commit/1933eca6dc9235c757e54e891b4dc0a649e146a4))
-* disable eslint for all installed shell files, lint in dev ([81b2a61](https://github.com/dhis2/app-platform/commit/81b2a617fa68237115ece358df4eb6a8e426e455))
-* prevent automatic find-up of eslint, use local config in dev ([6fab73a](https://github.com/dhis2/app-platform/commit/6fab73a1513088f1587410555b61aa10efafb8c5))
+* isolate eslint shell and app environments ([#499](https://github.com/dhis2/app-platform/issues/499)) ([1933eca](https://github.com/dhis2/app-platform/commit/1933eca6dc9235c757e54e891b4dc0a649e146a4))
 
 # [5.5.0](https://github.com/dhis2/app-platform/compare/v5.4.2...v5.5.0) (2020-11-16)
 
