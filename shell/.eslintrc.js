@@ -3,7 +3,7 @@ const path = require('path')
 
 const eslintRunningLocally = process.cwd() === __dirname
 
-const delegateEslintConfig = path.resolve(__dirname, '../.eslintrc.js') // This should only exist when in development!  It will pick up .d2/.eslintrc.js in an app, if it exists (unlikely)
+const delegateEslintConfig = path.resolve(__dirname, '../.eslintrc.js') // This should only exist when in development!
 const shouldDelegate =
     !eslintRunningLocally && fs.existsSync(delegateEslintConfig)
 
