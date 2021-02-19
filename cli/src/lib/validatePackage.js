@@ -2,8 +2,6 @@ const { reporter, chalk } = require('@dhis2/cli-helpers-engine')
 const {
     validatePackageExports,
 } = require('./validators/validatePackageExports')
-// const { validateSingletonDependencies } = require('./validators/validateSingletonDependnecies')
-// const { validateYarnVersion } = require('./validators/validateYarnVersion')
 
 module.exports.validatePackage = async ({
     config,
@@ -26,9 +24,5 @@ module.exports.validatePackage = async ({
 
     reporter.debug('Validating package...', { pkg, offerFix, noVerify })
 
-    return (
-        // await validateYarnVersion({ paths }) &&
-        // await validateSingletonDependencies(pkg, { paths, offerFix }) &&
-        await validatePackageExports(pkg, { config, paths, offerFix })
-    )
+    return await validatePackageExports(pkg, { config, paths, offerFix })
 }
