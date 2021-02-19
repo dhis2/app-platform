@@ -77,6 +77,7 @@ const handler = async ({
     await exitOnCatch(
         async () => {
             if (!await validatePackage({ config, paths, offerFix: !process.env.CI, noVerify: !verify })) {
+                reporter.error('Failed to validate package, use --no-verify to skip these checks')
                 process.exit(1)
             }
 
