@@ -1,6 +1,6 @@
+import { shallow } from 'enzyme'
 import React from 'react'
 import { FatalErrorBoundary } from '../FatalErrorBoundary'
-import { shallow } from 'enzyme'
 
 const Something = () => {
     // Placeholder

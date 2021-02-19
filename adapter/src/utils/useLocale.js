@@ -1,6 +1,6 @@
-import { useEffect } from 'react'
 import i18n from '@dhis2/d2-i18n'
 import moment from 'moment'
+import { useEffect } from 'react'
 
 i18n.setDefaultNamespace('default')
 
@@ -14,7 +14,9 @@ const simplifyLocale = locale => {
 
 const setGlobalLocale = locale => {
     if (locale !== 'en' && locale !== 'en-us') {
-        import(`moment/locale/${locale}`).catch(() => {
+        import(
+            /* webpackChunkName: "moment-locales/[request]" */ `moment/locale/${locale}`
+        ).catch(() => {
             /* ignore */
         })
     }

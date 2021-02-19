@@ -1,13 +1,12 @@
-const { reporter, chalk } = require('@dhis2/cli-helpers-engine')
 const path = require('path')
-const fs = require('fs-extra')
+const { reporter, chalk } = require('@dhis2/cli-helpers-engine')
 const FormData = require('form-data')
+const fs = require('fs-extra')
 const inquirer = require('inquirer')
-
-const makePaths = require('../lib/paths')
-const parseConfig = require('../lib/parseConfig')
-const { createClient } = require('../lib/httpClient')
 const { constructAppUrl } = require('../lib/constructAppUrl')
+const { createClient } = require('../lib/httpClient')
+const parseConfig = require('../lib/parseConfig')
+const makePaths = require('../lib/paths')
 
 const dumpHttpError = (message, response) => {
     if (!response) {

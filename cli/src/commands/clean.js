@@ -1,6 +1,5 @@
 const { reporter } = require('@dhis2/cli-helpers-engine')
 const fs = require('fs-extra')
-
 const makePaths = require('../lib/paths')
 
 const handler = async ({ cwd }) => {

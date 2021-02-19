@@ -1,8 +1,7 @@
 const fs = require('fs')
-const dotenvExpand = require('dotenv-expand')
-const dotenv = require('dotenv')
-
 const { reporter } = require('@dhis2/cli-helpers-engine')
+const dotenv = require('dotenv')
+const dotenvExpand = require('dotenv-expand')
 
 module.exports = (paths, NODE_ENV) => {
     /*

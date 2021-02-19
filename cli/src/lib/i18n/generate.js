@@ -1,9 +1,8 @@
-const fs = require('fs-extra')
 const path = require('path')
 const { reporter, chalk } = require('@dhis2/cli-helpers-engine')
-const { gettextToI18next } = require('i18next-conv')
+const fs = require('fs-extra')
 const handlebars = require('handlebars')
-
+const { gettextToI18next } = require('i18next-conv')
 const { checkDirectoryExists } = require('./helpers')
 const { langToLocale } = require('./locales')
 

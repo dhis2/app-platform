@@ -1,11 +1,16 @@
-const fs = require('fs'),
-    path = require('path')
+const fs = require('fs')
+const path = require('path')
 
-const customConfigFile = path.resolve('../../.eslintrc.js')
-const hasCustomConfig = fs.existsSync(customConfigFile)
+const eslintRunningLocally = process.cwd() === __dirname
 
-const extendsArray = hasCustomConfig ? [customConfigFile] : ['react-app']
+const delegateEslintConfig = path.resolve(__dirname, '../.eslintrc.js') // This should only exist when in development!
+const shouldDelegate =
+    !eslintRunningLocally && fs.existsSync(delegateEslintConfig)
 
+const extendsList = shouldDelegate
+    ? [delegateEslintConfig, 'react-app']
+    : 'react-app'
 module.exports = {
-    extends: extendsArray,
+    ignorePatterns: shouldDelegate ? [] : ['src/D2App/*'],
+    extends: extendsList,
 }

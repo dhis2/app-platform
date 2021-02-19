@@ -1,7 +1,7 @@
-const fs = require('fs-extra')
 const path = require('path')
-const archiver = require('archiver')
 const { reporter, chalk } = require('@dhis2/cli-helpers-engine')
+const archiver = require('archiver')
+const fs = require('fs-extra')
 
 module.exports = (inDir, outFile) => {
     return new Promise((resolve, reject) => {

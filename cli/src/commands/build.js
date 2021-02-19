@@ -1,18 +1,16 @@
-const { reporter, chalk } = require('@dhis2/cli-helpers-engine')
-
-const fs = require('fs-extra')
 const path = require('path')
-
-const i18n = require('../lib/i18n')
+const { reporter, chalk } = require('@dhis2/cli-helpers-engine')
+const fs = require('fs-extra')
+const bundleApp = require('../lib/bundleApp')
 const { compile } = require('../lib/compiler')
-const makePaths = require('../lib/paths')
-const makeShell = require('../lib/shell')
-const parseConfig = require('../lib/parseConfig')
 const exitOnCatch = require('../lib/exitOnCatch')
 const generateManifest = require('../lib/generateManifest')
-const bundleApp = require('../lib/bundleApp')
+const i18n = require('../lib/i18n')
 const loadEnvFiles = require('../lib/loadEnvFiles')
 const { validatePackage } = require('../lib/validatePackage')
+const parseConfig = require('../lib/parseConfig')
+const makePaths = require('../lib/paths')
+const makeShell = require('../lib/shell')
 
 const buildModes = ['development', 'production']
 

@@ -1,14 +1,13 @@
 const { reporter, chalk } = require('@dhis2/cli-helpers-engine')
 const detectPort = require('detect-port')
-
-const i18n = require('../lib/i18n')
 const { compile } = require('../lib/compiler')
-const makePaths = require('../lib/paths')
-const makeShell = require('../lib/shell')
-const parseConfig = require('../lib/parseConfig')
 const exitOnCatch = require('../lib/exitOnCatch')
+const i18n = require('../lib/i18n')
 const loadEnvFiles = require('../lib/loadEnvFiles')
 const { validatePackage } = require('../lib/validatePackage')
+const parseConfig = require('../lib/parseConfig')
+const makePaths = require('../lib/paths')
+const makeShell = require('../lib/shell')
 
 const defaultPort = 3000
 

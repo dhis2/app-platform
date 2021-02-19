@@ -1,3 +1,24 @@
+## [5.5.3](https://github.com/dhis2/app-platform/compare/v5.5.2...v5.5.3) (2021-02-19)
+
+
+### Bug Fixes
+
+* namespace code-split moment locale chunks to separate them from app chunks ([#507](https://github.com/dhis2/app-platform/issues/507)) ([cecb3c2](https://github.com/dhis2/app-platform/commit/cecb3c2fd64f745200b493029abf639d5e1dfb96))
+
+## [5.5.2](https://github.com/dhis2/app-platform/compare/v5.5.1...v5.5.2) (2021-02-18)
+
+
+### Bug Fixes
+
+* pin styled-jsx@3.3.2 to avoid styled-jsx/babel bug ([#502](https://github.com/dhis2/app-platform/issues/502)) ([123c9aa](https://github.com/dhis2/app-platform/commit/123c9aa1876ca34f2cac6c87535fb72643bccf4c))
+
+## [5.5.1](https://github.com/dhis2/app-platform/compare/v5.5.0...v5.5.1) (2021-01-13)
+
+
+### Bug Fixes
+
+* isolate eslint shell and app environments ([#499](https://github.com/dhis2/app-platform/issues/499)) ([1933eca](https://github.com/dhis2/app-platform/commit/1933eca6dc9235c757e54e891b4dc0a649e146a4))
+
 # [5.5.0](https://github.com/dhis2/app-platform/compare/v5.4.2...v5.5.0) (2020-11-16)
 
 
