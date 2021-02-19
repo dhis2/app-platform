@@ -105,15 +105,14 @@ const compile = async ({
         fs.copySync(paths.shellSourcePublic, paths.shellPublic)
     }
 
+    const babelConfig = makeBabelConfig({ moduleType, mode })
+
     const copyFile = async (source, destination) => {
         await fs.copy(source, destination)
     }
     const compileFile = async (source, destination) => {
-        if (path.extname(source) === '.js') {
-            const result = await babel.transformFileAsync(
-                source,
-                makeBabelConfig({ moduleType, mode })
-            )
+        if (source.match(/\.[jt]sx?$/)) {
+            const result = await babel.transformFileAsync(source, babelConfig)
             await fs.writeFile(destination, result.code)
         } else {
             await copyFile(source, destination)
