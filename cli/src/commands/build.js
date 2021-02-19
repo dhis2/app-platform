@@ -54,7 +54,6 @@ const handler = async ({
     watch,
     standalone,
     shell: shellSource,
-    quiet,
     verify,
     force,
 }) => {
