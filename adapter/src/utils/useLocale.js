@@ -14,7 +14,9 @@ const simplifyLocale = locale => {
 
 const setGlobalLocale = locale => {
     if (locale !== 'en' && locale !== 'en-us') {
-        import(`moment/locale/${locale}`).catch(() => {
+        import(
+            /* webpackChunkName: "moment-locales/[request]" */ `moment/locale/${locale}`
+        ).catch(() => {
             /* ignore */
         })
     }
