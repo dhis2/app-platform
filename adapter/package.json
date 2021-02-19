@@ -11,9 +11,8 @@
     "publishConfig": {
         "access": "public"
     },
-    "main": "./build/index.js",
-    "module": "./build/index.js",
-    "exports": "./build/index.js",
+    "main": "./build/cjs/index.js",
+    "module": "./build/es/index.js",
     "files": [
         "build"
     ],

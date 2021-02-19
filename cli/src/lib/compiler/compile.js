@@ -88,13 +88,14 @@ const watchFiles = ({ inputDir, outputDir, processFileCallback, watch }) => {
 const compile = async ({
     config,
     paths,
+    moduleType = 'es',
     mode = 'development',
     watch = false,
 }) => {
     await overwriteEntrypoint({ config, paths })
 
     const isApp = config.type === 'app'
-    const outDir = isApp ? paths.shellApp : paths.buildOutput
+    const outDir = isApp ? paths.shellApp : path.join(paths.buildOutput, moduleType)
 
     fs.removeSync(outDir)
     fs.ensureDirSync(outDir)
@@ -111,7 +112,7 @@ const compile = async ({
         if (path.extname(source) === '.js') {
             const result = await babel.transformFileAsync(
                 source,
-                makeBabelConfig({ mode })
+                makeBabelConfig({ moduleType, mode })
             )
             await fs.writeFile(destination, result.code)
         } else {

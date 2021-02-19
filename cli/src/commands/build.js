@@ -12,6 +12,7 @@ const exitOnCatch = require('../lib/exitOnCatch')
 const generateManifest = require('../lib/generateManifest')
 const bundleApp = require('../lib/bundleApp')
 const loadEnvFiles = require('../lib/loadEnvFiles')
+const { validatePackage } = require('../lib/validatePackage')
 
 const buildModes = ['development', 'production']
 
@@ -53,6 +54,8 @@ const handler = async ({
     watch,
     standalone,
     shell: shellSource,
+    quiet,
+    verify,
     force,
 }) => {
     const paths = makePaths(cwd)
@@ -74,6 +77,10 @@ const handler = async ({
 
     await exitOnCatch(
         async () => {
+            if (!await validatePackage({ config, paths, offerFix: !process.env.CI, noVerify: !verify })) {
+                process.exit(1)
+            }
+
             reporter.info('Generating internationalization strings...')
             await i18n.extract({ input: paths.src, output: paths.i18nStrings })
             await i18n.generate({
@@ -90,16 +97,33 @@ const handler = async ({
             reporter.info(
                 `Building ${config.type} ${chalk.bold(config.name)}...`
             )
-            await compile({
-                config,
-                paths,
-                mode,
-                watch,
-            })
 
             if (config.type === 'app') {
+                await compile({
+                    config,
+                    paths,
+                    mode,
+                    watch,
+                })
                 reporter.info('Building appShell...')
                 await shell.build()
+            } else {
+                await Promise.all([
+                    compile({
+                        config,
+                        paths,
+                        moduleType: 'es',
+                        mode,
+                        watch,
+                    }),
+                    compile({
+                        config,
+                        paths,
+                        moduleType: 'cjs',
+                        mode,
+                        watch,
+                    })
+                ])
             }
         },
         {
@@ -147,6 +171,11 @@ const command = {
             type: 'boolean',
             description: 'Build in development mode',
             conflicts: 'mode',
+        },
+        verify: {
+            type: 'boolean',
+            description: 'Validate package before building',
+            default: true
         },
         watch: {
             type: 'boolean',

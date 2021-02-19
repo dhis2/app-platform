@@ -1,7 +1,21 @@
 const browserTargets = require('./.browserlistrc')
 const jestTargets = { node: 'current' }
 
-const makeBabelConfig = ({ mode }) => {
+const getBabelModuleType = moduleType => {
+    switch (moduleType) {
+        case 'cjs':
+        case 'commonjs':
+            return 'commonjs'
+        case 'systemjs':
+        case 'umd':
+        case 'amd':
+            return moduleType
+        case 'es':
+        default:
+            return false
+    }
+}
+const makeBabelConfig = ({ moduleType, mode }) => {
     const isTest = mode === 'test'
 
     return {
@@ -11,7 +25,7 @@ const makeBabelConfig = ({ mode }) => {
             [
                 require('@babel/preset-env'),
                 {
-                    modules: isTest ? 'commonjs' : false,
+                    modules: isTest ? 'commonjs' : getBabelModuleType(moduleType),
                     targets: isTest ? jestTargets : browserTargets,
                 },
             ],
