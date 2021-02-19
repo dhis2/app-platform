@@ -1,3 +1,10 @@
+## [5.5.3](https://github.com/dhis2/app-platform/compare/v5.5.2...v5.5.3) (2021-02-19)
+
+
+### Bug Fixes
+
+* namespace code-split moment locale chunks to separate them from app chunks ([#507](https://github.com/dhis2/app-platform/issues/507)) ([cecb3c2](https://github.com/dhis2/app-platform/commit/cecb3c2fd64f745200b493029abf639d5e1dfb96))
+
 ## [5.5.2](https://github.com/dhis2/app-platform/compare/v5.5.1...v5.5.2) (2021-02-18)
 
 
