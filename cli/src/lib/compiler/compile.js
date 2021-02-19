@@ -95,7 +95,9 @@ const compile = async ({
     await overwriteEntrypoint({ config, paths })
 
     const isApp = config.type === 'app'
-    const outDir = isApp ? paths.shellApp : path.join(paths.buildOutput, moduleType)
+    const outDir = isApp
+        ? paths.shellApp
+        : path.join(paths.buildOutput, moduleType)
 
     fs.removeSync(outDir)
     fs.ensureDirSync(outDir)

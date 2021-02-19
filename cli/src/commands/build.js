@@ -74,8 +74,17 @@ const handler = async ({
 
     await exitOnCatch(
         async () => {
-            if (!await validatePackage({ config, paths, offerFix: !process.env.CI, noVerify: !verify })) {
-                reporter.error('Failed to validate package, use --no-verify to skip these checks')
+            if (
+                !(await validatePackage({
+                    config,
+                    paths,
+                    offerFix: !process.env.CI,
+                    noVerify: !verify,
+                }))
+            ) {
+                reporter.error(
+                    'Failed to validate package, use --no-verify to skip these checks'
+                )
                 process.exit(1)
             }
 
@@ -120,7 +129,7 @@ const handler = async ({
                         moduleType: 'cjs',
                         mode,
                         watch,
-                    })
+                    }),
                 ])
             }
         },
@@ -173,7 +182,7 @@ const command = {
         verify: {
             type: 'boolean',
             description: 'Validate package before building',
-            default: true
+            default: true,
         },
         watch: {
             type: 'boolean',

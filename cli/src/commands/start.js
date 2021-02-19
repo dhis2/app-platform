@@ -36,9 +36,15 @@ const handler = async ({
 
     await exitOnCatch(
         async () => {
-            if (!await validatePackage({ config, paths, offerFix: false })) {
-                reporter.print('Package validation issues are ignored when running "d2-app-scripts start"')
-                reporter.print(`${chalk.bold('HINT')}: Run "d2-app-scripts build" to automatically fix some of these issues`)
+            if (!(await validatePackage({ config, paths, offerFix: false }))) {
+                reporter.print(
+                    'Package validation issues are ignored when running "d2-app-scripts start"'
+                )
+                reporter.print(
+                    `${chalk.bold(
+                        'HINT'
+                    )}: Run "d2-app-scripts build" to automatically fix some of these issues`
+                )
             }
 
             reporter.info('Generating internationalization strings...')

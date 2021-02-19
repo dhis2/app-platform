@@ -61,7 +61,10 @@ const fixDeps = async (pkg, packageFile, extraneousDeps) => {
     await writeJSON(packageFile, newPkg, { spaces: 4 })
 }
 
-module.exports.validateSingletonDependencies = async (pkg, { paths, offerFix }) => {
+module.exports.validateSingletonDependencies = async (
+    pkg,
+    { paths, offerFix }
+) => {
     if (pkg.dependencies) {
         const extraneousDeps = singletonDependencies.filter(
             dep => !!pkg.dependencies[dep]

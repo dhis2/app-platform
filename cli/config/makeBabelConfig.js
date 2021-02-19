@@ -25,7 +25,9 @@ const makeBabelConfig = ({ moduleType, mode }) => {
             [
                 require('@babel/preset-env'),
                 {
-                    modules: isTest ? 'commonjs' : getBabelModuleType(moduleType),
+                    modules: isTest
+                        ? 'commonjs'
+                        : getBabelModuleType(moduleType),
                     targets: isTest ? jestTargets : browserTargets,
                 },
             ],

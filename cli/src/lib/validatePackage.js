@@ -1,9 +1,16 @@
 const { reporter, chalk } = require('@dhis2/cli-helpers-engine')
-const { validatePackageExports } = require('./validators/validatePackageExports')
+const {
+    validatePackageExports,
+} = require('./validators/validatePackageExports')
 // const { validateSingletonDependencies } = require('./validators/validateSingletonDependnecies')
 // const { validateYarnVersion } = require('./validators/validateYarnVersion')
 
-module.exports.validatePackage = async ({ config, paths, offerFix = true, noVerify = false } = {}) => {
+module.exports.validatePackage = async ({
+    config,
+    paths,
+    offerFix = true,
+    noVerify = false,
+} = {}) => {
     if (noVerify) {
         reporter.print(chalk.dim('Skipping package validation (--no-verify)'))
         return true
