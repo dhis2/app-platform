@@ -63,12 +63,12 @@ module.exports.validatePackageExports = async (
             reporter.warn(
                 `Invalid "${field}" field in package.json, expected ${expectedValue
                     .map(option => `"${option}"`)
-                    .join(' or ')} (got ${value})`
+                    .join(' or ')} (got "${value}")`
             )
             return false
         } else if (!Array.isArray(expectedValue) && value !== expectedValue) {
             reporter.warn(
-                `Invalid "${field}" field in package.json, expected "${expectedValue}" (got ${value})`
+                `Invalid "${field}" field in package.json, expected "${expectedValue}" (got "${value}")`
             )
             return false
         }
