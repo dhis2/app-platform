@@ -91,12 +91,12 @@ module.exports.validatePackageExports = async (
             : 'pkg.exports.'
         valid &= checkField(
             fieldPrefix + 'import',
-            exportContext?.import,
+            exportContext.import,
             expectedESMExport
         )
         valid &= checkField(
             fieldPrefix + 'require',
-            exportContext?.require,
+            exportContext.require,
             expectedCJSExport
         )
     } else {
