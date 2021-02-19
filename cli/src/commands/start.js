@@ -4,10 +4,10 @@ const { compile } = require('../lib/compiler')
 const exitOnCatch = require('../lib/exitOnCatch')
 const i18n = require('../lib/i18n')
 const loadEnvFiles = require('../lib/loadEnvFiles')
-const { validatePackage } = require('../lib/validatePackage')
 const parseConfig = require('../lib/parseConfig')
 const makePaths = require('../lib/paths')
 const makeShell = require('../lib/shell')
+const { validatePackage } = require('../lib/validatePackage')
 
 const defaultPort = 3000
 

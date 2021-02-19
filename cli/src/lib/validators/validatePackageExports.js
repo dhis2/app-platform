@@ -1,6 +1,6 @@
+const path = require('path')
 const { reporter, prompt } = require('@dhis2/cli-helpers-engine')
 const { writeJSON } = require('fs-extra')
-const path = require('path')
 
 /*
  * Ensure that package.main, package.module, and package.exports are valid

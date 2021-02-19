@@ -1,10 +1,8 @@
-const { reporter, chalk } = require('@dhis2/cli-helpers-engine')
-
 const path = require('path')
-const fs = require('fs-extra')
-const chokidar = require('chokidar')
 const babel = require('@babel/core')
-
+const { reporter, chalk } = require('@dhis2/cli-helpers-engine')
+const chokidar = require('chokidar')
+const fs = require('fs-extra')
 const makeBabelConfig = require('../../../config/makeBabelConfig.js')
 
 const overwriteEntrypoint = async ({ config, paths }) => {
