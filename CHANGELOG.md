@@ -1,3 +1,10 @@
+# [5.6.0](https://github.com/dhis2/app-platform/compare/v5.5.3...v5.6.0) (2021-02-20)
+
+
+### Features
+
+* build unbundled libraries, validate package when building (LIBS-125) ([#492](https://github.com/dhis2/app-platform/issues/492)) ([4fb3fae](https://github.com/dhis2/app-platform/commit/4fb3faeb3a1fe6f167f06b31fa596efcdd1df8e0))
+
 ## [5.5.3](https://github.com/dhis2/app-platform/compare/v5.5.2...v5.5.3) (2021-02-19)
 
 
