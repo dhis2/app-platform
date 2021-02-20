@@ -15,6 +15,16 @@ For testing purposes, `https://play.dhis2.org/dev` will NOT work because it is c
 
 If you have a local instance running with [`d2 cluster`](https://github.com/dhis2/cli/tree/master/packages/cluster), you can specify `http://localhost:8080` in the **Server** field.
 
+## Upgrading to v5.6 (for libraries only) - correcting package.json export declarations
+
+In `@dhis2/cli-app-scripts` version 5.6.0 library compilation was changed to build each file individually, rather than bundling the entire library into a single `lib.js` file. This change improves the chances that the library can be tree-shaken when built with an application.
+
+As a result of this change, the name of the main entrypoints built by `d2-app-scripts build` will likely change - instead of `build/es/lib.js` and `build/cjs/lib.js` it will likely be `build/es/index.js` and `build/cjs/index.js` (replace `index.js` with the name of the `lib` entrypoint defined in `d2.config.js`). Since libraries installed through `npm` use the `main`, `module`, and (more recently) `exports` fields in `package.json` to determine where to look for commonjs and ES module entrypoints, this could cause issues if your `package.json` isn't updated. To make this easier, we include strict package validation in the build script. `d2-app-scripts build` will warn you (and fail to build) if the `main`, `module`, or `exports` declarations in your `package.json` don't match what the compiler will output. The build script will also offer to automatically fix the issue, if desired. This should cause builds with a naïvely-upgraded `@dhis2/cli-app-scripts` to "fail fast" when a build is run on CI (rather than silently succeeding and potentially causing an invalid package to be published), while offering a painless way to fix the issue locally.
+
+> _NOTE_ - it is important, also, to specify `build/es/locales/index.js` and `build/cjs/locales/index.js` in the `sideEffects` array in `package.json`! Without this, the locales for the library might be tree-shaken out of your application's final bundle. This shouldn't be necessary for long (i18n should be improved in v6), but it's important to take into account when upgrading to >= v5.6
+
+If you know what you're doing and want to use a different `main`, `module`, or `exports` value, run `d2-app-scripts build --no-verify` to skip this check at build time
+
 ---
 
 ## Named Import Compilation Error

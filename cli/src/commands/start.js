@@ -7,6 +7,7 @@ const loadEnvFiles = require('../lib/loadEnvFiles')
 const parseConfig = require('../lib/parseConfig')
 const makePaths = require('../lib/paths')
 const makeShell = require('../lib/shell')
+const { validatePackage } = require('../lib/validatePackage')
 
 const defaultPort = 3000
 
@@ -35,6 +36,17 @@ const handler = async ({
 
     await exitOnCatch(
         async () => {
+            if (!(await validatePackage({ config, paths, offerFix: false }))) {
+                reporter.print(
+                    'Package validation issues are ignored when running "d2-app-scripts start"'
+                )
+                reporter.print(
+                    `${chalk.bold(
+                        'HINT'
+                    )}: Run "d2-app-scripts build" to automatically fix some of these issues`
+                )
+            }
+
             reporter.info('Generating internationalization strings...')
             await i18n.extract({ input: paths.src, output: paths.i18nStrings })
             await i18n.generate({

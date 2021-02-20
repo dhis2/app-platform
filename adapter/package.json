@@ -11,8 +11,12 @@
     "publishConfig": {
         "access": "public"
     },
-    "main": "build/cjs/lib.js",
-    "module": "build/es/lib.js",
+    "main": "./build/cjs/index.js",
+    "module": "./build/es/index.js",
+    "exports": {
+        "import": "./build/es/index.js",
+        "require": "./build/cjs/index.js"
+    },
     "files": [
         "build"
     ],
@@ -22,7 +26,9 @@
     "devDependencies": {
         "@dhis2/cli-app-scripts": "5.5.3",
         "enzyme": "^3.11.0",
-        "enzyme-adapter-react-16": "^1.15.5"
+        "enzyme-adapter-react-16": "^1.15.5",
+        "react": "^16.8",
+        "react-dom": "^16.8"
     },
     "scripts": {
         "build": "d2-app-scripts build",
