@@ -1,3 +1,10 @@
+# [5.7.0](https://github.com/dhis2/app-platform/compare/v5.6.0...v5.7.0) (2021-02-23)
+
+
+### Features
+
+* add support for generating manifest app_hub_id from d2.config id ([#515](https://github.com/dhis2/app-platform/issues/515)) ([f0478b0](https://github.com/dhis2/app-platform/commit/f0478b0d9a124fbaed4ca932af6aa0d988343d66))
+
 # [5.6.0](https://github.com/dhis2/app-platform/compare/v5.5.3...v5.6.0) (2021-02-20)
 
 
