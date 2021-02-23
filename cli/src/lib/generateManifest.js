@@ -3,6 +3,7 @@ const fs = require('fs-extra')
 
 module.exports = (paths, config, publicUrl) => {
     const manifest = {
+        app_hub_id: config.id,
         appType: 'APP',
         short_name: config.name,
         name: config.title,
