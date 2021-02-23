@@ -6,7 +6,7 @@
     "license": "BSD-3-Clause",
     "private": true,
     "devDependencies": {
-        "@dhis2/cli-app-scripts": "5.7.0"
+        "@dhis2/cli-app-scripts": "5.6.0"
     },
     "scripts": {
         "start": "d2-app-scripts start",
