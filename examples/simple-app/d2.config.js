@@ -7,7 +7,7 @@ const config = {
     // standalone: true, // Don't bake-in a DHIS2 base URL, allow the user to choose
 
     entryPoints: {
-        app: './src/App',
+        app: './src/App.js',
     },
 }
 

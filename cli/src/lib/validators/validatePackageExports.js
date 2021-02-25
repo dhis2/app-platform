@@ -6,6 +6,7 @@ const { writeJSON } = require('fs-extra')
  * Ensure that package.main, package.module, and package.exports are valid
  */
 
+const normalizeExtension = ext => ext.replace(/\.[tj]sx?$/, '.js')
 const fixPackage = async (pkg, expectedPackage, { paths }) => {
     const newPkg = {
         ...pkg,
@@ -30,7 +31,9 @@ module.exports.validatePackageExports = async (
     const baseDir = path.dirname(paths.package)
 
     let valid = true
-    const entrypointBasename = path.basename(config.entryPoints.lib)
+    const entrypointBasename = normalizeExtension(
+        path.basename(config.entryPoints.lib)
+    )
 
     const expectedESMExport =
         './' +

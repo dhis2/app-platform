@@ -5,6 +5,7 @@ const chokidar = require('chokidar')
 const fs = require('fs-extra')
 const makeBabelConfig = require('../../../config/makeBabelConfig.js')
 
+const extensionPattern = /\.[jt]sx?$/
 const overwriteEntrypoint = async ({ config, paths }) => {
     const isApp = config.type === 'app'
     const entrypoint = isApp ? config.entryPoints.app : config.entryPoints.lib
@@ -26,24 +27,34 @@ const overwriteEntrypoint = async ({ config, paths }) => {
         throw new Error(msg)
     }
 
+    const outRelativeEntrypoint = relativeEntrypoint.replace(
+        extensionPattern,
+        '.js'
+    )
+
     if (isApp) {
         const shellAppSource = await fs.readFile(paths.shellSourceEntrypoint)
         await fs.writeFile(
             paths.shellAppEntrypoint,
             shellAppSource
                 .toString()
-                .replace(/'.\/D2App\/app'/g, `'./D2App/${relativeEntrypoint}'`)
+                .replace(
+                    /'.\/D2App\/app'/g,
+                    `'./D2App/${outRelativeEntrypoint}'`
+                )
         )
     }
 }
 
 const watchFiles = ({ inputDir, outputDir, processFileCallback, watch }) => {
     const compileFile = async source => {
-        const relative = path.relative(inputDir, source)
+        const relative = path
+            .relative(inputDir, source)
+            .replace(extensionPattern, '.js')
         const destination = path.join(outputDir, relative)
         reporter.debug(
             `File ${relative} changed or added... dest: `,
-            path.relative(inputDir, relative)
+            path.relative(inputDir, destination)
         )
         await fs.ensureDir(path.dirname(destination))
         await processFileCallback(source, destination)
@@ -111,7 +122,7 @@ const compile = async ({
         await fs.copy(source, destination)
     }
     const compileFile = async (source, destination) => {
-        if (source.match(/\.[jt]sx?$/)) {
+        if (source.match(extensionPattern)) {
             const result = await babel.transformFileAsync(source, babelConfig)
             await fs.writeFile(destination, result.code)
         } else {
