@@ -1,6 +1,7 @@
 const path = require('path')
 const { reporter, prompt } = require('@dhis2/cli-helpers-engine')
 const { writeJSON } = require('fs-extra')
+const { normalizeExtension } = require('../compiler/extensionHelpers.js')
 
 /*
  * Ensure that package.main, package.module, and package.exports are valid
@@ -30,7 +31,9 @@ module.exports.validatePackageExports = async (
     const baseDir = path.dirname(paths.package)
 
     let valid = true
-    const entrypointBasename = path.basename(config.entryPoints.lib)
+    const entrypointBasename = normalizeExtension(
+        path.basename(config.entryPoints.lib)
+    )
 
     const expectedESMExport =
         './' +
