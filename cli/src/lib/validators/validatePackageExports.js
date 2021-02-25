@@ -1,12 +1,12 @@
 const path = require('path')
 const { reporter, prompt } = require('@dhis2/cli-helpers-engine')
 const { writeJSON } = require('fs-extra')
+const { normalizeExtension } = require('../compiler/extensionHelpers.js')
 
 /*
  * Ensure that package.main, package.module, and package.exports are valid
  */
 
-const normalizeExtension = ext => ext.replace(/\.[tj]sx?$/, '.js')
 const fixPackage = async (pkg, expectedPackage, { paths }) => {
     const newPkg = {
         ...pkg,

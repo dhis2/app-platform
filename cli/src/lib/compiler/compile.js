@@ -4,8 +4,8 @@ const { reporter, chalk } = require('@dhis2/cli-helpers-engine')
 const chokidar = require('chokidar')
 const fs = require('fs-extra')
 const makeBabelConfig = require('../../../config/makeBabelConfig.js')
+const { extensionPattern, normalizeExtension } = require('./extensionHelpers.js')
 
-const extensionPattern = /\.[jt]sx?$/
 const overwriteEntrypoint = async ({ config, paths }) => {
     const isApp = config.type === 'app'
     const entrypoint = isApp ? config.entryPoints.app : config.entryPoints.lib
@@ -27,10 +27,7 @@ const overwriteEntrypoint = async ({ config, paths }) => {
         throw new Error(msg)
     }
 
-    const outRelativeEntrypoint = relativeEntrypoint.replace(
-        extensionPattern,
-        '.js'
-    )
+    const outRelativeEntrypoint = normalizeExtension(relativeEntrypoint)
 
     if (isApp) {
         const shellAppSource = await fs.readFile(paths.shellSourceEntrypoint)
@@ -48,9 +45,7 @@ const overwriteEntrypoint = async ({ config, paths }) => {
 
 const watchFiles = ({ inputDir, outputDir, processFileCallback, watch }) => {
     const compileFile = async source => {
-        const relative = path
-            .relative(inputDir, source)
-            .replace(extensionPattern, '.js')
+        const relative = normalizeExtension(path.relative(inputDir, source))
         const destination = path.join(outputDir, relative)
         reporter.debug(
             `File ${relative} changed or added... dest: `,
