@@ -4,7 +4,10 @@ const { reporter, chalk } = require('@dhis2/cli-helpers-engine')
 const chokidar = require('chokidar')
 const fs = require('fs-extra')
 const makeBabelConfig = require('../../../config/makeBabelConfig.js')
-const { extensionPattern, normalizeExtension } = require('./extensionHelpers.js')
+const {
+    extensionPattern,
+    normalizeExtension,
+} = require('./extensionHelpers.js')
 
 const overwriteEntrypoint = async ({ config, paths }) => {
     const isApp = config.type === 'app'
