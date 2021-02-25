@@ -1,3 +1,10 @@
+## [5.7.1](https://github.com/dhis2/app-platform/compare/v5.7.0...v5.7.1) (2021-02-25)
+
+
+### Bug Fixes
+
+* convert jsx, ts, and tsx files to js on build ([#517](https://github.com/dhis2/app-platform/issues/517)) ([5af8a58](https://github.com/dhis2/app-platform/commit/5af8a589ae8667276fbd7950182bce2826cd74a6))
+
 # [5.7.0](https://github.com/dhis2/app-platform/compare/v5.6.0...v5.7.0) (2021-02-23)
 
 
