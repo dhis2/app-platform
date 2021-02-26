@@ -31,21 +31,20 @@ module.exports.validatePackageExports = async (
     const baseDir = path.dirname(paths.package)
 
     let valid = true
-    const entrypointBasename = normalizeExtension(
-        path.basename(config.entryPoints.lib)
-    )
+    const entrypointBasename = normalizeExtension(config.entryPoints.lib)
+    const relativeEntrypoint = path.relative('src', entrypointBasename)
 
     const expectedESMExport =
         './' +
         path.relative(
             baseDir,
-            path.join(paths.buildOutput, 'es', entrypointBasename)
+            path.join(paths.buildOutput, 'es', relativeEntrypoint)
         )
     const expectedCJSExport =
         './' +
         path.relative(
             baseDir,
-            path.join(paths.buildOutput, 'cjs', entrypointBasename)
+            path.join(paths.buildOutput, 'cjs', relativeEntrypoint)
         )
 
     const expectedPackage = {
