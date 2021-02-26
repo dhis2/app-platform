@@ -1,3 +1,10 @@
+## [5.7.2](https://github.com/dhis2/app-platform/compare/v5.7.1...v5.7.2) (2021-02-26)
+
+
+### Bug Fixes
+
+* allow for nested entry-points under src ([#519](https://github.com/dhis2/app-platform/issues/519)) ([3ae34b3](https://github.com/dhis2/app-platform/commit/3ae34b3febdcecf77e03963639c3a78d5832db0f))
+
 ## [5.7.1](https://github.com/dhis2/app-platform/compare/v5.7.0...v5.7.1) (2021-02-25)
 
 
