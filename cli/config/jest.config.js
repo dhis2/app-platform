@@ -3,6 +3,7 @@ module.exports = {
     transform: {
         '^.+\\.[t|j]sx?$': require.resolve('./jest.transform.js'),
     },
+    modulePathIgnorePatterns: ['build'],
     moduleNameMapper: {
         '\\.(css|less)$': require.resolve('./jest.identity.mock.js'),
         '\\.(jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$': require.resolve(
