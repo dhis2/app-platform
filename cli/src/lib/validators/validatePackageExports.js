@@ -31,8 +31,10 @@ module.exports.validatePackageExports = async (
     const baseDir = path.dirname(paths.package)
 
     let valid = true
-    const entrypointBasename = normalizeExtension(config.entryPoints.lib)
-    const relativeEntrypoint = path.relative('src', entrypointBasename)
+    const relativeEntrypoint = path.relative(
+        paths.src,
+        normalizeExtension(config.entryPoints.lib)
+    )
 
     const expectedESMExport =
         './' +
