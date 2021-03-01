@@ -1,6 +1,6 @@
 import i18n from '@dhis2/d2-i18n'
 import moment from 'moment'
-import { useEffect } from 'react'
+import { useState, useEffect } from 'react'
 
 i18n.setDefaultNamespace('default')
 
@@ -27,7 +27,13 @@ const setGlobalLocale = locale => {
 }
 
 export const useLocale = locale => {
+    const [result, setResult] = useState(undefined)
     useEffect(() => {
-        setGlobalLocale(locale || window.navigator.language)
+        if (!locale) {
+            return
+        }
+        setGlobalLocale(locale)
+        setResult(locale)
     }, [locale])
+    return result
 }
