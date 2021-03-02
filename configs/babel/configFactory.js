@@ -1,4 +1,5 @@
 const browserTargets = require('@dhis2/browserlist-config')
+const jestTargets = { node: 'current' }
 
 const getBabelModuleType = moduleType => {
     switch (moduleType) {
