@@ -1,3 +1,10 @@
+## [5.7.3](https://github.com/dhis2/app-platform/compare/v5.7.2...v5.7.3) (2021-03-02)
+
+
+### Bug Fixes
+
+* don't render application until we are sure the locale is initialized ([#525](https://github.com/dhis2/app-platform/issues/525)) ([4329e8e](https://github.com/dhis2/app-platform/commit/4329e8e37ab4155038b0145bcb0c4bbbc8cc9312))
+
 ## [5.7.2](https://github.com/dhis2/app-platform/compare/v5.7.1...v5.7.2) (2021-02-26)
 
 
