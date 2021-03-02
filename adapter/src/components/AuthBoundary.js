@@ -13,9 +13,11 @@ const settingsQuery = {
 
 export const AuthBoundary = ({ url, children }) => {
     const { loading, error, data } = useDataQuery(settingsQuery)
-    useLocale(data && data.userSettings.keyUiLocale)
+    const locale = useLocale(
+        data && (data.userSettings.keyUiLocale || window.navigator.language)
+    )
 
-    if (loading) {
+    if (loading || !locale) {
         return <LoadingMask />
     }
 
