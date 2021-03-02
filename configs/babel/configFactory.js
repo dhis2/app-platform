@@ -1,15 +1,33 @@
+const browserTargets = require('@dhis2/browserlist-config')
+
+const getBabelModuleType = moduleType => {
+    switch (moduleType) {
+        case 'cjs':
+        case 'commonjs':
+            return 'commonjs'
+        case 'amd':
+        case 'umd':
+        case 'system':
+            return moduleType
+        case 'es':
+        default:
+            return false
+    }
+}
+
 module.exports = ({ mode, moduleType = 'es' }) => {
     mode = mode || process.env.BABEL_ENV || process.env.NODE_ENV || 'development'
     const isTest = mode === 'test'
 
     return {
+        sourceMaps: "inline",
         presets: [
             require('@babel/preset-react'),
             require('@babel/preset-typescript'),
             [
                 require('@babel/preset-env'),
                 {
-                    modules: normalizeModuleType = moduleType,
+                    modules: getBabelModuleType(moduleType),
                     targets: isTest ? jestTargets : browserTargets,
                 },
             ],
@@ -49,6 +67,6 @@ module.exports = ({ mode, moduleType = 'es' }) => {
             test: {
                 plugins: [require('styled-jsx/babel-test')],
             },
-        },
+        }
     }
 }
