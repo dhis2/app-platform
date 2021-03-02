@@ -1,9 +1,10 @@
 const path = require('path')
 const babel = require('@babel/core')
 const { reporter, chalk } = require('@dhis2/cli-helpers-engine')
+const babelConfigFactory = require('@dhis2/config-babel/configFactory')
 const chokidar = require('chokidar')
 const fs = require('fs-extra')
-const makeBabelConfig = require('../../../config/makeBabelConfig.js')
+
 const {
     extensionPattern,
     normalizeExtension,
@@ -114,7 +115,7 @@ const compile = async ({
         fs.copySync(paths.shellSourcePublic, paths.shellPublic)
     }
 
-    const babelConfig = makeBabelConfig({ moduleType, mode })
+    const babelConfig = babelConfigFactory({ mode, moduleType })
 
     const copyFile = async (source, destination) => {
         await fs.copy(source, destination)

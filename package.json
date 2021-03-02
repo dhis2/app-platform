@@ -11,13 +11,16 @@
             "examples/simple-app",
             "cli",
             "shell",
-            "adapter"
+            "adapter",
+            "configs/*"
         ]
     },
     "devDependencies": {
         "@dhis2/cli-style": "^7.3.0",
         "@dhis2/cli-utils-docsite": "^2.0.2",
-        "concurrently": "^5.0.0"
+        "concurrently": "^5.0.0",
+        "@babel/core": "^7.13.8",
+        "react": "^17.0.1"
     },
     "scripts": {
         "format": "d2-style js apply && d2-style text apply",

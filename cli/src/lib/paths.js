@@ -9,7 +9,6 @@ const shellAppDirname = 'src/D2App'
 module.exports = (cwd = process.cwd()) => {
     const base = path.resolve(cwd)
     const paths = {
-        babelConfig: path.join(__dirname, '../../config/babel.config.js'),
         configDefaultsApp: path.join(
             __dirname,
             '../../config/d2.config.app.js'
@@ -18,7 +17,6 @@ module.exports = (cwd = process.cwd()) => {
             __dirname,
             '../../config/d2.config.lib.js'
         ),
-        jestConfigDefaults: path.join(__dirname, '../../config/jest.config.js'),
         readmeDefault: path.join(__dirname, '../../config/init.README.md'),
 
         shellSource,
