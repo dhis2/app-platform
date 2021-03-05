@@ -1,6 +1,6 @@
 {
     "name": "@dhis2/app-adapter",
-    "version": "5.7.3",
+    "version": "5.7.4",
     "repository": {
         "type": "git",
         "url": "https://github.com/dhis2/app-platform.git",
@@ -25,7 +25,7 @@
         "moment": "^2.24.0"
     },
     "devDependencies": {
-        "@dhis2/cli-app-scripts": "5.7.3",
+        "@dhis2/cli-app-scripts": "5.7.4",
         "enzyme": "^3.11.0",
         "enzyme-adapter-react-16": "^1.15.5",
         "react": "^16.8",

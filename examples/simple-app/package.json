@@ -1,6 +1,6 @@
 {
     "name": "simple-app",
-    "version": "5.7.3",
+    "version": "5.7.4",
     "repository": {
         "type": "git",
         "url": "https://github.com/dhis2/app-platform.git",
@@ -10,7 +10,7 @@
     "license": "BSD-3-Clause",
     "private": true,
     "devDependencies": {
-        "@dhis2/cli-app-scripts": "5.7.3"
+        "@dhis2/cli-app-scripts": "5.7.4"
     },
     "scripts": {
         "start": "d2-app-scripts start",
