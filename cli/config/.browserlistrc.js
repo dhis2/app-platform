@@ -1,5 +1,5 @@
 /*
- * @deprecated use "extends @dhis2/browserlist-config" instead!
+ * @deprecated use "extends @dhis2/browserslist-config" instead!
  */
 module.exports = [
     "extends @dhis2/browserslist-config",
