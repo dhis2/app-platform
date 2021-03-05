@@ -4,7 +4,7 @@
     "private": true,
     "repository": {
         "type": "git",
-        "url": "https://github.com/dhis2/app-platform"
+        "url": "https://github.com/dhis2/app-platform.git"
     },
     "workspaces": {
         "packages": [
@@ -34,7 +34,7 @@
         "docs:serve": "d2-utils-docsite serve ./docs -o ./dist",
         "docs:build": "d2-utils-docsite build ./docs -o ./dist",
         "test:adapter": "yarn workspace @dhis2/app-adapter test",
-        "test": "yarn test:adapter"
+        "test": "yarn build:rollup-config && yarn test:adapter"
     },
     "d2": {
         "docsite": {
