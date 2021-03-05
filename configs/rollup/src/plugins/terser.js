@@ -1,10 +1,10 @@
-import { terser } from "rollup-plugin-terser";
+import { terser } from 'rollup-plugin-terser'
 
-export default () => 
+export default () =>
     terser({
         output: {
-          comments(node, comment) {
-            return comment.value.trim().startsWith("react@");
-          },
+            comments(node, comment) {
+                return comment.value.trim().startsWith('react@')
+            },
         },
-      })
+    })

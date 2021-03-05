@@ -1,5 +1,5 @@
-const configFactory = require("./configFactory.js")
+const configFactory = require('./configFactory.js')
 
-module.exports = (api) => {
+module.exports = api => {
     return configFactory({ mode: api.env(), moduleType: 'commonjs' })
 }

@@ -1,4 +1,4 @@
-const browserTargets = require('@dhis2/browserlist-config')
+const browserTargets = require('@dhis2/browserslist-config')
 const jestTargets = { node: 'current' }
 
 const getBabelModuleType = moduleType => {
@@ -17,11 +17,12 @@ const getBabelModuleType = moduleType => {
 }
 
 module.exports = ({ mode, moduleType = 'es' }) => {
-    mode = mode || process.env.BABEL_ENV || process.env.NODE_ENV || 'development'
+    mode =
+        mode || process.env.BABEL_ENV || process.env.NODE_ENV || 'development'
     const isTest = mode === 'test'
 
     return {
-        sourceMaps: "inline",
+        sourceMaps: 'inline',
         presets: [
             require('@babel/preset-react'),
             require('@babel/preset-typescript'),
@@ -68,6 +69,6 @@ module.exports = ({ mode, moduleType = 'es' }) => {
             test: {
                 plugins: [require('styled-jsx/babel-test')],
             },
-        }
+        },
     }
 }

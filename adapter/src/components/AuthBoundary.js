@@ -17,12 +17,12 @@ export const AuthBoundary = ({ url, children }) => {
         data && (data.userSettings.keyUiLocale || window.navigator.language)
     )
 
-    if (loading || !locale) {
-        return <LoadingMask />
-    }
-
     if (error) {
         return <LoginModal url={url} />
+    }
+
+    if (loading || !locale) {
+        return <LoadingMask />
     }
 
     return children

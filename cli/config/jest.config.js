@@ -1,4 +1,3 @@
-
 /*
  * @deprecated use the package @dhis2/config-jest instead!
  */

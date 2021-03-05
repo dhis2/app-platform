@@ -4,7 +4,6 @@ const { reporter, chalk } = require('@dhis2/cli-helpers-engine')
 const babelConfigFactory = require('@dhis2/config-babel/configFactory')
 const chokidar = require('chokidar')
 const fs = require('fs-extra')
-
 const {
     extensionPattern,
     normalizeExtension,

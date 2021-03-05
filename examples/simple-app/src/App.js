@@ -2,7 +2,7 @@ import { useDataQuery } from '@dhis2/app-runtime'
 import moment from 'moment'
 import React from 'react'
 import { Alerter } from './Alerter.js'
-import style from './App.style'
+import { container } from './App.module.css'
 import i18n from './locales'
 
 const query = {
@@ -12,10 +12,11 @@ const query = {
 }
 
 const Component = () => {
+    const locale = 'fr'
     const { error, loading, data } = useDataQuery(query)
+    import(`moment/${locale}.js`)
     return (
-        <div>
-            <style jsx>{style}</style>
+        <div className={container}>
             {error && <span>ERROR</span>}
             {loading && <span>...</span>}
             {data && (
