@@ -142,7 +142,10 @@ const bundle = async ({ d2config, outDir, mode, publicDir, watch }) => {
         importMap,
         { spaces: 2 }
     )
-    fs.copySync(publicDir + '/', outDir)
+
+    if (fs.existsSync(publicDir) && fs.statSync(publicDir).isDirectory()) {
+        fs.copySync(publicDir + '/', outDir)
+    }
 }
 
 module.exports = bundle
