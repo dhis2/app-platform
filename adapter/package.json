@@ -3,7 +3,7 @@
     "version": "5.7.3",
     "repository": {
         "type": "git",
-        "url": "https://github.com/amcgee/dhis2-app-platform",
+        "url": "https://github.com/dhis2/app-platform.git",
         "directory": "adapter"
     },
     "author": "Austin McGee <austin@dhis2.org>",

@@ -6,6 +6,7 @@ const config = {
 
     entryPoints: {
         app: './src/App',
+        bootstrap: require.resolve('./defaultAppBootstrap.js')
     },
 }
 

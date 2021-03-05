@@ -7,7 +7,11 @@
         "./es": "./babel.config-es.js",
         "./cjs": "./babel.config-cjs.js"
     },
-    "repository": "https://github.com/dhis2/app-platform",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/dhis2/app-platform.git",
+        "directory": "configs/babel"
+    },
     "author": "Austin McGee <austin@dhis2.org>",
     "license": "BSD-3-Clause",
     "dependencies": {

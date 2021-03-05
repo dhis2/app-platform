@@ -3,7 +3,11 @@
     "version": "5.7.3",
     "description": "Shareable base jest configuration",
     "main": "./jest.config.js",
-    "repository": "https://github.com/dhis2/app-platform",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/dhis2/app-platform.git",
+        "directory": "configs/jest"
+    },
     "author": "Austin McGee <austin@dhis2.org>",
     "license": "BSD-3-Clause",
     "peerDependencies": {

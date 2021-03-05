@@ -8,7 +8,11 @@
         "import": "./src/rollup.config.js",
         "require": "./build/cjs/rollup.config.js"
     },
-    "repository": "https://github.com/dhis2/app-platform",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/dhis2/app-platform.git",
+        "directory": "configs/rollup"
+    },
     "author": "Austin McGee <austin@dhis2.org>",
     "license": "BSD-3-Clause",
     "dependencies": {
