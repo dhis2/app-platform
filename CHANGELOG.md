@@ -1,3 +1,10 @@
+## [5.7.4](https://github.com/dhis2/app-platform/compare/v5.7.3...v5.7.4) (2021-03-05)
+
+
+### Bug Fixes
+
+* show login modal before locale is loaded ([#527](https://github.com/dhis2/app-platform/issues/527)) ([98a7a56](https://github.com/dhis2/app-platform/commit/98a7a567d0732a421df19a97faa03f40192b678b))
+
 ## [5.7.3](https://github.com/dhis2/app-platform/compare/v5.7.2...v5.7.3) (2021-03-02)
 
 
