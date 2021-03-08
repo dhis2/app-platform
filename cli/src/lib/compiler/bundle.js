@@ -1,151 +1,144 @@
 const path = require('path')
+const { reporter, chalk } = require('@dhis2/cli-helpers-engine')
 const { configFactory: rollupConfigFactory } = require('@dhis2/config-rollup')
 const fs = require('fs-extra')
-const { rollup } = require('rollup')
+const rollup = require('rollup')
+const {
+    applyIndexTemplate,
+    writeImportMap,
+    generateImportMap,
+    BatchWarnings,
+} = require('./bundleHelpers.js')
+const { generateRollupOptions } = require('./generateRollupOptions.js')
+const AssetManagementPlugin = require('./RollupAssetManagementPlugin.js')
+const { watchFiles } = require('./watchFiles.js')
 
-console.log(rollupConfigFactory)
-
-const runtimeModuleNamespace = '$dhis2'
-
-const prepareOptions = ({
-    d2config: { name, entryPoints, buildOptions },
+const bundle = async ({
+    d2config,
     outDir,
     mode,
+    publicDir,
+    watch,
+    shell = path.dirname(require.resolve('../../../config/shell/index.html')),
 }) => {
-    const { modules } = buildOptions
-    const globals = {}
-    const configs = Object.entries(modules).reduce(
-        (inputs, [name, moduleConfig]) => {
-            try {
-                require.resolve(name, { paths: [process.cwd()] })
-            } catch (e) {
-                console.log(`Module ${name} not found, skipping...`)
-                return inputs
-            }
-            if (moduleConfig.type === 'umd') {
-                globals[name] = name
-            }
-
-            inputs.push({
-                input: {
-                    [name]:
-                        typeof moduleConfig === 'string'
-                            ? moduleConfig
-                            : moduleConfig.input || name,
-                },
-                format: moduleConfig.type === 'umd' ? 'umd' : 'system',
-            })
-            return inputs
-        },
-        []
-    )
-    const external = configs.reduce((list, config) => {
-        Object.keys(config.input).forEach(inputName => {
-            if (name !== inputName) {
-                list.push(inputName)
-            }
-        })
-        return list
-    }, [])
-    configs.push({
-        input: Object.entries(entryPoints).reduce(
-            (localInputs, [entryName, src]) => {
-                localInputs[
-                    `${runtimeModuleNamespace}/${name}/${entryName}`
-                ] = src
-                return localInputs
-            },
-            {}
-        ),
-        format: 'system',
-    })
-    return configs.map(config => ({
-        input: config.input,
-        dir: path.join(outDir, 'static/js'),
-        format: config.format,
-        environment: {
-            MODE: mode,
-            IMPORT_MAP_PATH: path.resolve(outDir, `import-map.${mode}.json`),
-        },
-        globals,
-        external,
-    }))
-}
-
-const bundle = async ({ d2config, outDir, mode, publicDir, watch }) => {
-    if (watch) {
-        console.error('Watch mode is currently unimplemented')
-        process.exit(1)
-    }
-
-    const configs = prepareOptions({
+    const configs = generateRollupOptions({
         d2config,
         outDir,
         mode,
     })
 
-    const importMap = {
-        imports: {},
-    }
+    const assets = {}
 
-    const warnings = []
-    warnings.flush = () => {
-        while (warnings.length) {
-            console.warn('WARNING', warnings.shift().toString())
-        }
-    }
-    const bundlers = configs.map(config => ({
-        name: Object.keys(config.input).join(', '),
-        config,
-        run: async () => {
-            const options = rollupConfigFactory({ ...config })
-            options.onwarn = warning => warnings.push(warning)
-
-            // console.log('Building...', name)
-            const bundle = await rollup(options)
-            // console.log('Writing...', name)
-            const { output } = await bundle.write(options.output)
-            for (const chunkOrAsset of output) {
-                if (chunkOrAsset.type === 'chunk' && chunkOrAsset.isEntry) {
-                    importMap.imports[chunkOrAsset.name] =
-                        './' +
-                        path.relative(
-                            outDir,
-                            path.join(config.dir, chunkOrAsset.fileName)
-                        )
-                }
-            }
-        },
-    }))
+    const warnings = new BatchWarnings()
 
     const timerLabel = '✨ Built all modules in'
-    console.time(timerLabel)
-    try {
-        await Promise.all(
-            bundlers.map(async bundler => {
-                await bundler.run()
+    let isFirstBuild = true
+    const bundlePromise = new Promise((resolve, reject) => {
+        const watcher = rollup.watch(
+            configs.map(config => {
+                const options = rollupConfigFactory({ ...config })
+                options.onwarn = warning =>
+                    warnings.add(Object.keys(options.input)[0], warning)
+                options.plugins.push(new AssetManagementPlugin(assets, outDir))
+                return options
             })
         )
-        warnings.flush()
-    } catch (e) {
-        warnings.flush()
-        console.error('[ERROR]', e.message)
-        if (e.frame) {
-            console.log(e.frame)
-        }
-        process.exit(1)
-    }
-    console.timeEnd(timerLabel)
+        watcher.on('event', async ({ code, result, error }) => {
+            if (result) {
+                result.close()
+            }
+            if (code === 'START') {
+                if (!isFirstBuild) {
+                    console.clear()
+                    reporter.print(chalk.dim('Changes detected, rebuilding...'))
+                } else {
+                    reporter.print(
+                        chalk.dim(`Building ${configs.length} modules...`)
+                    )
+                }
+                console.time(timerLabel)
+            }
+            if (code === 'END') {
+                const importMap = generateImportMap(assets)
+                const importMapFile = path.resolve(
+                    outDir,
+                    `systemjs-importmap.${mode}.json`
+                )
+                await writeImportMap(importMap, importMapFile)
 
-    fs.writeJSONSync(
-        path.resolve(outDir, `import-map.${mode}.json`),
-        importMap,
-        { spaces: 2 }
-    )
+                await applyIndexTemplate(assets, {
+                    srcDir: shell,
+                    outDir,
+                    importMap,
+                    title: d2config.title,
+                })
 
-    if (fs.existsSync(publicDir) && fs.statSync(publicDir).isDirectory()) {
-        fs.copySync(publicDir + '/', outDir)
-    }
+                warnings.flush()
+
+                console.timeEnd(timerLabel)
+                isFirstBuild = false
+
+                if (!watch) {
+                    watcher.close()
+                    resolve()
+                }
+            }
+            if (code === 'ERROR') {
+                reject(error)
+            }
+        })
+
+        process.on('SIGINT', async () => {
+            watcher.close()
+            reject('Caught interrupt signal')
+        })
+    })
+
+    await Promise.all([
+        bundlePromise,
+        watchFiles({
+            inputDir: shell,
+            outputDir: outDir,
+            processFileCallback: async (source, destination) => {
+                if (path.relative(shell, source) === 'index.html') {
+                    if (isFirstBuild) {
+                        // TODO: handle in devServer
+                        await fs.copyFile(
+                            require.resolve(
+                                '../../../config/index-placeholder.html'
+                            ),
+                            path.resolve(outDir, 'index.html')
+                        )
+                    } else {
+                        await applyIndexTemplate(assets, {
+                            srcDir: shell,
+                            outDir,
+                            importMap: generateImportMap(assets),
+                            title: d2config.title,
+                        })
+                    }
+                    return
+                }
+                await fs.copy(source, destination)
+            },
+            watch,
+        }),
+        watchFiles({
+            inputDir: publicDir,
+            outputDir: outDir,
+            processFileCallback: async (source, destination) => {
+                const relativePath = path.relative(publicDir, source)
+                if (await fs.pathExists(path.join(shell, relativePath))) {
+                    reporter.warn(
+                        `Overriding shell file ${relativePath} is not supported.`
+                    )
+                    return
+                }
+                await fs.copy(source, destination)
+            },
+            watch,
+        }),
+    ])
 }
 
 module.exports = bundle

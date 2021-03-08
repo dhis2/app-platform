@@ -5,7 +5,7 @@ const config = {
     type: 'lib',
 
     entryPoints: {
-        lib: './src/index',
+        lib: './src/index.js',
     },
 }
 

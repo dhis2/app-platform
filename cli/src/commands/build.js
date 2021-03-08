@@ -51,9 +51,7 @@ const handler = async ({
     dev,
     watch,
     standalone,
-    // shell: shellSource,
     verify,
-    // force,
 }) => {
     const paths = makePaths(cwd)
 
@@ -64,7 +62,6 @@ const handler = async ({
     printBuildParam('Mode', mode)
 
     const config = parseConfig(paths)
-    // const shell = makeShell({ config, paths })
 
     if (config.type === 'app') {
         setAppParameters(standalone, config)
@@ -95,11 +92,6 @@ const handler = async ({
                 output: paths.i18nLocales,
                 namespace: 'default',
             })
-
-            // if (config.type === 'app') {
-            //     reporter.info('Bootstrapping local appShell...')
-            //     await shell.bootstrap({ shell: shellSource, force })
-            // }
 
             reporter.info(
                 `Building ${config.type} ${chalk.bold(config.name)}...`
@@ -139,13 +131,6 @@ const handler = async ({
     )
 
     if (config.type === 'app') {
-        // if (!fs.pathExistsSync(paths.shellBuildOutput)) {
-        //     reporter.error('No build output found')
-        //     process.exit(1)
-        // }
-
-        // await fs.copy(paths.shellBuildOutput, paths.buildAppOutput)
-
         reporter.info('Generating manifest...')
         await generateManifest(paths, config, process.env.PUBLIC_URL)
 

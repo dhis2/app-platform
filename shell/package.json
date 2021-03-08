@@ -11,10 +11,14 @@
     "publishConfig": {
         "access": "public"
     },
+    "files": [
+        "build",
+        "public"
+    ],
     "devDependencies": {
         "@dhis2/app-adapter": "5.7.4",
         "@dhis2/app-runtime": "^2.6.1",
-        "@dhis2/cli-app-scripts": "5.7.3",
+        "@dhis2/cli-app-scripts": "5.7.4",
         "@dhis2/d2-i18n": "^1.1.0",
         "@dhis2/ui": "^5.7.2",
         "classnames": "^2.2.6",
@@ -23,10 +27,12 @@
         "react": "^16.8.6",
         "react-dom": "^16.8.6",
         "styled-jsx": "^3.2.2",
+        "systemjs": "^6.8.3",
         "typeface-roboto": "^0.0.75",
         "typescript": "^3.6.3"
     },
     "scripts": {
-        "build": "d2-app-scripts build"
+        "build": "d2-app-scripts build",
+        "start": "d2-app-scripts start"
     }
 }

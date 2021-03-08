@@ -46,7 +46,8 @@
         "jest-cli": "^24.9.0",
         "lodash": "^4.17.11",
         "parse-author": "^2.0.0",
-        "parse-gitignore": "^1.0.1"
+        "parse-gitignore": "^1.0.1",
+        "serve-handler": "^6.1.3"
     },
     "bin": {
         "d2-app-scripts": "./bin/d2-app-scripts"

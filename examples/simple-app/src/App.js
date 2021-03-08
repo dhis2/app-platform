@@ -12,9 +12,7 @@ const query = {
 }
 
 const Component = () => {
-    const locale = 'fr'
     const { error, loading, data } = useDataQuery(query)
-    import(`moment/${locale}.js`)
     return (
         <div className={container}>
             {error && <span>ERROR</span>}
