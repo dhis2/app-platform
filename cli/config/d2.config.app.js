@@ -13,14 +13,20 @@ const config = {
     buildOptions: {
         ...baseConfig.buildOptions,
         modules: {
-            react: {
-                input: 'react',
-                type: 'umd',
-            },
-            'react-dom': {
-                input: 'react-dom',
-                type: 'umd',
-            },
+            react: mode => ({
+                entry: `react/cjs/react.${
+                    mode === 'production' ? 'production.min' : 'development'
+                }.js`,
+                format: 'umd',
+                exports: 'named',
+            }),
+            'react-dom': mode => ({
+                entry: `react-dom/cjs/react-dom.${
+                    mode === 'production' ? 'production.min' : 'development'
+                }.js`,
+                format: 'umd',
+                exports: 'named',
+            }),
             '@dhis2/app-adapter': '@dhis2/app-adapter',
             '@dhis2/app-runtime': '@dhis2/app-runtime',
             '@dhis2/d2-i18n': '@dhis2/d2-i18n',
@@ -28,8 +34,8 @@ const config = {
             '@dhis2/ui': '@dhis2/ui',
             'styled-jsx/style': 'styled-jsx/dist/style.js',
             d2: {
-                input: 'd2/src/d2.js', // Use ES modules source instead of CJS build
-                type: 'umd',
+                entry: 'd2/src/d2.js', // Use ES modules source instead of CJS build
+                format: 'umd',
             },
         },
     },

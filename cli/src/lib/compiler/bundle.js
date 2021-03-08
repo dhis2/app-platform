@@ -13,18 +13,11 @@ const { generateRollupOptions } = require('./generateRollupOptions.js')
 const AssetManagementPlugin = require('./RollupAssetManagementPlugin.js')
 const { watchFiles } = require('./watchFiles.js')
 
-const bundle = async ({
-    d2config,
-    outDir,
-    mode,
-    publicDir,
-    watch,
-    shell = path.dirname(require.resolve('../../../config/shell/index.html')),
-}) => {
+const bundle = async ({ d2config, outDir, env, publicDir, watch, shell }) => {
     const configs = generateRollupOptions({
         d2config,
         outDir,
-        mode,
+        env,
     })
 
     const assets = {}
@@ -36,7 +29,7 @@ const bundle = async ({
     const bundlePromise = new Promise((resolve, reject) => {
         const watcher = rollup.watch(
             configs.map(config => {
-                const options = rollupConfigFactory({ ...config })
+                const options = rollupConfigFactory({ ...config, watch })
                 options.onwarn = warning =>
                     warnings.add(Object.keys(options.input)[0], warning)
                 options.plugins.push(new AssetManagementPlugin(assets, outDir))
@@ -62,7 +55,7 @@ const bundle = async ({
                 const importMap = generateImportMap(assets)
                 const importMapFile = path.resolve(
                     outDir,
-                    `systemjs-importmap.${mode}.json`
+                    `systemjs-importmap.${env.MODE}.json`
                 )
                 await writeImportMap(importMap, importMapFile)
 

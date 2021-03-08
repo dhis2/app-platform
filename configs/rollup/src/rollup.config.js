@@ -20,15 +20,14 @@ export const configFactory = commandLineArgs => {
     const format = commandLineArgs.format
     const globals = commandLineArgs.globals // umd modules
     const external = commandLineArgs.external // all modules
-
-    const mode = env.MODE || process.env.NODE_ENV || 'development'
-    const publicPath = env.PUBLIC_PATH || process.env.PUBLIC_PATH || '.'
+    const watch = commandLineArgs.watch
 
     delete commandLineArgs.input
     delete commandLineArgs.format
     delete commandLineArgs.dir
     delete commandLineArgs.globals
     delete commandLineArgs.external
+    delete commandLineArgs.watch
 
     if (!input || !dir) {
         throw new Error('Input and dir must be defined')
@@ -42,26 +41,28 @@ export const configFactory = commandLineArgs => {
 
     return {
         input,
-        output: configureOutput({ name, dir, mode, globals, format }),
+        output: configureOutput({ name, dir, mode: env.MODE, globals, format }),
+        watch,
         plugins: [
             // Dependency resolution
             nodeResolve({
                 mainFields: ['browser', 'module', 'main'],
+                exportConditions: [env.MODE],
                 preferBuiltins: false,
+            }),
+            commonjs({
+                include: /node_modules/,
             }),
             inputSourcemaps({ include: /node_modules/ }), // TODO: Confirm that this works...
 
             // Asset loading
             json(),
-            postcss({ mode }),
-            url({ publicPath }),
+            postcss({ mode: env.MODE }),
+            url({ publicPath: env.PUBLIC_PATH }),
 
             // Code transformation
-            replace({ mode }),
-            commonjs({
-                include: /node_modules/,
-            }),
-            babel({ mode }),
+            replace({ env }),
+            babel({ mode: env.MODE }),
             dynamicImportVars({
                 warnOnError: true,
             }),

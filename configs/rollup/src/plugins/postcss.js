@@ -15,6 +15,7 @@ export default ({ mode }) =>
             // See https://github.com/facebook/create-react-app/blob/master/packages/react-scripts/config/webpack.config.js#L134-L149
             postcssFlexbugsFixes,
             postcssPresetEnv({
+                browsers: browserslist,
                 autoprefixer: {
                     flexbox: 'no-2009',
                 },

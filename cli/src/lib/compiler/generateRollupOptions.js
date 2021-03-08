@@ -5,35 +5,63 @@ const {
     runtimeModuleNamespace,
 } = require('./bundleHelpers')
 
+const parseModuleConfig = (name, moduleConfig, mode) => {
+    const defaultConfig = {
+        entry: name,
+        format: 'system',
+    }
+    switch (typeof moduleConfig) {
+        case 'function':
+            return parseModuleConfig(name, moduleConfig(mode), mode)
+        case 'object':
+            return {
+                ...defaultConfig,
+                ...moduleConfig,
+            }
+        case 'string':
+            return {
+                ...defaultConfig,
+                entry: moduleConfig,
+            }
+        default:
+            reporter.error(
+                `Invalid module ${name} specified (${moduleConfig}).`
+            )
+            process.exit(1)
+    }
+}
+
 module.exports.generateRollupOptions = ({
     d2config: { name, entryPoints, buildOptions },
     outDir,
-    mode,
+    env,
 }) => {
     const { modules } = buildOptions
     const globals = {}
     const configs = Object.entries(modules).reduce(
-        (inputs, [name, moduleConfig]) => {
+        (inputs, [name, rawConfig]) => {
+            const moduleConfig = parseModuleConfig(name, rawConfig, env.MODE)
+            const { entry, format, ...moduleConfigExtras } = moduleConfig
             try {
-                require.resolve(name, { paths: [process.cwd()] })
+                require.resolve(entry, { paths: [process.cwd()] })
             } catch (e) {
                 reporter.warn(
-                    chalk.dim(`Module ${name} not found, skipping...`)
+                    chalk.dim(
+                        `Module ${name} (${entry}) not found, skipping...`
+                    )
                 )
                 return inputs
             }
-            if (moduleConfig.type === 'umd') {
+            if (format === 'umd') {
                 globals[name] = name
             }
 
             inputs.push({
                 input: {
-                    [name]:
-                        typeof moduleConfig === 'string'
-                            ? moduleConfig
-                            : moduleConfig.input || name,
+                    [name]: entry,
                 },
-                format: moduleConfig.type === 'umd' ? 'umd' : 'system',
+                format,
+                extras: moduleConfigExtras,
             })
             return inputs
         },
@@ -69,10 +97,9 @@ module.exports.generateRollupOptions = ({
         input: config.input,
         dir: path.join(outDir, 'static/js'),
         format: config.format,
-        environment: {
-            MODE: mode,
-        },
+        environment: env,
         globals,
         external: config.format !== 'iife' ? external : undefined,
+        ...config.extras,
     }))
 }

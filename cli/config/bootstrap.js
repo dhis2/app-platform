@@ -14,7 +14,7 @@ const render = async () => {
     const ReactDOM = await System.import('react-dom')
     const Adapter = await System.import('@dhis2/app-adapter')
 
-    const LazyApp = React.lazy(() => System.import('$dhis2/app-shell/app'))
+    const LazyApp = React.lazy(() => System.import('$dhis2/dashboard/app'))
 
     ReactDOM.render(
         React.createElement(

@@ -10,7 +10,11 @@ const { validatePackage } = require('../lib/validatePackage')
 
 const defaultPort = 3000
 
-const handler = async ({ cwd, port = process.env.PORT || defaultPort }) => {
+const handler = async ({
+    cwd,
+    shell = undefined,
+    port = process.env.PORT || defaultPort,
+}) => {
     const paths = makePaths(cwd)
 
     const mode = 'development'
@@ -54,8 +58,11 @@ const handler = async ({ cwd, port = process.env.PORT || defaultPort }) => {
                 bundle({
                     d2config: config,
                     outDir,
-                    mode,
+                    env: {
+                        MODE: mode,
+                    },
                     publicDir: paths.public,
+                    shell: shell || paths.shellSource,
                     watch: true,
                 }),
                 serve(outDir, { name: config.name, port }),
@@ -63,8 +70,6 @@ const handler = async ({ cwd, port = process.env.PORT || defaultPort }) => {
         },
         {
             name: 'start',
-            onError: () =>
-                reporter.error('Start script exited with non-zero exit code'),
         }
     )
 }
