@@ -83,10 +83,7 @@ const resolveBundle = (cwd, params) => {
 }
 
 const promptForConfig = async params => {
-    const requiredParams = ['appId', 'apiKey', 'minVersion']
-    const isMissingParam = requiredParams.some(p => !params[p])
-
-    if (process.env.CI && isMissingParam) {
+    if (process.env.CI && (!params.apiKey || !params.minVersion)) {
         reporter.error(
             'Prompt disabled in CI mode - missing baseUrl, username, or password parameter.'
         )
