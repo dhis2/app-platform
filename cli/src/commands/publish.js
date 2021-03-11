@@ -85,7 +85,7 @@ const resolveBundle = (cwd, params) => {
 const promptForConfig = async params => {
     if (process.env.CI && (!params.apiKey || !params.minVersion)) {
         reporter.error(
-            'Prompt disabled in CI mode - missing baseUrl, username, or password parameter.'
+            'Prompt disabled in CI mode - missing apiKey or minVersion parameter.'
         )
         process.exit(1)
     }
