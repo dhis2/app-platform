@@ -1,3 +1,15 @@
+# [6.0.0](https://github.com/dhis2/app-platform/compare/v5.7.4...v6.0.0) (2021-03-11)
+
+
+### Features
+
+* upgrade to @dhis2/ui v6 and bump other dependency versions ([#530](https://github.com/dhis2/app-platform/issues/530)) ([b8b72f4](https://github.com/dhis2/app-platform/commit/b8b72f4094bbed730c980aacabd530f8b6539ab1))
+
+
+### BREAKING CHANGES
+
+* applications must use @dhis2/ui@^6.5.3
+
 ## [5.7.4](https://github.com/dhis2/app-platform/compare/v5.7.3...v5.7.4) (2021-03-05)
 
 
