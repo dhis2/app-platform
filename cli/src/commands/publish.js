@@ -37,13 +37,12 @@ const resolveBundle = (cwd, params) => {
                 reporter.error(`${params.file} is not a file`)
                 process.exit(1)
             }
-            appBundle.path = filePath
-            appBundle.version = params.fileVersion
-            appBundle.name = path.basename(filePath)
             appBundle.id = params.appId
+            appBundle.version = params.fileVersion
+            appBundle.path = filePath
+            appBundle.name = path.basename(filePath)
         } catch (e) {
-            console.error(e)
-            reporter.error(`File not found at ${params.file}`)
+            reporter.error(`File does not exist at ${params.file}`)
             process.exit(1)
         }
     } else {
@@ -60,7 +59,6 @@ const resolveBundle = (cwd, params) => {
         }
         appBundle.id = builtAppConfig.id
         appBundle.version = builtAppConfig.version
-
         appBundle.path = path.relative(
             cwd,
             paths.buildAppBundle
