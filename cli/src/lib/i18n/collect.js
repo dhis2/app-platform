@@ -20,7 +20,8 @@ const collectLocalesFromDependency = (depName, defaultLocalePath) => {
         .filter(file => file.endsWith(localeFileSuffix))
         .reduce((locales, file) => {
             const locale = file.replace(
-                new RegExp(`/${localeFileSuffix}$/`, '')
+                new RegExp(`/${localeFileSuffix}$/`),
+                ''
             )
             locales[locale] = makeImport(depName, locale)
             return locales
