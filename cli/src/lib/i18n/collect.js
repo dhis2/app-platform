@@ -19,7 +19,9 @@ const collectLocalesFromDependency = (depName, defaultLocalePath) => {
     return files
         .filter(file => file.endsWith(localeFileSuffix))
         .reduce((locales, file) => {
-            const locale = file.replace(new RegExp(`/${localeFileSuffix}$/`, ''))
+            const locale = file.replace(
+                new RegExp(`/${localeFileSuffix}$/`, '')
+            )
             locales[locale] = makeImport(depName, locale)
             return locales
         }, {})
@@ -31,14 +33,22 @@ export const collect = ({ paths }) => {
     const dependencies = pkg.dependencies
 
     const importsByLocale = {}
-    
+
     Object.keys(dependencies).forEach(dep => {
         try {
-            const localeSourcePath = require.resolve(makeImport(dep, requiredDefaultLocale))
+            const localeSourcePath = require.resolve(
+                makeImport(dep, requiredDefaultLocale)
+            )
             if (localeSourcePath) {
-                const locales = collectLocalesFromDependency(dep, localeSourcePath)
+                const locales = collectLocalesFromDependency(
+                    dep,
+                    localeSourcePath
+                )
                 Object.keys(locales).forEach(locale => {
-                    importsByLocale[locale] = [...importsByLocale[locale], locales[locale]]
+                    importsByLocale[locale] = [
+                        ...importsByLocale[locale],
+                        locales[locale],
+                    ]
                 })
             }
             // TODO: deep find all deps in the tree?  (search transitive deps)
@@ -47,7 +57,7 @@ export const collect = ({ paths }) => {
         }
     })
 
-    /* 
+    /*
      * Sample output:
      *   {
      *     "en": ["dep1/d2-i18n/en.json", "dep2/d2-i18n/en.json", "dep3/d2-i18n/en.json"]
