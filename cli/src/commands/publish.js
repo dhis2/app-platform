@@ -130,6 +130,7 @@ const handler = async ({ cwd = process.cwd(), ...params }) => {
             'x-api-key': publishConfig.apiKey,
         },
     })
+
     const versionData = {
         version: appBundle.version,
         minDhisVersion: publishConfig.minVersion,
@@ -147,7 +148,6 @@ const handler = async ({ cwd = process.cwd(), ...params }) => {
 
         await client.post(uploadAppUrl, formData, {
             headers: formData.getHeaders(),
-            port: 3000,
             timeout: 30000, // Ensure we have enough time to upload a large zip file
         })
         reporter.info(
