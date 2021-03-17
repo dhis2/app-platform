@@ -81,9 +81,9 @@ const resolveBundle = (cwd, params) => {
 }
 
 const promptForConfig = async params => {
-    if (process.env.CI && (!params.apiKey || !params.minVersion)) {
+    if (process.env.CI && (!params.apikey || !params.minVersion)) {
         reporter.error(
-            'Prompt disabled in CI mode - missing apiKey or minVersion parameter.'
+            'Prompt disabled in CI mode - missing apikey or minVersion parameter.'
         )
         process.exit(1)
     }
@@ -91,9 +91,9 @@ const promptForConfig = async params => {
     const responses = await inquirer.prompt([
         {
             type: 'input',
-            name: 'apiKey',
+            name: 'apikey',
             message: 'App Hub API-key',
-            when: () => !params.apiKey,
+            when: () => !params.apikey,
         },
         {
             type: 'input',
@@ -127,7 +127,7 @@ const handler = async ({ cwd = process.cwd(), ...params }) => {
     const client = createClient({
         baseUrl: params.baseUrl,
         headers: {
-            'x-api-key': publishConfig.apiKey,
+            'x-api-key': publishConfig.apikey,
         },
     })
 
@@ -169,7 +169,7 @@ const command = {
     desc: 'Deploy the built application to a specific DHIS2 instance',
     builder: yargs =>
         yargs.options({
-            apiKey: {
+            apikey: {
                 alias: 'k',
                 type: 'string',
                 description: 'The API-key to use for authentication',
