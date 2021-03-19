@@ -14,6 +14,9 @@
     "publishConfig": {
         "access": "public"
     },
+    "scripts": {
+        "test": "jest"
+    },
     "main": "src/index.js",
     "files": [
         "bin",
@@ -41,6 +44,8 @@
         "form-data": "^3.0.0",
         "fs-extra": "^8.1.0",
         "gaze": "^1.1.3",
+        "graphql": "^15.5.0",
+        "graphql-tag": "^2.11.0",
         "handlebars": "^4.3.3",
         "i18next-conv": "^9",
         "i18next-scanner": "^2.10.3",
