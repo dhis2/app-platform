@@ -28,7 +28,7 @@ Options:
   --cwd           working directory to use (defaults to cwd)
   --version       Show version number                                  [boolean]
   --config        Path to JSON config file
-  --apiKey, -k    The API-key to use for authentication                 [string]
+  --apikey, -k    The API-key to use for authentication                 [string]
   --channel, -c   The channel to publish the app-version to  [default: "stable"]
   --baseUrl, -b   The base-url of the App Hub instance
                                              [default: "https://apps.dhis2.org"]
