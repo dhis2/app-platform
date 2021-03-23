@@ -2273,6 +2273,13 @@
   resolved "https://registry.yarnpkg.com/@csstools/normalize.css/-/normalize.css-10.1.0.tgz#f0950bba18819512d42f7197e56c518aa491cf18"
   integrity sha512-ij4wRiunFfaJxjB0BdrYHIH8FxBJpOwNPhhAcunlmPdXudL1WQV1qoP9un6JsEBAgQH+7UXyyjh0g7jTxXK6tg==
 
+"@dhis2/app-adapter@^5.7.4":
+  version "5.7.4"
+  resolved "https://registry.yarnpkg.com/@dhis2/app-adapter/-/app-adapter-5.7.4.tgz#26f391b411e68030a163cf7f8326ad24a6b20b1c"
+  integrity sha512-0kGg9rVqZ+vZdM/4E5OgqlFKQRFjbJ4R7wyPbSQircdiVCicIVISVncpTUgQaE9ahMdg2Efbe6XrQspGSh9Zaw==
+  dependencies:
+    moment "^2.24.0"
+
 "@dhis2/app-runtime@^2.8.0":
   version "2.8.0"
   resolved "https://registry.yarnpkg.com/@dhis2/app-runtime/-/app-runtime-2.8.0.tgz#83ca6e96c299686ee72eea3e1825e04aa53cd5d2"
