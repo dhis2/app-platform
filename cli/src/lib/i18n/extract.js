@@ -73,7 +73,7 @@ const extract = async ({ input, output }) => {
     reporter.print(
         chalk.dim(
             `Writing ${Object.keys(en).length} language strings to ${chalk.bold(
-                './' + targetPath
+                './' + path.relative(process.cwd(), targetPath)
             )}...`
         )
     )
