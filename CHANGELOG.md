@@ -1,3 +1,10 @@
+## [6.0.1](https://github.com/dhis2/app-platform/compare/v6.0.0...v6.0.1) (2021-03-24)
+
+
+### Bug Fixes
+
+* catch service worker unregistration rejection ([#537](https://github.com/dhis2/app-platform/issues/537)) ([e1cbf3e](https://github.com/dhis2/app-platform/commit/e1cbf3e9d1c0970e62fb14fc6b6f61713e9c76e0))
+
 # [6.0.0](https://github.com/dhis2/app-platform/compare/v5.7.4...v6.0.0) (2021-03-11)
 
 
