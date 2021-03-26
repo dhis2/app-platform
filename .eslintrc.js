@@ -5,8 +5,4 @@ module.exports = {
     parserOptions: {
         allowImportExportEverywhere: true,
     },
-    ignorePatterns: [
-        './gql-to-app-runtime-query/src/__test__/code.js',
-        './gql-to-app-runtime-query/src/__test__/runtimeQuery.js',
-    ],
 }

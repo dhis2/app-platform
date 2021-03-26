@@ -12,7 +12,7 @@
             "cli",
             "shell",
             "adapter",
-            "gql-to-app-runtime-query"
+            "config/gql-to-app-runtime-query"
         ]
     },
     "devDependencies": {
