@@ -11,7 +11,8 @@
             "examples/simple-app",
             "cli",
             "shell",
-            "adapter"
+            "adapter",
+            "gql-to-app-runtime-query"
         ]
     },
     "devDependencies": {
@@ -21,7 +22,9 @@
     },
     "scripts": {
         "format": "d2-style js apply && d2-style text apply",
+        "format:staged": "d2-style js apply --staged && d2-style text apply --staged",
         "lint": "d2-style js check && d2-style text check",
+        "lint:staged": "d2-style js check --staged && d2-style text check --staged",
         "build": "yarn build:adapter && yarn build:example",
         "build:adapter": "yarn workspace @dhis2/app-adapter build",
         "build:example": "yarn workspace simple-app build",

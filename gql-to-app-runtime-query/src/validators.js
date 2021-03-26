@@ -14,41 +14,30 @@ module.exports.validators = {
         }
     },
     Int: ({ value, name }) => {
-        if (typeof value !== 'number') {
-            throw new Error(
-                `Variable "${name}" must be of type "Int", received type "${typeof value}"`
-            )
-        }
+        const parsed = Number(value)
 
-        if (isNaN(value)) {
-            throw new Error(
-                `Variable "${name}" must be of type "Int", received value "NaN"`
-            )
-        }
-
-        if (!Number.isInteger(value)) {
+        if (isNaN(parsed) || !Number.isInteger(parsed)) {
             throw new Error(
                 `Variable "${name}" must be of type "Int", received value "${value}"`
             )
         }
     },
     Float: ({ value, name }) => {
-        if (typeof value !== 'number') {
-            throw new Error(
-                `Variable "${name}" must be of type "Float", received type "${typeof value}"`
-            )
-        }
+        const parsed = Number(value)
 
-        if (isNaN(value)) {
+        if (isNaN(parsed)) {
             throw new Error(
-                `Variable "${name}" must be of type "Float", received value "NaN"`
+                `Variable "${name}" must be of type "Float", received value "${value}"`
             )
         }
     },
     Boolean: ({ value, name }) => {
-        if (typeof value !== 'boolean') {
+        const parsed =
+            value === 'true' ? true : value === 'false' ? false : undefined
+
+        if (typeof parsed !== 'boolean') {
             throw new Error(
-                `Variable "${name}" must be of type "Boolean", received type "${typeof value}"`
+                `Variable "${name}" must be of type "Boolean", received value "${value}"`
             )
         }
     },

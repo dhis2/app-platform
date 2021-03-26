@@ -1,5 +1,12 @@
+const fs = require('fs')
+const path = require('path')
 const babel = require('@babel/core')
 const { gqlToAppRuntimeQuery } = require('../gqlToAppRuntimeQuery')
+
+const codePath = path.join(__dirname, 'code.js')
+const code = fs.readFileSync(codePath, { encoding: 'utf8' })
+const runtimeQueryPath = path.join(__dirname, 'runtimeQuery.js')
+const runtimeQuery = fs.readFileSync(runtimeQueryPath, { encoding: 'utf8' })
 
 describe('gqlToAppRuntimeQuery', () => {
     const transform = code =>
@@ -8,79 +15,11 @@ describe('gqlToAppRuntimeQuery', () => {
         })
 
     it('should replace the graphql query with an app-runtime query', () => {
-        const code = `
-            const query = gql\`
-                query queryName(
-                    $id: ID!,
-                    $test: String = "test",
-                    $foo: Object = {
-                        foo: "bar"
-                    },
-                    $bar: Array = [
-                        "foo",
-                        "bar"
-                    ]
-                ) {
-                    DataElement(
-                        resource: "dataElements",
-                        id: $id,
-                        params: {
-                            test: $test,
-                            paging: "false",
-                        }
-                    ) {
-                        __all
-                        id
-                        displayName
-                        prop {
-                            id
-                            displayName
-                            prop2 {
-                                __all
-                                id
-                                displayName
-                            }
-                        }
-                    }
-
-                    Sms(
-                        resource: "sms/outbound",
-                        params: {
-                            paging: "false"
-                        }
-                    ) {
-                        __all
-                    }
-                }
-            \`
-        `
-
-        // const expected = `
-        //     const query = {
-        //         DataElement: {
-        //             resource: 'dataElements',
-        //             id: ({ id }) => id,
-        //             params: {
-        //                 paging: "false",
-        //                 fields: [
-        //                     '*',
-        //                     'id',
-        //                     'displayName',
-        //                 ],
-        //             },
-        //         },
-        //         Sms: {
-        //             resource: 'sms/outbound',
-        //             params: {
-        //                 paging: "false",
-        //                 fields: ['*'],
-        //             },
-        //         },
-        //     }
-        // `
-
-        transform(code)
-        // const actual = transform(code)
-        // expect(actual).toBe(expected)
+        // Vim automatically appends empty lines.
+        // So the file with the expected code has an empty line.
+        // Needs to taken into account with the generated code
+        const actual = `${transform(code).code}\n`
+        const expected = runtimeQuery
+        expect(actual).toBe(expected)
     })
 })

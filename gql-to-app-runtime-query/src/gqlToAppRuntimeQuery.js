@@ -1,19 +1,34 @@
 const gql = require('graphql-tag')
+const { extractResources } = require('./extractResources')
+const { resourceToObjectProperty } = require('./resourceToObjectProperty')
 const { validators } = require('./validators')
 
-const getTypeOfVariable = variableDefinition =>
+const getGraphqlType = variableDefinition =>
     variableDefinition.type.kind === 'NonNullType'
         ? variableDefinition.type.type.name.value
         : variableDefinition.type.name.value
 
+const getTypeOfVariable = variableDefinition => {
+    const graphqlType = getGraphqlType(variableDefinition)
+    const is = v => v === graphqlType
+
+    if (is('String') || is('ID')) return 'StringLiteral'
+    if (is('Int') || is('Float')) return 'NumberLiteral'
+    if (is('Boolean')) return 'BooleanLiteral'
+    if (is('Object')) return 'ObjectExpression'
+    if (is('Array')) return 'ArrayExpression'
+
+    throw new Error(`Type "${graphqlType}" not supported`)
+}
+
 const getDefaultValueOfVariable = variableDefinition => {
     if (!variableDefinition.defaultValue) return undefined
 
-    if ('ObjectValue' === variableDefinition.defaultValue.kind) {
+    if ('ObjectExpression' === variableDefinition.defaultValue.kind) {
         return variableDefinition.defaultValue.fields
     }
 
-    if ('ListValue' === variableDefinition.defaultValue.kind) {
+    if ('ArrayExpression' === variableDefinition.defaultValue.kind) {
         return variableDefinition.defaultValue.values
     }
 
@@ -21,16 +36,16 @@ const getDefaultValueOfVariable = variableDefinition => {
 }
 
 const validateVariableDefaultValues = variables => {
-    variables.forEach(({ defaultValue, name, type }) => {
+    variables.forEach(({ defaultValue, name, graphqlType }) => {
         if (!defaultValue) return
 
-        const validator = validators[type]
+        const validator = validators[graphqlType]
 
         if (!validator) {
             const availableTypes = Object.keys(validators).join(', ')
 
             throw new Error(
-                `Unsupported variable type "${type}", available types are: ${availableTypes}`
+                `Unsupported variable type "${graphqlType}", available types are: ${availableTypes}`
             )
         }
 
@@ -68,66 +83,61 @@ const extractVariables = definition => {
     return variableDefinitions.map(variableDefinition => ({
         name: variableDefinition.variable.name.value,
         type: getTypeOfVariable(variableDefinition),
+        graphqlType: getGraphqlType(variableDefinition),
         defaultValue: getDefaultValueOfVariable(variableDefinition),
         required: variableDefinition.type.kind === 'NonNullType',
     }))
 }
 
-const getFieldsOfSelectionSet = resourceSet => {
-    const { selectionSet, name } = resourceSet
-    const { selections } = selectionSet
-
-    return {
-        [name.value]: selections.map(selection => {
-            if (!selection.selectionSet) {
-                const field = selection.name.value
-                return field === '__all' ? '*' : field
-            }
-
-            return getFieldsOfSelectionSet(selection)
-        }),
-    }
-}
-
-const extractResources = definition => {
-    const resourceSets = definition.selectionSet.selections
-
-    return resourceSets.map(resourceSet => {
-        const name = resourceSet.name.value
-        const args = resourceSet.arguments
-        const fields = getFieldsOfSelectionSet(resourceSet)[name]
-
-        return { name, args, fields }
-    })
-}
-
-module.exports.gqlToAppRuntimeQuery = () => {
+module.exports.gqlToAppRuntimeQuery = ({ types }) => {
     return {
         visitor: {
-            TaggedTemplateExpression({ node: { tag, quasi } }) {
-                if (tag.name !== 'gql') return
+            TaggedTemplateExpression(path) {
+                try {
+                    const { node } = path
+                    const { tag, quasi } = node
 
-                const quasis = quasi.quasis
-                validateHasSingleExpression(quasis)
+                    if (tag.name !== 'gql') return
 
-                const definition = extractQueryDefinition(quasis)
-                const { operation } = definition
+                    const quasis = quasi.quasis
+                    validateHasSingleExpression(quasis)
 
-                const variables = extractVariables(definition)
-                validateVariableDefaultValues(variables)
+                    const definition = extractQueryDefinition(quasis)
+                    // const { operation } = definition
 
-                const resources = extractResources(definition)
-                console.log(
-                    JSON.stringify(
-                        {
-                            operation,
+                    const variables = extractVariables(definition)
+                    validateVariableDefaultValues(variables)
+
+                    const resources = extractResources(definition)
+
+                    const resourcesObjectExpressions = resources.map(resource =>
+                        resourceToObjectProperty({
                             variables,
-                            resources,
-                        },
-                        null,
-                        2
+                            resource,
+                            types,
+                        })
                     )
-                )
+
+                    path.replaceWith(
+                        types.objectExpression(resourcesObjectExpressions)
+                    )
+                } catch (e) {
+                    console.log(
+                        [
+                            e.message,
+                            ...e.stack
+                                .split('\n')
+                                .map(
+                                    line =>
+                                        line.match(
+                                            /gql-to-app-runtime-query\/src.*:\d+:\d/
+                                        )?.[0]
+                                )
+                                .filter(i => i)
+                                .map(line => `  at ${line}`),
+                        ].join('\n')
+                    )
+                }
             },
         },
     }
