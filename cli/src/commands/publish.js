@@ -27,6 +27,45 @@ const dumpHttpError = (message, response) => {
     reporter.debugErr('Error details', response.data)
 }
 
+const requiredFields = new Set(['id', 'version', 'minDHIS2Version'])
+const configFieldValidations = {
+    minDHIS2Version: v =>
+        isValidServerVersion(v) ? true : 'Invalid server version',
+    maxDHIS2Version: v =>
+        isValidServerVersion(v) ? true : 'Invalid server version',
+}
+
+const validateFields = (
+    config,
+    fieldNames = ['id', 'version', 'minDHIS2Version']
+) => {
+    fieldNames.forEach(fieldName => {
+        const fieldValue = config[fieldName]
+        if (
+            (requiredFields.has(fieldName) && fieldValue == null) ||
+            fieldValue === ''
+        ) {
+            reporter.error(
+                `${fieldName} not found in config. Add an ${chalk.bold(
+                    fieldName
+                )}-field to ${chalk.bold('d2.config.js')}`
+            )
+            process.exit(1)
+        }
+        const fieldValidation = configFieldValidations[fieldName]
+        if (fieldValidation) {
+            const valid = fieldValidation(fieldValue)
+            if (typeof valid === 'string') {
+                reporter.error(`${fieldName}: ${valid}`)
+                process.exit(1)
+            } else if (!valid) {
+                reporter.error(`Invalid ${fieldName}`)
+                process.exit(1)
+            }
+        }
+    })
+}
+
 const resolveBundle = (cwd, params) => {
     const appBundle = {}
     // use file-path from params
@@ -41,6 +80,8 @@ const resolveBundle = (cwd, params) => {
             appBundle.version = params.fileVersion
             appBundle.path = filePath
             appBundle.name = path.basename(filePath)
+            appBundle.minDHIS2Version = params.minDHIS2Version
+            appBundle.maxDHIS2Version = params.maxDHIS2Version
         } catch (e) {
             reporter.error(`File does not exist at ${params.file}`)
             process.exit(1)
@@ -49,14 +90,8 @@ const resolveBundle = (cwd, params) => {
         // resolve file from built-bundle
         const paths = makePaths(cwd)
         const builtAppConfig = parseConfig(paths)
-        if (!builtAppConfig.id) {
-            reporter.error(
-                `No App Hub id found for app. Add an ${chalk.bold(
-                    'id'
-                )}-field to ${chalk.bold('d2.config.js')}`
-            )
-            process.exit(1)
-        }
+        validateFields(builtAppConfig)
+
         appBundle.id = builtAppConfig.id
         appBundle.version = builtAppConfig.version
         appBundle.path = path.relative(
@@ -66,6 +101,8 @@ const resolveBundle = (cwd, params) => {
                 .replace(/{{version}}/, builtAppConfig.version)
         )
         appBundle.name = builtAppConfig.name
+        appBundle.minDHIS2Version = builtAppConfig.minDHIS2Version
+        appBundle.maxDHIS2Version = builtAppConfig.maxDHIS2Version
 
         if (!fs.existsSync(appBundle.path)) {
             reporter.error(
@@ -97,17 +134,29 @@ const promptForConfig = async params => {
         },
         {
             type: 'input',
-            name: 'minVersion',
+            name: 'appId',
+            message: 'App Hub App-id',
+            when: () => params.file && !params.appId,
+        },
+        {
+            type: 'input',
+            name: 'fileVersion',
+            message: 'Version of the app',
+            when: () => params.file && !params.fileVersion,
+        },
+        {
+            type: 'input',
+            name: 'minDHIS2Version',
             message: 'Minimum DHIS2 version supported',
-            when: () => !params.minVersion,
+            when: () => params.file && !params.minDHIS2Version,
             validate: v =>
                 isValidServerVersion(v) ? true : 'Invalid server version',
         },
         {
             type: 'input',
-            name: 'maxVersion',
+            name: 'maxDHIS2Version',
             message: 'Maximum DHIS2 version supported',
-            when: () => !params.maxVersion,
+            when: () => params.file && !params.maxDHIS2Version,
             validate: v =>
                 !v || isValidServerVersion(v) ? true : 'Invalid server version',
         },
@@ -120,12 +169,13 @@ const promptForConfig = async params => {
 }
 
 const handler = async ({ cwd = process.cwd(), ...params }) => {
-    const appBundle = resolveBundle(cwd, params)
-    const uploadAppUrl = constructUploadUrl(appBundle.id)
     const publishConfig = await promptForConfig(params)
 
+    const appBundle = resolveBundle(cwd, publishConfig)
+    const uploadAppUrl = constructUploadUrl(appBundle.id)
+
     const client = createClient({
-        baseUrl: params.baseUrl,
+        baseUrl: publishConfig.baseUrl,
         headers: {
             'x-api-key': publishConfig.apikey,
         },
@@ -133,8 +183,8 @@ const handler = async ({ cwd = process.cwd(), ...params }) => {
 
     const versionData = {
         version: appBundle.version,
-        minDhisVersion: publishConfig.minVersion,
-        maxDhisVersion: publishConfig.maxVersion,
+        minDhisVersion: appBundle.minDHIS2Version,
+        maxDhisVersion: appBundle.maxDHIS2Version || '',
         channel: publishConfig.channel,
     }
 
@@ -143,7 +193,9 @@ const handler = async ({ cwd = process.cwd(), ...params }) => {
     formData.append('version', JSON.stringify(versionData))
 
     try {
-        reporter.print(`Uploading app bundle to ${uploadAppUrl}`)
+        reporter.print(
+            `Uploading app bundle to ${publishConfig.baseUrl + uploadAppUrl}`
+        )
         reporter.debug('Upload with version data', versionData)
 
         await client.post(uploadAppUrl, formData, {
@@ -184,11 +236,11 @@ const command = {
                 description: 'The base-url of the App Hub instance',
                 default: 'https://apps.dhis2.org',
             },
-            minVersion: {
+            minDHIS2Version: {
                 type: 'string',
                 description: 'The minimum version of DHIS2 the app supports',
             },
-            maxVersion: {
+            maxDHIS2Version: {
                 type: 'string',
                 description: 'The maximum version of DHIS2 the app supports',
             },
@@ -201,7 +253,6 @@ const command = {
             file: {
                 description:
                     'Path to the file to upload. This skips automatic resolution of the built app and uses this file-path to upload',
-                implies: ['file-version', 'appId'],
             },
             'file-version': {
                 type: 'string',
