@@ -6,18 +6,27 @@ const generate = {
     description:
         'Generate JSON files compatible with i18next from po/pot files',
     builder: {
+        path: {
+            alias: 'p',
+            description:
+                'directory path to find .po/.pot files and convert to JSON',
+        },
+        output: {
+            alias: 'o',
+            description: 'Output directory to place converted JSON files.',
+        },
         namespace: {
             alias: 'n',
             description: 'Namespace for app locale separation',
             default: 'default',
         },
     },
-    handler: async ({ cwd, namespace }) => {
+    handler: async ({ cwd, path, output, namespace }) => {
         const paths = makePaths(cwd)
 
         const result = await i18n.generate({
-            input: paths.i18nStrings,
-            output: paths.i18nLocales,
+            input: path || paths.i18nStrings,
+            output: output || paths.i18nLocales,
             namespace,
             paths,
         })
@@ -31,12 +40,23 @@ const generate = {
 }
 const extract = {
     description: 'Extract strings-to-translate',
-    handler: async ({ cwd }) => {
+    builder: {
+        path: {
+            alias: 'p',
+            description:
+                'Directory path to recurse and extract i18n.t translation strings',
+        },
+        output: {
+            alias: 'o',
+            description: 'Destination path for en.pot file',
+        },
+    },
+    handler: async ({ cwd, path, output }) => {
         const paths = makePaths(cwd)
 
         const result = await i18n.extract({
-            input: paths.src,
-            output: paths.i18nStrings,
+            input: path || paths.src,
+            output: output || paths.i18nStrings,
             paths,
         })
         if (!result) {
