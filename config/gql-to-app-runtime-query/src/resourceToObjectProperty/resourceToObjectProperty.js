@@ -1,5 +1,9 @@
-const { pipe } = require('./utils/pipe')
 const { variablesToFunctionArgument } = require('./variablesToFunctionArgument')
+
+const pipe = (...fns) => (...args) => {
+    if (!fns.length) return
+    return fns.slice(1).reduce((acc, fn) => fn(acc), fns[0](...args))
+}
 
 const identity = value => value
 
@@ -181,10 +185,10 @@ const createParamsFuncBody = (types, paramsFields, fields) => {
 }
 
 const paramsArgToValue = ({ types, arg, fields, variables }) => {
-    if (fields || arg?.value.kind === 'ObjectValue') {
+    if (fields || (arg && arg.value.kind === 'ObjectValue')) {
         const paramsFuncBodyProperties = createParamsFuncBody(
             types,
-            arg?.value.fields,
+            arg.value.fields,
             fields
         )
         const paramsFuncBody = types.objectExpression(paramsFuncBodyProperties)
@@ -200,10 +204,10 @@ const paramsArgToValue = ({ types, arg, fields, variables }) => {
 }
 
 const dataArgToValue = ({ types, arg, variables }) => {
-    if (arg?.value.kind === 'ObjectValue') {
+    if (arg && arg.value.kind === 'ObjectValue') {
         const paramsFuncBodyProperties = createParamsFuncBody(
             types,
-            arg?.value.fields
+            arg.value.fields
         )
 
         const paramsFuncBody = types.objectExpression(paramsFuncBodyProperties)

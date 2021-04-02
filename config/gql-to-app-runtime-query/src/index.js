@@ -1,2 +1,2 @@
-const gqlToAppRuntimeQuery = require('./gql-to-app-runtime-query.js')
-module.exports = gqlToAppRuntimeQuery
+const { plugin } = require('./plugin')
+module.exports = plugin

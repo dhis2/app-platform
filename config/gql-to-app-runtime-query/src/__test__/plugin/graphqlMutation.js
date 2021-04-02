@@ -1,7 +1,7 @@
 import { gql } from '@dhis2/app-runtime'
 
-const query = gql`
-    query queryName(
+const mutation = gql`
+    mutation mutationName(
         $id: ID!,
         $test: String = "test",
         $int: Int = 42,
@@ -60,25 +60,7 @@ const query = gql`
                 }
             }
         ) {
-            __all
-            displayName
-            dataset {
-                id
-                displayName
-                dataSetElements {
-                    dataElement {
-                        id
-                        displayName
-                        categoryCombo {
-                            categoryOptionCombos {
-                                id
-                                displayName
-                                code
-                            }
-                        }
-                    }
-                }
-            }
+
         }
 
         sms(
