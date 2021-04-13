@@ -76,12 +76,14 @@ const createFieldsObjectProperty = (types, fields) => {
         getNestedLevelFields,
         transformNestedFields
     )(fields)
-    const allFields = [...firstLevelFields, nestedFields]
+
+    const allFields = [...firstLevelFields, ...nestedFields]
         .filter(identity)
-        .join(',')
+        .map(value => types.stringLiteral(value))
+
     return types.objectProperty(
         types.identifier('fields'),
-        types.stringLiteral(allFields)
+        types.arrayExpression(allFields)
     )
 }
 
@@ -188,7 +190,7 @@ const paramsArgToValue = ({ types, arg, fields, variables }) => {
     if (fields || (arg && arg.value.kind === 'ObjectValue')) {
         const paramsFuncBodyProperties = createParamsFuncBody(
             types,
-            arg.value.fields,
+            arg && arg.value && arg.value.fields,
             fields
         )
         const paramsFuncBody = types.objectExpression(paramsFuncBodyProperties)
@@ -233,10 +235,10 @@ module.exports.resourceToObjectProperty = ({ variables, resource, types }) => {
         }
 
         if (arg.name.value === 'params') {
-            return {
-                ...resourceProperties,
-                params: paramsArgToValue({ types, arg, fields, variables }),
-            }
+            // Params needs to be handled separately as the fields will impact
+            // the final params as well. Added after the creation of the
+            // resource properties
+            return resourceProperties
         }
 
         if (arg.name.value === 'data') {
@@ -251,6 +253,16 @@ module.exports.resourceToObjectProperty = ({ variables, resource, types }) => {
             [arg.name.value]: createValuesFromField(types, arg),
         }
     }, {})
+
+    const paramsArg = args.find(arg => arg.name.value === 'params')
+    if (paramsArg || fields) {
+        finalResourceProperties.params = paramsArgToValue({
+            arg: paramsArg,
+            types,
+            fields,
+            variables,
+        })
+    }
 
     return types.objectProperty(
         types.identifier(name),

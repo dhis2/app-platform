@@ -62,15 +62,5 @@ const mutation = gql`
         ) {
 
         }
-
-        sms(
-            resource: "sms/outbound",
-            pageSize: $pageSize,
-            page: $page,
-            order: "date:desc",
-            filter: $filter
-        ) {
-            __all
-        }
     }
 `
