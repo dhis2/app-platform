@@ -8,7 +8,7 @@ Note that you need an App Hub API key before using this command. The API key is 
 
 This command can only upload _versions_ to an app that **already** exists on the App Hub. The app must have an `id`-field in the `d2.config.js` which matches the id of the app on App Hub.
 
-This command will prompt the user for information not found in `d2.config.js` or in the parameters. The API key can be specified with the `D2_APIKEY` environment variable. For example, the following will publish the app without waiting for user input, given that `id` is in the config-file.
+This command will prompt the user for information not found in `d2.config.js` or in the parameters. The API key can be specified with the `D2_APP_HUB_API_KEY` environment variable. For example, the following will publish the app without waiting for user input, given that `id` is in the config-file.
 
 ```sh
 > d2 app scripts publish

@@ -130,7 +130,7 @@ const promptForConfig = async params => {
             type: 'input',
             name: 'apikey',
             message: 'App Hub API-key',
-            when: () => !params.apikey,
+            when: () => !params.apikey && !process.env.D2_APP_HUB_API_KEY,
         },
         {
             type: 'input',
@@ -174,10 +174,12 @@ const handler = async ({ cwd = process.cwd(), ...params }) => {
     const appBundle = resolveBundle(cwd, publishConfig)
     const uploadAppUrl = constructUploadUrl(appBundle.id)
 
+    const resolvedApiKey =
+        publishConfig.apikey || process.env.D2_APP_HUB_API_KEY
     const client = createClient({
         baseUrl: publishConfig.baseUrl,
         headers: {
-            'x-api-key': publishConfig.apikey,
+            'x-api-key': resolvedApiKey,
         },
     })
 
