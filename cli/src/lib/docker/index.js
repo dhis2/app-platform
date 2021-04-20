@@ -16,4 +16,12 @@ module.exports = ({ paths }) => ({
             pipe: true,
         })
     },
+    push: async ({ image, tag }) => {
+        await exec({
+            cmd: 'docker',
+            args: ['push', `${image}:${tag}`],
+            cwd: paths.base,
+            pipe: true,
+        })
+    },
 })

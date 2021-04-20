@@ -23,6 +23,9 @@ const handler = async ({ cwd }) => {
         async () => {
             reporter.info('Building docker image...')
             await docker.build({ image: dockerImage, tag: dockerTag })
+
+            reporter.info('Pushing docker image...')
+            await docker.push({ image: dockerImage, tag: dockerTag })
         },
         {
             name: 'dockerize',
