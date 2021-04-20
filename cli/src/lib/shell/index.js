@@ -37,4 +37,20 @@ module.exports = ({ config, paths }) => ({
             pipe: true,
         })
     },
+    dockerBuild: async ({ image, tag }) => {
+        await exec({
+            cmd: 'docker',
+            args: [
+                'build',
+                '-f',
+                paths.dockerFile,
+                '.',
+                '-t',
+                `${image}${tag}`,
+            ],
+            cwd: paths.base,
+            env: getEnv({ name: config.title }),
+            pipe: true,
+        })
+    },
 })

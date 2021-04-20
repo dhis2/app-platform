@@ -21,6 +21,8 @@ module.exports = (cwd = process.cwd()) => {
         jestConfigDefaults: path.join(__dirname, '../../config/jest.config.js'),
         readmeDefault: path.join(__dirname, '../../config/init.README.md'),
 
+        dockerFile: path.join(__dirname, '../../config/Dockerfile'),
+
         shellSource,
         shellSourceEntrypoint: path.join(shellSource, 'src/App.js'),
         shellSourcePublic: path.join(shellSource, 'public'),
