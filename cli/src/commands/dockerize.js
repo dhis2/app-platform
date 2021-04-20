@@ -1,9 +1,9 @@
 const { reporter } = require('@dhis2/cli-helpers-engine')
+const makeDocker = require('../lib/docker')
 const exitOnCatch = require('../lib/exitOnCatch')
 const loadEnvFiles = require('../lib/loadEnvFiles')
 const parseConfig = require('../lib/parseConfig')
 const makePaths = require('../lib/paths')
-const makeShell = require('../lib/shell')
 
 const handler = async ({ cwd }) => {
     const paths = makePaths(cwd)
@@ -12,7 +12,7 @@ const handler = async ({ cwd }) => {
     loadEnvFiles(paths, mode)
 
     const config = parseConfig(paths)
-    const shell = makeShell({ config, paths })
+    const docker = makeDocker({ config, paths })
 
     const registry = 'dhis2'
     const appName = paths.base.split(/[\\/]/).pop()
@@ -22,7 +22,7 @@ const handler = async ({ cwd }) => {
     await exitOnCatch(
         async () => {
             reporter.info('Building docker image...')
-            await shell.dockerBuild({ image: dockerImage, tag: dockerTag })
+            await docker.build({ image: dockerImage, tag: dockerTag })
         },
         {
             name: 'dockerize',
