@@ -7,6 +7,7 @@ const makePaths = require('../lib/paths')
 
 const handler = async ({ cwd }) => {
     const paths = makePaths(cwd)
+    const pkg = require(paths.package)
 
     const mode = 'development'
     loadEnvFiles(paths, mode)
@@ -15,8 +16,7 @@ const handler = async ({ cwd }) => {
     const docker = makeDocker({ config, paths })
 
     const registry = 'dhis2'
-    const appName = paths.base.split(/[\\/]/).pop()
-    const dockerImage = `${registry}/${appName}`
+    const dockerImage = `${registry}/${pkg.appName}`
     const dockerTag = 'standalone'
 
     await exitOnCatch(
