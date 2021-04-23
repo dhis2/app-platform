@@ -17,6 +17,7 @@
         "@dhis2/d2-i18n": "^1.1.0",
         "@dhis2/ui": "^6.5.3",
         "classnames": "^2.2.6",
+        "idb": "^6.0.0",
         "moment": "^2.29.1",
         "prop-types": "^15.7.2",
         "react": "^16.8.6",
@@ -25,7 +26,12 @@
         "source-map-explorer": "^2.1.0",
         "styled-jsx": "^3.2.2",
         "typeface-roboto": "^0.0.75",
-        "typescript": "^3.6.3"
+        "typescript": "^3.6.3",
+        "workbox-core": "^6.1.5",
+        "workbox-expiration": "^6.1.5",
+        "workbox-precaching": "^6.1.5",
+        "workbox-routing": "^6.1.5",
+        "workbox-strategies": "^6.1.5"
     },
     "scripts": {
         "start": "react-scripts start",

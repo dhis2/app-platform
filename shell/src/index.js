@@ -3,7 +3,7 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 import App from './App'
 import 'typeface-roboto'
-import * as serviceWorker from './serviceWorker'
+import * as serviceWorkerRegistration from './serviceWorkerRegistration'
 
 ReactDOM.render(
     <>
@@ -15,5 +15,55 @@ ReactDOM.render(
 
 // If you want your app to work offline and load faster, you can change
 // unregister() to register() below. Note this comes with some pitfalls.
-// Learn more about service workers: https://bit.ly/CRA-PWA
-serviceWorker.unregister()
+// Learn more about service workers: https://cra.link/PWA
+if (process.env.DHIS2_APP_PWA_ENABLED) {
+    serviceWorkerRegistration.register({
+        // These callbacks can be used to prompt user to activate new service worker
+        // Called when a previous SW exists and a new one is installed
+        onUpdate: registration => {
+            if (
+                window.confirm(
+                    'New service worker installed and ready to activate. Reload and activate now?'
+                )
+            ) {
+                registration.waiting.postMessage({ type: 'SKIP_WAITING' })
+            }
+            console.log(
+                'New service worker installed and ready to activate',
+                registration
+            )
+        },
+        // Called when installed for the first time
+        onSuccess: registration =>
+            console.log('New service worker active', registration),
+    })
+} else {
+    serviceWorkerRegistration.unregister()
+}
+
+let reloaded
+if ('serviceWorker' in navigator && process.env.DHIS2_APP_PWA_ENABLED) {
+    // Reload when new ServiceWorker becomes active
+    navigator.serviceWorker.addEventListener('controllerchange', () => {
+        if (reloaded) return
+        reloaded = true
+        window.location.reload()
+    })
+
+    // Service worker message listeners
+    navigator.serviceWorker.onmessage = event => {
+        if (event.data && event.data.type === 'RECORDING_ERROR') {
+            console.error(
+                '[App] Received recording error',
+                event.data.payload.error
+            )
+        }
+
+        if (event.data && event.data.type === 'CONFIRM_RECORDING_COMPLETION') {
+            console.log('[App] Confirming completion')
+            navigator.serviceWorker.controller.postMessage({
+                type: 'COMPLETE_RECORDING',
+            })
+        }
+    }
+}
