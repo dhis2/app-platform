@@ -46,6 +46,8 @@ module.exports.plugin = ({ types }) => ({
                                 .map(line => `  at ${line}`),
                         ].join('\n')
                     )
+                } else {
+                    throw e
                 }
             }
         },
