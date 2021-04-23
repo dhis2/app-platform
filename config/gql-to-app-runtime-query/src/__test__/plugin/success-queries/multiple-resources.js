@@ -13,9 +13,15 @@ const query = gql`
                     displayName
                 }
             }
-            smsCodes {
-                code
-                optionId
+        }
+
+        DataElement(resource: "dataElements") {
+            id
+            displayName
+            dataSetElements {
+                categoryCombo {
+                    __all
+                }
             }
         }
     }

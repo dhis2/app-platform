@@ -7,7 +7,7 @@ module.exports.getDefaultValueOfVariable = variableDefinition => {
         return variableDefinition.defaultValue.fields
     }
 
-    if ('ArrayValue' === variableDefinition.defaultValue.kind) {
+    if ('ListValue' === variableDefinition.defaultValue.kind) {
         return variableDefinition.defaultValue.values
     }
 

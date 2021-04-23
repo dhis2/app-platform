@@ -3,7 +3,7 @@ const query = {
   SmsCommand: {
     resource: "smsCommands",
     params: ({}) => ({
-      fields: ["id", "displayName", "dataElements[id,displayName,dataSets[id,displayName]]"]
+      fields: ["id", "displayName", "dataElements[id,displayName,dataSets[id,displayName]]", "smsCodes[code,optionId]"]
     })
   }
 };

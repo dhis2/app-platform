@@ -1,23 +1,20 @@
-const { extractResources } = require('../extractResources')
-const { extractVariables } = require('../extractVariables')
-const { resourceToObjectProperty } = require('../resourceToObjectProperty')
-const {
-    validateVariableDefaultValues,
-} = require('../validateVariableDefaultValues')
+const { createRuntimeResource } = require('./createRuntimeResource')
+const { extractResources } = require('./extractResources')
+const { extractVariables } = require('./extractVariables')
 
 module.exports.handleQuery = (types, path, definition) => {
-    const variables = extractVariables(definition)
-    validateVariableDefaultValues(variables)
+    const gqlVariables = extractVariables(definition)
+    const gqlResourceData = extractResources(definition)
 
-    const resources = extractResources(definition)
-
-    const resourcesObjectExpressions = resources.map(resource =>
-        resourceToObjectProperty({
-            variables,
+    const runtimeResources = gqlResourceData.map(resource =>
+        createRuntimeResource({
+            variables: gqlVariables,
             resource,
             types,
         })
     )
 
-    path.replaceWith(types.objectExpression(resourcesObjectExpressions))
+    const runtimeQuery = types.objectExpression(runtimeResources)
+
+    path.replaceWith(runtimeQuery)
 }

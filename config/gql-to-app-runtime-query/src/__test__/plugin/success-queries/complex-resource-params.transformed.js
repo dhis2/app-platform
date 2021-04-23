@@ -5,16 +5,46 @@ const query = {
     id: ({
       id
     }) => id,
+    data: ({
+      id,
+      test = "test",
+      int = 42,
+      float = 42.42,
+      bool = false,
+      foo = {
+        foo: "bar",
+        bar: {
+          baz: "baz"
+        }
+      },
+      bar = ["foo", "bar"]
+    }) => ({
+      foo: foo,
+      bar: {
+        baz: "foobar"
+      }
+    }),
+    other: {
+      foo: "foo",
+      bar: {
+        baz: "baz"
+      }
+    },
     params: ({
       id,
       test = "test",
       int = 42,
       float = 42.42,
-      bool,
-      foo,
-      bar
+      bool = false,
+      foo = {
+        foo: "bar",
+        bar: {
+          baz: "baz"
+        }
+      },
+      bar = ["foo", "bar"]
     }) => ({
-      fields: "*,displayName,dataset[id,displayName,dataSetElements[dataElement[id,displayName,categoryCombo[categoryOptionCombos[id,displayName,code]]]]]",
+      fields: ["*"],
       test: test,
       paging: "false",
       int: int,
@@ -34,33 +64,6 @@ const query = {
         arrKey1: "arrVal1",
         arrKey2: "arrVal2"
       }, "arr1", "arr2", ["arr3.1", "arr3.2"]]
-    }),
-    data: ({
-      id,
-      test = "test",
-      int = 42,
-      float = 42.42,
-      bool,
-      foo,
-      bar
-    }) => ({
-      foo: foo,
-      bar: {
-        baz: "foobar"
-      }
-    }),
-    other: {
-      foo: "foo",
-      bar: {
-        baz: "baz"
-      }
-    }
-  },
-  sms: {
-    resource: "sms/outbound",
-    pageSize: pageSize,
-    page: page,
-    order: "date:desc",
-    filter: filter
+    })
   }
 };

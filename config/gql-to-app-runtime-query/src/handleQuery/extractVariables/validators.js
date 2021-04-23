@@ -32,10 +32,13 @@ module.exports.validators = {
         }
     },
     Boolean: ({ value, name }) => {
-        const parsed =
-            value === 'true' ? true : value === 'false' ? false : undefined
-
-        if (typeof parsed !== 'boolean') {
+        if (typeof value === 'boolean') {
+            // ok
+        } else if (value === 'true') {
+            // ok
+        } else if (value === 'false') {
+            // ok
+        } else {
             throw new Error(
                 `Variable "${name}" must be of type "Boolean", received value "${value}"`
             )
