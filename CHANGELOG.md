@@ -1,3 +1,10 @@
+# [6.1.0](https://github.com/dhis2/app-platform/compare/v6.0.1...v6.1.0) (2021-04-02)
+
+
+### Features
+
+* support custom authorities and reserved namespace [LIBS-165] ([#547](https://github.com/dhis2/app-platform/issues/547)) ([fc86a55](https://github.com/dhis2/app-platform/commit/fc86a559b259fdae8cff50558f477fbe966cc6fa))
+
 ## [6.0.1](https://github.com/dhis2/app-platform/compare/v6.0.0...v6.0.1) (2021-03-24)
 
 

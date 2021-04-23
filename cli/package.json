@@ -1,12 +1,12 @@
 {
     "name": "@dhis2/cli-app-scripts",
-    "version": "6.0.1",
+    "version": "6.1.0",
     "engines": {
         "node": ">=10"
     },
     "repository": {
         "type": "git",
-        "url": "https://github.com/amcgee/dhis2-app-platform",
+        "url": "https://github.com/dhis2/app-platform",
         "directory": "cli"
     },
     "author": "Austin McGee <austin@dhis2.org>",
@@ -28,7 +28,7 @@
         "@babel/preset-env": "^7.9.0",
         "@babel/preset-react": "^7.0.0",
         "@babel/preset-typescript": "^7.6.0",
-        "@dhis2/app-shell": "6.0.1",
+        "@dhis2/app-shell": "6.1.0",
         "@dhis2/cli-helpers-engine": "^2.1.1",
         "archiver": "^3.1.1",
         "axios": "^0.20.0",

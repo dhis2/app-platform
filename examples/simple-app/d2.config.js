@@ -9,6 +9,9 @@ const config = {
     entryPoints: {
         app: './src/App.js',
     },
+
+    dataStoreNamespace: 'testapp-namespace',
+    customAuthorities: ['testapp-authority'],
 }
 
 module.exports = config
