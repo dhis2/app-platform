@@ -15,7 +15,10 @@ module.exports = ({ config, paths }) => ({
             cmd: 'yarn',
             args: ['run', 'build'],
             cwd: paths.shell,
-            env: getEnv({ name: config.title }),
+            env: getEnv({
+                name: config.title,
+                pwa_enabled: config.pwa?.enabled,
+            }),
             pipe: false,
         })
     },
