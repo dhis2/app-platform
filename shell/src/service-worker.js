@@ -75,6 +75,8 @@ registerRoute(
         if (url.origin !== self.location.origin) return false
         // Don't handle service worker file
         if (url.pathname === self.location.pathname) return false
+        // Don't handle if pathname doesn't have a file extensions (not a static asset)
+        if (!fileExtensionRegexp.test(url.pathname)) return false
         // Handle static assets for this app
         // (Needed in addition to test below in case this app is deployed somewhere other than a DHIS2 instance)
         const buildPath = new URL('./', self.location.href).pathname
