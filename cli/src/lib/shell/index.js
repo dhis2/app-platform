@@ -17,7 +17,7 @@ module.exports = ({ config, paths }) => ({
             cwd: paths.shell,
             env: getEnv({
                 name: config.title,
-                pwa_enabled: config.pwa?.enabled,
+                pwa_enabled: config.pwa && config.pwa.enabled,
             }),
             pipe: false,
         })
