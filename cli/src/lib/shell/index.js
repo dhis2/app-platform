@@ -17,7 +17,14 @@ module.exports = ({ config, paths }) => ({
             cwd: paths.shell,
             env: getEnv({
                 name: config.title,
-                pwa_enabled: config.pwa && config.pwa.enabled,
+                // if config.type == 'app', there will be default values for the following properties
+                pwa_enabled: config.type === 'app' && config.pwa.enabled,
+                patterns_to_omit:
+                    config.type === 'app' &&
+                    JSON.stringify(config.pwa.caching.patternsToOmit),
+                files_to_precache:
+                    config.type === 'app' &&
+                    JSON.stringify(config.pwa.caching.filesToPrecache),
             }),
             pipe: false,
         })

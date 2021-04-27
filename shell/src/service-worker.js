@@ -11,6 +11,7 @@ let dbPromise
 const clientRecordingStates = {}
 const DB_VERSION = 2
 const CACHE_KEEP_LIST = ['other-assets', 'app-shell']
+const URL_FILTER_PATTERNS = process.env.REACT_APP_DHIS2_APP_PATTERNS_TO_OMIT
 
 clientsClaim()
 
@@ -105,10 +106,9 @@ registerRoute(({ url, request, event }) => {
     // QUESTION: Can this rule safely be generalized to all apps?
     if (url.origin !== self.location.origin) return false
 
-    // Don't cache if (url matches filter) return false
-    const filters = [] // TODO: Get from config
-    const urlMatchesFilter = filters.some(filter =>
-        new RegExp(filter).test(url.pathname)
+    // Don't cache if url matches filter in pattern list from d2.config.json
+    const urlMatchesFilter = URL_FILTER_PATTERNS.some(pattern =>
+        new RegExp(pattern).test(url.pathname)
     )
     if (urlMatchesFilter) return false
 
