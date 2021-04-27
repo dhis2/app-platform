@@ -1,3 +1,10 @@
+## [6.1.1](https://github.com/dhis2/app-platform/compare/v6.1.0...v6.1.1) (2021-04-27)
+
+
+### Bug Fixes
+
+* respect --cwd argument when generating/extracting translations ([#540](https://github.com/dhis2/app-platform/issues/540)) ([280e02c](https://github.com/dhis2/app-platform/commit/280e02ca445b5b54e86b7a1dbe965c7ad6ce7abc))
+
 # [6.1.0](https://github.com/dhis2/app-platform/compare/v6.0.1...v6.1.0) (2021-04-02)
 
 
