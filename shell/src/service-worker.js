@@ -11,7 +11,9 @@ let dbPromise
 const clientRecordingStates = {}
 const DB_VERSION = 2
 const CACHE_KEEP_LIST = ['other-assets', 'app-shell']
-const URL_FILTER_PATTERNS = process.env.REACT_APP_DHIS2_APP_PATTERNS_TO_OMIT
+const URL_FILTER_PATTERNS = JSON.parse(
+    process.env.REACT_APP_DHIS2_APP_PATTERNS_TO_OMIT
+)
 
 clientsClaim()
 
