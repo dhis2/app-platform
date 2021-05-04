@@ -223,6 +223,11 @@ function startRecording(event) {
         confirmationTimeout: undefined,
     }
     clientRecordingStates[clientId] = newClientRecordingState
+
+    // Send confirmation message to client
+    self.clients.get(clientId).then(client => {
+        client.postMessage({ type: 'RECORDING_STARTED' })
+    })
 }
 
 function isClientRecording(clientId) {
@@ -373,6 +378,11 @@ async function completeRecording(clientId) {
     }).catch(console.error)
 
     removeRecording(clientId)
+
+    // Send confirmation message to client
+    self.clients.get(clientId).then(client => {
+        client.postMessage({ type: 'RECORDING_COMPLETED' })
+    })
 }
 
 // Triggered by 'DELETE_RECORDED_SECTION' message
