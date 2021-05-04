@@ -36,7 +36,70 @@ const parseDataStoreNamespace = namespace => {
     return namespace
 }
 module.exports = (paths, config, publicUrl) => {
-    const manifest = {
+    // PWA manifest
+    const manifestJson = {
+        short_name: config.name,
+        name: config.title,
+        description: config.description,
+        icons: [
+            {
+                src: 'android-chrome-192x192.png',
+                type: 'image/png',
+                sizes: '192x192',
+            },
+            {
+                src: 'android-chrome-384x384.png',
+                type: 'image/png',
+                sizes: '384x384',
+            },
+            {
+                src: 'apple-touch-icon.png',
+                type: 'image/png',
+                sizes: '180x180',
+            },
+            {
+                src: 'dhis2-app-icon.png',
+                type: 'image/png',
+                sizes: '48x48',
+            },
+            {
+                src: 'favicon-16x16.png',
+                sizes: '16x16',
+                type: 'image/png',
+            },
+            {
+                src: 'favicon-32x32.png',
+                sizes: '32x32',
+                type: 'image/png',
+            },
+            {
+                src: 'favicon-48x48.png',
+                sizes: '48x48',
+                type: 'image/png',
+            },
+            {
+                src: 'favicon.ico',
+                sizes: '64x64 32x32 24x24 16x16',
+                type: 'image/x-icon',
+            },
+            {
+                src: 'mstile-150x150.png',
+                sizes: '150x150',
+                type: 'image/png',
+            },
+            {
+                src: 'safari-pinned-tab.svg',
+                type: 'image/svg+xml',
+            },
+        ],
+        start_url: '.',
+        display: 'browser',
+        theme_color: '#ffffff',
+        background_color: '#f4f6f8',
+    }
+
+    // Legacy manifest
+    const manifestWebapp = {
         app_hub_id: config.id,
         appType: 'APP',
         short_name: config.name,
@@ -68,12 +131,19 @@ module.exports = (paths, config, publicUrl) => {
         scope: publicUrl,
     }
 
-    reporter.debug('Generated manifest', manifest)
+    reporter.debug('Generated manifest.json', manifestJson)
+    reporter.debug('Generated manifest.webapp', manifestWebapp)
 
-    // For backwards compatibility, WILL BE DEPRECATED
-    fs.writeJsonSync(paths.buildAppManifest, manifest, { spaces: 2 })
+    // Write PWA manifest
+    fs.writeJsonSync(paths.buildAppManifestJson, manifestJson, {
+        spaces: 2,
+    })
+    // Legacy manifest for backwards compatibility, WILL BE DEPRECATED
+    fs.writeJsonSync(paths.buildAppManifestWebapp, manifestWebapp, {
+        spaces: 2,
+    })
 
-    // Write config json
+    // Write d2 config json
     const appConfig = { ...config }
     delete appConfig['entryPoints']
 

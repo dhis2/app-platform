@@ -47,7 +47,8 @@ module.exports = (cwd = process.cwd()) => {
 
         buildOutput: path.join(base, './build'),
         buildAppOutput: path.join(base, './build/app'),
-        buildAppManifest: path.join(base, './build/app/manifest.webapp'),
+        buildAppManifestWebapp: path.join(base, './build/app/manifest.webapp'),
+        buildAppManifestJson: path.join(base, './build/app/manifest.json'),
         buildAppConfigJson: path.join(base, './build/app/d2.config.json'),
         buildAppBundle: path.join(
             base,
