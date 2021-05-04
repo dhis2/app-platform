@@ -53,7 +53,7 @@
         }
     ],
     "start_url": ".",
-    "display": "minimal-ui",
+    "display": "browser",
     "theme_color": "#ffffff",
     "background_color": "#f4f6f8"
 }
