@@ -59,6 +59,7 @@ if ('serviceWorker' in navigator && process.env.DHIS2_APP_PWA_ENABLED) {
             )
         }
 
+        // Option to add more logic here
         if (event.data && event.data.type === 'CONFIRM_RECORDING_COMPLETION') {
             console.log('[App] Confirming completion')
             navigator.serviceWorker.controller.postMessage({

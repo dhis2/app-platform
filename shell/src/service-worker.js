@@ -11,8 +11,12 @@ let dbPromise
 const clientRecordingStates = {}
 const DB_VERSION = 2
 const CACHE_KEEP_LIST = ['other-assets', 'app-shell']
+// * Maybe use babel replacement here:
 const URL_FILTER_PATTERNS = JSON.parse(
     process.env.REACT_APP_DHIS2_APP_PATTERNS_TO_OMIT
+)
+const FILES_TO_PRECACHE = JSON.parse(
+    process.env.REACT_APP_DHIS_2_APP_FILES_TO_PRECACHE
 )
 
 clientsClaim()
@@ -30,18 +34,9 @@ clientsClaim()
 // even if you decide not to use precaching. See https://cra.link/PWA
 precacheAndRoute(self.__WB_MANIFEST)
 
-/**
- * Kai: A test to see if another precacheAndRouteCall works (it does).
- * Limitation: files need to be explicitly specified; I haven't found
- * a way to use a glob yet.
- * Maybe this could be handled by a cache-first route? It wouldn't be precached,
- * but would be handled smartly and separately from recording-mode.
- * (Cache-first route is down below)
- */
-precacheAndRoute([
-    { url: './vendor/jquery-migrate-3.0.1.min.js', revision: null },
-    { url: 'nonexistent/url-v1.png', revision: null }, // doesn't throw error
-])
+// TODO: Confirm you can precache external files
+// ? MAYBE: Require revision hash in filename of anything in files to precache
+precacheAndRoute(FILES_TO_PRECACHE) // needs revisions
 
 /**
  * (QUESTION: Do we need this route?)
@@ -85,6 +80,7 @@ registerRoute(
         const buildPath = new URL('./', self.location.href).pathname
         if (new RegExp(buildPath).test(url.pathname)) return true
         // Handle static assets from (other) dhis2 web apps (e.g. ../dhis-web-maps/maps.js)
+        // TODO: Consider other ways to use cache-control headers and stuff
         const dhis2AppPartialPath = new URL('../dhis-web-', self.location.href)
             .pathname
         if (new RegExp(dhis2AppPartialPath).test(url.pathname)) return true
@@ -105,7 +101,8 @@ registerRoute(
 // Network-first caching by default unless filtered out
 registerRoute(({ url, request, event }) => {
     // Don't cache external requests by default
-    // QUESTION: Can this rule safely be generalized to all apps?
+    // NOTE: This may not be generalizable to all apps that might use a service worker
+    // (Maybe: 'omitExternalRequest' in d2.config, or add external URLs to 'filesToPrecache' list)
     if (url.origin !== self.location.origin) return false
 
     // Don't cache if url matches filter in pattern list from d2.config.json
