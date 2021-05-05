@@ -24,6 +24,7 @@ const extract = async ({ input, output, paths }) => {
         process.exit(1)
     }
 
+    /* eslint-disable max-params */
     var parser = new scanner.Parser({
         keepRemoved: false,
         keySeparator: false,
@@ -31,6 +32,7 @@ const extract = async ({ input, output, paths }) => {
         defaultValue: (lng, ns, key, options) =>
             options.defaultValue ? options.defaultValue : key
     })
+    /* eslint-enable max-params */
 
     reporter.debug(`[i18n-extract] Parsing ${files.length} files...`)
 
