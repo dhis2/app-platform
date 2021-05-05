@@ -43,13 +43,22 @@ module.exports = (cwd = process.cwd()) => {
         shellAppDirname,
         shellApp: path.join(base, `./.d2/shell/${shellAppDirname}`),
         shellPublic: path.join(base, './.d2/shell/public'),
+        shellPublicManifestWebapp: path.join(
+            base,
+            './.d2/shell/public/manifest.webapp'
+        ),
+        shellPublicManifestJson: path.join(
+            base,
+            './.d2/shell/public/manifest.json'
+        ),
+        shellPublicConfigJson: path.join(
+            base,
+            './.d2/shell/public/d2.config.json'
+        ),
         shellBuildOutput: path.join(base, './.d2/shell/build'),
 
         buildOutput: path.join(base, './build'),
         buildAppOutput: path.join(base, './build/app'),
-        buildAppManifestWebapp: path.join(base, './build/app/manifest.webapp'),
-        buildAppManifestJson: path.join(base, './build/app/manifest.json'),
-        buildAppConfigJson: path.join(base, './build/app/d2.config.json'),
         buildAppBundle: path.join(
             base,
             './build/bundle/dhis2-{{name}}-{{version}}.zip'

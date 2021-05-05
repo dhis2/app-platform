@@ -112,6 +112,12 @@ const handler = async ({
                     mode,
                     watch,
                 })
+
+                // Manifest generation moved here so these static assets can be
+                // precached by Workbox during the shell build step
+                reporter.info('Generating manifest...')
+                await generateManifest(paths, config, process.env.PUBLIC_URL)
+
                 reporter.info('Building appShell...')
                 await shell.build()
             } else {
@@ -146,9 +152,6 @@ const handler = async ({
         }
 
         await fs.copy(paths.shellBuildOutput, paths.buildAppOutput)
-
-        reporter.info('Generating manifest...')
-        await generateManifest(paths, config, process.env.PUBLIC_URL)
 
         const appBundle = paths.buildAppBundle
             .replace(/{{name}}/, config.name)

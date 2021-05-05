@@ -135,11 +135,11 @@ module.exports = (paths, config, publicUrl) => {
     reporter.debug('Generated manifest.webapp', manifestWebapp)
 
     // Write PWA manifest
-    fs.writeJsonSync(paths.buildAppManifestJson, manifestJson, {
+    fs.writeJsonSync(paths.shellPublicManifestJson, manifestJson, {
         spaces: 2,
     })
     // Legacy manifest for backwards compatibility, WILL BE DEPRECATED
-    fs.writeJsonSync(paths.buildAppManifestWebapp, manifestWebapp, {
+    fs.writeJsonSync(paths.shellPublicManifestWebapp, manifestWebapp, {
         spaces: 2,
     })
 
@@ -147,5 +147,5 @@ module.exports = (paths, config, publicUrl) => {
     const appConfig = { ...config }
     delete appConfig['entryPoints']
 
-    fs.writeJsonSync(paths.buildAppConfigJson, appConfig, { spaces: 2 })
+    fs.writeJsonSync(paths.shellPublicConfigJson, appConfig, { spaces: 2 })
 }
