@@ -28,6 +28,8 @@ const extract = async ({ input, output, paths }) => {
         keepRemoved: false,
         keySeparator: false,
         sort: true,
+        defaultValue: (lng, ns, key, options) =>
+            options.defaultValue ? options.defaultValue : key
     })
 
     reporter.debug(`[i18n-extract] Parsing ${files.length} files...`)
