@@ -18,6 +18,8 @@ const URL_FILTER_PATTERNS = JSON.parse(
 const FILES_TO_PRECACHE = JSON.parse(
     process.env.REACT_APP_DHIS2_APP_FILES_TO_PRECACHE
 )
+const OMIT_EXTERNAL_REQUESTS =
+    process.env.REACT_APP_DHIS2_APP_OMIT_EXTERNAL_REQUESTS === 'true'
 
 clientsClaim()
 
@@ -69,6 +71,7 @@ registerRoute(
     createHandlerBoundToURL(process.env.PUBLIC_URL + '/index.html')
 )
 
+// TODO: Clean this up; maybe use SWR strategy for static assets on same domain but aren't precached
 // Possible cache-first route for static assets, if precaching is too complicated.
 registerRoute(
     ({ url, request, event }) => {
@@ -104,9 +107,9 @@ registerRoute(
 // Network-first caching by default unless filtered out
 registerRoute(({ url, request, event }) => {
     // Don't cache external requests by default
-    // NOTE: This may not be generalizable to all apps that might use a service worker
-    // (Maybe: 'omitExternalRequest' in d2.config, or add external URLs to 'filesToPrecache' list)
-    if (url.origin !== self.location.origin) return false
+    // ? Maybe require apps to add external requests to FILES_TO_PRECACHE list?
+    if (OMIT_EXTERNAL_REQUESTS && url.origin !== self.location.origin)
+        return false
 
     // Don't cache if url matches filter in pattern list from d2.config.json
     const urlMatchesFilter = URL_FILTER_PATTERNS.some(pattern =>

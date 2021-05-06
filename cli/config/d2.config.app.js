@@ -3,7 +3,11 @@ const config = {
 
     pwa: {
         enabled: false,
-        caching: { patternsToOmit: [], filesToPrecache: [] },
+        caching: {
+            omitExternalRequests: true,
+            patternsToOmit: [],
+            filesToPrecache: [],
+        },
     },
 
     entryPoints: {
