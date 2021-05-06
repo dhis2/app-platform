@@ -16,7 +16,7 @@ const URL_FILTER_PATTERNS = JSON.parse(
     process.env.REACT_APP_DHIS2_APP_PATTERNS_TO_OMIT
 )
 const FILES_TO_PRECACHE = JSON.parse(
-    process.env.REACT_APP_DHIS_2_APP_FILES_TO_PRECACHE
+    process.env.REACT_APP_DHIS2_APP_FILES_TO_PRECACHE
 )
 
 clientsClaim()
@@ -34,7 +34,10 @@ clientsClaim()
 // even if you decide not to use precaching. See https://cra.link/PWA
 precacheAndRoute(self.__WB_MANIFEST)
 
-// TODO: Confirm you can precache external files
+// Similar to above; manifest injection from Workbox CLI
+// Precaches all assets in the shell's build folder, except in /static
+precacheAndRoute(self.__WB_CLI_MANIFEST)
+
 // ? MAYBE: Require revision hash in filename of anything in files to precache
 precacheAndRoute(FILES_TO_PRECACHE) // needs revisions
 
