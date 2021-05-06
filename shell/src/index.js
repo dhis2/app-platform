@@ -16,7 +16,7 @@ ReactDOM.render(
 // If you want your app to work offline and load faster, you can change
 // unregister() to register() below. Note this comes with some pitfalls.
 // Learn more about service workers: https://cra.link/PWA
-const pwaEnabled = process.env.REACT_APP_DHIS2_APP_PWA_ENABLED == 'true' // env vars are strings
+const pwaEnabled = process.env.REACT_APP_DHIS2_APP_PWA_ENABLED === 'true' // env vars are strings
 if (pwaEnabled) {
     serviceWorkerRegistration.register({
         // These callbacks can be used to prompt user to activate new service worker
