@@ -44,7 +44,7 @@ if (pwaEnabled) {
 }
 
 let reloaded
-if ('serviceWorker' in navigator && process.env.DHIS2_APP_PWA_ENABLED) {
+if ('serviceWorker' in navigator) {
     // Reload when new ServiceWorker becomes active
     navigator.serviceWorker.addEventListener('controllerchange', () => {
         if (reloaded) return
