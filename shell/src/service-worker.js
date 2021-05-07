@@ -125,7 +125,6 @@ self.addEventListener('activate', event => {
 // * 3. Helper functions:
 
 function urlMeetsDefaultCachingCriteria(url) {
-    console.log('[SW] Checking request: ', { url })
     // Don't cache external requests by default
     // ? Maybe require apps to add external requests to FILES_TO_PRECACHE list?
     if (OMIT_EXTERNAL_REQUESTS && url.origin !== self.location.origin)
