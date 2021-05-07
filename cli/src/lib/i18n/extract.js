@@ -30,7 +30,7 @@ const extract = async ({ input, output, paths }) => {
         keySeparator: false,
         sort: true,
         defaultValue: (lng, ns, key, options) =>
-            options.defaultValue ? options.defaultValue : key
+            options.defaultValue ? options.defaultValue : key,
     })
     /* eslint-enable max-params */
 
