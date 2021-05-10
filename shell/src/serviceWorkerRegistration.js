@@ -1,3 +1,68 @@
+export default function handleSW(config) {
+    const pwaEnabled = process.env.REACT_APP_DHIS2_APP_PWA_ENABLED === 'true' // env vars are strings
+    if (pwaEnabled) {
+        register({
+            // These callbacks can be used to prompt user to activate new service worker.
+            // onUpdate is called when a previous SW exists and a new one is installed;
+            // This CB plus the 'controllerchange' listener below are an example
+            onUpdate: registration => {
+                // TODO: Replace this with a nice alert
+                const userConfirms = window.confirm(
+                    'New service worker installed and ready to activate. Reload and activate now?'
+                )
+                if (userConfirms) {
+                    // Instruct waiting service worker to skip waiting and activate
+                    registration.waiting.postMessage({ type: 'SKIP_WAITING' })
+                }
+                console.log(
+                    'New service worker installed and ready to activate',
+                    registration
+                )
+            },
+            // Called when installed for the first time
+            onSuccess: registration =>
+                console.log('New service worker active', registration),
+        })
+    } else {
+        console.log('PWA is not enabled.')
+        unregister()
+    }
+
+    let reloaded
+    if ('serviceWorker' in navigator) {
+        // Reload when new ServiceWorker becomes active
+        navigator.serviceWorker.addEventListener('controllerchange', () => {
+            if (reloaded) return
+            reloaded = true
+            window.location.reload()
+        })
+
+        // TODO: These are placeholders
+        // Service worker message listeners
+        navigator.serviceWorker.onmessage = event => {
+            if (event.data && event.data.type === 'RECORDING_ERROR') {
+                console.error(
+                    '[App] Received recording error',
+                    event.data.payload.error
+                )
+            }
+
+            // Option to add more logic here
+            if (
+                event.data &&
+                event.data.type === 'CONFIRM_RECORDING_COMPLETION'
+            ) {
+                console.log('[App] Confirming completion')
+                navigator.serviceWorker.controller.postMessage({
+                    type: 'COMPLETE_RECORDING',
+                })
+            }
+        }
+    }
+}
+
+/* CRA Boilerplate below */
+
 // This optional code is used to register a service worker.
 // register() is not called by default.
 
