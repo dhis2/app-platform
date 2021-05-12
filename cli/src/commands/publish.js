@@ -42,8 +42,8 @@ const validateFields = (
     fieldNames.forEach(fieldName => {
         const fieldValue = config[fieldName]
         if (
-            (requiredFields.has(fieldName) && fieldValue == null) ||
-            fieldValue === ''
+            requiredFields.has(fieldName) &&
+            (fieldValue == null || fieldValue === '')
         ) {
             reporter.error(
                 `${fieldName} not found in config. Add an ${chalk.bold(
@@ -66,62 +66,68 @@ const validateFields = (
     })
 }
 
-const resolveBundle = (cwd, params) => {
+const resolveBundleFromParams = (cwd, params) => {
     const appBundle = {}
-    // use file-path from params
-    if (params.file) {
-        try {
-            const filePath = path.resolve(cwd, params.file)
-            if (!fs.statSync(filePath).isFile()) {
-                reporter.error(`${params.file} is not a file`)
-                process.exit(1)
-            }
-            appBundle.id = params.appId
-            appBundle.version = params.fileVersion
-            appBundle.path = filePath
-            appBundle.name = path.basename(filePath)
-            appBundle.minDHIS2Version = params.minDHIS2Version
-            appBundle.maxDHIS2Version = params.maxDHIS2Version
-        } catch (e) {
-            reporter.error(`File does not exist at ${params.file}`)
+    try {
+        const filePath = path.resolve(cwd, params.file)
+        if (!fs.statSync(filePath).isFile()) {
+            reporter.error(`${params.file} is not a file`)
             process.exit(1)
         }
-    } else {
-        // resolve file from built-bundle
-        const paths = makePaths(cwd)
-        const builtAppConfig = parseConfig(paths)
-        validateFields(builtAppConfig)
-
-        appBundle.id = builtAppConfig.id
-        appBundle.version = builtAppConfig.version
-        appBundle.path = path.relative(
-            cwd,
-            paths.buildAppBundle
-                .replace(/{{name}}/, builtAppConfig.name)
-                .replace(/{{version}}/, builtAppConfig.version)
-        )
-        appBundle.name = builtAppConfig.name
-        appBundle.minDHIS2Version = builtAppConfig.minDHIS2Version
-        appBundle.maxDHIS2Version = builtAppConfig.maxDHIS2Version
-
-        if (!fs.existsSync(appBundle.path)) {
-            reporter.error(
-                `App bundle does not exist, run ${chalk.bold(
-                    'd2-app-scripts build'
-                )} before deploying.`
-            )
-            process.exit(1)
-        }
+        appBundle.id = params.appId
+        appBundle.version = params.fileVersion
+        appBundle.path = filePath
+        appBundle.name = path.basename(filePath)
+        appBundle.minDHIS2Version = params.minDHIS2Version
+        appBundle.maxDHIS2Version = params.maxDHIS2Version
+        return appBundle
+    } catch (e) {
+        reporter.error(`File does not exist at ${params.file}`)
+        process.exit(1)
     }
+}
 
+const resolveBundleFromAppConfig = cwd => {
+    // resolve file from built-bundle
+    const appBundle = {}
+    const paths = makePaths(cwd)
+    const builtAppConfig = parseConfig(paths)
+    validateFields(builtAppConfig)
+
+    appBundle.id = builtAppConfig.id
+    appBundle.version = builtAppConfig.version
+    appBundle.path = path.relative(
+        cwd,
+        paths.buildAppBundle
+            .replace(/{{name}}/, builtAppConfig.name)
+            .replace(/{{version}}/, builtAppConfig.version)
+    )
+    appBundle.name = builtAppConfig.name
+    appBundle.minDHIS2Version = builtAppConfig.minDHIS2Version
+    appBundle.maxDHIS2Version = builtAppConfig.maxDHIS2Version
+
+    if (!fs.existsSync(appBundle.path)) {
+        reporter.error(
+            `App bundle does not exist, run ${chalk.bold(
+                'd2-app-scripts build'
+            )} before deploying.`
+        )
+        process.exit(1)
+    }
     return appBundle
 }
 
+const resolveBundle = (cwd, params) => {
+    if (params.file) {
+        return resolveBundleFromParams(cwd, params)
+    }
+    return resolveBundleFromAppConfig(cwd)
+}
+
 const promptForConfig = async params => {
-    if (process.env.CI && (!params.apikey || !params.minVersion)) {
-        reporter.error(
-            'Prompt disabled in CI mode - missing apikey or minVersion parameter.'
-        )
+    const apiKey = params.apikey || process.env.D2_APP_HUB_API_KEY
+    if (process.env.CI && !apiKey) {
+        reporter.error('Prompt disabled in CI mode - missing apikey parameter.')
         process.exit(1)
     }
 
