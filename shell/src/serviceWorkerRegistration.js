@@ -5,8 +5,9 @@ export default function handleSW(config) {
             // These callbacks can be used to prompt user to activate new service worker.
             // onUpdate is called when a previous SW exists and a new one is installed;
             // This CB plus the 'controllerchange' listener below are an example
+            // TODO: `import { handleNewSwReady } from './serviceWorkerInterface'`
+            // TODO: `onUpdate: handleNewSwReady`
             onUpdate: registration => {
-                // TODO: Replace this with a nice alert
                 const userConfirms = window.confirm(
                     'New service worker installed and ready to activate. Reload and activate now?'
                 )
@@ -19,7 +20,7 @@ export default function handleSW(config) {
                     registration
                 )
             },
-            // Called when installed for the first time
+            // Called when installed for the first time. Probably not necessary
             onSuccess: registration =>
                 console.log('New service worker active', registration),
         })
@@ -28,6 +29,7 @@ export default function handleSW(config) {
         unregister()
     }
 
+    // TODO: The following content should be replaced by 'serviceWorkerInterface.js'
     let reloaded
     if ('serviceWorker' in navigator) {
         // Reload when new ServiceWorker becomes active
