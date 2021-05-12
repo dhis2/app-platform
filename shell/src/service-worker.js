@@ -96,23 +96,29 @@ registerRoute(
 // * 2. Service Worker event listeners
 
 self.addEventListener('message', event => {
+    if (!event.data) return
+
     // This allows the web app to trigger skipWaiting via
     // registration.waiting.postMessage({type: 'SKIP_WAITING'})
     // Paired with `clientsClaim()` at top of file.
-    if (event.data && event.data.type === 'SKIP_WAITING') {
+    if (event.data.type === 'SKIP_WAITING') {
         self.skipWaiting()
     }
 
-    if (event.data && event.data.type === 'START_RECORDING') {
+    if (event.data.type === 'START_RECORDING') {
         startRecording(event)
     }
 
-    if (event.data && event.data.type === 'COMPLETE_RECORDING') {
+    if (event.data.type === 'COMPLETE_RECORDING') {
         completeRecording(event.source.id) // same as FetchEvent.clientId
     }
 
-    if (event.data && event.data.type === 'DELETE_RECORDED_SECTION') {
+    if (event.data.type === 'DELETE_RECORDED_SECTION') {
         deleteRecordedSection(event.data.payload?.sectionId)
+    }
+
+    if (event.data.type === 'GET_RECORDED_SECTIONS') {
+        getRecordedSections(event)
     }
 })
 
@@ -193,6 +199,23 @@ async function removeUnusedCaches() {
             }
         })
     )
+}
+
+// Possible 'getRecordedSections' implementation
+// - Could also be implemented in client runtime
+async function getRecordedSections(event) {
+    const clientId = event.source.id
+
+    // If this were in a client runtime, it would need:
+    // const db = await openDB('recorded-section-store')
+
+    const db = await dbPromise
+    const sectionsList = await db.getAll('recorded-sections')
+    const client = await self.clients.get(clientId)
+    client.postMessage({
+        type: 'RECORDED_SECTIONS_LIST',
+        payload: { sectionsList },
+    })
 }
 
 // Triggered on 'START_RECORDING' message
