@@ -1,9 +1,9 @@
+import { handleServiceWorkerRegistration } from '@dhis2/sw'
 import { CssReset } from '@dhis2/ui'
 import React from 'react'
 import ReactDOM from 'react-dom'
 import App from './App'
 import 'typeface-roboto'
-import handleSW from './serviceWorkerRegistration'
 
 ReactDOM.render(
     <>
@@ -17,4 +17,4 @@ ReactDOM.render(
 // If you want your app to work offline and load faster, you can add
 // pwa: { enabled: true } in d2.config.json in your app. Note this comes with some pitfalls.
 // Learn more about service workers: https://cra.link/PWA
-handleSW()
+handleServiceWorkerRegistration()
