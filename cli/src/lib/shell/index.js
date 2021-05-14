@@ -25,9 +25,6 @@ module.exports = ({ config, paths }) => ({
                 patterns_to_omit:
                     config.type === 'app' &&
                     JSON.stringify(config.pwa.caching.patternsToOmit),
-                files_to_precache:
-                    config.type === 'app' &&
-                    JSON.stringify(config.pwa.caching.filesToPrecache),
             }),
             pipe: false,
         })

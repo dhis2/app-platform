@@ -6,7 +6,7 @@ const config = {
         caching: {
             omitExternalRequests: true,
             patternsToOmit: [],
-            filesToPrecache: [],
+            additionalManifestEntries: [],
         },
     },
 

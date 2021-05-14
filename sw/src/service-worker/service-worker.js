@@ -13,9 +13,6 @@ export function setUpServiceWorker() {
     const URL_FILTER_PATTERNS = JSON.parse(
         process.env.REACT_APP_DHIS2_APP_PATTERNS_TO_OMIT
     )
-    const FILES_TO_PRECACHE = JSON.parse(
-        process.env.REACT_APP_DHIS2_APP_FILES_TO_PRECACHE
-    )
     const OMIT_EXTERNAL_REQUESTS =
         process.env.REACT_APP_DHIS2_APP_OMIT_EXTERNAL_REQUESTS === 'true'
 
@@ -34,14 +31,10 @@ export function setUpServiceWorker() {
     // even if you decide not to use precaching. See https://cra.link/PWA
     precacheAndRoute(self.__WB_MANIFEST)
 
-    // Similar to above; manifest injection from Workbox CLI
-    // Precaches all assets in the shell's build folder, except in /static
-    precacheAndRoute(self.__WB_CLI_MANIFEST)
-
-    // Configurable precache manifest: currently requires a correctly-formatted
-    // manifest:
-    // https://developers.google.com/web/tools/workbox/modules/workbox-precaching#explanation_of_the_precache_list
-    precacheAndRoute(FILES_TO_PRECACHE)
+    // Similar to above; manifest injection from workbox-build
+    // Precaches all assets in the shell's build folder except in `static`
+    // (which CRA's workbox-webpack-plugin handle smartly)
+    precacheAndRoute(self.__WB_BUILD_MANIFEST)
 
     // ? QUESTION: Do we need this route?
     // Set up App Shell-style routing, so that all navigation requests

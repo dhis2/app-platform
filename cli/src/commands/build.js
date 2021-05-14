@@ -6,6 +6,7 @@ const { compile } = require('../lib/compiler')
 const exitOnCatch = require('../lib/exitOnCatch')
 const generateManifest = require('../lib/generateManifest')
 const i18n = require('../lib/i18n')
+const injectPrecacheManifest = require('../lib/injectPrecacheManifest')
 const loadEnvFiles = require('../lib/loadEnvFiles')
 const parseConfig = require('../lib/parseConfig')
 const makePaths = require('../lib/paths')
@@ -115,11 +116,16 @@ const handler = async ({
 
                 // Manifest generation moved here so these static assets can be
                 // precached by Workbox during the shell build step
-                reporter.info('Generating manifest...')
+                reporter.info('Generating manifests...')
                 await generateManifest(paths, config, process.env.PUBLIC_URL)
 
                 reporter.info('Building appShell...')
                 await shell.build()
+
+                if (config.pwa.enabled) {
+                    reporter.info('Injecting precache manifest...')
+                    await injectPrecacheManifest(paths, config)
+                }
             } else {
                 await Promise.all([
                     compile({
