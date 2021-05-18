@@ -56,7 +56,10 @@ module.exports = (cwd = process.cwd()) => {
             './.d2/shell/public/d2.config.json'
         ),
         shellBuildOutput: path.join(base, './.d2/shell/build'),
-        shellBuildServiceWorker: path.join(base, './.d2/shell/build/service-worker.js'),
+        shellBuildServiceWorker: path.join(
+            base,
+            './.d2/shell/build/service-worker.js'
+        ),
 
         buildOutput: path.join(base, './build'),
         buildAppOutput: path.join(base, './build/app'),
