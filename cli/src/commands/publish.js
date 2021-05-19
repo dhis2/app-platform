@@ -136,7 +136,7 @@ const promptForConfig = async params => {
             type: 'input',
             name: 'apikey',
             message: 'App Hub API-key',
-            when: () => !params.apikey && !process.env.D2_APP_HUB_API_KEY,
+            when: () => !apiKey,
         },
         {
             type: 'input',
@@ -170,6 +170,7 @@ const promptForConfig = async params => {
 
     return {
         ...params,
+        apikey: apiKey,
         ...responses,
     }
 }
@@ -180,12 +181,10 @@ const handler = async ({ cwd = process.cwd(), ...params }) => {
     const appBundle = resolveBundle(cwd, publishConfig)
     const uploadAppUrl = constructUploadUrl(appBundle.id)
 
-    const resolvedApiKey =
-        publishConfig.apikey || process.env.D2_APP_HUB_API_KEY
     const client = createClient({
         baseUrl: publishConfig.baseUrl,
         headers: {
-            'x-api-key': resolvedApiKey,
+            'x-api-key': publishConfig.apikey,
         },
     })
 
@@ -208,7 +207,7 @@ const handler = async ({ cwd = process.cwd(), ...params }) => {
 
         await client.post(uploadAppUrl, formData, {
             headers: formData.getHeaders(),
-            timeout: 30000, // Ensure we have enough time to upload a large zip file
+            timeout: 300000, // Ensure we have enough time to upload a large zip file
         })
         reporter.info(
             `Successfully published ${appBundle.name} with version ${appBundle.version}`
