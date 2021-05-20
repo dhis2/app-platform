@@ -1,3 +1,10 @@
+## [6.1.3](https://github.com/dhis2/app-platform/compare/v6.1.2...v6.1.3) (2021-05-20)
+
+
+### Bug Fixes
+
+* add file extension to default entrypoints in d2.config ([#561](https://github.com/dhis2/app-platform/issues/561)) ([6cb8543](https://github.com/dhis2/app-platform/commit/6cb8543f20154b4e9dc3c564c479ff3e66237984))
+
 ## [6.1.2](https://github.com/dhis2/app-platform/compare/v6.1.1...v6.1.2) (2021-05-11)
 
 
