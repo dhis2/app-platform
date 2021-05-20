@@ -1,3 +1,10 @@
+## [6.1.2](https://github.com/dhis2/app-platform/compare/v6.1.1...v6.1.2) (2021-05-11)
+
+
+### Bug Fixes
+
+* set default value for all strings to support plurals ([#552](https://github.com/dhis2/app-platform/issues/552)) ([3846fc0](https://github.com/dhis2/app-platform/commit/3846fc0ea5f920f4113b929d48b63ce298d3252d))
+
 ## [6.1.1](https://github.com/dhis2/app-platform/compare/v6.1.0...v6.1.1) (2021-04-27)
 
 
