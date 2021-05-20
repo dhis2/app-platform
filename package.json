@@ -9,6 +9,7 @@
     "workspaces": {
         "packages": [
             "examples/simple-app",
+            "examples/pwa-app",
             "cli",
             "shell",
             "adapter",
