@@ -1,0 +1,19 @@
+{
+  "name": "pwa-app",
+  "version": "1.0.0",
+  "description": "",
+  "license": "BSD-3-Clause",
+  "private": true,
+  "scripts": {
+    "build": "d2-app-scripts build",
+    "start": "d2-app-scripts start",
+    "test": "d2-app-scripts test",
+    "deploy": "d2-app-scripts deploy"
+  },
+  "devDependencies": {
+    "@dhis2/cli-app-scripts": "^6.1.2"
+  },
+  "dependencies": {
+    "@dhis2/app-runtime": "^2.8.0"
+  }
+}
