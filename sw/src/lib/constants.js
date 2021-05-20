@@ -1,4 +1,4 @@
-export const msgTypes = Object.freeze({
+export const swMsgs = Object.freeze({
     SKIP_WAITING: 'SKIP_WAITING',
     START_RECORDING: 'START_RECORDING',
     RECORDING_STARTED: 'RECORDING_STARTED',
