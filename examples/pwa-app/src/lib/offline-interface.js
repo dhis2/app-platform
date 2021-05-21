@@ -34,7 +34,7 @@ export function makeOfflineInterface() {
     // * Should everything be promise-based or callback-based? Or ok to mix?
     async function startRecording({
         sectionId,
-        recordingTimeout,
+        recordingTimeoutDelay,
         onStarted,
         onCompleted,
         onError,
@@ -45,11 +45,14 @@ export function makeOfflineInterface() {
             )
 
         // Send SW message to start recording
-        swMessage(swMsgs.startRecording, { sectionId, recordingTimeout })
+        swMessage(swMsgs.startRecording, {
+            sectionId,
+            recordingTimeoutDelay,
+        })
 
         // Prep for subsequent events after recording starts
         offlineEvents.once(swMsgs.recordingStarted, onStarted)
-        offlineEvents.once(swMsgs.requestCompletionConfirmation, () =>
+        offlineEvents.once(swMsgs.confirmRecordingCompletion, () =>
             // Confirms recording is okay to save
             swMessage(swMsgs.completeRecording)
         )

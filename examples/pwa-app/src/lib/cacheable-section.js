@@ -26,7 +26,7 @@ export function useCacheableSection(id) {
         offlineInterface
             .startRecording({
                 sectionId: id,
-                recordingTimeout: 1000,
+                recordingTimeoutDelay: 1000,
                 onStarted: onRecordingStarted,
                 onCompleted: onRecordingCompleted,
                 onError: onRecordingError,
