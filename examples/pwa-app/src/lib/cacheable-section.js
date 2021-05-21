@@ -2,6 +2,12 @@ import React, { useState } from 'react'
 import { useOfflineInterface } from './offline-interface.js'
 import { useCachedSections } from './cached-sections.js'
 
+// default is 'null'
+const recordingStates = {
+    pending: 'pending',
+    recording: 'recording',
+}
+
 export function useCacheableSection(id) {
     const offlineInterface = useOfflineInterface()
     const {
