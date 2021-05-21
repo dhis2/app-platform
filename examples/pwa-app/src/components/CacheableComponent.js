@@ -23,32 +23,20 @@ export default function CacheableComponent() {
     const engine = useDataEngine()
 
     useEffect(() => {
+        setVizList([])
         const cascadingFetch = async () => {
-            const res1 = await engine.query(query, { variables: { page: 1 } })
-            console.log('[cascadingFetch] received first res; waiting 250 ms')
-            await wait(250)
-            const res2 = await engine.query(query, { variables: { page: 2 } })
-            console.log('[cascadingFetch] received res 2; waiting 500 ms')
-           
-            // Intermediate test:
-            setVizList([
-                ...res1.visualizations.visualizations,
-                ...res2.visualizations.visualizations,
-            ])
+            for (let i = 0; i < 4; i++) {
+                // wait 0ms, 250ms, 500ms, 750ms
+                await wait(i * 250)
 
-            await wait(500)
-            const res3 = await engine.query(query, { variables: { page: 3 } })
-            console.log('[cascadingFetch] received res 3; waiting 750 ms')
-            await wait(750)
-            const res4 = await engine.query(query, { variables: { page: 4 } })
-            console.log('[cascadingFetch] received res 4')
+                const res = await engine.query(query, {
+                    variables: { page: i + 1 },
+                })
 
-            setVizList([
-                ...res1.visualizations.visualizations,
-                ...res2.visualizations.visualizations,
-                ...res3.visualizations.visualizations,
-                ...res4.visualizations.visualizations,
-            ])
+                setVizList(prev =>
+                    prev.concat(res.visualizations.visualizations)
+                )
+            }
         }
         cascadingFetch()
     }, [])
@@ -56,6 +44,9 @@ export default function CacheableComponent() {
     return (
         <>
             <h2>Visualizations</h2>
+            <div>
+                <em>These will load incrementally</em>
+            </div>
             <ul>
                 {vizList.map(({ id, name }) => (
                     <li key={id}>{name}</li>
