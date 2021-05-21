@@ -1,6 +1,8 @@
+import { Layer } from '@dhis2/ui'
+import PropTypes from 'prop-types'
 import React, { useState } from 'react'
-import { useOfflineInterface } from './offline-interface.js'
 import { useCachedSections } from './cached-sections.js'
+import { useOfflineInterface } from './offline-interface.js'
 
 // default is 'null'
 const recordingStates = {
@@ -25,8 +27,9 @@ export function useCacheableSection(id) {
             .startRecording({
                 sectionId: id,
                 recordingTimeout: 1000,
-                recordingStarted: messageCallback,
-                recordingCompleted: messageCallback,
+                onStarted: onRecordingStarted,
+                onCompleted: onRecordingCompleted,
+                onError: onRecordingError,
             })
             .then(() => setRecordingState(recordingStates.pending))
             .catch(err => {
@@ -35,37 +38,20 @@ export function useCacheableSection(id) {
             })
     }
 
-    // Hypothetical: this gets called upon each event after recording starts
-    // Alternative: startRecording = () => offlineInterface.startRecording(data, { startedRecordingCb, finishedRecordingCb })
-    // (offline interface would handle 'confirm recording' behind the scenes)
-    function messageCallback({ type, payload }) {
-        // this looks like a reducer action ^
-        switch (type) {
-            case 'RECORDING_STARTED':
-                setRecordingState(recordingStates.recording)
-                break
-            case 'CONFIRM_RECORDING_COMPLETION':
-                // TODO: This should be handled behind the scenes
-                offlineInterface.completeRecording()
-                break
-            case 'RECORDING_ERROR':
-                // TODO: Handle error. Alert too?
-                console.error(
-                    'Oops! Something went wrong with the recording.',
-                    payload.err
-                )
-                setRecordingState(null)
-                break
-            case 'RECORDING_COMPLETE':
-                setRecordingState(null)
-                updateSections()
-                break
-            default:
-                console.warn(
-                    `Service worker message of unexpected type ${type} received`
-                )
-                return
-        }
+    function onRecordingStarted() {
+        setRecordingState(recordingStates.recording)
+    }
+
+    function onRecordingCompleted() {
+        // TODO: Alert success
+        setRecordingState(null)
+        updateSections()
+    }
+
+    function onRecordingError(error) {
+        // TODO: Handle error. Alert too?
+        console.error('Oops! Something went wrong with the recording.', error)
+        setRecordingState(null)
     }
 
     // Section status: this and 'delete' _could_ be accessed by useCachedSection,
@@ -90,9 +76,23 @@ export function CacheableSection({ recordingState, children }) {
         }
         case recordingStates.recording: {
             // TODO: Screen cover
-            return <ScreenCover>{children}</ScreenCover>
+            return (
+                <>
+                    <Layer translucent />
+                    {children}
+                </>
+            )
         }
         default:
             return children
     }
+}
+
+CacheableSection.propTypes = {
+    children: PropTypes.node,
+    recordingState: PropTypes.oneOf([
+        recordingStates.pending,
+        recordingStates.recording,
+        null,
+    ]),
 }

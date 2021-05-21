@@ -1,6 +1,7 @@
+import EventEmitter from 'events'
 import { swMsgs, DB_NAME, OS_NAME } from '@dhis2/sw' // service worker constants
 import { openDB } from 'idb'
-import EventEmitter from 'events'
+import PropTypes from 'prop-types'
 import React, { createContext, useContext } from 'react'
 
 export function makeOfflineInterface() {
@@ -13,6 +14,9 @@ export function makeOfflineInterface() {
     // TODO: Handle error events
     function handleServiceWorkerMessage(event) {
         if (!event.data) return
+
+        console.log('[Offline interface] Received message:', event.data)
+
         const { type, payload } = event.data
         offlineEvents.emit(type, payload)
     }
@@ -31,24 +35,27 @@ export function makeOfflineInterface() {
     async function startRecording({
         sectionId,
         recordingTimeout,
-        recordingStarted,
-        recordingCompleted,
+        onStarted,
+        onCompleted,
+        onError,
     }) {
-        if (!sectionId || !recordingStarted || !recordingCompleted)
+        if (!sectionId || !onStarted || !onCompleted || !onError)
             throw new Error(
-                '[Offline interface] The options { sectionId, recordingStarted, recordingCompleted } are required when calling startRecording()'
+                '[Offline interface] The options { sectionId, onStarted, onCompleted, onError } are required when calling startRecording()'
             )
 
         // Send SW message to start recording
         swMessage(swMsgs.startRecording, { sectionId, recordingTimeout })
 
         // Prep for subsequent events after recording starts
-        offlineEvents.once(swMsgs.recordingStarted, recordingStarted)
+        offlineEvents.once(swMsgs.recordingStarted, onStarted)
         offlineEvents.once(swMsgs.requestCompletionConfirmation, () =>
             // Confirms recording is okay to save
             swMessage(swMsgs.completeRecording)
         )
-        offlineEvents.once(swMsgs.recordingCompleted, recordingCompleted)
+        offlineEvents.once(swMsgs.recordingCompleted, onCompleted)
+        offlineEvents.once(swMsgs.recordingError, onError)
+        // TODO: Clean up listeners on error or completion
     }
 
     async function getCachedSections() {
@@ -90,6 +97,11 @@ export function OfflineInterfaceProvider({ offlineInterface, children }) {
             {children}
         </OfflineContext.Provider>
     )
+}
+
+OfflineInterfaceProvider.propTypes = {
+    children: PropTypes.node,
+    offlineInterface: PropTypes.shape({}),
 }
 
 export function useOfflineInterface() {
