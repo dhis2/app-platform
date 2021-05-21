@@ -4,7 +4,7 @@ import { useOfflineInterface } from './offline-interface.js'
 const CachedSectionsContext = createContext()
 
 // Current implementation not optimized because it only 'getsCachedSections' on mount; could be done before?
-export function CachedSectionsProvider() {
+export function CachedSectionsProvider({ children }) {
     const offlineInterface = useOfflineInterface()
 
     // cachedSections = Map: id => lastUpdated
