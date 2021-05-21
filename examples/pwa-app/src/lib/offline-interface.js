@@ -20,21 +20,27 @@ export function makeOfflineInterface() {
 
     // Helper to simplify SW message sending
     function swMessage(type, payload) {
+        if (!navigator.serviceWorker.controller)
+            throw new Error(
+                '[Offine interface] Cannot send service worker message - no service worker is registered'
+            )
         navigator.serviceWorker.controller.postMessage({ type, payload })
     }
 
     // * Should everything be promise-based or callback-based? Or ok to mix?
-    function startRecording({
+    async function startRecording({
         sectionId,
         recordingTimeout,
         recordingStarted,
         recordingCompleted,
     }) {
-        // TODO: Validate options.sectionId & options.recordingTimeout?
         if (!sectionId || !recordingStarted || !recordingCompleted)
             throw new Error(
-                'The options { sectionId, recordingStarted, recordingCompleted } are required when calling startRecording()'
+                '[Offline interface] The options { sectionId, recordingStarted, recordingCompleted } are required when calling startRecording()'
             )
+
+        // Send SW message to start recording
+        swMessage(swMsgs.startRecording, { sectionId, recordingTimeout })
 
         // Prep for subsequent events after recording starts
         offlineEvents.once(swMsgs.recordingStarted, recordingStarted)
@@ -43,27 +49,28 @@ export function makeOfflineInterface() {
             swMessage(swMsgs.completeRecording)
         )
         offlineEvents.once(swMsgs.recordingCompleted, recordingCompleted)
-
-        // Send SW message to start recording
-        swMessage(swMsgs.startRecording, { sectionId, recordingTimeout })
     }
 
     async function getCachedSections() {
         const db = await openDB(DB_NAME)
         return db.getAll(OS_NAME).catch(err => {
-            console.error('Error in getCachedSections:')
-            console.error(err)
+            console.error(
+                '[Offline interface] Error in getCachedSections:\n',
+                err
+            )
             return []
         })
     }
 
     async function removeSection(sectionId) {
         if (!sectionId) throw new Error('No section ID specified to delete')
-        const db = await openDB(DB_NAME)
         return Promise.all([
             caches.delete(sectionId),
-            db.delete(OS_NAME, sectionId),
-        ])
+            (await openDB(DB_NAME)).delete(OS_NAME, sectionId),
+        ]).catch(err => {
+            console.error('[Offline interface] Error in removeSection:\n', err)
+            return null
+        })
     }
 
     return {

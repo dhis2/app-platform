@@ -18,16 +18,21 @@ export function useCacheableSection(id) {
     const [recordingState, setRecordingState] = useState(null)
 
     function startRecording() {
-        setRecordingState(recordingStates.pending)
-        // TODO: Catch errors here; return state to null
-        offlineInterface.startRecording(
-            {
+        // This promise resolving means that the message to the service worker
+        // to start recording was successful. Waiting for resolution prevents
+        // unnecessarily rerendering the whole component in case of an error
+        offlineInterface
+            .startRecording({
                 sectionId: id,
                 recordingTimeout: 1000,
                 recordingStarted: messageCallback,
                 recordingCompleted: messageCallback,
-            },
-        )
+            })
+            .then(() => setRecordingState(recordingStates.pending))
+            .catch(err => {
+                // TODO: Alert error
+                console.error(err)
+            })
     }
 
     // Hypothetical: this gets called upon each event after recording starts
