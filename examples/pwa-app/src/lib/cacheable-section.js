@@ -19,9 +19,14 @@ export function useCacheableSection(id) {
 
     function startRecording() {
         setRecordingState(recordingStates.pending)
+        // TODO: Catch errors here; return state to null
         offlineInterface.startRecording(
-            { sectionId: id, recordingTimeout: 1000 },
-            messageCallback
+            {
+                sectionId: id,
+                recordingTimeout: 1000,
+                recordingStarted: messageCallback,
+                recordingCompleted: messageCallback,
+            },
         )
     }
 

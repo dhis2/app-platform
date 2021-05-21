@@ -24,21 +24,28 @@ export function makeOfflineInterface() {
     }
 
     // * Should everything be promise-based or callback-based? Or ok to mix?
-    function startRecording(options, callbacks) {
-        // TODO: Validate options.sectiondId & options.recordingTimeout?
+    function startRecording({
+        sectionId,
+        recordingTimeout,
+        recordingStarted,
+        recordingCompleted,
+    }) {
+        // TODO: Validate options.sectionId & options.recordingTimeout?
+        if (!sectionId || !recordingStarted || !recordingCompleted)
+            throw new Error(
+                'The options { sectionId, recordingStarted, recordingCompleted } are required when calling startRecording()'
+            )
 
         // Prep for subsequent events after recording starts
-        offlineEvents.once(swMsgs.recordingStarted, callbacks.recordingStarted)
+        offlineEvents.once(swMsgs.recordingStarted, recordingStarted)
         offlineEvents.once(swMsgs.requestCompletionConfirmation, () =>
+            // Confirms recording is okay to save
             swMessage(swMsgs.completeRecording)
         )
-        offlineEvents.once(
-            swMsgs.recordingCompleted,
-            callbacks.recordingCompleted
-        )
+        offlineEvents.once(swMsgs.recordingCompleted, recordingCompleted)
 
         // Send SW message to start recording
-        swMessage(swMsgs.startRecording, options)
+        swMessage(swMsgs.startRecording, { sectionId, recordingTimeout })
     }
 
     async function getCachedSections() {
