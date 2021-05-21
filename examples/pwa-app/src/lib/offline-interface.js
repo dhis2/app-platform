@@ -43,7 +43,11 @@ export function makeOfflineInterface() {
 
     async function getCachedSections() {
         const db = await openDB(DB_NAME)
-        return db.getAll(OS_NAME)
+        return db.getAll(OS_NAME).catch(err => {
+            console.error('Error in getCachedSections:')
+            console.error(err)
+            return []
+        })
     }
 
     async function removeSection(sectionId) {
