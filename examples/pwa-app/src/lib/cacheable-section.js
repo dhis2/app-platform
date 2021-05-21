@@ -70,22 +70,14 @@ export function useCacheableSection(id) {
 }
 
 export function CacheableSection({ recordingState, children }) {
-    switch (recordingState) {
-        case recordingStates.pending: {
-            return null
-        }
-        case recordingStates.recording: {
-            // TODO: Screen cover
-            return (
-                <>
-                    <Layer translucent />
-                    {children}
-                </>
-            )
-        }
-        default:
-            return children
-    }
+    return (
+        <>
+            {recordingState === recordingStates.recording && (
+                <Layer translucent />
+            )}
+            {recordingState !== recordingStates.pending && children}
+        </>
+    )
 }
 
 CacheableSection.propTypes = {
