@@ -65,7 +65,7 @@ export function setUpServiceWorker() {
     // Request handler during recording mode: ALL requests are cached
     // Handling routing: https://developers.google.com/web/tools/workbox/modules/workbox-routing#matching_and_handling_in_routes
     registerRoute(
-        ({ event }) => isClientRecording(event.clientId),
+        ({ event }) => isClientRecordingRequests(event.clientId),
         handleRecordedRequest
     )
 
@@ -244,6 +244,14 @@ export function setUpServiceWorker() {
         return clientId in clientRecordingStates
     }
 
+    function isClientRecordingRequests(clientId) {
+        // Don't record requests when waiting for completion confirmation
+        return (
+            isClientRecording(clientId) &&
+            clientRecordingStates[clientId].confirmationTimeout === undefined
+        )
+    }
+
     function handleRecordedRequest({ request, event }) {
         const recordingState = clientRecordingStates[event.clientId]
 
@@ -389,6 +397,7 @@ export function setUpServiceWorker() {
             requests: recordingState.fulfilledRequests,
         }).catch(console.error)
 
+        // Clean up
         removeRecording(clientId)
 
         // Send confirmation message to client
