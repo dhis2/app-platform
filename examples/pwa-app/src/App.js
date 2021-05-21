@@ -5,15 +5,18 @@ import {
     makeOfflineInterface,
     OfflineInterfaceProvider,
 } from './lib/offline-interface.js'
-import CacheableComponent from './components/CacheableComponent'
+import SectionWrapper from './components/SectionWrapper'
+import { CachedSectionsProvider } from './lib/cached-sections'
 
 const offlineInterface = makeOfflineInterface()
 
 const MyApp = () => (
     <OfflineInterfaceProvider offlineInterface={offlineInterface}>
-        <div className={classes.container}>
-            <CacheableComponent />
-        </div>
+        <CachedSectionsProvider>
+            <div className={classes.container}>
+                <SectionWrapper id={'section-id-01'} />
+            </div>
+        </CachedSectionsProvider>
     </OfflineInterfaceProvider>
 )
 
