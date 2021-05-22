@@ -325,6 +325,7 @@ export function setUpServiceWorker() {
                     },
                 })
             })
+            removeRecording(clientId)
             return
         }
 
