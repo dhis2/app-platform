@@ -7,7 +7,7 @@ import { NetworkFirst, StaleWhileRevalidate } from 'workbox-strategies'
 export function setUpServiceWorker() {
     let dbPromise
     const clientRecordingStates = {}
-    const DB_VERSION = 2
+    const DB_VERSION = 1
     const CACHE_KEEP_LIST = ['other-assets', 'app-shell']
     // * Maybe use babel replacement here:
     const URL_FILTER_PATTERNS = JSON.parse(
@@ -138,9 +138,9 @@ export function setUpServiceWorker() {
     }
 
     function createDB() {
+        // TODO: Use constants for names here
         dbPromise = openDB('recorded-section-store', DB_VERSION, {
-            // eslint-disable-next-line max-params
-            upgrade(db, oldVersion, newVersion, transaction) {
+            upgrade(db, oldVersion /* newVersion, transaction */) {
                 // DB versioning trick that can iteratively apply upgrades
                 // https://developers.google.com/web/ilt/pwa/working-with-indexeddb#using_database_versioning
                 switch (oldVersion) {
@@ -150,15 +150,6 @@ export function setUpServiceWorker() {
                         })
                     }
                     // falls through (this comment satisfies eslint)
-                    case 1: {
-                        const sectionOS = transaction.objectStore(
-                            'recorded-sections'
-                        )
-                        sectionOS.createIndex('cacheKey', 'cacheKey', {
-                            unique: true,
-                        })
-                    }
-                    // falls through
                     default: {
                         console.log('[SW] Done upgrading DB')
                     }
@@ -178,9 +169,8 @@ export function setUpServiceWorker() {
                     keepKey => keepKey === key
                 )
                 const db = await dbPromise
-                const isASavedSection = !!(await db.getFromIndex(
+                const isASavedSection = !!(await db.get(
                     'recorded-sections',
-                    'cacheKey',
                     key
                 ))
                 if (!isWorkboxKey && !isInKeepList && !isASavedSection) {
@@ -377,8 +367,7 @@ export function setUpServiceWorker() {
         clearTimeout(recordingState.confirmationTimeout)
 
         // Move requests from temp cache to section-<ID> cache
-        const sectionCacheKey = getCacheKey('section', recordingState.sectionId)
-        const sectionCache = await caches.open(sectionCacheKey)
+        const sectionCache = await caches.open(recordingState.sectionId)
         const tempCache = await caches.open(getCacheKey('temp', clientId))
         const tempCacheItemKeys = await tempCache.keys()
         tempCacheItemKeys.forEach(async request => {
@@ -392,7 +381,6 @@ export function setUpServiceWorker() {
             // Note that request objects can't be stored in the IDB
             // https://stackoverflow.com/questions/32880073/whats-the-best-option-for-structured-cloning-of-a-fetch-api-request-object
             sectionId: recordingState.sectionId, // the key path
-            cacheKey: sectionCacheKey,
             lastUpdated: new Date(),
             requests: recordingState.fulfilledRequests,
         }).catch(console.error)
@@ -411,9 +399,8 @@ export function setUpServiceWorker() {
         if (!sectionId)
             throw new Error('[SW] No section ID specified to delete')
         const db = await dbPromise
-        const cacheKey = getCacheKey('section', sectionId)
         return Promise.all([
-            caches.delete(cacheKey),
+            caches.delete(sectionId),
             db.delete('recorded-sections', sectionId),
         ])
     }
