@@ -274,7 +274,7 @@ export function setUpServiceWorker() {
                 return handleRecordedResponse(request, response, event.clientId)
             })
             .catch(error => {
-                console.errror(error)
+                console.error(error)
                 stopRecording(error, event.clientId)
             })
     }
