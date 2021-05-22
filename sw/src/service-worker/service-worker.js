@@ -1,8 +1,12 @@
 import { openDB } from 'idb'
 import { clientsClaim } from 'workbox-core'
 import { precacheAndRoute, createHandlerBoundToURL } from 'workbox-precaching'
-import { registerRoute } from 'workbox-routing'
-import { NetworkFirst, StaleWhileRevalidate } from 'workbox-strategies'
+import { registerRoute, setDefaultHandler } from 'workbox-routing'
+import {
+    NetworkFirst,
+    StaleWhileRevalidate,
+    Strategy,
+} from 'workbox-strategies'
 
 export function setUpServiceWorker() {
     let dbPromise
@@ -83,7 +87,24 @@ export function setUpServiceWorker() {
         ({ url }) => urlMeetsDefaultCachingCriteria(url),
         new NetworkFirst({ cacheName: 'app-shell' })
     )
-    // If request doesn't meet caching criteria, don't cache or handle the request
+
+    // Strategy for all other requests: try cache if network fails,
+    // but don't add anything to cache
+    class NetworkAndTryCache extends Strategy {
+        _handle(request, handler) {
+            return handler.fetch(request).catch(fetchErr => {
+                // handler.cacheMatch doesn't work b/c it doesn't check all caches
+                return caches.match(request).then(res => {
+                    // If not found in cache, throw original fetchErr
+                    // (if there's a cache err, that will be returned)
+                    if (!res) throw fetchErr
+                    return res
+                })
+            })
+        }
+    }
+
+    setDefaultHandler(new NetworkAndTryCache())
 
     // * 2. Service Worker event listeners
 
