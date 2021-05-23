@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types'
 import React, { createContext, useContext, useState, useEffect } from 'react'
 import { useOfflineInterface } from './offline-interface.js'
 
@@ -15,8 +16,11 @@ export function CachedSectionsProvider({ children }) {
         updateSections()
     }, [])
 
-    function updateSections() {
-        offlineInterface.getCachedSections(setCachedSections)
+    async function updateSections() {
+        const list = await offlineInterface.getCachedSections()
+        const map = new Map()
+        list.forEach(section => map.set(section.sectionId, section.lastUpdated))
+        setCachedSections(map)
     }
 
     const value = {
@@ -34,6 +38,10 @@ export function CachedSectionsProvider({ children }) {
             {children}
         </CachedSectionsContext.Provider>
     )
+}
+
+CachedSectionsProvider.propTypes = {
+    children: PropTypes.node,
 }
 
 // TODO: Consider taking an optional 'id' param to return values for a single section,
