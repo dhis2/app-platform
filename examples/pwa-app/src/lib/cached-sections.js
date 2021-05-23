@@ -4,7 +4,12 @@ import { useOfflineInterface } from './offline-interface.js'
 
 const CachedSectionsContext = createContext()
 
-// Current implementation not optimized because it only 'getsCachedSections' on mount; could be done before?
+// ? (optimization) 'getCachedSections' is called on mount; could be done before?
+/**
+ * Uses the offline interface to access a Map of cached section IDs to their
+ * last updated time. Provides that list, a 'removeSection(id)' function, and
+ * an 'updateSections' function as context.
+ */
 export function CachedSectionsProvider({ children }) {
     const offlineInterface = useOfflineInterface()
 
@@ -23,7 +28,7 @@ export function CachedSectionsProvider({ children }) {
         setCachedSections(map)
     }
 
-    const value = {
+    const context = {
         cachedSections,
         // TODO: Feedback; handle nonexistent ID?
         removeSection: async id => {
@@ -34,7 +39,7 @@ export function CachedSectionsProvider({ children }) {
     }
 
     return (
-        <CachedSectionsContext.Provider value={value}>
+        <CachedSectionsContext.Provider value={context}>
             {children}
         </CachedSectionsContext.Provider>
     )
