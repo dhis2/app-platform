@@ -29,7 +29,7 @@
         "build:adapter": "yarn workspace @dhis2/app-adapter build",
         "build:example": "yarn workspace simple-app build",
         "build:sw": "yarn workspace @dhis2/sw build",
-        "build-pwa-test": "yarn build:sw && yarn build:adapter && yarn build:example --standalone --force --verbose && serve -l 5500 examples/simple-app/build/app",
+        "pwa-demo": "yarn build:sw && yarn build:adapter && yarn workspace pwa-app demo",
         "start:example": "yarn workspace simple-app start --force",
         "start": "yarn build:adapter && yarn start:example",
         "docs:serve": "d2-utils-docsite serve ./docs -o ./dist",
