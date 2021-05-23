@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react'
 import { useDataEngine } from '@dhis2/app-runtime'
+import React, { useState, useEffect } from 'react'
 
 const query = {
     visualizations: {

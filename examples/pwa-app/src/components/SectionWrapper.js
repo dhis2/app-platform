@@ -1,9 +1,10 @@
+import { Button, ButtonStrip } from '@dhis2/ui'
+import PropTypes from 'prop-types'
 import React from 'react'
 import {
     CacheableSection,
     useCacheableSection,
 } from '../lib/cacheable-section.js'
-import { Button, ButtonStrip } from '@dhis2/ui'
 import CacheableComponent from './CacheableComponent.js'
 
 export default function SectionWrapper({ id }) {
@@ -33,4 +34,8 @@ export default function SectionWrapper({ id }) {
             </CacheableSection>
         </div>
     )
+}
+
+SectionWrapper.propTypes = {
+    id: PropTypes.string,
 }
