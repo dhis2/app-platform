@@ -321,7 +321,6 @@ export function setUpServiceWorker() {
                     type: 'RECORDING_ERROR',
                     payload: {
                         error,
-                        clientId,
                     },
                 })
             })
@@ -367,7 +366,7 @@ export function setUpServiceWorker() {
             removeRecording(clientId)
             return
         }
-        client.postMessage({ type: 'CONFIRM_RECORDING_COMPLETION', clientId })
+        client.postMessage({ type: 'CONFIRM_RECORDING_COMPLETION' })
         startConfirmationTimeout(clientId)
     }
 
