@@ -1,7 +1,7 @@
 import { Layer } from '@dhis2/ui'
 import PropTypes from 'prop-types'
 import React, { useState } from 'react'
-import { useCachedSections } from './cached-sections.js'
+import { useCachedSection } from './cached-sections.js'
 import { useOfflineInterface } from './offline-interface.js'
 
 // default is 'null'
@@ -13,11 +13,9 @@ const recordingStates = {
 
 export function useCacheableSection(id) {
     const offlineInterface = useOfflineInterface()
-    const {
-        cachedSections,
-        removeSection,
-        updateSections,
-    } = useCachedSections()
+    const { isCached, lastUpdated, remove, updateSections } = useCachedSection(
+        id
+    )
     const [recordingState, setRecordingState] = useState(null)
 
     function startRecording() {
@@ -55,12 +53,8 @@ export function useCacheableSection(id) {
         setRecordingState(recordingStates.error)
     }
 
-    // Section status: this and 'delete' _could_ be accessed by useCachedSection,
-    // but they're provided through this hook for convenience
-    const lastUpdated = cachedSections.get(id) // might be undefined
-    const isCached = !!lastUpdated
-    const remove = () => removeSection(id)
-
+    // Section status: _could_ be accessed by useCachedSection,
+    // but provided through this hook for convenience
     return {
         recordingState,
         startRecording,

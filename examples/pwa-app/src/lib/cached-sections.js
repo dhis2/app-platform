@@ -44,16 +44,46 @@ CachedSectionsProvider.propTypes = {
     children: PropTypes.node,
 }
 
-// TODO: Consider taking an optional 'id' param to return values for a single section,
-// or make a separate a separate 'useCachedSection(id)' hook to access that.
+/**
+ * Access info and operations related to all cached sections.
+ * @returns {Object} { cachedSections: Map, removeSection: func(id), updateSections: func() }
+ */
 export function useCachedSections() {
-    const values = useContext(CachedSectionsContext)
+    const context = useContext(CachedSectionsContext)
 
-    if (values === undefined) {
+    if (context === undefined) {
         throw new Error(
             'useCachedSections must be used within a CachedSectionsProvider'
         )
     }
 
-    return values
+    return context
+}
+
+/**
+ * Accesses info and operations related to a single cached section.
+ * @param {string} id - Section ID of a cached section
+ * @returns {Object} { isCached: boolean, lastUpdated: Date, remove: func(), updateSections: func() }
+ */
+export function useCachedSection(id) {
+    const context = useContext(CachedSectionsContext)
+
+    if (context === undefined) {
+        throw new Error(
+            'useCachedSection must be used within a CachedSectionsProvider'
+        )
+    }
+
+    const { cachedSections, removeSection, updateSections } = context
+
+    const lastUpdated = cachedSections.get(id) // might be undefined
+    const isCached = !!lastUpdated
+    const remove = () => removeSection(id)
+
+    return {
+        isCached,
+        lastUpdated,
+        remove,
+        updateSections,
+    }
 }
