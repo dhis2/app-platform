@@ -31,6 +31,15 @@ export function makeOfflineInterface() {
         navigator.serviceWorker.controller.postMessage({ type, payload })
     }
 
+    function cleanUpListeners() {
+        offlineEvents.removeAllListeners([
+            swMsgs.recordingStarted,
+            swMsgs.confirmRecordingCompletion,
+            swMsgs.recordingCompleted,
+            swMsgs.recordingError,
+        ])
+    }
+
     // * Should everything be promise-based or callback-based? Or ok to mix?
     async function startRecording({
         sectionId,
@@ -58,9 +67,14 @@ export function makeOfflineInterface() {
             // Confirms recording is okay to save
             swMessage(swMsgs.completeRecording)
         )
-        offlineEvents.once(swMsgs.recordingCompleted, onCompleted)
-        offlineEvents.once(swMsgs.recordingError, onError)
-        // TODO: Clean up listeners on error or completion
+        offlineEvents.once(swMsgs.recordingCompleted, (...args) => {
+            cleanUpListeners()
+            onCompleted(...args)
+        })
+        offlineEvents.once(swMsgs.recordingError, (...args) => {
+            cleanUpListeners()
+            onError(...args)
+        })
     }
 
     async function getCachedSections() {
