@@ -44,6 +44,8 @@ export function makeOfflineInterface() {
                 '[Offline interface] The options { sectionId, onStarted, onCompleted, onError } are required when calling startRecording()'
             )
 
+        // TODO: This should throw an error if offline
+
         // Send SW message to start recording
         swMessage(swMsgs.startRecording, {
             sectionId,

@@ -8,6 +8,7 @@ import { useOfflineInterface } from './offline-interface.js'
 const recordingStates = {
     pending: 'pending',
     recording: 'recording',
+    error: 'error',
 }
 
 export function useCacheableSection(id) {
@@ -51,7 +52,7 @@ export function useCacheableSection(id) {
     function onRecordingError(error) {
         // TODO: Handle error. Alert too?
         console.error('Oops! Something went wrong with the recording.', error)
-        setRecordingState(null)
+        setRecordingState(recordingStates.error)
     }
 
     // Section status: this and 'delete' _could_ be accessed by useCachedSection,
@@ -70,6 +71,15 @@ export function useCacheableSection(id) {
 }
 
 export function CacheableSection({ recordingState, children }) {
+    // This will cause the component to reload in the event of a recording error;
+    // the state will be cleared next time recording moves to pending.
+    // Fixes a component getting stuck while rendered without data after failing a
+    // recording while offline.
+    // Errors can be handled in useCacheableSection > onRecordingError
+    if (recordingState === recordingStates.error) return children
+
+    // Handling this way prevents the component rerendering unnecessarily after
+    // completing a recording:
     return (
         <>
             {recordingState === recordingStates.recording && (
@@ -85,6 +95,7 @@ CacheableSection.propTypes = {
     recordingState: PropTypes.oneOf([
         recordingStates.pending,
         recordingStates.recording,
+        recordingStates.error,
         null,
     ]),
 }
