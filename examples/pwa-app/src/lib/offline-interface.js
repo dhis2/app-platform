@@ -7,7 +7,8 @@ import React, { createContext, useContext } from 'react'
 export function makeOfflineInterface() {
     if (!('serviceWorker' in navigator)) return null
 
-    // An EventEmitter is used to help coordinate with the service worker interface
+    // An EventEmitter, internal to offlineInterface, is used to help
+    // coordinate with the service worker interface
     const offlineEvents = new EventEmitter()
 
     // Receives messages from service worker and forwards to event emitter
