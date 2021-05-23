@@ -4,7 +4,15 @@ import { openDB } from 'idb'
 import PropTypes from 'prop-types'
 import React, { createContext, useContext } from 'react'
 
-export function makeOfflineInterface() {
+/**
+ * Initializes an interface between the client and the service worker.
+ * The interface sends and receives messages from the service worker for
+ * the purposes of 'cacheable section' recording and returns some functions
+ * that interact with the indexedDB and cache storage APIs.
+ *
+ * @returns {Object} { startRecording: func, removeSection: func, getCachedSections: func }
+ */
+export function initOfflineInterface() {
     if (!('serviceWorker' in navigator)) return null
 
     // An EventEmitter, internal to offlineInterface, is used to help
@@ -41,7 +49,6 @@ export function makeOfflineInterface() {
         ])
     }
 
-    // * Should everything be promise-based or callback-based? Or ok to mix?
     async function startRecording({
         sectionId,
         recordingTimeoutDelay,

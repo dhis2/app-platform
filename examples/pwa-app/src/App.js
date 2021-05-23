@@ -1,14 +1,13 @@
 import React from 'react'
 import classes from './App.module.css'
-
-import {
-    makeOfflineInterface,
-    OfflineInterfaceProvider,
-} from './lib/offline-interface.js'
 import SectionWrapper from './components/SectionWrapper'
 import { CachedSectionsProvider } from './lib/cached-sections'
+import {
+    initOfflineInterface,
+    OfflineInterfaceProvider,
+} from './lib/offline-interface.js'
 
-const offlineInterface = makeOfflineInterface()
+const offlineInterface = initOfflineInterface()
 
 const MyApp = () => (
     <OfflineInterfaceProvider offlineInterface={offlineInterface}>
