@@ -1,4 +1,4 @@
-import { Layer } from '@dhis2/ui'
+import { CenteredContent, CircularLoader, Layer } from '@dhis2/ui'
 import PropTypes from 'prop-types'
 import React, { useState } from 'react'
 import { useCachedSection } from './cached-sections.js'
@@ -77,7 +77,11 @@ export function CacheableSection({ recordingState, children }) {
     return (
         <>
             {recordingState === recordingStates.recording && (
-                <Layer translucent />
+                <Layer translucent>
+                    <CenteredContent>
+                        <CircularLoader />
+                    </CenteredContent>
+                </Layer>
             )}
             {recordingState !== recordingStates.pending && children}
         </>
