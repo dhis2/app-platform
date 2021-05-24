@@ -1,3 +1,5 @@
+// TODO: Some of this logic should be replaced by .../offline-interface.js
+
 export function handleServiceWorkerRegistration() {
     const pwaEnabled = process.env.REACT_APP_DHIS2_APP_PWA_ENABLED === 'true' // env vars are strings
     if (pwaEnabled) {
@@ -29,7 +31,7 @@ export function handleServiceWorkerRegistration() {
         unregister()
     }
 
-    // TODO: The following content should be replaced by 'serviceWorkerInterface.js'
+    // TODO: The following content should be replaced by '.../offline-interface.js'
     let reloaded
     if ('serviceWorker' in navigator) {
         // Reload when new ServiceWorker becomes active

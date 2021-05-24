@@ -15,6 +15,8 @@ import React, { createContext, useContext } from 'react'
 export function initOfflineInterface() {
     if (!('serviceWorker' in navigator)) return null
 
+    // TODO: Maybe handle registration here
+
     // An EventEmitter, internal to offlineInterface, is used to help
     // coordinate with the service worker interface
     const offlineEvents = new EventEmitter()
