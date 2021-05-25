@@ -1,3 +1,24 @@
+## [6.1.3](https://github.com/dhis2/app-platform/compare/v6.1.2...v6.1.3) (2021-05-20)
+
+
+### Bug Fixes
+
+* add file extension to default entrypoints in d2.config ([#561](https://github.com/dhis2/app-platform/issues/561)) ([6cb8543](https://github.com/dhis2/app-platform/commit/6cb8543f20154b4e9dc3c564c479ff3e66237984))
+
+## [6.1.2](https://github.com/dhis2/app-platform/compare/v6.1.1...v6.1.2) (2021-05-11)
+
+
+### Bug Fixes
+
+* set default value for all strings to support plurals ([#552](https://github.com/dhis2/app-platform/issues/552)) ([3846fc0](https://github.com/dhis2/app-platform/commit/3846fc0ea5f920f4113b929d48b63ce298d3252d))
+
+## [6.1.1](https://github.com/dhis2/app-platform/compare/v6.1.0...v6.1.1) (2021-04-27)
+
+
+### Bug Fixes
+
+* respect --cwd argument when generating/extracting translations ([#540](https://github.com/dhis2/app-platform/issues/540)) ([280e02c](https://github.com/dhis2/app-platform/commit/280e02ca445b5b54e86b7a1dbe965c7ad6ce7abc))
+
 # [6.1.0](https://github.com/dhis2/app-platform/compare/v6.0.1...v6.1.0) (2021-04-02)
 
 

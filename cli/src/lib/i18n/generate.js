@@ -15,9 +15,9 @@ const writeTemplate = (outFile, data) => {
     fs.writeFileSync(outFile, localesTemplate(data))
 }
 
-const generate = async ({ input, output, namespace }) => {
+const generate = async ({ input, output, namespace, paths }) => {
     if (!checkDirectoryExists(input)) {
-        const relativeInput = './' + path.relative(process.cwd(), input)
+        const relativeInput = './' + path.relative(paths.base, input)
         reporter.debug(
             `Source directory ${chalk.bold(
                 relativeInput

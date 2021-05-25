@@ -1,5 +1,6 @@
 const { namespace, reporter } = require('@dhis2/cli-helpers-engine')
 const i18n = require('../lib/i18n')
+const makePaths = require('../lib/paths')
 
 const generate = {
     description:
@@ -9,12 +10,10 @@ const generate = {
             alias: 'p',
             description:
                 'directory path to find .po/.pot files and convert to JSON',
-            default: './i18n/',
         },
         output: {
             alias: 'o',
             description: 'Output directory to place converted JSON files.',
-            default: './src/locales/',
         },
         namespace: {
             alias: 'n',
@@ -22,11 +21,14 @@ const generate = {
             default: 'default',
         },
     },
-    handler: async argv => {
+    handler: async ({ cwd, path, output, namespace }) => {
+        const paths = makePaths(cwd)
+
         const result = await i18n.generate({
-            input: argv.path,
-            output: argv.output,
-            namespace: argv.namespace,
+            input: path || paths.i18nStrings,
+            output: output || paths.i18nLocales,
+            namespace,
+            paths,
         })
 
         if (!result) {
@@ -43,18 +45,19 @@ const extract = {
             alias: 'p',
             description:
                 'Directory path to recurse and extract i18n.t translation strings',
-            default: './src/',
         },
         output: {
             alias: 'o',
             description: 'Destination path for en.pot file',
-            default: './i18n/',
         },
     },
-    handler: async argv => {
+    handler: async ({ cwd, path, output }) => {
+        const paths = makePaths(cwd)
+
         const result = await i18n.extract({
-            input: argv.path,
-            output: argv.output,
+            input: path || paths.src,
+            output: output || paths.i18nStrings,
+            paths,
         })
         if (!result) {
             reporter.error('Failed to extract i18n strings.')

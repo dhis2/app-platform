@@ -5,8 +5,8 @@ const { i18nextToPot, gettextToI18next } = require('i18next-conv')
 const scanner = require('i18next-scanner')
 const { checkDirectoryExists, walkDirectory, arrayEqual } = require('./helpers')
 
-const extract = async ({ input, output }) => {
-    const relativeInput = './' + path.relative(process.cwd(), input)
+const extract = async ({ input, output, paths }) => {
+    const relativeInput = './' + path.relative(paths.base, input)
     if (!checkDirectoryExists(input)) {
         reporter.error(
             `I18n source directory ${chalk.bold(relativeInput)} does not exist.`
@@ -24,11 +24,15 @@ const extract = async ({ input, output }) => {
         process.exit(1)
     }
 
+    /* eslint-disable max-params */
     var parser = new scanner.Parser({
         keepRemoved: false,
         keySeparator: false,
         sort: true,
+        defaultValue: (lng, ns, key, options) =>
+            options.defaultValue ? options.defaultValue : key,
     })
+    /* eslint-enable max-params */
 
     reporter.debug(`[i18n-extract] Parsing ${files.length} files...`)
 
@@ -73,7 +77,7 @@ const extract = async ({ input, output }) => {
     reporter.print(
         chalk.dim(
             `Writing ${Object.keys(en).length} language strings to ${chalk.bold(
-                './' + targetPath
+                './' + path.relative(paths.base, targetPath)
             )}...`
         )
     )
