@@ -65,6 +65,9 @@ export function useCacheableSection(id) {
 }
 
 export function CacheableSection({ recordingState, children }) {
+    // Option
+    // const { recordingState } = useCacheableSection(id)
+
     // This will cause the component to reload in the event of a recording error;
     // the state will be cleared next time recording moves to pending.
     // Fixes a component getting stuck while rendered without data after failing a
