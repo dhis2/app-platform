@@ -15,14 +15,15 @@ import React, { createContext, useContext } from 'react'
  */
 // TODO: Make a class?
 // Lives in platform
-export function initOfflineInterface() {
-    if (!('serviceWorker' in navigator)) return null
+export class OfflineInterface {
+    constructor() {
+        // An EventEmitter, internal to offlineInterface, is used to help
+        // coordinate with the service worker interface
+        this.offlineEvents = new EventEmitter()
+    }
 
-    // An EventEmitter, internal to offlineInterface, is used to help
-    // coordinate with the service worker interface
-    const offlineEvents = new EventEmitter()
-
-    function init({ showSwAlert }) {
+    init({ showSwAlert }) {
+        if (!('serviceWorker' in navigator)) return null
         // TODO: Make sure not to reregister
         // if (registered) skip
 
@@ -41,7 +42,7 @@ export function initOfflineInterface() {
             console.log('[Offline interface] Received message:', event.data)
 
             const { type, payload } = event.data
-            offlineEvents.emit(type, payload)
+            this.offlineEvents.emit(type, payload)
         }
         navigator.serviceWorker.onmessage = handleServiceWorkerMessage
 
@@ -49,25 +50,7 @@ export function initOfflineInterface() {
         // (or own method)
     }
 
-    // Helper to simplify SW message sending
-    function swMessage(type, payload) {
-        if (!navigator.serviceWorker.controller)
-            throw new Error(
-                '[Offine interface] Cannot send service worker message - no service worker is registered'
-            )
-        navigator.serviceWorker.controller.postMessage({ type, payload })
-    }
-
-    function cleanUpListeners() {
-        offlineEvents.removeAllListeners([
-            swMsgs.recordingStarted,
-            swMsgs.confirmRecordingCompletion,
-            swMsgs.recordingCompleted,
-            swMsgs.recordingError,
-        ])
-    }
-
-    async function startRecording({
+    async startRecording({
         sectionId,
         recordingTimeoutDelay,
         onStarted,
@@ -88,22 +71,22 @@ export function initOfflineInterface() {
         })
 
         // Prep for subsequent events after recording starts
-        offlineEvents.once(swMsgs.recordingStarted, onStarted)
-        offlineEvents.once(swMsgs.confirmRecordingCompletion, () =>
+        this.offlineEvents.once(swMsgs.recordingStarted, onStarted)
+        this.offlineEvents.once(swMsgs.confirmRecordingCompletion, () =>
             // Confirms recording is okay to save
             swMessage(swMsgs.completeRecording)
         )
-        offlineEvents.once(swMsgs.recordingCompleted, (...args) => {
+        this.offlineEvents.once(swMsgs.recordingCompleted, (...args) => {
             cleanUpListeners()
             onCompleted(...args)
         })
-        offlineEvents.once(swMsgs.recordingError, (...args) => {
+        this.offlineEvents.once(swMsgs.recordingError, (...args) => {
             cleanUpListeners()
             onError(...args)
         })
     }
 
-    async function getCachedSections() {
+    async getCachedSections() {
         const db = await openDB(DB_NAME)
         return db.getAll(OS_NAME).catch(err => {
             console.error(
@@ -114,7 +97,7 @@ export function initOfflineInterface() {
         })
     }
 
-    async function removeSection(sectionId) {
+    async removeSection(sectionId) {
         if (!sectionId) throw new Error('No section ID specified to delete')
         return Promise.all([
             caches.delete(sectionId),
@@ -124,13 +107,24 @@ export function initOfflineInterface() {
             return null
         })
     }
+}
 
-    return {
-        init,
-        startRecording,
-        removeSection,
-        getCachedSections,
-    }
+function cleanUpListeners(offlineEvents) {
+    offlineEvents.removeAllListeners([
+        swMsgs.recordingStarted,
+        swMsgs.confirmRecordingCompletion,
+        swMsgs.recordingCompleted,
+        swMsgs.recordingError,
+    ])
+}
+
+// Helper to simplify SW message sending
+function swMessage(type, payload) {
+    if (!navigator.serviceWorker.controller)
+        throw new Error(
+            '[Offine interface] Cannot send service worker message - no service worker is registered'
+        )
+    navigator.serviceWorker.controller.postMessage({ type, payload })
 }
 
 // Offline interface context

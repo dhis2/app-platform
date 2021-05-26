@@ -3,11 +3,11 @@ import classes from './App.module.css'
 import SectionWrapper from './components/SectionWrapper'
 import { CachedSectionsProvider } from './lib/cached-sections'
 import {
-    initOfflineInterface,
+    OfflineInterface,
     OfflineInterfaceProvider,
 } from './lib/offline-interface.js'
 
-const offlineInterface = initOfflineInterface()
+const offlineInterface = new OfflineInterface()
 
 const MyApp = () => (
     <OfflineInterfaceProvider offlineInterface={offlineInterface}>
