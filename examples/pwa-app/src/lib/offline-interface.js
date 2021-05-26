@@ -1,4 +1,5 @@
 import EventEmitter from 'events'
+import { useAlert } from '@dhis2/app-runtime'
 import { swMsgs, DB_NAME, OS_NAME } from '@dhis2/sw' // service worker constants
 import { openDB } from 'idb'
 import PropTypes from 'prop-types'
@@ -12,26 +13,41 @@ import React, { createContext, useContext } from 'react'
  *
  * @returns {Object} { startRecording: func, removeSection: func, getCachedSections: func }
  */
+// TODO: Make a class?
+// Lives in platform
 export function initOfflineInterface() {
     if (!('serviceWorker' in navigator)) return null
-
-    // TODO: Maybe handle registration here
 
     // An EventEmitter, internal to offlineInterface, is used to help
     // coordinate with the service worker interface
     const offlineEvents = new EventEmitter()
 
-    // Receives messages from service worker and forwards to event emitter
-    // TODO: Handle error events
-    function handleServiceWorkerMessage(event) {
-        if (!event.data) return
+    function init({ showSwAlert }) {
+        // TODO: Make sure not to reregister
+        // if (registered) skip
 
-        console.log('[Offline interface] Received message:', event.data)
+        // TODO: Maybe handle registration here
+        // registerSw({ onUpdate: showSwAlert })
 
-        const { type, payload } = event.data
-        offlineEvents.emit(type, payload)
+        // * Alert test:
+        // reload() would be () => swMessage(swMsgs.skipWaiting)
+        showSwAlert && showSwAlert({ reload: () => console.log('derp') })
+
+        // Receives messages from service worker and forwards to event emitter
+        // TODO: Handle error events
+        function handleServiceWorkerMessage(event) {
+            if (!event.data) return
+
+            console.log('[Offline interface] Received message:', event.data)
+
+            const { type, payload } = event.data
+            offlineEvents.emit(type, payload)
+        }
+        navigator.serviceWorker.onmessage = handleServiceWorkerMessage
+
+        // TODO: Teardown function - return fn here; return from useEffect
+        // (or own method)
     }
-    navigator.serviceWorker.onmessage = handleServiceWorkerMessage
 
     // Helper to simplify SW message sending
     function swMessage(type, payload) {
@@ -110,6 +126,7 @@ export function initOfflineInterface() {
     }
 
     return {
+        init,
         startRecording,
         removeSection,
         getCachedSections,
@@ -117,10 +134,25 @@ export function initOfflineInterface() {
 }
 
 // Offline interface context
+// Lives in runtime
 
 const OfflineContext = createContext()
 
 export function OfflineInterfaceProvider({ offlineInterface, children }) {
+    const { show } = useAlert(
+        'A new service worker (which provides offline caching) is installed and ready to activate. Reload page to activate now?',
+        ({ reload }) => ({
+            actions: [{ label: 'Reload', onClick: reload }],
+            permanent: true,
+        })
+    )
+
+    React.useEffect(() => {
+        // TODO: Check if registered ~
+        offlineInterface.init({ showSwAlert: show })
+        // TODO: Clean up
+    }, [])
+
     return (
         <OfflineContext.Provider value={offlineInterface}>
             {children}
@@ -130,7 +162,7 @@ export function OfflineInterfaceProvider({ offlineInterface, children }) {
 
 OfflineInterfaceProvider.propTypes = {
     children: PropTypes.node,
-    offlineInterface: PropTypes.shape({}),
+    offlineInterface: PropTypes.shape({ init: PropTypes.func }),
 }
 
 export function useOfflineInterface() {
