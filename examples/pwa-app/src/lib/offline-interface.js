@@ -69,10 +69,6 @@ export class OfflineInterface {
         // Receives messages from service worker and forwards to event emitter
         function handleServiceWorkerMessage(event) {
             if (!event.data) return
-
-            // TODO: Refactor to quieter debugging
-            console.log('[Offline interface] Received message:', event.data)
-
             const { type, payload } = event.data
             this.offlineEvents.emit(type, payload)
         }
