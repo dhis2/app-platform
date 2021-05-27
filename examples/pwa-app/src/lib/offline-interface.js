@@ -43,22 +43,28 @@ export class OfflineInterface {
      * listening to messages from the service worker.
      *
      * @param {Object} options
-     * @param {Function} options.promptReload - A function that will be called when a new service worker is installed and ready to activate. Expected to be an alert 'show' function
+     * @param {Function} options.promptUpdate - A function that will be called when a new service worker is installed and ready to activate. Expected to be an alert 'show' function
      * @returns {Function} A clean-up function that removes listeners
      */
-    init({ promptReload }) {
+    init({ promptUpdate }) {
         if (!('serviceWorker' in navigator)) return null
         // TODO: Make sure not to reregister
         // if (registered) skip
 
         // TODO: Handle registration here
-        // registerSw({ onUpdate: promptReload })
+        // registerSw({ onUpdate: promptUpdate })
 
-        // TODO: Smooth out params interface to be more generic
-        // reloadPrompt(onConfirm) or rP({ message, action, onConfirm })
-        // * Alert test:
-        // reload() will be () => swMessage(swMsgs.skipWaiting)
-        promptReload && promptReload({ reload: () => console.log('derp') })
+        // Alert test:
+        if (promptUpdate) {
+            const reloadMessage =
+                'App updates are ready and will be activated after all tabs of this app are closed. Skip waiting and reload to update now?'
+            promptUpdate({
+                message: reloadMessage,
+                action: 'Update',
+                // onConfirm() will be () => swMessage(swMsgs.skipWaiting)
+                onConfirm: () => console.log('TODO: skip waiting'),
+            })
+        }
 
         // Receives messages from service worker and forwards to event emitter
         function handleServiceWorkerMessage(event) {
@@ -168,16 +174,16 @@ const OfflineContext = createContext()
 
 export function OfflineInterfaceProvider({ offlineInterface, children }) {
     const { show } = useAlert(
-        'A new service worker (which provides offline caching) is installed and ready to activate. Reload page to activate now?',
-        ({ reload }) => ({
-            actions: [{ label: 'Reload', onClick: reload }],
+        ({ message }) => message,
+        ({ action, onConfirm }) => ({
+            actions: [{ label: action, onClick: onConfirm }],
             permanent: true,
         })
     )
 
     React.useEffect(() => {
         // init() Returns a cleanup function
-        return offlineInterface.init({ promptReload: show })
+        return offlineInterface.init({ promptUpdate: show })
     }, [])
 
     return (
