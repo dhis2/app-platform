@@ -5,40 +5,66 @@ import { openDB } from 'idb'
 import PropTypes from 'prop-types'
 import React, { createContext, useContext } from 'react'
 
+// Lives in platform
+
+/** Cleans up SW recording listeners */
+function cleanUpListeners(offlineEvents) {
+    offlineEvents.removeAllListeners([
+        swMsgs.recordingStarted,
+        swMsgs.confirmRecordingCompletion,
+        swMsgs.recordingCompleted,
+        swMsgs.recordingError,
+    ])
+}
+
+/** Helper to simplify SW message sending */
+function swMessage(type, payload) {
+    if (!navigator.serviceWorker.controller)
+        throw new Error(
+            '[Offine interface] Cannot send service worker message - no service worker is registered'
+        )
+    navigator.serviceWorker.controller.postMessage({ type, payload })
+}
+
 /**
- * Initializes an interface between the client and the service worker.
+ * Provides an interface between the client and the service worker.
  * The interface sends and receives messages from the service worker for
  * the purposes of 'cacheable section' recording and returns some functions
  * that interact with the indexedDB and cache storage APIs.
- *
- * @returns {Object} { startRecording: func, removeSection: func, getCachedSections: func }
  */
-// TODO: Make a class?
-// Lives in platform
 export class OfflineInterface {
     constructor() {
-        // An EventEmitter, internal to offlineInterface, is used to help
-        // coordinate with the service worker interface
+        // This event emitter helps coordinate with service worker messages
         this.offlineEvents = new EventEmitter()
     }
 
-    init({ showSwAlert }) {
+    /**
+     * Sets up a service worker by registering it, handling updates, and
+     * listening to messages from the service worker.
+     *
+     * @param {Object} options
+     * @param {Function} options.promptReload - A function that will be called when a new service worker is installed and ready to activate. Expected to be an alert 'show' function
+     * @returns {Function} A clean-up function that removes listeners
+     */
+    init({ promptReload }) {
         if (!('serviceWorker' in navigator)) return null
         // TODO: Make sure not to reregister
         // if (registered) skip
 
-        // TODO: Maybe handle registration here
-        // registerSw({ onUpdate: showSwAlert })
+        // TODO: Handle registration here
+        // registerSw({ onUpdate: promptReload })
 
+        // TODO: Smooth out params interface to be more generic
+        // reloadPrompt(onConfirm) or rP({ message, action, onConfirm })
         // * Alert test:
-        // reload() would be () => swMessage(swMsgs.skipWaiting)
-        showSwAlert && showSwAlert({ reload: () => console.log('derp') })
+        // reload() will be () => swMessage(swMsgs.skipWaiting)
+        promptReload && promptReload({ reload: () => console.log('derp') })
 
         // Receives messages from service worker and forwards to event emitter
-        // TODO: Handle error events
         function handleServiceWorkerMessage(event) {
             if (!event.data) return
 
+            // TODO: Refactor to quieter debugging
             console.log('[Offline interface] Received message:', event.data)
 
             const { type, payload } = event.data
@@ -46,10 +72,28 @@ export class OfflineInterface {
         }
         navigator.serviceWorker.onmessage = handleServiceWorkerMessage
 
-        // TODO: Teardown function - return fn here; return from useEffect
-        // (or own method)
+        return () => {
+            navigator.serviceWorker.onmessage = undefined
+        }
     }
 
+    /**
+     * Starts a recording session for a cacheable section. Returns a promise
+     * that resolves if the SW message is successfully sent or rejects if
+     * there's an error, which can happen if a service worker is not registered.
+     *
+     * Note that this promise resolving does not indicate recording is ready to
+     * start yet, but it is a good time to enter a 'recording pending' state.
+     * The `onStarted()` function in the options object will be called when the
+     * SW signals recording is actually ready to go.
+     *
+     * @param {Object} options
+     * @param {String} options.sectionId - ID of section to record
+     * @param {Number} options.recordingTimeoutDelay - How long to wait after all pending requests have resolved before stopping recording, if no other requests come in
+     * @param {Function} options.onStarted - Will be called when the service worker is set up for recording and ready to go.
+     * @param {Function} options.onCompleted - Called when recording completes successfully and the cached section has been saved in the IndexedDB and CacheStorage.
+     * @param {Function} options.onError - Called if there's an error during recording; receives an Error object as an argument.
+     */
     async startRecording({
         sectionId,
         recordingTimeoutDelay,
@@ -62,19 +106,18 @@ export class OfflineInterface {
                 '[Offline interface] The options { sectionId, onStarted, onCompleted, onError } are required when calling startRecording()'
             )
 
-        // TODO: This should throw an error if offline
-
         // Send SW message to start recording
         swMessage(swMsgs.startRecording, {
             sectionId,
             recordingTimeoutDelay,
         })
 
-        // Prep for subsequent events after recording starts
+        // Prep for subsequent events after recording starts:
         this.offlineEvents.once(swMsgs.recordingStarted, onStarted)
-        this.offlineEvents.once(swMsgs.confirmRecordingCompletion, () =>
+        this.offlineEvents.once(
+            swMsgs.confirmRecordingCompletion,
             // Confirms recording is okay to save
-            swMessage(swMsgs.completeRecording)
+            () => swMessage(swMsgs.completeRecording)
         )
         this.offlineEvents.once(swMsgs.recordingCompleted, (...args) => {
             cleanUpListeners()
@@ -86,6 +129,10 @@ export class OfflineInterface {
         })
     }
 
+    /**
+     * Retrieves a list of cached sections from IndexedDB.
+     * @returns {Promise} A promise that resolves to an array of cached sections.
+     */
     async getCachedSections() {
         const db = await openDB(DB_NAME)
         return db.getAll(OS_NAME).catch(err => {
@@ -97,6 +144,11 @@ export class OfflineInterface {
         })
     }
 
+    /**
+     * Removes a specified section from the IndexedDB and CacheStorage cache.
+     * @param {String} sectionId - ID of the section to remove
+     * @returns {Promise} A promise
+     */
     async removeSection(sectionId) {
         if (!sectionId) throw new Error('No section ID specified to delete')
         return Promise.all([
@@ -107,24 +159,6 @@ export class OfflineInterface {
             return null
         })
     }
-}
-
-function cleanUpListeners(offlineEvents) {
-    offlineEvents.removeAllListeners([
-        swMsgs.recordingStarted,
-        swMsgs.confirmRecordingCompletion,
-        swMsgs.recordingCompleted,
-        swMsgs.recordingError,
-    ])
-}
-
-// Helper to simplify SW message sending
-function swMessage(type, payload) {
-    if (!navigator.serviceWorker.controller)
-        throw new Error(
-            '[Offine interface] Cannot send service worker message - no service worker is registered'
-        )
-    navigator.serviceWorker.controller.postMessage({ type, payload })
 }
 
 // Offline interface context
@@ -142,9 +176,8 @@ export function OfflineInterfaceProvider({ offlineInterface, children }) {
     )
 
     React.useEffect(() => {
-        // TODO: Check if registered ~
-        offlineInterface.init({ showSwAlert: show })
-        // TODO: Clean up
+        // init() Returns a cleanup function
+        return offlineInterface.init({ promptReload: show })
     }, [])
 
     return (
