@@ -7,7 +7,3 @@ export const swMsgs = Object.freeze({
     completeRecording: 'COMPLETE_RECORDING',
     recordingCompleted: 'RECORDING_COMPLETED',
 })
-
-// DB and Object store name for IndexedDB
-export const DB_NAME = 'recorded-section-store'
-export const OS_NAME = 'recorded-sections'

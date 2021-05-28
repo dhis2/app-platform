@@ -1,4 +1,3 @@
-import { openDB } from 'idb'
 import { clientsClaim } from 'workbox-core'
 import { precacheAndRoute, createHandlerBoundToURL } from 'workbox-precaching'
 import { registerRoute, setDefaultHandler } from 'workbox-routing'
@@ -7,11 +6,11 @@ import {
     StaleWhileRevalidate,
     Strategy,
 } from 'workbox-strategies'
+import { openSectionsDB, SECTIONS_STORE } from '../lib/sections-db'
 
 export function setUpServiceWorker() {
     let dbPromise
     const clientRecordingStates = {}
-    const DB_VERSION = 1
     const CACHE_KEEP_LIST = ['other-assets', 'app-shell']
     // * Maybe use babel replacement here:
     const URL_FILTER_PATTERNS = JSON.parse(
@@ -125,14 +124,6 @@ export function setUpServiceWorker() {
         if (event.data.type === 'COMPLETE_RECORDING') {
             completeRecording(event.source.id) // same as FetchEvent.clientId
         }
-
-        if (event.data.type === 'DELETE_RECORDED_SECTION') {
-            deleteRecordedSection(event.data.payload?.sectionId)
-        }
-
-        if (event.data.type === 'GET_RECORDED_SECTIONS') {
-            getRecordedSections(event)
-        }
     })
 
     // Open DB on activation
@@ -159,24 +150,7 @@ export function setUpServiceWorker() {
     }
 
     function createDB() {
-        // TODO: Use constants for names here
-        dbPromise = openDB('recorded-section-store', DB_VERSION, {
-            upgrade(db, oldVersion /* newVersion, transaction */) {
-                // DB versioning trick that can iteratively apply upgrades
-                // https://developers.google.com/web/ilt/pwa/working-with-indexeddb#using_database_versioning
-                switch (oldVersion) {
-                    case 0: {
-                        db.createObjectStore('recorded-sections', {
-                            keyPath: 'sectionId',
-                        })
-                    }
-                    // falls through (this comment satisfies eslint)
-                    default: {
-                        console.log('[SW] Done upgrading DB')
-                    }
-                }
-            },
-        })
+        dbPromise = openSectionsDB()
         return dbPromise
     }
 
@@ -190,10 +164,7 @@ export function setUpServiceWorker() {
                     keepKey => keepKey === key
                 )
                 const db = await dbPromise
-                const isASavedSection = !!(await db.get(
-                    'recorded-sections',
-                    key
-                ))
+                const isASavedSection = !!(await db.get(SECTIONS_STORE, key))
                 if (!isWorkboxKey && !isInKeepList && !isASavedSection) {
                     console.log(
                         `[SW] Cache with key ${key} is unused and will be deleted`
@@ -202,23 +173,6 @@ export function setUpServiceWorker() {
                 }
             })
         )
-    }
-
-    // Possible 'getRecordedSections' implementation
-    // - Could also be implemented in client runtime
-    async function getRecordedSections(event) {
-        const clientId = event.source.id
-
-        // If this were in a client runtime, it would need:
-        // const db = await openDB('recorded-section-store')
-
-        const db = await dbPromise
-        const sectionsList = await db.getAll('recorded-sections')
-        const client = await self.clients.get(clientId)
-        client.postMessage({
-            type: 'RECORDED_SECTIONS_LIST',
-            payload: { sectionsList },
-        })
     }
 
     // Triggered on 'START_RECORDING' message
@@ -398,7 +352,7 @@ export function setUpServiceWorker() {
 
         // Add content to DB
         const db = await dbPromise
-        db.put('recorded-sections', {
+        db.put(SECTIONS_STORE, {
             // Note that request objects can't be stored in the IDB
             // https://stackoverflow.com/questions/32880073/whats-the-best-option-for-structured-cloning-of-a-fetch-api-request-object
             sectionId: recordingState.sectionId, // the key path
@@ -413,16 +367,5 @@ export function setUpServiceWorker() {
         self.clients.get(clientId).then(client => {
             client.postMessage({ type: 'RECORDING_COMPLETED' })
         })
-    }
-
-    // Triggered by 'DELETE_RECORDED_SECTION' message
-    async function deleteRecordedSection(sectionId) {
-        if (!sectionId)
-            throw new Error('[SW] No section ID specified to delete')
-        const db = await dbPromise
-        return Promise.all([
-            caches.delete(sectionId),
-            db.delete('recorded-sections', sectionId),
-        ])
     }
 }

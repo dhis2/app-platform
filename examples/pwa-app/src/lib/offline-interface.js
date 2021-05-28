@@ -1,7 +1,11 @@
 import EventEmitter from 'events'
 import { useAlert } from '@dhis2/app-runtime'
-import { swMsgs, DB_NAME, OS_NAME } from '@dhis2/sw' // service worker constants
-import { openDB } from 'idb'
+import {
+    openSectionsDB,
+    handleServiceWorkerRegistration,
+    swMsgs,
+    SECTIONS_STORE,
+} from '@dhis2/sw'
 import PropTypes from 'prop-types'
 import React, { createContext, useContext } from 'react'
 
@@ -36,6 +40,7 @@ export class OfflineInterface {
     constructor() {
         // This event emitter helps coordinate with service worker messages
         this.offlineEvents = new EventEmitter()
+        this.dbPromise = openSectionsDB()
     }
 
     /**
@@ -48,23 +53,31 @@ export class OfflineInterface {
      */
     init({ promptUpdate }) {
         if (!('serviceWorker' in navigator)) return null
-        // TODO: Make sure not to reregister
-        // if (registered) skip
 
-        // TODO: Handle registration here
-        // registerSw({ onUpdate: promptUpdate })
-
-        // Alert test:
-        if (promptUpdate) {
+        function onUpdate(registration) {
+            if (!promptUpdate) return
             const reloadMessage =
                 'App updates are ready and will be activated after all tabs of this app are closed. Skip waiting and reload to update now?'
+            const onConfirm = () =>
+                registration.waiting.postMessage({
+                    type: swMsgs.skipWaiting,
+                })
             promptUpdate({
                 message: reloadMessage,
                 action: 'Update',
-                // onConfirm() will be () => swMessage(swMsgs.skipWaiting)
-                onConfirm: () => console.log('TODO: skip waiting'),
+                onConfirm: onConfirm,
             })
         }
+        // TODO: Registering here can cause some lag while loading.
+        // There might be a better time to do it
+        handleServiceWorkerRegistration({ onUpdate })
+
+        // Reload window to use new assets when new SW activates
+        const onControllerChange = () => window.location.reload()
+        navigator.serviceWorker.addEventListener(
+            'controllerchange',
+            onControllerChange
+        )
 
         // Receives messages from service worker and forwards to event emitter
         function handleServiceWorkerMessage(event) {
@@ -72,10 +85,20 @@ export class OfflineInterface {
             const { type, payload } = event.data
             this.offlineEvents.emit(type, payload)
         }
-        navigator.serviceWorker.onmessage = handleServiceWorkerMessage
+        navigator.serviceWorker.addEventListener(
+            'message',
+            handleServiceWorkerMessage.bind(this)
+        )
 
         return () => {
-            navigator.serviceWorker.onmessage = undefined
+            navigator.serviceWorker.removeEventListener(
+                'message',
+                handleServiceWorkerMessage.bind(this)
+            )
+            navigator.serviceWorker.removeEventListener(
+                'controllerchange',
+                onControllerChange
+            )
         }
     }
 
@@ -122,11 +145,11 @@ export class OfflineInterface {
             () => swMessage(swMsgs.completeRecording)
         )
         this.offlineEvents.once(swMsgs.recordingCompleted, (...args) => {
-            cleanUpListeners()
+            cleanUpListeners(this.offlineEvents)
             onCompleted(...args)
         })
         this.offlineEvents.once(swMsgs.recordingError, (...args) => {
-            cleanUpListeners()
+            cleanUpListeners(this.offlineEvents)
             onError(...args)
         })
     }
@@ -136,8 +159,8 @@ export class OfflineInterface {
      * @returns {Promise} A promise that resolves to an array of cached sections.
      */
     async getCachedSections() {
-        const db = await openDB(DB_NAME)
-        return db.getAll(OS_NAME).catch(err => {
+        const db = await this.dbPromise
+        return db.getAll(SECTIONS_STORE).catch(err => {
             console.error(
                 '[Offline interface] Error in getCachedSections:\n',
                 err
@@ -155,7 +178,7 @@ export class OfflineInterface {
         if (!sectionId) throw new Error('No section ID specified to delete')
         return Promise.all([
             caches.delete(sectionId),
-            (await openDB(DB_NAME)).delete(OS_NAME, sectionId),
+            (await this.dbPromise).delete(SECTIONS_STORE, sectionId),
         ]).catch(err => {
             console.error('[Offline interface] Error in removeSection:\n', err)
             return null

@@ -1,67 +1,15 @@
-// TODO: Some of this logic should be replaced by .../offline-interface.js
-
-export function handleServiceWorkerRegistration() {
+/**
+ * Registers or unregisters a service worker based on the `pwa.enabled` value in `d2.config.js`.
+ * @param {Object} config
+ * @param {Function} [config.onUpdate] - Called with SW `registration` as an argument when an updated service worker is installed and waiting.
+ * @param {Function} [config.onSuccess] - Called with SW `registration` as an argument when a SW is installed for the first time.
+ */
+export function handleServiceWorkerRegistration(config) {
     const pwaEnabled = process.env.REACT_APP_DHIS2_APP_PWA_ENABLED === 'true' // env vars are strings
     if (pwaEnabled) {
-        register({
-            // These callbacks can be used to prompt user to activate new service worker.
-            // onUpdate is called when a previous SW exists and a new one is installed;
-            // This CB plus the 'controllerchange' listener below are an example
-            // TODO: `import { handleNewSwReady } from './serviceWorkerInterface'`
-            // TODO: `onUpdate: handleNewSwReady`
-            onUpdate: registration => {
-                const userConfirms = window.confirm(
-                    'New service worker installed and ready to activate. Reload and activate now?'
-                )
-                if (userConfirms) {
-                    // Instruct waiting service worker to skip waiting and activate
-                    registration.waiting.postMessage({ type: 'SKIP_WAITING' })
-                }
-                console.log(
-                    'New service worker installed and ready to activate',
-                    registration
-                )
-            },
-            // Called when installed for the first time. Probably not necessary
-            onSuccess: registration =>
-                console.log('New service worker active', registration),
-        })
+        register(config)
     } else {
-        console.log('PWA is not enabled.')
         unregister()
-    }
-
-    // TODO: The following content should be replaced by '.../offline-interface.js'
-    let reloaded
-    if ('serviceWorker' in navigator) {
-        // Reload when new ServiceWorker becomes active
-        navigator.serviceWorker.addEventListener('controllerchange', () => {
-            if (reloaded) return
-            reloaded = true
-            window.location.reload()
-        })
-
-        // TODO: These are placeholders
-        // Service worker message listeners
-        navigator.serviceWorker.onmessage = event => {
-            if (event.data && event.data.type === 'RECORDING_ERROR') {
-                console.error(
-                    '[App] Received recording error',
-                    event.data.payload.error
-                )
-            }
-
-            // Option to add more logic here
-            if (
-                event.data &&
-                event.data.type === 'CONFIRM_RECORDING_COMPLETION'
-            ) {
-                console.log('[App] Confirming completion')
-                navigator.serviceWorker.controller.postMessage({
-                    type: 'COMPLETE_RECORDING',
-                })
-            }
-        }
     }
 }
 
@@ -100,26 +48,25 @@ function register(config) {
             return
         }
 
-        window.addEventListener('load', () => {
-            const swUrl = `${process.env.PUBLIC_URL}/service-worker.js`
+        // CRA boilerplate was: window.addEventListener('load', () => {...})
+        const swUrl = `${process.env.PUBLIC_URL}/service-worker.js`
 
-            if (isLocalhost) {
-                // This is running on localhost. Let's check if a service worker still exists or not.
-                checkValidServiceWorker(swUrl, config)
+        if (isLocalhost) {
+            // This is running on localhost. Let's check if a service worker still exists or not.
+            checkValidServiceWorker(swUrl, config)
 
-                // Add some additional logging to localhost, pointing developers to the
-                // service worker/PWA documentation.
-                navigator.serviceWorker.ready.then(() => {
-                    console.log(
-                        'This web app is being served cache-first by a service ' +
-                            'worker. To learn more, visit https://cra.link/PWA'
-                    )
-                })
-            } else {
-                // Is not localhost. Just register service worker
-                registerValidSW(swUrl, config)
-            }
-        })
+            // Add some additional logging to localhost, pointing developers to the
+            // service worker/PWA documentation.
+            navigator.serviceWorker.ready.then(() => {
+                console.log(
+                    'This web app is being served cache-first by a service ' +
+                        'worker. To learn more, visit https://cra.link/PWA'
+                )
+            })
+        } else {
+            // Is not localhost. Just register service worker
+            registerValidSW(swUrl, config)
+        }
     }
 }
 
