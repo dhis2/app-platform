@@ -38,6 +38,7 @@ function swMessage(type, payload) {
  */
 export class OfflineInterface {
     constructor() {
+        // TODO: Skip this if PWA is not enabled
         // This event emitter helps coordinate with service worker messages
         this.offlineEvents = new EventEmitter()
         this.dbPromise = openSectionsDB()
@@ -52,6 +53,7 @@ export class OfflineInterface {
      * @returns {Function} A clean-up function that removes listeners
      */
     init({ promptUpdate }) {
+        // TODO: Skip this if PWA is not enabled
         if (!('serviceWorker' in navigator)) return null
 
         function onUpdate(registration) {

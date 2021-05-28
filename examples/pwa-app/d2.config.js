@@ -5,8 +5,9 @@ const config = {
     pwa: {
         enabled: true,
         caching: {
+            // Makes sure to cache API requests when in standalone mode
             omitExternalRequests: false,
-            // For the purposes of this demo:
+            // For the purposes of this demo, to simulate dashboard content:
             patternsToOmit: ['visualizations'],
         },
     },
