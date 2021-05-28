@@ -68,36 +68,33 @@ export class OfflineInterface {
                 onConfirm: onConfirm,
             })
         }
-        // TODO: Registering here can cause some lag while loading.
+        // TODO: Registering here can cause some lag while loading;
         // There might be a better time to do it
         handleServiceWorkerRegistration({ onUpdate })
 
         // Reload window to use new assets when new SW activates
-        const onControllerChange = () => window.location.reload()
-        navigator.serviceWorker.addEventListener(
-            'controllerchange',
-            onControllerChange
-        )
+        const reload = () => window.location.reload()
+        navigator.serviceWorker.addEventListener('controllerchange', reload)
 
         // Receives messages from service worker and forwards to event emitter
-        function handleServiceWorkerMessage(event) {
+        const handleServiceWorkerMessage = event => {
             if (!event.data) return
             const { type, payload } = event.data
             this.offlineEvents.emit(type, payload)
         }
         navigator.serviceWorker.addEventListener(
             'message',
-            handleServiceWorkerMessage.bind(this)
+            handleServiceWorkerMessage
         )
 
         return () => {
             navigator.serviceWorker.removeEventListener(
                 'message',
-                handleServiceWorkerMessage.bind(this)
+                handleServiceWorkerMessage
             )
             navigator.serviceWorker.removeEventListener(
                 'controllerchange',
-                onControllerChange
+                reload
             )
         }
     }
