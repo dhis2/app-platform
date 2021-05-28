@@ -1,3 +1,10 @@
+# [6.2.0](https://github.com/dhis2/app-platform/compare/v6.1.3...v6.2.0) (2021-05-28)
+
+
+### Features
+
+* **publish:** upload apps to App Hub ([#532](https://github.com/dhis2/app-platform/issues/532)) ([b8c86b6](https://github.com/dhis2/app-platform/commit/b8c86b6ee6afcd5b68c8110bb4521707b34c661f))
+
 ## [6.1.3](https://github.com/dhis2/app-platform/compare/v6.1.2...v6.1.3) (2021-05-20)
 
 
