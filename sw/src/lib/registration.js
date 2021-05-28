@@ -74,6 +74,24 @@ function registerValidSW(swUrl, config) {
     navigator.serviceWorker
         .register(swUrl)
         .then(registration => {
+            function handleWaitingSW() {
+                console.log(
+                    'New content is available and will be used when all ' +
+                        'tabs for this page are closed. See https://cra.link/PWA.'
+                )
+
+                // Execute callback
+                if (config && config.onUpdate) {
+                    config.onUpdate(registration)
+                }
+            }
+
+            // Sometimes a service worker update is triggered by a navigation
+            // event in scope, but the registration logic doesn't run on that
+            // page, for example if a user hits the login modal. The 'onUpdate'
+            // callback doesn't get called in that case. Handle that here:
+            if (registration.waiting) handleWaitingSW()
+
             registration.onupdatefound = () => {
                 const installingWorker = registration.installing
                 if (installingWorker == null) {
@@ -85,15 +103,7 @@ function registerValidSW(swUrl, config) {
                             // At this point, the updated precached content has been fetched,
                             // but the previous service worker will still serve the older
                             // content until all client tabs are closed.
-                            console.log(
-                                'New content is available and will be used when all ' +
-                                    'tabs for this page are closed. See https://cra.link/PWA.'
-                            )
-
-                            // Execute callback
-                            if (config && config.onUpdate) {
-                                config.onUpdate(registration)
-                            }
+                            handleWaitingSW()
                         } else {
                             // At this point, everything has been precached.
                             // It's the perfect time to display a
