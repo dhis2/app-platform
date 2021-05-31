@@ -7,7 +7,7 @@ import {
 } from '../lib/cacheable-section.js'
 import CacheableComponent from './CacheableComponent.js'
 
-export default function SectionWrapper({ id }) {
+function Controls({ id }) {
     const {
         startRecording,
         lastUpdated,
@@ -16,7 +16,7 @@ export default function SectionWrapper({ id }) {
     } = useCacheableSection(id)
 
     return (
-        <div>
+        <>
             <p>{`Is cached: ${isCached}. Last updated: ${
                 lastUpdated || 'n/a'
             }`}</p>
@@ -28,13 +28,19 @@ export default function SectionWrapper({ id }) {
                     Remove from cache
                 </Button>
             </ButtonStrip>
+        </>
+    )
+}
+Controls.propTypes = { id: PropTypes.string }
+
+export default function SectionWrapper({ id }) {
+    return (
+        <div>
+            <Controls id={id} />
             <CacheableSection id={id}>
                 <CacheableComponent />
             </CacheableSection>
         </div>
     )
 }
-
-SectionWrapper.propTypes = {
-    id: PropTypes.string,
-}
+SectionWrapper.propTypes = { id: PropTypes.string }
