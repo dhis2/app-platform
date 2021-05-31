@@ -1,5 +1,6 @@
 import EventEmitter from 'events'
 import { useAlert } from '@dhis2/app-runtime'
+import i18n from '@dhis2/d2-i18n'
 import {
     openSectionsDB,
     handleServiceWorkerRegistration,
@@ -50,15 +51,16 @@ export class OfflineInterface {
 
         function onUpdate(registration) {
             if (!promptUpdate) return
-            const reloadMessage =
+            const reloadMessage = i18n.t(
                 'App updates are ready and will be activated after all tabs of this app are closed. Skip waiting and reload to update now?'
+            )
             const onConfirm = () =>
                 registration.waiting.postMessage({
                     type: swMsgs.skipWaiting,
                 })
             promptUpdate({
                 message: reloadMessage,
-                action: 'Update',
+                action: i18n.t('Update'),
                 onConfirm: onConfirm,
             })
         }
@@ -208,7 +210,7 @@ export function OfflineInterfaceProvider({ offlineInterface, children }) {
     )
 
     React.useEffect(() => {
-        // TODO: refactor from env var
+        // TODO: refactor from env var; receive from config
         if (process.env.REACT_APP_DHIS2_APP_PWA_ENABLED === 'true')
             // init() Returns a cleanup function
             return offlineInterface.init({ promptUpdate: show })
