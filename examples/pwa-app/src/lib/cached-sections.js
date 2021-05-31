@@ -4,7 +4,6 @@ import { useOfflineInterface } from './offline-interface.js'
 
 const CachedSectionsContext = createContext()
 
-// ? (optimization) 'getCachedSections' is called on mount; could be done before?
 /**
  * Uses the offline interface to access a Map of cached section IDs to their
  * last updated time. Provides that list, a 'removeSection(id)' function, and
