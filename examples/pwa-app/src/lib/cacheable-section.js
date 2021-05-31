@@ -1,3 +1,5 @@
+import { useAlert } from '@dhis2/app-runtime'
+import i18n from '@dhis2/d2-i18n'
 import { CenteredContent, CircularLoader, Layer } from '@dhis2/ui'
 import PropTypes from 'prop-types'
 import React, { useState, useEffect, useContext } from 'react'
@@ -51,6 +53,10 @@ function useRecordingState(id) {
 }
 
 export function useCacheableSection(id) {
+    const { show } = useAlert(
+        ({ message }) => message,
+        ({ status }) => ({ [status]: true })
+    )
     const offlineInterface = useOfflineInterface()
     const { isCached, lastUpdated, remove, updateSections } = useCachedSection(
         id
@@ -77,7 +83,10 @@ export function useCacheableSection(id) {
             })
             .then(() => recordingState.set(recordingStates.pending))
             .catch(err => {
-                // TODO: Alert error
+                show({
+                    status: 'critical',
+                    message: i18n.t('Unable to save section: ', err.message),
+                })
                 console.error(err)
             })
     }
@@ -87,13 +96,22 @@ export function useCacheableSection(id) {
     }
 
     function onRecordingCompleted() {
-        // TODO: Alert success
+        show({
+            status: 'success',
+            message: i18n.t('Section successfully saved for offline use.'),
+        })
         recordingState.set(recordingStates.default)
         updateSections()
     }
 
     function onRecordingError(error) {
-        // TODO: Handle error. Alert too?
+        show({
+            status: 'critical',
+            message: i18n.t(
+                'There was an error when trying to save this section offline: ',
+                error.message
+            ),
+        })
         console.error('Oops! Something went wrong with the recording.', error)
         recordingState.set(recordingStates.error)
     }
