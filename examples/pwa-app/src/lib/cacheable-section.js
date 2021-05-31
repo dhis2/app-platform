@@ -35,16 +35,6 @@ export function RecordingStatesProvider({ children }) {
 }
 RecordingStatesProvider.propTypes = { children: PropTypes.node }
 
-/** Returns `{ get(id), set(id, value), remove(id) }` relative to all states */
-export function useRecordingStates() {
-    const context = useContext(RecordingStatesContext)
-    if (!context)
-        throw new Error(
-            'useRecordingStates must be used within a RecordingStatesProvider component'
-        )
-    return context
-}
-
 /** Returns `{ get(), set(value), remove() }` for a particular ID */
 function useRecordingState(id) {
     const context = useContext(RecordingStatesContext)
