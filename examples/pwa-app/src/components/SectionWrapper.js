@@ -10,7 +10,6 @@ import CacheableComponent from './CacheableComponent.js'
 export default function SectionWrapper({ id }) {
     const {
         startRecording,
-        recordingState,
         lastUpdated,
         isCached,
         remove,
@@ -29,7 +28,7 @@ export default function SectionWrapper({ id }) {
                     Remove from cache
                 </Button>
             </ButtonStrip>
-            <CacheableSection recordingState={recordingState}>
+            <CacheableSection id={id}>
                 <CacheableComponent />
             </CacheableSection>
         </div>
