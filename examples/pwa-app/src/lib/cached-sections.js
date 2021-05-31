@@ -27,13 +27,8 @@ export function CachedSectionsProvider({ children }) {
         setCachedSections(map)
     }
 
-    // Make cachedSections retrievable by a function, instead of rerendering the component
-    // Or use a ref ***
-    // Or use context as state?
-
     const context = {
         cachedSections,
-        // getCachedSections: () => cachedSections,
         // TODO: Feedback; handle nonexistent ID?
         removeSection: async id => {
             await offlineInterface.removeSection(id)
