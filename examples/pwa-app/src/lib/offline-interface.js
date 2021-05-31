@@ -37,13 +37,6 @@ function swMessage(type, payload) {
  * that interact with the indexedDB and cache storage APIs.
  */
 export class OfflineInterface {
-    constructor() {
-        // TODO: Skip this if PWA is not enabled
-        // This event emitter helps coordinate with service worker messages
-        this.offlineEvents = new EventEmitter()
-        this.dbPromise = openSectionsDB()
-    }
-
     /**
      * Sets up a service worker by registering it, handling updates, and
      * listening to messages from the service worker.
@@ -53,7 +46,6 @@ export class OfflineInterface {
      * @returns {Function} A clean-up function that removes listeners
      */
     init({ promptUpdate }) {
-        // TODO: Skip this if PWA is not enabled
         if (!('serviceWorker' in navigator)) return null
 
         function onUpdate(registration) {
@@ -78,6 +70,9 @@ export class OfflineInterface {
         const reload = () => window.location.reload()
         navigator.serviceWorker.addEventListener('controllerchange', reload)
 
+        // This event emitter helps coordinate with service worker messages
+        this.offlineEvents = new EventEmitter()
+
         // Receives messages from service worker and forwards to event emitter
         const handleServiceWorkerMessage = event => {
             if (!event.data) return
@@ -89,6 +84,10 @@ export class OfflineInterface {
             handleServiceWorkerMessage
         )
 
+        // Okay to use other methods now
+        this.initialized = true
+
+        // Cleanup function to be returned by useEffect
         return () => {
             navigator.serviceWorker.removeEventListener(
                 'message',
@@ -125,6 +124,10 @@ export class OfflineInterface {
         onCompleted,
         onError,
     }) {
+        if (!this.initialized)
+            throw new Error(
+                'OfflineInterface has not been initialized. Make sure `pwa.enabled` is `true` in `d2.config.js`'
+            )
         if (!sectionId || !onStarted || !onCompleted || !onError)
             throw new Error(
                 '[Offline interface] The options { sectionId, onStarted, onCompleted, onError } are required when calling startRecording()'
@@ -154,10 +157,13 @@ export class OfflineInterface {
     }
 
     /**
-     * Retrieves a list of cached sections from IndexedDB.
+     * Retrieves a list of cached sections from IndexedDB. Creates DB if it
+     * doesn't exist yet to avoid race conditions with service worker.
      * @returns {Promise} A promise that resolves to an array of cached sections.
      */
     async getCachedSections() {
+        // Only open/create DB once requested
+        if (this.dbPromise === undefined) this.dbPromise = openSectionsDB()
         const db = await this.dbPromise
         return db.getAll(SECTIONS_STORE).catch(err => {
             console.error(
@@ -175,6 +181,8 @@ export class OfflineInterface {
      */
     async removeSection(sectionId) {
         if (!sectionId) throw new Error('No section ID specified to delete')
+        // Only open/create DB once requested
+        if (this.dbPromise === undefined) this.dbPromise = openSectionsDB()
         return Promise.all([
             caches.delete(sectionId),
             (await this.dbPromise).delete(SECTIONS_STORE, sectionId),
@@ -200,8 +208,10 @@ export function OfflineInterfaceProvider({ offlineInterface, children }) {
     )
 
     React.useEffect(() => {
-        // init() Returns a cleanup function
-        return offlineInterface.init({ promptUpdate: show })
+        // TODO: refactor from env var
+        if (process.env.REACT_APP_DHIS2_APP_PWA_ENABLED === 'true')
+            // init() Returns a cleanup function
+            return offlineInterface.init({ promptUpdate: show })
     }, [])
 
     return (
