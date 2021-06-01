@@ -82,12 +82,14 @@ export function useCacheableSection(id) {
                 onError: onRecordingError,
             })
             .then(() => recordingState.set(recordingStates.pending))
-            .catch(err => {
+            .catch(error => {
                 show({
                     status: 'critical',
-                    message: i18n.t('Unable to save section: ', err.message),
+                    message: i18n.t('Unable to save section. {{msg}}', {
+                        msg: error.message,
+                    }),
                 })
-                console.error(err)
+                console.error(error)
             })
     }
 
@@ -98,18 +100,18 @@ export function useCacheableSection(id) {
     function onRecordingCompleted() {
         show({
             status: 'success',
-            message: i18n.t('Section successfully saved for offline use.'),
+            message: i18n.t('Section saved for offline use.'),
         })
         recordingState.set(recordingStates.default)
         updateSections()
     }
 
-    function onRecordingError(error) {
+    function onRecordingError({ error }) {
         show({
             status: 'critical',
             message: i18n.t(
-                'There was an error when trying to save this section offline: ',
-                error.message
+                'There was an error when trying to save this section offline. {{msg}}',
+                { msg: error.message }
             ),
         })
         console.error('Oops! Something went wrong with the recording.', error)

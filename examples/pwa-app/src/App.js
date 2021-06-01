@@ -7,6 +7,7 @@ import {
     OfflineInterface,
     OfflineInterfaceProvider,
 } from './lib/offline-interface.js'
+import './locales'
 
 const offlineInterface = new OfflineInterface()
 
