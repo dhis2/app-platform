@@ -1,3 +1,5 @@
+import { useAlert } from '@dhis2/app-runtime'
+import i18n from '@dhis2/d2-i18n'
 import PropTypes from 'prop-types'
 import React, { createContext, useContext, useState, useEffect } from 'react'
 import { useOfflineInterface } from './offline-interface.js'
@@ -10,6 +12,10 @@ const CachedSectionsContext = createContext()
  * an 'updateSections' function as context.
  */
 export function CachedSectionsProvider({ children }) {
+    const { show } = useAlert(
+        ({ message }) => message,
+        ({ props }) => ({ ...props })
+    )
     const offlineInterface = useOfflineInterface()
 
     // cachedSections = Map: id => lastUpdated
@@ -17,6 +23,9 @@ export function CachedSectionsProvider({ children }) {
 
     // Get cached sections on load (and on other events?)
     useEffect(() => {
+        // ! yikes! currently this creates a DB even if PWA is not enabled.
+        // TODO: Only 'fetch' sections if PWA is enabled
+        // check offlineInterface.initialized? .pwaEnabled? and add as dependency so it triggers on change
         updateSections()
     }, [])
 
@@ -27,13 +36,47 @@ export function CachedSectionsProvider({ children }) {
         setCachedSections(map)
     }
 
+    async function removeSection(id) {
+        return offlineInterface
+            .removeSection(id)
+            .then(success => {
+                if (success) {
+                    const options = {
+                        message: i18n.t(
+                            'Section removed from offline storage.'
+                        ),
+                        props: { success: true },
+                    }
+                    show(options)
+                    updateSections()
+                } else {
+                    const options = {
+                        message: i18n.t(
+                            'That section was not found in offline storage.'
+                        ),
+                    }
+                    show(options)
+                    // No need to update sections here
+                }
+
+                return success
+            })
+            .catch(err => {
+                const options = {
+                    message: i18n.t(
+                        'There was an error when trying to remove this section. {{-msg}}',
+                        { msg: err.message }
+                    ),
+                    props: { critical: true },
+                }
+                console.error(err)
+                show(options)
+            })
+    }
+
     const context = {
         cachedSections,
-        // TODO: Feedback; handle nonexistent ID?
-        removeSection: async id => {
-            await offlineInterface.removeSection(id)
-            updateSections()
-        },
+        removeSection,
         updateSections,
     }
 

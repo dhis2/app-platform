@@ -163,6 +163,8 @@ export class OfflineInterface {
         })
     }
 
+    // TODO: Handle the following better if a service worker is not registered
+
     /**
      * Retrieves a list of cached sections from IndexedDB. Creates DB if it
      * doesn't exist yet to avoid race conditions with service worker.
@@ -184,7 +186,7 @@ export class OfflineInterface {
     /**
      * Removes a specified section from the IndexedDB and CacheStorage cache.
      * @param {String} sectionId - ID of the section to remove
-     * @returns {Promise} A promise
+     * @returns {Promise} A promise that resolves to `true` if the section is successfully deleted or `false` if it was not found.
      */
     async removeSection(sectionId) {
         if (!sectionId) throw new Error('No section ID specified to delete')
@@ -193,10 +195,7 @@ export class OfflineInterface {
         return Promise.all([
             caches.delete(sectionId),
             (await this.dbPromise).delete(SECTIONS_STORE, sectionId),
-        ]).catch(err => {
-            console.error('[Offline interface] Error in removeSection:\n', err)
-            return null
-        })
+        ]).then(([cacheDeleted]) => cacheDeleted)
     }
 }
 
