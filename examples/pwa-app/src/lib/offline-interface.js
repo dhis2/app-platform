@@ -46,9 +46,11 @@ export class OfflineInterface {
      * @param {Function} options.promptUpdate - A function that will be called when a new service worker is installed and ready to activate. Expected to be an alert 'show' function
      * @returns {Function} A clean-up function that removes listeners
      */
-    init({ promptUpdate }) {
+    init({ promptUpdate, pwaEnabled }) {
         if (!('serviceWorker' in navigator)) return null
 
+        // Registration handling needs to happen if PWA is enabled or not,
+        // because it will unregister any SWs if PWA is disabled
         function onUpdate(registration) {
             if (!promptUpdate) return
             const reloadMessage = i18n.t(
@@ -66,7 +68,10 @@ export class OfflineInterface {
         }
         // TODO: Registering here can cause some lag while loading;
         // There might be a better time to do it
-        handleServiceWorkerRegistration({ onUpdate })
+        handleServiceWorkerRegistration(pwaEnabled, { onUpdate })
+
+        // Stop here if pwa is not enabled
+        if (!pwaEnabled) return
 
         // Reload window to use new assets when new SW activates
         const reload = () => window.location.reload()
@@ -86,7 +91,7 @@ export class OfflineInterface {
             handleServiceWorkerMessage
         )
 
-        // Okay to use other methods now
+        // Okay to use 'startRecording' now
         this.initialized = true
 
         // Cleanup function to be returned by useEffect
@@ -211,9 +216,10 @@ export function OfflineInterfaceProvider({ offlineInterface, children }) {
 
     React.useEffect(() => {
         // TODO: refactor from env var; receive from config
-        if (process.env.REACT_APP_DHIS2_APP_PWA_ENABLED === 'true')
-            // init() Returns a cleanup function
-            return offlineInterface.init({ promptUpdate: show })
+        const pwaEnabled =
+            process.env.REACT_APP_DHIS2_APP_PWA_ENABLED === 'true'
+        // init() Returns a cleanup function
+        return offlineInterface.init({ promptUpdate: show, pwaEnabled })
     }, [])
 
     return (

@@ -1,11 +1,11 @@
 /**
- * Registers or unregisters a service worker based on the `pwa.enabled` value in `d2.config.js`.
+ * Registers or unregisters a service worker based on the `pwaEnabled` argument.
+ * @param {Boolean} pwaEnabled - If true, a service worker is registered. If false, service workers are unregistered in this scope. Should typically receive the env var that results from the `pwa.enabled` option in `d2.config.js`.
  * @param {Object} config
  * @param {Function} [config.onUpdate] - Called with SW `registration` as an argument when an updated service worker is installed and waiting.
  * @param {Function} [config.onSuccess] - Called with SW `registration` as an argument when a SW is installed for the first time.
  */
-export function handleServiceWorkerRegistration(config) {
-    const pwaEnabled = process.env.REACT_APP_DHIS2_APP_PWA_ENABLED === 'true' // env vars are strings
+export function handleServiceWorkerRegistration(pwaEnabled, config) {
     if (pwaEnabled) {
         register(config)
     } else {
