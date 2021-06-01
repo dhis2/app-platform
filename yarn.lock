@@ -3054,13 +3054,6 @@
   resolved "https://registry.yarnpkg.com/@csstools/normalize.css/-/normalize.css-10.1.0.tgz#f0950bba18819512d42f7197e56c518aa491cf18"
   integrity sha512-ij4wRiunFfaJxjB0BdrYHIH8FxBJpOwNPhhAcunlmPdXudL1WQV1qoP9un6JsEBAgQH+7UXyyjh0g7jTxXK6tg==
 
-"@dhis2/app-adapter@6.1.0":
-  version "6.1.0"
-  resolved "https://registry.yarnpkg.com/@dhis2/app-adapter/-/app-adapter-6.1.0.tgz#f1683b58b396a3bada4da459ecb757bbc8777ecf"
-  integrity sha512-danRGr84ojGSTCd2rqmQyv9V6yRNOgh3Lw2ai6lQs2uGC/MBNpRBK41vTo7OKeneudmtpkuYHIjrnbQklrrSNA==
-  dependencies:
-    moment "^2.24.0"
-
 "@dhis2/app-runtime@^2.8.0":
   version "2.8.0"
   resolved "https://registry.yarnpkg.com/@dhis2/app-runtime/-/app-runtime-2.8.0.tgz#83ca6e96c299686ee72eea3e1825e04aa53cd5d2"
@@ -3084,61 +3077,6 @@
   version "2.8.0"
   resolved "https://registry.yarnpkg.com/@dhis2/app-service-data/-/app-service-data-2.8.0.tgz#9cd347127968cb6f3c8a4ab0fc6699ea7058f835"
   integrity sha512-5doyL4bxRMdMXY4RtWo2O3NVGwSDOSUY3hGPXaF1TeFWAqujlPTx17uDw6wEelN6LaryAnVwId2Ep3FOV8v5MA==
-
-"@dhis2/app-shell@6.1.0":
-  version "6.1.0"
-  resolved "https://registry.yarnpkg.com/@dhis2/app-shell/-/app-shell-6.1.0.tgz#bf1fccde09aacb06e0a23973ad8f247089b7e8e9"
-  integrity sha512-aZ6sHRcoZ34+5iC7zdGts3NwFPoyNfgujoC52AcBmrclQzch00pq8+BEQ8CIJP0Rwu+4U8wZVJ2MJcjKEOBHYg==
-  dependencies:
-    "@dhis2/app-adapter" "6.1.0"
-    "@dhis2/app-runtime" "^2.8.0"
-    "@dhis2/d2-i18n" "^1.1.0"
-    "@dhis2/ui" "^6.5.3"
-    classnames "^2.2.6"
-    moment "^2.29.1"
-    prop-types "^15.7.2"
-    react "^16.8.6"
-    react-dom "^16.8.6"
-    react-scripts "^4.0.0"
-    source-map-explorer "^2.1.0"
-    styled-jsx "^3.2.2"
-    typeface-roboto "^0.0.75"
-    typescript "^3.6.3"
-
-"@dhis2/cli-app-scripts@6.1.0":
-  version "6.1.0"
-  resolved "https://registry.yarnpkg.com/@dhis2/cli-app-scripts/-/cli-app-scripts-6.1.0.tgz#c05f6a21edb5702a21343ac20eb7e0aa5bef30bf"
-  integrity sha512-8/kp8hL8Mx+xLObT/TEge4pJESIMxEoWmrJahnFPkCJnm42eYa6Cn2RlLbvfoxgSKrIMZYVG8EM06XL847RlDA==
-  dependencies:
-    "@babel/core" "^7.6.2"
-    "@babel/plugin-proposal-class-properties" "^7.8.3"
-    "@babel/plugin-proposal-nullish-coalescing-operator" "^7.8.3"
-    "@babel/plugin-proposal-optional-chaining" "^7.8.3"
-    "@babel/preset-env" "^7.9.0"
-    "@babel/preset-react" "^7.0.0"
-    "@babel/preset-typescript" "^7.6.0"
-    "@dhis2/app-shell" "6.1.0"
-    "@dhis2/cli-helpers-engine" "^2.1.1"
-    archiver "^3.1.1"
-    axios "^0.20.0"
-    babel-jest "^24.9.0"
-    babel-plugin-react-require "^3.1.3"
-    chokidar "^3.3.0"
-    detect-port "^1.3.0"
-    dotenv "^8.1.0"
-    dotenv-expand "^5.1.0"
-    form-data "^3.0.0"
-    fs-extra "^8.1.0"
-    gaze "^1.1.3"
-    handlebars "^4.3.3"
-    i18next-conv "^9"
-    i18next-scanner "^2.10.3"
-    inquirer "^7.3.3"
-    jest-cli "^24.9.0"
-    lodash "^4.17.11"
-    parse-author "^2.0.0"
-    parse-gitignore "^1.0.1"
-    styled-jsx "<3.3.3"
 
 "@dhis2/cli-helpers-engine@2.1.1", "@dhis2/cli-helpers-engine@^2.1.1":
   version "2.1.1"
