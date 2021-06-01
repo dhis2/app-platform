@@ -51,41 +51,38 @@ export function CachedSectionsProvider({ children }) {
     }
 
     async function removeSection(id) {
-        return offlineInterface
-            .removeSection(id)
-            .then(success => {
-                if (success) {
-                    const options = {
-                        message: i18n.t(
-                            'Section removed from offline storage.'
-                        ),
-                        props: { success: true },
-                    }
-                    show(options)
-                    updateSections()
-                } else {
-                    const options = {
-                        message: i18n.t(
-                            'That section was not found in offline storage.'
-                        ),
-                    }
-                    show(options)
-                    // No need to update sections here
-                }
+        try {
+            const success = await offlineInterface.removeSection(id)
 
-                return success
-            })
-            .catch(error => {
+            if (success) {
+                const options = {
+                    message: i18n.t('Section removed from offline storage.'),
+                    props: { success: true },
+                }
+                show(options)
+                updateSections()
+            } else {
                 const options = {
                     message: i18n.t(
-                        'There was an error when trying to remove this section. {{-msg}}',
-                        { msg: error.message }
+                        'That section was not found in offline storage.'
                     ),
-                    props: { critical: true },
                 }
-                console.error(error)
                 show(options)
-            })
+                // No need to update sections here
+            }
+
+            return success
+        } catch (error) {
+            const options = {
+                message: i18n.t(
+                    'There was an error when trying to remove this section. {{-msg}}',
+                    { msg: error.message }
+                ),
+                props: { critical: true },
+            }
+            console.error(error)
+            show(options)
+        }
     }
 
     const context = {
