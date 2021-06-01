@@ -5,8 +5,8 @@ msgstr ""
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1)\n"
-"POT-Creation-Date: 2021-06-01T22:47:36.894Z\n"
-"PO-Revision-Date: 2021-06-01T22:47:36.894Z\n"
+"POT-Creation-Date: 2021-06-01T22:54:23.048Z\n"
+"PO-Revision-Date: 2021-06-01T22:54:23.048Z\n"
 
 msgid "Unable to save section. {{msg}}"
 msgstr "Unable to save section. {{msg}}"
@@ -16,6 +16,9 @@ msgstr "Section saved for offline use."
 
 msgid "There was an error when trying to save this section offline. {{msg}}"
 msgstr "There was an error when trying to save this section offline. {{msg}}"
+
+msgid "There was an error when accessing cached sections. {{-msg}}"
+msgstr "There was an error when accessing cached sections. {{-msg}}"
 
 msgid "Section removed from offline storage."
 msgstr "Section removed from offline storage."

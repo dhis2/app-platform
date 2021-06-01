@@ -30,10 +30,24 @@ export function CachedSectionsProvider({ children }) {
     }, [])
 
     async function updateSections() {
-        const list = await offlineInterface.getCachedSections()
-        const map = new Map()
-        list.forEach(section => map.set(section.sectionId, section.lastUpdated))
-        setCachedSections(map)
+        try {
+            const list = await offlineInterface.getCachedSections()
+            const map = new Map()
+            list.forEach(section =>
+                map.set(section.sectionId, section.lastUpdated)
+            )
+            setCachedSections(map)
+        } catch (error) {
+            const options = {
+                message: i18n.t(
+                    'There was an error when accessing cached sections. {{-msg}}',
+                    { msg: error.message }
+                ),
+                props: { critical: true },
+            }
+            console.error(error)
+            show(options)
+        }
     }
 
     async function removeSection(id) {
@@ -61,15 +75,15 @@ export function CachedSectionsProvider({ children }) {
 
                 return success
             })
-            .catch(err => {
+            .catch(error => {
                 const options = {
                     message: i18n.t(
                         'There was an error when trying to remove this section. {{-msg}}',
-                        { msg: err.message }
+                        { msg: error.message }
                     ),
                     props: { critical: true },
                 }
-                console.error(err)
+                console.error(error)
                 show(options)
             })
     }

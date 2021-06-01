@@ -174,13 +174,7 @@ export class OfflineInterface {
         // Only open/create DB once requested
         if (this.dbPromise === undefined) this.dbPromise = openSectionsDB()
         const db = await this.dbPromise
-        return db.getAll(SECTIONS_STORE).catch(err => {
-            console.error(
-                '[Offline interface] Error in getCachedSections:\n',
-                err
-            )
-            return []
-        })
+        return db.getAll(SECTIONS_STORE)
     }
 
     /**
