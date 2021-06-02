@@ -13,6 +13,7 @@ function Controls({ id }) {
         lastUpdated,
         isCached,
         remove,
+        /* recordingState, */
     } = useCacheableSection(id)
 
     return (
