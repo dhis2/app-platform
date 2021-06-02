@@ -2,6 +2,7 @@ const config = {
     type: 'app',
 
     standalone: true,
+
     pwa: {
         enabled: true,
         caching: {
