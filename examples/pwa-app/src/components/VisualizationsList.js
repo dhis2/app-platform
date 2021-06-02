@@ -18,7 +18,7 @@ const wait = ms =>
         setTimeout(resolve, ms)
     })
 
-export default function CacheableComponent() {
+export default function VisualizationsList() {
     const [vizList, setVizList] = useState([])
     const engine = useDataEngine()
 

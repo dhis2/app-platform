@@ -5,7 +5,7 @@ import {
     CacheableSection,
     useCacheableSection,
 } from '../lib/cacheable-section.js'
-import CacheableComponent from './CacheableComponent.js'
+import VisualizationsList from './VisualizationsList.js'
 
 function Controls({ id }) {
     const {
@@ -38,7 +38,7 @@ export default function SectionWrapper({ id }) {
         <div>
             <Controls id={id} />
             <CacheableSection id={id}>
-                <CacheableComponent />
+                <VisualizationsList />
             </CacheableSection>
         </div>
     )
