@@ -32,8 +32,8 @@ Options:
   --channel, -c   The channel to publish the app-version to  [default: "stable"]
   --baseUrl, -b   The base-url of the App Hub instance
                                              [default: "https://apps.dhis2.org"]
-  --minVersion    The minimum version of DHIS2 the app supports         [string]
-  --maxVersion    The maximum version of DHIS2 the app supports         [string]
+  --minDHIS2Version    The minimum version of DHIS2 the app supports    [string]
+  --maxDHIS2Version    The maximum version of DHIS2 the app supports    [string]
   --appId         Only used with --file option. The App Hub ID for the App to
                   publish to                                            [string]
   --file          Path to the file to upload. This skips automatic resolution of
