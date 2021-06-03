@@ -12,7 +12,7 @@ This command will prompt the user for information not found in `d2.config.js` or
 
 ```sh
 > d2 app scripts publish
-> export D2_APIKEY=xyz
+> export D2_APP_HUB_API_KEY=xyz
 > d2 app scripts publish --minVersion 2.34 --maxVersion 2.36
 ```
 
