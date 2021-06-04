@@ -19,12 +19,13 @@ The API key can be specified with the `D2_APP_HUB_API_KEY` environment variable.
 ## Upload a non-platform app
 
 This command can also be used to upload an app-version that is not a DHIS2 platform app. We encourage you to migrate to the DHIS2 platform, but we provide the ability to upload any app.
-Use the `--file` option to specify the path to the file, and use options to specify other required information. 
+Use the `--file` option to specify the path to the file, and use options to specify other required information.
 
 ```sh
 > d2 app scripts publish --file build/simple-app.zip --file-version 1.0.1 --minDHIS2Version 2.34 --appId <someAppId>
 ```
- Note that your app must still have a manifest that matches the information you provide.
+
+Note that your app must still have a manifest that matches the information you provide.
 
 ## Usage
 
