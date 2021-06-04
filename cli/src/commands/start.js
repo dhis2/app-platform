@@ -2,6 +2,7 @@ const { reporter, chalk } = require('@dhis2/cli-helpers-engine')
 const detectPort = require('detect-port')
 const { compile } = require('../lib/compiler')
 const exitOnCatch = require('../lib/exitOnCatch')
+const generateManifest = require('../lib/generateManifest')
 const i18n = require('../lib/i18n')
 const loadEnvFiles = require('../lib/loadEnvFiles')
 const parseConfig = require('../lib/parseConfig')
@@ -70,6 +71,10 @@ const handler = async ({
                 paths,
                 watch: true,
             })
+
+            // Manifests added here so app has access to manifest.json for pwa
+            reporter.info('Generating manifests...')
+            await generateManifest(paths, config, process.env.PUBLIC_URL)
 
             const newPort = await detectPort(port)
             if (String(newPort) !== String(port)) {
