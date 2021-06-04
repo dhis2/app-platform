@@ -24,7 +24,7 @@ Use the `--file` option to specify the path to the file, and use options to spec
 ```sh
 > d2 app scripts publish --file build/simple-app.zip --file-version 1.0.1 --minDHIS2Version 2.34 --appId <someAppId>
 ```
- Note that your app must still have a manifest that matches the information you type.
+ Note that your app must still have a manifest that matches the information you provide.
 
 ## Usage
 
