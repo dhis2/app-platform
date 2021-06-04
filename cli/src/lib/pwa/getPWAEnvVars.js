@@ -10,10 +10,10 @@ function getPWAEnvVars(config) {
         pwa_enabled: config.pwa.enabled,
         omit_external_requests: config.pwa.caching.omitExternalRequests,
         patterns_to_omit: JSON.stringify(
-            config.pwa.caching?.patternsToOmit || []
+            config.pwa.caching.patternsToOmit || []
         ),
         additional_manifest_entries: JSON.stringify(
-            config.pwa.caching?.additionalManifestEntries || []
+            config.pwa.caching.additionalManifestEntries || []
         ),
     }
 }
