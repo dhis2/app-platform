@@ -18,6 +18,10 @@ module.exports = (cwd = process.cwd()) => {
             __dirname,
             '../../config/d2.config.lib.js'
         ),
+        configDefaultsPWA: path.join(
+            __dirname,
+            '../../config/d2.pwa.config.js'
+        ),
         jestConfigDefaults: path.join(__dirname, '../../config/jest.config.js'),
         readmeDefault: path.join(__dirname, '../../config/init.README.md'),
 

@@ -4,7 +4,7 @@ const config = {
     standalone: true,
 
     pwa: {
-        enabled: true,
+        enabled: false,
         caching: {
             // Makes sure to cache API requests when in standalone mode
             omitExternalRequests: false,

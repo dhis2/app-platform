@@ -1,4 +1,5 @@
 const { exec } = require('@dhis2/cli-helpers-engine')
+const { getPWAEnvVars } = require('../pwa')
 const bootstrap = require('./bootstrap')
 const getEnv = require('./env')
 
@@ -17,14 +18,7 @@ module.exports = ({ config, paths }) => ({
             cwd: paths.shell,
             env: getEnv({
                 name: config.title,
-                // if config.type == 'app', there will be default values for the following properties
-                pwa_enabled: config.type === 'app' && config.pwa.enabled,
-                omit_external_requests:
-                    config.type === 'app' &&
-                    config.pwa.caching.omitExternalRequests,
-                patterns_to_omit:
-                    config.type === 'app' &&
-                    JSON.stringify(config.pwa.caching.patternsToOmit),
+                ...getPWAEnvVars(config),
             }),
             pipe: false,
         })

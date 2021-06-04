@@ -12,9 +12,9 @@ export function setUpServiceWorker() {
     let dbPromise
     const clientRecordingStates = {}
     const CACHE_KEEP_LIST = ['other-assets', 'app-shell']
-    // * Maybe use babel replacement here:
+    // Fallback prevents error when switching from pwa enabled to disabled
     const URL_FILTER_PATTERNS = JSON.parse(
-        process.env.REACT_APP_DHIS2_APP_PATTERNS_TO_OMIT
+        process.env.REACT_APP_DHIS2_APP_PATTERNS_TO_OMIT || '[]'
     )
     const OMIT_EXTERNAL_REQUESTS =
         process.env.REACT_APP_DHIS2_APP_OMIT_EXTERNAL_REQUESTS === 'true'
@@ -36,8 +36,9 @@ export function setUpServiceWorker() {
 
     // Similar to above; manifest injection from workbox-build
     // Precaches all assets in the shell's build folder except in `static`
-    // (which CRA's workbox-webpack-plugin handle smartly)
-    precacheAndRoute(self.__WB_BUILD_MANIFEST)
+    // (which CRA's workbox-webpack-plugin handle smartly).
+    // '[]' fallback prevents an error when switching pwa enabled to disabled
+    precacheAndRoute(self.__WB_BUILD_MANIFEST || [])
 
     // ? QUESTION: Do we need this route?
     // Set up App Shell-style routing, so that all navigation requests
