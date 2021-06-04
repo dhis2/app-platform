@@ -171,7 +171,9 @@ export class OfflineInterface {
      * @returns {Promise} A promise that resolves to an array of cached sections.
      */
     async getCachedSections() {
-        // Only open/create DB once requested
+        // This fn may be called before service worker is ready. Wait 'til then
+        // to avoid opening a DB in an app that isn't PWA-enabled
+        await navigator.serviceWorker.ready
         if (this.dbPromise === undefined) this.dbPromise = openSectionsDB()
         const db = await this.dbPromise
         return db.getAll(SECTIONS_STORE)
@@ -184,7 +186,7 @@ export class OfflineInterface {
      */
     async removeSection(sectionId) {
         if (!sectionId) throw new Error('No section ID specified to delete')
-        // Only open/create DB once requested
+        await navigator.serviceWorker.ready
         if (this.dbPromise === undefined) this.dbPromise = openSectionsDB()
         return Promise.all([
             caches.delete(sectionId),
