@@ -4,7 +4,7 @@ const fs = require('fs-extra')
 const bundleApp = require('../lib/bundleApp')
 const { compile } = require('../lib/compiler')
 const exitOnCatch = require('../lib/exitOnCatch')
-const generateManifest = require('../lib/generateManifest')
+const generateManifests = require('../lib/generateManifests')
 const i18n = require('../lib/i18n')
 const loadEnvFiles = require('../lib/loadEnvFiles')
 const parseConfig = require('../lib/parseConfig')
@@ -122,7 +122,7 @@ const handler = async ({
                 // Manifest generation moved here so these static assets can be
                 // precached by Workbox during the shell build step
                 reporter.info('Generating manifests...')
-                await generateManifest(paths, config, process.env.PUBLIC_URL)
+                await generateManifests(paths, config, process.env.PUBLIC_URL)
 
                 reporter.info('Building appShell...')
                 await shell.build()
