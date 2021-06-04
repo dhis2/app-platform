@@ -8,13 +8,23 @@ Note that you need an App Hub API key before using this command. The API key is 
 
 This command can only upload _versions_ to an app that **already** exists on the App Hub. The app must have an `id`-field in the `d2.config.js` which matches the id of the app on App Hub.
 
-This command will prompt the user for information not found in `d2.config.js` or in the parameters. The API key can be specified with the `D2_APP_HUB_API_KEY` environment variable. For example, the following will publish the app without waiting for user input, given that `id` is in the config-file.
+The API key can be specified with the `D2_APP_HUB_API_KEY` environment variable. For example, the following will publish the app without waiting for user input, given that `id` is in the config-file.
 
 ```sh
 > d2 app scripts publish
 > export D2_APP_HUB_API_KEY=xyz
 > d2 app scripts publish --minVersion 2.34 --maxVersion 2.36
 ```
+
+## Upload a non-platform app
+
+This command can also be used to upload an app-version that is not a DHIS2 platform app. We encourage you to migrate to the DHIS2 platform, but we provide the ability to upload any app.
+Use the `--file` option to specify the path to the file, and use options to specify other required information. 
+
+```sh
+> d2 app scripts publish --file build/simple-app.zip --file-version 1.0.1 --minDHIS2Version 2.34 --appId <someAppId>
+```
+ Note that your app must still have a manifest that matches the information you type.
 
 ## Usage
 
