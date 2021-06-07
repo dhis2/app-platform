@@ -7,20 +7,17 @@ import {
     OfflineInterface,
     OfflineInterfaceProvider,
 } from './lib/offline-interface.js'
+import { OfflineProvider } from './lib/provider.js'
 import './locales'
 
 const offlineInterface = new OfflineInterface()
 
 const MyApp = () => (
-    <OfflineInterfaceProvider offlineInterface={offlineInterface}>
-        <CachedSectionsProvider>
-            <RecordingStatesProvider>
-                <div className={classes.container}>
-                    <SectionWrapper id={'section-id-01'} />
-                </div>
-            </RecordingStatesProvider>
-        </CachedSectionsProvider>
-    </OfflineInterfaceProvider>
+    <OfflineProvider offlineInterface={offlineInterface}>
+        <div className={classes.container}>
+            <SectionWrapper id={'section-id-01'} />
+        </div>
+    </OfflineProvider>
 )
 
 export default MyApp
