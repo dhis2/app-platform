@@ -8,7 +8,35 @@ import {
 } from 'workbox-strategies'
 import { openSectionsDB, SECTIONS_STORE } from '../lib/sections-db'
 
+function setUpKillSwitchServiceWorker() {
+    // A simple, no-op service worker that takes immediate control.
+    self.addEventListener('install', () => {
+        self.skipWaiting()
+    })
+
+    self.addEventListener('activate', () => {
+        // Get a list of all the current open windows/tabs under
+        // our service worker's control, and force them to reload.
+        // This can "unbreak" any open windows/tabs as soon as the new
+        // service worker activates, rather than users having to manually reload.
+        self.clients.matchAll({ type: 'window' }).then(windowClients => {
+            windowClients.forEach(windowClient => {
+                windowClient.navigate(windowClient.url)
+            })
+        })
+        // TODO: Clear service worker caches and IndexedDB
+    })
+}
+
 export function setUpServiceWorker() {
+    const pwaEnabled = process.env.REACT_APP_DHIS2_APP_PWA_ENABLED === 'true'
+    if (!pwaEnabled) {
+        // Install 'killswitch' service worker and refresh page to clear
+        // rogue service workers. App should then unregister SW
+        setUpKillSwitchServiceWorker()
+        return
+    }
+
     let dbPromise
     const clientRecordingStates = {}
     const CACHE_KEEP_LIST = ['other-assets', 'app-shell']
