@@ -1,4 +1,4 @@
-import { openDB } from 'idb'
+import { openDB, deleteDB } from 'idb'
 
 export const SECTIONS_DB = 'sections-db'
 export const SECTIONS_STORE = 'sections-store'
@@ -30,4 +30,9 @@ export function openSectionsDB() {
             }
         },
     })
+}
+
+/** Deletes the DB */
+export function deleteSectionsDB() {
+    return deleteDB(SECTIONS_DB)
 }

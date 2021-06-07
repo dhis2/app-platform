@@ -6,25 +6,31 @@ import {
     StaleWhileRevalidate,
     Strategy,
 } from 'workbox-strategies'
-import { openSectionsDB, SECTIONS_STORE } from '../lib/sections-db'
+import {
+    openSectionsDB,
+    deleteSectionsDB,
+    SECTIONS_STORE,
+} from '../lib/sections-db'
 
 function setUpKillSwitchServiceWorker() {
-    // A simple, no-op service worker that takes immediate control.
+    // A simple, no-op service worker that takes immediate control and tears
+    // everything down. Has no fetch handler.
     self.addEventListener('install', () => {
         self.skipWaiting()
     })
 
-    self.addEventListener('activate', () => {
-        // Get a list of all the current open windows/tabs under
-        // our service worker's control, and force them to reload.
-        // This can "unbreak" any open windows/tabs as soon as the new
-        // service worker activates, rather than users having to manually reload.
-        self.clients.matchAll({ type: 'window' }).then(windowClients => {
-            windowClients.forEach(windowClient => {
-                windowClient.navigate(windowClient.url)
-            })
-        })
-        // TODO: Clear service worker caches and IndexedDB
+    self.addEventListener('activate', async () => {
+        console.log('[SW] Tearing down service worker, caches, and IDB...')
+        // Unregister, in case app doesn't
+        self.registration.unregister()
+        // Delete all caches
+        const keys = await self.caches.keys()
+        await Promise.all(keys.map(key => self.caches.delete(key)))
+        // Delete DB
+        await deleteSectionsDB()
+        // Force refresh all windows
+        const clients = await self.clients.matchAll({ type: 'window' })
+        clients.forEach(client => client.navigate(client.url))
     })
 }
 
