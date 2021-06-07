@@ -23,9 +23,6 @@ export function CachedSectionsProvider({ children }) {
 
     // Get cached sections on load (and on other events?)
     useEffect(() => {
-        // ! yikes! currently this creates a DB even if PWA is not enabled.
-        // TODO: Only 'fetch' sections if PWA is enabled
-        // check offlineInterface.initialized? .pwaEnabled? and add as dependency so it triggers on change
         updateSections()
     }, [])
 
