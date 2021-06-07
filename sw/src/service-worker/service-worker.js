@@ -256,7 +256,7 @@ export function setUpServiceWorker() {
         const recordingState = clientRecordingStates[event.clientId]
 
         clearTimeout(recordingState.recordingTimeout)
-        recordingState.pendingRequests.set(request, 'placeholder') // Something better to put here? timestamp?
+        recordingState.pendingRequests.set(request, 'placeholder')
 
         fetch(request)
             .then(response => {
@@ -274,9 +274,8 @@ export function setUpServiceWorker() {
         const tempCacheKey = getCacheKey('temp', clientId)
         addToCache(tempCacheKey, request, response)
 
-        // add request to fulfilled
-        // note that request objects can't be stored in IDB (see 'complet recording' function)
-        // QUESTION: Something better to store as value? If not, an array may be appropriate
+        // add request to fulfilled. TODO: Handle response for normalized caching
+        // note that request objects can't be stored in IDB (see 'complete recording' function)
         recordingState.fulfilledRequests.set(request.url, 'placeholder-value')
 
         // remove request from pending requests
