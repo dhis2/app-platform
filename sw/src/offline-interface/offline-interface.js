@@ -1,11 +1,8 @@
 import EventEmitter from 'events'
 import i18n from '@dhis2/d2-i18n'
-import {
-    openSectionsDB,
-    handleServiceWorkerRegistration,
-    swMsgs,
-    SECTIONS_STORE,
-} from '@dhis2/sw'
+import { swMsgs } from '../lib/constants'
+import { handleServiceWorkerRegistration } from '../lib/registration'
+import { openSectionsDB, SECTIONS_STORE } from '../lib/sections-db'
 
 /** Cleans up SW recording listeners */
 function cleanUpListeners(offlineEvents) {

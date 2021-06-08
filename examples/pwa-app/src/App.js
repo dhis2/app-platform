@@ -1,8 +1,8 @@
 import { OfflineProvider } from '@dhis2/app-service-offline'
+import { OfflineInterface } from '@dhis2/sw'
 import React from 'react'
 import classes from './App.module.css'
 import SectionWrapper from './components/SectionWrapper'
-import { OfflineInterface } from './lib/offline-interface.js'
 import './locales'
 
 const offlineInterface = new OfflineInterface()
