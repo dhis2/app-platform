@@ -1,5 +1,4 @@
 import EventEmitter from 'events'
-import { useAlert } from '@dhis2/app-runtime'
 import i18n from '@dhis2/d2-i18n'
 import {
     openSectionsDB,
@@ -7,10 +6,6 @@ import {
     swMsgs,
     SECTIONS_STORE,
 } from '@dhis2/sw'
-import PropTypes from 'prop-types'
-import React, { createContext, useContext } from 'react'
-
-// Lives in platform
 
 /** Cleans up SW recording listeners */
 function cleanUpListeners(offlineEvents) {
@@ -193,50 +188,4 @@ export class OfflineInterface {
             (await this.dbPromise).delete(SECTIONS_STORE, sectionId),
         ]).then(([cacheDeleted]) => cacheDeleted)
     }
-}
-
-// Offline interface context
-// Lives in runtime
-
-const OfflineContext = createContext()
-
-export function OfflineInterfaceProvider({ offlineInterface, children }) {
-    const { show } = useAlert(
-        ({ message }) => message,
-        ({ action, onConfirm }) => ({
-            actions: [{ label: action, onClick: onConfirm }],
-            permanent: true,
-        })
-    )
-
-    React.useEffect(() => {
-        // TODO: refactor from env var; receive from config
-        const pwaEnabled =
-            process.env.REACT_APP_DHIS2_APP_PWA_ENABLED === 'true'
-        // init() Returns a cleanup function
-        return offlineInterface.init({ promptUpdate: show, pwaEnabled })
-    }, [])
-
-    return (
-        <OfflineContext.Provider value={offlineInterface}>
-            {children}
-        </OfflineContext.Provider>
-    )
-}
-
-OfflineInterfaceProvider.propTypes = {
-    children: PropTypes.node,
-    offlineInterface: PropTypes.shape({ init: PropTypes.func }),
-}
-
-export function useOfflineInterface() {
-    const offlineInterface = useContext(OfflineContext)
-
-    if (offlineInterface === undefined) {
-        throw new Error(
-            'useOfflineInterface must be used within an OfflineInterfaceProvider'
-        )
-    }
-
-    return offlineInterface
 }
