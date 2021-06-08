@@ -21,7 +21,11 @@
         "build"
     ],
     "dependencies": {
+        "@dhis2/app-service-offline": "file:../../app-runtime/services/offline",
         "moment": "^2.24.0"
+    },
+    "resolutions": {
+        "@dhis2/app-service-offline": "file:../../app-runtime/services/offline"
     },
     "devDependencies": {
         "@dhis2/cli-app-scripts": "6.2.0",
