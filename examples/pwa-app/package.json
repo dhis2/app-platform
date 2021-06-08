@@ -16,9 +16,14 @@
         "@dhis2/cli-app-scripts": "^6.2.0"
     },
     "peerDependencies": {
-        "@dhis2/app-runtime": "*",
         "@dhis2/d2-i18n": "*",
         "react": "^16.8",
         "react-dom": "^16.8"
+    },
+    "dependencies": {
+        "@dhis2/app-service-offline": "file:../../../app-runtime/services/offline"
+    },
+    "resolutions": {
+        "@dhis2/app-service-offline": "file:../../../app-runtime/services/offline"
     }
 }

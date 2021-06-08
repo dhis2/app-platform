@@ -1,10 +1,10 @@
-import { Button, ButtonStrip } from '@dhis2/ui'
-import PropTypes from 'prop-types'
-import React from 'react'
 import {
     CacheableSection,
     useCacheableSection,
-} from '../lib/cacheable-section.js'
+} from '@dhis2/app-service-offline'
+import { Button, ButtonStrip } from '@dhis2/ui'
+import PropTypes from 'prop-types'
+import React from 'react'
 import VisualizationsList from './VisualizationsList.js'
 
 function Controls({ id }) {

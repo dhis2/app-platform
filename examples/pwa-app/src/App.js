@@ -1,13 +1,8 @@
+import { OfflineProvider } from '@dhis2/app-service-offline'
 import React from 'react'
 import classes from './App.module.css'
 import SectionWrapper from './components/SectionWrapper'
-import { RecordingStatesProvider } from './lib/cacheable-section.js'
-import { CachedSectionsProvider } from './lib/cached-sections.js'
-import {
-    OfflineInterface,
-    OfflineInterfaceProvider,
-} from './lib/offline-interface.js'
-import { OfflineProvider } from './lib/provider.js'
+import { OfflineInterface } from './lib/offline-interface.js'
 import './locales'
 
 const offlineInterface = new OfflineInterface()
