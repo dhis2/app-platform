@@ -11,10 +11,13 @@ import { styles } from './styles.js'
 
 const offlineInterface = new OfflineInterface()
 
-const App = ({ url, apiVersion, appName, children }) => (
+const App = ({ url, apiVersion, appName, pwaEnabled, children }) => (
     <FatalErrorBoundary>
         <ServerVersionProvider url={url} apiVersion={apiVersion}>
-            <OfflineProvider offlineInterface={offlineInterface}>
+            <OfflineProvider
+                offlineInterface={offlineInterface}
+                pwaEnabled={pwaEnabled}
+            >
                 <div className="app-shell-adapter">
                     <style jsx>{styles}</style>
                     <HeaderBar appName={appName} />
@@ -33,6 +36,7 @@ App.propTypes = {
     url: PropTypes.string.isRequired,
     apiVersion: PropTypes.number,
     children: PropTypes.element,
+    pwaEnabled: PropTypes.bool,
 }
 
 export default App
