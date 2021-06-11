@@ -1,6 +1,7 @@
 import {
     CacheableSection,
     useCacheableSection,
+    useOnlineStatus,
 } from '@dhis2/app-service-offline'
 import { Button, ButtonStrip } from '@dhis2/ui'
 import PropTypes from 'prop-types'
@@ -15,14 +16,16 @@ function Controls({ id }) {
         remove,
         /* recordingState, */
     } = useCacheableSection(id)
+    const { offline /*, online */ } = useOnlineStatus()
 
     return (
         <>
+            <p>{offline ? 'Offline' : 'Online'}</p>
             <p>{`Is cached: ${isCached}. Last updated: ${
                 lastUpdated || 'n/a'
             }`}</p>
             <ButtonStrip>
-                <Button small onClick={startRecording}>
+                <Button small onClick={startRecording} disabled={offline}>
                     Start recording
                 </Button>
                 <Button small destructive onClick={remove}>
