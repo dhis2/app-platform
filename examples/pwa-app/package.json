@@ -10,7 +10,7 @@
         "test": "d2-app-scripts test",
         "deploy": "d2-app-scripts deploy",
         "serve": "serve -l 5500 build/app",
-        "demo": "yarn install --force && yarn build --force --verbose && yarn serve"
+        "demo": "yarn build --force --verbose && yarn serve"
     },
     "devDependencies": {
         "@dhis2/cli-app-scripts": "^6.2.0"
