@@ -13,7 +13,8 @@
         "demo": "yarn build --force --verbose && yarn serve"
     },
     "devDependencies": {
-        "@dhis2/cli-app-scripts": "^6.2.0"
+        "@dhis2/cli-app-scripts": "^6.2.0",
+        "serve": "^12.0.0"
     },
     "peerDependencies": {
         "@dhis2/d2-i18n": "*",
