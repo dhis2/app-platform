@@ -101,8 +101,7 @@ const handler = async ({
 const command = {
     command: 'start',
     aliases: 's',
-    desc:
-        'Start a development server running a DHIS2 app within the DHIS2 app-shell',
+    desc: 'Start a development server running a DHIS2 app within the DHIS2 app-shell',
     builder: {
         port: {
             alias: 'p',
