@@ -23,9 +23,8 @@ const Component = () => {
                     <h1>{i18n.t('Hello {{name}}', { name: data.me.name })}</h1>
                     <h3>
                         {i18n.t('Have a great {{dayOfTheWeek}}!', {
-                            dayOfTheWeek: moment.weekdays(true)[
-                                moment().weekday()
-                            ],
+                            dayOfTheWeek:
+                                moment.weekdays(true)[moment().weekday()],
                         })}
                     </h3>
                     <Alerter />
