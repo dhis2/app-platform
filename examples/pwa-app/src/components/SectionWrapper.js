@@ -6,6 +6,7 @@ import {
 import { Button, ButtonStrip } from '@dhis2/ui'
 import PropTypes from 'prop-types'
 import React from 'react'
+import LoadingMask from './LoadingMask.js'
 import VisualizationsList from './VisualizationsList.js'
 
 function Controls({ id }) {
@@ -41,7 +42,7 @@ export default function SectionWrapper({ id }) {
     return (
         <div>
             <Controls id={id} />
-            <CacheableSection id={id}>
+            <CacheableSection id={id} loadingMask={<LoadingMask />}>
                 <VisualizationsList />
             </CacheableSection>
         </div>
