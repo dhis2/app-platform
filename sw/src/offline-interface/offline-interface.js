@@ -155,8 +155,6 @@ export class OfflineInterface {
         })
     }
 
-    // TODO: Handle the following better if a service worker is not registered
-
     /**
      * Retrieves a list of cached sections from IndexedDB. Creates DB if it
      * doesn't exist yet to avoid race conditions with service worker.

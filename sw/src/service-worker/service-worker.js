@@ -20,7 +20,6 @@ function setUpKillSwitchServiceWorker() {
     })
 
     self.addEventListener('activate', async () => {
-        console.log('[SW] Tearing down service worker, caches, and IDB...')
         // Unregister, in case app doesn't
         self.registration.unregister()
         // Delete all caches
@@ -163,7 +162,6 @@ export function setUpServiceWorker() {
 
     // Open DB on activation
     self.addEventListener('activate', event => {
-        console.log('[SW] New service worker activated')
         event.waitUntil(createDB().then(removeUnusedCaches))
     })
 
@@ -190,7 +188,6 @@ export function setUpServiceWorker() {
     }
 
     async function removeUnusedCaches() {
-        console.log('[SW] Checking for unused caches to prune...')
         const cacheKeys = await caches.keys()
         return Promise.all(
             cacheKeys.map(async key => {
@@ -201,7 +198,7 @@ export function setUpServiceWorker() {
                 const db = await dbPromise
                 const isASavedSection = !!(await db.get(SECTIONS_STORE, key))
                 if (!isWorkboxKey && !isInKeepList && !isASavedSection) {
-                    console.log(
+                    console.debug(
                         `[SW] Cache with key ${key} is unused and will be deleted`
                     )
                     return caches.delete(key)
@@ -212,7 +209,7 @@ export function setUpServiceWorker() {
 
     // Triggered on 'START_RECORDING' message
     function startRecording(event) {
-        console.log('[SW] Starting recording')
+        console.debug('[SW] Starting recording')
         if (!event.data.payload?.sectionId)
             throw new Error('[SW] No section ID specified to record')
 
@@ -298,13 +295,12 @@ export function setUpServiceWorker() {
     function stopRecording(error, clientId) {
         const recordingState = clientRecordingStates[clientId]
 
-        console.log('[SW] Stopping recording', { clientId, recordingState })
+        console.debug('[SW] Stopping recording', { clientId, recordingState })
         clearTimeout(recordingState?.recordingTimeout)
 
         if (error) {
             // QUESTION: Anything else we should do to handle errors better?
             self.clients.get(clientId).then(client => {
-                console.log('[SW] posting error message to client', client)
                 client.postMessage({
                     type: 'RECORDING_ERROR',
                     payload: {
@@ -326,7 +322,6 @@ export function setUpServiceWorker() {
 
     function addToCache(cacheKey, request, response) {
         if (response.ok) {
-            console.log(`[SW] Response ok - adding ${request.url} to cache`)
             const responseClone = response.clone()
             caches
                 .open(cacheKey)
@@ -335,7 +330,6 @@ export function setUpServiceWorker() {
     }
 
     function removeRecording(clientId) {
-        console.log('[SW] Removing recording for client ID', clientId)
         // Remove recording state
         delete clientRecordingStates[clientId]
         // Delete temp cache
@@ -344,13 +338,9 @@ export function setUpServiceWorker() {
     }
 
     async function requestCompletionConfirmation(clientId) {
-        console.log(
-            '[SW] Requesting completion confirmation from client ID',
-            clientId
-        )
         const client = await self.clients.get(clientId)
         if (!client) {
-            console.log('[SW] Client not found for ID', clientId)
+            console.debug('[SW] Client not found for ID', clientId)
             removeRecording(clientId)
             return
         }
@@ -372,7 +362,7 @@ export function setUpServiceWorker() {
     // Triggered by 'COMPLETE_RECORDING' message
     async function completeRecording(clientId) {
         const recordingState = clientRecordingStates[clientId]
-        console.log('[SW] Completing recording', { clientId, recordingState })
+        console.debug('[SW] Completing recording', { clientId, recordingState })
         clearTimeout(recordingState.confirmationTimeout)
 
         // Move requests from temp cache to section-<ID> cache
