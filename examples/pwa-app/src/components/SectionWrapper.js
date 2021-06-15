@@ -22,9 +22,11 @@ function Controls({ id }) {
         lastUpdated,
         isCached,
         remove,
-        /* recordingState, */
+        /* recordingState, */ // one of 'default', 'pending', 'recording', or 'error'
     } = useCacheableSection(id)
-    const { offline /*, online */ } = useOnlineStatus()
+    const { offline /*, online */ } = useOnlineStatus({
+        debounceDelay: 1000, // the default
+    })
 
     function handleRecording() {
         const onStarted = () => {}
@@ -58,10 +60,7 @@ function Controls({ id }) {
                 lastUpdated || 'n/a'
             }`}</p>
             <ButtonStrip>
-                <Button
-                    small
-                    onClick={handleRecording} /* disabled={offline} */
-                >
+                <Button small onClick={handleRecording} disabled={offline}>
                     Start recording
                 </Button>
                 <Button small destructive onClick={handleRemove}>
