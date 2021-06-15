@@ -4,16 +4,6 @@ import { swMsgs } from '../lib/constants'
 import { handleServiceWorkerRegistration } from '../lib/registration'
 import { openSectionsDB, SECTIONS_STORE } from '../lib/sections-db'
 
-/** Cleans up SW recording listeners */
-function cleanUpListeners(offlineEvents) {
-    offlineEvents.removeAllListeners([
-        swMsgs.recordingStarted,
-        swMsgs.confirmRecordingCompletion,
-        swMsgs.recordingCompleted,
-        swMsgs.recordingError,
-    ])
-}
-
 /** Helper to simplify SW message sending */
 function swMessage(type, payload) {
     if (!navigator.serviceWorker.controller)
@@ -138,6 +128,19 @@ export class OfflineInterface {
             recordingTimeoutDelay,
         })
 
+        /** Cleans up SW recording listeners */
+        const cleanUpListeners = () => {
+            const messageTypes = [
+                swMsgs.recordingStarted,
+                swMsgs.recordingError,
+                swMsgs.recordingCompleted,
+                swMsgs.confirmRecordingCompletion,
+            ]
+            messageTypes.forEach(messageType =>
+                this.offlineEvents.removeAllListeners(messageType)
+            )
+        }
+
         // Prep for subsequent events after recording starts:
         this.offlineEvents.once(swMsgs.recordingStarted, onStarted)
         this.offlineEvents.once(
@@ -145,13 +148,13 @@ export class OfflineInterface {
             // Confirms recording is okay to save
             () => swMessage(swMsgs.completeRecording)
         )
-        this.offlineEvents.once(swMsgs.recordingCompleted, (...args) => {
-            cleanUpListeners(this.offlineEvents)
-            onCompleted(...args)
+        this.offlineEvents.once(swMsgs.recordingCompleted, () => {
+            cleanUpListeners()
+            onCompleted()
         })
-        this.offlineEvents.once(swMsgs.recordingError, (...args) => {
-            cleanUpListeners(this.offlineEvents)
-            onError(...args)
+        this.offlineEvents.once(swMsgs.recordingError, ({ error }) => {
+            cleanUpListeners()
+            onError(error)
         })
     }
 
