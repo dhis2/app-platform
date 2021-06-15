@@ -1,3 +1,19 @@
+# [7.0.0](https://github.com/dhis2/app-platform/compare/v6.2.0...v7.0.0) (2021-06-14)
+
+
+### chore
+
+* remove node 10 support ([5900a39](https://github.com/dhis2/app-platform/commit/5900a39ba6e03eae00f7f311a327f9ec47d5c999))
+* remove node 10 support ([#567](https://github.com/dhis2/app-platform/issues/567)) ([cbee9cb](https://github.com/dhis2/app-platform/commit/cbee9cbac91dfc9b1f600590936c6605c96315d4))
+
+
+### BREAKING CHANGES
+
+* New minimum version for NodeJS is 12.x.
+
+* chore(deps): update cli deps to latest major
+* New minimum version for NodeJS is 12.x.
+
 # [6.2.0](https://github.com/dhis2/app-platform/compare/v6.1.3...v6.2.0) (2021-05-28)
 
 
