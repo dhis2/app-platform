@@ -1,3 +1,10 @@
+## [7.0.1-alpha.1](https://github.com/dhis2/app-platform/compare/v7.0.0...v7.0.1-alpha.1) (2021-06-16)
+
+
+### Bug Fixes
+
+* **ui:** use ui alpha for testing ([43312a5](https://github.com/dhis2/app-platform/commit/43312a58f8eb4c23e8742f14de44dad2b455ee22))
+
 # [7.0.0](https://github.com/dhis2/app-platform/compare/v6.2.0...v7.0.0) (2021-06-14)
 
 
