@@ -1,7 +1,7 @@
 import EventEmitter from 'events'
 import i18n from '@dhis2/d2-i18n'
 import { swMsgs } from '../lib/constants'
-import { handleServiceWorkerRegistration } from '../lib/registration'
+import { register, unregister, checkForUpdates } from '../lib/registration'
 import { openSectionsDB, SECTIONS_STORE } from '../lib/sections-db'
 
 /** Helper to simplify SW message sending */
@@ -20,19 +20,32 @@ function swMessage(type, payload) {
  * that interact with the indexedDB and cache storage APIs.
  */
 export class OfflineInterface {
+    constructor() {
+        this.pwaEnabled = process.env.REACT_APP_DHIS2_APP_PWA_ENABLED === 'true'
+
+        if (this.pwaEnabled) {
+            register()
+        } else {
+            unregister()
+        }
+
+        if ('serviceWorker' in navigator)
+            navigator.serviceWorker.oncontrollerchange = () =>
+                window.location.reload()
+    }
     /**
-     * Sets up a service worker by registering it, handling updates, and
-     * listening to messages from the service worker.
+     * Checks for service worker updates and sets up an interface for
+     * communicating with the service worker.
+     * If PWA is not enabled, a killswitch service worker should register
+     * itself and skip waiting without needing to check for updates.
      *
      * @param {Object} options
      * @param {Function} options.promptUpdate - A function that will be called when a new service worker is installed and ready to activate. Expected to be an alert 'show' function
      * @returns {Function} A clean-up function that removes listeners
      */
-    init({ promptUpdate, pwaEnabled }) {
+    init({ promptUpdate }) {
         if (!('serviceWorker' in navigator)) return null
 
-        // Registration handling needs to happen if PWA is enabled or not,
-        // because it will unregister any SWs if PWA is disabled
         function onUpdate(registration) {
             if (!promptUpdate) return
             const reloadMessage = i18n.t(
@@ -48,16 +61,9 @@ export class OfflineInterface {
                 onConfirm: onConfirm,
             })
         }
-        // TODO: Registering here can cause some lag while loading;
-        // There might be a better time to do it
-        handleServiceWorkerRegistration(pwaEnabled, { onUpdate })
 
-        // Stop here if pwa is not enabled
-        if (!pwaEnabled) return
-
-        // Reload window to use new assets when new SW activates
-        const reload = () => window.location.reload()
-        navigator.serviceWorker.addEventListener('controllerchange', reload)
+        // Check for SW updates
+        checkForUpdates(onUpdate)
 
         // This event emitter helps coordinate with service worker messages
         this.offlineEvents = new EventEmitter()
@@ -81,10 +87,6 @@ export class OfflineInterface {
             navigator.serviceWorker.removeEventListener(
                 'message',
                 handleServiceWorkerMessage
-            )
-            navigator.serviceWorker.removeEventListener(
-                'controllerchange',
-                reload
             )
         }
     }

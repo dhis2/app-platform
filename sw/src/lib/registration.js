@@ -1,19 +1,44 @@
-/**
- * Registers or unregisters a service worker based on the `pwaEnabled` argument.
- * @param {Boolean} pwaEnabled - If true, a service worker is registered. If false, service workers are unregistered in this scope. Should typically receive the env var that results from the `pwa.enabled` option in `d2.config.js`.
- * @param {Object} config
- * @param {Function} [config.onUpdate] - Called with SW `registration` as an argument when an updated service worker is installed and waiting.
- * @param {Function} [config.onSuccess] - Called with SW `registration` as an argument when a SW is installed for the first time.
- */
-export function handleServiceWorkerRegistration(pwaEnabled, config) {
-    if (pwaEnabled) {
-        register(config)
-    } else {
-        unregister()
+export async function checkForUpdates(onUpdate) {
+    if (!('serviceWorker' in navigator)) return
+
+    const registration = await navigator.serviceWorker.getRegistration()
+    if (registration === undefined) return
+
+    function handleWaitingSW() {
+        console.log(
+            'New content is available and will be used when all ' +
+                'tabs for this page are closed. See https://cra.link/PWA.'
+        )
+
+        // Execute callback
+        if (onUpdate) onUpdate(registration)
     }
+
+    // Sometimes a service worker update is triggered by a navigation
+    // event in scope, but the registration logic doesn't run on that
+    // page, for example if a user hits the login modal. The 'onUpdate'
+    // callback doesn't get called in that case. Handle that here:
+    if (registration.waiting) handleWaitingSW()
+
+    function handleInstallingWorker() {
+        const installingWorker = registration.installing
+        if (installingWorker) {
+            installingWorker.onstatechange = () => {
+                if (installingWorker.state !== 'installed') return
+                if (navigator.serviceWorker.controller) handleWaitingSW()
+                else console.log('Content is cached for offline use.')
+            }
+        }
+    }
+
+    // If a service worker is installing:
+    if (registration.installing) handleInstallingWorker()
+
+    // If a new service worker will be installed:
+    registration.onupdatefound = handleInstallingWorker
 }
 
-function register(config) {
+export function register(config) {
     const isLocalhost = Boolean(
         window.location.hostname === 'localhost' ||
             // [::1] is the IPv6 localhost address.
@@ -34,80 +59,33 @@ function register(config) {
             return
         }
 
-        // CRA boilerplate was: window.addEventListener('load', () => {...})
-        const swUrl = `${process.env.PUBLIC_URL}/service-worker.js`
+        window.addEventListener('load', () => {
+            const swUrl = `${process.env.PUBLIC_URL}/service-worker.js`
 
-        if (isLocalhost) {
-            // This is running on localhost. Let's check if a service worker still exists or not.
-            checkValidServiceWorker(swUrl, config)
+            if (isLocalhost) {
+                // This is running on localhost. Let's check if a service worker still exists or not.
+                checkValidServiceWorker(swUrl, config)
 
-            // Add some additional logging to localhost, pointing developers to the
-            // service worker/PWA documentation.
-            navigator.serviceWorker.ready.then(() => {
-                console.log(
-                    'This web app is being served cache-first by a service ' +
-                        'worker. To learn more, visit https://cra.link/PWA'
-                )
-            })
-        } else {
-            // Is not localhost. Just register service worker
-            registerValidSW(swUrl, config)
-        }
+                // Add some additional logging to localhost, pointing developers to the
+                // service worker/PWA documentation.
+                navigator.serviceWorker.ready.then(() => {
+                    console.log(
+                        'This web app is being served cache-first by a service ' +
+                            'worker. To learn more, visit https://cra.link/PWA'
+                    )
+                })
+            } else {
+                // Is not localhost. Just register service worker
+                registerValidSW(swUrl, config)
+            }
+        })
     }
 }
 
-function registerValidSW(swUrl, config) {
-    navigator.serviceWorker
-        .register(swUrl)
-        .then(registration => {
-            function handleWaitingSW() {
-                console.log(
-                    'New content is available and will be used when all ' +
-                        'tabs for this page are closed. See https://cra.link/PWA.'
-                )
-
-                // Execute callback
-                if (config && config.onUpdate) {
-                    config.onUpdate(registration)
-                }
-            }
-
-            // Sometimes a service worker update is triggered by a navigation
-            // event in scope, but the registration logic doesn't run on that
-            // page, for example if a user hits the login modal. The 'onUpdate'
-            // callback doesn't get called in that case. Handle that here:
-            if (registration.waiting) handleWaitingSW()
-
-            registration.onupdatefound = () => {
-                const installingWorker = registration.installing
-                if (installingWorker == null) {
-                    return
-                }
-                installingWorker.onstatechange = () => {
-                    if (installingWorker.state === 'installed') {
-                        if (navigator.serviceWorker.controller) {
-                            // At this point, the updated precached content has been fetched,
-                            // but the previous service worker will still serve the older
-                            // content until all client tabs are closed.
-                            handleWaitingSW()
-                        } else {
-                            // At this point, everything has been precached.
-                            // It's the perfect time to display a
-                            // "Content is cached for offline use." message.
-                            console.log('Content is cached for offline use.')
-
-                            // Execute callback
-                            if (config && config.onSuccess) {
-                                config.onSuccess(registration)
-                            }
-                        }
-                    }
-                }
-            }
-        })
-        .catch(error => {
-            console.error('Error during service worker registration:', error)
-        })
+function registerValidSW(swUrl /* config */) {
+    navigator.serviceWorker.register(swUrl).catch(error => {
+        console.error('Error during service worker registration:', error)
+    })
 }
 
 function checkValidServiceWorker(swUrl, config) {
@@ -141,7 +119,7 @@ function checkValidServiceWorker(swUrl, config) {
         })
 }
 
-function unregister() {
+export function unregister() {
     if ('serviceWorker' in navigator) {
         navigator.serviceWorker.ready
             .then(registration => {
