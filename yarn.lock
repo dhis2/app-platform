@@ -3115,7 +3115,7 @@
     typeface-roboto "^0.0.75"
     typescript "^3.6.3"
 
-"@dhis2/cli-app-scripts@^6.1.2", "@dhis2/cli-app-scripts@^6.2.0":
+"@dhis2/cli-app-scripts@^6.1.2":
   version "6.2.0"
   resolved "https://registry.yarnpkg.com/@dhis2/cli-app-scripts/-/cli-app-scripts-6.2.0.tgz#224b45d701d281a626be69478e3e763b1cd2e793"
   integrity sha512-MO2Ga7YM39kjY+4zHstdELPriHbQz/6o/I1jYVuA87hbT7GDkG383cpXkgGoH41kk6gtYaL3kfHNGcD++of1rw==
