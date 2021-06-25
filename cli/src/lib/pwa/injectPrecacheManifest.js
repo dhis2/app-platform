@@ -8,10 +8,8 @@
  * inject it into a service worker by using string replacement; see the
  * `injectionPoint` option below. The CRA webpack config does the same thing,
  * using the `self.__WB_MANIFEST` injection point, but it's only configured to
- * add files handled by the webpack compilation process. In order to precache
- * the rest of the static assets in the `build` directory, this custom script
- * is used. The CRA injection point is therefore sequestered in a comment in
- * the service worker file in favor of this script's injection point.
+ * add files handled by the webpack compilation process. This script handles
+ * all the other files in the app's `build` dir.
  *
  * See also:
  * https://developers.google.com/web/tools/workbox/modules/workbox-build#injectmanifest_mode
