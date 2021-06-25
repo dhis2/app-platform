@@ -18,6 +18,11 @@ const wait = ms =>
         setTimeout(resolve, ms)
     })
 
+/**
+ * Loads a list of visualizations in an incremental way to emulate the
+ * incremental loading nature of dashboards and test out the service worker
+ * "recording mode"
+ */
 export default function VisualizationsList() {
     const [vizList, setVizList] = useState([])
     const engine = useDataEngine()
