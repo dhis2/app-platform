@@ -1,5 +1,6 @@
 const { namespace } = require('@dhis2/cli-helpers-engine')
-const publishCommand = require('./commands/publish')
+const buildCommand = require('./commands/build.js')
+const publishCommand = require('./commands/publish.js')
 
 module.exports = namespace('scripts', {
     desc: 'Scripts for development of DHIS2 applications',
@@ -12,3 +13,4 @@ module.exports = namespace('scripts', {
 })
 
 module.exports.publishCommand = publishCommand
+module.exports.buildCommand = buildCommand
