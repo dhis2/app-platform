@@ -1,4 +1,5 @@
 const { namespace } = require('@dhis2/cli-helpers-engine')
+const publishCommand = require('./commands/publish')
 
 module.exports = namespace('scripts', {
     desc: 'Scripts for development of DHIS2 applications',
@@ -9,3 +10,5 @@ module.exports = namespace('scripts', {
         yargs.commandDir('commands')
     },
 })
+
+module.exports.publishCommand = publishCommand
