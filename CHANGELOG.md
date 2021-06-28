@@ -1,3 +1,10 @@
+# [7.1.0-alpha.2](https://github.com/dhis2/app-platform/compare/v7.1.0-alpha.1...v7.1.0-alpha.2) (2021-06-28)
+
+
+### Features
+
+* **build:** expose build command ([98d9acc](https://github.com/dhis2/app-platform/commit/98d9accad1c521d7ece8d68a21f085e1fce21ec7))
+
 # [7.1.0-alpha.1](https://github.com/dhis2/app-platform/compare/v7.0.1-alpha.1...v7.1.0-alpha.1) (2021-06-28)
 
 
