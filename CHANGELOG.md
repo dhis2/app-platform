@@ -1,3 +1,10 @@
+# [7.1.0-alpha.1](https://github.com/dhis2/app-platform/compare/v7.0.1-alpha.1...v7.1.0-alpha.1) (2021-06-28)
+
+
+### Features
+
+* **publish:** expose publish command module ([2782d78](https://github.com/dhis2/app-platform/commit/2782d78d62205909cb8fa8a40373c2fc64de18c3))
+
 ## [7.0.1-alpha.1](https://github.com/dhis2/app-platform/compare/v7.0.0...v7.0.1-alpha.1) (2021-06-16)
 
 
