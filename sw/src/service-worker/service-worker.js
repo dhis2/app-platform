@@ -326,8 +326,8 @@ export function setUpServiceWorker() {
         console.debug('[SW] Stopping recording', { clientId, recordingState })
         clearTimeout(recordingState?.recordingTimeout)
 
+        // In case of error, notify client and remove recording
         if (error) {
-            // ? QUESTION: Anything else we should do to handle errors better?
             self.clients.get(clientId).then(client => {
                 client.postMessage({
                     type: 'RECORDING_ERROR',
@@ -340,7 +340,7 @@ export function setUpServiceWorker() {
             return
         }
 
-        // Prompt client to confirm saving recording
+        // On success, prompt client to confirm saving recording
         requestCompletionConfirmation(clientId)
     }
 
