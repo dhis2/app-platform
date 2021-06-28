@@ -12,6 +12,7 @@ import {
     SECTIONS_STORE,
 } from '../lib/sections-db'
 
+/** Called if the `pwaEnabled` env var is not `true` */
 function setUpKillSwitchServiceWorker() {
     // A simple, no-op service worker that takes immediate control and tears
     // everything down. Has no fetch handler.
@@ -42,8 +43,17 @@ export function setUpServiceWorker() {
         return
     }
 
+    // 'Globals'
+
+    // Will be populated upon activation with a promise that accesses the
+    // recorded sections IndexedDB using the `idb` library - see `createDB()`
     let dbPromise
+    // Tracks recording states for multiple clients to handle multiple windows
+    // recording simultaneously
     const clientRecordingStates = {}
+
+    // Constants
+
     const CACHE_KEEP_LIST = ['other-assets', 'app-shell']
     // Fallback prevents error when switching from pwa enabled to disabled
     const URL_FILTER_PATTERNS = JSON.parse(
@@ -52,6 +62,7 @@ export function setUpServiceWorker() {
     const OMIT_EXTERNAL_REQUESTS =
         process.env.REACT_APP_DHIS2_APP_OMIT_EXTERNAL_REQUESTS === 'true'
 
+    // Makes sure to take control of available clients when the SW is activated
     clientsClaim()
 
     // Table of contents:
@@ -67,13 +78,15 @@ export function setUpServiceWorker() {
     // even if you decide not to use precaching. See https://cra.link/PWA
     precacheAndRoute(self.__WB_MANIFEST)
 
-    // Similar to above; manifest injection from workbox-build
+    // Similar to above; manifest injection from `workbox-build`
     // Precaches all assets in the shell's build folder except in `static`
     // (which CRA's workbox-webpack-plugin handle smartly).
+    // Additional files to precache can be added using the
+    // `additionalManifestEntries` option in d2.config.js; see the docs
     // '[]' fallback prevents an error when switching pwa enabled to disabled
     precacheAndRoute(self.__WB_BUILD_MANIFEST || [])
 
-    // ? QUESTION: Do we need this route?
+    // From CRA Boilerplate:
     // Set up App Shell-style routing, so that all navigation requests
     // are fulfilled with your index.html shell. Learn more at
     // https://developers.google.com/web/fundamentals/architecture/app-shell
@@ -84,16 +97,20 @@ export function setUpServiceWorker() {
             // If this isn't a navigation, skip.
             if (request.mode !== 'navigate') {
                 return false
-            } // If this is a URL that starts with /_, skip.
+            }
 
+            // If this is a URL that starts with /_, skip.
             if (url.pathname.startsWith('/_')) {
                 return false
-            } // If this looks like a URL for a resource, because it contains // a file extension, skip.
+            }
 
+            // If this looks like a URL for a resource, because it contains
+            // a file extension, skip.
             if (url.pathname.match(fileExtensionRegexp)) {
                 return false
-            } // Return true to signal that we want to use the handler.
+            }
 
+            // Return true to signal that we want to use the handler.
             return true
         },
         createHandlerBoundToURL(process.env.PUBLIC_URL + '/index.html')
@@ -136,7 +153,7 @@ export function setUpServiceWorker() {
             })
         }
     }
-
+    // Use fallback strategy as default
     setDefaultHandler(new NetworkAndTryCache())
 
     // * 2. Service Worker event listeners
@@ -168,12 +185,11 @@ export function setUpServiceWorker() {
     // * 3. Helper functions:
 
     function urlMeetsDefaultCachingCriteria(url) {
-        // Don't cache external requests by default
-        // ? Maybe require apps to add external requests to FILES_TO_PRECACHE list?
+        // Don't cache if pwa.caching.omitExternalRequests in d2.config is true
         if (OMIT_EXTERNAL_REQUESTS && url.origin !== self.location.origin)
             return false
 
-        // Don't cache if url matches filter in pattern list from d2.config.json
+        // Don't cache if url matches filter in pattern list from d2.config.js
         const urlMatchesFilter = URL_FILTER_PATTERNS.some(pattern =>
             new RegExp(pattern).test(url.pathname)
         )
@@ -182,11 +198,13 @@ export function setUpServiceWorker() {
         return true
     }
 
+    /** Called upon SW activation */
     function createDB() {
         dbPromise = openSectionsDB()
         return dbPromise
     }
 
+    /** Called upon SW activation */
     async function removeUnusedCaches() {
         const cacheKeys = await caches.keys()
         return Promise.all(
@@ -249,6 +267,7 @@ export function setUpServiceWorker() {
         )
     }
 
+    /** Request handler during recording mode */
     function handleRecordedRequest({ request, event }) {
         const recordingState = clientRecordingStates[event.clientId]
 
@@ -284,6 +303,11 @@ export function setUpServiceWorker() {
         return response
     }
 
+    /**
+     * Starts a timer that stops recording when finished. The timer will
+     * be cleared if a new request is handled and start again when there are
+     * no more pending requests.
+     */
     function startRecordingTimeout(clientId) {
         const recordingState = clientRecordingStates[clientId]
         recordingState.recordingTimeout = setTimeout(
@@ -292,6 +316,7 @@ export function setUpServiceWorker() {
         )
     }
 
+    /** Called on recording success or failure */
     function stopRecording(error, clientId) {
         const recordingState = clientRecordingStates[clientId]
 
@@ -299,7 +324,7 @@ export function setUpServiceWorker() {
         clearTimeout(recordingState?.recordingTimeout)
 
         if (error) {
-            // QUESTION: Anything else we should do to handle errors better?
+            // ? QUESTION: Anything else we should do to handle errors better?
             self.clients.get(clientId).then(client => {
                 client.postMessage({
                     type: 'RECORDING_ERROR',
