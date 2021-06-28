@@ -255,10 +255,12 @@ export function setUpServiceWorker() {
         })
     }
 
+    /** Used to check if a new recording can begin */
     function isClientRecording(clientId) {
         return clientId in clientRecordingStates
     }
 
+    /** Used to check if requests should be handled by recording handler */
     function isClientRecordingRequests(clientId) {
         // Don't record requests when waiting for completion confirmation
         return (
@@ -284,6 +286,7 @@ export function setUpServiceWorker() {
             })
     }
 
+    /** Response handler during recording mode */
     function handleRecordedResponse(request, response, clientId) {
         const recordingState = clientRecordingStates[clientId]
         // add response to temp cache - when recording is successful, move to permanent cache
@@ -362,6 +365,12 @@ export function setUpServiceWorker() {
         return caches.delete(cacheKey)
     }
 
+    /**
+     * To validate a completed recording, request an acknowledgement from
+     * the client before finishing and saving the recording. This prevents
+     * saving faulty recordings due to navigation or other problems and
+     * avoids overwriting a good recording
+     */
     async function requestCompletionConfirmation(clientId) {
         const client = await self.clients.get(clientId)
         if (!client) {
@@ -373,6 +382,10 @@ export function setUpServiceWorker() {
         startConfirmationTimeout(clientId)
     }
 
+    /**
+     * Wait 10 seconds for client acknowledgement to save recording. If timer
+     * runs out, the recording is scrapped.
+     */
     function startConfirmationTimeout(clientId) {
         const recordingState = clientRecordingStates[clientId]
         recordingState.confirmationTimeout = setTimeout(() => {
@@ -384,7 +397,7 @@ export function setUpServiceWorker() {
         }, 10000)
     }
 
-    // Triggered by 'COMPLETE_RECORDING' message
+    /** Triggered by 'COMPLETE_RECORDING' message; saves recording */
     async function completeRecording(clientId) {
         const recordingState = clientRecordingStates[clientId]
         console.debug('[SW] Completing recording', { clientId, recordingState })
