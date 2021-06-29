@@ -22,10 +22,12 @@
     ],
     "dependencies": {
         "@dhis2/app-service-offline": "file:../../app-runtime/services/offline",
+        "@dhis2/sw": "file:../sw",
         "moment": "^2.24.0"
     },
     "resolutions": {
-        "@dhis2/app-service-offline": "file:../../app-runtime/services/offline"
+        "@dhis2/app-service-offline": "file:../../app-runtime/services/offline",
+        "@dhis2/sw": "file:../sw"
     },
     "devDependencies": {
         "@dhis2/cli-app-scripts": "7.0.0",

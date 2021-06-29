@@ -13,6 +13,7 @@
     },
     "dependencies": {
         "@dhis2/app-adapter": "7.0.0",
+        "@dhis2/sw": "file:../sw",
         "@dhis2/app-runtime": "^2.8.0",
         "@dhis2/d2-i18n": "^1.1.0",
         "@dhis2/ui": "^6.5.3",
@@ -26,6 +27,9 @@
         "styled-jsx": "^3.2.2",
         "typeface-roboto": "^0.0.75",
         "typescript": "^3.6.3"
+    },
+    "resolutions": {
+        "@dhis2/sw": "file:../sw"
     },
     "scripts": {
         "start": "react-scripts start",
