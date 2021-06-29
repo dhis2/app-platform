@@ -11,10 +11,9 @@
         "deploy": "d2-app-scripts deploy"
     },
     "devDependencies": {
-        "@dhis2/cli-app-scripts": "^6.1.2"
+        "@dhis2/cli-app-scripts": "^7.0.0"
     },
     "dependencies": {
-        "@dhis2/app-runtime": "^2.8.0",
         "idb": "^6.0.0",
         "workbox-core": "^6.1.5",
         "workbox-precaching": "^6.1.5",
