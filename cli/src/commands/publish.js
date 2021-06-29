@@ -124,10 +124,9 @@ const resolveBundle = (cwd, params) => {
     return resolveBundleFromAppConfig(cwd)
 }
 
-const promptForConfig = async params => {
-    const apiKey = params.apikey || process.env.D2_APP_HUB_API_KEY
-    if (process.env.CI && !apiKey) {
-        reporter.error('Prompt disabled in CI mode - missing apikey parameter.')
+const promptForConfig = async (params, apikey) => {
+    if (!apikey) {
+        reporter.error('Missing apikey parameter.')
         process.exit(1)
     }
 
@@ -136,7 +135,7 @@ const promptForConfig = async params => {
             type: 'input',
             name: 'apikey',
             message: 'App Hub API-key',
-            when: () => !apiKey,
+            when: () => !apikey,
         },
         {
             type: 'input',
@@ -170,13 +169,28 @@ const promptForConfig = async params => {
 
     return {
         ...params,
-        apikey: apiKey,
+        apikey,
         ...responses,
     }
 }
 
+const resolveConfig = (params, apikey) => {
+    return {
+        ...params,
+        apikey,
+    }
+}
+
 const handler = async ({ cwd = process.cwd(), ...params }) => {
-    const publishConfig = await promptForConfig(params)
+    const apikey = params.apikey || process.env.D2_APP_HUB_API_KEY
+
+    let publishConfig
+
+    if (process.env.CI) {
+        publishConfig = resolveConfig(params, apikey)
+    } else {
+        publishConfig = await promptForConfig(params, apikey)
+    }
 
     const appBundle = resolveBundle(cwd, publishConfig)
     const uploadAppUrl = constructUploadUrl(appBundle.id)
