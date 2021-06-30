@@ -1,4 +1,4 @@
-export async function checkForUpdates(onUpdate) {
+export async function checkForUpdates({ onUpdate }) {
     if (!('serviceWorker' in navigator)) return
 
     const registration = await navigator.serviceWorker.getRegistration()

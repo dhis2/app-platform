@@ -63,7 +63,7 @@ export class OfflineInterface {
         }
 
         // Check for SW updates
-        checkForUpdates(onUpdate)
+        checkForUpdates({ onUpdate })
 
         // This event emitter helps coordinate with service worker messages
         this.offlineEvents = new EventEmitter()
