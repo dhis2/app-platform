@@ -9,7 +9,7 @@ const handler = async ({
     verbose,
     cwd,
     testRegex,
-    update,
+    updateSnapshot,
     coverage,
     watch,
     watchAll,
@@ -44,7 +44,7 @@ const handler = async ({
                 {
                     testPathPattern: testRegex,
                     config: JSON.stringify(jestConfig),
-                    updateSnapshot: !ci && update,
+                    updateSnapshot: !ci && updateSnapshot,
                     collectCoverage: coverage,
                     watch: (!ci && watch) || undefined,
                     watchAll: (!ci && watchAll) || undefined,
