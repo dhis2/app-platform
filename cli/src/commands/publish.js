@@ -114,8 +114,8 @@ const resolveBundle = ({ cwd, params, config }) => {
     return resolveBundleFromAppConfig(cwd, config)
 }
 
-const promptForConfig = async (params, apikey) => {
-    if (!apikey) {
+const promptForConfig = async params => {
+    if (!params.apikey) {
         exit(1, 'Missing apikey parameter.')
     }
 
@@ -124,7 +124,7 @@ const promptForConfig = async (params, apikey) => {
             type: 'input',
             name: 'apikey',
             message: 'App Hub API-key',
-            when: () => !apikey,
+            when: () => !params.apikey,
         },
         {
             type: 'input',
@@ -158,30 +158,20 @@ const promptForConfig = async (params, apikey) => {
 
     return {
         ...params,
-        apikey,
         ...responses,
     }
 }
 
-const resolveConfig = (params, apikey) => {
-    return {
-        ...params,
-        apikey,
-    }
-}
-
 const handler = async ({ cwd = process.cwd(), ...params }) => {
-    const apikey = params.apikey || process.env.D2_APP_HUB_API_KEY
-
     const paths = makePaths(cwd)
     const appConfig = parseConfig(paths)
 
     let publishConfig
 
     if (process.env.CI) {
-        publishConfig = resolveConfig(params, apikey)
+        publishConfig = params
     } else {
-        publishConfig = await promptForConfig(params, apikey)
+        publishConfig = await promptForConfig(params)
     }
 
     const appBundle = resolveBundle({
@@ -257,7 +247,7 @@ const command = {
     builder: yargs =>
         yargs.options({
             apikey: {
-                alias: 'k',
+                alias: ['k', 'app-hub-api-key', 'app-hub-token', 'token'],
                 type: 'string',
                 description: 'The API-key to use for authentication',
             },
