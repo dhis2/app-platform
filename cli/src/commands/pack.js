@@ -2,7 +2,6 @@ const path = require('path')
 const { reporter, chalk, exit } = require('@dhis2/cli-helpers-engine')
 const fs = require('fs-extra')
 const makeBundle = require('../lib/makeBundle.js')
-const parseConfig = require('../lib/parseConfig.js')
 const makePaths = require('../lib/paths.js')
 
 exports.command = 'pack [folder]'
@@ -31,7 +30,7 @@ exports.handler = async argv => {
     const { cwd = process.cwd(), folder, destination, filename } = argv
 
     const paths = makePaths(cwd)
-    const config = parseConfig(paths)
+    const config = fs.readJsonSync(paths.buildAppConfigJson)
 
     let inputPath, outputPath
     if (config.type === 'app') {
