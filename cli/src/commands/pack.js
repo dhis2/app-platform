@@ -1,9 +1,9 @@
-const fs = require('fs')
 const path = require('path')
 const { reporter, chalk, exit } = require('@dhis2/cli-helpers-engine')
-const bundleApp = require('../lib/bundleApp')
-const parseConfig = require('../lib/parseConfig')
-const makePaths = require('../lib/paths')
+const fs = require('fs-extra')
+const makeBundle = require('../lib/makeBundle.js')
+const parseConfig = require('../lib/parseConfig.js')
+const makePaths = require('../lib/paths.js')
 
 exports.command = 'pack [folder]'
 
@@ -12,7 +12,7 @@ exports.describe = 'Create archive from the build.'
 exports.builder = yargs =>
     yargs
         .positional('folder', {
-            describe: 'The folder to pack',
+            describe: 'The folder to pack relative to cwd.',
             type: 'string',
             defaultDescription: '.',
         })
@@ -70,11 +70,13 @@ exports.handler = async argv => {
         .replace(/{name}/, clean(config.name))
         .replace(/{version}/, config.version)
 
+    const logPath = path.relative(process.cwd(), inputPath)
     reporter.info(
         `Creating archive from ${chalk.bold(
-            path.relative(cwd, inputPath)
-        )} at ${chalk.bold(path.relative(cwd, archivePath))}...`
+            logPath === '' ? '.' : logPath
+        )} at ${chalk.bold(path.relative(process.cwd(), archivePath))}...`
     )
 
-    await bundleApp(inputPath, archivePath)
+    await fs.remove(paths.buildAppBundleOutput)
+    await makeBundle(inputPath, archivePath)
 }

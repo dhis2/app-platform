@@ -86,8 +86,8 @@ const handler = async ({ cwd = process.cwd(), ...params }) => {
     const appBundle = path.relative(
         cwd,
         paths.buildAppBundle
-            .replace(/{{name}}/, config.name)
-            .replace(/{{version}}/, config.version)
+            .replace(/{name}/, config.name)
+            .replace(/{version}/, config.version)
     )
 
     if (!fs.existsSync(appBundle)) {

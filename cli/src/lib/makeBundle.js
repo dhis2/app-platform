@@ -30,7 +30,31 @@ module.exports = (inDir, outFile) => {
         })
 
         archive.pipe(output)
-        archive.directory(inDir, false)
+
+        // avoid packing the created file stream
+        const files = fs
+            .readdirSync(inDir)
+            .filter(
+                f => path.resolve(inDir, f) !== path.resolve(inDir, outFile)
+            )
+
+        reporter.debug('Pack list', files)
+
+        for (const file of files) {
+            const fp = path.resolve(inDir, file)
+            const stat = fs.statSync(fp)
+
+            if (stat.isDirectory()) {
+                archive.directory(fp, path.basename(fp))
+            }
+
+            if (stat.isFile()) {
+                archive.file(fp, {
+                    name: path.basename(fp),
+                })
+            }
+        }
+
         archive.finalize()
     })
 }

@@ -1,11 +1,13 @@
 const path = require('path')
-const { reporter, chalk } = require('@dhis2/cli-helpers-engine')
+const { reporter, chalk, exit } = require('@dhis2/cli-helpers-engine')
 const FormData = require('form-data')
 const fs = require('fs-extra')
 const inquirer = require('inquirer')
 const { createClient } = require('../lib/httpClient')
 const parseConfig = require('../lib/parseConfig')
 const makePaths = require('../lib/paths')
+const updateManifest = require('../lib/updateManifest.js')
+const { handler: pack } = require('./pack.js')
 
 const constructUploadUrl = appId => `/api/v1/apps/${appId}/versions`
 
@@ -45,22 +47,20 @@ const validateFields = (
             requiredFields.has(fieldName) &&
             (fieldValue == null || fieldValue === '')
         ) {
-            reporter.error(
+            exit(
+                1,
                 `${fieldName} not found in config. Add an ${chalk.bold(
                     fieldName
                 )}-field to ${chalk.bold('d2.config.js')}`
             )
-            process.exit(1)
         }
         const fieldValidation = configFieldValidations[fieldName]
         if (fieldValidation) {
             const valid = fieldValidation(fieldValue)
             if (typeof valid === 'string') {
-                reporter.error(`${fieldName}: ${valid}`)
-                process.exit(1)
+                exit(1, `${fieldName}: ${valid}`)
             } else if (!valid) {
-                reporter.error(`Invalid ${fieldName}`)
-                process.exit(1)
+                exit(1, `Invalid ${fieldName}`)
             }
         }
     })
@@ -71,8 +71,7 @@ const resolveBundleFromParams = (cwd, params) => {
     try {
         const filePath = path.resolve(cwd, params.file)
         if (!fs.statSync(filePath).isFile()) {
-            reporter.error(`${params.file} is not a file`)
-            process.exit(1)
+            exit(1, `${params.file} is not a file`)
         }
         appBundle.id = params.appId
         appBundle.version = params.fileVersion
@@ -82,52 +81,42 @@ const resolveBundleFromParams = (cwd, params) => {
         appBundle.maxDHIS2Version = params.maxDHIS2Version
         return appBundle
     } catch (e) {
-        reporter.error(`File does not exist at ${params.file}`)
-        process.exit(1)
+        exit(1, `File does not exist at ${params.file}`)
     }
 }
 
-const resolveBundleFromAppConfig = cwd => {
+const resolveBundleFromAppConfig = (cwd, config) => {
     // resolve file from built-bundle
     const appBundle = {}
     const paths = makePaths(cwd)
-    const builtAppConfig = parseConfig(paths)
-    validateFields(builtAppConfig)
 
-    appBundle.id = builtAppConfig.id
-    appBundle.version = builtAppConfig.version
+    validateFields(config)
+
+    appBundle.id = config.id
+    appBundle.version = config.version
     appBundle.path = path.relative(
         cwd,
         paths.buildAppBundle
-            .replace(/{{name}}/, builtAppConfig.name)
-            .replace(/{{version}}/, builtAppConfig.version)
+            .replace(/{name}/, config.name)
+            .replace(/{version}/, config.version)
     )
-    appBundle.name = builtAppConfig.name
-    appBundle.minDHIS2Version = builtAppConfig.minDHIS2Version
-    appBundle.maxDHIS2Version = builtAppConfig.maxDHIS2Version
+    appBundle.name = config.name
+    appBundle.minDHIS2Version = config.minDHIS2Version
+    appBundle.maxDHIS2Version = config.maxDHIS2Version
 
-    if (!fs.existsSync(appBundle.path)) {
-        reporter.error(
-            `App bundle does not exist, run ${chalk.bold(
-                'd2-app-scripts build'
-            )} before deploying.`
-        )
-        process.exit(1)
-    }
     return appBundle
 }
 
-const resolveBundle = (cwd, params) => {
+const resolveBundle = ({ cwd, params, config }) => {
     if (params.file) {
         return resolveBundleFromParams(cwd, params)
     }
-    return resolveBundleFromAppConfig(cwd)
+    return resolveBundleFromAppConfig(cwd, config)
 }
 
 const promptForConfig = async (params, apikey) => {
     if (!apikey) {
-        reporter.error('Missing apikey parameter.')
-        process.exit(1)
+        exit(1, 'Missing apikey parameter.')
     }
 
     const responses = await inquirer.prompt([
@@ -184,6 +173,9 @@ const resolveConfig = (params, apikey) => {
 const handler = async ({ cwd = process.cwd(), ...params }) => {
     const apikey = params.apikey || process.env.D2_APP_HUB_API_KEY
 
+    const paths = makePaths(cwd)
+    const appConfig = parseConfig(paths)
+
     let publishConfig
 
     if (process.env.CI) {
@@ -192,8 +184,30 @@ const handler = async ({ cwd = process.cwd(), ...params }) => {
         publishConfig = await promptForConfig(params, apikey)
     }
 
-    const appBundle = resolveBundle(cwd, publishConfig)
+    const appBundle = resolveBundle({
+        cwd,
+        config: appConfig,
+        params: publishConfig,
+    })
     const uploadAppUrl = constructUploadUrl(appBundle.id)
+
+    if (appConfig.type !== 'app') {
+        exit(
+            1,
+            'Only publishing apps to the App Hub is currently supported. Please upload other types manually.'
+        )
+    }
+
+    // prepare for release
+    updateManifest({ version: appBundle.version }, paths)
+
+    const bundle = path.parse(appBundle.path)
+
+    // update bundle archive
+    await pack({
+        destination: path.resolve(cwd, bundle.dir),
+        filename: bundle.base,
+    })
 
     const client = createClient({
         baseUrl: publishConfig.baseUrl,
@@ -232,7 +246,7 @@ const handler = async ({ cwd = process.cwd(), ...params }) => {
         } else {
             reporter.error(e)
         }
-        process.exit(1)
+        exit(1)
     }
 }
 
