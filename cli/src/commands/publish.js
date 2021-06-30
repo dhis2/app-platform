@@ -188,7 +188,7 @@ const handler = async ({ cwd = process.cwd(), ...params }) => {
         )
     }
 
-    // prepare for release
+    // update build/app manifests after prepare for release
     updateManifest({ version: appBundle.version }, paths)
 
     const bundle = path.parse(appBundle.path)
