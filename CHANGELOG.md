@@ -1,3 +1,10 @@
+# [7.1.0-beta.2](https://github.com/dhis2/app-platform/compare/v7.1.0-beta.1...v7.1.0-beta.2) (2021-06-30)
+
+
+### Bug Fixes
+
+* rename 'update' test command handler parameter to 'updateSnapshot' ([#577](https://github.com/dhis2/app-platform/issues/577)) ([34787ad](https://github.com/dhis2/app-platform/commit/34787ad5448454bbfac6672b2b67516d131d753c))
+
 ## [7.0.1](https://github.com/dhis2/app-platform/compare/v7.0.0...v7.0.1) (2021-06-30)
 
 
