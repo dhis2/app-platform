@@ -1,3 +1,10 @@
+# [7.1.0-beta.3](https://github.com/dhis2/app-platform/compare/v7.1.0-beta.2...v7.1.0-beta.3) (2021-06-30)
+
+
+### Bug Fixes
+
+* **fs:** re-read package.json from disk to make sure it is not stale ([918d113](https://github.com/dhis2/app-platform/commit/918d1137297455cbf4506f9a65bc7fda7d659bad))
+
 # [7.1.0-beta.2](https://github.com/dhis2/app-platform/compare/v7.1.0-beta.1...v7.1.0-beta.2) (2021-06-30)
 
 
