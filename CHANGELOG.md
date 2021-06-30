@@ -1,16 +1,9 @@
-# [7.1.0-beta.1](https://github.com/dhis2/app-platform/compare/v7.0.0...v7.1.0-beta.1) (2021-06-30)
+## [7.0.1](https://github.com/dhis2/app-platform/compare/v7.0.0...v7.0.1) (2021-06-30)
 
 
 ### Bug Fixes
 
-* **pack:** use the built app config ([e22d186](https://github.com/dhis2/app-platform/commit/e22d1865ace1d8170dded7191511a7496f1f9051))
-* **publish:** only prompt in CI mode ([6872ca0](https://github.com/dhis2/app-platform/commit/6872ca0887fbe1f33180f2dfd4b7c07b4b47746f))
-
-
-### Features
-
-* **pack:** adds pack command ([be700f1](https://github.com/dhis2/app-platform/commit/be700f16197491ee6d1aeb4a5afbd843e991d8ed))
-* **publish:** expose publish command module ([ff55d5a](https://github.com/dhis2/app-platform/commit/ff55d5a69a99de27a0df97853164c5e5b43e6268))
+* rename 'update' test command handler parameter to 'updateSnapshot' ([#577](https://github.com/dhis2/app-platform/issues/577)) ([34787ad](https://github.com/dhis2/app-platform/commit/34787ad5448454bbfac6672b2b67516d131d753c))
 
 # [7.0.0](https://github.com/dhis2/app-platform/compare/v6.2.0...v7.0.0) (2021-06-14)
 
