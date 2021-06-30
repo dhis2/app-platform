@@ -7,6 +7,7 @@ const i18n = require('../lib/i18n')
 const loadEnvFiles = require('../lib/loadEnvFiles')
 const parseConfig = require('../lib/parseConfig')
 const makePaths = require('../lib/paths')
+const { compileServiceWorker } = require('../lib/pwa')
 const makeShell = require('../lib/shell')
 const { validatePackage } = require('../lib/validatePackage')
 
@@ -84,6 +85,15 @@ const handler = async ({
                 )
             }
 
+            if (config.pwa.enabled) {
+                reporter.info('Compiling service worker...')
+                await compileServiceWorker({
+                    input: paths.shellSrcServiceWorker,
+                    output: paths.shellSrcDevServiceWorker,
+                    mode: 'development',
+                })
+            }
+
             reporter.print('')
             reporter.info('Starting development server...')
             reporter.print(
@@ -97,8 +107,10 @@ const handler = async ({
         },
         {
             name: 'start',
-            onError: () =>
-                reporter.error('Start script exited with non-zero exit code'),
+            onError: err => {
+                reporter.error('Start script exited with non-zero exit code')
+                console.error(err)
+            },
         }
     )
 }
