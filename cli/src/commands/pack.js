@@ -1,24 +1,24 @@
 const path = require('path')
 const { reporter, chalk, exit } = require('@dhis2/cli-helpers-engine')
 const fs = require('fs-extra')
+const finalArchivePath = require('../lib/finalArchivePath.js')
 const makeBundle = require('../lib/makeBundle.js')
 const makePaths = require('../lib/paths.js')
 
-exports.command = 'pack [folder]'
+exports.command = 'pack [source]'
 
 exports.describe = 'Create archive from the build.'
 
 exports.builder = yargs =>
     yargs
-        .positional('folder', {
-            describe: 'The folder to pack relative to cwd.',
+        .positional('source', {
+            describe: 'The source directory to pack relative to cwd.',
             type: 'string',
-            defaultDescription: '.',
         })
         .option('destination', {
+            alias: ['dest', 'd'],
             type: 'string',
             describe: 'Directory to save the packed archive to.',
-            defaultDescription: '.',
         })
         .option('filename', {
             type: 'string',
@@ -27,29 +27,31 @@ exports.builder = yargs =>
         })
 
 exports.handler = async argv => {
-    const { cwd = process.cwd(), folder, destination, filename } = argv
+    const { cwd = process.cwd(), source, destination, filename } = argv
 
     const paths = makePaths(cwd)
-    const config = fs.readJsonSync(paths.buildAppConfigJson)
+    const config = fs.readJsonSync(paths.buildAppConfigJson, { throws: false })
 
-    let inputPath, outputPath
-    if (config.type === 'app') {
-        inputPath = path.resolve(cwd, folder ? folder : paths.buildAppOutput)
+    if (!config) {
+        // we may be dealing with a library or a unbuilt app
+        // load the d2.config.js file from the project and check
+        const baseConfig = require(paths.config)
 
-        outputPath = path.resolve(
-            cwd,
-            destination ? destination : paths.buildAppBundleOutput,
-            filename ? filename : paths.buildAppBundleFile
-        )
-    } else {
-        inputPath = path.resolve(cwd, folder ? folder : '.')
-
-        outputPath = path.resolve(
-            cwd,
-            destination ? destination : paths.buildLibBundleOutput,
-            filename ? filename : paths.buildLibBundleFile
-        )
+        if (baseConfig.type !== 'app') {
+            exit(
+                1,
+                `Unsupported type '${baseConfig.type}', only 'app' is currently supported.`
+            )
+        }
     }
+
+    const inputPath = path.resolve(cwd, source ? source : paths.buildAppOutput)
+
+    const outputPath = path.resolve(
+        cwd,
+        destination ? destination : paths.buildAppBundleOutput,
+        filename ? filename : paths.buildAppBundleFile
+    )
 
     if (!fs.existsSync(inputPath)) {
         exit(
@@ -61,13 +63,11 @@ exports.handler = async argv => {
         )
     }
 
-    // for scoped names in package.json
-    const clean = str => str.replace(/@/, '').replace(/\//, '-')
-
-    // replace placeholder within names defined in lib/paths.js
-    const archivePath = outputPath
-        .replace(/{name}/, clean(config.name))
-        .replace(/{version}/, config.version)
+    const archivePath = finalArchivePath({
+        filepath: outputPath,
+        name: config.name,
+        version: config.version,
+    })
 
     const logPath = path.relative(process.cwd(), inputPath)
     reporter.info(

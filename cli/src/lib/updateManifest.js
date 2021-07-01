@@ -1,7 +1,17 @@
-const { reporter } = require('@dhis2/cli-helpers-engine')
+const { reporter, exit } = require('@dhis2/cli-helpers-engine')
 const fs = require('fs-extra')
 
 module.exports = ({ version }, paths) => {
+    const hasConfig = fs.existsSync(paths.buildAppConfigJson)
+    const hasManifest = fs.existsSync(paths.buildAppManifest)
+
+    if (!hasConfig || !hasManifest) {
+        exit(
+            1,
+            `Could not find manifest (exists: ${hasManifest}) and/or config (exists: ${hasConfig}) in build dir. Did you forget to build?`
+        )
+    }
+
     const manifest = fs.readJsonSync(paths.buildAppManifest)
     const config = fs.readJsonSync(paths.buildAppConfigJson)
 

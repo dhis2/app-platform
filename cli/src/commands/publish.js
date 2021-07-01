@@ -1,33 +1,15 @@
 const path = require('path')
 const { reporter, chalk, exit } = require('@dhis2/cli-helpers-engine')
-const FormData = require('form-data')
 const fs = require('fs-extra')
 const inquirer = require('inquirer')
-const { createClient } = require('../lib/httpClient')
+const finalArchivePath = require('../lib/finalArchivePath.js')
 const parseConfig = require('../lib/parseConfig')
 const makePaths = require('../lib/paths')
+const publishVersion = require('../lib/publishVersion.js')
 const updateManifest = require('../lib/updateManifest.js')
 const { handler: pack } = require('./pack.js')
 
-const constructUploadUrl = appId => `/api/v1/apps/${appId}/versions`
-
 const isValidServerVersion = v => !!/(\d+)\.(\d+)/.exec(v)
-
-const dumpHttpError = (message, response) => {
-    if (!response) {
-        reporter.error(message)
-        return
-    }
-
-    reporter.error(
-        message,
-        response.status,
-        typeof response.data === 'object'
-            ? response.data.message
-            : response.statusText
-    )
-    reporter.debugErr('Error details', response.data)
-}
 
 const requiredFields = new Set(['id', 'version', 'minDHIS2Version'])
 const configFieldValidations = {
@@ -96,9 +78,11 @@ const resolveBundleFromAppConfig = (cwd, config) => {
     appBundle.version = config.version
     appBundle.path = path.relative(
         cwd,
-        paths.buildAppBundle
-            .replace(/{name}/, config.name)
-            .replace(/{version}/, config.version)
+        finalArchivePath({
+            filepath: paths.buildAppBundle,
+            name: config.name,
+            version: config.version,
+        })
     )
     appBundle.name = config.name
     appBundle.minDHIS2Version = config.minDHIS2Version
@@ -115,16 +99,16 @@ const resolveBundle = ({ cwd, params, config }) => {
 }
 
 const promptForConfig = async params => {
-    if (!params.apikey) {
-        exit(1, 'Missing apikey parameter.')
+    if (!params.token) {
+        exit(1, 'Missing API token.')
     }
 
     const responses = await inquirer.prompt([
         {
             type: 'input',
-            name: 'apikey',
-            message: 'App Hub API-key',
-            when: () => !params.apikey,
+            name: 'token',
+            message: 'App Hub API token',
+            when: () => !params.token,
         },
         {
             type: 'input',
@@ -163,6 +147,13 @@ const promptForConfig = async params => {
 }
 
 const handler = async ({ cwd = process.cwd(), ...params }) => {
+    if (params.apikey) {
+        reporter.debug(
+            '[DEPRECATED] use of --apikey is deprecated, use --token instead.'
+        )
+        params.token = params.apikey
+    }
+
     const paths = makePaths(cwd)
     const appConfig = parseConfig(paths)
 
@@ -179,7 +170,6 @@ const handler = async ({ cwd = process.cwd(), ...params }) => {
         config: appConfig,
         params: publishConfig,
     })
-    const uploadAppUrl = constructUploadUrl(appBundle.id)
 
     if (appConfig.type !== 'app') {
         exit(
@@ -201,45 +191,17 @@ const handler = async ({ cwd = process.cwd(), ...params }) => {
         })
     }
 
-    const client = createClient({
+    await publishVersion({
+        id: appBundle.id,
+        token: publishConfig.token,
         baseUrl: publishConfig.baseUrl,
-        headers: {
-            'x-api-key': publishConfig.apikey,
-        },
-    })
-
-    const versionData = {
-        version: appBundle.version,
-        minDhisVersion: appBundle.minDHIS2Version,
-        maxDhisVersion: appBundle.maxDHIS2Version || '',
         channel: publishConfig.channel,
-    }
-
-    const formData = new FormData()
-    formData.append('file', fs.createReadStream(appBundle.path))
-    formData.append('version', JSON.stringify(versionData))
-
-    try {
-        reporter.print(
-            `Uploading app bundle to ${publishConfig.baseUrl + uploadAppUrl}`
-        )
-        reporter.debug('Upload with version data', versionData)
-
-        await client.post(uploadAppUrl, formData, {
-            headers: formData.getHeaders(),
-            timeout: 300000, // Ensure we have enough time to upload a large zip file
-        })
-        reporter.info(
-            `Successfully published ${appBundle.name} with version ${appBundle.version}`
-        )
-    } catch (e) {
-        if (e.isAxiosError) {
-            dumpHttpError('Failed to upload app, HTTP error', e.response)
-        } else {
-            reporter.error(e)
-        }
-        exit(1)
-    }
+        minDhisVersion: appBundle.minDHIS2Version,
+        maxDhisVersion: appBundle.maxDHIS2Version,
+        filepath: appBundle.path,
+        name: appBundle.name,
+        version: appBundle.version,
+    })
 }
 
 const command = {
@@ -247,47 +209,58 @@ const command = {
     alias: 'p',
     desc: 'Deploy the built application to a specific DHIS2 instance',
     builder: yargs =>
-        yargs.options({
-            apikey: {
-                alias: ['k', 'app-hub-api-key', 'app-hub-token', 'token'],
-                type: 'string',
-                description: 'The API-key to use for authentication',
-            },
-            channel: {
-                alias: 'c',
-                description: 'The channel to publish the app-version to',
-                default: 'stable',
-            },
-            baseUrl: {
-                alias: 'b',
-                description: 'The base-url of the App Hub instance',
-                default: 'https://apps.dhis2.org',
-            },
-            minDHIS2Version: {
-                type: 'string',
-                description: 'The minimum version of DHIS2 the app supports',
-            },
-            maxDHIS2Version: {
-                type: 'string',
-                description: 'The maximum version of DHIS2 the app supports',
-            },
-            appId: {
-                type: 'string',
-                description:
-                    'Only used with --file option. The App Hub ID for the App to publish to',
-                implies: 'file',
-            },
-            file: {
-                description:
-                    'Path to the file to upload. This skips automatic resolution of the built app and uses this file-path to upload',
-            },
-            'file-version': {
-                type: 'string',
-                description:
-                    'Only used with --file option. The semantic version of the app uploaded',
-                implies: 'file',
-            },
-        }),
+        yargs
+            .options({
+                apikey: {
+                    alias: ['app-hub-api-key'],
+                    type: 'string',
+                    deprecated: true,
+                    conflicts: 'token',
+                },
+                token: {
+                    alias: ['app-hub-token', 'k'],
+                    type: 'string',
+                    description: 'The API token to use for authentication',
+                    conflicts: 'apikey',
+                },
+                channel: {
+                    alias: 'c',
+                    description: 'The channel to publish the app-version to',
+                    default: 'stable',
+                },
+                baseUrl: {
+                    alias: 'b',
+                    description: 'The base-url of the App Hub instance',
+                    default: 'https://apps.dhis2.org',
+                },
+                minDHIS2Version: {
+                    type: 'string',
+                    description:
+                        'The minimum version of DHIS2 the app supports',
+                },
+                maxDHIS2Version: {
+                    type: 'string',
+                    description:
+                        'The maximum version of DHIS2 the app supports',
+                },
+                appId: {
+                    type: 'string',
+                    description:
+                        'Only used with --file option. The App Hub ID for the App to publish to',
+                    implies: 'file',
+                },
+                file: {
+                    description:
+                        'Path to the file to upload. This skips automatic resolution of the built app and uses this file-path to upload',
+                },
+                'file-version': {
+                    type: 'string',
+                    description:
+                        'Only used with --file option. The semantic version of the app uploaded',
+                    implies: 'file',
+                },
+            })
+            .hide('apikey'),
     handler,
 }
 
