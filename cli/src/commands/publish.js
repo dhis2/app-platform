@@ -188,16 +188,18 @@ const handler = async ({ cwd = process.cwd(), ...params }) => {
         )
     }
 
-    // update build/app manifests after prepare for release
-    updateManifest({ version: appBundle.version }, paths)
+    if (!publishConfig.file) {
+        // update build/app manifests after prepare for release
+        updateManifest({ version: appBundle.version }, paths)
 
-    const bundle = path.parse(appBundle.path)
+        const bundle = path.parse(appBundle.path)
 
-    // update bundle archive
-    await pack({
-        destination: path.resolve(cwd, bundle.dir),
-        filename: bundle.base,
-    })
+        // update bundle archive
+        await pack({
+            destination: path.resolve(cwd, bundle.dir),
+            filename: bundle.base,
+        })
+    }
 
     const client = createClient({
         baseUrl: publishConfig.baseUrl,
