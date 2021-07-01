@@ -25,7 +25,7 @@ export function openSectionsDB() {
                 }
                 // falls through (this comment satisfies eslint)
                 default: {
-                    console.log('[sections-db] Done upgrading DB')
+                    console.debug('[sections-db] Done upgrading DB')
                 }
             }
         },

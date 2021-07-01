@@ -124,6 +124,7 @@ const handler = async ({
                 reporter.info('Generating manifests...')
                 await generateManifests(paths, config, process.env.PUBLIC_URL)
 
+                // CRA Manages service worker compilation here
                 reporter.info('Building appShell...')
                 await shell.build()
 

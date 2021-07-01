@@ -46,7 +46,15 @@ module.exports = (cwd = process.cwd()) => {
         shellAppEntrypoint: path.join(base, './.d2/shell/src/App.js'),
         shellAppDirname,
         shellApp: path.join(base, `./.d2/shell/${shellAppDirname}`),
+        shellSrcServiceWorker: path.join(
+            base,
+            './.d2/shell/src/service-worker.js'
+        ),
         shellPublic: path.join(base, './.d2/shell/public'),
+        shellPublicServiceWorker: path.join(
+            base,
+            './.d2/shell/public/service-worker.js'
+        ),
         shellPublicManifestWebapp: path.join(
             base,
             './.d2/shell/public/manifest.webapp'

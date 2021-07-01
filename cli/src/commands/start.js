@@ -7,6 +7,7 @@ const i18n = require('../lib/i18n')
 const loadEnvFiles = require('../lib/loadEnvFiles')
 const parseConfig = require('../lib/parseConfig')
 const makePaths = require('../lib/paths')
+const { compileServiceWorker } = require('../lib/pwa')
 const makeShell = require('../lib/shell')
 const { validatePackage } = require('../lib/validatePackage')
 
@@ -82,6 +83,15 @@ const handler = async ({
                 reporter.warn(
                     `Something is already running on port ${port}, using ${newPort} instead.`
                 )
+            }
+
+            if (config.pwa.enabled) {
+                reporter.info('Compiling service worker...')
+                await compileServiceWorker({
+                    config,
+                    paths,
+                    mode: 'development',
+                })
             }
 
             reporter.print('')
