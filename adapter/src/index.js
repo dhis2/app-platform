@@ -1,5 +1,5 @@
 import { OfflineProvider } from '@dhis2/app-service-offline'
-import { OfflineInterface } from '@dhis2/sw'
+import { checkForSWUpdateAndReload, OfflineInterface } from '@dhis2/sw'
 import { HeaderBar } from '@dhis2/ui'
 import PropTypes from 'prop-types'
 import React from 'react'
@@ -12,7 +12,7 @@ import { styles } from './styles.js'
 const offlineInterface = new OfflineInterface()
 
 const App = ({ url, apiVersion, appName, pwaEnabled, children }) => (
-    <ErrorBoundary fullscreen onRefresh={() => window.location.reload()}>
+    <ErrorBoundary fullscreen onRefresh={checkForSWUpdateAndReload}>
         <ServerVersionProvider url={url} apiVersion={apiVersion}>
             <OfflineProvider
                 offlineInterface={offlineInterface}

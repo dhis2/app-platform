@@ -38,6 +38,35 @@ export async function checkForUpdates({ onUpdate }) {
     registration.onupdatefound = handleInstallingWorker
 }
 
+/**
+ * If a service worker is installing or waiting, wait for updates using
+ * `checkForUpdates`, then skip waiting and reload. In other circumstances,
+ * just reload.
+ *
+ * Intended for use at a fatal error boundary to make it possible to activate
+ * a waiting service worker via the user interface when alerts aren't available
+ */
+export async function checkForSWUpdateAndReload() {
+    const reload = () => window.location.reload()
+
+    if (!('serviceWorker' in navigator)) return reload()
+
+    // 1. Check if there's a SW (if no, reload)
+    const registration = await navigator.serviceWorker.getRegistration()
+    if (registration === undefined) return reload()
+
+    // 2. Check if updates are ready (if no, reload)
+    if (!registration.waiting && !registration.installing) return reload()
+
+    // 3. If updates are ready, wait for them, _then_ reload
+    checkForUpdates({
+        onUpdate: reg => {
+            navigator.serviceWorker.oncontrollerchange = reload
+            reg.waiting.postMessage({ type: 'SKIP_WAITING' })
+        },
+    })
+}
+
 export function register(config) {
     const isLocalhost = Boolean(
         window.location.hostname === 'localhost' ||
