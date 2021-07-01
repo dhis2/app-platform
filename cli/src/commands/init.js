@@ -101,7 +101,7 @@ const handler = async ({ force, name, cwd, lib }) => {
     }
 
     reporter.info('Creating package scripts...')
-    const pkg = require(paths.package)
+    const pkg = fs.readJsonSync(paths.package)
     if (pkg.scripts && pkg.scripts.build && !force) {
         reporter.warn(
             'A script called "build" already exists, use --force to overwrite it'

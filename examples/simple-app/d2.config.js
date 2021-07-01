@@ -12,6 +12,8 @@ const config = {
 
     dataStoreNamespace: 'testapp-namespace',
     customAuthorities: ['testapp-authority'],
+
+    minDHIS2Version: '2.35',
 }
 
 module.exports = config
