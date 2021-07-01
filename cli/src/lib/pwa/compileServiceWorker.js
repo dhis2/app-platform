@@ -1,37 +1,94 @@
 const path = require('path')
 const { reporter } = require('@dhis2/cli-helpers-engine')
 const webpack = require('webpack')
+const getPWAEnvVars = require('./getPWAEnvVars')
 
-function compileServiceWorker({ input, output /* mode */ } = {}) {
-    const { dir: outputPath, base: outputFilename } = path.parse(output)
-    const config = {
-        // mode, // "production" or "development"
-        entry: input,
+/**
+ * Uses webpack to bundle a service worker. If used in development mode,
+ * compiles in development mode and outputs the service worker to the `public`
+ * dir for use with a dev server. In production mode, compiles a minified
+ * service worker and outputs it into the apps `build` dir.
+ *
+ * Currently used only for 'dev' SWs, since CRA handles production bundling.
+ * TODO: Use this for production bundling as well, which gives greater control
+ * over 'injectManifest' configuration (CRA omits files > 2MB) and bundling
+ * options.
+ *
+ * @param {Object} param0
+ * @param {Object} param0.config - d2 app config
+ * @param {Object} param0.paths - `paths` object in CLI
+ * @param {String} param0.mode - `'production'` or `'development'` (or other valid webpack `mode`s)
+ * @returns {Promise}
+ */
+function compileServiceWorker({ config, paths, mode }) {
+    // Choose appropriate destination for compiled SW based on 'mode'
+    const outputPath =
+        mode === 'production'
+            ? paths.shellBuildServiceWorker
+            : paths.shellPublicServiceWorker
+    const { dir: outputDir, base: outputFilename } = path.parse(outputPath)
+
+    // This is part of a bit of a hacky way to provide the same env vars to dev
+    // SWs as in production by adding them to `process.env` using the plugin
+    // below.
+    // TODO: This could be cleaner if the production SW is built in the same
+    // way instead of using the CRA webpack config, so both can more easily
+    // share environment variables.
+    const prefixedPWAEnvVars = Object.entries(getPWAEnvVars(config)).reduce(
+        (output, [key, value]) => ({
+            ...output,
+            [`REACT_APP_DHIS2_APP_${key.toUpperCase()}`]: value,
+        }),
+        {}
+    )
+
+    const webpackConfig = {
+        mode, // "production" or "development"
+        entry: paths.shellSrcServiceWorker,
         output: {
-            path: outputPath,
+            path: outputDir,
             filename: outputFilename,
         },
         target: 'webworker',
-        // Appropriate for SW files
-        // devtool: 'source-map',
         plugins: [
-            // Adds `process.env` to globals
             new webpack.DefinePlugin({
-                'process.env': JSON.stringify(process.env),
+                'process.env': JSON.stringify({
+                    ...process.env,
+                    ...prefixedPWAEnvVars,
+                }),
             }),
         ],
     }
 
     return new Promise((resolve, reject) => {
-        webpack(config, (err, stats) => {
-            // TODO: Take more advantage of info in `stats`
-            if (err || stats.hasErrors()) {
-                reporter.debugErr(err)
-                reject(err)
-            } else {
-                reporter.debug('Service Worker compilation successful')
-                resolve()
+        const logErr = err => {
+            reporter.debugErr(err.stack || err)
+            if (err.details) {
+                reporter.debugErr(err.details)
             }
+        }
+
+        webpack(webpackConfig, (err, stats) => {
+            if (err) {
+                logErr(err)
+                reject('Service worker compilation error')
+            }
+
+            const info = stats.toJson()
+
+            if (stats.hasWarnings()) {
+                reporter.warn(`There are ${info.warnings.length} warnings`)
+                reporter.debug('Warnings:', info.warnings)
+            }
+
+            if (stats.hasErrors()) {
+                info.errors.forEach(logErr)
+                reject('Service worker compilation error')
+                return
+            }
+
+            reporter.debug('Service Worker compilation successful')
+            resolve()
         })
     })
 }

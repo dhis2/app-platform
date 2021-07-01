@@ -88,8 +88,8 @@ const handler = async ({
             if (config.pwa.enabled) {
                 reporter.info('Compiling service worker...')
                 await compileServiceWorker({
-                    input: paths.shellSrcServiceWorker,
-                    output: paths.shellSrcDevServiceWorker,
+                    config,
+                    paths,
                     mode: 'development',
                 })
             }
@@ -107,10 +107,8 @@ const handler = async ({
         },
         {
             name: 'start',
-            onError: err => {
-                reporter.error('Start script exited with non-zero exit code')
-                console.error(err)
-            },
+            onError: () =>
+                reporter.error('Start script exited with non-zero exit code'),
         }
     )
 }
