@@ -1,3 +1,10 @@
+# [7.1.0-beta.4](https://github.com/dhis2/app-platform/compare/v7.1.0-beta.3...v7.1.0-beta.4) (2021-07-01)
+
+
+### Bug Fixes
+
+* **publish:** pack when file param is unused ([cc4c802](https://github.com/dhis2/app-platform/commit/cc4c8027db7d14473f1961fb0967dc8ea79eb5a1))
+
 # [7.1.0-beta.3](https://github.com/dhis2/app-platform/compare/v7.1.0-beta.2...v7.1.0-beta.3) (2021-06-30)
 
 
