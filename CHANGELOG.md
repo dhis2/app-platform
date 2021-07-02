@@ -1,3 +1,24 @@
+# [7.1.0](https://github.com/dhis2/app-platform/compare/v7.0.2...v7.1.0) (2021-07-02)
+
+
+### Features
+
+* **shell:** add killswitch service worker ([#583](https://github.com/dhis2/app-platform/issues/583)) ([1ba1c1e](https://github.com/dhis2/app-platform/commit/1ba1c1e1d320d2d5d3a5edb16cd08ad0a70d8b60))
+
+## [7.0.2](https://github.com/dhis2/app-platform/compare/v7.0.1...v7.0.2) (2021-07-02)
+
+
+### Bug Fixes
+
+* **cli:** bump @babel/preset-env ([8ebb78d](https://github.com/dhis2/app-platform/commit/8ebb78d8842aab40b9fbfe01105398ce0dce4ded))
+
+## [7.0.1](https://github.com/dhis2/app-platform/compare/v7.0.0...v7.0.1) (2021-06-30)
+
+
+### Bug Fixes
+
+* rename 'update' test command handler parameter to 'updateSnapshot' ([#577](https://github.com/dhis2/app-platform/issues/577)) ([34787ad](https://github.com/dhis2/app-platform/commit/34787ad5448454bbfac6672b2b67516d131d753c))
+
 # [7.0.0](https://github.com/dhis2/app-platform/compare/v6.2.0...v7.0.0) (2021-06-14)
 
 
