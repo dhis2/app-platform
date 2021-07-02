@@ -1,7 +1,8 @@
 import i18n from '@dhis2/d2-i18n'
+import cx from 'classnames'
 import PropTypes from 'prop-types'
 import React, { Component } from 'react'
-import styles from './styles/FatalErrorBoundary.style'
+import styles from './styles/ErrorBoundary.style'
 
 const translatedErrorHeading = i18n.t(
     'An error occurred in the DHIS2 application.'
@@ -12,7 +13,7 @@ const replaceNewlinesWithBreaks = text =>
         .split('\n')
         .reduce((out, line, i) => [...out, line, <br key={i} />], [])
 
-export class FatalErrorBoundary extends Component {
+export class ErrorBoundary extends Component {
     constructor(props) {
         super(props)
         this.state = {
@@ -39,7 +40,11 @@ export class FatalErrorBoundary extends Component {
         const { children } = this.props
         if (this.state.error) {
             return (
-                <div className="mask">
+                <div
+                    className={cx('mask', {
+                        fullscreen: this.props.fullscreen,
+                    })}
+                >
                     <style jsx>{styles}</style>
                     <div className="container">
                         {/* <InfoIcon className="icon" /> */}
@@ -48,7 +53,9 @@ export class FatalErrorBoundary extends Component {
                         </div>
                         <div
                             className="link"
-                            onClick={() => window.location.reload()}
+                            onClick={() => {
+                                this.props.onRefresh && this.props.onRefresh()
+                            }}
                         >
                             {i18n.t('Refresh to try again')}
                         </div>
@@ -93,6 +100,8 @@ export class FatalErrorBoundary extends Component {
     }
 }
 
-FatalErrorBoundary.propTypes = {
+ErrorBoundary.propTypes = {
     children: PropTypes.node.isRequired,
+    fullscreen: PropTypes.bool,
+    onRefresh: PropTypes.func,
 }

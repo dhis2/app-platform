@@ -8,11 +8,8 @@ const bgColor = '#F4F6F8',
 
 export default css`
     .mask {
-        position: absolute;
-        top: 0px;
-        left: 0px;
-        right: 0px;
-        bottom: 0px;
+        height: 100%;
+        width: 100%;
 
         overflow: auto;
         overflow-y: auto;
@@ -27,6 +24,14 @@ export default css`
 
         align-items: center;
         justify-content: center;
+    }
+
+    .fullscreen {
+        position: absolute;
+        top: 0px;
+        left: 0px;
+        right: 0px;
+        bottom: 0px;
     }
 
     .container {

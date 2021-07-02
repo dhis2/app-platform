@@ -1,18 +1,18 @@
 import { OfflineProvider } from '@dhis2/app-service-offline'
-import { OfflineInterface } from '@dhis2/sw'
+import { checkForSWUpdateAndReload, OfflineInterface } from '@dhis2/sw'
 import { HeaderBar } from '@dhis2/ui'
 import PropTypes from 'prop-types'
 import React from 'react'
 import { Alerts } from './components/Alerts'
 import { AuthBoundary } from './components/AuthBoundary'
-import { FatalErrorBoundary } from './components/FatalErrorBoundary'
+import { ErrorBoundary } from './components/ErrorBoundary'
 import { ServerVersionProvider } from './components/ServerVersionProvider'
 import { styles } from './styles.js'
 
 const offlineInterface = new OfflineInterface()
 
 const App = ({ url, apiVersion, appName, pwaEnabled, children }) => (
-    <FatalErrorBoundary>
+    <ErrorBoundary fullscreen onRefresh={checkForSWUpdateAndReload}>
         <ServerVersionProvider url={url} apiVersion={apiVersion}>
             <OfflineProvider
                 offlineInterface={offlineInterface}
@@ -22,13 +22,19 @@ const App = ({ url, apiVersion, appName, pwaEnabled, children }) => (
                     <style jsx>{styles}</style>
                     <HeaderBar appName={appName} />
                     <AuthBoundary url={url}>
-                        <div className="app-shell-app">{children}</div>
+                        <div className="app-shell-app">
+                            <ErrorBoundary
+                                onRefresh={() => window.location.reload()}
+                            >
+                                {children}
+                            </ErrorBoundary>
+                        </div>
                     </AuthBoundary>
                     <Alerts />
                 </div>
             </OfflineProvider>
         </ServerVersionProvider>
-    </FatalErrorBoundary>
+    </ErrorBoundary>
 )
 
 App.propTypes = {
