@@ -166,8 +166,10 @@ export class OfflineInterface {
      * @returns {Promise} A promise that resolves to an array of cached sections.
      */
     async getCachedSections() {
-        // This fn may be called before service worker is ready. Wait 'til then
-        // to avoid opening a DB in an app that isn't PWA-enabled
+        if (!this.pwaEnabled)
+            throw new Error(
+                'Cannot get cached sections - PWA is not enabled in d2.config.js'
+            )
         await navigator.serviceWorker.ready
         if (this.dbPromise === undefined) this.dbPromise = openSectionsDB()
         const db = await this.dbPromise
@@ -180,6 +182,10 @@ export class OfflineInterface {
      * @returns {Promise} A promise that resolves to `true` if the section is successfully deleted or `false` if it was not found.
      */
     async removeSection(sectionId) {
+        if (!this.pwaEnabled)
+            throw new Error(
+                'Cannot remove section - PWA is not enabled in d2.config.js'
+            )
         if (!sectionId) throw new Error('No section ID specified to delete')
         await navigator.serviceWorker.ready
         if (this.dbPromise === undefined) this.dbPromise = openSectionsDB()
