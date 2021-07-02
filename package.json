@@ -24,7 +24,7 @@
     "scripts": {
         "format": "d2-style apply",
         "lint": "d2-style check",
-        "build": "yarn build:adapter && yarn build:sw && yarn build:example && yarn build:pwa",
+        "build": "yarn build:sw && yarn build:adapter && yarn build:example && yarn build:pwa",
         "build:adapter": "yarn workspace @dhis2/app-adapter build",
         "build:example": "yarn workspace simple-app build",
         "build:pwa": "yarn workspace pwa-app build",
