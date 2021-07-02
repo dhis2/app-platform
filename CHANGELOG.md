@@ -1,3 +1,10 @@
+## [7.0.2](https://github.com/dhis2/app-platform/compare/v7.0.1...v7.0.2) (2021-07-02)
+
+
+### Bug Fixes
+
+* **cli:** bump @babel/preset-env ([8ebb78d](https://github.com/dhis2/app-platform/commit/8ebb78d8842aab40b9fbfe01105398ce0dce4ded))
+
 ## [7.0.1](https://github.com/dhis2/app-platform/compare/v7.0.0...v7.0.1) (2021-06-30)
 
 
