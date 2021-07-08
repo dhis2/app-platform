@@ -141,7 +141,7 @@ const handler = async ({ cwd = process.cwd(), ...params }) => {
             headers: {
                 ...formData.getHeaders(),
             },
-            timeout: 30000, // Ensure we have enough time to upload a large zip file
+            timeout: 300000, // Ensure we have enough time to upload a large zip file
         })
         reporter.info(
             `Successfully deployed ${config.name} to ${dhis2Config.baseUrl}`
