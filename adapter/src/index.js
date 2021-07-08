@@ -14,9 +14,9 @@ const AppAdapter = ({ url, apiVersion, appName, children }) => (
 
 AppAdapter.propTypes = {
     appName: PropTypes.string.isRequired,
-    url: PropTypes.string,
     apiVersion: PropTypes.number,
     children: PropTypes.element,
+    url: PropTypes.string,
 }
 
 export default AppAdapter

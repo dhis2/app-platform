@@ -58,7 +58,7 @@ export const ServerVersionProvider = ({ url, apiVersion, children }) => {
 }
 
 ServerVersionProvider.propTypes = {
-    url: PropTypes.string,
     apiVersion: PropTypes.number,
     children: PropTypes.element,
+    url: PropTypes.string,
 }
