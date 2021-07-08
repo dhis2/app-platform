@@ -33,8 +33,11 @@ export const useLocale = locale => {
         if (!locale) {
             return
         }
+
         setGlobalLocale(locale)
         setResult(locale)
+
+        console.log('🗺 Global d2-i18n locale initialized:', locale)
     }, [locale])
     return result
 }
@@ -53,10 +56,6 @@ export const useCurrentUserLocale = () => {
     if (error) {
         // This shouldn't happen, trigger the fatal error boundary
         throw new Error('Failed to fetch user locale: ' + error)
-    }
-
-    if (locale) {
-        console.log('d2-i18n locale initialized', locale)
     }
 
     return { loading: loading || !locale, locale }
