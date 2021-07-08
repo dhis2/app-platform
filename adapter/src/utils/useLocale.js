@@ -1,3 +1,4 @@
+import { useDataQuery } from '@dhis2/app-runtime'
 import i18n from '@dhis2/d2-i18n'
 import moment from 'moment'
 import { useState, useEffect } from 'react'
@@ -36,4 +37,27 @@ export const useLocale = locale => {
         setResult(locale)
     }, [locale])
     return result
+}
+
+const settingsQuery = {
+    userSettings: {
+        resource: 'userSettings',
+    },
+}
+export const useCurrentUserLocale = () => {
+    const { loading, error, data } = useDataQuery(settingsQuery)
+    const locale = useLocale(
+        data && (data.userSettings.keyUiLocale || window.navigator.language)
+    )
+
+    if (error) {
+        // This shouldn't happen, trigger the fatal error boundary
+        throw new Error('Failed to fetch user locale: ' + error)
+    }
+
+    if (locale) {
+        console.log('d2-i18n locale initialized', locale)
+    }
+
+    return { loading: loading || !locale, locale }
 }
