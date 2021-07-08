@@ -26,7 +26,9 @@ export const LoginModal = () => {
         e.preventDefault()
         setIsDirty(true)
         if (isValid(server) && isValid(username) && isValid(password)) {
-            window.localStorage.DHIS2_BASE_URL = server
+            if (!staticUrl) {
+                window.localStorage.DHIS2_BASE_URL = server
+            }
             try {
                 await post(
                     `${server}/dhis-web-commons-security/login.action`,

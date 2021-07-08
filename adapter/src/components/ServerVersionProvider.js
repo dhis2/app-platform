@@ -12,6 +12,11 @@ export const ServerVersionProvider = ({ url, apiVersion, children }) => {
     })
 
     useEffect(() => {
+        if (!url) {
+            setState({ loading: false, error: new Error('No url specified') })
+            return
+        }
+
         setState(state => (state.loading ? state : { loading: true }))
         const request = get(`${url}/api/system/info`)
         request
@@ -53,7 +58,7 @@ export const ServerVersionProvider = ({ url, apiVersion, children }) => {
 }
 
 ServerVersionProvider.propTypes = {
-    url: PropTypes.string.isRequired,
+    url: PropTypes.string,
     apiVersion: PropTypes.number,
     children: PropTypes.element,
 }

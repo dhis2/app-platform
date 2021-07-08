@@ -4,7 +4,7 @@ import { AppWrapper } from './components/AppWrapper.js'
 import { FatalErrorBoundary } from './components/FatalErrorBoundary.js'
 import { ServerVersionProvider } from './components/ServerVersionProvider.js'
 
-const App = ({ url, apiVersion, appName, children }) => (
+const AppAdapter = ({ url, apiVersion, appName, children }) => (
     <FatalErrorBoundary>
         <ServerVersionProvider url={url} apiVersion={apiVersion}>
             <AppWrapper appName={appName}>{children}</AppWrapper>
@@ -12,11 +12,11 @@ const App = ({ url, apiVersion, appName, children }) => (
     </FatalErrorBoundary>
 )
 
-App.propTypes = {
+AppAdapter.propTypes = {
     appName: PropTypes.string.isRequired,
-    url: PropTypes.string.isRequired,
+    url: PropTypes.string,
     apiVersion: PropTypes.number,
     children: PropTypes.element,
 }
 
-export default App
+export default AppAdapter
