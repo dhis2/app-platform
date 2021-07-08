@@ -1,10 +1,12 @@
 import { HeaderBar } from '@dhis2/ui'
-import { styles } from './styles/AppWrapper.style.js'
+import PropTypes from 'prop-types'
+import React from 'react'
 import { useCurrentUserLocale } from '../utils/useLocale.js'
-import { LoadingMask } from './LoadingMask.js'
 import { Alerts } from './Alerts.js'
+import { LoadingMask } from './LoadingMask.js'
+import { styles } from './styles/AppWrapper.style.js'
 
-export const AppWrapper = ({ url, appName, children }) => {
+export const AppWrapper = ({ appName, children }) => {
     const { loading } = useCurrentUserLocale()
 
     if (loading) {
@@ -19,4 +21,9 @@ export const AppWrapper = ({ url, appName, children }) => {
             <Alerts />
         </div>
     )
+}
+
+AppWrapper.propTypes = {
+    appName: PropTypes.string.isRequired,
+    children: PropTypes.node,
 }

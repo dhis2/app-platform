@@ -7,9 +7,7 @@ import { ServerVersionProvider } from './components/ServerVersionProvider.js'
 const App = ({ url, apiVersion, appName, children }) => (
     <FatalErrorBoundary>
         <ServerVersionProvider url={url} apiVersion={apiVersion}>
-            <AppWrapper url={url} appName={appName}>
-                {children}
-            </AppWrapper>
+            <AppWrapper appName={appName}>{children}</AppWrapper>
         </ServerVersionProvider>
     </FatalErrorBoundary>
 )
