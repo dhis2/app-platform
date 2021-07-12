@@ -1,4 +1,7 @@
-import { OfflineProvider } from '@dhis2/app-service-offline'
+import {
+    OfflineProvider,
+    createCacheableSectionStore,
+} from '@dhis2/app-service-offline'
 import { checkForSWUpdateAndReload, OfflineInterface } from '@dhis2/sw'
 import { HeaderBar } from '@dhis2/ui'
 import PropTypes from 'prop-types'
@@ -10,13 +13,14 @@ import { ServerVersionProvider } from './components/ServerVersionProvider'
 import { styles } from './styles.js'
 
 const offlineInterface = new OfflineInterface()
+const store = createCacheableSectionStore()
 
-const App = ({ url, apiVersion, appName, pwaEnabled, children }) => (
+const App = ({ url, apiVersion, appName, children }) => (
     <ErrorBoundary fullscreen onRefresh={checkForSWUpdateAndReload}>
         <ServerVersionProvider url={url} apiVersion={apiVersion}>
             <OfflineProvider
                 offlineInterface={offlineInterface}
-                pwaEnabled={pwaEnabled}
+                cacheableSectionStore={store}
             >
                 <div className="app-shell-adapter">
                     <style jsx>{styles}</style>
@@ -42,7 +46,6 @@ App.propTypes = {
     url: PropTypes.string.isRequired,
     apiVersion: PropTypes.number,
     children: PropTypes.element,
-    pwaEnabled: PropTypes.bool,
 }
 
 export default App
