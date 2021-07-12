@@ -6,6 +6,7 @@ import {
     StaleWhileRevalidate,
     Strategy,
 } from 'workbox-strategies'
+import { swMsgs } from '../lib/constants'
 import {
     openSectionsDB,
     deleteSectionsDB,
@@ -176,15 +177,15 @@ export function setUpServiceWorker() {
         // This allows the web app to trigger skipWaiting via
         // registration.waiting.postMessage({type: 'SKIP_WAITING'})
         // Paired with `clientsClaim()` at top of file.
-        if (event.data.type === 'SKIP_WAITING') {
+        if (event.data.type === swMsgs.skipWaiting) {
             self.skipWaiting()
         }
 
-        if (event.data.type === 'START_RECORDING') {
+        if (event.data.type === swMsgs.startRecording) {
             startRecording(event)
         }
 
-        if (event.data.type === 'COMPLETE_RECORDING') {
+        if (event.data.type === swMsgs.completeRecording) {
             completeRecording(event.source.id) // same as FetchEvent.clientId
         }
     })
@@ -263,7 +264,7 @@ export function setUpServiceWorker() {
 
         // Send confirmation message to client
         self.clients.get(clientId).then(client => {
-            client.postMessage({ type: 'RECORDING_STARTED' })
+            client.postMessage({ type: swMsgs.recordingStarted })
         })
     }
 
@@ -342,7 +343,7 @@ export function setUpServiceWorker() {
         if (error) {
             self.clients.get(clientId).then(client => {
                 client.postMessage({
-                    type: 'RECORDING_ERROR',
+                    type: swMsgs.recordingError,
                     payload: {
                         error,
                     },
@@ -390,7 +391,7 @@ export function setUpServiceWorker() {
             removeRecording(clientId)
             return
         }
-        client.postMessage({ type: 'CONFIRM_RECORDING_COMPLETION' })
+        client.postMessage({ type: swMsgs.confirmRecordingCompletion })
         startConfirmationTimeout(clientId)
     }
 
@@ -440,7 +441,7 @@ export function setUpServiceWorker() {
 
         // Send confirmation message to client
         self.clients.get(clientId).then(client => {
-            client.postMessage({ type: 'RECORDING_COMPLETED' })
+            client.postMessage({ type: swMsgs.recordingCompleted })
         })
     }
 }
