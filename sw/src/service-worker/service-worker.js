@@ -431,7 +431,8 @@ export function setUpServiceWorker() {
             // https://stackoverflow.com/questions/32880073/whats-the-best-option-for-structured-cloning-of-a-fetch-api-request-object
             sectionId: recordingState.sectionId, // the key path
             lastUpdated: new Date(),
-            requests: recordingState.fulfilledRequests,
+            // 'requests' can later hold data for normalization
+            requests: recordingState.fulfilledRequests.size,
         }).catch(console.error)
 
         // Clean up
