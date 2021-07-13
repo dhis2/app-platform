@@ -1,3 +1,10 @@
+## [7.1.2](https://github.com/dhis2/app-platform/compare/v7.1.1...v7.1.2) (2021-07-13)
+
+
+### Bug Fixes
+
+* allow command-line configuration of deploy and publish upload timeouts ([#588](https://github.com/dhis2/app-platform/issues/588)) ([e60da18](https://github.com/dhis2/app-platform/commit/e60da180402d346d9ce8e7606059723ab8b41f40))
+
 ## [7.1.1](https://github.com/dhis2/app-platform/compare/v7.1.0...v7.1.1) (2021-07-08)
 
 
