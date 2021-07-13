@@ -1,3 +1,10 @@
+## [7.1.1](https://github.com/dhis2/app-platform/compare/v7.1.0...v7.1.1) (2021-07-08)
+
+
+### Bug Fixes
+
+* never render HeaderBar without runtime provider ([#587](https://github.com/dhis2/app-platform/issues/587)) ([65c7766](https://github.com/dhis2/app-platform/commit/65c776642353a5c9396a71a1b8b1e3422d16d7d9))
+
 # [7.1.0](https://github.com/dhis2/app-platform/compare/v7.0.2...v7.1.0) (2021-07-02)
 
 
