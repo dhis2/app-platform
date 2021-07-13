@@ -72,7 +72,7 @@ const promptForDhis2Config = async params => {
     }
 }
 
-const handler = async ({ cwd = process.cwd(), ...params }) => {
+const handler = async ({ cwd = process.cwd(), timeout, ...params }) => {
     const paths = makePaths(cwd)
     const config = parseConfig(paths)
 
@@ -141,7 +141,7 @@ const handler = async ({ cwd = process.cwd(), ...params }) => {
             headers: {
                 ...formData.getHeaders(),
             },
-            timeout: 30000, // Ensure we have enough time to upload a large zip file
+            timeout: timeout * 1000, // Ensure we have enough time to upload a large zip file
         })
         reporter.info(
             `Successfully deployed ${config.name} to ${dhis2Config.baseUrl}`
@@ -170,6 +170,11 @@ const command = {
             alias: 'u',
             description:
                 'The username for authenticating with the DHIS2 instance',
+        },
+        timeout: {
+            description:
+                'The timeout (in seconds) for uploading the app bundle',
+            default: 300,
         },
     },
     handler,

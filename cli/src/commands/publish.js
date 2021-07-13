@@ -175,7 +175,7 @@ const promptForConfig = async params => {
     }
 }
 
-const handler = async ({ cwd = process.cwd(), ...params }) => {
+const handler = async ({ cwd = process.cwd(), timeout, ...params }) => {
     const publishConfig = await promptForConfig(params)
 
     const appBundle = resolveBundle(cwd, publishConfig)
@@ -207,7 +207,7 @@ const handler = async ({ cwd = process.cwd(), ...params }) => {
 
         await client.post(uploadAppUrl, formData, {
             headers: formData.getHeaders(),
-            timeout: 300000, // Ensure we have enough time to upload a large zip file
+            timeout: timeout * 1000, // Ensure we have enough time to upload a large zip file
         })
         reporter.info(
             `Successfully published ${appBundle.name} with version ${appBundle.version}`
@@ -266,6 +266,11 @@ const command = {
                 description:
                     'Only used with --file option. The semantic version of the app uploaded',
                 implies: 'file',
+            },
+            timeout: {
+                description:
+                    'The timeout (in seconds) for uploading the app bundle',
+                default: 300,
             },
         }),
     handler,
