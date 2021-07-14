@@ -22,8 +22,11 @@ module.exports = {
              */
             patternsToOmit: [],
             /**
-             * Additional URLs to add to precache manifest. Requires versioning
-             * See: https://developers.google.com/web/tools/workbox/modules/workbox-precaching#explanation_of_the_precache_list
+             * In addition to the contents of an app's 'build' folder, other
+             * URLs can be precached by adding them to this list which will
+             * add them to the precache manifest at build time. The format of
+             * this list must match the Workbox precache list format:
+             * https://developers.google.com/web/tools/workbox/modules/workbox-precaching#explanation_of_the_precache_list
              */
             additionalManifestEntries: [],
         },
