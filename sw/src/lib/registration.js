@@ -95,7 +95,7 @@ export function register(config) {
 
             if (isLocalhost) {
                 // This is running on localhost. Let's check if a service worker still exists or not.
-                checkValidServiceWorker(swUrl, config)
+                checkValidSW(swUrl, config)
 
                 // Add some additional logging to localhost, pointing developers
                 // to the service worker/PWA documentation.
@@ -120,7 +120,7 @@ function registerValidSW(swUrl /* config */) {
     })
 }
 
-function checkValidServiceWorker(swUrl, config) {
+function checkValidSW(swUrl, config) {
     // Check if the service worker can be found. If it can't reload the page.
     fetch(swUrl, {
         headers: { 'Service-Worker': 'script' },
