@@ -146,6 +146,7 @@ module.exports = (paths, config, publicUrl) => {
     // Write d2 config json
     const appConfig = { ...config }
     delete appConfig['entryPoints']
+    delete appConfig['pwa']
 
     fs.writeJsonSync(paths.shellPublicConfigJson, appConfig, { spaces: 2 })
 }
