@@ -16,10 +16,13 @@ export function startRecording(event) {
 
     const newClientRecordingState = {
         sectionId: event.data.payload?.sectionId,
-        pendingRequests: new Map(),
-        fulfilledRequests: new Map(),
+        pendingRequests: new Set(),
+        // `fulfilledRequests` can later hold useful data for normalization.
+        // Until then, it's just a count
+        fulfilledRequests: 0,
         recordingTimeout: undefined,
-        recordingTimeoutDelay: event.data.payload?.recordingTimeoutDelay || 200,
+        recordingTimeoutDelay:
+            event.data.payload?.recordingTimeoutDelay || 1000,
         confirmationTimeout: undefined,
     }
     self.clientRecordingStates[clientId] = newClientRecordingState
@@ -49,7 +52,7 @@ export function handleRecordedRequest({ request, event }) {
     const recordingState = self.clientRecordingStates[event.clientId]
 
     clearTimeout(recordingState.recordingTimeout)
-    recordingState.pendingRequests.set(request, 'placeholder')
+    recordingState.pendingRequests.add(request)
 
     fetch(request)
         .then(response => {
@@ -68,9 +71,8 @@ function handleRecordedResponse(request, response, clientId) {
     const tempCacheKey = getCacheKey('temp', clientId)
     addToCache(tempCacheKey, request, response)
 
-    // add request to fulfilled. TODO: Handle response for normalized caching
-    // note that request objects can't be stored in IDB (see 'complete recording' function)
-    recordingState.fulfilledRequests.set(request.url, 'placeholder-value')
+    // normalizing data could happen here; until then, increment counter
+    recordingState.fulfilledRequests += 1
 
     // remove request from pending requests
     recordingState.pendingRequests.delete(request)
@@ -193,7 +195,7 @@ export async function completeRecording(clientId) {
         sectionId: recordingState.sectionId, // the key path
         lastUpdated: new Date(),
         // 'requests' can later hold data for normalization
-        requests: recordingState.fulfilledRequests.size,
+        requests: recordingState.fulfilledRequests,
     }).catch(console.error)
 
     // Clean up
