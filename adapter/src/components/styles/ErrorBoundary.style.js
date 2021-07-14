@@ -51,10 +51,7 @@ export default css`
         margin-bottom: 24px;
     }
 
-    .link {
-        font-size: 18px;
-        text-decoration: underline;
-        cursor: pointer;
+    .retry {
         margin-bottom: 24px;
     }
 

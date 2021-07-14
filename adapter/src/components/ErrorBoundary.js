@@ -2,6 +2,7 @@ import i18n from '@dhis2/d2-i18n'
 import cx from 'classnames'
 import PropTypes from 'prop-types'
 import React, { Component } from 'react'
+import buttonStyles from './styles/Button.style'
 import styles from './styles/ErrorBoundary.style'
 
 const translatedErrorHeading = i18n.t(
@@ -46,18 +47,20 @@ export class ErrorBoundary extends Component {
                     })}
                 >
                     <style jsx>{styles}</style>
+                    <style jsx>{buttonStyles}</style>
                     <div className="container">
                         {/* <InfoIcon className="icon" /> */}
                         <div className="message">
                             {i18n.t('Something went wrong')}
                         </div>
-                        <div
-                            className="link"
-                            onClick={() => {
-                                this.props.onRefresh && this.props.onRefresh()
-                            }}
-                        >
-                            {i18n.t('Refresh to try again')}
+                        <div className="retry">
+                            <button
+                                onClick={() => {
+                                    this.props.onRetry && this.props.onRetry()
+                                }}
+                            >
+                                {i18n.t('Try again')}
+                            </button>
                         </div>
                         <div
                             className="drawerToggle"
@@ -103,5 +106,5 @@ export class ErrorBoundary extends Component {
 ErrorBoundary.propTypes = {
     children: PropTypes.node.isRequired,
     fullscreen: PropTypes.bool,
-    onRefresh: PropTypes.func,
+    onRetry: PropTypes.func,
 }

@@ -12,7 +12,7 @@ import { styles } from './styles.js'
 const offlineInterface = new OfflineInterface()
 
 const App = ({ url, apiVersion, appName, pwaEnabled, children }) => (
-    <ErrorBoundary fullscreen onRefresh={checkForSWUpdateAndReload}>
+    <ErrorBoundary fullscreen onRetry={checkForSWUpdateAndReload}>
         <ServerVersionProvider url={url} apiVersion={apiVersion}>
             <OfflineProvider
                 offlineInterface={offlineInterface}
@@ -24,7 +24,7 @@ const App = ({ url, apiVersion, appName, pwaEnabled, children }) => (
                     <AuthBoundary url={url}>
                         <div className="app-shell-app">
                             <ErrorBoundary
-                                onRefresh={() => window.location.reload()}
+                                onRetry={() => window.location.reload()}
                             >
                                 {children}
                             </ErrorBoundary>

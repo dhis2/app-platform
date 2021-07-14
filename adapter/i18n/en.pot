@@ -5,38 +5,38 @@ msgstr ""
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1)\n"
-"POT-Creation-Date: 2020-10-08T15:51:57.880Z\n"
-"PO-Revision-Date: 2020-10-08T15:51:57.880Z\n"
+"POT-Creation-Date: 2021-07-14T21:34:51.462Z\n"
+"PO-Revision-Date: 2021-07-14T21:34:51.462Z\n"
 
 msgid "An error occurred in the DHIS2 application."
-msgstr ""
+msgstr "An error occurred in the DHIS2 application."
 
 msgid "Something went wrong"
-msgstr ""
+msgstr "Something went wrong"
 
-msgid "Refresh to try again"
-msgstr ""
+msgid "Try again"
+msgstr "Try again"
 
 msgid "Hide technical details"
-msgstr ""
+msgstr "Hide technical details"
 
 msgid "Show technical details"
-msgstr ""
+msgstr "Show technical details"
 
 msgid "The following information may be requested by technical support."
-msgstr ""
+msgstr "The following information may be requested by technical support."
 
 msgid "Please sign in"
-msgstr ""
+msgstr "Please sign in"
 
 msgid "Server"
-msgstr ""
+msgstr "Server"
 
 msgid "Username"
-msgstr ""
+msgstr "Username"
 
 msgid "Password"
-msgstr ""
+msgstr "Password"
 
 msgid "Sign in"
-msgstr ""
+msgstr "Sign in"
