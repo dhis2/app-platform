@@ -8,10 +8,12 @@ function getPWAEnvVars(config) {
     if (config.type !== 'app' || !config.pwa.enabled) return null
     return {
         pwa_enabled: JSON.stringify(config.pwa.enabled),
-        omit_external_requests: JSON.stringify(
+        pwa_caching_omit_external_requests: JSON.stringify(
             config.pwa.caching.omitExternalRequests
         ),
-        patterns_to_omit: JSON.stringify(config.pwa.caching.patternsToOmit),
+        pwa_caching_patterns_to_omit: JSON.stringify(
+            config.pwa.caching.patternsToOmit
+        ),
     }
 }
 

@@ -59,10 +59,11 @@ export function setUpServiceWorker() {
     const CACHE_KEEP_LIST = ['other-assets', 'app-shell']
     // Fallback prevents error when switching from pwa enabled to disabled
     const URL_FILTER_PATTERNS = JSON.parse(
-        process.env.REACT_APP_DHIS2_APP_PATTERNS_TO_OMIT || '[]'
+        process.env.REACT_APP_DHIS2_APP_PWA_CACHING_PATTERNS_TO_OMIT || '[]'
     )
     const OMIT_EXTERNAL_REQUESTS =
-        process.env.REACT_APP_DHIS2_APP_OMIT_EXTERNAL_REQUESTS === 'true'
+        process.env.REACT_APP_DHIS2_APP_PWA_CACHING_OMIT_EXTERNAL_REQUESTS ===
+        'true'
     const PRODUCTION_ENV = process.env.NODE_ENV === 'production'
     const fileExtensionRegexp = new RegExp('/[^/?]+\\.[^/]+$')
 
