@@ -38,7 +38,7 @@ const parseDataStoreNamespace = namespace => {
 module.exports = (paths, config, publicUrl) => {
     // PWA manifest
     const manifestJson = {
-        short_name: config.name,
+        short_name: config.title,
         name: config.title,
         description: config.description,
         icons: [
