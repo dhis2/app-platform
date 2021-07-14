@@ -8,33 +8,17 @@ import {
 } from 'workbox-strategies'
 import { swMsgs } from '../lib/constants'
 import {
-    openSectionsDB,
-    deleteSectionsDB,
-    SECTIONS_STORE,
-} from '../lib/sections-db'
-
-/** Called if the `pwaEnabled` env var is not `true` */
-function setUpKillSwitchServiceWorker() {
-    // A simple, no-op service worker that takes immediate control and tears
-    // everything down. Has no fetch handler.
-    self.addEventListener('install', () => {
-        self.skipWaiting()
-    })
-
-    self.addEventListener('activate', async () => {
-        console.log('Removing previous service worker')
-        // Unregister, in case app doesn't
-        self.registration.unregister()
-        // Delete all caches
-        const keys = await self.caches.keys()
-        await Promise.all(keys.map(key => self.caches.delete(key)))
-        // Delete DB
-        await deleteSectionsDB()
-        // Force refresh all windows
-        const clients = await self.clients.matchAll({ type: 'window' })
-        clients.forEach(client => client.navigate(client.url))
-    })
-}
+    startRecording,
+    completeRecording,
+    handleRecordedRequest,
+    isClientRecordingRequests,
+} from './recording-mode'
+import {
+    urlMeetsDefaultCachingCriteria,
+    createDB,
+    removeUnusedCaches,
+    setUpKillSwitchServiceWorker,
+} from './utils'
 
 export function setUpServiceWorker() {
     const pwaEnabled = process.env.REACT_APP_DHIS2_APP_PWA_ENABLED === 'true'
@@ -45,27 +29,7 @@ export function setUpServiceWorker() {
         return
     }
 
-    // 'Globals'
-
-    // Will be populated upon activation with a promise that accesses the
-    // recorded sections IndexedDB using the `idb` library - see `createDB()`
-    let dbPromise
-    // Tracks recording states for multiple clients to handle multiple windows
-    // recording simultaneously
-    const clientRecordingStates = {}
-
-    // Constants
-
-    const CACHE_KEEP_LIST = ['other-assets', 'app-shell']
-    // Fallback prevents error when switching from pwa enabled to disabled
-    const URL_FILTER_PATTERNS = JSON.parse(
-        process.env.REACT_APP_DHIS2_APP_PWA_CACHING_PATTERNS_TO_OMIT || '[]'
-    )
-    const OMIT_EXTERNAL_REQUESTS =
-        process.env.REACT_APP_DHIS2_APP_PWA_CACHING_OMIT_EXTERNAL_REQUESTS ===
-        'true'
-    const PRODUCTION_ENV = process.env.NODE_ENV === 'production'
-    const fileExtensionRegexp = new RegExp('/[^/?]+\\.[^/]+$')
+    // Misc setup
 
     // Makes sure to take control of available clients when the SW is activated
     clientsClaim()
@@ -73,12 +37,21 @@ export function setUpServiceWorker() {
     // TODO: control with env var
     self.__WB_DISABLE_DEV_LOGS = true
 
-    // Table of contents:
-    // 1. Workbox routes
-    // 2. Service Worker event listeners
-    // 3. Helper functions
+    // Globals
 
-    // * 1. Worbox routes
+    // Will be populated upon activation with a promise that accesses the
+    // recorded sections IndexedDB using the `idb` library - see `createDB()`
+    self.dbPromise
+    // Tracks recording states for multiple clients to handle multiple windows
+    // recording simultaneously
+    self.clientRecordingStates = {}
+
+    // Local constants
+
+    const PRODUCTION_ENV = process.env.NODE_ENV === 'production'
+    const fileExtensionRegexp = new RegExp('/[^/?]+\\.[^/]+$')
+
+    // Workbox routes
 
     // Only precache in production mode to enable easier app development.
     // In development, static assets are handled by 'network first' strategy
@@ -170,7 +143,7 @@ export function setUpServiceWorker() {
     // Use fallback strategy as default
     setDefaultHandler(new NetworkAndTryCache())
 
-    // * 2. Service Worker event listeners
+    // Service Worker event handlers
 
     self.addEventListener('message', event => {
         if (!event.data) return
@@ -195,254 +168,4 @@ export function setUpServiceWorker() {
     self.addEventListener('activate', event => {
         event.waitUntil(createDB().then(removeUnusedCaches))
     })
-
-    // * 3. Helper functions:
-
-    function urlMeetsDefaultCachingCriteria(url) {
-        // Don't cache if pwa.caching.omitExternalRequests in d2.config is true
-        if (OMIT_EXTERNAL_REQUESTS && url.origin !== self.location.origin)
-            return false
-
-        // Don't cache if url matches filter in pattern list from d2.config.js
-        const urlMatchesFilter = URL_FILTER_PATTERNS.some(pattern =>
-            new RegExp(pattern).test(url.pathname)
-        )
-        if (urlMatchesFilter) return false
-
-        return true
-    }
-
-    /** Called upon SW activation */
-    function createDB() {
-        dbPromise = openSectionsDB()
-        return dbPromise
-    }
-
-    /** Called upon SW activation */
-    async function removeUnusedCaches() {
-        const cacheKeys = await caches.keys()
-        return Promise.all(
-            cacheKeys.map(async key => {
-                const isWorkboxKey = /workbox/.test(key)
-                const isInKeepList = !!CACHE_KEEP_LIST.find(
-                    keepKey => keepKey === key
-                )
-                const db = await dbPromise
-                const isASavedSection = !!(await db.get(SECTIONS_STORE, key))
-                if (!isWorkboxKey && !isInKeepList && !isASavedSection) {
-                    console.debug(
-                        `[SW] Cache with key ${key} is unused and will be deleted`
-                    )
-                    return caches.delete(key)
-                }
-            })
-        )
-    }
-
-    // Triggered on 'START_RECORDING' message
-    function startRecording(event) {
-        console.debug('[SW] Starting recording')
-        if (!event.data.payload?.sectionId)
-            throw new Error('[SW] No section ID specified to record')
-
-        const clientId = event.source.id // clientId from MessageEvent
-        // Throw error if another recording is in process
-        if (isClientRecording(clientId))
-            throw new Error(
-                "[SW] Can't start a new recording; a recording is already in process"
-            )
-
-        const newClientRecordingState = {
-            sectionId: event.data.payload?.sectionId,
-            pendingRequests: new Map(),
-            fulfilledRequests: new Map(),
-            recordingTimeout: undefined,
-            recordingTimeoutDelay:
-                event.data.payload?.recordingTimeoutDelay || 200,
-            confirmationTimeout: undefined,
-        }
-        clientRecordingStates[clientId] = newClientRecordingState
-
-        // Send confirmation message to client
-        self.clients.get(clientId).then(client => {
-            client.postMessage({ type: swMsgs.recordingStarted })
-        })
-    }
-
-    /** Used to check if a new recording can begin */
-    function isClientRecording(clientId) {
-        return clientId in clientRecordingStates
-    }
-
-    /** Used to check if requests should be handled by recording handler */
-    function isClientRecordingRequests(clientId) {
-        // Don't record requests when waiting for completion confirmation
-        return (
-            isClientRecording(clientId) &&
-            clientRecordingStates[clientId].confirmationTimeout === undefined
-        )
-    }
-
-    /** Request handler during recording mode */
-    function handleRecordedRequest({ request, event }) {
-        const recordingState = clientRecordingStates[event.clientId]
-
-        clearTimeout(recordingState.recordingTimeout)
-        recordingState.pendingRequests.set(request, 'placeholder')
-
-        fetch(request)
-            .then(response => {
-                return handleRecordedResponse(request, response, event.clientId)
-            })
-            .catch(error => {
-                console.error(error)
-                stopRecording(error, event.clientId)
-            })
-    }
-
-    /** Response handler during recording mode */
-    function handleRecordedResponse(request, response, clientId) {
-        const recordingState = clientRecordingStates[clientId]
-        // add response to temp cache - when recording is successful, move to permanent cache
-        const tempCacheKey = getCacheKey('temp', clientId)
-        addToCache(tempCacheKey, request, response)
-
-        // add request to fulfilled. TODO: Handle response for normalized caching
-        // note that request objects can't be stored in IDB (see 'complete recording' function)
-        recordingState.fulfilledRequests.set(request.url, 'placeholder-value')
-
-        // remove request from pending requests
-        recordingState.pendingRequests.delete(request)
-
-        // start timer if pending requests are all complete
-        if (recordingState.pendingRequests.size === 0)
-            startRecordingTimeout(clientId)
-        return response
-    }
-
-    /**
-     * Starts a timer that stops recording when finished. The timer will
-     * be cleared if a new request is handled and start again when there are
-     * no more pending requests.
-     */
-    function startRecordingTimeout(clientId) {
-        const recordingState = clientRecordingStates[clientId]
-        recordingState.recordingTimeout = setTimeout(
-            () => stopRecording(null, clientId),
-            recordingState.recordingTimeoutDelay
-        )
-    }
-
-    /** Called on recording success or failure */
-    function stopRecording(error, clientId) {
-        const recordingState = clientRecordingStates[clientId]
-
-        console.debug('[SW] Stopping recording', { clientId, recordingState })
-        clearTimeout(recordingState?.recordingTimeout)
-
-        // In case of error, notify client and remove recording
-        if (error) {
-            self.clients.get(clientId).then(client => {
-                client.postMessage({
-                    type: swMsgs.recordingError,
-                    payload: {
-                        error,
-                    },
-                })
-            })
-            removeRecording(clientId)
-            return
-        }
-
-        // On success, prompt client to confirm saving recording
-        requestCompletionConfirmation(clientId)
-    }
-
-    function getCacheKey(...args) {
-        return args.join('-')
-    }
-
-    function addToCache(cacheKey, request, response) {
-        if (response.ok) {
-            const responseClone = response.clone()
-            caches
-                .open(cacheKey)
-                .then(cache => cache.put(request, responseClone))
-        }
-    }
-
-    function removeRecording(clientId) {
-        // Remove recording state
-        delete clientRecordingStates[clientId]
-        // Delete temp cache
-        const cacheKey = getCacheKey('temp', clientId)
-        return caches.delete(cacheKey)
-    }
-
-    /**
-     * To validate a completed recording, request an acknowledgement from
-     * the client before finishing and saving the recording. This prevents
-     * saving faulty recordings due to navigation or other problems and
-     * avoids overwriting a good recording
-     */
-    async function requestCompletionConfirmation(clientId) {
-        const client = await self.clients.get(clientId)
-        if (!client) {
-            console.debug('[SW] Client not found for ID', clientId)
-            removeRecording(clientId)
-            return
-        }
-        client.postMessage({ type: swMsgs.confirmRecordingCompletion })
-        startConfirmationTimeout(clientId)
-    }
-
-    /**
-     * Wait 10 seconds for client acknowledgement to save recording. If timer
-     * runs out, the recording is scrapped.
-     */
-    function startConfirmationTimeout(clientId) {
-        const recordingState = clientRecordingStates[clientId]
-        recordingState.confirmationTimeout = setTimeout(() => {
-            console.warn(
-                '[SW] Completion confirmation timed out. Clearing recording for client',
-                clientId
-            )
-            removeRecording(clientId)
-        }, 10000)
-    }
-
-    /** Triggered by 'COMPLETE_RECORDING' message; saves recording */
-    async function completeRecording(clientId) {
-        const recordingState = clientRecordingStates[clientId]
-        console.debug('[SW] Completing recording', { clientId, recordingState })
-        clearTimeout(recordingState.confirmationTimeout)
-
-        // Move requests from temp cache to section-<ID> cache
-        const sectionCache = await caches.open(recordingState.sectionId)
-        const tempCache = await caches.open(getCacheKey('temp', clientId))
-        const tempCacheItemKeys = await tempCache.keys()
-        tempCacheItemKeys.forEach(async request => {
-            const response = await tempCache.match(request)
-            sectionCache.put(request, response)
-        })
-
-        // Add content to DB
-        const db = await dbPromise
-        db.put(SECTIONS_STORE, {
-            // Note that request objects can't be stored in the IDB
-            // https://stackoverflow.com/questions/32880073/whats-the-best-option-for-structured-cloning-of-a-fetch-api-request-object
-            sectionId: recordingState.sectionId, // the key path
-            lastUpdated: new Date(),
-            // 'requests' can later hold data for normalization
-            requests: recordingState.fulfilledRequests.size,
-        }).catch(console.error)
-
-        // Clean up
-        removeRecording(clientId)
-
-        // Send confirmation message to client
-        self.clients.get(clientId).then(client => {
-            client.postMessage({ type: swMsgs.recordingCompleted })
-        })
-    }
 }
