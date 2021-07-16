@@ -11,13 +11,10 @@ import { styles } from './styles.js'
 
 const offlineInterface = new OfflineInterface()
 
-const App = ({ url, apiVersion, appName, pwaEnabled, children }) => (
+const App = ({ url, apiVersion, appName, children }) => (
     <ErrorBoundary fullscreen onRetry={checkForSWUpdateAndReload}>
         <ServerVersionProvider url={url} apiVersion={apiVersion}>
-            <OfflineProvider
-                offlineInterface={offlineInterface}
-                pwaEnabled={pwaEnabled}
-            >
+            <OfflineProvider offlineInterface={offlineInterface}>
                 <div className="app-shell-adapter">
                     <style jsx>{styles}</style>
                     <HeaderBar appName={appName} />
@@ -42,7 +39,6 @@ App.propTypes = {
     url: PropTypes.string.isRequired,
     apiVersion: PropTypes.number,
     children: PropTypes.element,
-    pwaEnabled: PropTypes.bool,
 }
 
 export default App
