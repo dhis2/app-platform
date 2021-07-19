@@ -1,6 +1,6 @@
 {
     "name": "@dhis2/app-shell",
-    "version": "7.0.1",
+    "version": "7.1.0",
     "repository": {
         "type": "git",
         "url": "https://github.com/amcgee/dhis2-app-platform",
@@ -12,7 +12,8 @@
         "access": "public"
     },
     "dependencies": {
-        "@dhis2/app-adapter": "7.0.1",
+        "@dhis2/app-adapter": "7.1.0",
+        "@dhis2/sw": "file:../sw",
         "@dhis2/app-runtime": "^2.8.0",
         "@dhis2/d2-i18n": "^1.1.0",
         "@dhis2/ui": "^6.5.3",
@@ -21,11 +22,14 @@
         "prop-types": "^15.7.2",
         "react": "^16.8.6",
         "react-dom": "^16.8.6",
-        "react-scripts": "^4.0.0",
+        "react-scripts": "^4.0.3",
         "source-map-explorer": "^2.1.0",
         "styled-jsx": "^3.2.2",
         "typeface-roboto": "^0.0.75",
         "typescript": "^3.6.3"
+    },
+    "resolutions": {
+        "@dhis2/sw": "file:../sw"
     },
     "scripts": {
         "start": "react-scripts start",

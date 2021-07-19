@@ -2,10 +2,12 @@ const { reporter, chalk } = require('@dhis2/cli-helpers-engine')
 const detectPort = require('detect-port')
 const { compile } = require('../lib/compiler')
 const exitOnCatch = require('../lib/exitOnCatch')
+const generateManifests = require('../lib/generateManifests')
 const i18n = require('../lib/i18n')
 const loadEnvFiles = require('../lib/loadEnvFiles')
 const parseConfig = require('../lib/parseConfig')
 const makePaths = require('../lib/paths')
+const { compileServiceWorker } = require('../lib/pwa')
 const makeShell = require('../lib/shell')
 const { validatePackage } = require('../lib/validatePackage')
 
@@ -71,12 +73,25 @@ const handler = async ({
                 watch: true,
             })
 
+            // Manifests added here so app has access to manifest.json for pwa
+            reporter.info('Generating manifests...')
+            await generateManifests(paths, config, process.env.PUBLIC_URL)
+
             const newPort = await detectPort(port)
             if (String(newPort) !== String(port)) {
                 reporter.print('')
                 reporter.warn(
                     `Something is already running on port ${port}, using ${newPort} instead.`
                 )
+            }
+
+            if (config.pwa.enabled) {
+                reporter.info('Compiling service worker...')
+                await compileServiceWorker({
+                    config,
+                    paths,
+                    mode: 'development',
+                })
             }
 
             reporter.print('')
