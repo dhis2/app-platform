@@ -5,7 +5,9 @@
  * @param {Object} config
  */
 function getPWAEnvVars(config) {
-    if (config.type !== 'app' || !config.pwa.enabled) return null
+    if (config.type !== 'app' || !config.pwa.enabled) {
+        return null
+    }
     return {
         pwa_enabled: JSON.stringify(config.pwa.enabled),
         pwa_caching_omit_external_requests: JSON.stringify(

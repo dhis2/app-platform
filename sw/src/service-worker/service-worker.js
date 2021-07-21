@@ -134,7 +134,9 @@ export function setUpServiceWorker() {
                 return caches.match(request).then(res => {
                     // If not found in cache, throw original fetchErr
                     // (if there's a cache err, that will be returned)
-                    if (!res) throw fetchErr
+                    if (!res) {
+                        throw fetchErr
+                    }
                     return res
                 })
             })
@@ -146,7 +148,9 @@ export function setUpServiceWorker() {
     // Service Worker event handlers
 
     self.addEventListener('message', event => {
-        if (!event.data) return
+        if (!event.data) {
+            return
+        }
 
         // This allows the web app to trigger skipWaiting via
         // registration.waiting.postMessage({type: 'SKIP_WAITING'})

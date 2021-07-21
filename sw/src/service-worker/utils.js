@@ -38,14 +38,17 @@ export function setUpKillSwitchServiceWorker() {
 
 export function urlMeetsDefaultCachingCriteria(url) {
     // Don't cache if pwa.caching.omitExternalRequests in d2.config is true
-    if (OMIT_EXTERNAL_REQUESTS && url.origin !== self.location.origin)
+    if (OMIT_EXTERNAL_REQUESTS && url.origin !== self.location.origin) {
         return false
+    }
 
     // Don't cache if url matches filter in pattern list from d2.config.js
     const urlMatchesFilter = URL_FILTER_PATTERNS.some(pattern =>
         new RegExp(pattern).test(url.pathname)
     )
-    if (urlMatchesFilter) return false
+    if (urlMatchesFilter) {
+        return false
+    }
 
     return true
 }

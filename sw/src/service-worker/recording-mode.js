@@ -4,15 +4,17 @@ import { SECTIONS_STORE } from '../lib/sections-db'
 // Triggered on 'START_RECORDING' message
 export function startRecording(event) {
     console.debug('[SW] Starting recording')
-    if (!event.data.payload?.sectionId)
+    if (!event.data.payload?.sectionId) {
         throw new Error('[SW] No section ID specified to record')
+     }
 
     const clientId = event.source.id // clientId from MessageEvent
     // Throw error if another recording is in process
-    if (isClientRecording(clientId))
+    if (isClientRecording(clientId)) {
         throw new Error(
             "[SW] Can't start a new recording; a recording is already in process"
         )
+    }
 
     const newClientRecordingState = {
         sectionId: event.data.payload?.sectionId,
@@ -78,8 +80,9 @@ function handleRecordedResponse(request, response, clientId) {
     recordingState.pendingRequests.delete(request)
 
     // start timer if pending requests are all complete
-    if (recordingState.pendingRequests.size === 0)
+    if (recordingState.pendingRequests.size === 0) {
         startRecordingTimeout(clientId)
+    }
     return response
 }
 
