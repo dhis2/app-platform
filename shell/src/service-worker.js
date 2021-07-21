@@ -1,3 +1,3 @@
-import { setUpServiceWorker } from '@dhis2/sw'
+import { setUpServiceWorker } from '@dhis2/pwa'
 
 setUpServiceWorker()

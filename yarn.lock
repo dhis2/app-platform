@@ -2462,9 +2462,6 @@
   resolved "https://registry.yarnpkg.com/@dhis2/app-service-offline/-/app-service-offline-2.10.0-pwa.1.tgz#195a2c577e62c056629c345d17aef41b02c196d7"
   integrity sha512-hHXMNylsrNqxS9Qe9kA3U74O3zB+Js1loDAm7xxZHn/HV70/yaJtjRI/UYZ65/8SxmT4LyzVJg06jjRYfIy6DA==
 
-"@dhis2/app-service-offline@file:../app-runtime/services/offline":
-  version "2.10.0-pwa.0"
-
 "@dhis2/cli-helpers-engine@^1.5.0":
   version "1.5.0"
   resolved "https://registry.yarnpkg.com/@dhis2/cli-helpers-engine/-/cli-helpers-engine-1.5.0.tgz#5bce097bcb226842d67cffae716b44f9b037390e"
@@ -2555,8 +2552,8 @@
   dependencies:
     prop-types "^15"
 
-"@dhis2/sw@file:sw":
-  version "1.0.0"
+"@dhis2/pwa@file:pwa":
+  version "7.1.0"
   dependencies:
     idb "^6.0.0"
     workbox-core "^6.1.5"

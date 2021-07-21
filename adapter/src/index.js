@@ -1,4 +1,4 @@
-import { checkForSWUpdateAndReload, OfflineInterface } from '@dhis2/sw'
+import { checkForSWUpdateAndReload, OfflineInterface } from '@dhis2/pwa'
 import { HeaderBar } from '@dhis2/ui'
 import PropTypes from 'prop-types'
 import React from 'react'

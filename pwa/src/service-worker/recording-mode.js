@@ -6,7 +6,7 @@ export function startRecording(event) {
     console.debug('[SW] Starting recording')
     if (!event.data.payload?.sectionId) {
         throw new Error('[SW] No section ID specified to record')
-     }
+    }
 
     const clientId = event.source.id // clientId from MessageEvent
     // Throw error if another recording is in process
