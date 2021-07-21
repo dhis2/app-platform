@@ -1,9 +1,9 @@
-import { useAlert } from '@dhis2/app-runtime'
 import {
+    useAlert,
     CacheableSection,
     useCacheableSection,
     useOnlineStatus,
-} from '@dhis2/app-service-offline'
+} from '@dhis2/app-runtime'
 import { Button, ButtonStrip } from '@dhis2/ui'
 import PropTypes from 'prop-types'
 import React from 'react'

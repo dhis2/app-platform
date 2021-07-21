@@ -14,7 +14,7 @@
     "dependencies": {
         "@dhis2/app-adapter": "7.1.0",
         "@dhis2/sw": "file:../sw",
-        "@dhis2/app-runtime": "^2.8.0",
+        "@dhis2/app-runtime": "^2.10.0-pwa.1",
         "@dhis2/d2-i18n": "^1.1.0",
         "@dhis2/ui": "^6.5.3",
         "classnames": "^2.2.6",

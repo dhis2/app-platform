@@ -5,7 +5,12 @@ import { get } from '../utils/api'
 import { parseServerVersion } from '../utils/parseServerVersion'
 import { LoadingMask } from './LoadingMask'
 
-export const ServerVersionProvider = ({ url, apiVersion, children }) => {
+export const ServerVersionProvider = ({
+    url,
+    apiVersion,
+    offlineInterface,
+    children,
+}) => {
     const [{ loading, error, systemInfo }, setState] = useState({
         loading: true,
     })
@@ -45,6 +50,7 @@ export const ServerVersionProvider = ({ url, apiVersion, children }) => {
                 serverVersion,
                 systemInfo,
             }}
+            offlineInterface={offlineInterface}
         >
             {children}
         </Provider>
@@ -55,4 +61,5 @@ ServerVersionProvider.propTypes = {
     url: PropTypes.string.isRequired,
     apiVersion: PropTypes.number,
     children: PropTypes.element,
+    offlineInterface: PropTypes.shape({}),
 }

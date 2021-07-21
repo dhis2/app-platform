@@ -1,4 +1,3 @@
-import { OfflineProvider } from '@dhis2/app-service-offline'
 import { checkForSWUpdateAndReload, OfflineInterface } from '@dhis2/sw'
 import { HeaderBar } from '@dhis2/ui'
 import PropTypes from 'prop-types'
@@ -13,23 +12,23 @@ const offlineInterface = new OfflineInterface()
 
 const App = ({ url, apiVersion, appName, children }) => (
     <ErrorBoundary fullscreen onRetry={checkForSWUpdateAndReload}>
-        <ServerVersionProvider url={url} apiVersion={apiVersion}>
-            <OfflineProvider offlineInterface={offlineInterface}>
-                <div className="app-shell-adapter">
-                    <style jsx>{styles}</style>
-                    <HeaderBar appName={appName} />
-                    <AuthBoundary url={url}>
-                        <div className="app-shell-app">
-                            <ErrorBoundary
-                                onRetry={() => window.location.reload()}
-                            >
-                                {children}
-                            </ErrorBoundary>
-                        </div>
-                    </AuthBoundary>
-                    <Alerts />
-                </div>
-            </OfflineProvider>
+        <ServerVersionProvider
+            url={url}
+            apiVersion={apiVersion}
+            offlineInterface={offlineInterface}
+        >
+            <div className="app-shell-adapter">
+                <style jsx>{styles}</style>
+                <HeaderBar appName={appName} />
+                <AuthBoundary url={url}>
+                    <div className="app-shell-app">
+                        <ErrorBoundary onRetry={() => window.location.reload()}>
+                            {children}
+                        </ErrorBoundary>
+                    </div>
+                </AuthBoundary>
+                <Alerts />
+            </div>
         </ServerVersionProvider>
     </ErrorBoundary>
 )
