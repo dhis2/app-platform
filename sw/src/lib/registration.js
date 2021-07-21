@@ -1,8 +1,12 @@
 export async function checkForUpdates({ onUpdate }) {
-    if (!('serviceWorker' in navigator)) return
+    if (!('serviceWorker' in navigator)) {
+        return
+    }
 
     const registration = await navigator.serviceWorker.getRegistration()
-    if (registration === undefined) return
+    if (registration === undefined) {
+        return
+    }
 
     function handleWaitingSW() {
         console.log(
@@ -11,14 +15,18 @@ export async function checkForUpdates({ onUpdate }) {
         )
 
         // Execute callback
-        if (onUpdate) onUpdate(registration)
+        if (onUpdate) {
+            onUpdate(registration)
+        }
     }
 
     // Sometimes a service worker update is triggered by a navigation
     // event in scope, but the registration logic doesn't run on that
     // page, for example if a user hits the login modal. The 'onUpdate'
     // callback doesn't get called in that case. Handle that here:
-    if (registration.waiting) handleWaitingSW()
+    if (registration.waiting) {
+        handleWaitingSW()
+    }
 
     function handleInstallingWorker() {
         const installingWorker = registration.installing
@@ -32,7 +40,9 @@ export async function checkForUpdates({ onUpdate }) {
     }
 
     // If a service worker is installing:
-    if (registration.installing) handleInstallingWorker()
+    if (registration.installing) {
+        handleInstallingWorker()
+    }
 
     // If a new service worker will be installed:
     registration.onupdatefound = handleInstallingWorker
@@ -49,14 +59,20 @@ export async function checkForUpdates({ onUpdate }) {
 export async function checkForSWUpdateAndReload() {
     const reload = () => window.location.reload()
 
-    if (!('serviceWorker' in navigator)) return reload()
+    if (!('serviceWorker' in navigator)) {
+        return reload()
+    }
 
     // 1. Check if there's a SW (if no, reload)
     const registration = await navigator.serviceWorker.getRegistration()
-    if (registration === undefined) return reload()
+    if (registration === undefined) {
+        return reload()
+    }
 
     // 2. Check if updates are ready (if no, reload)
-    if (!registration.waiting && !registration.installing) return reload()
+    if (!registration.waiting && !registration.installing) {
+        return reload()
+    }
 
     // 3. If updates are ready, wait for them, _then_ reload
     checkForUpdates({

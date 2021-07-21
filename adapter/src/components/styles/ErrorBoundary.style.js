@@ -4,10 +4,12 @@ const bgColor = '#F4F6F8',
     iconColor = '#B0BEC5',
     primaryTextColor = '#000000',
     secondaryTextColor = '#494949',
-    errorColor = 'red'
+    errorColor = '#D32F2F',
+    grey050 = '#FBFCFD'
 
 export default css`
     .mask {
+        min-height: 480px;
         height: 100%;
         width: 100%;
 
@@ -18,10 +20,6 @@ export default css`
         background-color: ${bgColor};
 
         display: flex;
-
-        min-width: 640px;
-        min-height: 480px;
-
         align-items: center;
         justify-content: center;
     }
@@ -48,6 +46,8 @@ export default css`
 
     .message {
         font-size: 24px;
+        font-weight: normal;
+        margin-top: 0;
         margin-bottom: 24px;
     }
 
@@ -61,32 +61,40 @@ export default css`
         text-decoration: underline;
         cursor: pointer;
         margin-bottom: 12px;
+        background: none;
+        border: none;
     }
 
-    .drawerVisible {
+    .drawer {
+        margin: auto;
         padding: 8px;
         display: block;
-        height: 150px;
-        width: 500px;
+        height: 250px;
+        width: min(500px, 100%);
         overflow: auto;
         overflow-y: auto;
+        background: ${grey050};
         border: 1px solid ${secondaryTextColor};
         text-align: left;
     }
 
-    .drawerHidden {
+    .hidden {
         display: none;
     }
 
     .errorIntro {
-        font-size: 12px;
-        line-height: 1.2;
+        margin-bottom: 16px;
+    }
+
+    .errorIntro p {
+        margin-top: 0;
+        margin-bottom: 4px;
+        font-size: 14px;
         color: ${secondaryTextColor};
-        margin-bottom: 8px;
-        font-family: Menlo, Courier, monospace !important;
     }
 
     .errorDetails {
+        white-space: pre-wrap;
         font-size: 12px;
         line-height: 1.2;
         color: ${errorColor};
