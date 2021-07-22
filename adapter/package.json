@@ -21,11 +21,8 @@
         "build"
     ],
     "dependencies": {
-        "@dhis2/pwa": "file:../pwa",
+        "@dhis2/pwa": "7.1.0",
         "moment": "^2.24.0"
-    },
-    "resolutions": {
-        "@dhis2/pwa": "file:../pwa"
     },
     "devDependencies": {
         "@dhis2/cli-app-scripts": "7.1.0",

@@ -2552,15 +2552,6 @@
   dependencies:
     prop-types "^15"
 
-"@dhis2/pwa@file:pwa":
-  version "7.1.0"
-  dependencies:
-    idb "^6.0.0"
-    workbox-core "^6.1.5"
-    workbox-precaching "^6.1.5"
-    workbox-routing "^6.1.5"
-    workbox-strategies "^6.1.5"
-
 "@dhis2/ui-constants@6.5.3":
   version "6.5.3"
   resolved "https://registry.yarnpkg.com/@dhis2/ui-constants/-/ui-constants-6.5.3.tgz#9c500b71b20beae1085d187b7c3c5191b28bc473"

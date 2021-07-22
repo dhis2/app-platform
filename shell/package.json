@@ -13,7 +13,7 @@
     },
     "dependencies": {
         "@dhis2/app-adapter": "7.1.0",
-        "@dhis2/pwa": "file:../pwa",
+        "@dhis2/pwa": "7.1.0",
         "@dhis2/app-runtime": "^2.10.0-pwa.1",
         "@dhis2/d2-i18n": "^1.1.0",
         "@dhis2/ui": "^6.5.3",
@@ -27,9 +27,6 @@
         "styled-jsx": "^3.2.2",
         "typeface-roboto": "^0.0.75",
         "typescript": "^3.6.3"
-    },
-    "resolutions": {
-        "@dhis2/pwa": "file:../pwa"
     },
     "scripts": {
         "start": "react-scripts start",
