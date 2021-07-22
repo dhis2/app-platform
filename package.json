@@ -30,7 +30,8 @@
         "docs:serve": "d2-utils-docsite serve ./docs -o ./dist",
         "docs:build": "d2-utils-docsite build ./docs -o ./dist",
         "test:adapter": "yarn workspace @dhis2/app-adapter test",
-        "test": "yarn test:adapter"
+        "test:cli": "yarn workspace @dhis2/cli-app-scripts test",
+        "test": "yarn test:adapter && yarn test:cli"
     },
     "d2": {
         "docsite": {
