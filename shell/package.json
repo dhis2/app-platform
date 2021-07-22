@@ -1,6 +1,6 @@
 {
     "name": "@dhis2/app-shell",
-    "version": "7.1.0",
+    "version": "7.1.2",
     "repository": {
         "type": "git",
         "url": "https://github.com/amcgee/dhis2-app-platform",
@@ -12,11 +12,11 @@
         "access": "public"
     },
     "dependencies": {
-        "@dhis2/app-adapter": "7.1.0",
-        "@dhis2/pwa": "7.1.0",
+        "@dhis2/app-adapter": "7.1.2",
         "@dhis2/app-runtime": "^2.10.0-pwa.1",
+        "@dhis2/pwa": "7.1.2",
         "@dhis2/d2-i18n": "^1.1.0",
-        "@dhis2/ui": "^6.5.3",
+        "@dhis2/ui": "^6.10.5",
         "classnames": "^2.2.6",
         "moment": "^2.29.1",
         "prop-types": "^15.7.2",
