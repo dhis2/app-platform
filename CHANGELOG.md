@@ -1,23 +1,30 @@
-# [7.1.0-beta.4](https://github.com/dhis2/app-platform/compare/v7.1.0-beta.3...v7.1.0-beta.4) (2021-07-01)
+## [7.1.2](https://github.com/dhis2/app-platform/compare/v7.1.1...v7.1.2) (2021-07-13)
 
 
 ### Bug Fixes
 
-* **publish:** pack when file param is unused ([cc4c802](https://github.com/dhis2/app-platform/commit/cc4c8027db7d14473f1961fb0967dc8ea79eb5a1))
+* allow command-line configuration of deploy and publish upload timeouts ([#588](https://github.com/dhis2/app-platform/issues/588)) ([e60da18](https://github.com/dhis2/app-platform/commit/e60da180402d346d9ce8e7606059723ab8b41f40))
 
-# [7.1.0-beta.3](https://github.com/dhis2/app-platform/compare/v7.1.0-beta.2...v7.1.0-beta.3) (2021-06-30)
-
-
-### Bug Fixes
-
-* **fs:** re-read package.json from disk to make sure it is not stale ([918d113](https://github.com/dhis2/app-platform/commit/918d1137297455cbf4506f9a65bc7fda7d659bad))
-
-# [7.1.0-beta.2](https://github.com/dhis2/app-platform/compare/v7.1.0-beta.1...v7.1.0-beta.2) (2021-06-30)
+## [7.1.1](https://github.com/dhis2/app-platform/compare/v7.1.0...v7.1.1) (2021-07-08)
 
 
 ### Bug Fixes
 
-* rename 'update' test command handler parameter to 'updateSnapshot' ([#577](https://github.com/dhis2/app-platform/issues/577)) ([34787ad](https://github.com/dhis2/app-platform/commit/34787ad5448454bbfac6672b2b67516d131d753c))
+* never render HeaderBar without runtime provider ([#587](https://github.com/dhis2/app-platform/issues/587)) ([65c7766](https://github.com/dhis2/app-platform/commit/65c776642353a5c9396a71a1b8b1e3422d16d7d9))
+
+# [7.1.0](https://github.com/dhis2/app-platform/compare/v7.0.2...v7.1.0) (2021-07-02)
+
+
+### Features
+
+* **shell:** add killswitch service worker ([#583](https://github.com/dhis2/app-platform/issues/583)) ([1ba1c1e](https://github.com/dhis2/app-platform/commit/1ba1c1e1d320d2d5d3a5edb16cd08ad0a70d8b60))
+
+## [7.0.2](https://github.com/dhis2/app-platform/compare/v7.0.1...v7.0.2) (2021-07-02)
+
+
+### Bug Fixes
+
+* **cli:** bump @babel/preset-env ([8ebb78d](https://github.com/dhis2/app-platform/commit/8ebb78d8842aab40b9fbfe01105398ce0dce4ded))
 
 ## [7.0.1](https://github.com/dhis2/app-platform/compare/v7.0.0...v7.0.1) (2021-06-30)
 

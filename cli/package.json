@@ -1,6 +1,6 @@
 {
     "name": "@dhis2/cli-app-scripts",
-    "version": "7.1.0-beta.4",
+    "version": "7.1.2",
     "engines": {
         "node": ">=12"
     },
@@ -25,10 +25,10 @@
         "@babel/plugin-proposal-class-properties": "^7.8.3",
         "@babel/plugin-proposal-nullish-coalescing-operator": "^7.8.3",
         "@babel/plugin-proposal-optional-chaining": "^7.8.3",
-        "@babel/preset-env": "^7.9.0",
+        "@babel/preset-env": "^7.14.7",
         "@babel/preset-react": "^7.0.0",
         "@babel/preset-typescript": "^7.6.0",
-        "@dhis2/app-shell": "7.1.0-beta.4",
+        "@dhis2/app-shell": "7.1.2",
         "@dhis2/cli-helpers-engine": "^3.0.0",
         "archiver": "^3.1.1",
         "axios": "^0.20.0",

@@ -31,6 +31,7 @@ module.exports = async ({
     maxDhisVersion = '',
     channel,
     filepath,
+    timeout = 300
 }) => {
     const client = createClient({
         baseUrl,
@@ -58,7 +59,7 @@ module.exports = async ({
 
         await client.post(uploadAppUrl, formData, {
             headers: formData.getHeaders(),
-            timeout: 300000, // Ensure we have enough time to upload a large zip file
+            timeout: timeout * 1000,
         })
 
         reporter.info(`Successfully published ${name} with version ${version}`)
