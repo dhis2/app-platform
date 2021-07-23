@@ -31,7 +31,7 @@ module.exports = async ({
     maxDhisVersion = '',
     channel,
     filepath,
-    timeout = 300
+    timeout = 300,
 }) => {
     const client = createClient({
         baseUrl,

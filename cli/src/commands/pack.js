@@ -14,13 +14,13 @@ exports.builder = yargs =>
         .positional('source', {
             describe: 'The source directory to pack relative to cwd.',
             type: 'string',
-            defaultDescription: './build/app'
+            defaultDescription: './build/app',
         })
         .option('destination', {
             alias: ['dest', 'd'],
             type: 'string',
             describe: 'Directory to save the packed archive to.',
-            defaultDescription: './build/bundle'
+            defaultDescription: './build/bundle',
         })
         .option('filename', {
             type: 'string',
@@ -30,19 +30,28 @@ exports.builder = yargs =>
         .option('app-name', {
             type: 'string',
             describe: 'The name of the application to replace in filename',
-            defaultDescription: 'config.name'
+            defaultDescription: 'config.name',
         })
         .option('version', {
             type: 'string',
             describe: 'The version of the application to replace in filename',
-            defaultDescription: 'config.version'
+            defaultDescription: 'config.version',
         })
 
 exports.handler = async argv => {
-    const { cwd = process.cwd(), source, destination, filename, appName, version } = argv
+    const {
+        cwd = process.cwd(),
+        source,
+        destination,
+        filename,
+        appName,
+        version,
+    } = argv
 
     const paths = makePaths(cwd)
-    const config = fs.readJsonSync(path.join(source, 'd2.config.json'), { throws: false })
+    const config = fs.readJsonSync(path.join(source, 'd2.config.json'), {
+        throws: false,
+    })
     const isPlatformApp = fs.existsSync(paths.config)
 
     if (!config) {
@@ -64,7 +73,11 @@ exports.handler = async argv => {
 
     const outputPath = path.resolve(
         cwd,
-        destination ? destination : isPlatformApp ? paths.buildAppBundleOutput : cwd,
+        destination
+            ? destination
+            : isPlatformApp
+            ? paths.buildAppBundleOutput
+            : cwd,
         filename ? filename : paths.buildAppBundleFile
     )
 

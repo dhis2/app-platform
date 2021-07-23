@@ -54,7 +54,7 @@ const handler = async ({
     shell: shellSource,
     verify,
     force,
-    pack: packAppOutput
+    pack: packAppOutput,
 }) => {
     const paths = makePaths(cwd)
 
@@ -163,7 +163,7 @@ const handler = async ({
             await pack({
                 destination: path.resolve(cwd, bundle.dir),
                 filename: bundle.base,
-            })   
+            })
         }
 
         reporter.print(chalk.green('\n**** DONE! ****'))

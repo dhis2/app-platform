@@ -201,7 +201,7 @@ const handler = async ({ cwd = process.cwd(), ...params }) => {
         filepath: appBundle.path,
         name: appBundle.name,
         version: appBundle.version,
-        timeout: params.timeout * 1000
+        timeout: params.timeout * 1000,
     })
 }
 
