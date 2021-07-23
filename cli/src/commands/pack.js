@@ -27,17 +27,28 @@ exports.builder = yargs =>
             describe: 'Override the filename of the archive.',
             defaultDescription: '{app-name}-{version}.zip',
         })
+        .option('app-name', {
+            type: 'string',
+            describe: 'The name of the application to replace in filename',
+            defaultDescription: 'config.name'
+        })
+        .option('version', {
+            type: 'string',
+            describe: 'The version of the application to replace in filename',
+            defaultDescription: 'config.version'
+        })
 
 exports.handler = async argv => {
-    const { cwd = process.cwd(), source, destination, filename } = argv
+    const { cwd = process.cwd(), source, destination, filename, appName, version } = argv
 
     const paths = makePaths(cwd)
-    const config = fs.readJsonSync(paths.buildAppConfigJson, { throws: false })
+    const config = fs.readJsonSync(path.join(source, 'd2.config.json'), { throws: false })
+    const isPlatformApp = fs.existsSync(paths.config)
 
     if (!config) {
         // we may be dealing with a library or a unbuilt app
         // load the d2.config.js file from the project and check
-        if (fs.existsSync(paths.config)) {
+        if (isPlatformApp) {
             const baseConfig = require(paths.config)
 
             if (baseConfig.type !== 'app') {
@@ -53,7 +64,7 @@ exports.handler = async argv => {
 
     const outputPath = path.resolve(
         cwd,
-        destination ? destination : paths.buildAppBundleOutput,
+        destination ? destination : isPlatformApp ? paths.buildAppBundleOutput : cwd,
         filename ? filename : paths.buildAppBundleFile
     )
 
@@ -69,8 +80,8 @@ exports.handler = async argv => {
 
     const archivePath = finalArchivePath({
         filepath: outputPath,
-        name: config.name,
-        version: config.version,
+        name: appName || config ? config.name : 'app',
+        version: version || config ? config.version : 'latest',
     })
 
     const logPath = path.relative(process.cwd(), inputPath)
