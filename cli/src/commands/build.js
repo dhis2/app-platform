@@ -159,6 +159,7 @@ const handler = async ({
         if (packAppOutput) {
             const bundle = path.parse(paths.buildAppBundle)
 
+            await fs.remove(paths.buildAppBundleOutput)
             // update bundle archive
             await pack({
                 destination: path.resolve(cwd, bundle.dir),

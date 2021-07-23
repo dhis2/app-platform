@@ -3,11 +3,12 @@ const { reporter, chalk, exit } = require('@dhis2/cli-helpers-engine')
 const fs = require('fs-extra')
 const finalArchivePath = require('../lib/finalArchivePath.js')
 const makeBundle = require('../lib/makeBundle.js')
+const parseConfig = require('../lib/parseConfig.js')
 const makePaths = require('../lib/paths.js')
 
 exports.command = 'pack [source]'
 
-exports.describe = 'Create archive from the build.'
+exports.describe = 'Create a .zip archive of a built application'
 
 exports.builder = yargs =>
     yargs
@@ -29,13 +30,13 @@ exports.builder = yargs =>
         })
         .option('app-name', {
             type: 'string',
-            describe: 'The name of the application to replace in filename',
-            defaultDescription: 'config.name',
+            describe: 'The name of the app to replace in filename',
+            defaultDescription: '${config.name}',
         })
-        .option('version', {
+        .option('app-version', {
             type: 'string',
-            describe: 'The version of the application to replace in filename',
-            defaultDescription: 'config.version',
+            describe: 'The version of the app to replace in filename',
+            defaultDescription: '${config.version}',
         })
 
 exports.handler = async argv => {
@@ -45,42 +46,16 @@ exports.handler = async argv => {
         destination,
         filename,
         appName,
-        version,
+        appVersion,
     } = argv
 
-    const paths = makePaths(cwd)
-    const config = fs.readJsonSync(path.join(source, 'd2.config.json'), {
-        throws: false,
-    })
-    const isPlatformApp = fs.existsSync(paths.config)
-
-    if (!config) {
-        // we may be dealing with a library or a unbuilt app
-        // load the d2.config.js file from the project and check
-        if (isPlatformApp) {
-            const baseConfig = require(paths.config)
-
-            if (baseConfig.type !== 'app') {
-                exit(
-                    1,
-                    `Unsupported type '${baseConfig.type}', only 'app' is currently supported.`
-                )
-            }
-        }
+    if (filename && !filename.endsWith('.zip')) {
+        exit(1, `Output filename must have the extension .zip`)
     }
 
-    const inputPath = path.resolve(cwd, source ? source : paths.buildAppOutput)
+    const paths = makePaths(cwd)
 
-    const outputPath = path.resolve(
-        cwd,
-        destination
-            ? destination
-            : isPlatformApp
-            ? paths.buildAppBundleOutput
-            : cwd,
-        filename ? filename : paths.buildAppBundleFile
-    )
-
+    const inputPath = path.resolve(cwd, source || paths.buildAppOutput)
     if (!fs.existsSync(inputPath)) {
         exit(
             1,
@@ -91,10 +66,48 @@ exports.handler = async argv => {
         )
     }
 
+    const builtConfig = fs.readJsonSync(
+        path.join(inputPath, 'd2.config.json'),
+        {
+            throws: false,
+        }
+    )
+    const baseConfig = fs.existsSync(paths.config) ? parseConfig(paths) : null
+
+    const resolved = {
+        destination,
+        appName,
+        appVersion,
+    }
+    if (builtConfig) {
+        resolved.appName = resolved.appName || builtConfig.name
+        resolved.appVersion = resolved.appVersion || builtConfig.version
+    } else if (baseConfig) {
+        // we may be dealing with a library or a unbuilt app
+        // load the d2.config.js file from the project and check
+        if (baseConfig.type !== 'app') {
+            exit(
+                1,
+                `Unsupported type '${baseConfig.type}', only 'app' is currently supported.`
+            )
+        }
+
+        resolved.destination =
+            resolved.destination || paths.buildAppBundleOutput
+        resolved.appName = resolved.appName || baseConfig.name
+        resolved.appVersion = resolved.appVersion || baseConfig.version
+    }
+
+    const outputPath = path.resolve(
+        cwd,
+        resolved.destination || '.',
+        filename || paths.buildAppBundleFile
+    )
+
     const archivePath = finalArchivePath({
         filepath: outputPath,
-        name: appName || config ? config.name : 'app',
-        version: version || config ? config.version : 'latest',
+        name: resolved.appName || 'app',
+        version: resolved.appVersion || 'latest',
     })
 
     const logPath = path.relative(process.cwd(), inputPath)
@@ -104,6 +117,5 @@ exports.handler = async argv => {
         )} at ${chalk.bold(path.relative(process.cwd(), archivePath))}...`
     )
 
-    await fs.remove(paths.buildAppBundleOutput)
     await makeBundle(inputPath, archivePath)
 }

@@ -1,6 +1,6 @@
 # d2 app scripts pack
 
-Create a .zip archive of a built application
+Create a .zip archive of a built application.
 
 > **NOTE**: This command is currently unsupported for libraries
 
@@ -8,7 +8,7 @@ Create a .zip archive of a built application
 > d2 app scripts pack --help
 d2-app-scripts pack [source]
 
-Create archive from the build.
+Create a .zip archive of a built application
 
 Positionals:
   source  The source directory to pack relative to cwd.
@@ -24,7 +24,12 @@ Global Options:
 
 Options:
   --cwd                      working directory to use (defaults to cwd)
-  --destination, --dest, -d  Directory to save the packed archive to.   [string]
+  --destination, --dest, -d  Directory to save the packed archive to.
+                                              [string] [default: ./build/bundle]
   --filename                 Override the filename of the archive.
                                     [string] [default: {app-name}-{version}.zip]
+  --app-name                 The name of the app to replace in filename
+                                              [string] [default: ${config.name}]
+  --app-version              The version of the app to replace in filename
+                                           [string] [default: ${config.version}]
 ```
