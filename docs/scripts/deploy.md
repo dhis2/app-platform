@@ -20,10 +20,17 @@ d2-app-scripts deploy [baseUrl]
 
 Deploy the built application to a specific DHIS2 instance
 
+Global Options:
+  -h, --help     Show help                                             [boolean]
+  -v, --version  Show version number                                   [boolean]
+  --verbose      Enable verbose messages                               [boolean]
+  --debug        Enable debug messages                                 [boolean]
+  --quiet        Enable quiet mode                                     [boolean]
+  --config       Path to JSON config file
+
 Options:
   --cwd           working directory to use (defaults to cwd)
-  --version       Show version number                                  [boolean]
-  --config        Path to JSON config file
   --username, -u  The username for authenticating with the DHIS2 instance
-  -h, --help      Show help                                            [boolean]
+  --timeout       The timeout (in seconds) for uploading the app bundle
+                                                                  [default: 300]
 ```
