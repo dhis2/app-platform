@@ -54,6 +54,7 @@ const handler = async ({
     shell: shellSource,
     verify,
     force,
+    pack: packAppOutput
 }) => {
     const paths = makePaths(cwd)
 
@@ -155,13 +156,15 @@ const handler = async ({
         reporter.info('Generating manifest...')
         await generateManifest(paths, config, process.env.PUBLIC_URL)
 
-        const bundle = path.parse(paths.buildAppBundle)
+        if (packAppOutput) {
+            const bundle = path.parse(paths.buildAppBundle)
 
-        // update bundle archive
-        await pack({
-            destination: path.resolve(cwd, bundle.dir),
-            filename: bundle.base,
-        })
+            // update bundle archive
+            await pack({
+                destination: path.resolve(cwd, bundle.dir),
+                filename: bundle.base,
+            })   
+        }
 
         reporter.print(chalk.green('\n**** DONE! ****'))
     }
@@ -191,6 +194,11 @@ const command = {
             type: 'boolean',
             description: 'Watch source files for changes',
             default: false,
+        },
+        pack: {
+            type: 'boolean',
+            description: 'Create a .zip archive of the built application',
+            default: true,
         },
         standalone: {
             type: 'boolean',

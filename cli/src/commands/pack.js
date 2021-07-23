@@ -14,11 +14,13 @@ exports.builder = yargs =>
         .positional('source', {
             describe: 'The source directory to pack relative to cwd.',
             type: 'string',
+            defaultDescription: './build/app'
         })
         .option('destination', {
             alias: ['dest', 'd'],
             type: 'string',
             describe: 'Directory to save the packed archive to.',
+            defaultDescription: './build/bundle'
         })
         .option('filename', {
             type: 'string',
