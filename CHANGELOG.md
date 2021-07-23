@@ -1,3 +1,10 @@
+# [7.3.0-alpha.1](https://github.com/dhis2/app-platform/compare/v7.2.0...v7.3.0-alpha.1) (2021-07-23)
+
+
+### Features
+
+* add service worker and pwa capabilities ([#550](https://github.com/dhis2/app-platform/issues/550)) ([225069e](https://github.com/dhis2/app-platform/commit/225069e11d924734c5ac2e257af7d5e9185c612a)), closes [#580](https://github.com/dhis2/app-platform/issues/580) [#582](https://github.com/dhis2/app-platform/issues/582) [#592](https://github.com/dhis2/app-platform/issues/592)
+
 # [7.2.0](https://github.com/dhis2/app-platform/compare/v7.1.2...v7.2.0) (2021-07-23)
 
 
