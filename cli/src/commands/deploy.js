@@ -1,12 +1,13 @@
 const path = require('path')
-const { reporter, chalk } = require('@dhis2/cli-helpers-engine')
+const { reporter, chalk, exit } = require('@dhis2/cli-helpers-engine')
 const FormData = require('form-data')
 const fs = require('fs-extra')
 const inquirer = require('inquirer')
 const { constructAppUrl } = require('../lib/constructAppUrl')
+const finalArchivePath = require('../lib/finalArchivePath.js')
 const { createClient } = require('../lib/httpClient')
 const parseConfig = require('../lib/parseConfig')
-const makePaths = require('../lib/paths')
+const makePaths = require('../lib/paths.js')
 
 const dumpHttpError = (message, response) => {
     if (!response) {
@@ -29,10 +30,10 @@ const promptForDhis2Config = async params => {
         process.env.CI &&
         (!params.baseUrl || !params.username || !params.password)
     ) {
-        reporter.error(
+        exit(
+            1,
             'Prompt disabled in CI mode - missing baseUrl, username, or password parameter.'
         )
-        process.exit(1)
     }
 
     const isValidUrl = input =>
@@ -79,24 +80,25 @@ const handler = async ({ cwd = process.cwd(), timeout, ...params }) => {
     const dhis2Config = await promptForDhis2Config(params)
 
     if (config.standalone) {
-        reporter.error(`Standalone apps cannot be deployed to DHIS2 instances`)
-        process.exit(1)
+        exit(1, `Standalone apps cannot be deployed to DHIS2 instances`)
     }
 
     const appBundle = path.relative(
         cwd,
-        paths.buildAppBundle
-            .replace(/{{name}}/, config.name)
-            .replace(/{{version}}/, config.version)
+        finalArchivePath({
+            filepath: paths.buildAppBundle,
+            name: config.name,
+            version: config.version,
+        })
     )
 
     if (!fs.existsSync(appBundle)) {
-        reporter.error(
+        exit(
+            1,
             `App bundle does not exist, run ${chalk.bold(
                 'd2-app-scripts build'
             )} before deploying.`
         )
-        process.exit(1)
     }
 
     const client = createClient(dhis2Config)
@@ -110,10 +112,10 @@ const handler = async ({ cwd = process.cwd(), timeout, ...params }) => {
             .data.version
         const parsedServerVersion = /(\d+)\.(\d+)/.exec(rawServerVersion)
         if (!parsedServerVersion) {
-            reporter.error(
+            exit(
+                1,
                 `Invalid server version ${rawServerVersion} found, aborting...`
             )
-            process.exit(1)
         }
         serverVersion = {
             full: parsedServerVersion[0],
@@ -130,7 +132,7 @@ const handler = async ({ cwd = process.cwd(), timeout, ...params }) => {
             `Server ${chalk.bold(dhis2Config.baseUrl)} could not be contacted`,
             e.response
         )
-        process.exit(1)
+        exit(1)
     }
 
     const appUrl = constructAppUrl(dhis2Config.baseUrl, config, serverVersion)
@@ -148,7 +150,7 @@ const handler = async ({ cwd = process.cwd(), timeout, ...params }) => {
         )
     } catch (e) {
         dumpHttpError('Failed to upload app, HTTP error', e.response)
-        process.exit(1)
+        exit(1)
     }
 
     reporter.debug(`Testing app launch url at ${appUrl}...`)
@@ -156,7 +158,7 @@ const handler = async ({ cwd = process.cwd(), timeout, ...params }) => {
         await client.get(appUrl)
     } catch (e) {
         dumpHttpError(`Uploaded app not responding at ${appUrl}`)
-        process.exit(1)
+        exit(1)
     }
     reporter.print(`App is available at ${appUrl}`)
 }
