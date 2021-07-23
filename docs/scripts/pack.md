@@ -1,4 +1,4 @@
-# d2 app scripts packk
+# d2 app scripts pack
 
 Create a .zip archive of a built application
 
