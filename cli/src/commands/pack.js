@@ -35,13 +35,15 @@ exports.handler = async argv => {
     if (!config) {
         // we may be dealing with a library or a unbuilt app
         // load the d2.config.js file from the project and check
-        const baseConfig = require(paths.config)
+        if (fs.existsSync(paths.config)) {
+            const baseConfig = require(paths.config)
 
-        if (baseConfig.type !== 'app') {
-            exit(
-                1,
-                `Unsupported type '${baseConfig.type}', only 'app' is currently supported.`
-            )
+            if (baseConfig.type !== 'app') {
+                exit(
+                    1,
+                    `Unsupported type '${baseConfig.type}', only 'app' is currently supported.`
+                )
+            }
         }
     }
 
