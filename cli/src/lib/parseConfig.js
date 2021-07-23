@@ -72,7 +72,7 @@ const parseConfig = paths => {
         }
 
         if (fs.existsSync(paths.package)) {
-            const pkg = require(paths.package)
+            const pkg = fs.readJsonSync(paths.package)
             config.name = config.name || pkg.name
             config.version = config.version || pkg.version
             config.author = config.author || parseAuthor(pkg.author)

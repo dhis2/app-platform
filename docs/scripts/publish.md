@@ -19,7 +19,7 @@ The API key can be specified with the `D2_APP_HUB_API_KEY` environment variable.
 ## Upload a non-platform app
 
 This command can also be used to upload an app-version that is not a DHIS2 platform app. We encourage you to migrate to the DHIS2 platform, but we provide the ability to upload any app.
-Use the `--file` option to specify the path to the file, and use options to specify other required information.
+Use the `--file` option to specify the path to the bundled app .zip file, and use options to specify other required information.
 
 ```sh
 > d2 app scripts publish --file build/simple-app.zip --file-version 1.0.1 --minDHIS2Version 2.34 --appId <someAppId>
@@ -35,21 +35,32 @@ d2-app-scripts publish
 
 Deploy the built application to a specific DHIS2 instance
 
+Global Options:
+  -h, --help     Show help                                             [boolean]
+  -v, --version  Show version number                                   [boolean]
+  --verbose      Enable verbose messages                               [boolean]
+  --debug        Enable debug messages                                 [boolean]
+  --quiet        Enable quiet mode                                     [boolean]
+  --config       Path to JSON config file
+
 Options:
-  --cwd           working directory to use (defaults to cwd)
-  --version       Show version number                                  [boolean]
-  --config        Path to JSON config file
-  --apikey, -k    The API-key to use for authentication                 [string]
-  --channel, -c   The channel to publish the app-version to  [default: "stable"]
-  --baseUrl, -b   The base-url of the App Hub instance
+  --cwd                         working directory to use (defaults to cwd)
+  --token, --app-hub-token, -k  The API token to use for authentication [string]
+  --channel, -c                 The channel to publish the app-version to
+                                                             [default: "stable"]
+  --baseUrl, -b                 The base-url of the App Hub instance
                                              [default: "https://apps.dhis2.org"]
-  --minDHIS2Version    The minimum version of DHIS2 the app supports    [string]
-  --maxDHIS2Version    The maximum version of DHIS2 the app supports    [string]
-  --appId         Only used with --file option. The App Hub ID for the App to
-                  publish to                                            [string]
-  --file          Path to the file to upload. This skips automatic resolution of
-                  the built app and uses this file-path to upload
-  --file-version  Only used with --file option. The semantic version of the app
-                  uploaded                                              [string]
-  -h, --help      Show help                                            [boolean]
+  --minDHIS2Version             The minimum version of DHIS2 the app supports
+                                                                        [string]
+  --maxDHIS2Version             The maximum version of DHIS2 the app supports
+                                                                        [string]
+  --appId                       Only used with --file option. The App Hub ID for
+                                the App to publish to                   [string]
+  --file                        Path to the file to upload. This skips automatic
+                                resolution of the built app and uses this
+                                file-path to upload
+  --file-version                Only used with --file option. The semantic
+                                version of the app uploaded             [string]
+  --timeout                     The timeout (in seconds) for uploading the app
+                                bundle                            [default: 300]
 ```

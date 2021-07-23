@@ -1,7 +1,6 @@
 const path = require('path')
 const { reporter, chalk } = require('@dhis2/cli-helpers-engine')
 const fs = require('fs-extra')
-const bundleApp = require('../lib/bundleApp')
 const { compile } = require('../lib/compiler')
 const exitOnCatch = require('../lib/exitOnCatch')
 const generateManifests = require('../lib/generateManifests')
@@ -12,6 +11,7 @@ const makePaths = require('../lib/paths')
 const { injectPrecacheManifest } = require('../lib/pwa')
 const makeShell = require('../lib/shell')
 const { validatePackage } = require('../lib/validatePackage')
+const { handler: pack } = require('./pack.js')
 
 const buildModes = ['development', 'production']
 
@@ -55,6 +55,7 @@ const handler = async ({
     shell: shellSource,
     verify,
     force,
+    pack: packAppOutput,
 }) => {
     const paths = makePaths(cwd)
 
@@ -165,15 +166,16 @@ const handler = async ({
 
         await fs.copy(paths.shellBuildOutput, paths.buildAppOutput)
 
-        const appBundle = paths.buildAppBundle
-            .replace(/{{name}}/, config.name)
-            .replace(/{{version}}/, config.version)
-        reporter.info(
-            `Creating app archive at ${chalk.bold(
-                path.relative(cwd, appBundle)
-            )}...`
-        )
-        await bundleApp(paths.buildAppOutput, appBundle)
+        if (packAppOutput) {
+            const bundle = path.parse(paths.buildAppBundle)
+
+            await fs.remove(paths.buildAppBundleOutput)
+            // update bundle archive
+            await pack({
+                destination: path.resolve(cwd, bundle.dir),
+                filename: bundle.base,
+            })
+        }
 
         reporter.print(chalk.green('\n**** DONE! ****'))
     }
@@ -203,6 +205,11 @@ const command = {
             type: 'boolean',
             description: 'Watch source files for changes',
             default: false,
+        },
+        pack: {
+            type: 'boolean',
+            description: 'Create a .zip archive of the built application',
+            default: true,
         },
         standalone: {
             type: 'boolean',

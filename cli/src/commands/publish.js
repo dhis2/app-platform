@@ -1,31 +1,15 @@
 const path = require('path')
-const { reporter, chalk } = require('@dhis2/cli-helpers-engine')
-const FormData = require('form-data')
+const { reporter, chalk, exit } = require('@dhis2/cli-helpers-engine')
 const fs = require('fs-extra')
 const inquirer = require('inquirer')
-const { createClient } = require('../lib/httpClient')
+const finalArchivePath = require('../lib/finalArchivePath.js')
 const parseConfig = require('../lib/parseConfig')
 const makePaths = require('../lib/paths')
-
-const constructUploadUrl = appId => `/api/v1/apps/${appId}/versions`
+const publishVersion = require('../lib/publishVersion.js')
+const updateManifest = require('../lib/updateManifest.js')
+const { handler: pack } = require('./pack.js')
 
 const isValidServerVersion = v => !!/(\d+)\.(\d+)/.exec(v)
-
-const dumpHttpError = (message, response) => {
-    if (!response) {
-        reporter.error(message)
-        return
-    }
-
-    reporter.error(
-        message,
-        response.status,
-        typeof response.data === 'object'
-            ? response.data.message
-            : response.statusText
-    )
-    reporter.debugErr('Error details', response.data)
-}
 
 const requiredFields = new Set(['id', 'version', 'minDHIS2Version'])
 const configFieldValidations = {
@@ -45,22 +29,20 @@ const validateFields = (
             requiredFields.has(fieldName) &&
             (fieldValue == null || fieldValue === '')
         ) {
-            reporter.error(
+            exit(
+                1,
                 `${fieldName} not found in config. Add an ${chalk.bold(
                     fieldName
                 )}-field to ${chalk.bold('d2.config.js')}`
             )
-            process.exit(1)
         }
         const fieldValidation = configFieldValidations[fieldName]
         if (fieldValidation) {
             const valid = fieldValidation(fieldValue)
             if (typeof valid === 'string') {
-                reporter.error(`${fieldName}: ${valid}`)
-                process.exit(1)
+                exit(1, `${fieldName}: ${valid}`)
             } else if (!valid) {
-                reporter.error(`Invalid ${fieldName}`)
-                process.exit(1)
+                exit(1, `Invalid ${fieldName}`)
             }
         }
     })
@@ -71,8 +53,7 @@ const resolveBundleFromParams = (cwd, params) => {
     try {
         const filePath = path.resolve(cwd, params.file)
         if (!fs.statSync(filePath).isFile()) {
-            reporter.error(`${params.file} is not a file`)
-            process.exit(1)
+            exit(1, `${params.file} is not a file`)
         }
         appBundle.id = params.appId
         appBundle.version = params.fileVersion
@@ -82,61 +63,52 @@ const resolveBundleFromParams = (cwd, params) => {
         appBundle.maxDHIS2Version = params.maxDHIS2Version
         return appBundle
     } catch (e) {
-        reporter.error(`File does not exist at ${params.file}`)
-        process.exit(1)
+        exit(1, `File does not exist at ${params.file}`)
     }
 }
 
-const resolveBundleFromAppConfig = cwd => {
+const resolveBundleFromAppConfig = (cwd, config) => {
     // resolve file from built-bundle
     const appBundle = {}
     const paths = makePaths(cwd)
-    const builtAppConfig = parseConfig(paths)
-    validateFields(builtAppConfig)
 
-    appBundle.id = builtAppConfig.id
-    appBundle.version = builtAppConfig.version
+    validateFields(config)
+
+    appBundle.id = config.id
+    appBundle.version = config.version
     appBundle.path = path.relative(
         cwd,
-        paths.buildAppBundle
-            .replace(/{{name}}/, builtAppConfig.name)
-            .replace(/{{version}}/, builtAppConfig.version)
+        finalArchivePath({
+            filepath: paths.buildAppBundle,
+            name: config.name,
+            version: config.version,
+        })
     )
-    appBundle.name = builtAppConfig.name
-    appBundle.minDHIS2Version = builtAppConfig.minDHIS2Version
-    appBundle.maxDHIS2Version = builtAppConfig.maxDHIS2Version
+    appBundle.name = config.name
+    appBundle.minDHIS2Version = config.minDHIS2Version
+    appBundle.maxDHIS2Version = config.maxDHIS2Version
 
-    if (!fs.existsSync(appBundle.path)) {
-        reporter.error(
-            `App bundle does not exist, run ${chalk.bold(
-                'd2-app-scripts build'
-            )} before deploying.`
-        )
-        process.exit(1)
-    }
     return appBundle
 }
 
-const resolveBundle = (cwd, params) => {
+const resolveBundle = ({ cwd, params, config }) => {
     if (params.file) {
         return resolveBundleFromParams(cwd, params)
     }
-    return resolveBundleFromAppConfig(cwd)
+    return resolveBundleFromAppConfig(cwd, config)
 }
 
 const promptForConfig = async params => {
-    const apiKey = params.apikey || process.env.D2_APP_HUB_API_KEY
-    if (process.env.CI && !apiKey) {
-        reporter.error('Prompt disabled in CI mode - missing apikey parameter.')
-        process.exit(1)
+    if (!params.token) {
+        exit(1, 'Missing API token.')
     }
 
     const responses = await inquirer.prompt([
         {
             type: 'input',
-            name: 'apikey',
-            message: 'App Hub API-key',
-            when: () => !apiKey,
+            name: 'token',
+            message: 'App Hub API token',
+            when: () => !params.token,
         },
         {
             type: 'input',
@@ -170,56 +142,67 @@ const promptForConfig = async params => {
 
     return {
         ...params,
-        apikey: apiKey,
         ...responses,
     }
 }
 
-const handler = async ({ cwd = process.cwd(), timeout, ...params }) => {
-    const publishConfig = await promptForConfig(params)
+const handler = async ({ cwd = process.cwd(), ...params }) => {
+    if (params.apikey) {
+        reporter.debug(
+            '[DEPRECATED] use of --apikey is deprecated, use --token instead.'
+        )
+        params.token = params.apikey
+    }
 
-    const appBundle = resolveBundle(cwd, publishConfig)
-    const uploadAppUrl = constructUploadUrl(appBundle.id)
+    const paths = makePaths(cwd)
+    const appConfig = parseConfig(paths)
 
-    const client = createClient({
-        baseUrl: publishConfig.baseUrl,
-        headers: {
-            'x-api-key': publishConfig.apikey,
-        },
+    let publishConfig
+
+    if (process.env.CI) {
+        publishConfig = params
+    } else {
+        publishConfig = await promptForConfig(params)
+    }
+
+    const appBundle = resolveBundle({
+        cwd,
+        config: appConfig,
+        params: publishConfig,
     })
 
-    const versionData = {
-        version: appBundle.version,
-        minDhisVersion: appBundle.minDHIS2Version,
-        maxDhisVersion: appBundle.maxDHIS2Version || '',
-        channel: publishConfig.channel,
+    if (appConfig.type !== 'app') {
+        exit(
+            1,
+            'Only publishing apps to the App Hub is currently supported. Please upload other types manually.'
+        )
     }
 
-    const formData = new FormData()
-    formData.append('file', fs.createReadStream(appBundle.path))
-    formData.append('version', JSON.stringify(versionData))
+    if (!publishConfig.file) {
+        // update build/app manifests after prepare for release
+        updateManifest({ version: appBundle.version }, paths)
 
-    try {
-        reporter.print(
-            `Uploading app bundle to ${publishConfig.baseUrl + uploadAppUrl}`
-        )
-        reporter.debug('Upload with version data', versionData)
+        const bundle = path.parse(appBundle.path)
 
-        await client.post(uploadAppUrl, formData, {
-            headers: formData.getHeaders(),
-            timeout: timeout * 1000, // Ensure we have enough time to upload a large zip file
+        // update bundle archive
+        await pack({
+            destination: path.resolve(cwd, bundle.dir),
+            filename: bundle.base,
         })
-        reporter.info(
-            `Successfully published ${appBundle.name} with version ${appBundle.version}`
-        )
-    } catch (e) {
-        if (e.isAxiosError) {
-            dumpHttpError('Failed to upload app, HTTP error', e.response)
-        } else {
-            reporter.error(e)
-        }
-        process.exit(1)
     }
+
+    await publishVersion({
+        id: appBundle.id,
+        token: publishConfig.token,
+        baseUrl: publishConfig.baseUrl,
+        channel: publishConfig.channel,
+        minDhisVersion: appBundle.minDHIS2Version,
+        maxDhisVersion: appBundle.maxDHIS2Version,
+        filepath: appBundle.path,
+        name: appBundle.name,
+        version: appBundle.version,
+        timeout: params.timeout * 1000,
+    })
 }
 
 const command = {
@@ -227,52 +210,63 @@ const command = {
     alias: 'p',
     desc: 'Deploy the built application to a specific DHIS2 instance',
     builder: yargs =>
-        yargs.options({
-            apikey: {
-                alias: 'k',
-                type: 'string',
-                description: 'The API-key to use for authentication',
-            },
-            channel: {
-                alias: 'c',
-                description: 'The channel to publish the app-version to',
-                default: 'stable',
-            },
-            baseUrl: {
-                alias: 'b',
-                description: 'The base-url of the App Hub instance',
-                default: 'https://apps.dhis2.org',
-            },
-            minDHIS2Version: {
-                type: 'string',
-                description: 'The minimum version of DHIS2 the app supports',
-            },
-            maxDHIS2Version: {
-                type: 'string',
-                description: 'The maximum version of DHIS2 the app supports',
-            },
-            appId: {
-                type: 'string',
-                description:
-                    'Only used with --file option. The App Hub ID for the App to publish to',
-                implies: 'file',
-            },
-            file: {
-                description:
-                    'Path to the file to upload. This skips automatic resolution of the built app and uses this file-path to upload',
-            },
-            'file-version': {
-                type: 'string',
-                description:
-                    'Only used with --file option. The semantic version of the app uploaded',
-                implies: 'file',
-            },
-            timeout: {
-                description:
-                    'The timeout (in seconds) for uploading the app bundle',
-                default: 300,
-            },
-        }),
+        yargs
+            .options({
+                apikey: {
+                    alias: ['app-hub-api-key'],
+                    type: 'string',
+                    deprecated: true,
+                    conflicts: 'token',
+                },
+                token: {
+                    alias: ['app-hub-token', 'k'],
+                    type: 'string',
+                    description: 'The API token to use for authentication',
+                    conflicts: 'apikey',
+                },
+                channel: {
+                    alias: 'c',
+                    description: 'The channel to publish the app-version to',
+                    default: 'stable',
+                },
+                baseUrl: {
+                    alias: 'b',
+                    description: 'The base-url of the App Hub instance',
+                    default: 'https://apps.dhis2.org',
+                },
+                minDHIS2Version: {
+                    type: 'string',
+                    description:
+                        'The minimum version of DHIS2 the app supports',
+                },
+                maxDHIS2Version: {
+                    type: 'string',
+                    description:
+                        'The maximum version of DHIS2 the app supports',
+                },
+                appId: {
+                    type: 'string',
+                    description:
+                        'Only used with --file option. The App Hub ID for the App to publish to',
+                    implies: 'file',
+                },
+                file: {
+                    description:
+                        'Path to the file to upload. This skips automatic resolution of the built app and uses this file-path to upload',
+                },
+                'file-version': {
+                    type: 'string',
+                    description:
+                        'Only used with --file option. The semantic version of the app uploaded',
+                    implies: 'file',
+                },
+                timeout: {
+                    description:
+                        'The timeout (in seconds) for uploading the app bundle',
+                    default: 300,
+                },
+            })
+            .hide('apikey'),
     handler,
 }
 

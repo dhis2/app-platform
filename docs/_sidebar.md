@@ -6,6 +6,7 @@
     -   [`d2-app-scripts build`](scripts/build.md)
     -   [`d2-app-scripts start`](scripts/start.md)
     -   [`d2-app-scripts test`](scripts/test.md)
+    -   [`d2-app-scripts pack`](scripts/pack.md)
     -   [`d2-app-scripts deploy`](scripts/deploy.md)
     -   [`d2-app-scripts publish`](scripts/publish.md)
 -   [**Configuration**](config.md)
