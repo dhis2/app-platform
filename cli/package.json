@@ -49,7 +49,9 @@
         "lodash": "^4.17.11",
         "parse-author": "^2.0.0",
         "parse-gitignore": "^1.0.1",
-        "styled-jsx": "<3.3.3"
+        "styled-jsx": "<3.3.3",
+        "webpack": "^5.41.1",
+        "workbox-build": "^6.1.5"
     },
     "bin": {
         "d2-app-scripts": "./bin/d2-app-scripts"

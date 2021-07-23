@@ -6,7 +6,12 @@ import { parseServerVersion } from '../utils/parseServerVersion.js'
 import { LoadingMask } from './LoadingMask.js'
 import { LoginModal } from './LoginModal.js'
 
-export const ServerVersionProvider = ({ url, apiVersion, children }) => {
+export const ServerVersionProvider = ({
+    url,
+    apiVersion,
+    offlineInterface,
+    children,
+}) => {
     const [{ loading, error, systemInfo }, setState] = useState({
         loading: true,
     })
@@ -51,6 +56,7 @@ export const ServerVersionProvider = ({ url, apiVersion, children }) => {
                 serverVersion,
                 systemInfo,
             }}
+            offlineInterface={offlineInterface}
         >
             {children}
         </Provider>
@@ -60,5 +66,6 @@ export const ServerVersionProvider = ({ url, apiVersion, children }) => {
 ServerVersionProvider.propTypes = {
     apiVersion: PropTypes.number,
     children: PropTypes.element,
+    offlineInterface: PropTypes.shape({}),
     url: PropTypes.string,
 }

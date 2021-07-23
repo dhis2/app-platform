@@ -1,20 +1,20 @@
 import { shallow } from 'enzyme'
 import React from 'react'
-import { FatalErrorBoundary } from '../FatalErrorBoundary'
+import { ErrorBoundary } from '../ErrorBoundary'
 
 const Something = () => {
     // Placeholder
     return null
 }
 
-describe('FatalErrorBoundary', () => {
+describe('ErrorBoundary', () => {
     it('Should render the normal tree when no error occurs', () => {
         const wrapper = shallow(
-            <FatalErrorBoundary classes={{}}>
+            <ErrorBoundary classes={{}}>
                 <div>
                     <span id="testme">Hello there!</span>
                 </div>
-            </FatalErrorBoundary>
+            </ErrorBoundary>
         )
 
         expect(wrapper.find('span#testme').length).toBe(1)
@@ -22,9 +22,9 @@ describe('FatalErrorBoundary', () => {
 
     it('Should render the error mask when an error is thrown', () => {
         const wrapper = shallow(
-            <FatalErrorBoundary classes={{}}>
+            <ErrorBoundary classes={{}}>
                 <Something />
-            </FatalErrorBoundary>
+            </ErrorBoundary>
         )
 
         expect(wrapper.find(Something).length).toBe(1)
@@ -37,9 +37,9 @@ describe('FatalErrorBoundary', () => {
 
     it('Should match the snapshot tree when error is manually invoked', () => {
         const wrapper = shallow(
-            <FatalErrorBoundary classes={{}}>
+            <ErrorBoundary classes={{}}>
                 <Something />
-            </FatalErrorBoundary>
+            </ErrorBoundary>
         )
 
         const error = {
