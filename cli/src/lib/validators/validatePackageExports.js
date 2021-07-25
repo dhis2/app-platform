@@ -122,5 +122,5 @@ module.exports.validatePackageExports = async (
         await fixPackage(pkg, expectedPackage, { paths })
         valid = true
     }
-    return valid
+    return !!valid
 }
