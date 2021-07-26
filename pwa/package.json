@@ -26,16 +26,22 @@
     "module": "./build/es/browser/index.js",
     "exports": {
         ".": {
+            "browser": {
+                "import": "./build/es/browser/index.js",
+                "require": "./build/cjs/browser/index.js"
+            },
+            "worker": {
+                "import": "./build/es/sw/index.js",
+                "require": "./build/cjs/sw/index.js"
+            }
+        },
+        "./browser": {
             "import": "./build/es/browser/index.js",
             "require": "./build/cjs/browser/index.js"
         },
         "./sw": {
             "import": "./build/es/sw/index.js",
             "require": "./build/cjs/sw/index.js"
-        },
-        "./browser": {
-            "import": "./build/es/browser/index.js",
-            "require": "./build/cjs/browser/index.js"
         }
     }
 }

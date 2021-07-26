@@ -2,7 +2,14 @@ const config = {
     type: 'lib',
 
     entryPoints: {
-        lib: './src/browser/index.js',
+        lib: {
+            '.': {
+                browser: './src/browser/index.js',
+                worker: './src/sw/index.js',
+            },
+            './browser': './src/browser/index.js',
+            './sw': './src/sw/index.js',
+        },
     },
 }
 
