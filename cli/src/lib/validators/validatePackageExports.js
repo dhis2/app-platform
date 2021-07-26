@@ -133,26 +133,29 @@ const validateMultipleEntrypoints = (pkg, { config, paths }) => {
         )
         valid = false
     } else if (pkg.exports) {
-        const checkNestedExports = (exports, context) => {
-            Object.entries(exports).forEach(([field, expectedValue]) => {
-                if (expectedValue.import && expectedValue.require) {
-                    valid &= checkField(
-                        `${context.path}['${field}'].import`,
-                        context.value[field] && context.value[field].import,
-                        expectedValue.import
-                    )
-                    valid &= checkField(
-                        `${context.path}['${field}'].require`,
-                        context.value[field] && context.value[field].require,
-                        expectedValue.require
-                    )
-                } else {
-                    checkNestedExports(expectedValue, {
-                        path: `${context.path}['${field}']`,
-                        value: context.value[field],
-                    })
+        const checkNestedExports = (expectedExports, context) => {
+            Object.entries(expectedExports).forEach(
+                ([field, expectedValue]) => {
+                    if (expectedValue.import && expectedValue.require) {
+                        valid &= checkField(
+                            `${context.path}['${field}'].import`,
+                            context.value[field] && context.value[field].import,
+                            expectedValue.import
+                        )
+                        valid &= checkField(
+                            `${context.path}['${field}'].require`,
+                            context.value[field] &&
+                                context.value[field].require,
+                            expectedValue.require
+                        )
+                    } else {
+                        checkNestedExports(expectedValue, {
+                            path: `${context.path}['${field}']`,
+                            value: context.value[field],
+                        })
+                    }
                 }
-            })
+            )
         }
         checkNestedExports(expectedExports, {
             path: 'exports',
