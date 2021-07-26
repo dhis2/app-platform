@@ -55,5 +55,13 @@
     },
     "bin": {
         "d2-app-scripts": "./bin/d2-app-scripts"
+    },
+    "scripts": {
+        "test": "d2-app-scripts test"
+    },
+    "jest": {
+        "testPathIgnorePatterns": [
+            "src/commands/test.js"
+        ]
     }
 }
