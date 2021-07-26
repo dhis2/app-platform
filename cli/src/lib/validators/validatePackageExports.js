@@ -22,7 +22,7 @@ const fixPackage = async (pkg, expectedPackage, { paths }) => {
 
 const checkField = (field, value, expectedValue) => {
     if (!value) {
-        reporter.warn(`Package.json is missing "${field}" field`)
+        reporter.warn(`package.json is missing "${field}" field`)
         return false
     }
     if (Array.isArray(expectedValue) && !expectedValue.includes(value)) {
@@ -66,7 +66,7 @@ const getExpectedExports = (entrypoint, paths) => {
         }
     }
     return Object.entries(entrypoint).reduce((acc, [key, value]) => {
-        acc[key] = getExpectedExports(value)
+        acc[key] = getExpectedExports(value, paths)
         return acc
     }, {})
 }
@@ -102,7 +102,7 @@ const validateSingleEntrypoint = (pkg, { config, paths }) => {
             expectedExports.require
         )
     } else {
-        reporter.warn(`Package.json is missing "exports" field`)
+        reporter.warn('package.json is missing "exports" field')
         valid = false
     }
 
@@ -129,26 +129,37 @@ const validateMultipleEntrypoints = (pkg, { config, paths }) => {
 
     if (typeof pkg.exports === 'string') {
         reporter.warn(
-            `The "exports" field cannot be a string if multiple entrypoints are defined`
+            'The "exports" field cannot be a string if multiple entrypoints are defined'
         )
         valid = false
     } else if (pkg.exports) {
-        const exportContext = pkg.exports['.'] || pkg.exports
-        const fieldPrefix = pkg.exports['.']
-            ? `pkg.exports['.'].`
-            : 'pkg.exports.'
-        valid &= checkField(
-            fieldPrefix + 'import',
-            exportContext.import,
-            expectedESMExport
-        )
-        valid &= checkField(
-            fieldPrefix + 'require',
-            exportContext.require,
-            expectedCJSExport
-        )
+        const checkNestedExports = (exports, context) => {
+            Object.entries(exports).forEach(([field, expectedValue]) => {
+                if (expectedValue.import && expectedValue.require) {
+                    valid &= checkField(
+                        `${context.path}['${field}'].import`,
+                        context.value[field] && context.value[field].import,
+                        expectedValue.import
+                    )
+                    valid &= checkField(
+                        `${context.path}['${field}'].require`,
+                        context.value[field] && context.value[field].require,
+                        expectedValue.require
+                    )
+                } else {
+                    checkNestedExports(expectedValue, {
+                        path: `${context.path}['${field}']`,
+                        value: context.value[field],
+                    })
+                }
+            })
+        }
+        checkNestedExports(expectedExports, {
+            path: 'exports',
+            value: pkg.exports,
+        })
     } else {
-        reporter.warn(`Package.json is missing "exports" field`)
+        reporter.warn('package.json is missing "exports" field')
         valid = false
     }
 
@@ -163,7 +174,7 @@ module.exports.validatePackageExports = async (
         return true
     }
 
-    let { valid, expectedPackage } =
+    const { valid, expectedPackage } =
         typeof config.entryPoints.lib === 'string'
             ? validateSingleEntrypoint(pkg, { config, paths })
             : validateMultipleEntrypoints(pkg, { config, paths })
@@ -180,7 +191,7 @@ module.exports.validatePackageExports = async (
             return false
         }
         await fixPackage(pkg, expectedPackage, { paths })
-        valid = true
+        return true
     }
     return !!valid
 }
