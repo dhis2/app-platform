@@ -115,8 +115,12 @@ const validateMultipleEntrypoints = (pkg, { config, paths }) => {
         exports: expectedExports,
     }
     if (expectedExports['.']) {
-        expectedPackage.module = expectedExports['.'].import
-        expectedPackage.main = expectedExports['.'].require
+        if (expectedExports['.'].import) {
+            expectedPackage.module = expectedExports['.'].import
+        }
+        if (expectedExports['.'].require) {
+            expectedPackage.main = expectedExports['.'].require
+        }
     }
 
     let valid = true
