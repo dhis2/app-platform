@@ -1,4 +1,5 @@
 const { reporter, chalk } = require('@dhis2/cli-helpers-engine')
+const fs = require('fs-extra')
 const {
     validatePackageExports,
 } = require('./validators/validatePackageExports')
@@ -16,7 +17,7 @@ module.exports.validatePackage = async ({
 
     let pkg
     try {
-        pkg = require(paths.package)
+        pkg = fs.readJsonSync(paths.package)
     } catch (e) {
         reporter.error(`Failed to load package manifest at ${paths.package}`)
         return false

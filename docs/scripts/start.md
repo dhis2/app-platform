@@ -10,10 +10,15 @@ d2-app-scripts start
 
 Start a development server running a DHIS2 app within the DHIS2 app-shell
 
+Global Options:
+  -h, --help     Show help                                             [boolean]
+  -v, --version  Show version number                                   [boolean]
+  --verbose      Enable verbose messages                               [boolean]
+  --debug        Enable debug messages                                 [boolean]
+  --quiet        Enable quiet mode                                     [boolean]
+  --config       Path to JSON config file
+
 Options:
   --cwd       working directory to use (defaults to cwd)
-  --version   Show version number                                      [boolean]
-  --config    Path to JSON config file
   --port, -p  The port to use when running the development server       [number]
-  -h, --help  Show help                                                [boolean]
 ```
