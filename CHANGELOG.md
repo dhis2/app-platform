@@ -1,3 +1,10 @@
+## [7.2.1](https://github.com/dhis2/app-platform/compare/v7.2.0...v7.2.1) (2021-07-27)
+
+
+### Bug Fixes
+
+* **cli:** Support multiple library entrypoints ([#597](https://github.com/dhis2/app-platform/issues/597)) ([a95be81](https://github.com/dhis2/app-platform/commit/a95be817a669901a082621be88e37e516dcd6bf3))
+
 # [7.2.0](https://github.com/dhis2/app-platform/compare/v7.1.2...v7.2.0) (2021-07-23)
 
 
