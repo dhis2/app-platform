@@ -1,9 +1,20 @@
+const path = require('path')
 const { reporter } = require('@dhis2/cli-helpers-engine')
 const fs = require('fs-extra')
 const { runCLI } = require('jest-cli')
 const exitOnCatch = require('../lib/exitOnCatch')
 const loadEnvFiles = require('../lib/loadEnvFiles')
 const makePaths = require('../lib/paths')
+
+const getAppJestConfig = ({ jestConfigPath, paths }) => {
+    if (jestConfigPath) {
+        return require(path.resolve(paths.base, jestConfigPath))
+    } else if (fs.existsSync(paths.jestConfig)) {
+        return require(paths.jestConfig)
+    } else {
+        return {}
+    }
+}
 
 const handler = async ({
     verbose,
@@ -13,6 +24,7 @@ const handler = async ({
     coverage,
     watch,
     watchAll,
+    jestConfig: jestConfigPath,
 }) => {
     const paths = makePaths(cwd)
 
@@ -24,9 +36,10 @@ const handler = async ({
     await exitOnCatch(
         async () => {
             const defaultJestConfig = require(paths.jestConfigDefaults)
-            const appJestConfig = fs.existsSync(paths.jestConfig)
-                ? require(paths.jestConfig)
-                : {}
+            const appJestConfig = getAppJestConfig({
+                jestConfigPath,
+                paths,
+            })
             const pkgJestConfig = require(paths.package).jest
 
             const jestConfig = {
@@ -95,6 +108,9 @@ const command = {
             type: 'boolean',
             desc: 'Watch all source files for changes',
             default: false,
+        },
+        jestConfig: {
+            desc: 'Path to a jest config file',
         },
     },
     handler,
