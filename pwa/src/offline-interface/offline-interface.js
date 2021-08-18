@@ -173,12 +173,21 @@ export class OfflineInterface {
             throw new Error(
                 'Cannot get cached sections - PWA is not enabled in d2.config.js'
             )
+
         await navigator.serviceWorker.ready
         if (this.dbPromise === undefined) {
             this.dbPromise = openSectionsDB()
         }
         const db = await this.dbPromise
-        return db.getAll(SECTIONS_STORE)
+
+        const sections = await db.getAll(SECTIONS_STORE)
+        const cacheKeys = await caches.keys()
+        // Validate that each section in IDB has cached data
+        const validSections = sections.filter(section =>
+            cacheKeys.includes(section.sectionId)
+        )
+
+        return validSections
     }
 
     /**
@@ -198,6 +207,7 @@ export class OfflineInterface {
         if (this.dbPromise === undefined) {
             this.dbPromise = openSectionsDB()
         }
+        // todo: feedback if one but not the other is removed
         return Promise.all([
             caches.delete(sectionId),
             (await this.dbPromise).delete(SECTIONS_STORE, sectionId),
