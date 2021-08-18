@@ -193,7 +193,7 @@ export class OfflineInterface {
     /**
      * Removes a specified section from the IndexedDB and CacheStorage cache.
      * @param {String} sectionId - ID of the section to remove
-     * @returns {Promise} A promise that resolves to `true` if the section is successfully deleted or `false` if it was not found.
+     * @returns {Promise} A promise that resolves to `true` if at least one of the cache or the idb entry are deleted or `false` if neither were found.
      */
     async removeSection(sectionId) {
         if (!this.pwaEnabled)
@@ -203,14 +203,20 @@ export class OfflineInterface {
         if (!sectionId) {
             throw new Error('No section ID specified to delete')
         }
+
         await navigator.serviceWorker.ready
         if (this.dbPromise === undefined) {
             this.dbPromise = openSectionsDB()
         }
-        // todo: feedback if one but not the other is removed
+        const db = await this.dbPromise
+
+        const sectionExists = await db.count(SECTIONS_STORE, sectionId)
         return Promise.all([
             caches.delete(sectionId),
-            (await this.dbPromise).delete(SECTIONS_STORE, sectionId),
-        ]).then(([cacheDeleted]) => cacheDeleted)
+            !!sectionExists &&
+                db.delete(SECTIONS_STORE, sectionId).then(() => true),
+        ]).then(
+            ([cacheDeleted, dbEntryDeleted]) => cacheDeleted || dbEntryDeleted
+        )
     }
 }
