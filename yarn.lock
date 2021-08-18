@@ -2894,35 +2894,35 @@
     classnames "^2.3.1"
     prop-types "^15.7.2"
 
-"@dhis2/app-runtime@^2.10.0-pwa.1":
-  version "2.10.0-pwa.1"
-  resolved "https://registry.yarnpkg.com/@dhis2/app-runtime/-/app-runtime-2.10.0-pwa.1.tgz#93a37409004c36c1638bc9dc01fe17c1e5cc3e29"
-  integrity sha512-QlGQqc7ltWm54hfMzzfGxElhkP2lRHiX9A+eZs33zNuwg80wVN2BfCyRfoD95guhKXJlcmQ8/6Af+76jzoJNww==
+"@dhis2/app-runtime@^2.10.0-pwa.3":
+  version "2.10.0-pwa.3"
+  resolved "https://registry.yarnpkg.com/@dhis2/app-runtime/-/app-runtime-2.10.0-pwa.3.tgz#24200b1e40faa01aa4930e65368841809fc34947"
+  integrity sha512-SuQmGb+lx1cR6GqqNmPVYgdb+1AZnEI1hhfgLuJBj6lotDxPYO19sxmhLpAyGn//fneW0jD7uTEvKhxIVEpu6Q==
   dependencies:
-    "@dhis2/app-service-alerts" "2.10.0-pwa.1"
-    "@dhis2/app-service-config" "2.10.0-pwa.1"
-    "@dhis2/app-service-data" "2.10.0-pwa.1"
-    "@dhis2/app-service-offline" "2.10.0-pwa.1"
+    "@dhis2/app-service-alerts" "2.10.0-pwa.3"
+    "@dhis2/app-service-config" "2.10.0-pwa.3"
+    "@dhis2/app-service-data" "2.10.0-pwa.3"
+    "@dhis2/app-service-offline" "2.10.0-pwa.3"
 
-"@dhis2/app-service-alerts@2.10.0-pwa.1":
-  version "2.10.0-pwa.1"
-  resolved "https://registry.yarnpkg.com/@dhis2/app-service-alerts/-/app-service-alerts-2.10.0-pwa.1.tgz#1651de8e12bc10d4f0b32b4deff02711499348f5"
-  integrity sha512-kLxdEzEUkTRshaN/Of4sTIhUSZf14QLmIhJPZrtWSqiBuvNdya3Qri7+cBpGxTK7kDf13UTH++dHOYFe8BN+HA==
+"@dhis2/app-service-alerts@2.10.0-pwa.3":
+  version "2.10.0-pwa.3"
+  resolved "https://registry.yarnpkg.com/@dhis2/app-service-alerts/-/app-service-alerts-2.10.0-pwa.3.tgz#25f42b84e0e05f70e229a7ff1414088422ca27da"
+  integrity sha512-j4Yt1+Q1IpTKsunYkPMHUex/rJaZiDSU+8H8Elk8ZhJnJ/1xBy0uqoFbhqzK1UcdOs+0i9p3B8l2w07G1gCBFw==
 
-"@dhis2/app-service-config@2.10.0-pwa.1":
-  version "2.10.0-pwa.1"
-  resolved "https://registry.yarnpkg.com/@dhis2/app-service-config/-/app-service-config-2.10.0-pwa.1.tgz#1fc10ed8fa2cc3d5bb335ab1c254c224ffb47e89"
-  integrity sha512-R7rY9capeU9rFRdbZH0+Zo/jtUvEeu+yk6lZy7aiDqjf66I+p5/DZPnKTEyqB20gFEb4Qa0KRHYEk44K4bA3fA==
+"@dhis2/app-service-config@2.10.0-pwa.3":
+  version "2.10.0-pwa.3"
+  resolved "https://registry.yarnpkg.com/@dhis2/app-service-config/-/app-service-config-2.10.0-pwa.3.tgz#7a5dc381033fcc1a619209477cc237fa6f61c5ec"
+  integrity sha512-Y+5yqPtFj0SWREd24YaJymE1EkEbHDGidffId9I8cY2i7MjJXFMllSL2YOKjR4jEe9qaPx8OleQ7RSmNDDFuTA==
 
-"@dhis2/app-service-data@2.10.0-pwa.1":
-  version "2.10.0-pwa.1"
-  resolved "https://registry.yarnpkg.com/@dhis2/app-service-data/-/app-service-data-2.10.0-pwa.1.tgz#9a6cb897fdc87a94c560f2d522351e177e95ee75"
-  integrity sha512-6ypgudTNfo3k/zczrkbtrjV1Bxph9FKaI7KazOId7BpQwScZMCDvcaDaIMBb4QA2W6dh73u7G4bnKAWloBpKcw==
+"@dhis2/app-service-data@2.10.0-pwa.3":
+  version "2.10.0-pwa.3"
+  resolved "https://registry.yarnpkg.com/@dhis2/app-service-data/-/app-service-data-2.10.0-pwa.3.tgz#164bda719c2c8d5eeadff9cd4ebc2b2ebc564127"
+  integrity sha512-y/V60zvkQziNjHW4yP/hOXXzWafbXhGuws5Mg9TL/Nh2C1oUwDSX4jzs0xg6+leYCxv+tT0PhOar6cxGl40ttQ==
 
-"@dhis2/app-service-offline@2.10.0-pwa.1":
-  version "2.10.0-pwa.1"
-  resolved "https://registry.yarnpkg.com/@dhis2/app-service-offline/-/app-service-offline-2.10.0-pwa.1.tgz#195a2c577e62c056629c345d17aef41b02c196d7"
-  integrity sha512-hHXMNylsrNqxS9Qe9kA3U74O3zB+Js1loDAm7xxZHn/HV70/yaJtjRI/UYZ65/8SxmT4LyzVJg06jjRYfIy6DA==
+"@dhis2/app-service-offline@2.10.0-pwa.3":
+  version "2.10.0-pwa.3"
+  resolved "https://registry.yarnpkg.com/@dhis2/app-service-offline/-/app-service-offline-2.10.0-pwa.3.tgz#44bd3f86412f5d953bbd6c4e7234ec62c03affb5"
+  integrity sha512-Ho2KIBJpSleEDfhztacnUU0nP1w5MWPEw3FxjtD9qMQuiF50sircfg2hfZmQS/NjfPJJZNmXTGHdnWSQv8WxDQ==
 
 "@dhis2/cli-helpers-engine@^1.5.0":
   version "1.5.0"
