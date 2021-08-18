@@ -44,7 +44,7 @@ export function urlMeetsDefaultCachingCriteria(url) {
 
     // Don't cache if url matches filter in pattern list from d2.config.js
     const urlMatchesFilter = URL_FILTER_PATTERNS.some(pattern =>
-        new RegExp(pattern).test(url.pathname)
+        new RegExp(pattern).test(url.href)
     )
     if (urlMatchesFilter) {
         return false
