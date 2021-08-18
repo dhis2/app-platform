@@ -176,36 +176,41 @@ function startConfirmationTimeout(clientId) {
 }
 
 /** Triggered by 'COMPLETE_RECORDING' message; saves recording */
+// todo: handle errors
 export async function completeRecording(clientId) {
-    const recordingState = self.clientRecordingStates[clientId]
-    console.debug('[SW] Completing recording', { clientId, recordingState })
-    clearTimeout(recordingState.confirmationTimeout)
+    try {
+        const recordingState = self.clientRecordingStates[clientId]
+        console.debug('[SW] Completing recording', { clientId, recordingState })
+        clearTimeout(recordingState.confirmationTimeout)
 
-    // Move requests from temp cache to section-<ID> cache
-    const sectionCache = await caches.open(recordingState.sectionId)
-    const tempCache = await caches.open(getCacheKey('temp', clientId))
-    const tempCacheItemKeys = await tempCache.keys()
-    tempCacheItemKeys.forEach(async request => {
-        const response = await tempCache.match(request)
-        sectionCache.put(request, response)
-    })
+        // Add content to DB
+        const db = await self.dbPromise
+        db.put(SECTIONS_STORE, {
+            // Note that request objects can't be stored in the IDB
+            // https://stackoverflow.com/questions/32880073/whats-the-best-option-for-structured-cloning-of-a-fetch-api-request-object
+            sectionId: recordingState.sectionId, // the key path
+            lastUpdated: new Date(),
+            // 'requests' can later hold data for normalization
+            requests: recordingState.fulfilledRequests,
+        }).catch(console.error)
 
-    // Add content to DB
-    const db = await self.dbPromise
-    db.put(SECTIONS_STORE, {
-        // Note that request objects can't be stored in the IDB
-        // https://stackoverflow.com/questions/32880073/whats-the-best-option-for-structured-cloning-of-a-fetch-api-request-object
-        sectionId: recordingState.sectionId, // the key path
-        lastUpdated: new Date(),
-        // 'requests' can later hold data for normalization
-        requests: recordingState.fulfilledRequests,
-    }).catch(console.error)
+        // Move requests from temp cache to section-<ID> cache
+        const sectionCache = await caches.open(recordingState.sectionId)
+        const tempCache = await caches.open(getCacheKey('temp', clientId))
+        const tempCacheItemKeys = await tempCache.keys()
+        tempCacheItemKeys.forEach(async request => {
+            const response = await tempCache.match(request)
+            sectionCache.put(request, response)
+        })
 
-    // Clean up
-    removeRecording(clientId)
+        // Clean up
+        removeRecording(clientId)
 
-    // Send confirmation message to client
-    self.clients.get(clientId).then(client => {
-        client.postMessage({ type: swMsgs.recordingCompleted })
-    })
+        // Send confirmation message to client
+        self.clients.get(clientId).then(client => {
+            client.postMessage({ type: swMsgs.recordingCompleted })
+        })
+    } catch (err) {
+        stopRecording(err, clientId)
+    }
 }
