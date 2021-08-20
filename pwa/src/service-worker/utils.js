@@ -8,7 +8,7 @@ const CACHE_KEEP_LIST = ['other-assets', 'app-shell']
 // Fallback prevents error when switching from pwa enabled to disabled
 const URL_FILTER_PATTERNS = JSON.parse(
     process.env.REACT_APP_DHIS2_APP_PWA_CACHING_PATTERNS_TO_OMIT || '[]'
-)
+).map(pattern => new RegExp(pattern))
 const OMIT_EXTERNAL_REQUESTS =
     process.env.REACT_APP_DHIS2_APP_PWA_CACHING_OMIT_EXTERNAL_REQUESTS ===
     'true'
@@ -44,7 +44,7 @@ export function urlMeetsDefaultCachingCriteria(url) {
 
     // Don't cache if url matches filter in pattern list from d2.config.js
     const urlMatchesFilter = URL_FILTER_PATTERNS.some(pattern =>
-        new RegExp(pattern).test(url.href)
+        pattern.test(url.href)
     )
     if (urlMatchesFilter) {
         return false
