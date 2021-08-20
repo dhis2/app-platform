@@ -1,3 +1,16 @@
+# [7.3.0-alpha.2](https://github.com/dhis2/app-platform/compare/v7.3.0-alpha.1...v7.3.0-alpha.2) (2021-08-20)
+
+
+### Bug Fixes
+
+* catch errors in completeRecording ([e67ae82](https://github.com/dhis2/app-platform/commit/e67ae821b33990435f3846f3ce933362105520bb))
+* check whole URL against filter patterns ([5468114](https://github.com/dhis2/app-platform/commit/5468114e8631610d4e70f6c54a288a62cc7f28c2))
+
+
+### Features
+
+* allow RegEx for filter patterns in d2.config.js ([9699330](https://github.com/dhis2/app-platform/commit/96993301f1d3ba4eec719bd2ecf93b72995653ba))
+
 # [7.3.0-alpha.1](https://github.com/dhis2/app-platform/compare/v7.2.0...v7.3.0-alpha.1) (2021-07-23)
 
 
