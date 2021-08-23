@@ -1,5 +1,5 @@
 import { swMsgs } from '../lib/constants'
-import { SECTIONS_STORE } from '../lib/sections-db'
+import { openSectionsDB, SECTIONS_STORE } from '../lib/sections-db'
 
 // Triggered on 'START_RECORDING' message
 export function startRecording(event) {
@@ -109,6 +109,7 @@ function stopRecording(error, clientId) {
     // In case of error, notify client and remove recording
     if (error) {
         self.clients.get(clientId).then(client => {
+            // todo: use plain object instead of Error for firefox compatibility
             client.postMessage({
                 type: swMsgs.recordingError,
                 payload: {
@@ -176,13 +177,16 @@ function startConfirmationTimeout(clientId) {
 }
 
 /** Triggered by 'COMPLETE_RECORDING' message; saves recording */
-// todo: handle errors
 export async function completeRecording(clientId) {
     try {
         const recordingState = self.clientRecordingStates[clientId]
         console.debug('[SW] Completing recording', { clientId, recordingState })
         clearTimeout(recordingState.confirmationTimeout)
 
+        // If global state has reset, reopen IndexedDB
+        if (self.dbPromise === undefined) {
+            self.dbPromise = openSectionsDB()
+        }
         // Add content to DB
         const db = await self.dbPromise
         db.put(SECTIONS_STORE, {

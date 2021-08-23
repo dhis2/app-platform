@@ -37,11 +37,8 @@ export function setUpServiceWorker() {
     // TODO: control with env var
     self.__WB_DISABLE_DEV_LOGS = true
 
-    // Globals
+    // Globals (Note: global state resets each time SW goes idle)
 
-    // Will be populated upon activation with a promise that accesses the
-    // recorded sections IndexedDB using the `idb` library - see `createDB()`
-    self.dbPromise
     // Tracks recording states for multiple clients to handle multiple windows
     // recording simultaneously
     self.clientRecordingStates = {}
