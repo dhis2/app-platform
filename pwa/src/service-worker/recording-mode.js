@@ -112,7 +112,7 @@ function stopRecording(error, clientId) {
             client.postMessage({
                 type: swMsgs.recordingError,
                 payload: {
-                    error,
+                    msg: error.message,
                 },
             })
         })
