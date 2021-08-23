@@ -1,3 +1,13 @@
+# [7.3.0-alpha.3](https://github.com/dhis2/app-platform/compare/v7.3.0-alpha.2...v7.3.0-alpha.3) (2021-08-23)
+
+
+### Bug Fixes
+
+* only return sections with cached data from getCachedSections ([f6242d1](https://github.com/dhis2/app-platform/commit/f6242d1b6b25268f3a0c441060264d584d023afe))
+* reopen indexedDB if global state resets ([0aded68](https://github.com/dhis2/app-platform/commit/0aded6846b1f9abc567e44144006cb516516e8b3))
+* return true if either cache or idb entry is removed ([43d8001](https://github.com/dhis2/app-platform/commit/43d8001ab2aa6077bb0dc3fbaecb2228399a26e4))
+* simplify message payload to be compatible with firefox ([5e5a633](https://github.com/dhis2/app-platform/commit/5e5a633440e1b103669dae3d0b1e8786cde9f96b))
+
 # [7.3.0-alpha.2](https://github.com/dhis2/app-platform/compare/v7.3.0-alpha.1...v7.3.0-alpha.2) (2021-08-20)
 
 
