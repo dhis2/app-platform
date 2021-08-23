@@ -154,8 +154,11 @@ export class OfflineInterface {
             cleanUpListeners()
             onCompleted()
         })
-        this.offlineEvents.once(swMsgs.recordingError, ({ error }) => {
+        this.offlineEvents.once(swMsgs.recordingError, ({ msg }) => {
             cleanUpListeners()
+            // Make error out of message from SW (firefox SW message interface
+            // doesn't handle payloads other than simple objects)
+            const error = new Error(msg)
             onError(error)
         })
     }
