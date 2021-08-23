@@ -10,7 +10,7 @@ ReactDOM.render(
         <CssReset />
         <App />
     </>,
-    document.getElementById('root')
+    document.getElementById('dhis2-app-root')
 )
 
 // If you want your app to work offline and load faster, you can change
