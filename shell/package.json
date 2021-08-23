@@ -13,7 +13,7 @@
     },
     "dependencies": {
         "@dhis2/app-adapter": "7.3.0-alpha.2",
-        "@dhis2/app-runtime": "^2.10.0-pwa.1",
+        "@dhis2/app-runtime": "^2.10.0-pwa.3",
         "@dhis2/pwa": "7.3.0-alpha.2",
         "@dhis2/d2-i18n": "^1.1.0",
         "@dhis2/ui": "^6.10.5",
