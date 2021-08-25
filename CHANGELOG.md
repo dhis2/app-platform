@@ -1,3 +1,10 @@
+# [7.4.0](https://github.com/dhis2/app-platform/compare/v7.3.0...v7.4.0) (2021-08-24)
+
+
+### Features
+
+* **portal-root:** add root element for react portals ([5bd8566](https://github.com/dhis2/app-platform/commit/5bd856668c61af1ce8b5509fb059478402dc26c1))
+
 # [7.3.0](https://github.com/dhis2/app-platform/compare/v7.2.1...v7.3.0) (2021-08-12)
 
 
