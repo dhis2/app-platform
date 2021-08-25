@@ -1,7 +1,7 @@
 const path = require('path')
 const { reporter } = require('@dhis2/cli-helpers-engine')
-const { runCLI } = require('@jest/core')
 const fs = require('fs-extra')
+const { runCLI } = require('jest-cli')
 const exitOnCatch = require('../lib/exitOnCatch')
 const loadEnvFiles = require('../lib/loadEnvFiles')
 const makePaths = require('../lib/paths')
