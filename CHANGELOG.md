@@ -1,3 +1,10 @@
+## [7.5.1](https://github.com/dhis2/app-platform/compare/v7.5.0...v7.5.1) (2021-08-25)
+
+
+### Reverts
+
+* "feat: bump jest to v27 ([#616](https://github.com/dhis2/app-platform/issues/616))" ([7733d14](https://github.com/dhis2/app-platform/commit/7733d14f48b99d1fe9d117abd0b4b823d9f55cd5))
+
 # [7.5.0](https://github.com/dhis2/app-platform/compare/v7.4.0...v7.5.0) (2021-08-25)
 
 
