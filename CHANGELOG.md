@@ -1,3 +1,10 @@
+# [7.5.0](https://github.com/dhis2/app-platform/compare/v7.4.0...v7.5.0) (2021-08-25)
+
+
+### Features
+
+* bump jest to v27 ([#616](https://github.com/dhis2/app-platform/issues/616)) ([618fd27](https://github.com/dhis2/app-platform/commit/618fd27ea9d66bc762a83a4e8248862efbf5f49b))
+
 # [7.4.0](https://github.com/dhis2/app-platform/compare/v7.3.0...v7.4.0) (2021-08-24)
 
 
