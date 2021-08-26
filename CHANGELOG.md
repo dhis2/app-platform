@@ -1,3 +1,16 @@
+# [8.0.0-beta.1](https://github.com/dhis2/app-platform/compare/v7.5.1-beta.1...v8.0.0-beta.1) (2021-08-26)
+
+
+### Features
+
+* bump jest to v27 ([f5015b2](https://github.com/dhis2/app-platform/commit/f5015b2186978a08a2315474de9317423fde9b90))
+
+
+### BREAKING CHANGES
+
+* Upgrade Jest to 27.x.
+Please see for a list of changes: https://jestjs.io/blog/2021/05/25/jest-27
+
 ## [7.5.1-beta.1](https://github.com/dhis2/app-platform/compare/v7.5.0...v7.5.1-beta.1) (2021-08-25)
 
 
