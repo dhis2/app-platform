@@ -1,3 +1,10 @@
+# [8.0.0-beta.2](https://github.com/dhis2/app-platform/compare/v8.0.0-beta.1...v8.0.0-beta.2) (2021-08-30)
+
+
+### Bug Fixes
+
+* set jsdom as default test environment ([#624](https://github.com/dhis2/app-platform/issues/624)) ([2f1ba42](https://github.com/dhis2/app-platform/commit/2f1ba4228a7a9a6f95a44258e615ba73461537bc))
+
 # [8.0.0-beta.1](https://github.com/dhis2/app-platform/compare/v7.5.1-beta.1...v8.0.0-beta.1) (2021-08-26)
 
 
