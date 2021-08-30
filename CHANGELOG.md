@@ -1,3 +1,10 @@
+# [7.3.0-alpha.4](https://github.com/dhis2/app-platform/compare/v7.3.0-alpha.3...v7.3.0-alpha.4) (2021-08-30)
+
+
+### Features
+
+* use new headerbar with online status indicator ([#626](https://github.com/dhis2/app-platform/issues/626)) ([3bd7d37](https://github.com/dhis2/app-platform/commit/3bd7d37d0776dfd44ab583a95ad47734c1302f84))
+
 # [7.3.0-alpha.3](https://github.com/dhis2/app-platform/compare/v7.3.0-alpha.2...v7.3.0-alpha.3) (2021-08-23)
 
 
