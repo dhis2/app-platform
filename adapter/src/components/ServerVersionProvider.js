@@ -10,6 +10,7 @@ export const ServerVersionProvider = ({
     url,
     apiVersion,
     offlineInterface,
+    pwaEnabled,
     children,
 }) => {
     const [{ loading, error, systemInfo }, setState] = useState({
@@ -55,6 +56,7 @@ export const ServerVersionProvider = ({
                 apiVersion: apiVersion || realApiVersion,
                 serverVersion,
                 systemInfo,
+                pwaEnabled,
             }}
             offlineInterface={offlineInterface}
         >
@@ -67,5 +69,6 @@ ServerVersionProvider.propTypes = {
     apiVersion: PropTypes.number,
     children: PropTypes.element,
     offlineInterface: PropTypes.shape({}),
+    pwaEnabled: PropTypes.bool,
     url: PropTypes.string,
 }
