@@ -60,6 +60,7 @@
     "jest": {
         "testPathIgnorePatterns": [
             "src/commands/test.js"
-        ]
+        ],
+        "testEnvironment": "node"
     }
 }
