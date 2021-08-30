@@ -1,3 +1,10 @@
+# [8.0.0-beta.3](https://github.com/dhis2/app-platform/compare/v8.0.0-beta.2...v8.0.0-beta.3) (2021-08-30)
+
+
+### Bug Fixes
+
+* **cli:** set test environment to node ([#625](https://github.com/dhis2/app-platform/issues/625)) ([36d311b](https://github.com/dhis2/app-platform/commit/36d311b4aca74535d551d300a509117a1cb95179))
+
 # [8.0.0-beta.2](https://github.com/dhis2/app-platform/compare/v8.0.0-beta.1...v8.0.0-beta.2) (2021-08-30)
 
 
