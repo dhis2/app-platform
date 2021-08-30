@@ -11,4 +11,5 @@ module.exports = {
             './jest.styled-jsx-css.mock.js'
         ),
     },
+    testEnvironment: 'jsdom',
 }
