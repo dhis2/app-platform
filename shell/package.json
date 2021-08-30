@@ -14,9 +14,9 @@
     "dependencies": {
         "@dhis2/app-adapter": "7.3.0-alpha.3",
         "@dhis2/app-runtime": "^2.10.0-pwa.3",
-        "@dhis2/pwa": "7.3.0-alpha.3",
         "@dhis2/d2-i18n": "^1.1.0",
-        "@dhis2/ui": "^6.10.5",
+        "@dhis2/pwa": "7.3.0-alpha.3",
+        "@dhis2/ui": "^6.19.0",
         "classnames": "^2.2.6",
         "moment": "^2.29.1",
         "prop-types": "^15.7.2",
