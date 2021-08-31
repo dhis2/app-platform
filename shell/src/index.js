@@ -9,5 +9,5 @@ ReactDOM.render(
         <CssReset />
         <App />
     </>,
-    document.getElementById('root')
+    document.getElementById('dhis2-app-root')
 )

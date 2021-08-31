@@ -1,39 +1,37 @@
-# [7.3.0-alpha.4](https://github.com/dhis2/app-platform/compare/v7.3.0-alpha.3...v7.3.0-alpha.4) (2021-08-30)
+## [7.5.1](https://github.com/dhis2/app-platform/compare/v7.5.0...v7.5.1) (2021-08-25)
+
+
+### Reverts
+
+* "feat: bump jest to v27 ([#616](https://github.com/dhis2/app-platform/issues/616))" ([7733d14](https://github.com/dhis2/app-platform/commit/7733d14f48b99d1fe9d117abd0b4b823d9f55cd5))
+
+# [7.5.0](https://github.com/dhis2/app-platform/compare/v7.4.0...v7.5.0) (2021-08-25)
 
 
 ### Features
 
-* use new headerbar with online status indicator ([#626](https://github.com/dhis2/app-platform/issues/626)) ([3bd7d37](https://github.com/dhis2/app-platform/commit/3bd7d37d0776dfd44ab583a95ad47734c1302f84))
+* bump jest to v27 ([#616](https://github.com/dhis2/app-platform/issues/616)) ([618fd27](https://github.com/dhis2/app-platform/commit/618fd27ea9d66bc762a83a4e8248862efbf5f49b))
 
-# [7.3.0-alpha.3](https://github.com/dhis2/app-platform/compare/v7.3.0-alpha.2...v7.3.0-alpha.3) (2021-08-23)
+# [7.4.0](https://github.com/dhis2/app-platform/compare/v7.3.0...v7.4.0) (2021-08-24)
+
+
+### Features
+
+* **portal-root:** add root element for react portals ([5bd8566](https://github.com/dhis2/app-platform/commit/5bd856668c61af1ce8b5509fb059478402dc26c1))
+
+# [7.3.0](https://github.com/dhis2/app-platform/compare/v7.2.1...v7.3.0) (2021-08-12)
+
+
+### Features
+
+* **cli:** add jestConfig option to test script ([#605](https://github.com/dhis2/app-platform/issues/605)) ([57d6407](https://github.com/dhis2/app-platform/commit/57d6407996711a445629be497dbe7b47728101a7))
+
+## [7.2.1](https://github.com/dhis2/app-platform/compare/v7.2.0...v7.2.1) (2021-07-27)
 
 
 ### Bug Fixes
 
-* only return sections with cached data from getCachedSections ([f6242d1](https://github.com/dhis2/app-platform/commit/f6242d1b6b25268f3a0c441060264d584d023afe))
-* reopen indexedDB if global state resets ([0aded68](https://github.com/dhis2/app-platform/commit/0aded6846b1f9abc567e44144006cb516516e8b3))
-* return true if either cache or idb entry is removed ([43d8001](https://github.com/dhis2/app-platform/commit/43d8001ab2aa6077bb0dc3fbaecb2228399a26e4))
-* simplify message payload to be compatible with firefox ([5e5a633](https://github.com/dhis2/app-platform/commit/5e5a633440e1b103669dae3d0b1e8786cde9f96b))
-
-# [7.3.0-alpha.2](https://github.com/dhis2/app-platform/compare/v7.3.0-alpha.1...v7.3.0-alpha.2) (2021-08-20)
-
-
-### Bug Fixes
-
-* catch errors in completeRecording ([e67ae82](https://github.com/dhis2/app-platform/commit/e67ae821b33990435f3846f3ce933362105520bb))
-* check whole URL against filter patterns ([5468114](https://github.com/dhis2/app-platform/commit/5468114e8631610d4e70f6c54a288a62cc7f28c2))
-
-
-### Features
-
-* allow RegEx for filter patterns in d2.config.js ([9699330](https://github.com/dhis2/app-platform/commit/96993301f1d3ba4eec719bd2ecf93b72995653ba))
-
-# [7.3.0-alpha.1](https://github.com/dhis2/app-platform/compare/v7.2.0...v7.3.0-alpha.1) (2021-07-23)
-
-
-### Features
-
-* add service worker and pwa capabilities ([#550](https://github.com/dhis2/app-platform/issues/550)) ([225069e](https://github.com/dhis2/app-platform/commit/225069e11d924734c5ac2e257af7d5e9185c612a)), closes [#580](https://github.com/dhis2/app-platform/issues/580) [#582](https://github.com/dhis2/app-platform/issues/582) [#592](https://github.com/dhis2/app-platform/issues/592)
+* **cli:** Support multiple library entrypoints ([#597](https://github.com/dhis2/app-platform/issues/597)) ([a95be81](https://github.com/dhis2/app-platform/commit/a95be817a669901a082621be88e37e516dcd6bf3))
 
 # [7.2.0](https://github.com/dhis2/app-platform/compare/v7.1.2...v7.2.0) (2021-07-23)
 
