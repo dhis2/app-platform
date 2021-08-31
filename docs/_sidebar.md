@@ -18,6 +18,7 @@
     -   [CSS](usage/css)
     -   [Static Files](usage/static-files)
     -   [Custom App Icon](usage/app-icon)
+-   [**PWA**](pwa/pwa)
 -   [**Architecture**](architecture)
 -   [**Troubleshooting**](troubleshooting.md)
 -   &nbsp;

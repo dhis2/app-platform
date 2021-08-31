@@ -1,6 +1,6 @@
 {
     "name": "root",
-    "version": "7.5.1",
+    "version": "7.6.0-alpha.1",
     "private": true,
     "repository": {
         "type": "git",
@@ -9,22 +9,27 @@
     "workspaces": {
         "packages": [
             "examples/simple-app",
+            "examples/pwa-app",
             "cli",
             "shell",
-            "adapter"
+            "adapter",
+            "pwa"
         ]
     },
     "devDependencies": {
-        "@dhis2/cli-style": "^9.0.0",
+        "@dhis2/cli-style": "^9.0.1",
         "@dhis2/cli-utils-docsite": "^3.0.0",
         "concurrently": "^6.0.0"
     },
     "scripts": {
         "format": "d2-style apply",
         "lint": "d2-style check",
-        "build": "yarn build:adapter && yarn build:example",
+        "build": "yarn build:pwa && yarn build:adapter && yarn build:example && yarn build:pwa-app",
         "build:adapter": "yarn workspace @dhis2/app-adapter build",
         "build:example": "yarn workspace simple-app build",
+        "build:pwa-app": "yarn workspace pwa-app build",
+        "build:pwa": "yarn workspace @dhis2/pwa build",
+        "pwa-demo": "yarn build:pwa && yarn build:adapter && yarn workspace pwa-app demo",
         "start:example": "yarn workspace simple-app start --force",
         "start": "yarn build:adapter && yarn start:example",
         "docs:serve": "d2-utils-docsite serve ./docs -o ./dist",

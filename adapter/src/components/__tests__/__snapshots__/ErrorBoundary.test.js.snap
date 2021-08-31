@@ -1,0 +1,3 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ErrorBoundary Should match the snapshot tree when error is manually invoked 1`] = `ShallowWrapper {}`;
