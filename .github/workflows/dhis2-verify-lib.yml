@@ -19,6 +19,8 @@ jobs:
 
         steps:
             - uses: actions/checkout@v2
+              with:
+                  token: ${{secrets.DHIS2_BOT_GITHUB_TOKEN}}
             - uses: actions/setup-node@v1
               with:
                   node-version: 12.x
