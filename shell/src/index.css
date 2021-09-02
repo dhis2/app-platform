@@ -11,3 +11,13 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
 }
+
+#dhis2-app-root {
+    /* establish a stacking context for the application */
+    isolation: isolate;
+}
+
+#dhis2-portal-root {
+    /* establish a stacking context for portals */
+    isolation: isolate;
+}
