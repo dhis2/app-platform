@@ -1,3 +1,10 @@
+## [7.6.2](https://github.com/dhis2/app-platform/compare/v7.6.1...v7.6.2) (2021-09-02)
+
+
+### Bug Fixes
+
+* import index.css in index.js so styles are applied ([8db1bf8](https://github.com/dhis2/app-platform/commit/8db1bf8f234e808a5299474df3f1dc6998feac44))
+
 ## [7.6.1](https://github.com/dhis2/app-platform/compare/v7.6.0...v7.6.1) (2021-09-02)
 
 
