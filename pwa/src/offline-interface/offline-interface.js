@@ -6,10 +6,11 @@ import { openSectionsDB, SECTIONS_STORE } from '../lib/sections-db'
 
 /** Helper to simplify SW message sending */
 function swMessage(type, payload) {
-    if (!navigator.serviceWorker.controller)
+    if (!navigator.serviceWorker.controller) {
         throw new Error(
             '[Offine interface] Cannot send service worker message - no service worker is registered'
         )
+    }
     navigator.serviceWorker.controller.postMessage({ type, payload })
 }
 
@@ -29,9 +30,10 @@ export class OfflineInterface {
             unregister()
         }
 
-        if ('serviceWorker' in navigator)
+        if ('serviceWorker' in navigator) {
             navigator.serviceWorker.oncontrollerchange = () =>
                 window.location.reload()
+        }
     }
     /**
      * Checks for service worker updates and sets up an interface for
@@ -44,10 +46,14 @@ export class OfflineInterface {
      * @returns {Function} A clean-up function that removes listeners
      */
     init({ promptUpdate }) {
-        if (!('serviceWorker' in navigator)) return null
+        if (!('serviceWorker' in navigator)) {
+            return null
+        }
 
         function onUpdate(registration) {
-            if (!promptUpdate) return
+            if (!promptUpdate) {
+                return
+            }
             const reloadMessage = i18n.t(
                 'App updates are ready and will be activated after all tabs of this app are closed. Skip waiting and reload to update now?'
             )
@@ -70,7 +76,9 @@ export class OfflineInterface {
 
         // Receives messages from service worker and forwards to event emitter
         const handleServiceWorkerMessage = event => {
-            if (!event.data) return
+            if (!event.data) {
+                return
+            }
             const { type, payload } = event.data
             this.offlineEvents.emit(type, payload)
         }
@@ -115,14 +123,16 @@ export class OfflineInterface {
         onCompleted,
         onError,
     }) {
-        if (!this.initialized)
+        if (!this.initialized) {
             throw new Error(
                 'OfflineInterface has not been initialized. Make sure `pwa.enabled` is `true` in `d2.config.js`'
             )
-        if (!sectionId || !onStarted || !onCompleted || !onError)
+        }
+        if (!sectionId || !onStarted || !onCompleted || !onError) {
             throw new Error(
                 '[Offline interface] The options { sectionId, onStarted, onCompleted, onError } are required when calling startRecording()'
             )
+        }
 
         // Send SW message to start recording
         swMessage(swMsgs.startRecording, {
@@ -169,10 +179,11 @@ export class OfflineInterface {
      * @returns {Promise} A promise that resolves to an array of cached sections.
      */
     async getCachedSections() {
-        if (!this.pwaEnabled)
+        if (!this.pwaEnabled) {
             throw new Error(
                 'Cannot get cached sections - PWA is not enabled in d2.config.js'
             )
+        }
 
         await navigator.serviceWorker.ready
         if (this.dbPromise === undefined) {
@@ -196,10 +207,11 @@ export class OfflineInterface {
      * @returns {Promise} A promise that resolves to `true` if at least one of the cache or the idb entry are deleted or `false` if neither were found.
      */
     async removeSection(sectionId) {
-        if (!this.pwaEnabled)
+        if (!this.pwaEnabled) {
             throw new Error(
                 'Cannot remove section - PWA is not enabled in d2.config.js'
             )
+        }
         if (!sectionId) {
             throw new Error('No section ID specified to delete')
         }

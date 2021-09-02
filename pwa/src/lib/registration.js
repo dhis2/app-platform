@@ -32,9 +32,14 @@ export async function checkForUpdates({ onUpdate }) {
         const installingWorker = registration.installing
         if (installingWorker) {
             installingWorker.onstatechange = () => {
-                if (installingWorker.state !== 'installed') return
-                if (navigator.serviceWorker.controller) handleWaitingSW()
-                else console.log('Content is cached for offline use.')
+                if (installingWorker.state !== 'installed') {
+                    return
+                }
+                if (navigator.serviceWorker.controller) {
+                    handleWaitingSW()
+                } else {
+                    console.log('Content is cached for offline use.')
+                }
             }
         }
     }
