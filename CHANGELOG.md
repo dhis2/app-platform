@@ -1,3 +1,10 @@
+## [7.6.1](https://github.com/dhis2/app-platform/compare/v7.6.0...v7.6.1) (2021-09-02)
+
+
+### Bug Fixes
+
+* **shell:** create new stacking context for roots ([324a095](https://github.com/dhis2/app-platform/commit/324a0958ae436e75cb1b252263dfafbd1447097f))
+
 # [7.6.0](https://github.com/dhis2/app-platform/compare/v7.5.1...v7.6.0) (2021-08-31)
 
 
