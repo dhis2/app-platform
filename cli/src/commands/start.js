@@ -7,6 +7,7 @@ const i18n = require('../lib/i18n')
 const loadEnvFiles = require('../lib/loadEnvFiles')
 const parseConfig = require('../lib/parseConfig')
 const makePaths = require('../lib/paths')
+const createProxyServer = require('../lib/proxy')
 const { compileServiceWorker } = require('../lib/pwa')
 const makeShell = require('../lib/shell')
 const { validatePackage } = require('../lib/validatePackage')
@@ -18,6 +19,8 @@ const handler = async ({
     force,
     port = process.env.PORT || defaultPort,
     shell: shellSource,
+    proxy,
+    proxyPort,
 }) => {
     const paths = makePaths(cwd)
 
@@ -34,6 +37,30 @@ const handler = async ({
             )} is not currently supported for libraries!`
         )
         process.exit(1)
+    }
+
+    const newPort = await detectPort(port)
+
+    if (proxy) {
+        const newProxyPort = await detectPort(proxyPort)
+        const proxyBaseUrl = `http://localhost:${newProxyPort}`
+        process.env.DHIS2_DEFAULT_BASE_URL = proxyBaseUrl
+
+        reporter.print('')
+        reporter.info('Starting proxy server...')
+        reporter.print(
+            `The proxy for ${chalk.bold(
+                proxy
+            )} is now available on port ${newProxyPort}`
+        )
+        reporter.print('')
+
+        createProxyServer({
+            target: proxy,
+            baseUrl: proxyBaseUrl,
+            port: newProxyPort,
+            shellPort: newPort,
+        })
     }
 
     await exitOnCatch(
@@ -77,7 +104,6 @@ const handler = async ({
             reporter.info('Generating manifests...')
             await generateManifests(paths, config, process.env.PUBLIC_URL)
 
-            const newPort = await detectPort(port)
             if (String(newPort) !== String(port)) {
                 reporter.print('')
                 reporter.warn(
@@ -122,6 +148,16 @@ const command = {
             alias: 'p',
             type: 'number',
             description: 'The port to use when running the development server',
+        },
+        proxy: {
+            alias: 'P',
+            type: 'string',
+            description: 'The remote DHIS2 instance the proxy should point to',
+        },
+        proxyPort: {
+            type: 'number',
+            description: 'The port to use when running the proxy',
+            default: 8080,
         },
     },
     handler,

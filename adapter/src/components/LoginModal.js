@@ -11,10 +11,11 @@ import i18n from '../locales'
 import { post } from '../utils/api'
 
 const staticUrl = process.env.REACT_APP_DHIS2_BASE_URL
+const defaultUrl = process.env.REACT_APP_DHIS2_DEFAULT_BASE_URL
 
 export const LoginModal = () => {
     const [server, setServer] = useState(
-        staticUrl || window.localStorage.DHIS2_BASE_URL || ''
+        staticUrl || defaultUrl || window.localStorage.DHIS2_BASE_URL || ''
     )
     const [username, setUsername] = useState('')
     const [password, setPassword] = useState('')
