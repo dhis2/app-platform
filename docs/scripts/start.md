@@ -21,4 +21,6 @@ Global Options:
 Options:
   --cwd       working directory to use (defaults to cwd)
   --port, -p  The port to use when running the development server       [number]
+  --proxy, -P  The remote DHIS2 instance the proxy should point to      [string]
+  --proxyPort  The port to use when running the proxy   [number] [default: 8080]
 ```
