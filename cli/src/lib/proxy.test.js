@@ -1,4 +1,26 @@
-const { rewriteLocation } = require('./proxy')
+const { rewriteLocation, transformJsonResponse } = require('./proxy')
+
+describe('transformJsonResponse', () => {
+    it('rewrites URLs in responses if they match the proxy target', () => {
+        const transformedResponse = transformJsonResponse(
+            {
+                a: {
+                    b: {
+                        c: 'https://play.dhis2.org/dev/api/endpoint',
+                    },
+                },
+            },
+            {
+                target: 'https://play.dhis2.org/dev',
+                baseUrl: 'http://localhost:8080',
+            }
+        )
+
+        expect(transformedResponse.a.b.c).toBe(
+            'http://localhost:8080/api/endpoint'
+        )
+    })
+})
 
 describe('rewriteLocation', () => {
     it('rewrites locations if they match the proxy target', () => {

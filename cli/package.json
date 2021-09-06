@@ -48,6 +48,7 @@
         "inquirer": "^7.3.3",
         "jest-cli": "^24.9.0",
         "lodash": "^4.17.11",
+        "node-http-proxy-json": "^0.1.9",
         "parse-author": "^2.0.0",
         "parse-gitignore": "^1.0.1",
         "styled-jsx": "<3.3.3",
