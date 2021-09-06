@@ -100,7 +100,10 @@ exports = module.exports = ({ target, baseUrl, port, shellPort }) => {
             proxyRes.headers['set-cookie'] = sc.map(stripCookieSecure)
         }
 
-        if (proxyRes.headers['content-type']?.includes('application/json')) {
+        if (
+            proxyRes.headers['content-type'] &&
+            proxyRes.headers['content-type'].includes('application/json')
+        ) {
             transformProxyResponse(res, proxyRes, body => {
                 if (body) {
                     return transformJsonResponse(body, {
