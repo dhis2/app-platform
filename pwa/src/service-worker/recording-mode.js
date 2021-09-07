@@ -69,6 +69,14 @@ export function handleRecordedRequest({ request, event }) {
 /** Response handler during recording mode */
 function handleRecordedResponse(request, response, clientId) {
     const recordingState = self.clientRecordingStates[clientId]
+
+    if (!recordingState) {
+        // It's likely that the recording was stopped due to an error.
+        // There will be plenty of error messages logged; no need for another
+        // one here
+        return response
+    }
+
     // add response to temp cache - when recording is successful, move to permanent cache
     const tempCacheKey = getCacheKey('temp', clientId)
     addToCache(tempCacheKey, request, response)
