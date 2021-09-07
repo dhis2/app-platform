@@ -59,20 +59,27 @@ export class OfflineInterface {
         }
 
         function onUpdate(registration) {
-            if (!promptUpdate) {
-                return
-            }
-            const reloadMessage = i18n.t(
-                'App updates are ready and will be activated after all tabs of this app are closed. Skip waiting and reload to update now?'
-            )
-            const onConfirm = () =>
+            const skipWaiting = () =>
                 registration.waiting.postMessage({
                     type: swMsgs.skipWaiting,
                 })
+
+            // If no update prompt function is provided, or if in dev or test
+            // environments, skip waiting and activate newly installed SW
+            // without waiting
+            if (!promptUpdate || process.env.NODE_ENV !== 'production') {
+                skipWaiting()
+                return
+            }
+
+            // Otherwise, call promptUpdate callback with appropriate args
+            const reloadMessage = i18n.t(
+                'App updates are ready and will be activated after all tabs of this app are closed. Skip waiting and reload to update now?'
+            )
             promptUpdate({
                 message: reloadMessage,
                 action: i18n.t('Update'),
-                onConfirm: onConfirm,
+                onConfirm: skipWaiting,
             })
         }
 
