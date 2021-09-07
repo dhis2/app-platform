@@ -41,6 +41,30 @@ describe('rewriteLocation', () => {
                 baseUrl,
             })
         ).toBe(`${baseUrl}/page?param=value`)
+
+        expect(
+            rewriteLocation({
+                location: 'https://server.com:1234',
+                target: 'https://server.com:5678',
+                baseUrl,
+            })
+        ).toBe('https://server.com:1234')
+
+        expect(
+            rewriteLocation({
+                location: 'https://server.com',
+                target: 'http://server.com',
+                baseUrl,
+            })
+        ).toBe(baseUrl)
+
+        expect(
+            rewriteLocation({
+                location: 'https://play.dhis2.org/dev/api/dev',
+                target: 'https://play.dhis2.org/dev',
+                baseUrl,
+            })
+        ).toBe(`${baseUrl}/api/dev`)
     })
 
     it('does not rewrite locations if they do not match the proxy target', () => {
