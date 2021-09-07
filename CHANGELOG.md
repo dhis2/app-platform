@@ -1,3 +1,10 @@
+## [7.6.3](https://github.com/dhis2/app-platform/compare/v7.6.2...v7.6.3) (2021-09-07)
+
+
+### Bug Fixes
+
+* **offline-interface:** prevent infinite update loop in Chrome ([#638](https://github.com/dhis2/app-platform/issues/638)) ([079f6ea](https://github.com/dhis2/app-platform/commit/079f6ea382fa4fd29ee72a9cd526a282f591837b))
+
 ## [7.6.2](https://github.com/dhis2/app-platform/compare/v7.6.1...v7.6.2) (2021-09-02)
 
 
