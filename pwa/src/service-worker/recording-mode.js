@@ -109,7 +109,7 @@ function stopRecording(error, clientId) {
     // In case of error, notify client and remove recording
     if (error) {
         self.clients.get(clientId).then(client => {
-            // todo: use plain object instead of Error for firefox compatibility
+            // use plain object instead of Error for firefox compatibility
             client.postMessage({
                 type: swMsgs.recordingError,
                 payload: {
