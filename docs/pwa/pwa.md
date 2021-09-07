@@ -6,7 +6,7 @@ The App Platform provides some tools that can enable some PWA features and offli
 
 ### Opting In
 
-You can opt in to PWA features using options in `d2.config.json`. Here are the options and their effects:
+You can opt in to PWA features using options in `d2.config.js`. Here are the options and their effects:
 
 | **`config` Property**                   | **Type**                                                            | **Description**                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  |
 | --------------------------------------- | ------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -56,6 +56,8 @@ As a measure to protect against saving faulty recordings, once the recording tim
 ### Service worker messages
 
 A number of messages are sent between the service worker and a client using the `postMessage` interface to communicate and initiate different actions.
+
+**NB** These are internal and added only for developer reference.
 
 | **Message type (event.data.type)** | **Sent by? (SW or Client)** | **Payload expected (event.data.payload)**  | **Event**                                             | **Notes**                                                                                                                                                                                                                                                                     |
 | ---------------------------------- | --------------------------- | ------------------------------------------ | ----------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
