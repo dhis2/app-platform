@@ -61,7 +61,6 @@ export function handleRecordedRequest({ request, event }) {
             return handleRecordedResponse(request, response, event.clientId)
         })
         .catch(error => {
-            console.error(error)
             stopRecording(error, event.clientId)
         })
 }
@@ -111,10 +110,13 @@ function startRecordingTimeout(clientId) {
 function stopRecording(error, clientId) {
     const recordingState = self.clientRecordingStates[clientId]
 
-    console.debug('[SW] Stopping recording', { clientId, recordingState })
-    clearTimeout(recordingState?.recordingTimeout)
+    if (recordingState) {
+        console.debug('[SW] Stopping recording', { clientId, recordingState })
+        clearTimeout(recordingState.recordingTimeout)
+    }
 
-    // In case of error, notify client and remove recording
+    // In case of error, notify client and remove recording.
+    // Post message even if !recordingState to ensure client stops.
     if (error) {
         self.clients.get(clientId).then(client => {
             // use plain object instead of Error for firefox compatibility
