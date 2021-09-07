@@ -31,8 +31,16 @@ export class OfflineInterface {
         }
 
         if ('serviceWorker' in navigator) {
-            navigator.serviceWorker.oncontrollerchange = () =>
+            let reloading
+            navigator.serviceWorker.oncontrollerchange = () => {
+                if (reloading) {
+                    // Fixes an infinite update loop when 'Update on reload' is
+                    // checked in Chrome
+                    return
+                }
+                reloading = true
                 window.location.reload()
+            }
         }
     }
     /**
