@@ -1,6 +1,6 @@
 {
     "name": "@dhis2/cli-app-scripts",
-    "version": "8.0.0-beta.3",
+    "version": "7.6.4",
     "engines": {
         "node": ">=12"
     },
@@ -28,7 +28,7 @@
         "@babel/preset-env": "^7.14.7",
         "@babel/preset-react": "^7.0.0",
         "@babel/preset-typescript": "^7.6.0",
-        "@dhis2/app-shell": "8.0.0-beta.3",
+        "@dhis2/app-shell": "7.6.4",
         "@dhis2/cli-helpers-engine": "^3.0.0",
         "@jest/core": "^27.0.6",
         "archiver": "^3.1.1",
@@ -49,7 +49,9 @@
         "lodash": "^4.17.11",
         "parse-author": "^2.0.0",
         "parse-gitignore": "^1.0.1",
-        "styled-jsx": "<3.3.3"
+        "styled-jsx": "<3.3.3",
+        "webpack": "^5.41.1",
+        "workbox-build": "^6.1.5"
     },
     "bin": {
         "d2-app-scripts": "./bin/d2-app-scripts"

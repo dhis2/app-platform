@@ -6,7 +6,13 @@ import { parseServerVersion } from '../utils/parseServerVersion.js'
 import { LoadingMask } from './LoadingMask.js'
 import { LoginModal } from './LoginModal.js'
 
-export const ServerVersionProvider = ({ url, apiVersion, children }) => {
+export const ServerVersionProvider = ({
+    url,
+    apiVersion,
+    offlineInterface,
+    pwaEnabled,
+    children,
+}) => {
     const [{ loading, error, systemInfo }, setState] = useState({
         loading: true,
     })
@@ -50,7 +56,9 @@ export const ServerVersionProvider = ({ url, apiVersion, children }) => {
                 apiVersion: apiVersion || realApiVersion,
                 serverVersion,
                 systemInfo,
+                pwaEnabled,
             }}
+            offlineInterface={offlineInterface}
         >
             {children}
         </Provider>
@@ -60,5 +68,7 @@ export const ServerVersionProvider = ({ url, apiVersion, children }) => {
 ServerVersionProvider.propTypes = {
     apiVersion: PropTypes.number,
     children: PropTypes.element,
+    offlineInterface: PropTypes.shape({}),
+    pwaEnabled: PropTypes.bool,
     url: PropTypes.string,
 }

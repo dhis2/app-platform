@@ -66,6 +66,11 @@ const parseConfig = paths => {
             type === 'lib' ? paths.configDefaultsLib : paths.configDefaultsApp
         config = defaultsDeep(config, require(defaults))
 
+        // Add PWA defaults to apps
+        if (type === 'app') {
+            config = defaultsDeep(config, require(paths.configDefaultsPWA))
+        }
+
         if (fs.existsSync(paths.package)) {
             const pkg = fs.readJsonSync(paths.package)
             config.name = config.name || pkg.name

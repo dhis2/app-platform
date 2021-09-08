@@ -1,31 +1,70 @@
-# [8.0.0-beta.3](https://github.com/dhis2/app-platform/compare/v8.0.0-beta.2...v8.0.0-beta.3) (2021-08-30)
+## [7.6.4](https://github.com/dhis2/app-platform/compare/v7.6.3...v7.6.4) (2021-09-08)
 
 
 ### Bug Fixes
 
-* **cli:** set test environment to node ([#625](https://github.com/dhis2/app-platform/issues/625)) ([36d311b](https://github.com/dhis2/app-platform/commit/36d311b4aca74535d551d300a509117a1cb95179))
+* **recording-mode:** handle fulfilled requests after recording error ([#642](https://github.com/dhis2/app-platform/issues/642)) ([928e2cb](https://github.com/dhis2/app-platform/commit/928e2cb4882bf8a79d4f560cc89487d36235cd50))
 
-# [8.0.0-beta.2](https://github.com/dhis2/app-platform/compare/v8.0.0-beta.1...v8.0.0-beta.2) (2021-08-30)
+## [7.6.3](https://github.com/dhis2/app-platform/compare/v7.6.2...v7.6.3) (2021-09-07)
 
 
 ### Bug Fixes
 
-* set jsdom as default test environment ([#624](https://github.com/dhis2/app-platform/issues/624)) ([2f1ba42](https://github.com/dhis2/app-platform/commit/2f1ba4228a7a9a6f95a44258e615ba73461537bc))
+* **offline-interface:** prevent infinite update loop in Chrome ([#638](https://github.com/dhis2/app-platform/issues/638)) ([079f6ea](https://github.com/dhis2/app-platform/commit/079f6ea382fa4fd29ee72a9cd526a282f591837b))
 
-# [8.0.0-beta.1](https://github.com/dhis2/app-platform/compare/v7.5.1-beta.1...v8.0.0-beta.1) (2021-08-26)
+## [7.6.2](https://github.com/dhis2/app-platform/compare/v7.6.1...v7.6.2) (2021-09-02)
+
+
+### Bug Fixes
+
+* import index.css in index.js so styles are applied ([8db1bf8](https://github.com/dhis2/app-platform/commit/8db1bf8f234e808a5299474df3f1dc6998feac44))
+
+## [7.6.1](https://github.com/dhis2/app-platform/compare/v7.6.0...v7.6.1) (2021-09-02)
+
+
+### Bug Fixes
+
+* **shell:** create new stacking context for roots ([324a095](https://github.com/dhis2/app-platform/commit/324a0958ae436e75cb1b252263dfafbd1447097f))
+
+# [7.6.0](https://github.com/dhis2/app-platform/compare/v7.5.1...v7.6.0) (2021-08-31)
+
+
+### Bug Fixes
+
+* catch errors in completeRecording ([e67ae82](https://github.com/dhis2/app-platform/commit/e67ae821b33990435f3846f3ce933362105520bb))
+* check whole URL against filter patterns ([5468114](https://github.com/dhis2/app-platform/commit/5468114e8631610d4e70f6c54a288a62cc7f28c2))
+* only return sections with cached data from getCachedSections ([f6242d1](https://github.com/dhis2/app-platform/commit/f6242d1b6b25268f3a0c441060264d584d023afe))
+* reopen indexedDB if global state resets ([0aded68](https://github.com/dhis2/app-platform/commit/0aded6846b1f9abc567e44144006cb516516e8b3))
+* return true if either cache or idb entry is removed ([43d8001](https://github.com/dhis2/app-platform/commit/43d8001ab2aa6077bb0dc3fbaecb2228399a26e4))
+* simplify message payload to be compatible with firefox ([5e5a633](https://github.com/dhis2/app-platform/commit/5e5a633440e1b103669dae3d0b1e8786cde9f96b))
 
 
 ### Features
 
-* bump jest to v27 ([f5015b2](https://github.com/dhis2/app-platform/commit/f5015b2186978a08a2315474de9317423fde9b90))
+* add service worker and pwa capabilities ([#550](https://github.com/dhis2/app-platform/issues/550)) ([225069e](https://github.com/dhis2/app-platform/commit/225069e11d924734c5ac2e257af7d5e9185c612a)), closes [#580](https://github.com/dhis2/app-platform/issues/580) [#582](https://github.com/dhis2/app-platform/issues/582) [#592](https://github.com/dhis2/app-platform/issues/592)
+* allow RegEx for filter patterns in d2.config.js ([9699330](https://github.com/dhis2/app-platform/commit/96993301f1d3ba4eec719bd2ecf93b72995653ba))
+* use new headerbar with online status indicator ([#626](https://github.com/dhis2/app-platform/issues/626)) ([3bd7d37](https://github.com/dhis2/app-platform/commit/3bd7d37d0776dfd44ab583a95ad47734c1302f84))
+
+# [7.6.0-alpha.1](https://github.com/dhis2/app-platform/compare/v7.5.1...v7.6.0-alpha.1) (2021-08-31)
 
 
-### BREAKING CHANGES
+### Bug Fixes
 
-* Upgrade Jest to 27.x.
-Please see for a list of changes: https://jestjs.io/blog/2021/05/25/jest-27
+* catch errors in completeRecording ([e67ae82](https://github.com/dhis2/app-platform/commit/e67ae821b33990435f3846f3ce933362105520bb))
+* check whole URL against filter patterns ([5468114](https://github.com/dhis2/app-platform/commit/5468114e8631610d4e70f6c54a288a62cc7f28c2))
+* only return sections with cached data from getCachedSections ([f6242d1](https://github.com/dhis2/app-platform/commit/f6242d1b6b25268f3a0c441060264d584d023afe))
+* reopen indexedDB if global state resets ([0aded68](https://github.com/dhis2/app-platform/commit/0aded6846b1f9abc567e44144006cb516516e8b3))
+* return true if either cache or idb entry is removed ([43d8001](https://github.com/dhis2/app-platform/commit/43d8001ab2aa6077bb0dc3fbaecb2228399a26e4))
+* simplify message payload to be compatible with firefox ([5e5a633](https://github.com/dhis2/app-platform/commit/5e5a633440e1b103669dae3d0b1e8786cde9f96b))
 
-## [7.5.1-beta.1](https://github.com/dhis2/app-platform/compare/v7.5.0...v7.5.1-beta.1) (2021-08-25)
+
+### Features
+
+* add service worker and pwa capabilities ([#550](https://github.com/dhis2/app-platform/issues/550)) ([225069e](https://github.com/dhis2/app-platform/commit/225069e11d924734c5ac2e257af7d5e9185c612a)), closes [#580](https://github.com/dhis2/app-platform/issues/580) [#582](https://github.com/dhis2/app-platform/issues/582) [#592](https://github.com/dhis2/app-platform/issues/592)
+* allow RegEx for filter patterns in d2.config.js ([9699330](https://github.com/dhis2/app-platform/commit/96993301f1d3ba4eec719bd2ecf93b72995653ba))
+* use new headerbar with online status indicator ([#626](https://github.com/dhis2/app-platform/issues/626)) ([3bd7d37](https://github.com/dhis2/app-platform/commit/3bd7d37d0776dfd44ab583a95ad47734c1302f84))
+
+## [7.5.1](https://github.com/dhis2/app-platform/compare/v7.5.0...v7.5.1) (2021-08-25)
 
 
 ### Reverts
