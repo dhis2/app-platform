@@ -3,11 +3,12 @@ const { reporter, chalk } = require('@dhis2/cli-helpers-engine')
 const fs = require('fs-extra')
 const { compile } = require('../lib/compiler')
 const exitOnCatch = require('../lib/exitOnCatch')
-const generateManifest = require('../lib/generateManifest')
+const generateManifests = require('../lib/generateManifests')
 const i18n = require('../lib/i18n')
 const loadEnvFiles = require('../lib/loadEnvFiles')
 const parseConfig = require('../lib/parseConfig')
 const makePaths = require('../lib/paths')
+const { injectPrecacheManifest } = require('../lib/pwa')
 const makeShell = require('../lib/shell')
 const { validatePackage } = require('../lib/validatePackage')
 const { handler: pack } = require('./pack.js')
@@ -118,8 +119,20 @@ const handler = async ({
                     mode,
                     watch,
                 })
+
+                // Manifest generation moved here so these static assets can be
+                // precached by Workbox during the shell build step
+                reporter.info('Generating manifests...')
+                await generateManifests(paths, config, process.env.PUBLIC_URL)
+
+                // CRA Manages service worker compilation here
                 reporter.info('Building appShell...')
                 await shell.build()
+
+                if (config.pwa.enabled) {
+                    reporter.info('Injecting precache manifest...')
+                    await injectPrecacheManifest(paths, config)
+                }
             } else {
                 await Promise.all([
                     compile({
@@ -152,9 +165,6 @@ const handler = async ({
         }
 
         await fs.copy(paths.shellBuildOutput, paths.buildAppOutput)
-
-        reporter.info('Generating manifest...')
-        await generateManifest(paths, config, process.env.PUBLIC_URL)
 
         if (packAppOutput) {
             const bundle = path.parse(paths.buildAppBundle)
