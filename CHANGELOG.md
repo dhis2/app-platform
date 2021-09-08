@@ -12,6 +12,40 @@
 app-runtime. That means that this version of the app-platform will only
 work with apps that use version 3 of the app-runtime.
 
+# [8.0.0-beta.3](https://github.com/dhis2/app-platform/compare/v8.0.0-beta.2...v8.0.0-beta.3) (2021-08-30)
+
+
+### Bug Fixes
+
+* **cli:** set test environment to node ([#625](https://github.com/dhis2/app-platform/issues/625)) ([36d311b](https://github.com/dhis2/app-platform/commit/36d311b4aca74535d551d300a509117a1cb95179))
+
+# [8.0.0-beta.2](https://github.com/dhis2/app-platform/compare/v8.0.0-beta.1...v8.0.0-beta.2) (2021-08-30)
+
+
+### Bug Fixes
+
+* set jsdom as default test environment ([#624](https://github.com/dhis2/app-platform/issues/624)) ([2f1ba42](https://github.com/dhis2/app-platform/commit/2f1ba4228a7a9a6f95a44258e615ba73461537bc))
+
+# [8.0.0-beta.1](https://github.com/dhis2/app-platform/compare/v7.5.1-beta.1...v8.0.0-beta.1) (2021-08-26)
+
+
+### Features
+
+* bump jest to v27 ([f5015b2](https://github.com/dhis2/app-platform/commit/f5015b2186978a08a2315474de9317423fde9b90))
+
+
+### BREAKING CHANGES
+
+* Upgrade Jest to 27.x.
+Please see for a list of changes: https://jestjs.io/blog/2021/05/25/jest-27
+
+## [7.5.1-beta.1](https://github.com/dhis2/app-platform/compare/v7.5.0...v7.5.1-beta.1) (2021-08-25)
+
+
+### Reverts
+
+* "feat: bump jest to v27 ([#616](https://github.com/dhis2/app-platform/issues/616))" ([7733d14](https://github.com/dhis2/app-platform/commit/7733d14f48b99d1fe9d117abd0b4b823d9f55cd5))
+
 ## [7.6.2](https://github.com/dhis2/app-platform/compare/v7.6.1...v7.6.2) (2021-09-02)
 
 
