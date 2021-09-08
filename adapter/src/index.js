@@ -1,21 +1,30 @@
+import { checkForSWUpdateAndReload, OfflineInterface } from '@dhis2/pwa'
 import PropTypes from 'prop-types'
 import React from 'react'
 import { AppWrapper } from './components/AppWrapper.js'
-import { FatalErrorBoundary } from './components/FatalErrorBoundary.js'
-import { ServerVersionProvider } from './components/ServerVersionProvider.js'
+import { ErrorBoundary } from './components/ErrorBoundary'
+import { ServerVersionProvider } from './components/ServerVersionProvider'
 
-const AppAdapter = ({ url, apiVersion, appName, children }) => (
-    <FatalErrorBoundary>
-        <ServerVersionProvider url={url} apiVersion={apiVersion}>
+const offlineInterface = new OfflineInterface()
+
+const AppAdapter = ({ url, apiVersion, appName, pwaEnabled, children }) => (
+    <ErrorBoundary fullscreen onRetry={checkForSWUpdateAndReload}>
+        <ServerVersionProvider
+            url={url}
+            apiVersion={apiVersion}
+            pwaEnabled={pwaEnabled}
+            offlineInterface={offlineInterface}
+        >
             <AppWrapper appName={appName}>{children}</AppWrapper>
         </ServerVersionProvider>
-    </FatalErrorBoundary>
+    </ErrorBoundary>
 )
 
 AppAdapter.propTypes = {
     appName: PropTypes.string.isRequired,
     apiVersion: PropTypes.number,
     children: PropTypes.element,
+    pwaEnabled: PropTypes.bool,
     url: PropTypes.string,
 }
 

@@ -1,0 +1,25 @@
+{
+    "name": "pwa-app",
+    "version": "8.0.0-alpha.1",
+    "description": "",
+    "license": "BSD-3-Clause",
+    "private": true,
+    "scripts": {
+        "build": "d2-app-scripts build",
+        "start": "d2-app-scripts start",
+        "test": "d2-app-scripts test",
+        "deploy": "d2-app-scripts deploy",
+        "serve": "serve -l 5500 build/app",
+        "demo": "yarn build --force --debug && yarn serve"
+    },
+    "devDependencies": {
+        "@dhis2/cli-app-scripts": "8.0.0-alpha.1",
+        "serve": "^12.0.0"
+    },
+    "peerDependencies": {
+        "@dhis2/app-runtime": "*",
+        "@dhis2/d2-i18n": "*",
+        "react": "^16.8",
+        "react-dom": "^16.8"
+    }
+}

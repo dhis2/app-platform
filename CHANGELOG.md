@@ -1,3 +1,17 @@
+# [8.0.0-alpha.1](https://github.com/dhis2/app-platform/compare/v7.6.2...v8.0.0-alpha.1) (2021-09-08)
+
+
+### Bug Fixes
+
+* **dependencies:** update app-runtime to v3 ([8777699](https://github.com/dhis2/app-platform/commit/8777699b5e11684a943c0db84fa01c3989dd83c9))
+
+
+### BREAKING CHANGES
+
+* **dependencies:** This updates the app-platform to version 3 of the
+app-runtime. That means that this version of the app-platform will only
+work with apps that use version 3 of the app-runtime.
+
 # [8.0.0-beta.3](https://github.com/dhis2/app-platform/compare/v8.0.0-beta.2...v8.0.0-beta.3) (2021-08-30)
 
 
