@@ -1,3 +1,10 @@
+## [7.6.4](https://github.com/dhis2/app-platform/compare/v7.6.3...v7.6.4) (2021-09-08)
+
+
+### Bug Fixes
+
+* **recording-mode:** handle fulfilled requests after recording error ([#642](https://github.com/dhis2/app-platform/issues/642)) ([928e2cb](https://github.com/dhis2/app-platform/commit/928e2cb4882bf8a79d4f560cc89487d36235cd50))
+
 ## [7.6.3](https://github.com/dhis2/app-platform/compare/v7.6.2...v7.6.3) (2021-09-07)
 
 
