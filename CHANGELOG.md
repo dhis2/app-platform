@@ -1,16 +1,16 @@
-# [8.0.0-alpha.1](https://github.com/dhis2/app-platform/compare/v7.6.2...v8.0.0-alpha.1) (2021-09-08)
+## [7.6.4](https://github.com/dhis2/app-platform/compare/v7.6.3...v7.6.4) (2021-09-08)
 
 
 ### Bug Fixes
 
-* **dependencies:** update app-runtime to v3 ([8777699](https://github.com/dhis2/app-platform/commit/8777699b5e11684a943c0db84fa01c3989dd83c9))
+* **recording-mode:** handle fulfilled requests after recording error ([#642](https://github.com/dhis2/app-platform/issues/642)) ([928e2cb](https://github.com/dhis2/app-platform/commit/928e2cb4882bf8a79d4f560cc89487d36235cd50))
+
+## [7.6.3](https://github.com/dhis2/app-platform/compare/v7.6.2...v7.6.3) (2021-09-07)
 
 
-### BREAKING CHANGES
+### Bug Fixes
 
-* **dependencies:** This updates the app-platform to version 3 of the
-app-runtime. That means that this version of the app-platform will only
-work with apps that use version 3 of the app-runtime.
+* **offline-interface:** prevent infinite update loop in Chrome ([#638](https://github.com/dhis2/app-platform/issues/638)) ([079f6ea](https://github.com/dhis2/app-platform/commit/079f6ea382fa4fd29ee72a9cd526a282f591837b))
 
 ## [7.6.2](https://github.com/dhis2/app-platform/compare/v7.6.1...v7.6.2) (2021-09-02)
 

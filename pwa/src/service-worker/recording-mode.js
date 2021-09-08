@@ -61,7 +61,6 @@ export function handleRecordedRequest({ request, event }) {
             return handleRecordedResponse(request, response, event.clientId)
         })
         .catch(error => {
-            console.error(error)
             stopRecording(error, event.clientId)
         })
 }
@@ -69,6 +68,14 @@ export function handleRecordedRequest({ request, event }) {
 /** Response handler during recording mode */
 function handleRecordedResponse(request, response, clientId) {
     const recordingState = self.clientRecordingStates[clientId]
+
+    if (!recordingState) {
+        // It's likely that the recording was stopped due to an error.
+        // There will be plenty of error messages logged; no need for another
+        // one here
+        return response
+    }
+
     // add response to temp cache - when recording is successful, move to permanent cache
     const tempCacheKey = getCacheKey('temp', clientId)
     addToCache(tempCacheKey, request, response)
@@ -103,13 +110,16 @@ function startRecordingTimeout(clientId) {
 function stopRecording(error, clientId) {
     const recordingState = self.clientRecordingStates[clientId]
 
-    console.debug('[SW] Stopping recording', { clientId, recordingState })
-    clearTimeout(recordingState?.recordingTimeout)
+    if (recordingState) {
+        console.debug('[SW] Stopping recording', { clientId, recordingState })
+        clearTimeout(recordingState.recordingTimeout)
+    }
 
-    // In case of error, notify client and remove recording
+    // In case of error, notify client and remove recording.
+    // Post message even if !recordingState to ensure client stops.
     if (error) {
         self.clients.get(clientId).then(client => {
-            // todo: use plain object instead of Error for firefox compatibility
+            // use plain object instead of Error for firefox compatibility
             client.postMessage({
                 type: swMsgs.recordingError,
                 payload: {
