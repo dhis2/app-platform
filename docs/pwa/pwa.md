@@ -53,6 +53,12 @@ When “recording mode” is used and a “recording session” is triggered, th
 
 As a measure to protect against saving faulty recordings, once the recording timeout has elapsed and the recording is moving to finish, the service worker will send a message to the client to confirm that this recording should be completed and saved. The client needs to send back a confirmation message within a 10 second timeout, or the recording will be scrapped. If the service worker receives confirmation, it will save the cached request/response pairs for that section and write some metadata about the recorded section in an IndexedDB.
 
+### Updating the service worker
+
+In production environments, when a new service worker (which brings with it new app code and/or new network-handling code) is installed and ready, an Alert will show that gives the user the ability to reload the page to activate the updates right away. If they do not, the newly installed service worker will activate after all tabs of that app are closed.
+
+In testing and development environments, the page reload will happen automatically once a new service worker is installed, without user input. This may be surprising, which is why the prompt is used in production, but it facilitates easier development and testing of PWA apps.
+
 ### Service worker messages
 
 A number of messages are sent between the service worker and a client using the `postMessage` interface to communicate and initiate different actions.
