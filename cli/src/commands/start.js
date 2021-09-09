@@ -44,7 +44,6 @@ const handler = async ({
     if (proxy) {
         const newProxyPort = await detectPort(proxyPort)
         const proxyBaseUrl = `http://localhost:${newProxyPort}`
-        process.env.DHIS2_DEFAULT_BASE_URL = proxyBaseUrl
 
         reporter.print('')
         reporter.info('Starting proxy server...')
