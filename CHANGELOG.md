@@ -1,3 +1,10 @@
+# [8.0.0-beta.5](https://github.com/dhis2/app-platform/compare/v8.0.0-beta.4...v8.0.0-beta.5) (2021-09-09)
+
+
+### Features
+
+* **cli:** instance proxy server ([#635](https://github.com/dhis2/app-platform/issues/635)) ([9df387e](https://github.com/dhis2/app-platform/commit/9df387e4e376bcf902e51348649e22e5948e5974))
+
 # [8.0.0-beta.4](https://github.com/dhis2/app-platform/compare/v8.0.0-beta.3...v8.0.0-beta.4) (2021-09-08)
 
 
