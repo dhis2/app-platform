@@ -24,13 +24,13 @@ export const Alerter = () => {
                 onChange={() => setCritical(!critical)}
             />
             <Button onClick={() => show(message)}>Show alert</Button>
-            <Button onClick={hide}>Hide permanent message</Button>
+            <Button onClick={hide}>Hide alert</Button>
             <style jsx>{`
                 div {
                     display: flex;
                     align-items: center;
                     justify-content: space-between;
-                    width: 600px;
+                    width: 500px;
                 }
             `}</style>
         </div>
