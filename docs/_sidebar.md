@@ -21,5 +21,6 @@
 -   [**PWA**](pwa/pwa)
 -   [**Architecture**](architecture)
 -   [**Troubleshooting**](troubleshooting.md)
+-   [**Proxy**](proxy.md)
 -   &nbsp;
 -   [Changelog](CHANGELOG.md)

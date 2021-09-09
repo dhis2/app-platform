@@ -8,8 +8,11 @@ A DHIS2 application needs to talk to a [DHIS2 server](https://www.dhis2.org/down
 
 You should specify the fully-qualified base URL of a running DHIS2 server (including the `http://` or `https://` protocol) in the **Server** field of the login dialog.
 
-Make sure that the the URL of your application (`localhost:3000` in this case) is included in the DHIS2 server's CORS whitelist (System Settings -> Access). Also ensure that the server
-you specify doesn't have any domain-restricting proxy settings (such as the `SameSite=Lax`).
+Make sure that the the URL of your application (`localhost:3000` in this case)
+is included in the DHIS2 server's CORS whitelist (System Settings -> Access). If
+your server or browser has domain-restricting settings (such as the
+`SameSite=Lax`), the [`--proxy`](proxy.md) option of the
+[`start`](scripts/start.md) command may be helpful.
 
 For testing purposes, `https://play.dhis2.org/dev` will NOT work because it is configured for secure same-site access, while `https://debug.dhis2.org/dev` should work.
 
