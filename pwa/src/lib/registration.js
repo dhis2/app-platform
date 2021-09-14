@@ -135,7 +135,15 @@ export function register(config) {
     }
 }
 
-function registerValidSW(swUrl /* config */) {
+async function registerValidSW(swUrl /* config */) {
+    const reg = await navigator.serviceWorker.getRegistration()
+    if (reg?.active && navigator.serviceWorker.controller === null) {
+        // The page was hard-reloaded; service worker is disabled
+        // (navigator.serviceWorker.controller becomes null after a hard reload)
+        // Unregister before registering again to reenable service worker.
+        // Will likely cause another refresh due to .oncontrollerchange event
+        await unregister()
+    }
     navigator.serviceWorker.register(swUrl).catch(error => {
         console.error('Error during service worker registration:', error)
     })
@@ -172,9 +180,22 @@ function checkValidSW(swUrl, config) {
         })
 }
 
+/**
+ * Note that 'navigator.serviceWorker.ready' may be a gotcha at some point -
+ * it only resolves once a service worker is active, and quietly never resolves
+ * otherwise (not even rejects). This doesn't cause a problem in the use case
+ * in registerValidSW above because 'unregister' will only be called if there
+ * is already an active service worker.
+ *
+ * In the normal, unregister-on-page-load use case, it's fine to never resolve,
+ * and useful to wait for an active SW before unregistering if one is
+ * installing.
+ *
+ * https://developer.mozilla.org/en-US/docs/Web/API/ServiceWorkerContainer/ready
+ */
 export function unregister() {
     if ('serviceWorker' in navigator) {
-        navigator.serviceWorker.ready
+        return navigator.serviceWorker.ready
             .then(registration => {
                 registration.unregister()
             })
@@ -182,4 +203,5 @@ export function unregister() {
                 console.error(error.message)
             })
     }
+    return Promise.resolve()
 }
