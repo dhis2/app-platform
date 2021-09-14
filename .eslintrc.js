@@ -5,4 +5,12 @@ module.exports = {
     parserOptions: {
         allowImportExportEverywhere: true,
     },
+    overrides: [
+        {
+            files: ['*.test.js'],
+            rules: {
+                'react/prop-types': 'off',
+            },
+        },
+    ],
 }
