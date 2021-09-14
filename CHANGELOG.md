@@ -1,3 +1,10 @@
+## [7.6.5](https://github.com/dhis2/app-platform/compare/v7.6.4...v7.6.5) (2021-09-14)
+
+
+### Bug Fixes
+
+* add crossorgin use-credentials to manifest.json link ([57483f5](https://github.com/dhis2/app-platform/commit/57483f50d5e61c5a1e081bbec9cd9833fb0cf4d2))
+
 ## [7.6.4](https://github.com/dhis2/app-platform/compare/v7.6.3...v7.6.4) (2021-09-08)
 
 
