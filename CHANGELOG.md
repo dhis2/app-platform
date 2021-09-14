@@ -1,3 +1,15 @@
+# [8.0.0-beta.6](https://github.com/dhis2/app-platform/compare/v8.0.0-beta.5...v8.0.0-beta.6) (2021-09-14)
+
+
+### Bug Fixes
+
+* **alerts-service:** add tests and align implementation ([dabe477](https://github.com/dhis2/app-platform/commit/dabe47771a3b79730d0dd42e106ed495908cae83))
+
+
+### Features
+
+* **app-adapter:** align Alerts component with alerts-service and AlertBar ([bd4564c](https://github.com/dhis2/app-platform/commit/bd4564c75667b703cabf1b680d97ff8a200f6533))
+
 # [8.0.0-beta.5](https://github.com/dhis2/app-platform/compare/v8.0.0-beta.4...v8.0.0-beta.5) (2021-09-09)
 
 
