@@ -45,7 +45,7 @@
         "prop-types": "^15",
         "react": "^16.8",
         "react-dom": "^16.8",
-        "styled-jsx": "^3"
+        "styled-jsx": "^4"
     },
     "jest": {
         "setupFilesAfterEnv": [
