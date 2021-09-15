@@ -1,3 +1,10 @@
+## [7.6.6](https://github.com/dhis2/app-platform/compare/v7.6.5...v7.6.6) (2021-09-15)
+
+
+### Bug Fixes
+
+* **sw-registration:** reregister SW after hard reload ([4c86468](https://github.com/dhis2/app-platform/commit/4c8646871b00211f41e3b9ad09ae70c40338b4fd))
+
 ## [7.6.5](https://github.com/dhis2/app-platform/compare/v7.6.4...v7.6.5) (2021-09-14)
 
 
