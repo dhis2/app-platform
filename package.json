@@ -19,7 +19,8 @@
     "devDependencies": {
         "@dhis2/cli-style": "^9.2.0",
         "@dhis2/cli-utils-docsite": "^3.0.0",
-        "concurrently": "^6.0.0"
+        "concurrently": "^6.0.0",
+        "serve": "^12.0.0"
     },
     "scripts": {
         "format": "d2-style apply",
