@@ -1,9 +1,9 @@
-# [8.0.0-beta.8](https://github.com/dhis2/app-platform/compare/v8.0.0-beta.7...v8.0.0-beta.8) (2021-09-15)
+## [7.6.6](https://github.com/dhis2/app-platform/compare/v7.6.5...v7.6.6) (2021-09-15)
 
 
 ### Bug Fixes
 
-* add crossorgin use-credentials to manifest.json link ([57483f5](https://github.com/dhis2/app-platform/commit/57483f50d5e61c5a1e081bbec9cd9833fb0cf4d2))
+* **sw-registration:** reregister SW after hard reload ([4c86468](https://github.com/dhis2/app-platform/commit/4c8646871b00211f41e3b9ad09ae70c40338b4fd))
 
 ## [7.6.5](https://github.com/dhis2/app-platform/compare/v7.6.4...v7.6.5) (2021-09-14)
 
