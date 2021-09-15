@@ -1,65 +1,9 @@
-# [8.0.0-beta.7](https://github.com/dhis2/app-platform/compare/v8.0.0-beta.6...v8.0.0-beta.7) (2021-09-15)
-
-
-### chore
-
-* **deps:** upgrade to styled-jsx 4.x ([8cf9e17](https://github.com/dhis2/app-platform/commit/8cf9e17c123e55b44a5b68bef0d4af7283622928))
-
-
-### BREAKING CHANGES
-
-* **deps:** Upgrade to styled-jsx 4 requires that the application
-uses a compatible version of @dhis2/ui.
-
-# [8.0.0-beta.6](https://github.com/dhis2/app-platform/compare/v8.0.0-beta.5...v8.0.0-beta.6) (2021-09-14)
+## [7.6.5](https://github.com/dhis2/app-platform/compare/v7.6.4...v7.6.5) (2021-09-14)
 
 
 ### Bug Fixes
 
-* **alerts-service:** add tests and align implementation ([dabe477](https://github.com/dhis2/app-platform/commit/dabe47771a3b79730d0dd42e106ed495908cae83))
-
-
-### Features
-
-* **app-adapter:** align Alerts component with alerts-service and AlertBar ([bd4564c](https://github.com/dhis2/app-platform/commit/bd4564c75667b703cabf1b680d97ff8a200f6533))
-
-# [8.0.0-beta.5](https://github.com/dhis2/app-platform/compare/v8.0.0-beta.4...v8.0.0-beta.5) (2021-09-09)
-
-
-### Features
-
-* **cli:** instance proxy server ([#635](https://github.com/dhis2/app-platform/issues/635)) ([9df387e](https://github.com/dhis2/app-platform/commit/9df387e4e376bcf902e51348649e22e5948e5974))
-
-# [8.0.0-beta.4](https://github.com/dhis2/app-platform/compare/v8.0.0-beta.3...v8.0.0-beta.4) (2021-09-08)
-
-
-### Bug Fixes
-
-* **dependencies:** update app-runtime to v3 ([8777699](https://github.com/dhis2/app-platform/commit/8777699b5e11684a943c0db84fa01c3989dd83c9))
-* **offline-interface:** prevent infinite update loop in Chrome ([#638](https://github.com/dhis2/app-platform/issues/638)) ([079f6ea](https://github.com/dhis2/app-platform/commit/079f6ea382fa4fd29ee72a9cd526a282f591837b))
-* **recording-mode:** handle fulfilled requests after recording error ([#642](https://github.com/dhis2/app-platform/issues/642)) ([928e2cb](https://github.com/dhis2/app-platform/commit/928e2cb4882bf8a79d4f560cc89487d36235cd50))
-* import index.css in index.js so styles are applied ([8db1bf8](https://github.com/dhis2/app-platform/commit/8db1bf8f234e808a5299474df3f1dc6998feac44))
-* **shell:** create new stacking context for roots ([324a095](https://github.com/dhis2/app-platform/commit/324a0958ae436e75cb1b252263dfafbd1447097f))
-* catch errors in completeRecording ([e67ae82](https://github.com/dhis2/app-platform/commit/e67ae821b33990435f3846f3ce933362105520bb))
-* check whole URL against filter patterns ([5468114](https://github.com/dhis2/app-platform/commit/5468114e8631610d4e70f6c54a288a62cc7f28c2))
-* only return sections with cached data from getCachedSections ([f6242d1](https://github.com/dhis2/app-platform/commit/f6242d1b6b25268f3a0c441060264d584d023afe))
-* reopen indexedDB if global state resets ([0aded68](https://github.com/dhis2/app-platform/commit/0aded6846b1f9abc567e44144006cb516516e8b3))
-* return true if either cache or idb entry is removed ([43d8001](https://github.com/dhis2/app-platform/commit/43d8001ab2aa6077bb0dc3fbaecb2228399a26e4))
-* simplify message payload to be compatible with firefox ([5e5a633](https://github.com/dhis2/app-platform/commit/5e5a633440e1b103669dae3d0b1e8786cde9f96b))
-
-
-### Features
-
-* add service worker and pwa capabilities ([#550](https://github.com/dhis2/app-platform/issues/550)) ([225069e](https://github.com/dhis2/app-platform/commit/225069e11d924734c5ac2e257af7d5e9185c612a)), closes [#580](https://github.com/dhis2/app-platform/issues/580) [#582](https://github.com/dhis2/app-platform/issues/582) [#592](https://github.com/dhis2/app-platform/issues/592)
-* allow RegEx for filter patterns in d2.config.js ([9699330](https://github.com/dhis2/app-platform/commit/96993301f1d3ba4eec719bd2ecf93b72995653ba))
-* use new headerbar with online status indicator ([#626](https://github.com/dhis2/app-platform/issues/626)) ([3bd7d37](https://github.com/dhis2/app-platform/commit/3bd7d37d0776dfd44ab583a95ad47734c1302f84))
-
-
-### BREAKING CHANGES
-
-* **dependencies:** This updates the app-platform to version 3 of the
-app-runtime. That means that this version of the app-platform will only
-work with apps that use version 3 of the app-runtime.
+* add crossorgin use-credentials to manifest.json link ([57483f5](https://github.com/dhis2/app-platform/commit/57483f50d5e61c5a1e081bbec9cd9833fb0cf4d2))
 
 ## [7.6.4](https://github.com/dhis2/app-platform/compare/v7.6.3...v7.6.4) (2021-09-08)
 
@@ -90,25 +34,6 @@ work with apps that use version 3 of the app-runtime.
 * **shell:** create new stacking context for roots ([324a095](https://github.com/dhis2/app-platform/commit/324a0958ae436e75cb1b252263dfafbd1447097f))
 
 # [7.6.0](https://github.com/dhis2/app-platform/compare/v7.5.1...v7.6.0) (2021-08-31)
-
-
-### Bug Fixes
-
-* catch errors in completeRecording ([e67ae82](https://github.com/dhis2/app-platform/commit/e67ae821b33990435f3846f3ce933362105520bb))
-* check whole URL against filter patterns ([5468114](https://github.com/dhis2/app-platform/commit/5468114e8631610d4e70f6c54a288a62cc7f28c2))
-* only return sections with cached data from getCachedSections ([f6242d1](https://github.com/dhis2/app-platform/commit/f6242d1b6b25268f3a0c441060264d584d023afe))
-* reopen indexedDB if global state resets ([0aded68](https://github.com/dhis2/app-platform/commit/0aded6846b1f9abc567e44144006cb516516e8b3))
-* return true if either cache or idb entry is removed ([43d8001](https://github.com/dhis2/app-platform/commit/43d8001ab2aa6077bb0dc3fbaecb2228399a26e4))
-* simplify message payload to be compatible with firefox ([5e5a633](https://github.com/dhis2/app-platform/commit/5e5a633440e1b103669dae3d0b1e8786cde9f96b))
-
-
-### Features
-
-* add service worker and pwa capabilities ([#550](https://github.com/dhis2/app-platform/issues/550)) ([225069e](https://github.com/dhis2/app-platform/commit/225069e11d924734c5ac2e257af7d5e9185c612a)), closes [#580](https://github.com/dhis2/app-platform/issues/580) [#582](https://github.com/dhis2/app-platform/issues/582) [#592](https://github.com/dhis2/app-platform/issues/592)
-* allow RegEx for filter patterns in d2.config.js ([9699330](https://github.com/dhis2/app-platform/commit/96993301f1d3ba4eec719bd2ecf93b72995653ba))
-* use new headerbar with online status indicator ([#626](https://github.com/dhis2/app-platform/issues/626)) ([3bd7d37](https://github.com/dhis2/app-platform/commit/3bd7d37d0776dfd44ab583a95ad47734c1302f84))
-
-# [7.6.0-alpha.1](https://github.com/dhis2/app-platform/compare/v7.5.1...v7.6.0-alpha.1) (2021-08-31)
 
 
 ### Bug Fixes
@@ -163,26 +88,6 @@ work with apps that use version 3 of the app-runtime.
 * **cli:** Support multiple library entrypoints ([#597](https://github.com/dhis2/app-platform/issues/597)) ([a95be81](https://github.com/dhis2/app-platform/commit/a95be817a669901a082621be88e37e516dcd6bf3))
 
 # [7.2.0](https://github.com/dhis2/app-platform/compare/v7.1.2...v7.2.0) (2021-07-23)
-
-
-### Bug Fixes
-
-* add flags to specify name and version for non-platform apps ([a24e0e6](https://github.com/dhis2/app-platform/commit/a24e0e6bcdd2f55ef4162ccfa5d65a831802cae6))
-* correctly parse base config, simplify logic, only rm dir on build ([9891ea3](https://github.com/dhis2/app-platform/commit/9891ea32431b9e452f8aa4cd6f3f4ee29798e057))
-* don't throw if d2.config.js doesn't exist ([3385e0e](https://github.com/dhis2/app-platform/commit/3385e0e3682379b2d1ad8b03332f2fb7fcbbecdf))
-* **fs:** re-read package.json from disk to make sure it is not stale ([918d113](https://github.com/dhis2/app-platform/commit/918d1137297455cbf4506f9a65bc7fda7d659bad))
-* **pack:** use the built app config ([e22d186](https://github.com/dhis2/app-platform/commit/e22d1865ace1d8170dded7191511a7496f1f9051))
-* **publish:** only prompt in CI mode ([6872ca0](https://github.com/dhis2/app-platform/commit/6872ca0887fbe1f33180f2dfd4b7c07b4b47746f))
-* **publish:** pack when file param is unused ([cc4c802](https://github.com/dhis2/app-platform/commit/cc4c8027db7d14473f1961fb0967dc8ea79eb5a1))
-
-
-### Features
-
-* add option to skip packing when running build ([669ab94](https://github.com/dhis2/app-platform/commit/669ab9400a3dfda0b8b5e1c740b7646209f85112))
-* **pack:** adds pack command ([be700f1](https://github.com/dhis2/app-platform/commit/be700f16197491ee6d1aeb4a5afbd843e991d8ed))
-* **publish:** expose publish command module ([ff55d5a](https://github.com/dhis2/app-platform/commit/ff55d5a69a99de27a0df97853164c5e5b43e6268))
-
-# [7.2.0-beta.1](https://github.com/dhis2/app-platform/compare/v7.1.2...v7.2.0-beta.1) (2021-07-23)
 
 
 ### Bug Fixes
