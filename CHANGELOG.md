@@ -1,3 +1,16 @@
+# [8.0.0-beta.7](https://github.com/dhis2/app-platform/compare/v8.0.0-beta.6...v8.0.0-beta.7) (2021-09-15)
+
+
+### chore
+
+* **deps:** upgrade to styled-jsx 4.x ([8cf9e17](https://github.com/dhis2/app-platform/commit/8cf9e17c123e55b44a5b68bef0d4af7283622928))
+
+
+### BREAKING CHANGES
+
+* **deps:** Upgrade to styled-jsx 4 requires that the application
+uses a compatible version of @dhis2/ui.
+
 # [8.0.0-beta.6](https://github.com/dhis2/app-platform/compare/v8.0.0-beta.5...v8.0.0-beta.6) (2021-09-14)
 
 
