@@ -1,3 +1,18 @@
+# [8.0.0-beta.10](https://github.com/dhis2/app-platform/compare/v8.0.0-beta.9...v8.0.0-beta.10) (2021-09-15)
+
+
+### chore
+
+* **deps:** upgrade to 7.0.0 of @dhis2/ui ([b624c9e](https://github.com/dhis2/app-platform/commit/b624c9e732a639ee457b90f8264e0fdb21d0dee0))
+
+
+### BREAKING CHANGES
+
+* **deps:** @dhis2/ui 7.x has dropped support for the deprecated
+entrypoints @dhis2/ui-core and @dhis2/ui-widgets.
+Please use @dhis2/ui to import components you need in your app.
+Everything from core and widgets is available.
+
 # [8.0.0-beta.9](https://github.com/dhis2/app-platform/compare/v8.0.0-beta.8...v8.0.0-beta.9) (2021-09-15)
 
 
