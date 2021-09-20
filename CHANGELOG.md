@@ -1,3 +1,10 @@
+## [8.0.1](https://github.com/dhis2/app-platform/compare/v8.0.0...v8.0.1) (2021-09-20)
+
+
+### Bug Fixes
+
+* **deps:** allow range for app shell's ui dependency ([17f0546](https://github.com/dhis2/app-platform/commit/17f05466baeac4d53cec96f66684cea56efed826))
+
 # [8.0.0](https://github.com/dhis2/app-platform/compare/v7.6.6...v8.0.0) (2021-09-20)
 
 
