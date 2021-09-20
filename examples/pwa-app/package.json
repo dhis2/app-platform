@@ -1,6 +1,6 @@
 {
     "name": "pwa-app",
-    "version": "7.6.6",
+    "version": "8.0.0-beta.10",
     "description": "",
     "license": "BSD-3-Clause",
     "private": true,
@@ -11,10 +11,6 @@
         "deploy": "d2-app-scripts deploy",
         "serve": "serve -l 5500 build/app",
         "demo": "yarn build --force --debug && yarn serve"
-    },
-    "devDependencies": {
-        "@dhis2/cli-app-scripts": "7.6.6",
-        "serve": "^12.0.0"
     },
     "peerDependencies": {
         "@dhis2/app-runtime": "*",
