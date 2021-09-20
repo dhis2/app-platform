@@ -1,3 +1,41 @@
+# [8.0.0](https://github.com/dhis2/app-platform/compare/v7.6.6...v8.0.0) (2021-09-20)
+
+
+### Bug Fixes
+
+* **alerts-service:** add tests and align implementation ([dabe477](https://github.com/dhis2/app-platform/commit/dabe47771a3b79730d0dd42e106ed495908cae83))
+* **cli:** set test environment to node ([#625](https://github.com/dhis2/app-platform/issues/625)) ([36d311b](https://github.com/dhis2/app-platform/commit/36d311b4aca74535d551d300a509117a1cb95179))
+* **dependencies:** update app-runtime to v3 ([8777699](https://github.com/dhis2/app-platform/commit/8777699b5e11684a943c0db84fa01c3989dd83c9))
+* set jsdom as default test environment ([#624](https://github.com/dhis2/app-platform/issues/624)) ([2f1ba42](https://github.com/dhis2/app-platform/commit/2f1ba4228a7a9a6f95a44258e615ba73461537bc))
+
+
+### chore
+
+* **deps:** upgrade to 7.0.0 of @dhis2/ui ([b624c9e](https://github.com/dhis2/app-platform/commit/b624c9e732a639ee457b90f8264e0fdb21d0dee0))
+* **deps:** upgrade to styled-jsx 4.x ([8cf9e17](https://github.com/dhis2/app-platform/commit/8cf9e17c123e55b44a5b68bef0d4af7283622928))
+
+
+### Features
+
+* **app-adapter:** align Alerts component with alerts-service and AlertBar ([bd4564c](https://github.com/dhis2/app-platform/commit/bd4564c75667b703cabf1b680d97ff8a200f6533))
+* **cli:** instance proxy server ([#635](https://github.com/dhis2/app-platform/issues/635)) ([9df387e](https://github.com/dhis2/app-platform/commit/9df387e4e376bcf902e51348649e22e5948e5974))
+* bump jest to v27 ([f5015b2](https://github.com/dhis2/app-platform/commit/f5015b2186978a08a2315474de9317423fde9b90))
+
+
+### BREAKING CHANGES
+
+* **deps:** @dhis2/ui 7.x has dropped support for the deprecated
+entrypoints @dhis2/ui-core and @dhis2/ui-widgets.
+Please use @dhis2/ui to import components you need in your app.
+Everything from core and widgets is available.
+* **deps:** Upgrade to styled-jsx 4 requires that the application
+uses a compatible version of @dhis2/ui.
+* **dependencies:** This updates the app-platform to version 3 of the
+app-runtime. That means that this version of the app-platform will only
+work with apps that use version 3 of the app-runtime.
+* Upgrade Jest to 27.x.
+Please see for a list of changes: https://jestjs.io/blog/2021/05/25/jest-27
+
 # [8.0.0-beta.10](https://github.com/dhis2/app-platform/compare/v8.0.0-beta.9...v8.0.0-beta.10) (2021-09-15)
 
 
