@@ -46,7 +46,7 @@
         "http-proxy": "^1.18.1",
         "i18next-conv": "^9",
         "i18next-scanner": "^2.10.3",
-        "inquirer": "^7.3.3",
+        "inquirer": "^8.1.5",
         "lodash": "^4.17.11",
         "node-http-proxy-json": "^0.1.9",
         "parse-author": "^2.0.0",
