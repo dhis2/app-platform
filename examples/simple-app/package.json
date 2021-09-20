@@ -15,7 +15,7 @@
         "@dhis2/app-runtime": "*",
         "@dhis2/d2-i18n": "*",
         "moment": "*",
-        "react": "^16.8",
-        "react-dom": "^16.8"
+        "react": ">=16.8",
+        "react-dom": ">=16.8"
     }
 }
