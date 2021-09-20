@@ -8,7 +8,7 @@ const useLazyParcel = (lazyModuleFetcher) => {
         setLoading(true)
         lazyModuleFetcher()
             .then(parcel => {
-                setParcel(parcel)
+                setParcel(parcel.default())
             })
             .catch(err => {
                 setError(err)
