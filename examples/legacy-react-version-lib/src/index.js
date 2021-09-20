@@ -1,5 +1,6 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
+import { LegacyApp } from './LegacyApp'
 
 export const Parcel = () => {
     let mountPoint
@@ -15,13 +16,13 @@ export const Parcel = () => {
         ReactDOM.unmountComponentAtNode(mountPoint)
     }
 
-    const update = (props) => {
-        ReactDOM.render(<MyApp {...props} />, mountPoint)
+    const update = props => {
+        ReactDOM.render(<LegacyApp {...props} />, mountPoint)
     }
-    
+
     return {
         mount,
         unmount,
-        update
+        update,
     }
 }

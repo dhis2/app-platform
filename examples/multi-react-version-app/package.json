@@ -1,23 +1,23 @@
 {
-  "name": "multi-react-version-app",
-  "version": "1.0.0",
-  "description": "",
-  "license": "BSD-3-Clause",
-  "private": true,
-  "scripts": {
-    "build": "d2-app-scripts build",
-    "start": "d2-app-scripts start",
-    "test": "d2-app-scripts test",
-    "deploy": "d2-app-scripts deploy"
-  },
-  "dependencies": {
-    "legacy-react-version-lib": "*"
-  },
-  "peerDependencies": {
-    "@dhis2/app-runtime": "*",
-    "@dhis2/d2-i18n": "*",
-    "moment": "*",
-    "react": ">17",
-    "react-dom": ">17"
-  }
+    "name": "multi-react-version-app",
+    "version": "1.0.0",
+    "description": "",
+    "license": "BSD-3-Clause",
+    "private": true,
+    "scripts": {
+        "build": "d2-app-scripts build",
+        "start": "d2-app-scripts start",
+        "test": "d2-app-scripts test",
+        "deploy": "d2-app-scripts deploy"
+    },
+    "dependencies": {
+        "legacy-react-version-lib": "*"
+    },
+    "peerDependencies": {
+        "@dhis2/app-runtime": "*",
+        "@dhis2/d2-i18n": "*",
+        "moment": "*",
+        "react": ">17",
+        "react-dom": ">17"
+    }
 }

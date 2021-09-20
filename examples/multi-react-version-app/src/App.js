@@ -1,6 +1,6 @@
-import React from 'react'
 import { DataQuery } from '@dhis2/app-runtime'
 import i18n from '@dhis2/d2-i18n'
+import React from 'react'
 import classes from './App.module.css'
 import { LegacyAppContainer } from './LegacyAppContainer'
 
@@ -14,8 +14,12 @@ const MyApp = () => (
     <div className={classes.container}>
         <DataQuery query={query}>
             {({ error, loading, data }) => {
-                if (error) return <span>ERROR</span>
-                if (loading) return <span>...</span>
+                if (error) {
+                    return <span>ERROR</span>
+                }
+                if (loading) {
+                    return <span>...</span>
+                }
                 return (
                     <>
                         <h1>
@@ -26,7 +30,9 @@ const MyApp = () => (
                 )
             }}
         </DataQuery>
-        <LegacyAppContainer lazyModuleFetcher={() => import('legacy-react-version-lib')} />
+        <LegacyAppContainer
+            lazyModuleFetcher={() => import('legacy-react-version-lib')}
+        />
     </div>
 )
 
