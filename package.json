@@ -10,6 +10,8 @@
         "packages": [
             "examples/simple-app",
             "examples/pwa-app",
+            "examples/legacy-react-version-lib",
+            "examples/multi-react-version-app",
             "cli",
             "shell",
             "adapter",

@@ -1,0 +1,21 @@
+{
+    "name": "legacy-react-version-lib",
+    "version": "1.0.0",
+    "description": "",
+    "license": "BSD-3-Clause",
+    "private": true,
+    "scripts": {
+        "build": "d2-app-scripts build",
+        "test": "d2-app-scripts test"
+    },
+    "dependencies": {
+        "react": "~15",
+        "react-dom": "~15"
+    },
+    "main": "./build/cjs/index.js",
+    "module": "./build/es/index.js",
+    "exports": {
+        "import": "./build/es/index.js",
+        "require": "./build/cjs/index.js"
+    }
+}
