@@ -1,0 +1,40 @@
+.sql-view__header {
+    display: flex;
+    flex-direction: row;
+    margin-bottom: 1rem;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.sql-view__content {
+    overflow: scroll;
+    // 12rem (container):
+    //  - main padding top: 8rem
+    //  - main>div margin-bottom: 4rem
+    // 83px (header):
+    //  - .sql-view__header height: 69px
+    //  - .sql-view__header margin-bottom: 14px
+    max-height: calc(100vh - 12rem - 83px);
+}
+
+.sql-view__dropdown-button {
+    margin-top: 1rem;
+}
+
+.sql-view__table {
+    text-align: left;
+    border-collapse: collapse;
+    width: 100%;
+
+    th, td {
+        border-bottom: 1px solid #E0E0E0;
+        padding: 4px 8px;
+    }
+
+    th {
+        border-bottom-width: 2px;
+        text-transform: capitalize;
+        padding-top: 8px;
+        padding-bottom: 8px;
+    }
+}

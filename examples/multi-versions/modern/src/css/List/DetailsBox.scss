@@ -1,0 +1,30 @@
+$detail-box--field-value--color: #333;
+
+.details-box {
+  padding: 1.5rem;
+}
+
+.details-box__close-button {
+  cursor: pointer;
+  float: right;
+}
+
+.detail-field__label {
+  font-weight: bold;
+}
+
+.detail-field__value {
+  color: $detail-box--field-value--color;
+  padding-top: 4px;
+  min-width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.detail-field {
+  padding-bottom: 1rem;
+}
+
+.detail-field:last-child {
+  padding-bottom: 0;
+}

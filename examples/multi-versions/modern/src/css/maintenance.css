@@ -1,0 +1,48 @@
+* {
+	 box-sizing: border-box;
+}
+
+html {
+	 background: #f3f3f3;
+	 font-family: 'Roboto', sans-serif;
+	 font-size: 14px;
+}
+ [data-reactroot] > div > main {
+	 margin-top: 121px !important;
+}
+
+.data-table {
+	 background-color: #fff;
+}
+
+.details-box-wrap .sticky {
+	 left: initial !important;
+	 margin-right: 2rem;
+	 margin-top: 5rem;
+	 width: 22%;
+}
+
+.details-box__close-button {
+	 cursor: pointer;
+}
+
+.data-table__rows__row__column {
+	 white-space: nowrap;
+}
+
+.data-table__rows__row__column:not(:first-child) {
+	 width: 10%;
+}
+
+.data-table__rows__row__column:last-child {
+	 max-width: 90px;
+	 min-width: initial;
+}
+
+.data-table__headers__header {
+	 white-space: nowrap;
+}
+
+.sortableModalHelper {
+	 z-index: 2000;
+}

@@ -1,0 +1,17 @@
+.swatches-picker > div > div:last-child > div > div {
+	 display: flex;
+	 flex-direction: column;
+}
+
+.swatches-picker > div > div:last-child > div > div > div {
+	 width: 320px !important;
+}
+
+.swatches-picker > div > div:last-child > div > div > div > span {
+	 display: inline-block;
+	 height: 100%;
+}
+
+.swatches-picker > div > div:last-child > div > div > div > span > div {
+	 float: left;
+}

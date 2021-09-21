@@ -1,0 +1,138 @@
+
+.paletteContainer {
+  position: fixed;
+  right: 16px;
+  top: 112px;
+  bottom: 16px;
+  &:hover {
+    .resizeHandle:after {
+      border-color: rgba(0, 0, 0, 0.12);
+    }
+  }
+
+  .resizeHandle {
+    position: absolute;
+    top: -20px;
+    right: 0;
+    bottom: -16px;
+    left: -8px;
+    width: 12px;
+    cursor: col-resize;
+
+    &:after {
+      content: "";
+      display: block;
+      position: absolute;
+      bottom: 0;
+      top: 0;
+      border: 0 dashed rgba(0, 0, 0, 0);
+      border-left-width: 1px;
+      margin-left: 5px;
+      transition: border 125ms linear;
+    }
+    &:hover:after {
+      border-color: rgba(0, 0, 0, 0.45);
+    }
+  }
+
+  .palette {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 8px;
+    background: white;
+    border-radius: 5px;
+    box-shadow: 0 1px 6px rgba(0, 0, 0, 0.12), 0 1px 4px rgba(0, 0, 0, 0.12);
+
+    .elements {
+      position: absolute;
+      top: 48px;
+      bottom: 32px;
+      left: 0;
+      right: 0;
+      margin: 8px;
+      font-size: 13px;
+      font-weight: 300;
+
+      display: flex;
+      flex-direction: column;
+
+      overflow-x: auto;
+
+      .cell {
+        position: relative;
+        flex: 1 1;
+        transition: all 175ms ease-in-out;
+
+        &.expanded {
+          flex: 35;
+          .header .arrow {
+            transform: rotate(90deg);
+          }
+          .items {
+            //box-shadow: 0 -4px 16px 1px rgba(0, 0, 0, 0.3);
+          }
+        }
+
+        .header {
+          font-weight: 700;
+          font-size: 16px;
+          padding-top: 8px;
+          cursor: pointer;
+          .arrow {
+            display: inline-block;
+            margin: 0 2px;
+            transition: transform 175ms ease-out;
+          }
+          .count {
+            display: inline-block;
+            font-weight: 400;
+            font-size: 14px;
+            margin-left: 4px;
+          }
+        }
+        .items {
+          position: absolute;
+          padding-left: 16px;
+          top: 32px;
+          bottom: 0;
+          left: 0;
+          right: 0;
+
+          overflow: auto;
+
+          .item {
+            width: 100%;
+            padding-bottom: 1px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+          }
+        }
+      }
+    }
+  }
+}
+
+.item {
+  &.active {
+    a {
+      cursor: pointer;
+      &:hover {
+        text-decoration: underline;
+      }
+    }
+  }
+  &.inactive {
+    a {
+      color: inherit;
+      opacity: 0.5;
+      cursor: default;
+    }
+  }
+}
+
+.expand {
+  @extend .item.active;
+}

@@ -1,0 +1,85 @@
+.icon-picker__content {
+	 width: 80vw !important;
+	 max-width: 1200px !important;
+}
+
+.icon-picker__title {
+	 padding-bottom: 0 !important;
+}
+
+.icon-picker__body {
+	 overflow-x: hidden;
+	 padding: 0 !important;
+	 position: relative;
+}
+
+.icon-picker__actions {
+	 border-top: 1px solid #bdbdbd !important;
+	 text-align: left !important;
+	 padding: 1rem 24px 24px 24px !important;
+}
+
+.icon-picker__actions > div {
+	 width: 10rem !important;
+}
+
+.icon-picker__actions > div:first-child {
+	 margin-right: 1rem;
+}
+
+.icon-picker__icon-button-image {
+	 width: 36px;
+	 float: left;
+}
+
+.icon-picker__filter-bar {
+	 display: flex;
+	 justify-content: space-between;
+	 margin-top: -12px;
+	 padding: 0 24px 6px 24px;
+	 border-bottom: 1px solid #bdbdbd;
+}
+
+.icon-picker__filter-button-wrap {
+	 display: inline-flex;
+	 padding-top: 29px;
+}
+
+.icon-picker__scroll-box {
+	 height: calc(100vh - 320px);
+	 max-height: 1200px;
+	 overflow-y: auto;
+	 overflow-x: hidden;
+	 padding-left: 24px;
+	 padding-right: 24px;
+}
+
+.icon-picker__list-loader {
+	 height: 100%;
+	 display: flex;
+	 align-items: center;
+	 justify-content: center;
+}
+
+.icon-picker__icon-list {
+	 display: flex;
+	 flex-flow: wrap;
+}
+
+.icon-picker__icon {
+	 opacity: 1;
+	 transition: opacity 0.3s ease-in;
+	 border: 3px solid transparent;
+	 width: 60px;
+	 height: 60px;
+	 cursor: pointer;
+	 margin: 4px;
+}
+
+.icon-picker__icon[data-loading] {
+	 opacity: 0;
+}
+
+.icon-picker__icon--selected {
+	 border: 3px solid #64acf5;
+}

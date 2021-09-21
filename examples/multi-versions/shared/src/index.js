@@ -1,0 +1,5 @@
+export { hasRouteBeenModernized } from './hasRouteBeenModernized.js'
+export { history } from './history.js'
+export { modernizedRoutes } from './modernizedRoutes.js'
+export { shouldDisableTabs } from './shouldDisableTabs.js'
+export { shouldHideSidebar } from './shouldHideSidebar.js'

@@ -1,0 +1,17 @@
+{
+  "name": "shared",
+  "version": "0.1.0",
+  "main": "./build/cjs/index.js",
+  "module": "./build/es/index.js",
+  "exports": {
+      "import": "./build/es/index.js",
+      "require": "./build/cjs/index.js"
+  },
+  "scripts": {
+    "build": "d2-app-scripts build",
+    "test": "d2-app-scripts test"
+  },
+  "dependencies": {
+    "history": "^4"
+  }
+}

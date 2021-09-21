@@ -1,0 +1,31 @@
+{
+    "private": true,
+    "version": "0.1.0",
+    "name": "modern",
+    "main": "./build/cjs/index.js",
+    "module": "./build/es/index.js",
+    "exports": {
+        "import": "./build/es/index.js",
+        "require": "./build/cjs/index.js"
+    },
+    "dependencies": {
+        "@dhis2/app-runtime": "^3.0.0",
+        "@dhis2/d2-i18n": "^1",
+        "@dhis2/ui": "^6.23.5",
+        "legacy": "*",
+        "react": "17.0.0",
+        "react-dom": "17.0.0",
+        "react-redux": "7.2.1",
+        "react-router-dom": "5.2.0",
+        "redux": "^4.1.1",
+        "redux-thunk": "2.3.0",
+        "shared": "*",
+        "styled-jsx": "^3.2"
+    },
+    "scripts": {
+        "build": "d2-app-scripts build",
+        "start": "d2-app-scripts start",
+        "test": "d2-app-scripts test",
+        "deploy": "d2-app-scripts deploy"
+    }
+}

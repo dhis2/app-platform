@@ -1,0 +1,38 @@
+$sidebar--background-color: #FFF;
+$sidebar--border-color: #E1E1E1;
+$sidebar--border-style: 1px solid;
+$sidebar--item--text-color: #303030;
+$sidebar--item--hover-color: #EEE;
+$left-bar-width: 256px;
+
+.sidebar {
+  background: $sidebar--background-color;
+  border-right: $sidebar--border-style $sidebar--border-color;
+  bottom: 3rem;
+  float: left;
+  left: 30px;
+  margin-top: 16px;
+  overflow-y: auto;
+  position: fixed;
+  top: 4rem;
+  width: $left-bar-width;
+
+  ul {
+    list-style: none;
+    padding-left: 0;
+  }
+
+  li {
+    border-bottom: $sidebar--border-style $sidebar--border-color;
+
+    &:hover {
+      background: $sidebar--item--hover-color;
+    }
+  }
+
+  a {
+    color: $sidebar--item--text-color;
+    display: block;
+    text-decoration: none;
+  }
+}

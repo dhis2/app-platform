@@ -8,6 +8,7 @@
     },
     "workspaces": {
         "packages": [
+            "examples/multi-versions/*",
             "examples/simple-app",
             "examples/pwa-app",
             "cli",
@@ -36,7 +37,12 @@
         "docs:build": "d2-utils-docsite build ./docs -o ./dist",
         "test:adapter": "yarn workspace @dhis2/app-adapter test",
         "test:cli": "yarn workspace @dhis2/cli-app-scripts test",
-        "test": "yarn test:adapter && yarn test:cli"
+        "test": "yarn test:adapter && yarn test:cli",
+        "build:multi-react:shared": "yarn workspace shared build",
+        "build:multi-react:legacy": "yarn workspace legacy build",
+        "build:multi-react:modern": "yarn workspace modern build",
+        "build:multi-react": "yarn build:multi-react:shared && yarn build:multi-react:legacy && yarn build:multi-react:modern",
+        "start:multi-react": "yarn build:multi-react && yarn workspace container start"
     },
     "d2": {
         "docsite": {

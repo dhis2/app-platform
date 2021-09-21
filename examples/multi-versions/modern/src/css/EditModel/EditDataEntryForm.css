@@ -1,0 +1,127 @@
+.paletteContainer {
+	 position: fixed;
+	 right: 16px;
+	 top: 112px;
+	 bottom: 16px;
+}
+
+.paletteContainer:hover .resizeHandle:after {
+	 border-color: rgba(0, 0, 0, 0.12);
+}
+
+.paletteContainer .resizeHandle {
+	 position: absolute;
+	 top: -20px;
+	 right: 0;
+	 bottom: -16px;
+	 left: -8px;
+	 width: 12px;
+	 cursor: col-resize;
+}
+
+.paletteContainer .resizeHandle:after {
+	 content: "";
+	 display: block;
+	 position: absolute;
+	 bottom: 0;
+	 top: 0;
+	 border: 0 dashed rgba(0, 0, 0, 0);
+	 border-left-width: 1px;
+	 margin-left: 5px;
+	 transition: border 125ms linear;
+}
+
+.paletteContainer .resizeHandle:hover:after {
+	 border-color: rgba(0, 0, 0, 0.45);
+}
+
+.paletteContainer .palette {
+	 position: absolute;
+	 top: 0;
+	 right: 0;
+	 bottom: 0;
+	 left: 8px;
+	 background: white;
+	 border-radius: 5px;
+	 box-shadow: 0 1px 6px rgba(0, 0, 0, 0.12), 0 1px 4px rgba(0, 0, 0, 0.12);
+}
+
+.paletteContainer .palette .elements {
+	 position: absolute;
+	 top: 48px;
+	 bottom: 32px;
+	 left: 0;
+	 right: 0;
+	 margin: 8px;
+	 font-size: 13px;
+	 font-weight: 300;
+	 display: flex;
+	 flex-direction: column;
+	 overflow-x: auto;
+}
+
+.paletteContainer .palette .elements .cell {
+	 position: relative;
+	 flex: 1 1;
+	 transition: all 175ms ease-in-out;
+}
+
+.paletteContainer .palette .elements .cell.expanded {
+	 flex: 35;
+}
+
+.paletteContainer .palette .elements .cell.expanded .header .arrow {
+	 transform: rotate(90deg);
+}
+
+.paletteContainer .palette .elements .cell .header {
+	 font-weight: 700;
+	 font-size: 16px;
+	 padding-top: 8px;
+	 cursor: pointer;
+}
+
+.paletteContainer .palette .elements .cell .header .arrow {
+	 display: inline-block;
+	 margin: 0 2px;
+	 transition: transform 175ms ease-out;
+}
+
+.paletteContainer .palette .elements .cell .header .count {
+	 display: inline-block;
+	 font-weight: 400;
+	 font-size: 14px;
+	 margin-left: 4px;
+}
+
+.paletteContainer .palette .elements .cell .items {
+	 position: absolute;
+	 padding-left: 16px;
+	 top: 32px;
+	 bottom: 0;
+	 left: 0;
+	 right: 0;
+	 overflow: auto;
+}
+
+.paletteContainer .palette .elements .cell .items .item {
+	 width: 100%;
+	 padding-bottom: 1px;
+	 white-space: nowrap;
+	 overflow: hidden;
+	 text-overflow: ellipsis;
+}
+
+.item.active a, .expand a {
+	 cursor: pointer;
+}
+
+.item.active a:hover, .expand a:hover {
+	 text-decoration: underline;
+}
+
+.item.inactive a {
+	 color: inherit;
+	 opacity: 0.5;
+	 cursor: default;
+}

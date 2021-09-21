@@ -1,0 +1,67 @@
+// Component stylesheets from dependencies
+@import '../legacy/node_modules/d2-ui/lib/css/DataTable';
+@import '../legacy/node_modules/d2-ui/lib/css/Pagination';
+
+@import './List/DetailsBox';
+@import './List/List';
+@import './SqlView/SqlView';
+@import './ColorPickers/ColorPickers';
+@import './IconPicker/IconPicker';
+
+$html-background-color: #F3F3F3;
+$data-table--background-color: #FFF;
+
+// Basic for all
+* {
+  box-sizing: border-box;
+}
+
+html {
+  background: $html-background-color;
+  font-family: 'Roboto', sans-serif;
+  font-size: 14px;
+}
+
+[data-reactroot] > div > main {
+  margin-top: 121px !important;
+}
+
+//TODO: Distribute
+//list
+.data-table {
+  background-color: $data-table--background-color;
+}
+
+// Needed to override the inline style set by the component
+// scss-lint:disable ImportantRule
+.details-box-wrap .sticky {
+  left: initial !important;
+  margin-right: 2rem;
+  margin-top: 5rem;
+  width: 22%;
+}
+
+.details-box__close-button {
+  cursor: pointer;
+}
+
+.data-table__rows__row__column {
+  white-space: nowrap;
+}
+
+.data-table__rows__row__column:not(:first-child) {
+  width: 10%;
+}
+
+.data-table__rows__row__column:last-child {
+  max-width: 90px;
+  min-width: initial;
+}
+
+.data-table__headers__header {
+  white-space: nowrap;
+}
+
+.sortableModalHelper {
+  z-index: 2000;
+}

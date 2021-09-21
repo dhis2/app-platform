@@ -1,0 +1,17 @@
+{
+  "name": "container",
+  "version": "0.1.0",
+  "dependencies": {
+    "modern": "*",
+    "react-scripts": "3.4.1"
+  },
+  "scripts": {
+    "start:app": "SKIP_PREFLIGHT_CHECK=true BROWSER=none react-scripts start",
+    "start": "yarn copy:legacy-i18n && yarn start:app",
+    "copy:legacy-i18n": "(rm -rf ./public/i18n || true) && cp -r ../legacy/src/i18n ./public/i18n"
+  },
+  "devDependencies": {
+    "cpx": "1.5.0",
+    "npm-run-all": "4.1.5"
+  }
+}

@@ -1,0 +1,69 @@
+{
+    "/edit/categorySection/categoryOptionGroupSet": "/en/user/html/manage_category.html#create_category_option_group_set",
+    "/edit/categorySection/categoryOptionGroup": "/en/user/html/manage_category.html#create_category_option_group",
+    "/edit/categorySection/categoryOptionCombo": "/en/user/html/manage_category.html#assign_code_category_option_combo",
+    "/edit/categorySection/categoryOption": "/en/user/html/manage_category.html#create_category_option",
+    "/edit/categorySection/categoryCombo": "/en/user/html/manage_category.html#create_category_combination",
+    "/edit/categorySection/category": "/en/user/html/manage_category.html#create_category",
+    "/list/categorySection": "/en/user/html/manage_category.html",
+
+    "/edit/dataElementSection/dataElementGroupSet": "/en/user/html/manage_data_element.html#create_data_element_group_set",
+    "/edit/dataElementSection/dataElementGroup": "/en/user/html/manage_data_element.html#create_data_element_group",
+    "/edit/dataElementSection/dataElement": "/en/user/html/manage_data_element.html#create_data_element",
+    "/list/dataElementSection": "/en/user/html/manage_data_element.html",
+
+    "/edit/dataSetSection/dataSet/${objectId}/sections": "/en/user/html/manage_data_set.html#manage_section_form",    
+    "/edit/dataSetSection/dataSet": "/en/user/html/manage_data_set.html#create_data_set",
+    "/list/dataSetSection/dataSet": "/en/user/html/manage_data_set.html",
+
+    "/edit/indicatorSection/programIndicatorGroup": "/en/user/html/configure_program_indicator.html#create_program_indicator_group",
+    "/list/indicatorSection/programIndicatorGroup": "/en/user/html/configure_program_indicator.html",
+    "/edit/indicatorSection/programIndicator": "/en/user/html/configure_program_indicator.html#create_program_indicator",
+    "/list/indicatorSection/programIndicator": "/en/user/html/configure_program_indicator.html",
+    
+    "/edit/indicatorSection/indicatorGroupSet": "/en/user/html/manage_indicator.html#create_indicator_group_set",
+    "/edit/indicatorSection/indicatorGroup": "/en/user/html/manage_indicator.html#create_indicator_group",
+    "/edit/indicatorSection/indicatorType": "/en/user/html/manage_indicator.html#create_indicator_type",
+    "/edit/indicatorSection/indicator": "/en/user/html/manage_indicator.html#create_indicator",
+    "/list/indicatorSection": "/en/user/html/manage_indicator.html",
+
+    "/edit/organisationUnitSection/organisationUnitGroupSet": "/en/user/html/manage_organisation_unit.html#create_organisation_unit_group_set",
+    "/edit/organisationUnitSection/organisationUnitGroup": "/en/user/html/manage_organisation_unit.html#create_organisation_unit_group",
+    "/edit/organisationUnitSection/organisationUnitLevel": "/en/user/html/manage_organisation_unit.html#name_organisation_unit_level",
+    "/edit/organisationUnitSection/organisationUnit": "/en/user/html/manage_organisation_unit.html#create_organisation_unit",
+    "/list/organisationUnitSection": "/en/user/html/manage_organisation_unit.html",
+    
+    "/edit/programSection/trackedEntityAttribute": "/en/user/html/configure_tracked_entity.html#create_tracked_entity_attribute",
+    "/edit/programSection/programRuleVariable": "/en/user/html/configure_program_rule.html#create_program_rule_variable",
+    "/edit/programSection/relationshipType": "/en/user/html/configure_relationship_type.html#create_relationship_type",
+    "/edit/programSection/trackedEntity": "/en/user/html/configure_tracked_entity.html#about_tracked_entity",
+    "/edit/programSection/programRule": "/en/user/html/configure_program_rule.html#create_program_rule",
+    "/edit/programSection/program": "/en/user/html/configure_event_program_in_maintenance_app.html#create_event_program",
+    "/list/programSection": "/en/user/html/configure_programs_in_maintenance_app.html",
+    
+    "/edit/validationSection/validationNotificationTemplate": "/en/user/html/manage_validation_rule.html#create_validation_notification",
+    "/edit/validationSection/validationRuleGroup": "/en/user/html/manage_validation_rule.html#create_validation_rule_group",
+    "/edit/validationSection/validationRule": "/en/user/html/manage_validation_rule.html#create_validation_rule",
+    "/list/validationSection": "/en/user/html/manage_validation_rule.html",
+
+    "/edit/otherSection/legendSet": "/en/user/html/manage_legend.html#create_legend",
+    "/list/otherSection/legendSet": "/en/user/html/manage_legend.html",
+
+    "/edit/otherSection/pushAnalysis": "/en/user/html/manage_push_report.html#create_push_report",
+    "/list/otherSection/pushAnalysis": "/en/user/html/manage_push_report.html",
+
+    "/edit/otherSection/externalMapLayer": "/en/user/html/manage_external_maplayer.html#create_external_map_layer",
+    "/list/otherSection/externalMapLayer": "/en/user/html/manage_external_maplayer.html",
+
+    "/edit/otherSection/predictorGroup": "/en/user/html/manage_predictor.html#create_predictor_group",
+    "/list/otherSection/predictorGroup": "/en/user/html/manage_predictor.html",
+
+    "/edit/otherSection/optionGroupSet": "/en/user/html/manage_option_set.html#create_option_group_set",
+    "/list/otherSection/optionGroupSet": "/en/user/html/manage_option_set.html#create_option_group_set",
+
+    "/edit/otherSection/optionGroup": "/en/user/html/manage_option_set.html#create_option_group",
+    "/list/otherSection/optionGroup": "/en/user/html/manage_option_set.html#create_option_group",
+
+    "/edit/otherSection/${objectType}": "/en/user/html/manage_${objectType}.html#create_${objectType}",
+    "/list/otherSection/${objectType}": "/en/user/html/manage_${objectType}.html"
+}

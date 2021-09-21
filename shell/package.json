@@ -20,8 +20,6 @@
         "classnames": "^2.2.6",
         "moment": "^2.29.1",
         "prop-types": "^15.7.2",
-        "react": "^16.8.6",
-        "react-dom": "^16.8.6",
         "react-scripts": "^4.0.3",
         "source-map-explorer": "^2.1.0",
         "styled-jsx": "^3.2.2",
@@ -39,5 +37,9 @@
         "enzyme": "^3.10.0",
         "enzyme-adapter-react-16": "^1.14.0",
         "react-test-renderer": "^16.8.6"
+    },
+    "peerDependencies": {
+        "react": "^17",
+        "react-dom": "^17"
     }
 }

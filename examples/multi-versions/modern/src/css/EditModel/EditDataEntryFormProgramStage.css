@@ -1,0 +1,124 @@
+.programStageEditForm {
+	 display: flex;
+	 box-sizing: border-box;
+}
+
+.programStageEditForm .left {
+	 width: auto;
+}
+
+.programStageEditForm .right {
+	 width: 30%;
+	 min-width: 300px;
+}
+
+.programStageEditForm .paletteContainer:hover .resizeHandle:after {
+	 border-color: rgba(0, 0, 0, 0.12);
+}
+
+.programStageEditForm .paletteContainer .resizeHandle {
+	 position: absolute;
+	 top: -20px;
+	 right: 0;
+	 bottom: -16px;
+	 left: -8px;
+	 width: 12px;
+	 cursor: col-resize;
+}
+
+.programStageEditForm .paletteContainer .resizeHandle:after {
+	 content: "";
+	 display: block;
+	 position: absolute;
+	 bottom: 0;
+	 top: 0;
+	 border: 0 dashed rgba(0, 0, 0, 0);
+	 border-left-width: 1px;
+	 margin-left: 5px;
+	 transition: border 125ms linear;
+}
+
+.programStageEditForm .paletteContainer .resizeHandle:hover:after {
+	 border-color: rgba(0, 0, 0, 0.45);
+}
+
+.programStageEditForm .paletteContainer .palette {
+	 padding-left: 1rem;
+}
+
+.programStageEditForm .paletteContainer .palette .elements {
+	 padding: 0 8px 8px;
+	 font-size: 13px;
+	 font-weight: 300;
+	 display: flex;
+	 flex-direction: column;
+	 overflow-x: auto;
+}
+
+.programStageEditForm .paletteContainer .palette .elements .cell {
+	 position: relative;
+	 flex: 1 1;
+	 transition: all 175ms ease-in-out;
+}
+
+.programStageEditForm .paletteContainer .palette .elements .cell.expanded {
+	 flex: 1;
+}
+
+.programStageEditForm .paletteContainer .palette .elements .cell.expanded .header .arrow {
+	 transform: rotate(90deg);
+}
+
+.programStageEditForm .paletteContainer .palette .elements .cell.expanded .items {
+	 height: 100%;
+}
+
+.programStageEditForm .paletteContainer .palette .elements .cell .header {
+	 font-weight: 700;
+	 font-size: 16px;
+	 padding-top: 8px;
+	 cursor: pointer;
+}
+
+.programStageEditForm .paletteContainer .palette .elements .cell .header .arrow {
+	 display: inline-block;
+	 margin: 0 2px;
+	 transition: transform 175ms ease-out;
+}
+
+.programStageEditForm .paletteContainer .palette .elements .cell .header .count {
+	 display: inline-block;
+	 font-weight: 400;
+	 font-size: 14px;
+	 margin-left: 4px;
+}
+
+.programStageEditForm .paletteContainer .palette .elements .cell .items {
+	 transition: height 175ms ease-in-out;
+	 height: 0;
+	 max-height: 500px;
+	 position: relative;
+	 padding-left: 16px;
+	 overflow: auto;
+}
+
+.programStageEditForm .paletteContainer .palette .elements .cell .items .item {
+	 padding-bottom: 1px;
+	 white-space: nowrap;
+	 overflow: hidden;
+	 text-overflow: ellipsis;
+}
+
+.programStageEditForm .item.active a, .programStageEditForm .expand a {
+	 cursor: pointer;
+}
+
+.programStageEditForm .item.active a:hover, .programStageEditForm .expand a:hover {
+	 text-decoration: underline;
+}
+
+.programStageEditForm .item.inactive a {
+	 color: inherit;
+	 opacity: 0.5;
+	 cursor: default;
+}

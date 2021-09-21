@@ -47,6 +47,9 @@ const makeBabelConfig = ({ moduleType, mode }) => {
             // class { handleClick = () => { } }
             require('@babel/plugin-proposal-class-properties'),
 
+            // Adds support for experimental 'exportDefaultFrom' syntax
+            require('@babel/plugin-proposal-export-default-from'),
+
             // Adds syntax support for optional chaining (?.)
             require('@babel/plugin-proposal-optional-chaining'),
 
