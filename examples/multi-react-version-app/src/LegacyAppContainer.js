@@ -8,9 +8,13 @@ const useLazyParcel = lazyModuleFetcher => {
         setLoading(true)
         lazyModuleFetcher()
             .then(parcel => {
+                console.log(parcel)
+                setLoading(false)
                 setParcel(parcel.default())
             })
             .catch(err => {
+                console.log('err', err)
+                setLoading(false)
                 setError(err)
             })
     }, [lazyModuleFetcher])
@@ -18,7 +22,7 @@ const useLazyParcel = lazyModuleFetcher => {
     return { loading, error, parcel }
 }
 
-export const LegacyAppContainer = (lazyModuleFetcher, ...props) => {
+export const LegacyAppContainer = ({ lazyModuleFetcher, ...props }) => {
     const mountPointRef = useRef()
     const { loading, error, parcel } = useLazyParcel(lazyModuleFetcher)
 
@@ -34,7 +38,7 @@ export const LegacyAppContainer = (lazyModuleFetcher, ...props) => {
 
     useEffect(() => {
         parcel?.update(props)
-    }, props)
+    }, [props])
 
     return (
         <>

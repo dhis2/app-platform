@@ -20,6 +20,8 @@ const MyApp = () => (
                 if (loading) {
                     return <span>...</span>
                 }
+
+                console.log(`Loading modern app - React ${React.version}`)
                 return (
                     <>
                         <h1>
