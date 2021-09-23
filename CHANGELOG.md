@@ -1,3 +1,10 @@
+# [8.1.0](https://github.com/dhis2/app-platform/compare/v8.0.1...v8.1.0) (2021-09-23)
+
+
+### Features
+
+* **adapter:** clear sensitive caches on user-change ([398cde2](https://github.com/dhis2/app-platform/commit/398cde20a6c603e5741bcb8f7d5d2d97c217c987))
+
 ## [8.0.1](https://github.com/dhis2/app-platform/compare/v8.0.0...v8.0.1) (2021-09-20)
 
 
