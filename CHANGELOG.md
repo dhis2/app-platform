@@ -1,3 +1,10 @@
+# [7.7.0](https://github.com/dhis2/app-platform/compare/v7.6.6...v7.7.0) (2021-09-23)
+
+
+### Features
+
+* **adapter:** clear sensitive caches on user-change ([e18d8d9](https://github.com/dhis2/app-platform/commit/e18d8d94614da46a7c5bea49154b9533165c5a73))
+
 ## [7.6.6](https://github.com/dhis2/app-platform/compare/v7.6.5...v7.6.6) (2021-09-15)
 
 
