@@ -62,17 +62,19 @@ export class OfflineInterface {
             if (!promptUpdate) {
                 return
             }
-            const reloadMessage = i18n.t(
-                'App updates are ready and will be activated after all tabs of this app are closed. Skip waiting and reload to update now?'
-            )
+
+            const message = i18n.t("There's an update available for this app.")
             const onConfirm = () =>
                 registration.waiting.postMessage({
                     type: swMsgs.skipWaiting,
                 })
+            const actions = [
+                { label: i18n.t('Update and reload'), onClick: onConfirm },
+                { label: i18n.t('Not now'), onClick: () => {} },
+            ]
             promptUpdate({
-                message: reloadMessage,
-                action: i18n.t('Update'),
-                onConfirm: onConfirm,
+                message,
+                actions,
             })
         }
 
