@@ -1,6 +1,6 @@
 # Bootstrapping
 
-To create a new template application (or upgrade and existing React app), use the [init](scripts/init) command.
+To create a new template application (or upgrade an existing React app), use the [init](scripts/init) command.
 
 ```sh
 > d2 app scripts init my-test-app
