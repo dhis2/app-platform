@@ -1,3 +1,10 @@
+## [7.7.1](https://github.com/dhis2/app-platform/compare/v7.7.0...v7.7.1) (2021-09-28)
+
+
+### Bug Fixes
+
+* **offline-interface:** improve SW update message & actions ([1335ce1](https://github.com/dhis2/app-platform/commit/1335ce1f18c1b85479ed498f11b1d78c85868daa))
+
 # [7.7.0](https://github.com/dhis2/app-platform/compare/v7.6.6...v7.7.0) (2021-09-23)
 
 
