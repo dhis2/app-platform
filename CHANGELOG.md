@@ -1,3 +1,10 @@
+## [8.1.1](https://github.com/dhis2/app-platform/compare/v8.1.0...v8.1.1) (2021-09-28)
+
+
+### Bug Fixes
+
+* **offline-interface:** improve SW update message & actions ([9caedba](https://github.com/dhis2/app-platform/commit/9caedbaf566815c85aa55448bb31c4251d7474de))
+
 # [8.1.0](https://github.com/dhis2/app-platform/compare/v8.0.1...v8.1.0) (2021-09-23)
 
 
