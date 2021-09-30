@@ -2,6 +2,7 @@ const { exec } = require('@dhis2/cli-helpers-engine')
 const { getPWAEnvVars } = require('../pwa')
 const bootstrap = require('./bootstrap')
 const getEnv = require('./env')
+const getAppInfos = require('./getAppInfos')
 
 module.exports = ({ config, paths }) => ({
     bootstrap: async (args = {}) => {
@@ -16,7 +17,7 @@ module.exports = ({ config, paths }) => ({
             cmd: 'yarn',
             args: ['run', 'build'],
             cwd: paths.shell,
-            env: getEnv({ name: config.title, ...getPWAEnvVars(config) }),
+            env: getEnv({ ...getAppInfos(config), ...getPWAEnvVars(config) }),
             pipe: false,
         })
     },
@@ -25,7 +26,7 @@ module.exports = ({ config, paths }) => ({
             cmd: 'yarn',
             args: ['run', 'start'],
             cwd: paths.shell,
-            env: getEnv({ name: config.title, port, ...getPWAEnvVars(config) }),
+            env: getEnv({ ...getAppInfos(config), port, ...getPWAEnvVars(config) }),
             pipe: false,
         })
     },
@@ -34,7 +35,7 @@ module.exports = ({ config, paths }) => ({
             cmd: 'yarn',
             args: ['run', 'test', '--', '--all'],
             cwd: paths.shell,
-            env: getEnv({ name: config.title }),
+            env: getEnv({ ...getAppInfos(config) }),
             pipe: true,
         })
     },
