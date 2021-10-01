@@ -42,8 +42,9 @@ module.exports = function injectPrecacheManifest(paths, config) {
         swDest: paths.shellBuildServiceWorker,
         globDirectory: paths.shellBuildOutput,
         globPatterns: ['**/*'],
-        // Skip `static` directory; CRA's workbox-webpack-plugin handles it smartly
-        globIgnores: ['static/**/*'],
+        // Skip index.html and `static` directory;
+        // CRA's workbox-webpack-plugin handles it smartly
+        globIgnores: ['static/**/*', 'index.html'],
         additionalManifestEntries: config.pwa.caching.additionalManifestEntries,
         injectionPoint: 'self.__WB_BUILD_MANIFEST',
         // Skip revision hashing for files with hash or semver in name:
