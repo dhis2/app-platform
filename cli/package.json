@@ -31,6 +31,7 @@
         "@dhis2/app-shell": "8.1.1",
         "@dhis2/cli-helpers-engine": "^3.0.0",
         "@jest/core": "^27.0.6",
+        "@yarnpkg/lockfile": "^1.1.0",
         "archiver": "^3.1.1",
         "axios": "^0.20.0",
         "babel-jest": "^27.0.6",
@@ -66,5 +67,8 @@
             "src/commands/test.js"
         ],
         "testEnvironment": "node"
+    },
+    "devDependencies": {
+        "outdent": "^0.8.0"
     }
 }
