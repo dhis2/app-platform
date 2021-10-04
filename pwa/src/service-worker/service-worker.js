@@ -1,4 +1,3 @@
-import { clientsClaim } from 'workbox-core'
 import { precacheAndRoute, matchPrecache, precache } from 'workbox-precaching'
 import { registerRoute, setDefaultHandler } from 'workbox-routing'
 import {
@@ -18,6 +17,8 @@ import {
     createDB,
     removeUnusedCaches,
     setUpKillSwitchServiceWorker,
+    getClientsInfo,
+    claimClients,
 } from './utils'
 
 export function setUpServiceWorker() {
@@ -31,8 +32,6 @@ export function setUpServiceWorker() {
 
     // Misc setup
 
-    // Makes sure to take control of available clients when the SW is activated
-    clientsClaim()
     // Disable verbose logs
     // TODO: control with env var
     self.__WB_DISABLE_DEV_LOGS = true
@@ -183,9 +182,17 @@ export function setUpServiceWorker() {
             return
         }
 
+        if (event.data.type === swMsgs.getClientsInfo) {
+            getClientsInfo(event)
+        }
+
+        // Can be used upon first SW activation
+        if (event.data.type === swMsgs.claimClients) {
+            claimClients()
+        }
+
         // This allows the web app to trigger skipWaiting via
         // registration.waiting.postMessage({type: 'SKIP_WAITING'})
-        // Paired with `clientsClaim()` at top of file.
         if (event.data.type === swMsgs.skipWaiting) {
             self.skipWaiting()
         }

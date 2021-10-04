@@ -1,3 +1,4 @@
+import { swMsgs } from '../lib/constants'
 import {
     deleteSectionsDB,
     openSectionsDB,
@@ -79,4 +80,42 @@ export async function removeUnusedCaches() {
             }
         })
     )
+}
+
+/**
+ * Can be used to access information about this service worker's clients.
+ * Sends back information on a message with 'CLIENTS_INFO' type; the payload
+ * currently contains the number of current clients, including uncontrolled.
+ * @returns {Object} { clientsCounts: number }
+ */
+export async function getClientsInfo(event) {
+    const clientId = event.source.id
+
+    // Include uncontrolled clients: necessary to know if there are multiple
+    // tabs open upon first SW installation
+    const clientsList = await self.clients.matchAll({
+        includeUncontrolled: true,
+    })
+
+    self.clients.get(clientId).then(client => {
+        client.postMessage({
+            type: swMsgs.clientsInfo,
+            payload: {
+                clientsCount: clientsList.length,
+            },
+        })
+    })
+}
+
+/**
+ * Can be used upon first SW activation to give the newly installed SW control
+ * of all open tabs (and then reload to use PWA app assets)
+ */
+export async function claimClients() {
+    // The new SW will be active but not controlling any tabs.
+    // clients.claim() gives the SW control of those tabs.
+    self.clients.claim()
+    // Important to use includeUncontrolled option here:
+    const clients = await self.clients.matchAll({ includeUncontrolled: true })
+    clients.forEach(client => client.navigate(client.url))
 }
