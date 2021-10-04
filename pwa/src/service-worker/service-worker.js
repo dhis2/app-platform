@@ -64,7 +64,7 @@ export function setUpServiceWorker() {
         // Extract index.html from the manifest to precache, then route
         // in a custom way
         const indexHtmlManifestEntry = precacheManifest.find(({ url }) =>
-            url.includes('index.html')
+            url.endsWith('index.html')
         )
         precache([indexHtmlManifestEntry])
 
@@ -88,7 +88,7 @@ export function setUpServiceWorker() {
             // a file extension, skip (unless it's index.html)
             if (
                 fileExtensionRegexp.test(url.pathname) &&
-                !/index\.html$/.test(url.pathname)
+                !url.pathname.endsWith('index.html')
             ) {
                 return false
             }
