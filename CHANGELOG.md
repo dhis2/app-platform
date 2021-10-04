@@ -1,3 +1,10 @@
+## [8.1.2](https://github.com/dhis2/app-platform/compare/v8.1.1...v8.1.2) (2021-10-04)
+
+
+### Bug Fixes
+
+* **service-worker:** change routing to allow redirect to login page ([#669](https://github.com/dhis2/app-platform/issues/669)) ([97c84d4](https://github.com/dhis2/app-platform/commit/97c84d42ba9a07fce28435a3db94027e8e6650d7))
+
 ## [8.1.1](https://github.com/dhis2/app-platform/compare/v8.1.0...v8.1.1) (2021-09-28)
 
 
