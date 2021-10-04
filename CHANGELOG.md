@@ -1,3 +1,10 @@
+## [7.7.2](https://github.com/dhis2/app-platform/compare/v7.7.1...v7.7.2) (2021-10-04)
+
+
+### Bug Fixes
+
+* **service-worker:** change routing to allow redirect to login page 7.x ([#670](https://github.com/dhis2/app-platform/issues/670)) ([8f56284](https://github.com/dhis2/app-platform/commit/8f562849883fc7871a1f4622c998d7981bbdb5c2))
+
 ## [7.7.1](https://github.com/dhis2/app-platform/compare/v7.7.0...v7.7.1) (2021-09-28)
 
 
