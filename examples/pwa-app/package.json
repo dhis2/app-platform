@@ -10,7 +10,7 @@
         "test": "d2-app-scripts test",
         "deploy": "d2-app-scripts deploy",
         "serve": "serve -l 5500 build/app",
-        "demo": "yarn build --force --debug && yarn serve"
+        "demo": "yarn build --force --standalone --debug && yarn serve"
     },
     "peerDependencies": {
         "@dhis2/app-runtime": "*",
