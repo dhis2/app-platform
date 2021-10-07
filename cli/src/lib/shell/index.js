@@ -26,7 +26,11 @@ module.exports = ({ config, paths }) => ({
             cmd: 'yarn',
             args: ['run', 'start'],
             cwd: paths.shell,
-            env: getEnv({ ...getAppInfos(config), port, ...getPWAEnvVars(config) }),
+            env: getEnv({
+                ...getAppInfos(config),
+                port,
+                ...getPWAEnvVars(config),
+            }),
             pipe: false,
         })
     },

@@ -7,7 +7,14 @@ import { ServerVersionProvider } from './components/ServerVersionProvider'
 
 const offlineInterface = new OfflineInterface()
 
-const AppAdapter = ({ url, apiVersion, appName, appVersion, pwaEnabled, children }) => (
+const AppAdapter = ({
+    url,
+    apiVersion,
+    appName,
+    appVersion,
+    pwaEnabled,
+    children,
+}) => (
     <ErrorBoundary fullscreen onRetry={checkForSWUpdateAndReload}>
         <ServerVersionProvider
             url={url}
