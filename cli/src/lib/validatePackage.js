@@ -1,5 +1,6 @@
 const { reporter, chalk } = require('@dhis2/cli-helpers-engine')
 const fs = require('fs-extra')
+const { validateLockfile } = require('./validators/validateLockfile')
 const {
     validatePackageExports,
 } = require('./validators/validatePackageExports')
@@ -25,5 +26,11 @@ module.exports.validatePackage = async ({
 
     reporter.debug('Validating package...', { pkg, offerFix, noVerify })
 
-    return await validatePackageExports(pkg, { config, paths, offerFix })
+    const validators = [validatePackageExports, validateLockfile]
+    for (const validator of validators) {
+        if (!(await validator(pkg, { config, paths, offerFix }))) {
+            return false
+        }
+    }
+    return true
 }
