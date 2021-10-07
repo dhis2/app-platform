@@ -7,7 +7,7 @@ import { ErrorBoundary } from './ErrorBoundary.js'
 import { LoadingMask } from './LoadingMask.js'
 import { styles } from './styles/AppWrapper.style.js'
 
-export const AppWrapper = ({ appName, children }) => {
+export const AppWrapper = ({ appName, appVersion, children }) => {
     const { loading } = useCurrentUserLocale()
 
     if (loading) {
@@ -16,19 +16,23 @@ export const AppWrapper = ({ appName, children }) => {
 
     return (
         <div className="app-shell-adapter">
-            <style jsx>{styles}</style>
-            <HeaderBar appName={appName} />
+            <HeaderBar appName={appName} appVersion={appVersion} />
+
             <div className="app-shell-app">
                 <ErrorBoundary onRetry={() => window.location.reload()}>
                     {children}
                 </ErrorBoundary>
             </div>
+
             <Alerts />
+
+            <style jsx>{styles}</style>
         </div>
     )
 }
 
 AppWrapper.propTypes = {
     appName: PropTypes.string.isRequired,
+    appVersion: PropTypes.string,
     children: PropTypes.node,
 }

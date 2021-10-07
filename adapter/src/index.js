@@ -7,7 +7,7 @@ import { ServerVersionProvider } from './components/ServerVersionProvider'
 
 const offlineInterface = new OfflineInterface()
 
-const AppAdapter = ({ url, apiVersion, appName, pwaEnabled, children }) => (
+const AppAdapter = ({ url, apiVersion, appName, appVersion, pwaEnabled, children }) => (
     <ErrorBoundary fullscreen onRetry={checkForSWUpdateAndReload}>
         <ServerVersionProvider
             url={url}
@@ -15,7 +15,9 @@ const AppAdapter = ({ url, apiVersion, appName, pwaEnabled, children }) => (
             pwaEnabled={pwaEnabled}
             offlineInterface={offlineInterface}
         >
-            <AppWrapper appName={appName}>{children}</AppWrapper>
+            <AppWrapper appName={appName} appVersion={appVersion}>
+                {children}
+            </AppWrapper>
         </ServerVersionProvider>
     </ErrorBoundary>
 )
@@ -23,6 +25,7 @@ const AppAdapter = ({ url, apiVersion, appName, pwaEnabled, children }) => (
 AppAdapter.propTypes = {
     appName: PropTypes.string.isRequired,
     apiVersion: PropTypes.number,
+    appVersion: PropTypes.number,
     children: PropTypes.element,
     pwaEnabled: PropTypes.bool,
     url: PropTypes.string,
