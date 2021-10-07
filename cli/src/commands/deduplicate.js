@@ -1,5 +1,5 @@
 const fs = require('fs')
-const { reporter, chalk } = require('@dhis2/cli-helpers-engine')
+const { reporter, chalk, exit } = require('@dhis2/cli-helpers-engine')
 const makePaths = require('../lib/paths')
 const { listDuplicates, fixDuplicates } = require('../lib/yarnDeduplicate')
 
@@ -7,8 +7,7 @@ const handler = async ({ cwd }) => {
     const paths = makePaths(cwd)
 
     if (paths.yarnLock === null) {
-        reporter.error('Could not find yarn.lock')
-        process.exit(1)
+        exit(1, 'Could not find yarn.lock')
     }
 
     const yarnLock = fs.readFileSync(paths.yarnLock, 'utf8')
@@ -23,7 +22,7 @@ const handler = async ({ cwd }) => {
                 ` * ${chalk.bold(name)} (found versions ${versions.join(', ')})`
             )
         }
-        process.exit(1)
+        exit(1)
     }
 }
 
