@@ -1,3 +1,4 @@
+const fs = require('fs')
 const path = require('path')
 const { reporter } = require('@dhis2/cli-helpers-engine')
 
@@ -5,6 +6,18 @@ const shellSource = path.dirname(
     require.resolve('@dhis2/app-shell/package.json')
 )
 const shellAppDirname = 'src/D2App'
+
+const findYarnLock = base => {
+    if (base === '/') {
+        return null
+    }
+
+    const yarnLock = path.join(base, './yarn.lock')
+    if (fs.existsSync(yarnLock)) {
+        return yarnLock
+    }
+    return findYarnLock(path.dirname(base))
+}
 
 module.exports = (cwd = process.cwd()) => {
     const base = path.resolve(cwd)
@@ -31,6 +44,7 @@ module.exports = (cwd = process.cwd()) => {
 
         base,
         package: path.join(base, './package.json'),
+        yarnLock: findYarnLock(base),
         dotenv: path.join(base, './.env'),
         config: path.join(base, './d2.config.js'),
         readme: path.join(base, './README.md'),
