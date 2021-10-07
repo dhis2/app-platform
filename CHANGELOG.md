@@ -1,3 +1,10 @@
+# [8.2.0](https://github.com/dhis2/app-platform/compare/v8.1.2...v8.2.0) (2021-10-07)
+
+
+### Features
+
+* **cli:** validate yarn.lock in 'start' and 'build' commands and add 'deduplicate' command ([#668](https://github.com/dhis2/app-platform/issues/668)) ([8a8aa4d](https://github.com/dhis2/app-platform/commit/8a8aa4d451cec58660eaba876d7f16b3d634ce46))
+
 ## [8.1.2](https://github.com/dhis2/app-platform/compare/v8.1.1...v8.1.2) (2021-10-04)
 
 
