@@ -1,3 +1,10 @@
+## [8.2.1](https://github.com/dhis2/app-platform/compare/v8.2.0...v8.2.1) (2021-10-08)
+
+
+### Bug Fixes
+
+* **shell:** wrap app in CustomDataProvider in App test ([#677](https://github.com/dhis2/app-platform/issues/677)) ([3325605](https://github.com/dhis2/app-platform/commit/332560595d58fc49c3a06e0100029a21738a2cd3))
+
 # [8.2.0](https://github.com/dhis2/app-platform/compare/v8.1.2...v8.2.0) (2021-10-07)
 
 
