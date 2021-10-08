@@ -14,6 +14,12 @@ const handler = async ({ cwd }) => {
     const deduped = fixDuplicates(yarnLock)
     fs.writeFileSync(paths.yarnLock, deduped)
 
+    if (deduped !== yarnLock) {
+        reporter.info(
+            `Run ${chalk.bold('yarn install')} to deduplicate node_modules`
+        )
+    }
+
     const duplicates = listDuplicates(deduped)
     if (duplicates.size > 0) {
         reporter.error('Failed to deduplicate the following packages:')
