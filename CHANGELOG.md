@@ -1,3 +1,10 @@
+## [8.2.2](https://github.com/dhis2/app-platform/compare/v8.2.1...v8.2.2) (2021-10-11)
+
+
+### Bug Fixes
+
+* **pwa:** improve SW update UX ([79b5285](https://github.com/dhis2/app-platform/commit/79b5285619c0e49bc39eebe104c7c5aedadb8783))
+
 ## [8.2.1](https://github.com/dhis2/app-platform/compare/v8.2.0...v8.2.1) (2021-10-08)
 
 
