@@ -1,3 +1,10 @@
+## [7.7.3](https://github.com/dhis2/app-platform/compare/v7.7.2...v7.7.3) (2021-10-11)
+
+
+### Bug Fixes
+
+* **pwa:** improve SW update UX ([5551141](https://github.com/dhis2/app-platform/commit/55511414b02c7ef557914843ab4ca48c6a3fff8d))
+
 ## [7.7.2](https://github.com/dhis2/app-platform/compare/v7.7.1...v7.7.2) (2021-10-04)
 
 
