@@ -34,6 +34,6 @@ export const AppWrapper = ({ appName, children, offlineInterface }) => {
 
 AppWrapper.propTypes = {
     appName: PropTypes.string.isRequired,
+    offlineInterface: PropTypes.object.isRequired,
     children: PropTypes.node,
-    offlineInterface: PropTypes.shape({}),
 }

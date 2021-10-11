@@ -89,8 +89,8 @@ export default function PWAUpdateManager({ offlineInterface }) {
 }
 PWAUpdateManager.propTypes = {
     offlineInterface: PropTypes.shape({
-        checkForNewSW: PropTypes.func,
-        getClientsInfo: PropTypes.func,
-        useNewSW: PropTypes.func,
-    }),
+        checkForNewSW: PropTypes.func.isRequired,
+        getClientsInfo: PropTypes.func.isRequired,
+        useNewSW: PropTypes.func.isRequired,
+    }).isRequired,
 }
