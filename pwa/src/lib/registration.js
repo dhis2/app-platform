@@ -10,13 +10,24 @@ export async function checkForUpdates({ onUpdate }) {
 
     function handleWaitingSW() {
         console.log(
-            'New content is available and will be used when all ' +
-                'tabs for this page are closed. See https://cra.link/PWA.'
+            'New content is available and will be used when all tabs for this page are closed.'
         )
 
         // Execute callback
         if (onUpdate) {
-            onUpdate(registration)
+            onUpdate({ registration })
+        }
+    }
+
+    // Handle active but not-controlling worker
+    // (which happens on first installation, if clients.claim() is not used)
+    function handleFirstSWActivation() {
+        console.log(
+            'This app is ready for offline usage. Refresh to use offline features.'
+        )
+
+        if (onUpdate) {
+            onUpdate({ registration, firstActivation: true })
         }
     }
 
@@ -26,19 +37,29 @@ export async function checkForUpdates({ onUpdate }) {
     // callback doesn't get called in that case. Handle that here:
     if (registration.waiting) {
         handleWaitingSW()
+    } else if (
+        registration.active &&
+        navigator.serviceWorker.controller === null
+    ) {
+        handleFirstSWActivation()
     }
 
     function handleInstallingWorker() {
         const installingWorker = registration.installing
         if (installingWorker) {
             installingWorker.onstatechange = () => {
-                if (installingWorker.state !== 'installed') {
-                    return
-                }
-                if (navigator.serviceWorker.controller) {
+                if (
+                    installingWorker.state === 'installed' &&
+                    navigator.serviceWorker.controller
+                ) {
+                    // SW is waiting to become active
                     handleWaitingSW()
-                } else {
-                    console.log('Content is cached for offline use.')
+                } else if (
+                    installingWorker.state === 'activated' &&
+                    !navigator.serviceWorker.controller
+                ) {
+                    // First SW is installed and active
+                    handleFirstSWActivation()
                 }
             }
         }

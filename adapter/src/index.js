@@ -15,7 +15,9 @@ const AppAdapter = ({ url, apiVersion, appName, pwaEnabled, children }) => (
             pwaEnabled={pwaEnabled}
             offlineInterface={offlineInterface}
         >
-            <AppWrapper appName={appName}>{children}</AppWrapper>
+            <AppWrapper appName={appName} offlineInterface={offlineInterface}>
+                {children}
+            </AppWrapper>
         </ServerVersionProvider>
     </ErrorBoundary>
 )

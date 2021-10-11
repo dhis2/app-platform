@@ -1,5 +1,4 @@
 import EventEmitter from 'events'
-import i18n from '@dhis2/d2-i18n'
 import { swMsgs } from '../lib/constants'
 import { register, unregister, checkForUpdates } from '../lib/registration'
 import { openSectionsDB, SECTIONS_STORE } from '../lib/sections-db'
@@ -8,7 +7,7 @@ import { openSectionsDB, SECTIONS_STORE } from '../lib/sections-db'
 function swMessage(type, payload) {
     if (!navigator.serviceWorker.controller) {
         throw new Error(
-            '[Offine interface] Cannot send service worker message - no service worker is registered'
+            '[Offine interface] Cannot send service worker message - no service worker is controlling this page.'
         )
     }
     navigator.serviceWorker.controller.postMessage({ type, payload })
@@ -30,83 +29,86 @@ export class OfflineInterface {
             unregister()
         }
 
-        if ('serviceWorker' in navigator) {
-            let reloading
-            navigator.serviceWorker.oncontrollerchange = () => {
-                if (reloading) {
-                    // Fixes an infinite update loop when 'Update on reload' is
-                    // checked in Chrome
-                    return
-                }
-                reloading = true
-                window.location.reload()
-            }
-        }
-    }
-    /**
-     * Checks for service worker updates and sets up an interface for
-     * communicating with the service worker.
-     * If PWA is not enabled, a killswitch service worker should register
-     * itself and skip waiting without needing to check for updates.
-     *
-     * @param {Object} options
-     * @param {Function} options.promptUpdate - A function that will be called when a new service worker is installed and ready to activate. Expected to be an alert 'show' function
-     * @returns {Function} A clean-up function that removes listeners
-     */
-    init({ promptUpdate }) {
         if (!('serviceWorker' in navigator)) {
-            return null
+            return
         }
 
-        function onUpdate(registration) {
-            if (!promptUpdate) {
+        // Reload when a new SW gains control
+        let reloading
+        navigator.serviceWorker.oncontrollerchange = () => {
+            if (reloading) {
+                // Fixes an infinite update loop when 'Update on reload' is
+                // checked in Chrome
                 return
             }
-
-            const message = i18n.t("There's an update available for this app.")
-            const onConfirm = () =>
-                registration.waiting.postMessage({
-                    type: swMsgs.skipWaiting,
-                })
-            const actions = [
-                { label: i18n.t('Update and reload'), onClick: onConfirm },
-                { label: i18n.t('Not now'), onClick: () => {} },
-            ]
-            promptUpdate({
-                message,
-                actions,
-            })
+            reloading = true
+            window.location.reload()
         }
-
-        // Check for SW updates
-        checkForUpdates({ onUpdate })
 
         // This event emitter helps coordinate with service worker messages
         this.offlineEvents = new EventEmitter()
-
         // Receives messages from service worker and forwards to event emitter
-        const handleServiceWorkerMessage = event => {
+        const handleSWMessage = event => {
             if (!event.data) {
                 return
             }
             const { type, payload } = event.data
             this.offlineEvents.emit(type, payload)
         }
-        navigator.serviceWorker.addEventListener(
-            'message',
-            handleServiceWorkerMessage
-        )
+        navigator.serviceWorker.addEventListener('message', handleSWMessage)
+    }
 
-        // Okay to use 'startRecording' now
-        this.initialized = true
+    /** Basically `checkForUpdates` from registration.js exposed here */
+    checkForNewSW({ onNewSW }) {
+        // Check for SW updates (or first activation)
+        checkForUpdates({ onUpdate: onNewSW })
+    }
 
-        // Cleanup function to be returned by useEffect
-        return () => {
-            navigator.serviceWorker.removeEventListener(
-                'message',
-                handleServiceWorkerMessage
-            )
-        }
+    /**
+     * Requests clients info from the active service worker. Works for
+     * both first activation and SW update by using `reg.active` worker.
+     * @returns {Promise}
+     */
+    getClientsInfo() {
+        return new Promise((resolve, reject) => {
+            navigator.serviceWorker.getRegistration().then(registration => {
+                if (!registration || !registration.active) {
+                    reject('There is no active service worker')
+                }
+                // Send request message to SW
+                registration.active.postMessage({ type: swMsgs.getClientsInfo })
+                // Resolve with payload received from SW `clientsInfo` message
+                this.offlineEvents.once(swMsgs.clientsInfo, resolve)
+                // Clean up potentially unused listeners eventually
+                setTimeout(() => {
+                    reject('Request for clients info timed out')
+                    this.offlineEvents.removeAllListeners(swMsgs.clientsInfo)
+                }, 10000)
+            })
+        })
+    }
+
+    /**
+     * Makes a new SW either skip waiting if it's an update,
+     * or claim clients if it's the first SW activation
+     */
+    useNewSW() {
+        navigator.serviceWorker.getRegistration().then(registration => {
+            if (!registration) {
+                throw new Error('No service worker is registered')
+            }
+            if (registration.waiting) {
+                // Update existing service worker
+                registration.waiting.postMessage({
+                    type: swMsgs.skipWaiting,
+                })
+            } else if (registration.active) {
+                // (First SW activation) Have SW take control of clients
+                registration.active.postMessage({
+                    type: swMsgs.claimClients,
+                })
+            }
+        })
     }
 
     /**
@@ -133,9 +135,9 @@ export class OfflineInterface {
         onCompleted,
         onError,
     }) {
-        if (!this.initialized) {
+        if (!this.pwaEnabled) {
             throw new Error(
-                'OfflineInterface has not been initialized. Make sure `pwa.enabled` is `true` in `d2.config.js`'
+                'Offline features are not enabled. Make sure `pwa.enabled` is `true` in `d2.config.js`'
             )
         }
         if (!sectionId || !onStarted || !onCompleted || !onError) {
