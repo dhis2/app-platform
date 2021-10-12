@@ -16,13 +16,15 @@ function ConfirmReloadModal({ clientsCount, onCancel, onConfirm }) {
         <Modal position="middle">
             <ModalTitle>{i18n.t('Save your data')}</ModalTitle>
             <ModalContent>
-                {i18n.t(
-                    "Updating will reload all {{n}} open instances of this app, and any unsaved data will be lost. Save any data you need to, then click 'Reload' when ready.",
-                    {
-                        // 'the' backup makes a coherent sentence if clientsCount is unavailable
-                        n: clientsCount || 'the',
-                    }
-                )}
+                {clientsCount
+                    ? i18n.t(
+                          "Updating will reload all {{n}} open instances of this app, and any unsaved data will be lost. Save any data you need to, then click 'Reload' when ready.",
+                          { n: clientsCount }
+                      )
+                    : // Fallback if clientsCount is unavailable:
+                      i18n.t(
+                          "Updating will reload all open instances of this app, and any unsaved data will be lost. Save any data you need to, then click 'Reload' when ready."
+                      )}
             </ModalContent>
             <ModalActions>
                 <ButtonStrip end>
