@@ -18,7 +18,10 @@ function ConfirmReloadModal({ clientsCount, onCancel, onConfirm }) {
             <ModalContent>
                 {i18n.t(
                     "Updating will reload all {{n}} open instances of this app, and any unsaved data will be lost. Save any data you need to, then click 'Reload' when ready.",
-                    { n: clientsCount }
+                    {
+                        // 'the' backup makes a coherent sentence if clientsCount is unavailable
+                        n: clientsCount || 'the',
+                    }
                 )}
             </ModalContent>
             <ModalActions>
@@ -47,7 +50,7 @@ ConfirmReloadModal.propTypes = {
  */
 export default function PWAUpdateManager({ offlineInterface }) {
     const [confirmReloadModalOpen, setConfirmReloadModalOpen] = useState(false)
-    const [clientsCountState, setClientsCountState] = useState(1)
+    const [clientsCountState, setClientsCountState] = useState(null)
     const { show } = useAlert(
         i18n.t("There's an update available for this app."),
         ({ onConfirm }) => ({
@@ -59,16 +62,25 @@ export default function PWAUpdateManager({ offlineInterface }) {
         })
     )
 
-    const confirmReload = async () => {
-        const { clientsCount } = await offlineInterface.getClientsInfo()
-        setClientsCountState(clientsCount)
-        if (clientsCount <= 1) {
-            // Just one client; go ahead and reload
-            offlineInterface.useNewSW()
-        } else {
-            // Multiple clients open; warn about data loss before reloading
-            setConfirmReloadModalOpen(true)
-        }
+    const confirmReload = () => {
+        offlineInterface
+            .getClientsInfo()
+            .then(({ clientsCount }) => {
+                setClientsCountState(clientsCount)
+                if (clientsCount === 1) {
+                    // Just one client; go ahead and reload
+                    offlineInterface.useNewSW()
+                } else {
+                    // Multiple clients; warn about data loss before reloading
+                    setConfirmReloadModalOpen(true)
+                }
+            })
+            .catch(reason => {
+                // Didn't get clients info
+                console.warn(reason)
+                // Go ahead with confirmation modal with `null` as clientsCount
+                setConfirmReloadModalOpen(true)
+            })
     }
 
     useEffect(() => {
