@@ -1,5 +1,5 @@
 const fs = require('fs')
-const { reporter, prompt } = require('@dhis2/cli-helpers-engine')
+const { reporter, prompt, exec } = require('@dhis2/cli-helpers-engine')
 const { listDuplicates, fixDuplicates } = require('../yarnDeduplicate')
 
 const singletonDependencies = [
@@ -52,6 +52,11 @@ exports.validateLockfile = async (pkg, { paths, offerFix = false }) => {
         }
         const dedupedYarnLock = fixDuplicates(yarnLock)
         fs.writeFileSync(paths.yarnLock, dedupedYarnLock)
+        await exec({
+            cmd: 'yarn',
+            args: ['install'],
+            cwd: paths.base,
+        })
         return listSingletonDuplicates(dedupedYarnLock).size === 0
     }
 
