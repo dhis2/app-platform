@@ -1,3 +1,10 @@
+## [7.7.4](https://github.com/dhis2/app-platform/compare/v7.7.3...v7.7.4) (2021-10-14)
+
+
+### Bug Fixes
+
+* **pwa:** update gracefully despite missing clients info 7.x ([#680](https://github.com/dhis2/app-platform/issues/680)) ([fabb159](https://github.com/dhis2/app-platform/commit/fabb15977e277dc9f34163a7357508e4d35f2df1))
+
 ## [7.7.3](https://github.com/dhis2/app-platform/compare/v7.7.2...v7.7.3) (2021-10-11)
 
 
