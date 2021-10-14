@@ -65,8 +65,7 @@ export class OfflineInterface {
     }
 
     /**
-     * Requests clients info from the active service worker. Works for
-     * both first activation and SW update by using `reg.active` worker.
+     * Requests clients info from the active service worker.
      * @returns {Promise}
      */
     getClientsInfo() {
@@ -75,15 +74,16 @@ export class OfflineInterface {
                 if (!registration || !registration.active) {
                     reject('There is no active service worker')
                 }
-                // Send request message to SW
-                registration.active.postMessage({ type: swMsgs.getClientsInfo })
+                // Send request message to newest SW
+                const newestSW = registration.waiting || registration.active
+                newestSW.postMessage({ type: swMsgs.getClientsInfo })
                 // Resolve with payload received from SW `clientsInfo` message
                 this.offlineEvents.once(swMsgs.clientsInfo, resolve)
                 // Clean up potentially unused listeners eventually
                 setTimeout(() => {
                     reject('Request for clients info timed out')
                     this.offlineEvents.removeAllListeners(swMsgs.clientsInfo)
-                }, 10000)
+                }, 2000)
             })
         })
     }
