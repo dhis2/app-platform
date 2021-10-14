@@ -5,7 +5,7 @@ const config = {
         enabled: true,
         caching: {
             // For the purposes of this demo, to simulate dashboard content:
-            patternsToOmit: ['visualizations'],
+            patternsToOmitFromAppShell: ['visualizations'],
         },
     },
 

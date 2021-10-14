@@ -1,6 +1,13 @@
 import { swMsgs } from '../lib/constants'
 import { openSectionsDB, SECTIONS_STORE } from '../lib/sections-db'
 
+// '[]' Fallback prevents error when switching from pwa enabled to disabled
+const CACHEABLE_SECTION_URL_FILTER_PATTERNS = JSON.parse(
+    process.env
+        .REACT_APP_DHIS2_APP_PWA_CACHING_PATTERNS_TO_OMIT_FROM_CACHEABLE_SECTIONS ||
+        '[]'
+).map(pattern => new RegExp(pattern))
+
 // Triggered on 'START_RECORDING' message
 export function startRecording(event) {
     console.debug('[SW] Starting recording')
@@ -40,13 +47,33 @@ function isClientRecording(clientId) {
     return clientId in self.clientRecordingStates
 }
 
-/** Used to check if requests should be handled by recording handler */
-export function isClientRecordingRequests(clientId) {
+/**
+ * A request-matching function for the recorded request route. If 'true' is
+ * returned, the request will be handled by the handler below.
+ */
+export function shouldRequestBeRecorded({ url, event }) {
+    const clientId = event.clientId
+    // If not recording, don't handle
+    if (!isClientRecording(clientId)) {
+        return false
+    }
+
     // Don't record requests when waiting for completion confirmation
-    return (
-        isClientRecording(clientId) &&
-        self.clientRecordingStates[clientId].confirmationTimeout === undefined
+    if (
+        self.clientRecordingStates[clientId].confirmationTimeout !== undefined
+    ) {
+        return false
+    }
+
+    // Don't cache if url matches filter in pattern list from d2.config.js
+    const urlMatchesFilter = CACHEABLE_SECTION_URL_FILTER_PATTERNS.some(
+        pattern => pattern.test(url.href)
     )
+    if (urlMatchesFilter) {
+        return false
+    }
+
+    return true
 }
 
 /** Request handler during recording mode */

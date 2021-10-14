@@ -1,11 +1,18 @@
+/** Preps string literals for regex conversion by escaping special chars */
+function escapeForRegex(string) {
+    return string.replace(/[-\\^$*+?.()|[\]{}]/g, '\\$&')
+}
+
 /**
- * Handles patterns defined as strings or RegExps
+ * Handles patterns defined as strings or RegExps and stringifies the array
+ * for passing as an env var. Note that all patterns will be converted to
+ * Regexes in the service worker.
  * @param {Object} config
  */
-function getPatternsToOmit(config) {
-    const patternsToOmit = config.pwa.caching.patternsToOmit.map(pattern => {
+function stringifyPatterns(patternsList) {
+    const stringsList = patternsList.map(pattern => {
         if (typeof pattern === 'string') {
-            return pattern
+            return escapeForRegex(pattern)
         } else if (pattern instanceof RegExp) {
             return pattern.source
         } else {
@@ -14,7 +21,7 @@ function getPatternsToOmit(config) {
             )
         }
     })
-    return JSON.stringify(patternsToOmit)
+    return JSON.stringify(stringsList)
 }
 
 /**
@@ -29,10 +36,15 @@ function getPWAEnvVars(config) {
     }
     return {
         pwa_enabled: JSON.stringify(config.pwa.enabled),
-        pwa_caching_omit_external_requests: JSON.stringify(
-            config.pwa.caching.omitExternalRequests
+        pwa_caching_omit_external_requests_from_app_shell: JSON.stringify(
+            config.pwa.caching.omitExternalRequestsFromAppShell
         ),
-        pwa_caching_patterns_to_omit: getPatternsToOmit(config),
+        pwa_caching_patterns_to_omit_from_app_shell: stringifyPatterns(
+            config.pwa.caching.patternsToOmitFromAppShell
+        ),
+        pwa_caching_patterns_to_omit_from_cacheable_sections: stringifyPatterns(
+            config.pwa.caching.patternsToOmitFromCacheableSections
+        ),
     }
 }
 
