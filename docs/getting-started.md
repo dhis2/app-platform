@@ -9,6 +9,7 @@ The Application Platform provides common build system, development tools, runtim
 The baseline features built-in to any platform application include:
 
 -   Build and development tooling ([`@dhis2/cli-app-scripts`](scripts))
+
     -   I18n extract/generate
     -   Manifest generation
     -   Dependency injection
