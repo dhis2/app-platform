@@ -1,3 +1,12 @@
+## [8.2.3](https://github.com/dhis2/app-platform/compare/v8.2.2...v8.2.3) (2021-10-14)
+
+
+### Bug Fixes
+
+* **cli:** run yarn install after fixing yarn.lock by deduplicating ([#676](https://github.com/dhis2/app-platform/issues/676)) ([a32f969](https://github.com/dhis2/app-platform/commit/a32f9697d2ac6acecd58a7647d121f8659e14499))
+* **cli:** wrap App component in CustomDataProvider in boilerplate test ([#678](https://github.com/dhis2/app-platform/issues/678)) ([88be6eb](https://github.com/dhis2/app-platform/commit/88be6eb58b7ed340801523518488e0ddfe656c01))
+* **pwa:** update gracefully despite missing clients info ([#679](https://github.com/dhis2/app-platform/issues/679)) ([c7fe509](https://github.com/dhis2/app-platform/commit/c7fe5093e89a45dbb06d44d245e5d08936396180))
+
 ## [8.2.2](https://github.com/dhis2/app-platform/compare/v8.2.1...v8.2.2) (2021-10-11)
 
 
