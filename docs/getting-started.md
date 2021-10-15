@@ -1,6 +1,6 @@
 # Getting Started
 
-For an introduction to the Application Platform concept, there is a [short article and video](https://developers.dhis2.org/2019/07/what-is-this-app-platform/) on the DHIS2 Developer Portal.
+For an introduction to the Application Platform concept, there is a [short article and video](https://developers.dhis2.org/blog/what-is-this-app-platform/) on the DHIS2 Developer Portal.
 
 The Application Platform provides common build system, development tools, runtime support, and standard functionality for DHIS2 applications. The basic features of a modern, compliant, and functional application are all provided out-of-the-box.
 
