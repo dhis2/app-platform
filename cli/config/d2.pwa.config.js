@@ -12,15 +12,24 @@ module.exports = {
         enabled: false,
         caching: {
             /**
-             * If true, don't cache requests to exteral domains by default.
+             * If true, don't cache requests to exteral domains in app shell.
              * Doesn't affect recording mode
              */
+            omitExternalRequestsFromAppShell: false,
+            /** Deprecated version of above */
             omitExternalRequests: false,
             /**
-             * Don't cache URLs matching patterns in this array by default.
+             * Don't cache URLs matching patterns in this array in app shell.
              * Doesn't affect recording mode
              */
+            patternsToOmitFromAppShell: [],
+            /** Deprecated version of above */
             patternsToOmit: [],
+            /**
+             * Don't cache URLs matching these patterns in recorded sections.
+             * Can still be cached in app shell unless filtered there too.
+             */
+            patternsToOmitFromCacheableSections: [],
             /**
              * In addition to the contents of an app's 'build' folder, other
              * URLs can be precached by adding them to this list which will
