@@ -1,3 +1,10 @@
+# [8.3.0](https://github.com/dhis2/app-platform/compare/v8.2.3...v8.3.0) (2021-10-19)
+
+
+### Features
+
+* **pwa:** add request filtering for recorded sections ([#682](https://github.com/dhis2/app-platform/issues/682)) ([b40516e](https://github.com/dhis2/app-platform/commit/b40516e3986257c29600b8598e7e2a49706b43a7))
+
 ## [8.2.3](https://github.com/dhis2/app-platform/compare/v8.2.2...v8.2.3) (2021-10-14)
 
 
