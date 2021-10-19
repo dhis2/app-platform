@@ -10,10 +10,10 @@ import {
     startRecording,
     completeRecording,
     handleRecordedRequest,
-    isClientRecordingRequests,
+    shouldRequestBeRecorded,
 } from './recording-mode'
 import {
-    urlMeetsDefaultCachingCriteria,
+    urlMeetsAppShellCachingCriteria,
     createDB,
     removeUnusedCaches,
     setUpKillSwitchServiceWorker,
@@ -133,25 +133,23 @@ export function setUpServiceWorker() {
 
     // Request handler during recording mode: ALL requests are cached
     // Handling routing: https://developers.google.com/web/tools/workbox/modules/workbox-routing#matching_and_handling_in_routes
-    registerRoute(
-        ({ event }) => isClientRecordingRequests(event.clientId),
-        handleRecordedRequest
-    )
+    registerRoute(shouldRequestBeRecorded, handleRecordedRequest)
 
-    // If not recording, fall through to default caching strategies
+    // If not recording, fall through to default caching strategies for app
+    // shell:
     // SWR strategy for static assets that can't be precached.
-    // Skip in development environments
+    // (Skip in development environments)
     registerRoute(
         ({ url }) =>
             PRODUCTION_ENV &&
-            urlMeetsDefaultCachingCriteria(url) &&
+            urlMeetsAppShellCachingCriteria(url) &&
             fileExtensionRegexp.test(url.pathname),
         new StaleWhileRevalidate({ cacheName: 'other-assets' })
     )
 
     // Network-first caching by default
     registerRoute(
-        ({ url }) => urlMeetsDefaultCachingCriteria(url),
+        ({ url }) => urlMeetsAppShellCachingCriteria(url),
         new NetworkFirst({ cacheName: 'app-shell' })
     )
 

@@ -6,13 +6,21 @@ import {
 } from '../lib/sections-db'
 
 const CACHE_KEEP_LIST = ['other-assets', 'app-shell']
-// Fallback prevents error when switching from pwa enabled to disabled
-const URL_FILTER_PATTERNS = JSON.parse(
-    process.env.REACT_APP_DHIS2_APP_PWA_CACHING_PATTERNS_TO_OMIT || '[]'
+// '[]' Fallback prevents error when switching from pwa enabled to disabled
+const APP_SHELL_URL_FILTER_PATTERNS = JSON.parse(
+    process.env
+        .REACT_APP_DHIS2_APP_PWA_CACHING_PATTERNS_TO_OMIT_FROM_APP_SHELL ||
+        // A deprecated fallback option:
+        process.env.REACT_APP_DHIS2_APP_PWA_CACHING_PATTERNS_TO_OMIT ||
+        '[]'
 ).map(pattern => new RegExp(pattern))
-const OMIT_EXTERNAL_REQUESTS =
+const OMIT_EXTERNAL_REQUESTS_FROM_APP_SHELL =
+    process.env
+        .REACT_APP_DHIS2_APP_PWA_CACHING_OMIT_EXTERNAL_REQUESTS_FROM_APP_SHELL ===
+        'true' ||
+    // Deprecated option:
     process.env.REACT_APP_DHIS2_APP_PWA_CACHING_OMIT_EXTERNAL_REQUESTS ===
-    'true'
+        'true'
 
 /** Called if the `pwaEnabled` env var is not `true` */
 export function setUpKillSwitchServiceWorker() {
@@ -37,14 +45,17 @@ export function setUpKillSwitchServiceWorker() {
     })
 }
 
-export function urlMeetsDefaultCachingCriteria(url) {
+export function urlMeetsAppShellCachingCriteria(url) {
     // Don't cache if pwa.caching.omitExternalRequests in d2.config is true
-    if (OMIT_EXTERNAL_REQUESTS && url.origin !== self.location.origin) {
+    if (
+        OMIT_EXTERNAL_REQUESTS_FROM_APP_SHELL &&
+        url.origin !== self.location.origin
+    ) {
         return false
     }
 
     // Don't cache if url matches filter in pattern list from d2.config.js
-    const urlMatchesFilter = URL_FILTER_PATTERNS.some(pattern =>
+    const urlMatchesFilter = APP_SHELL_URL_FILTER_PATTERNS.some(pattern =>
         pattern.test(url.href)
     )
     if (urlMatchesFilter) {
