@@ -39,8 +39,16 @@ function getPWAEnvVars(config) {
         pwa_caching_omit_external_requests_from_app_shell: JSON.stringify(
             config.pwa.caching.omitExternalRequestsFromAppShell
         ),
+        // Deprecated version of the above:
+        pwa_caching_omit_external_requests: JSON.stringify(
+            config.pwa.caching.omitExternalRequests
+        ),
         pwa_caching_patterns_to_omit_from_app_shell: stringifyPatterns(
             config.pwa.caching.patternsToOmitFromAppShell
+        ),
+        // Deprecated version of the above:
+        pwa_caching_patterns_to_omit: stringifyPatterns(
+            config.pwa.caching.patternsToOmit
         ),
         pwa_caching_patterns_to_omit_from_cacheable_sections: stringifyPatterns(
             config.pwa.caching.patternsToOmitFromCacheableSections

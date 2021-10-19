@@ -16,11 +16,15 @@ module.exports = {
              * Doesn't affect recording mode
              */
             omitExternalRequestsFromAppShell: false,
+            /** Deprecated version of above */
+            omitExternalRequests: false,
             /**
              * Don't cache URLs matching patterns in this array in app shell.
              * Doesn't affect recording mode
              */
             patternsToOmitFromAppShell: [],
+            /** Deprecated version of above */
+            patternsToOmit: [],
             /**
              * Don't cache URLs matching these patterns in recorded sections.
              * Can still be cached in app shell unless filtered there too.
