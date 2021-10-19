@@ -9,12 +9,18 @@ const CACHE_KEEP_LIST = ['other-assets', 'app-shell']
 // '[]' Fallback prevents error when switching from pwa enabled to disabled
 const APP_SHELL_URL_FILTER_PATTERNS = JSON.parse(
     process.env
-        .REACT_APP_DHIS2_APP_PWA_CACHING_PATTERNS_TO_OMIT_FROM_APP_SHELL || '[]'
+        .REACT_APP_DHIS2_APP_PWA_CACHING_PATTERNS_TO_OMIT_FROM_APP_SHELL ||
+        // A deprecated fallback option:
+        process.env.REACT_APP_DHIS2_APP_PWA_CACHING_PATTERNS_TO_OMIT ||
+        '[]'
 ).map(pattern => new RegExp(pattern))
 const OMIT_EXTERNAL_REQUESTS_FROM_APP_SHELL =
     process.env
         .REACT_APP_DHIS2_APP_PWA_CACHING_OMIT_EXTERNAL_REQUESTS_FROM_APP_SHELL ===
-    'true'
+        'true' ||
+    // Deprecated option:
+    process.env.REACT_APP_DHIS2_APP_PWA_CACHING_OMIT_EXTERNAL_REQUESTS ===
+        'true'
 
 /** Called if the `pwaEnabled` env var is not `true` */
 export function setUpKillSwitchServiceWorker() {
