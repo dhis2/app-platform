@@ -9,6 +9,7 @@
         "test": "d2-app-scripts test"
     },
     "dependencies": {
+        "material-ui": "^0.17.0",
         "react": "~15",
         "react-dom": "~15"
     },
@@ -17,5 +18,10 @@
     "exports": {
         "import": "./build/es/index.js",
         "require": "./build/cjs/index.js"
+    },
+    "workspaces": {
+        "nohoist": [
+            "**"
+        ]
     }
 }
