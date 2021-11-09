@@ -4,7 +4,7 @@ Bootraps a new (or updates an existing) DHIS2 application in the directory `./<n
 
 ```sh
 > d2 app scripts init --help
-d2-app-scripts init <name>
+d2 app scripts init <name>
 
 Setup an app
 
