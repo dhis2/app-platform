@@ -94,8 +94,19 @@ const compile = async ({
     }
     const compileFile = async (source, destination) => {
         if (source.match(extensionPattern)) {
-            const result = await babel.transformFileAsync(source, babelConfig)
-            await fs.writeFile(destination, result.code)
+            try {
+                const result = await babel.transformFileAsync(
+                    source,
+                    babelConfig
+                )
+                await fs.writeFile(destination, result.code)
+                console.info(`Compiling ${source}: OK.`)
+            } catch (err) {
+                console.error(err)
+                console.info(
+                    `Compiling ${source}: ERROR. Fix the problem and save the file to automatically reload.`
+                )
+            }
         } else {
             await copyFile(source, destination)
         }
