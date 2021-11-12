@@ -13,6 +13,10 @@ const makeShell = require('../lib/shell')
 const { validatePackage } = require('../lib/validatePackage')
 const { handler: pack } = require('./pack.js')
 
+process.on('unhandledRejection', err => {
+    throw err
+})
+
 const buildModes = ['development', 'production']
 
 const getNodeEnv = () => {

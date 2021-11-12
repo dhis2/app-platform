@@ -2,6 +2,10 @@ const { namespace, reporter } = require('@dhis2/cli-helpers-engine')
 const i18n = require('../lib/i18n')
 const makePaths = require('../lib/paths')
 
+process.on('unhandledRejection', err => {
+    throw err
+})
+
 const generate = {
     description:
         'Generate JSON files compatible with i18next from po/pot files',

@@ -3,6 +3,10 @@ const { reporter, chalk, exit } = require('@dhis2/cli-helpers-engine')
 const makePaths = require('../lib/paths')
 const { listDuplicates, fixDuplicates } = require('../lib/yarnDeduplicate')
 
+process.on('unhandledRejection', err => {
+    throw err
+})
+
 const handler = async ({ cwd }) => {
     const paths = makePaths(cwd)
 
