@@ -4,10 +4,6 @@ const fs = require('fs-extra')
 const gitignore = require('parse-gitignore')
 const makePaths = require('../lib/paths')
 
-process.on('unhandledRejection', err => {
-    throw err
-})
-
 const ignorePatterns = ['node_modules', '.d2', 'src/locales', 'build']
 
 const parseGitignore = gitignoreFile => {

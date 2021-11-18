@@ -6,10 +6,6 @@ const exitOnCatch = require('../lib/exitOnCatch')
 const loadEnvFiles = require('../lib/loadEnvFiles')
 const makePaths = require('../lib/paths')
 
-process.on('unhandledRejection', err => {
-    throw err
-})
-
 const getAppJestConfig = ({ jestConfigPath, paths }) => {
     if (jestConfigPath) {
         return require(path.resolve(paths.base, jestConfigPath))

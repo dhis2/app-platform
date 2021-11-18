@@ -9,10 +9,6 @@ const { createClient } = require('../lib/httpClient')
 const parseConfig = require('../lib/parseConfig')
 const makePaths = require('../lib/paths.js')
 
-process.on('unhandledRejection', err => {
-    throw err
-})
-
 const dumpHttpError = (message, response) => {
     if (!response) {
         reporter.error(message)

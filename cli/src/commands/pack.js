@@ -6,10 +6,6 @@ const makeBundle = require('../lib/makeBundle.js')
 const parseConfig = require('../lib/parseConfig.js')
 const makePaths = require('../lib/paths.js')
 
-process.on('unhandledRejection', err => {
-    throw err
-})
-
 exports.command = 'pack [source]'
 
 exports.describe = 'Create a .zip archive of a built application'

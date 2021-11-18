@@ -12,10 +12,6 @@ const { compileServiceWorker } = require('../lib/pwa')
 const makeShell = require('../lib/shell')
 const { validatePackage } = require('../lib/validatePackage')
 
-process.on('unhandledRejection', err => {
-    throw err
-})
-
 const defaultPort = 3000
 
 const handler = async ({

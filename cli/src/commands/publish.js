@@ -9,10 +9,6 @@ const publishVersion = require('../lib/publishVersion.js')
 const updateManifest = require('../lib/updateManifest.js')
 const { handler: pack } = require('./pack.js')
 
-process.on('unhandledRejection', err => {
-    throw err
-})
-
 const isValidServerVersion = v => !!/(\d+)\.(\d+)/.exec(v)
 
 const requiredFields = new Set(['id', 'version', 'minDHIS2Version'])

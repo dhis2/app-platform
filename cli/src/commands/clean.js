@@ -2,10 +2,6 @@ const { reporter } = require('@dhis2/cli-helpers-engine')
 const fs = require('fs-extra')
 const makePaths = require('../lib/paths')
 
-process.on('unhandledRejection', err => {
-    throw err
-})
-
 const handler = async ({ cwd }) => {
     const paths = makePaths(cwd)
 
