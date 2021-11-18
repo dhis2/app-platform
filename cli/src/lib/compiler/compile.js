@@ -1,6 +1,6 @@
 const path = require('path')
 const babel = require('@babel/core')
-const { reporter } = require('@dhis2/cli-helpers-engine')
+const { reporter, prettyPrint } = require('@dhis2/cli-helpers-engine')
 const chokidar = require('chokidar')
 const fs = require('fs-extra')
 const makeBabelConfig = require('../../../config/makeBabelConfig.js')
@@ -100,11 +100,12 @@ const compile = async ({
                     babelConfig
                 )
                 await fs.writeFile(destination, result.code)
-                console.info(`Compiling ${source}: OK.`)
             } catch (err) {
-                console.error(err)
-                console.info(
-                    `Compiling ${source}: ERROR. Fix the problem and save the file to automatically reload.`
+                reporter.dumpErr(err)
+                reporter.error(
+                    `Failed to compile ${prettyPrint.relativePath(
+                        source
+                    )}. Fix the problem and save the file to automatically reload.`
                 )
             }
         } else {
