@@ -1,3 +1,10 @@
+## [8.3.1](https://github.com/dhis2/app-platform/compare/v8.3.0...v8.3.1) (2021-11-22)
+
+
+### Bug Fixes
+
+* **app-icon:** replace with placeholder icon ([e97fe45](https://github.com/dhis2/app-platform/commit/e97fe455f18c36f30cee6e371b531ad3c618a904))
+
 # [8.3.0](https://github.com/dhis2/app-platform/compare/v8.2.3...v8.3.0) (2021-10-19)
 
 
