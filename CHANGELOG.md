@@ -1,3 +1,11 @@
+## [8.3.2](https://github.com/dhis2/app-platform/compare/v8.3.1...v8.3.2) (2021-12-07)
+
+
+### Bug Fixes
+
+* **cli-38:** catch all unhandled rejections ([3f9f371](https://github.com/dhis2/app-platform/commit/3f9f3713cac570a5d8fd3c84e0c8660a414ba066))
+* **cli-38:** catch syntax errors and recover ([5f9c5bb](https://github.com/dhis2/app-platform/commit/5f9c5bba1a14a941af17a241624088489c8c5f77))
+
 ## [8.3.1](https://github.com/dhis2/app-platform/compare/v8.3.0...v8.3.1) (2021-11-22)
 
 
