@@ -1,6 +1,6 @@
 {
     "name": "@dhis2/cli-app-scripts",
-    "version": "8.3.2",
+    "version": "8.3.3-beta.1",
     "engines": {
         "node": ">=12"
     },
@@ -28,7 +28,7 @@
         "@babel/preset-env": "^7.14.7",
         "@babel/preset-react": "^7.0.0",
         "@babel/preset-typescript": "^7.6.0",
-        "@dhis2/app-shell": "8.3.2",
+        "@dhis2/app-shell": "8.3.3-beta.1",
         "@dhis2/cli-helpers-engine": "^3.2.0",
         "@jest/core": "^27.0.6",
         "@yarnpkg/lockfile": "^1.1.0",

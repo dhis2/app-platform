@@ -1,3 +1,10 @@
+## [8.3.3-beta.1](https://github.com/dhis2/app-platform/compare/v8.3.2...v8.3.3-beta.1) (2022-01-13)
+
+
+### Bug Fixes
+
+* remove lint step from publish step requirements ([#695](https://github.com/dhis2/app-platform/issues/695)) ([a04f8f7](https://github.com/dhis2/app-platform/commit/a04f8f715023fdcb568990fe478f19fb11e54fde))
+
 ## [8.3.2](https://github.com/dhis2/app-platform/compare/v8.3.1...v8.3.2) (2021-12-07)
 
 
