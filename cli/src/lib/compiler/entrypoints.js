@@ -27,15 +27,35 @@ exports.verifyEntrypoints = ({
     resolveModule = require.resolve,
 }) => {
     if (config.type === 'app') {
-        verifyEntrypoint({
-            entrypoint: config.entryPoints.app,
-            basePath: paths.base,
-            resolveModule,
-        })
+        if (
+            !config.entryPoints ||
+            (!config.entryPoints.app && !config.entryPoints.plugin)
+        ) {
+            throw new Error('Apps must define an app or plugin entrypoint')
+        }
+
+        if (config.entryPoints.app) {
+            verifyEntrypoint({
+                entrypoint: config.entryPoints.app,
+                basePath: paths.base,
+                resolveModule,
+            })
+        }
+        if (config.entryPoints.plugin) {
+            verifyEntrypoint({
+                entrypoint: config.entryPoints.plugin,
+                basePath: paths.base,
+                resolveModule,
+            })
+        }
         return
     }
 
-    const verifyLibraryEntrypoint = (entrypoint) => {
+    if (!config.entryPoints || !config.entryPoints.lib) {
+        throw new Error('Libraries must define a lib entrypoint')
+    }
+
+    const verifyLibraryEntrypoint = entrypoint => {
         switch (typeof entrypoint) {
             case 'string':
                 verifyEntrypoint({
