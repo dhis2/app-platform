@@ -6,7 +6,8 @@ const fs = require('fs-extra')
 const makeBabelConfig = require('../../../config/makeBabelConfig.js')
 const {
     verifyEntrypoints,
-    overwriteAppEntrypoint,
+    createAppEntrypointWrapper,
+    createPluginEntrypointWrapper,
 } = require('./entrypoints.js')
 const {
     extensionPattern,
@@ -70,10 +71,16 @@ const compile = async ({
 
     verifyEntrypoints({ config, paths })
     if (isApp) {
-        await overwriteAppEntrypoint({
+        await createAppEntrypointWrapper({
             entrypoint: config.entryPoints.app,
             paths,
         })
+        if (config.entryPoints.plugin) {
+            await createPluginEntrypointWrapper({
+                entrypoint: config.entryPoints.plugin,
+                paths,
+            })
+        }
     }
 
     const outDir = isApp

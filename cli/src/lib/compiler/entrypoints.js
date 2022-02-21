@@ -79,14 +79,26 @@ exports.verifyEntrypoints = ({
     verifyLibraryEntrypoint(config.entryPoints.lib)
 }
 
-exports.overwriteAppEntrypoint = async ({ entrypoint, paths }) => {
+const getEntrypointWrapper = async ({ entrypoint, paths }) => {
     const relativeEntrypoint = entrypoint.replace(/^(\.\/)?src\//, '')
     const outRelativeEntrypoint = normalizeExtension(relativeEntrypoint)
     const shellAppSource = await fs.readFile(paths.shellSourceEntrypoint)
+
+    return shellAppSource
+        .toString()
+        .replace(/'.\/D2App\/app'/g, `'./D2App/${outRelativeEntrypoint}'`)
+}
+
+exports.createAppEntrypointWrapper = async ({ entrypoint, paths }) => {
     await fs.writeFile(
         paths.shellAppEntrypoint,
-        shellAppSource
-            .toString()
-            .replace(/'.\/D2App\/app'/g, `'./D2App/${outRelativeEntrypoint}'`)
+        await getEntrypointWrapper({ entrypoint, paths })
+    )
+}
+
+exports.createPluginEntrypointWrapper = async ({ entrypoint, paths }) => {
+    await fs.writeFile(
+        paths.shellPluginEntrypoint,
+        await getEntrypointWrapper({ entrypoint, paths })
     )
 }

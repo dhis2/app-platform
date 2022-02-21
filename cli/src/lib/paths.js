@@ -60,6 +60,7 @@ module.exports = (cwd = process.cwd()) => {
         shellAppEntrypoint: path.join(base, './.d2/shell/src/App.js'),
         shellAppDirname,
         shellApp: path.join(base, `./.d2/shell/${shellAppDirname}`),
+        shellPluginEntrypoint: path.join(base, './.d2/shell/src/Plugin.js'),
         shellSrcServiceWorker: path.join(
             base,
             './.d2/shell/src/service-worker.js'
