@@ -1,3 +1,10 @@
+## [8.3.3](https://github.com/dhis2/app-platform/compare/v8.3.2...v8.3.3) (2022-02-22)
+
+
+### Bug Fixes
+
+* **deps:** bump axios from 0.20.0 to 0.25.0 ([#698](https://github.com/dhis2/app-platform/issues/698)) ([77853c4](https://github.com/dhis2/app-platform/commit/77853c47a543f4a3147bdb167612b4efc30afcff))
+
 ## [8.3.2](https://github.com/dhis2/app-platform/compare/v8.3.1...v8.3.2) (2021-12-07)
 
 
