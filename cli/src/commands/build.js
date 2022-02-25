@@ -8,6 +8,7 @@ const i18n = require('../lib/i18n')
 const loadEnvFiles = require('../lib/loadEnvFiles')
 const parseConfig = require('../lib/parseConfig')
 const makePaths = require('../lib/paths')
+const makePlugin = require('../lib/plugin')
 const { injectPrecacheManifest } = require('../lib/pwa')
 const makeShell = require('../lib/shell')
 const { validatePackage } = require('../lib/validatePackage')
@@ -67,6 +68,7 @@ const handler = async ({
 
     const config = parseConfig(paths)
     const shell = makeShell({ config, paths })
+    const plugin = makePlugin({ config, paths })
 
     if (config.type === 'app') {
         setAppParameters(standalone, config)
@@ -128,6 +130,10 @@ const handler = async ({
                 // CRA Manages service worker compilation here
                 reporter.info('Building appShell...')
                 await shell.build()
+
+                if (config.entryPoints.plugin) {
+                    await plugin.build()
+                }
 
                 if (config.pwa.enabled) {
                     reporter.info('Injecting precache manifest...')
