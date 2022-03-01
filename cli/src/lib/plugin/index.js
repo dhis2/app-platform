@@ -3,6 +3,7 @@ const start = require('./start')
 
 module.exports = ({ config, paths }) => ({
     // build: () => build({ config, paths }),
+    // XXX
     build: async () => {
         try {
             await build({ config, paths })

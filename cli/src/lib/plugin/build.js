@@ -43,11 +43,11 @@ module.exports = async ({ paths }) => {
                 return
             }
 
-            if (stats.hasWarnings()) {
-                console.warn(info.warnings)
-                reject(new Error(info.warnings))
-                return
-            }
+            /*if (stats.hasWarnings()) {
+                console.warn(
+                    info.warnings.map(warning => warning.message).join('\n')
+                )
+            }*/
 
             resolve()
         })
