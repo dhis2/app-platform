@@ -13,7 +13,7 @@ module.exports = async ({ paths }) => {
     const webpackConfig = webpackConfigFactory({ env: 'production', paths })
     const compiler = webpack(webpackConfig)
     return new Promise((resolve, reject) => {
-        compiler.run(err => {
+        compiler.run((err, stats) => {
             if (err) {
                 if (!err.message) {
                     reject(err)
@@ -29,6 +29,23 @@ module.exports = async ({ paths }) => {
                 }
 
                 reject(new Error(errMessage))
+                return
+            }
+
+            const info = stats.toJson()
+
+            if (stats.hasErrors()) {
+                reject(
+                    new Error(
+                        info.errors.map(error => error.message).join('\n')
+                    )
+                )
+                return
+            }
+
+            if (stats.hasWarnings()) {
+                console.warn(info.warnings)
+                reject(new Error(info.warnings))
                 return
             }
 
