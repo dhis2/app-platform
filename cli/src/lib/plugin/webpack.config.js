@@ -1,5 +1,8 @@
 // Based on CRA Webpack config
 
+// TODO: react fast refresh in development
+
+const CssMinimizerPlugin = require('css-minimizer-webpack-plugin')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 const getCSSModuleLocalIdent = require('react-dev-utils/getCSSModuleLocalIdent')
@@ -81,13 +84,12 @@ module.exports = ({ env: webpackEnv, paths }) => {
         entry: paths.shellPluginBundleEntrypoint,
         output: {
             path: paths.shellBuildOutput,
-            filename: 'plugin.bundle.js',
-            /*filename: isProduction
-              ? 'static/js/plugin-[name].[contenthash:8].js'
-              : 'static/js/plugin.bundle.js',*/
-            /*chunkFilename: isProduction
-              ? 'static/js/plugin-[name].[contenthash:8].chunk.js'
-              : 'static/js/plugin-[name].chunk.js',*/
+            filename: isProduction
+                ? 'static/js/plugin-[name].[contenthash:8].js'
+                : 'static/js/plugin.bundle.js',
+            chunkFilename: isProduction
+                ? 'static/js/plugin-[name].[contenthash:8].chunk.js'
+                : 'static/js/plugin-[name].chunk.js',
         },
         optimization: {
             minimize: isProduction,
@@ -112,6 +114,7 @@ module.exports = ({ env: webpackEnv, paths }) => {
                         },
                     },
                 }),
+                new CssMinimizerPlugin(),
             ],
             splitChunks: {
                 chunks: 'all',
