@@ -134,7 +134,8 @@ module.exports = ({ env: webpackEnv, paths }) => {
                     NODE_ENV: JSON.stringify(webpackEnv),
                 },
             }),
-        ],
+            new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/),
+        ].filter(Boolean),
         module: {
             rules: [
                 {
