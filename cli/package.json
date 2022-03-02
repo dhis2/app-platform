@@ -72,6 +72,7 @@
         "testEnvironment": "node"
     },
     "devDependencies": {
+        "html-webpack-plugin": "^5.5.0",
         "outdent": "^0.8.0"
     }
 }

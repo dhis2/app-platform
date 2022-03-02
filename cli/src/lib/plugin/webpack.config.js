@@ -1,5 +1,6 @@
 // Based on CRA Webpack config
 
+const HtmlWebpackPlugin = require('html-webpack-plugin')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 const getCSSModuleLocalIdent = require('react-dev-utils/getCSSModuleLocalIdent')
 const getPublicUrlOrPath = require('react-dev-utils/getPublicUrlOrPath')
@@ -84,6 +85,31 @@ module.exports = ({ env: webpackEnv, paths }) => {
               : 'static/js/plugin-[name].chunk.js',*/
         },
         plugins: [
+            new HtmlWebpackPlugin(
+                Object.assign(
+                    {
+                        inject: true,
+                        filename: 'plugin.html',
+                        template: paths.shellPublicPluginHtml,
+                    },
+                    isProduction
+                        ? {
+                              minify: {
+                                  removeComments: true,
+                                  collapseWhitespace: true,
+                                  removeRedundantAttributes: true,
+                                  useShortDoctype: true,
+                                  removeEmptyAttributes: true,
+                                  removeStyleLinkTypeAttributes: true,
+                                  keepClosingSlash: true,
+                                  minifyJS: true,
+                                  minifyCSS: true,
+                                  minifyURLs: true,
+                              },
+                          }
+                        : undefined
+                )
+            ),
             isProduction &&
                 new MiniCssExtractPlugin({
                     filename: 'static/css/[name].[contenthash:8].css',

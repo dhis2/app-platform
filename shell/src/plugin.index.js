@@ -3,7 +3,7 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 import Plugin from './Plugin'
 import 'typeface-roboto'
-// import './index.css'
+import './index.css'
 
 ReactDOM.render(
     <>
