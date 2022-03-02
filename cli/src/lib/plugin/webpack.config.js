@@ -113,6 +113,9 @@ module.exports = ({ env: webpackEnv, paths }) => {
                     },
                 }),
             ],
+            splitChunks: {
+                chunks: 'all',
+            },
         },
         plugins: [
             new HtmlWebpackPlugin(
