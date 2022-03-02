@@ -4,6 +4,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 const getCSSModuleLocalIdent = require('react-dev-utils/getCSSModuleLocalIdent')
 const getPublicUrlOrPath = require('react-dev-utils/getPublicUrlOrPath')
+const TerserPlugin = require('terser-webpack-plugin')
 const webpack = require('webpack')
 const makeBabelConfig = require('../../../config/makeBabelConfig')
 const getShellEnv = require('../shell/env')
@@ -87,6 +88,31 @@ module.exports = ({ env: webpackEnv, paths }) => {
             /*chunkFilename: isProduction
               ? 'static/js/plugin-[name].[contenthash:8].chunk.js'
               : 'static/js/plugin-[name].chunk.js',*/
+        },
+        optimization: {
+            minimize: isProduction,
+            minimizer: [
+                new TerserPlugin({
+                    terserOptions: {
+                        parse: {
+                            // We want terser to parse ecma 8 code. However, we don't want it
+                            // to apply any minification steps that turns valid ecma 5 code
+                            // into invalid ecma 5 code. This is why the 'compress' and 'output'
+                            // sections only apply transformations that are ecma 5 safe
+                            // https://github.com/facebook/create-react-app/pull/4234
+                            ecma: 8,
+                        },
+                        compress: {
+                            ecma: 5,
+                            warnings: false,
+                        },
+                        output: {
+                            ecma: 5,
+                            comments: false,
+                        },
+                    },
+                }),
+            ],
         },
         plugins: [
             new HtmlWebpackPlugin(
