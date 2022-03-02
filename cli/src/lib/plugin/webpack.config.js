@@ -4,7 +4,9 @@ const HtmlWebpackPlugin = require('html-webpack-plugin')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 const getCSSModuleLocalIdent = require('react-dev-utils/getCSSModuleLocalIdent')
 const getPublicUrlOrPath = require('react-dev-utils/getPublicUrlOrPath')
+const webpack = require('webpack')
 const makeBabelConfig = require('../../../config/makeBabelConfig')
+const getShellEnv = require('../shell/env')
 
 const babelWebpackConfig = {
     babelrc: false,
@@ -25,6 +27,8 @@ module.exports = ({ env: webpackEnv, paths }) => {
         null,
         process.env.PUBLIC_URL
     )
+
+    const shellEnv = getShellEnv({})
 
     // "style" loader turns CSS into JS modules that inject <style> tags.
     // "css" loader resolves paths in CSS and adds assets as dependencies.
@@ -116,6 +120,20 @@ module.exports = ({ env: webpackEnv, paths }) => {
                     chunkFilename:
                         'static/css/[name].[contenthash:8].chunk.css',
                 }),
+            // Makes some environment variables available to the JS code, for example:
+            // if (process.env.NODE_ENV === 'production') { ... }.
+            // It is absolutely essential that NODE_ENV is set to production
+            // during a production build.
+            // Otherwise React will be compiled in the very slow development mode.
+            new webpack.DefinePlugin({
+                'process.env': {
+                    ...Object.keys(shellEnv).reduce((env, key) => {
+                        env[key] = JSON.stringify(shellEnv[key])
+                        return env
+                    }, {}),
+                    NODE_ENV: JSON.stringify(webpackEnv),
+                },
+            }),
         ],
         module: {
             rules: [
