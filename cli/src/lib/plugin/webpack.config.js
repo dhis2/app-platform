@@ -31,7 +31,7 @@ module.exports = ({ env: webpackEnv, paths }) => {
         process.env.PUBLIC_URL
     )
 
-    const shellEnv = getShellEnv({})
+    const shellEnv = getShellEnv({ plugin: 'true' })
 
     // "style" loader turns CSS into JS modules that inject <style> tags.
     // "css" loader resolves paths in CSS and adds assets as dependencies.
