@@ -1,7 +1,6 @@
 // Based on CRA Webpack config
 
-// TODO: react fast refresh in development
-
+const ReactRefreshWebpackPlugin = require('@pmmmwh/react-refresh-webpack-plugin')
 const CssMinimizerPlugin = require('css-minimizer-webpack-plugin')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
@@ -121,6 +120,7 @@ module.exports = ({ env: webpackEnv, paths }) => {
             },
         },
         plugins: [
+            isDevelopment && new ReactRefreshWebpackPlugin(),
             new HtmlWebpackPlugin(
                 Object.assign(
                     {
@@ -180,6 +180,14 @@ module.exports = ({ env: webpackEnv, paths }) => {
                                 options: {
                                     ...makeBabelConfig({ mode: webpackEnv }),
                                     ...babelWebpackConfig,
+                                    plugins: [
+                                        ...makeBabelConfig({ mode: webpackEnv })
+                                            .plugins,
+                                        isDevelopment &&
+                                            require.resolve(
+                                                'react-refresh/babel'
+                                            ),
+                                    ].filter(Boolean),
                                 },
                             },
                         },

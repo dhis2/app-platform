@@ -133,7 +133,7 @@ const handler = async ({
             const shellStartPromise = shell.start({ port: newPort })
 
             if (config.entryPoints.plugin) {
-                const pluginPort = await detectPort(newPort)
+                const pluginPort = await detectPort(newPort + 1)
                 reporter.print(
                     `The plugin is now available on port ${pluginPort}`
                 )
@@ -149,8 +149,10 @@ const handler = async ({
         },
         {
             name: 'start',
-            onError: () =>
-                reporter.error('Start script exited with non-zero exit code'),
+            onError: err => {
+                reporter.error(err)
+                reporter.error('Start script exited with non-zero exit code')
+            },
         }
     )
 }

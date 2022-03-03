@@ -4,11 +4,12 @@
 process.env.BABEL_ENV = 'production'
 process.env.NODE_ENV = 'production'
 
+const { reporter } = require('@dhis2/cli-helpers-engine')
 const webpack = require('webpack')
 const webpackConfigFactory = require('./webpack.config')
 
 module.exports = async ({ paths }) => {
-    console.log('Building plugin...')
+    reporter.debug('Building plugin...')
 
     const webpackConfig = webpackConfigFactory({ env: 'production', paths })
     const compiler = webpack(webpackConfig)
@@ -43,11 +44,11 @@ module.exports = async ({ paths }) => {
                 return
             }
 
-            /*if (stats.hasWarnings()) {
-                console.warn(
-                    info.warnings.map(warning => warning.message).join('\n')
-                )
-            }*/
+            if (stats.hasWarnings()) {
+                for (const warning of info.warnings) {
+                    reporter.warn(warning.message)
+                }
+            }
 
             resolve()
         })
