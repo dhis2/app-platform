@@ -1,3 +1,16 @@
+# [9.0.0](https://github.com/dhis2/app-platform/compare/v8.3.3...v9.0.0) (2022-03-14)
+
+
+### chore
+
+* **app shell:** update @dhis2/ui to ^8 ([c16f3b1](https://github.com/dhis2/app-platform/commit/c16f3b170e3138e0a0109c342eeed5d000eece0d))
+
+
+### BREAKING CHANGES
+
+* **app shell:** To prevent issues with multiple ui versions, we bump
+the major version of the app-platform libraries as well
+
 ## [8.3.3](https://github.com/dhis2/app-platform/compare/v8.3.2...v8.3.3) (2022-02-22)
 
 
