@@ -29,15 +29,20 @@
         "typescript": "^3.6.3"
     },
     "scripts": {
-        "start": "react-scripts start",
-        "build": "react-scripts build",
+        "build": "d2-app-scripts build",
         "test": "react-scripts test",
-        "eject": "react-scripts eject",
         "analyze": "source-map-explorer 'build/static/js/*.js'"
     },
     "devDependencies": {
+        "@dhis2/cli-app-scripts": "^9.0.0",
         "enzyme": "^3.10.0",
         "enzyme-adapter-react-16": "^1.14.0",
         "react-test-renderer": "^16.8.6"
+    },
+    "main": "./build/cjs/index.js",
+    "module": "./build/es/index.js",
+    "exports": {
+        "import": "./build/es/index.js",
+        "require": "./build/cjs/index.js"
     }
 }
