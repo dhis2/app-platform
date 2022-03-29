@@ -1,0 +1,22 @@
+{
+  "name": "cra-template-dhis2-app",
+  "version": "1.0.0",
+  "keywords": [
+    "react",
+    "create-react-app",
+    "template",
+    "dhis2"
+  ],
+  "description": "The base template for DHIS2 Create React App.",
+  "license": "BSD-3-Clause",
+  "engines": {
+    "node": ">=14"
+  },
+  "bugs": {
+    "url": "https://github.com/facebook/create-react-app/issues"
+  },
+  "files": [
+    "template",
+    "template.json"
+  ]
+}
