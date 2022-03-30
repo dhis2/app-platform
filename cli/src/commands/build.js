@@ -27,95 +27,95 @@ const handler = ({
     verify,
     pack: packAppOutput,
     verbose,
-}) => exitOnCatch(
-    async () => {
-        const paths = makePaths(cwd)
-        const mode = determineBuildMode(modeArg, dev)
+}) =>
+    exitOnCatch(
+        async () => {
+            const paths = makePaths(cwd)
+            const mode = determineBuildMode(modeArg, dev)
 
-        loadEnvFiles(paths, mode)
+            loadEnvFiles(paths, mode)
 
-        reporter.print(chalk.green.bold('Build parameters:'))
-        printBuildParam('Mode', mode)
+            reporter.print(chalk.green.bold('Build parameters:'))
+            printBuildParam('Mode', mode)
 
-        const config = parseConfig(paths)
+            const config = parseConfig(paths)
 
-        if (config.type === 'app') {
-            setAppParameters(standalone, config)
-        }
-
-        await fs.remove(paths.buildOutput)
-        await exitWhenPackageInvalid(config, paths, verify)
-
-        reporter.info('Generating internationalization strings...')
-        await i18n.extractAndGenerate(paths)
-
-        reporter.info(
-            `Building ${config.type} ${chalk.bold(config.name)}...`
-        )
-
-        if (config.type === 'app') {
-            // Manifest generation moved here so these static assets can be
-            // precached by Workbox during the shell build step
-            reporter.info('Generating manifests...')
-            await generateManifests(paths, config, process.env.PUBLIC_URL)
-
-            // @TODO: Figure out how to do this
-            // const { injectPrecacheManifest } = require('../lib/pwa')
-            // if (config.pwa.enabled) {
-            //     reporter.info('Injecting precache manifest...')
-            //     await injectPrecacheManifest(paths, config)
-            // }
-
-            reporter.info('Ensuring that a build folder exists')
-            fs.ensureDirSync(paths.buildOutput)
-
-            // CRA Manages service worker compilation here
-            reporter.info('Creating a production build...')
-            await craBuild({ config, verbose, cwd })
-
-            if (!fs.pathExistsSync(paths.buildAppOutput)) {
-                reporter.error('No build output found')
-                process.exit(1)
+            if (config.type === 'app') {
+                setAppParameters(standalone, config)
             }
 
-            if (packAppOutput) {
-                const bundle = path.parse(paths.buildAppBundle)
+            await fs.remove(paths.buildOutput)
+            await exitWhenPackageInvalid(config, paths, verify)
 
-                await fs.remove(paths.buildAppBundleOutput)
+            reporter.info('Generating internationalization strings...')
+            await i18n.extractAndGenerate(paths)
 
-                // update bundle archive
-                await pack({
-                    destination: path.resolve(cwd, bundle.dir),
-                    filename: bundle.base,
-                })
+            reporter.info(
+                `Building ${config.type} ${chalk.bold(config.name)}...`
+            )
+
+            if (config.type === 'app') {
+                // Manifest generation moved here so these static assets can be
+                // precached by Workbox during the shell build step
+                reporter.info('Generating manifests...')
+                await generateManifests(paths, config, process.env.PUBLIC_URL)
+
+                // @TODO: Figure out how to do this
+                // const { injectPrecacheManifest } = require('../lib/pwa')
+                // if (config.pwa.enabled) {
+                //     reporter.info('Injecting precache manifest...')
+                //     await injectPrecacheManifest(paths, config)
+                // }
+
+                reporter.info('Ensuring that a build folder exists')
+                fs.ensureDirSync(paths.buildOutput)
+
+                // CRA Manages service worker compilation here
+                reporter.info('Creating a production build...')
+                await craBuild({ config, verbose, cwd })
+
+                if (!fs.pathExistsSync(paths.buildAppOutput)) {
+                    reporter.error('No build output found')
+                    process.exit(1)
+                }
+
+                if (packAppOutput) {
+                    const bundle = path.parse(paths.buildAppBundle)
+
+                    await fs.remove(paths.buildAppBundleOutput)
+
+                    // update bundle archive
+                    await pack({
+                        destination: path.resolve(cwd, bundle.dir),
+                        filename: bundle.base,
+                    })
+                }
+
+                reporter.print(chalk.green('\n**** DONE! ****'))
+            } else {
+                await Promise.all([
+                    compile({
+                        config,
+                        paths,
+                        moduleType: 'es',
+                        mode,
+                        watch,
+                    }),
+                    compile({
+                        config,
+                        paths,
+                        moduleType: 'cjs',
+                        mode,
+                        watch,
+                    }),
+                ])
             }
-
-            reporter.print(chalk.green('\n**** DONE! ****'))
-        } else {
-            await Promise.all([
-                compile({
-                    config,
-                    paths,
-                    moduleType: 'es',
-                    mode,
-                    watch,
-                }),
-                compile({
-                    config,
-                    paths,
-                    moduleType: 'cjs',
-                    mode,
-                    watch,
-                }),
-            ])
+        },
+        {
+            name: 'build',
+            onError: () => reporter.error('Build script failed'),
         }
-    },
-    {
-        name: 'build',
-        onError: () => reporter.error('Build script failed'),
-    }
-)
-
+    )
 
 const command = {
     aliases: 'b',

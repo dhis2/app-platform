@@ -1,10 +1,7 @@
 const { initApp, initLibrary } = require('../lib/index.js')
 
-const handler = async options => await (
-    options.lib
-        ? initLibrary(options)
-        : initApp(options)
-)
+const handler = async options =>
+    await (options.lib ? initLibrary(options) : initApp(options))
 
 const command = {
     command: 'init <name>',

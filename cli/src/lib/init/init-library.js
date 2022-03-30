@@ -81,10 +81,7 @@ module.exports = async function initLibrary({ force, name, cwdArg }) {
         )
     } else {
         reporter.info('Importing d2.config.js defaults')
-        fs.copyFileSync(
-            paths.configDefaultsLib,
-            paths.config
-        )
+        fs.copyFileSync(paths.configDefaultsLib, paths.config)
     }
 
     if (!fs.existsSync(paths.package)) {

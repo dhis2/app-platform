@@ -10,9 +10,8 @@ export function Shell({ children }) {
     verifyChildrenIsTheApp(children)
 
     const appConfig = createAppConfig()
-    const appWithConfig = React.Children.map(
-        children,
-        child => React.cloneElement(child, { config: appConfig })
+    const appWithConfig = React.Children.map(children, child =>
+        React.cloneElement(child, { config: appConfig })
     )
 
     return (

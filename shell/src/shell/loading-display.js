@@ -3,7 +3,7 @@ import {
     CircularLoader,
     CssReset,
     Layer,
-    layers
+    layers,
 } from '@dhis2/ui'
 import React from 'react'
 

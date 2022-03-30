@@ -9,20 +9,21 @@ const spawn = (...args) => {
     return new Promise((resolve, reject) => {
         const ls = xspawn(...args)
 
-        ls.on('close', (code) => {
+        ls.on('close', code => {
             if (code !== 0) {
                 reject(code)
             } else {
                 resolve()
             }
-        });
+        })
     })
 }
 
-const getReactScripts = () => path.join(
-    require.resolve('react-scripts/package.json'),
-    '../bin/react-scripts.js'
-)
+const getReactScripts = () =>
+    path.join(
+        require.resolve('react-scripts/package.json'),
+        '../bin/react-scripts.js'
+    )
 
 const runReactScripts = async (args, options) => {
     const reactScripts = getReactScripts()
@@ -39,11 +40,10 @@ module.exports.craInit = async function craInit({ verbose, name, cwd }) {
 
     // @TODO: Export `spawn` from @dhis2/cli-helpers-engine
     // and use that one here
-    await spawn(
-        'npx',
-        ['create-react-app', '--template', template, name],
-        { cwd, stdio }
-    )
+    await spawn('npx', ['create-react-app', '--template', template, name], {
+        cwd,
+        stdio,
+    })
 }
 
 module.exports.craBuild = async function craBuild({ config, cwd, verbose }) {
@@ -57,12 +57,17 @@ module.exports.craBuild = async function craBuild({ config, cwd, verbose }) {
             ...getEnv({
                 name: config.title,
                 ...getPWAEnvVars(config),
-            })
+            }),
         },
     })
 }
 
-module.exports.craStart = async function craStart({ config, port, cwd, verbose }) {
+module.exports.craStart = async function craStart({
+    config,
+    port,
+    cwd,
+    verbose,
+}) {
     const stdio = verbose ? 'inherit' : undefined
     const env = {
         // process crashes when not providing this
@@ -75,18 +80,12 @@ module.exports.craStart = async function craStart({ config, port, cwd, verbose }
         }),
     }
 
-    await runReactScripts(
-        ['start', '--port', port],
-        { cwd, stdio, env }
-    )
+    await runReactScripts(['start', '--port', port], { cwd, stdio, env })
 }
 
 module.exports.craTest = async function craTest({ cwd, testArgs }) {
-    await runReactScripts(
-        ['test', ...testArgs],
-        {
-            cwd,
-            stdio: 'inherit',
-        }
-    )
+    await runReactScripts(['test', ...testArgs], {
+        cwd,
+        stdio: 'inherit',
+    })
 }

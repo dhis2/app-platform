@@ -2,9 +2,7 @@ const fs = require('fs')
 const path = require('path')
 const { reporter } = require('@dhis2/cli-helpers-engine')
 
-const shellSource = path.dirname(
-    require.resolve('@dhis2/app-shell')
-)
+const shellSource = path.dirname(require.resolve('@dhis2/app-shell'))
 const shellAppDirname = 'src/D2App'
 
 const findYarnLock = base => {

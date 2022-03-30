@@ -13,14 +13,11 @@ const handler = async ({ cwd }) => {
 
     reporter.info('Running tests...')
 
-    await exitOnCatch(
-        async () => await craTest({ cwd, testArgs }),
-        {
-            name: 'test',
-            onError: () =>
-                reporter.error('Test script exited with non-zero exit code'),
-        }
-    )
+    await exitOnCatch(async () => await craTest({ cwd, testArgs }), {
+        name: 'test',
+        onError: () =>
+            reporter.error('Test script exited with non-zero exit code'),
+    })
 }
 
 const command = {

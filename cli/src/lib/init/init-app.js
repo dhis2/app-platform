@@ -6,7 +6,9 @@ const { craInit } = require('../shell')
 // See https://github.com/facebook/create-react-app/issues/9849
 function addMissingFieldsToPackageJson(appFolder) {
     const packageJsonPath = path.join(appFolder, 'package.json')
-    const packageJsonRaw = fs.readFileSync(packageJsonPath, { encoding: 'utf8' })
+    const packageJsonRaw = fs.readFileSync(packageJsonPath, {
+        encoding: 'utf8',
+    })
     const packageJsonContents = JSON.parse(packageJsonRaw)
     const packageJsonPatched = {
         ...packageJsonContents,
@@ -24,11 +26,7 @@ function addMissingFieldsToPackageJson(appFolder) {
     fs.writeFileSync(packageJsonPath, packageJsonPatchedString)
 }
 
-module.exports = async function initApp({
-    cwd: cwdArg,
-    verbose,
-    name,
-}) {
+module.exports = async function initApp({ cwd: cwdArg, verbose, name }) {
     const cwd = cwdArg || process.cwd()
     const appFolder = path.join(cwd, name)
 
@@ -41,5 +39,4 @@ module.exports = async function initApp({
     reporter.info(
         `Successfully created the dhis2 app. You can now navigate to \`${appFolder}\` and run \`yarn start\``
     )
-
 }

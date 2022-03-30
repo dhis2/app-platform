@@ -21,60 +21,60 @@ const handler = ({
     proxy,
     proxyPort,
     verbose,
-}) => exitOnCatch(
-    async () => {
-        const mode = 'development'
-        const paths = makePaths(cwd)
+}) =>
+    exitOnCatch(
+        async () => {
+            const mode = 'development'
+            const paths = makePaths(cwd)
 
-        loadEnvFiles(paths, mode)
+            loadEnvFiles(paths, mode)
 
-        const config = parseConfig(paths)
+            const config = parseConfig(paths)
 
-        verifyIsApp(config)
+            verifyIsApp(config)
 
-        const appPort = await detectPort(port)
+            const appPort = await detectPort(port)
 
-        await createLocalProxyServer({ proxy, proxyPort, appPort })
-        await notifyWhenPackageInvalid(config, paths)
+            await createLocalProxyServer({ proxy, proxyPort, appPort })
+            await notifyWhenPackageInvalid(config, paths)
 
-        reporter.info('Generating internationalization strings...')
-        await i18n.extractAndGenerate(paths)
+            reporter.info('Generating internationalization strings...')
+            await i18n.extractAndGenerate(paths)
 
-        // Manifests added here so app has access to manifest.json for pwa
-        reporter.info('Generating manifests...')
-        await generateManifests(paths, config, process.env.PUBLIC_URL)
+            // Manifests added here so app has access to manifest.json for pwa
+            reporter.info('Generating manifests...')
+            await generateManifests(paths, config, process.env.PUBLIC_URL)
 
-        if (String(appPort) !== String(port)) {
-            reporter.print('')
-            reporter.warn(
-                `Something is already running on port ${port}, using ${appPort} instead.`
-            )
+            if (String(appPort) !== String(port)) {
+                reporter.print('')
+                reporter.warn(
+                    `Something is already running on port ${port}, using ${appPort} instead.`
+                )
+            }
+
+            // @TODO: Figure out how to do this properly
+            // const { compileServiceWorker } = require('../lib/pwa')
+            // if (config.pwa.enabled) {
+            //     reporter.info('Compiling service worker...')
+            //     await compileServiceWorker({
+            //         config,
+            //         paths,
+            //         mode: 'development',
+            //     })
+            // }
+
+            try {
+                await craStart({ port, cwd: paths.base, config, verbose })
+            } catch (code) {
+                process.exit(code)
+            }
+        },
+        {
+            name: 'start',
+            onError: () =>
+                reporter.error('Start script exited with non-zero exit code'),
         }
-
-        // @TODO: Figure out how to do this properly
-        // const { compileServiceWorker } = require('../lib/pwa')
-        // if (config.pwa.enabled) {
-        //     reporter.info('Compiling service worker...')
-        //     await compileServiceWorker({
-        //         config,
-        //         paths,
-        //         mode: 'development',
-        //     })
-        // }
-
-        try {
-            await craStart({ port, cwd: paths.base, config, verbose })
-        } catch (code) {
-            process.exit(code)
-        }
-    },
-    {
-        name: 'start',
-        onError: () =>
-        reporter.error('Start script exited with non-zero exit code'),
-    }
-)
-
+    )
 
 const command = {
     command: 'start',
