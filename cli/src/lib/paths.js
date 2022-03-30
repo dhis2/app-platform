@@ -3,7 +3,7 @@ const path = require('path')
 const { reporter } = require('@dhis2/cli-helpers-engine')
 
 const shellSource = path.dirname(
-    require.resolve('@dhis2/app-shell/package.json')
+    require.resolve('@dhis2/app-shell')
 )
 const shellAppDirname = 'src/D2App'
 
@@ -43,6 +43,7 @@ module.exports = (cwd = process.cwd()) => {
         shellSourcePublic: path.join(shellSource, 'public'),
 
         base,
+        serviceWorker: path.join(base, './src/service-worker.js'),
         package: path.join(base, './package.json'),
         yarnLock: findYarnLock(base),
         dotenv: path.join(base, './.env'),
@@ -50,6 +51,8 @@ module.exports = (cwd = process.cwd()) => {
         readme: path.join(base, './README.md'),
         src: path.join(base, './src'),
         public: path.join(base, './public'),
+        publicManifestJson: path.join(base, './public/manifest.json'),
+        publicManifestWebapp: path.join(base, './public/manifest.webapp'),
         jestConfig: path.join(base, 'jest.config.js'),
         i18nStrings: path.join(base, './i18n'),
         i18nLocales: path.join(base, './src/locales'),

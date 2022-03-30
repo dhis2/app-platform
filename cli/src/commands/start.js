@@ -1,142 +1,80 @@
-const { reporter, chalk } = require('@dhis2/cli-helpers-engine')
+const { reporter } = require('@dhis2/cli-helpers-engine')
 const detectPort = require('detect-port')
-const { compile } = require('../lib/compiler')
 const exitOnCatch = require('../lib/exitOnCatch')
 const generateManifests = require('../lib/generateManifests')
-const i18n = require('../lib/i18n')
+const i18n = require('../lib/i18n/index.js')
+const {
+    createLocalProxyServer,
+    notifyWhenPackageInvalid,
+    verifyIsApp,
+    craStart,
+} = require('../lib/index.js')
 const loadEnvFiles = require('../lib/loadEnvFiles')
 const parseConfig = require('../lib/parseConfig')
 const makePaths = require('../lib/paths')
-const createProxyServer = require('../lib/proxy')
-const { compileServiceWorker } = require('../lib/pwa')
-const makeShell = require('../lib/shell')
-const { validatePackage } = require('../lib/validatePackage')
 
 const defaultPort = 3000
 
-const handler = async ({
+const handler = ({
     cwd,
-    force,
     port = process.env.PORT || defaultPort,
-    shell: shellSource,
     proxy,
     proxyPort,
-}) => {
-    const paths = makePaths(cwd)
+    verbose,
+}) => exitOnCatch(
+    async () => {
+        const mode = 'development'
+        const paths = makePaths(cwd)
 
-    const mode = 'development'
-    loadEnvFiles(paths, mode)
+        loadEnvFiles(paths, mode)
 
-    const config = parseConfig(paths)
-    const shell = makeShell({ config, paths })
+        const config = parseConfig(paths)
 
-    if (config.type !== 'app') {
-        reporter.error(
-            `The command ${chalk.bold(
-                'd2-app-scripts start'
-            )} is not currently supported for libraries!`
-        )
-        process.exit(1)
-    }
+        verifyIsApp(config)
 
-    const newPort = await detectPort(port)
+        const appPort = await detectPort(port)
 
-    if (proxy) {
-        const newProxyPort = await detectPort(proxyPort)
-        const proxyBaseUrl = `http://localhost:${newProxyPort}`
+        await createLocalProxyServer({ proxy, proxyPort, appPort })
+        await notifyWhenPackageInvalid(config, paths)
 
-        reporter.print('')
-        reporter.info('Starting proxy server...')
-        reporter.print(
-            `The proxy for ${chalk.bold(
-                proxy
-            )} is now available on port ${newProxyPort}`
-        )
-        reporter.print('')
+        reporter.info('Generating internationalization strings...')
+        await i18n.extractAndGenerate(paths)
 
-        createProxyServer({
-            target: proxy,
-            baseUrl: proxyBaseUrl,
-            port: newProxyPort,
-            shellPort: newPort,
-        })
-    }
+        // Manifests added here so app has access to manifest.json for pwa
+        reporter.info('Generating manifests...')
+        await generateManifests(paths, config, process.env.PUBLIC_URL)
 
-    await exitOnCatch(
-        async () => {
-            if (!(await validatePackage({ config, paths, offerFix: false }))) {
-                reporter.print(
-                    'Package validation issues are ignored when running "d2-app-scripts start"'
-                )
-                reporter.print(
-                    `${chalk.bold(
-                        'HINT'
-                    )}: Run "d2-app-scripts build" to automatically fix some of these issues`
-                )
-            }
-
-            reporter.info('Generating internationalization strings...')
-            await i18n.extract({
-                input: paths.src,
-                output: paths.i18nStrings,
-                paths,
-            })
-            await i18n.generate({
-                input: paths.i18nStrings,
-                output: paths.i18nLocales,
-                namespace: 'default',
-                paths,
-            })
-
-            reporter.info('Bootstrapping local appShell...')
-            await shell.bootstrap({ shell: shellSource, force })
-
-            reporter.info(`Building app ${chalk.bold(config.name)}...`)
-            await compile({
-                config,
-                mode,
-                paths,
-                watch: true,
-            })
-
-            // Manifests added here so app has access to manifest.json for pwa
-            reporter.info('Generating manifests...')
-            await generateManifests(paths, config, process.env.PUBLIC_URL)
-
-            if (String(newPort) !== String(port)) {
-                reporter.print('')
-                reporter.warn(
-                    `Something is already running on port ${port}, using ${newPort} instead.`
-                )
-            }
-
-            if (config.pwa.enabled) {
-                reporter.info('Compiling service worker...')
-                await compileServiceWorker({
-                    config,
-                    paths,
-                    mode: 'development',
-                })
-            }
-
+        if (String(appPort) !== String(port)) {
             reporter.print('')
-            reporter.info('Starting development server...')
-            reporter.print(
-                `The app ${chalk.bold(
-                    config.name
-                )} is now available on port ${newPort}`
+            reporter.warn(
+                `Something is already running on port ${port}, using ${appPort} instead.`
             )
-            reporter.print('')
-
-            await shell.start({ port: newPort })
-        },
-        {
-            name: 'start',
-            onError: () =>
-                reporter.error('Start script exited with non-zero exit code'),
         }
-    )
-}
+
+        // @TODO: Figure out how to do this properly
+        // const { compileServiceWorker } = require('../lib/pwa')
+        // if (config.pwa.enabled) {
+        //     reporter.info('Compiling service worker...')
+        //     await compileServiceWorker({
+        //         config,
+        //         paths,
+        //         mode: 'development',
+        //     })
+        // }
+
+        try {
+            await craStart({ port, cwd: paths.base, config, verbose })
+        } catch (code) {
+            process.exit(code)
+        }
+    },
+    {
+        name: 'start',
+        onError: () =>
+        reporter.error('Start script exited with non-zero exit code'),
+    }
+)
+
 
 const command = {
     command: 'start',

@@ -20,6 +20,7 @@ const parseCustomAuthorities = authorities => {
     }
     return authorities
 }
+
 const parseDataStoreNamespace = namespace => {
     if (!namespace) {
         return undefined
@@ -35,7 +36,8 @@ const parseDataStoreNamespace = namespace => {
 
     return namespace
 }
-module.exports = (paths, config, publicUrl) => {
+
+const createAndWriteManifestJson = (config, paths) => {
     // PWA manifest
     const manifestJson = {
         short_name: config.title,
@@ -98,6 +100,15 @@ module.exports = (paths, config, publicUrl) => {
         background_color: '#f4f6f8',
     }
 
+    reporter.debug('Generated manifest.json', manifestJson)
+
+    // Write PWA manifest
+    fs.writeJsonSync(paths.publicManifestJson, manifestJson, {
+        spaces: 2,
+    })
+}
+
+const createAndWriteManifestWebapp = (config, paths, publicUrl) => {
     // Legacy manifest
     const manifestWebapp = {
         app_hub_id: config.id,
@@ -131,22 +142,15 @@ module.exports = (paths, config, publicUrl) => {
         scope: publicUrl,
     }
 
-    reporter.debug('Generated manifest.json', manifestJson)
     reporter.debug('Generated manifest.webapp', manifestWebapp)
 
-    // Write PWA manifest
-    fs.writeJsonSync(paths.shellPublicManifestJson, manifestJson, {
-        spaces: 2,
-    })
     // Legacy manifest for backwards compatibility, WILL BE DEPRECATED
-    fs.writeJsonSync(paths.shellPublicManifestWebapp, manifestWebapp, {
+    fs.writeJsonSync(paths.publicManifestWebapp, manifestWebapp, {
         spaces: 2,
     })
+}
 
-    // Write d2 config json
-    const appConfig = { ...config }
-    delete appConfig['entryPoints']
-    delete appConfig['pwa']
-
-    fs.writeJsonSync(paths.shellPublicConfigJson, appConfig, { spaces: 2 })
+module.exports = (paths, config, publicUrl) => {
+    createAndWriteManifestJson(config, paths)
+    createAndWriteManifestWebapp(config, paths, publicUrl)
 }
