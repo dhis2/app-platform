@@ -7,9 +7,7 @@ const D2App = React.lazy(() =>
 ) // Automatic bundle splitting!
 
 const appConfig = {
-    url:
-        process.env.REACT_APP_DHIS2_BASE_URL ||
-        window.localStorage.DHIS2_BASE_URL,
+    url: process.env.REACT_APP_DHIS2_BASE_URL,
     appName: process.env.REACT_APP_DHIS2_APP_NAME || '',
     apiVersion: parseInt(process.env.REACT_APP_DHIS2_API_VERSION),
     pwaEnabled: process.env.REACT_APP_DHIS2_APP_PWA_ENABLED === 'true',

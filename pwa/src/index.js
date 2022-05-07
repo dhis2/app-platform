@@ -4,3 +4,4 @@ export {
     checkForUpdates,
     checkForSWUpdateAndReload,
 } from './lib/registration.js'
+export { getBaseUrlByAppName, setBaseUrlByAppName } from './lib/base-url-db.js'

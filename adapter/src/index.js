@@ -11,6 +11,7 @@ const AppAdapter = ({ url, apiVersion, appName, pwaEnabled, children }) => (
     <ErrorBoundary fullscreen onRetry={checkForSWUpdateAndReload}>
         <ServerVersionProvider
             url={url}
+            appName={appName}
             apiVersion={apiVersion}
             pwaEnabled={pwaEnabled}
             offlineInterface={offlineInterface}
