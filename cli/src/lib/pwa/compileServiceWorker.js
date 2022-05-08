@@ -1,6 +1,7 @@
 const path = require('path')
 const { reporter } = require('@dhis2/cli-helpers-engine')
 const webpack = require('webpack')
+const getEnv = require('../shell/env')
 const getPWAEnvVars = require('./getPWAEnvVars')
 
 /**
@@ -34,13 +35,7 @@ function compileServiceWorker({ config, paths, mode }) {
     // TODO: This could be cleaner if the production SW is built in the same
     // way instead of using the CRA webpack config, so both can more easily
     // share environment variables.
-    const prefixedPWAEnvVars = Object.entries(getPWAEnvVars(config)).reduce(
-        (output, [key, value]) => ({
-            ...output,
-            [`REACT_APP_DHIS2_APP_${key.toUpperCase()}`]: value,
-        }),
-        {}
-    )
+    const env = getEnv({ name: config.title, ...getPWAEnvVars(config) })
 
     const webpackConfig = {
         mode, // "production" or "development"
@@ -54,7 +49,7 @@ function compileServiceWorker({ config, paths, mode }) {
             new webpack.DefinePlugin({
                 'process.env': JSON.stringify({
                     ...process.env,
-                    ...prefixedPWAEnvVars,
+                    ...env,
                 }),
             }),
         ],
