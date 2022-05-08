@@ -8,6 +8,14 @@ const CACHEABLE_SECTION_URL_FILTER_PATTERNS = JSON.parse(
         '[]'
 ).map(pattern => new RegExp(pattern))
 
+/**
+ * Tracks recording states for multiple clients to handle multiple windows
+ * recording simultaneously
+ */
+export function initClientRecordingStates() {
+    self.clientRecordingStates = {}
+}
+
 // Triggered on 'START_RECORDING' message
 export function startRecording(event) {
     console.debug('[SW] Starting recording')
