@@ -52,6 +52,7 @@
         "node-http-proxy-json": "^0.1.9",
         "parse-author": "^2.0.0",
         "parse-gitignore": "^1.0.1",
+        "react-scripts": "^5.0.0",
         "styled-jsx": "^4.0.1",
         "webpack": "^5.41.1",
         "workbox-build": "^6.1.5"
@@ -69,6 +70,7 @@
         "testEnvironment": "node"
     },
     "devDependencies": {
+        "cross-spawn": "^7.0.3",
         "outdent": "^0.8.0"
     }
 }

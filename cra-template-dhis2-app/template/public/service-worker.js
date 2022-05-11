@@ -1,5 +1,3 @@
-/* eslint-disable no-restricted-globals */
-
 // A simple, no-op service worker that takes immediate control and tears
 // everything down; has no fetch handler. Fixes apps with rogue service workers
 // and gets overrwritten in apps using PWA

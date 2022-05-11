@@ -1,0 +1,44 @@
+{
+    "package": {
+        "name": "yourappname-app",
+        "version": "1.0.0",
+        "license": "BSD-3-Clause",
+        "private": false,
+        "scripts": {
+            "build": "d2-app-scripts build",
+            "start": "d2-app-scripts start",
+            "test": "d2-app-scripts test",
+            "deploy": "d2-app-scripts deploy"
+        },
+        "devDependencies": {
+            "@dhis2/app-shell": "^9.0.0",
+            "@dhis2/cli-app-scripts": "^9.0.0",
+            "@testing-library/jest-dom": "^5.16.2",
+            "@testing-library/react": "^12.1.4",
+            "@testing-library/user-event": "^13.5.0",
+            "react": "^16.8",
+            "react-dom": "^16.8",
+            "react-scripts": "5.0.0",
+            "web-vitals": "^2.1.4"
+        },
+        "dependencies": {
+            "@dhis2/app-runtime": "^3.4.0",
+            "@dhis2/d2-i18n": "^1",
+            "@dhis2/ui": ">=7",
+            "classnames": "^2",
+            "moment": "^2",
+            "prop-types": "^15",
+            "react": "^16.8",
+            "react-dom": "^16.8",
+            "styled-jsx": "^4"
+        },
+        "browserslist": {
+            "production": [">0.2%", "not dead", "not op_mini all"],
+            "development": [
+                "last 1 chrome version",
+                "last 1 firefox version",
+                "last 1 safari version"
+            ]
+        }
+    }
+}

@@ -38,9 +38,9 @@ function logManifestOutput({ count, filePaths, size, warnings }) {
 module.exports = function injectPrecacheManifest(paths, config) {
     // See https://developers.google.com/web/tools/workbox/reference-docs/latest/module-workbox-build#.injectManifest
     const injectManifestOptions = {
-        swSrc: paths.shellBuildServiceWorker,
-        swDest: paths.shellBuildServiceWorker,
-        globDirectory: paths.shellBuildOutput,
+        swSrc: paths.serviceWorker,
+        swDest: paths.serviceWorker,
+        globDirectory: paths.buildOutput,
         globPatterns: ['**/*'],
         // Skip index.html and `static` directory;
         // CRA's workbox-webpack-plugin handles it smartly
