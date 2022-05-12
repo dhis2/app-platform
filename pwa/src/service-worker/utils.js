@@ -13,7 +13,7 @@ const APP_SHELL_URL_FILTER_PATTERNS = JSON.parse(
         // A deprecated fallback option:
         process.env.REACT_APP_DHIS2_APP_PWA_CACHING_PATTERNS_TO_OMIT ||
         '[]'
-).map(pattern => new RegExp(pattern))
+).map((pattern) => new RegExp(pattern))
 const OMIT_EXTERNAL_REQUESTS_FROM_APP_SHELL =
     process.env
         .REACT_APP_DHIS2_APP_PWA_CACHING_OMIT_EXTERNAL_REQUESTS_FROM_APP_SHELL ===
@@ -36,12 +36,12 @@ export function setUpKillSwitchServiceWorker() {
         self.registration.unregister()
         // Delete all caches
         const keys = await self.caches.keys()
-        await Promise.all(keys.map(key => self.caches.delete(key)))
+        await Promise.all(keys.map((key) => self.caches.delete(key)))
         // Delete DB
         await deleteSectionsDB()
         // Force refresh all windows
         const clients = await self.clients.matchAll({ type: 'window' })
-        clients.forEach(client => client.navigate(client.url))
+        clients.forEach((client) => client.navigate(client.url))
     })
 }
 
@@ -55,7 +55,7 @@ export function urlMeetsAppShellCachingCriteria(url) {
     }
 
     // Don't cache if url matches filter in pattern list from d2.config.js
-    const urlMatchesFilter = APP_SHELL_URL_FILTER_PATTERNS.some(pattern =>
+    const urlMatchesFilter = APP_SHELL_URL_FILTER_PATTERNS.some((pattern) =>
         pattern.test(url.href)
     )
     if (urlMatchesFilter) {
@@ -76,10 +76,10 @@ export function createDB() {
 export async function removeUnusedCaches() {
     const cacheKeys = await caches.keys()
     return Promise.all(
-        cacheKeys.map(async key => {
+        cacheKeys.map(async (key) => {
             const isWorkboxKey = /workbox/.test(key)
             const isInKeepList = !!CACHE_KEEP_LIST.find(
-                keepKey => keepKey === key
+                (keepKey) => keepKey === key
             )
             const db = await self.dbPromise
             const isASavedSection = !!(await db.get(SECTIONS_STORE, key))
@@ -108,7 +108,7 @@ export async function getClientsInfo(event) {
         includeUncontrolled: true,
     })
 
-    self.clients.get(clientId).then(client => {
+    self.clients.get(clientId).then((client) => {
         client.postMessage({
             type: swMsgs.clientsInfo,
             payload: {
@@ -128,5 +128,5 @@ export async function claimClients() {
     self.clients.claim()
     // Important to use includeUncontrolled option here:
     const clients = await self.clients.matchAll({ includeUncontrolled: true })
-    clients.forEach(client => client.navigate(client.url))
+    clients.forEach((client) => client.navigate(client.url))
 }

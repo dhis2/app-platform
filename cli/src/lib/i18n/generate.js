@@ -34,16 +34,16 @@ const generate = async ({ input, output, namespace, paths }) => {
     reporter.debug(`[i18n-generate] Reading translation sources...`)
     const files = fs.readdirSync(input)
 
-    const langs = files.map(f => path.basename(f, path.extname(f)))
+    const langs = files.map((f) => path.basename(f, path.extname(f)))
     const locales = langs
-        .filter(lang => lang !== 'en')
-        .map(lang => langToLocale[lang])
+        .filter((lang) => lang !== 'en')
+        .map((lang) => langToLocale[lang])
 
     const outFile = path.join(dst, 'index.js')
     writeTemplate(outFile, { locales, langs, namespace })
 
     reporter.debug(`[i18n-generate] Generating translation .json files...`)
-    const promises = files.map(async f => {
+    const promises = files.map(async (f) => {
         const ext = path.extname(f)
         const lang = path.basename(f, ext)
 

@@ -9,13 +9,13 @@ const publishVersion = require('../lib/publishVersion.js')
 const updateManifest = require('../lib/updateManifest.js')
 const { handler: pack } = require('./pack.js')
 
-const isValidServerVersion = v => !!/(\d+)\.(\d+)/.exec(v)
+const isValidServerVersion = (v) => !!/(\d+)\.(\d+)/.exec(v)
 
 const requiredFields = new Set(['id', 'version', 'minDHIS2Version'])
 const configFieldValidations = {
-    minDHIS2Version: v =>
+    minDHIS2Version: (v) =>
         isValidServerVersion(v) ? true : 'Invalid server version',
-    maxDHIS2Version: v =>
+    maxDHIS2Version: (v) =>
         isValidServerVersion(v) ? true : 'Invalid server version',
 }
 
@@ -23,7 +23,7 @@ const validateFields = (
     config,
     fieldNames = ['id', 'version', 'minDHIS2Version']
 ) => {
-    fieldNames.forEach(fieldName => {
+    fieldNames.forEach((fieldName) => {
         const fieldValue = config[fieldName]
         if (
             requiredFields.has(fieldName) &&
@@ -98,7 +98,7 @@ const resolveBundle = ({ cwd, params, config }) => {
     return resolveBundleFromAppConfig(cwd, config)
 }
 
-const promptForConfig = async params => {
+const promptForConfig = async (params) => {
     if (!params.token) {
         exit(1, 'Missing API token.')
     }
@@ -127,7 +127,7 @@ const promptForConfig = async params => {
             name: 'minDHIS2Version',
             message: 'Minimum DHIS2 version supported',
             when: () => params.file && !params.minDHIS2Version,
-            validate: v =>
+            validate: (v) =>
                 isValidServerVersion(v) ? true : 'Invalid server version',
         },
         {
@@ -135,7 +135,7 @@ const promptForConfig = async params => {
             name: 'maxDHIS2Version',
             message: 'Maximum DHIS2 version supported',
             when: () => params.file && !params.maxDHIS2Version,
-            validate: v =>
+            validate: (v) =>
                 !v || isValidServerVersion(v) ? true : 'Invalid server version',
         },
     ])
@@ -209,7 +209,7 @@ const command = {
     command: 'publish',
     alias: 'p',
     desc: 'Deploy the built application to a specific DHIS2 instance',
-    builder: yargs =>
+    builder: (yargs) =>
         yargs
             .options({
                 apikey: {

@@ -84,7 +84,7 @@ describe('rewriteLocation', () => {
                 target: 'http://server.com:5678',
                 baseUrl: 'http://localhost:8080',
             },
-        ].forEach(args => {
+        ].forEach((args) => {
             expect(rewriteLocation(args)).toBe(args.location)
         })
     })

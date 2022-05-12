@@ -36,7 +36,7 @@ const extract = async ({ input, output, paths }) => {
 
     reporter.debug(`[i18n-extract] Parsing ${files.length} files...`)
 
-    files.forEach(filePath => {
+    files.forEach((filePath) => {
         var contents = fs.readFileSync(filePath, 'utf8')
         parser.parseFuncFromString(contents).get()
     })
@@ -44,7 +44,7 @@ const extract = async ({ input, output, paths }) => {
     var parsed = parser.get()
     var en = {}
     Object.keys(parsed.en.translation).forEach(
-        str => (en[str] = parsed.en.translation[str])
+        (str) => (en[str] = parsed.en.translation[str])
     )
 
     if (Object.keys(en).length === 0) {

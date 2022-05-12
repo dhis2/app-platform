@@ -48,7 +48,7 @@ export class OfflineInterface {
         // This event emitter helps coordinate with service worker messages
         this.offlineEvents = new EventEmitter()
         // Receives messages from service worker and forwards to event emitter
-        const handleSWMessage = event => {
+        const handleSWMessage = (event) => {
             if (!event.data) {
                 return
             }
@@ -70,7 +70,7 @@ export class OfflineInterface {
      */
     getClientsInfo() {
         return new Promise((resolve, reject) => {
-            navigator.serviceWorker.getRegistration().then(registration => {
+            navigator.serviceWorker.getRegistration().then((registration) => {
                 if (!registration || !registration.active) {
                     reject('There is no active service worker')
                 }
@@ -93,7 +93,7 @@ export class OfflineInterface {
      * or claim clients if it's the first SW activation
      */
     useNewSW() {
-        navigator.serviceWorker.getRegistration().then(registration => {
+        navigator.serviceWorker.getRegistration().then((registration) => {
             if (!registration) {
                 throw new Error('No service worker is registered')
             }
@@ -160,7 +160,7 @@ export class OfflineInterface {
                 swMsgs.recordingCompleted,
                 swMsgs.confirmRecordingCompletion,
             ]
-            messageTypes.forEach(messageType =>
+            messageTypes.forEach((messageType) =>
                 this.offlineEvents.removeAllListeners(messageType)
             )
         }
@@ -206,7 +206,7 @@ export class OfflineInterface {
         const sections = await db.getAll(SECTIONS_STORE)
         const cacheKeys = await caches.keys()
         // Validate that each section in IDB has cached data
-        const validSections = sections.filter(section =>
+        const validSections = sections.filter((section) =>
             cacheKeys.includes(section.sectionId)
         )
 

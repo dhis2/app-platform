@@ -12,7 +12,7 @@ const request = (url, options) => {
             },
             signal: abortController.signal,
         })
-            .then(response => {
+            .then((response) => {
                 if (response.status !== 200) {
                     reject('Request failed', response.statusText)
                     return
@@ -23,7 +23,7 @@ const request = (url, options) => {
                     resolve(response.text())
                 }
             })
-            .catch(e => {
+            .catch((e) => {
                 console.error('Network error: ', e)
                 reject('Network error')
             })
@@ -33,7 +33,7 @@ const request = (url, options) => {
     return promise
 }
 
-export const get = url => request(url, { method: 'GET' })
+export const get = (url) => request(url, { method: 'GET' })
 export const post = (url, body) =>
     request(url, {
         method: 'POST',

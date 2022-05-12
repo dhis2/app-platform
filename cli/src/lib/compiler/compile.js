@@ -14,7 +14,7 @@ const {
 } = require('./extensionHelpers.js')
 
 const watchFiles = ({ inputDir, outputDir, processFileCallback, watch }) => {
-    const compileFile = async source => {
+    const compileFile = async (source) => {
         const relative = normalizeExtension(path.relative(inputDir, source))
         const destination = path.join(outputDir, relative)
         reporter.debug(
@@ -25,7 +25,7 @@ const watchFiles = ({ inputDir, outputDir, processFileCallback, watch }) => {
         await processFileCallback(source, destination)
     }
 
-    const removeFile = async file => {
+    const removeFile = async (file) => {
         const relative = path.relative(inputDir, file)
         const outFile = path.join(outputDir, relative)
         reporter.debug(`File ${relative} removed... removing: `, outFile)
@@ -47,7 +47,7 @@ const watchFiles = ({ inputDir, outputDir, processFileCallback, watch }) => {
             .on('add', compileFile)
             .on('change', compileFile)
             .on('unlink', removeFile)
-            .on('error', error => {
+            .on('error', (error) => {
                 reporter.debugErr('Chokidar error:', error)
                 reject('Chokidar error!')
             })

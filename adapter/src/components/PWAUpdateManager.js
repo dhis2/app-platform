@@ -77,7 +77,7 @@ export default function PWAUpdateManager({ offlineInterface }) {
                     setConfirmReloadModalOpen(true)
                 }
             })
-            .catch(reason => {
+            .catch((reason) => {
                 // Didn't get clients info
                 console.warn(reason)
                 // Go ahead with confirmation modal with `null` as clientsCount

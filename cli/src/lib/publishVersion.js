@@ -3,7 +3,7 @@ const FormData = require('form-data')
 const fs = require('fs-extra')
 const { createClient } = require('../lib/httpClient')
 
-const constructUploadUrl = appId => `/api/v1/apps/${appId}/versions`
+const constructUploadUrl = (appId) => `/api/v1/apps/${appId}/versions`
 
 const dumpHttpError = (message, response) => {
     if (!response) {

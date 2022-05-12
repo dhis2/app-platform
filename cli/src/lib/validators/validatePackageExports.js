@@ -28,7 +28,7 @@ const checkField = (field, value, expectedValue) => {
     if (Array.isArray(expectedValue) && !expectedValue.includes(value)) {
         reporter.warn(
             `Invalid "${field}" field in package.json, expected ${expectedValue
-                .map(option => `"${option}"`)
+                .map((option) => `"${option}"`)
                 .join(' or ')} (got "${value}")`
         )
         return false

@@ -23,13 +23,13 @@ export const ServerVersionProvider = ({
             return
         }
 
-        setState(state => (state.loading ? state : { loading: true }))
+        setState((state) => (state.loading ? state : { loading: true }))
         const request = get(`${url}/api/system/info`)
         request
-            .then(systemInfo => {
+            .then((systemInfo) => {
                 setState({ loading: false, systemInfo })
             })
-            .catch(e => {
+            .catch((e) => {
                 setState({ loading: false, error: e })
             })
 

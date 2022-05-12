@@ -10,7 +10,7 @@ function escapeForRegex(string) {
  * @param {Object} config
  */
 function stringifyPatterns(patternsList) {
-    const stringsList = patternsList.map(pattern => {
+    const stringsList = patternsList.map((pattern) => {
         if (typeof pattern === 'string') {
             return escapeForRegex(pattern)
         } else if (pattern instanceof RegExp) {
