@@ -1,9 +1,9 @@
-import { swMsgs } from '../lib/constants'
+import { swMsgs } from '../lib/constants.js'
 import {
     deleteSectionsDB,
     openSectionsDB,
     SECTIONS_STORE,
-} from '../lib/sections-db'
+} from '../lib/sections-db.js'
 
 const CACHE_KEEP_LIST = ['other-assets', 'app-shell']
 // '[]' Fallback prevents error when switching from pwa enabled to disabled

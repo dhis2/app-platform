@@ -5,13 +5,13 @@ import {
     StaleWhileRevalidate,
     Strategy,
 } from 'workbox-strategies'
-import { swMsgs } from '../lib/constants'
+import { swMsgs } from '../lib/constants.js'
 import {
     startRecording,
     completeRecording,
     handleRecordedRequest,
     shouldRequestBeRecorded,
-} from './recording-mode'
+} from './recording-mode.js'
 import {
     urlMeetsAppShellCachingCriteria,
     createDB,
@@ -19,7 +19,7 @@ import {
     setUpKillSwitchServiceWorker,
     getClientsInfo,
     claimClients,
-} from './utils'
+} from './utils.js'
 
 export function setUpServiceWorker() {
     const pwaEnabled = process.env.REACT_APP_DHIS2_APP_PWA_ENABLED === 'true'

@@ -1,7 +1,7 @@
 import EventEmitter from 'events'
-import { swMsgs } from '../lib/constants'
-import { register, unregister, checkForUpdates } from '../lib/registration'
-import { openSectionsDB, SECTIONS_STORE } from '../lib/sections-db'
+import { swMsgs } from '../lib/constants.js'
+import { register, unregister, checkForUpdates } from '../lib/registration.js'
+import { openSectionsDB, SECTIONS_STORE } from '../lib/sections-db.js'
 
 /** Helper to simplify SW message sending */
 function swMessage(type, payload) {

@@ -1,5 +1,5 @@
-import { swMsgs } from '../lib/constants'
-import { openSectionsDB, SECTIONS_STORE } from '../lib/sections-db'
+import { swMsgs } from '../lib/constants.js'
+import { openSectionsDB, SECTIONS_STORE } from '../lib/sections-db.js'
 
 // '[]' Fallback prevents error when switching from pwa enabled to disabled
 const CACHEABLE_SECTION_URL_FILTER_PATTERNS = JSON.parse(

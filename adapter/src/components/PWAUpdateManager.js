@@ -9,7 +9,7 @@ import {
 } from '@dhis2/ui'
 import PropTypes from 'prop-types'
 import React, { useState, useEffect } from 'react'
-import i18n from '../locales'
+import i18n from '../locales/index.js'
 
 function ConfirmReloadModal({ clientsCount, onCancel, onConfirm }) {
     return (

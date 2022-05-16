@@ -1,6 +1,6 @@
 import React from 'react'
 import classes from './App.module.css'
-import SectionWrapper from './components/SectionWrapper'
+import SectionWrapper from './components/SectionWrapper.js'
 
 const MyApp = () => (
     <div className={classes.container}>

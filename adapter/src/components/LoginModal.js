@@ -7,8 +7,8 @@ import {
     InputField,
 } from '@dhis2/ui'
 import React, { useState } from 'react'
-import i18n from '../locales'
-import { post } from '../utils/api'
+import i18n from '../locales/index.js'
+import { post } from '../utils/api.js'
 
 const staticUrl = process.env.REACT_APP_DHIS2_BASE_URL
 
