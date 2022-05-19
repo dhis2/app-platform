@@ -36,9 +36,9 @@ export const ServerVersionProvider = ({
             )
             // try getting URL from IndexedDB
             getBaseUrlByAppName(appName)
-                .then(dbEntry => {
+                .then(baseUrlFromDB => {
                     // If still no URL found, set error to show login modal
-                    if (!dbEntry) {
+                    if (!baseUrlFromDB) {
                         setBaseUrlState({
                             loading: false,
                             error: new Error('No url specified'),
@@ -48,7 +48,7 @@ export const ServerVersionProvider = ({
                     // Otherwise, set baseUrl in state
                     setBaseUrlState({
                         loading: false,
-                        baseUrl: dbEntry.baseUrl,
+                        baseUrl: baseUrlFromDB,
                     })
                 })
                 .catch(err => {
