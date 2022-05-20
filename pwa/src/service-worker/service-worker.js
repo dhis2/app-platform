@@ -6,11 +6,13 @@ import {
     Strategy,
 } from 'workbox-strategies'
 import { swMsgs } from '../lib/constants'
+import { onlineStatusUpdatesPlugin, initOnlineStatus } from './online-status'
 import {
     startRecording,
     completeRecording,
     handleRecordedRequest,
     shouldRequestBeRecorded,
+    initClientRecordingStates,
 } from './recording-mode'
 import {
     urlMeetsAppShellCachingCriteria,
@@ -38,9 +40,8 @@ export function setUpServiceWorker() {
 
     // Globals (Note: global state resets each time SW goes idle)
 
-    // Tracks recording states for multiple clients to handle multiple windows
-    // recording simultaneously
-    self.clientRecordingStates = {}
+    initClientRecordingStates()
+    initOnlineStatus()
 
     // Local constants
 
@@ -144,13 +145,19 @@ export function setUpServiceWorker() {
             PRODUCTION_ENV &&
             urlMeetsAppShellCachingCriteria(url) &&
             fileExtensionRegexp.test(url.pathname),
-        new StaleWhileRevalidate({ cacheName: 'other-assets' })
+        new StaleWhileRevalidate({
+            cacheName: 'other-assets',
+            plugins: [onlineStatusUpdatesPlugin],
+        })
     )
 
     // Network-first caching by default
     registerRoute(
         ({ url }) => urlMeetsAppShellCachingCriteria(url),
-        new NetworkFirst({ cacheName: 'app-shell' })
+        new NetworkFirst({
+            cacheName: 'app-shell',
+            plugins: [onlineStatusUpdatesPlugin],
+        })
     )
 
     // Strategy for all other requests: try cache if network fails,
@@ -171,7 +178,9 @@ export function setUpServiceWorker() {
         }
     }
     // Use fallback strategy as default
-    setDefaultHandler(new NetworkAndTryCache())
+    setDefaultHandler(
+        new NetworkAndTryCache({ plugins: [onlineStatusUpdatesPlugin] })
+    )
 
     // Service Worker event handlers
 

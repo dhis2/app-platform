@@ -9,4 +9,5 @@ export const swMsgs = Object.freeze({
     confirmRecordingCompletion: 'CONFIRM_RECORDING_COMPLETION',
     completeRecording: 'COMPLETE_RECORDING',
     recordingCompleted: 'RECORDING_COMPLETED',
+    onlineStatusUpdate: 'ONLINE_STATUS_UPDATE',
 })
