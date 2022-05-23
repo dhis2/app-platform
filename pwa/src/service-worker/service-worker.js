@@ -6,7 +6,10 @@ import {
     Strategy,
 } from 'workbox-strategies'
 import { swMsgs } from '../lib/constants'
-import { onlineStatusUpdatesPlugin, initOnlineStatus } from './online-status'
+import {
+    dhis2ConnectionStatusPlugin,
+    initDhis2ConnectionStatus,
+} from './dhis2-connection-status'
 import {
     startRecording,
     completeRecording,
@@ -41,7 +44,7 @@ export function setUpServiceWorker() {
     // Globals (Note: global state resets each time SW goes idle)
 
     initClientRecordingStates()
-    initOnlineStatus()
+    initDhis2ConnectionStatus()
 
     // Local constants
 
@@ -136,7 +139,7 @@ export function setUpServiceWorker() {
     // Handling routing: https://developers.google.com/web/tools/workbox/modules/workbox-routing#matching_and_handling_in_routes
     registerRoute(
         shouldRequestBeRecorded,
-        new RecordingMode({ plugins: [onlineStatusUpdatesPlugin] })
+        new RecordingMode({ plugins: [dhis2ConnectionStatusPlugin] })
     )
 
     // If not recording, fall through to default caching strategies for app
@@ -150,7 +153,7 @@ export function setUpServiceWorker() {
             fileExtensionRegexp.test(url.pathname),
         new StaleWhileRevalidate({
             cacheName: 'other-assets',
-            plugins: [onlineStatusUpdatesPlugin],
+            plugins: [dhis2ConnectionStatusPlugin],
         })
     )
 
@@ -159,7 +162,7 @@ export function setUpServiceWorker() {
         ({ url }) => urlMeetsAppShellCachingCriteria(url),
         new NetworkFirst({
             cacheName: 'app-shell',
-            plugins: [onlineStatusUpdatesPlugin],
+            plugins: [dhis2ConnectionStatusPlugin],
         })
     )
 
@@ -182,7 +185,7 @@ export function setUpServiceWorker() {
     }
     // Use fallback strategy as default
     setDefaultHandler(
-        new NetworkAndTryCache({ plugins: [onlineStatusUpdatesPlugin] })
+        new NetworkAndTryCache({ plugins: [dhis2ConnectionStatusPlugin] })
     )
 
     // Service Worker event handlers

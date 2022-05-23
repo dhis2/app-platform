@@ -5,8 +5,8 @@ import { swMsgs } from '../lib/constants.js'
  * Tracks connection to the DHIS2 server based on fetch successes or failures.
  * Starts as null because it can't be determined until a request is sent
  */
-export function initOnlineStatus() {
-    self.isOnline = null
+export function initDhis2ConnectionStatus() {
+    self.isConnectedToDhis2 = null
 
     // base url is only set as an env var in production.
     // in dev/standalone env, this may be undefined,
@@ -24,28 +24,31 @@ export function initOnlineStatus() {
     }
 }
 
-export async function updateOnlineStatus(isOnline) {
+export async function updateDhis2ConnectionStatus(isConnectedToDhis2) {
     // todo: remove
-    console.log('in update', { isOnline, oldIsOnline: self.isOnline })
+    console.log('in update', {
+        isConnectedToDhis2,
+        oldIsConnectedToDhis2: self.isConnectedToDhis2,
+    })
 
     // todo: avoid spamming duplicate status updates
-    const hasOnlineStatusChanged = isOnline !== self.isOnline
-    if (!hasOnlineStatusChanged) {
+    const hasStatusChanged = isConnectedToDhis2 !== self.isConnectedToDhis2
+    if (!hasStatusChanged) {
         // return
     }
 
-    self.isOnline = isOnline
+    self.isConnectedToDhis2 = isConnectedToDhis2
 
     const clients = await self.clients.matchAll({ type: 'window' })
     clients.forEach(client =>
         client.postMessage({
-            type: swMsgs.onlineStatusUpdate,
-            payload: { isOnline },
+            type: swMsgs.dhis2ConnectionStatusUpdate,
+            payload: { isConnectedToDhis2 },
         })
     )
 }
 
-async function shouldUpdateOnlineStatus(request) {
+async function shouldUpdateDhis2ConnectionStatus(request) {
     // If dhis2BaseUrl isn't set, try getting it from IDB
     if (!self.dhis2BaseUrl) {
         const baseUrl = await getBaseUrlByAppName(
@@ -69,7 +72,7 @@ async function shouldUpdateOnlineStatus(request) {
  * A plugin to hook into lifecycle events in workbox strategies
  * https://developer.chrome.com/docs/workbox/using-plugins/
  */
-export const onlineStatusUpdatesPlugin = {
+export const dhis2ConnectionStatusPlugin = {
     // todo: remove console logs
     fetchDidFail: async ({ request, error }) => {
         console.log('fetch did FAIL', {
@@ -78,8 +81,8 @@ export const onlineStatusUpdatesPlugin = {
             baseUrl: self.dhis2BaseUrl,
         })
 
-        if (await shouldUpdateOnlineStatus(request)) {
-            updateOnlineStatus(false)
+        if (await shouldUpdateDhis2ConnectionStatus(request)) {
+            updateDhis2ConnectionStatus(false)
         }
     },
     fetchDidSucceed: async ({ request, response }) => {
@@ -90,8 +93,8 @@ export const onlineStatusUpdatesPlugin = {
             env: process.env,
         })
 
-        if (await shouldUpdateOnlineStatus(request)) {
-            updateOnlineStatus(true)
+        if (await shouldUpdateDhis2ConnectionStatus(request)) {
+            updateDhis2ConnectionStatus(true)
         }
         return response
     },
