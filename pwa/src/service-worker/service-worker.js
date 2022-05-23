@@ -10,9 +10,9 @@ import { onlineStatusUpdatesPlugin, initOnlineStatus } from './online-status'
 import {
     startRecording,
     completeRecording,
-    handleRecordedRequest,
     shouldRequestBeRecorded,
     initClientRecordingStates,
+    RecordingMode,
 } from './recording-mode'
 import {
     urlMeetsAppShellCachingCriteria,
@@ -134,7 +134,10 @@ export function setUpServiceWorker() {
 
     // Request handler during recording mode: ALL requests are cached
     // Handling routing: https://developers.google.com/web/tools/workbox/modules/workbox-routing#matching_and_handling_in_routes
-    registerRoute(shouldRequestBeRecorded, handleRecordedRequest)
+    registerRoute(
+        shouldRequestBeRecorded,
+        new RecordingMode({ plugins: [onlineStatusUpdatesPlugin] })
+    )
 
     // If not recording, fall through to default caching strategies for app
     // shell:

@@ -1,3 +1,4 @@
+import { Strategy } from 'workbox-strategies'
 import { swMsgs } from '../lib/constants'
 import { openSectionsDB, SECTIONS_STORE } from '../lib/sections-db'
 
@@ -85,19 +86,25 @@ export function shouldRequestBeRecorded({ url, event }) {
 }
 
 /** Request handler during recording mode */
-export function handleRecordedRequest({ request, event }) {
-    const recordingState = self.clientRecordingStates[event.clientId]
+export class RecordingMode extends Strategy {
+    _handle(request, handler) {
+        const { event } = handler
+        const recordingState = self.clientRecordingStates[event.clientId]
 
-    clearTimeout(recordingState.recordingTimeout)
-    recordingState.pendingRequests.add(request)
+        clearTimeout(recordingState.recordingTimeout)
+        recordingState.pendingRequests.add(request)
 
-    fetch(request)
-        .then(response => {
-            return handleRecordedResponse(request, response, event.clientId)
-        })
-        .catch(error => {
-            stopRecording(error, event.clientId)
-        })
+        return handler
+            .fetch(request)
+            .then(response => {
+                return handleRecordedResponse(request, response, event.clientId)
+            })
+            .catch(error => {
+                stopRecording(error, event.clientId)
+                // trigger 'fetchDidFail' callback
+                throw error
+            })
+    }
 }
 
 /** Response handler during recording mode */
