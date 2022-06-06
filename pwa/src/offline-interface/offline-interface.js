@@ -112,6 +112,17 @@ export class OfflineInterface {
     }
 
     /**
+     * @param {Object} params
+     * @param {Function} params.onChange - Called on status updates with argument { isConnectedToDhis2: bool }
+     * @returns {Function} - An unsubscribe function
+     */
+    subscribeToDhis2ConnectionStatus({ onChange }) {
+        this.offlineEvents.on(swMsgs.dhis2ConnectionStatusUpdate, onChange)
+        return () =>
+            this.offlineEvents.off(swMsgs.dhis2ConnectionStatusUpdate, onChange)
+    }
+
+    /**
      * Starts a recording session for a cacheable section. Returns a promise
      * that resolves if the SW message is successfully sent or rejects if
      * there's an error, which can happen if a service worker is not registered.
