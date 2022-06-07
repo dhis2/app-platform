@@ -1,5 +1,5 @@
 import { Provider } from '@dhis2/app-runtime'
-import { getBaseUrlByAppName } from '@dhis2/pwa/src/lib/base-url-db'
+import { getBaseUrlByAppName, setBaseUrlByAppName } from '@dhis2/pwa'
 import PropTypes from 'prop-types'
 import React, { useEffect, useState } from 'react'
 import { get } from '../utils/api.js'
@@ -37,18 +37,33 @@ export const ServerVersionProvider = ({
             // try getting URL from IndexedDB
             getBaseUrlByAppName(appName)
                 .then(baseUrlFromDB => {
-                    // If still no URL found, set error to show login modal
-                    if (!baseUrlFromDB) {
+                    if (baseUrlFromDB) {
+                        // Set baseUrl in state if found in DB
                         setBaseUrlState({
                             loading: false,
-                            error: new Error('No url specified'),
+                            baseUrl: baseUrlFromDB,
                         })
                         return
                     }
-                    // Otherwise, set baseUrl in state
+                    // If no URL found in DB, try localStorage
+                    // TODO: deprecate
+                    const baseUrlFromLocalStorage =
+                        window.localStorage.DHIS2_BASE_URL
+                    if (baseUrlFromLocalStorage) {
+                        setBaseUrlState({
+                            loading: false,
+                            baseUrl: baseUrlFromLocalStorage,
+                        })
+                        // Also set it in IndexedDB for SW to access
+                        return setBaseUrlByAppName({
+                            appName,
+                            baseUrl: baseUrlFromLocalStorage,
+                        })
+                    }
+                    // If no base URL found in either, set error to show login modal
                     setBaseUrlState({
                         loading: false,
-                        baseUrl: baseUrlFromDB,
+                        error: new Error('No url specified'),
                     })
                 })
                 .catch(err => {
