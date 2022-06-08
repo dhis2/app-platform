@@ -1,3 +1,10 @@
+## [9.0.1](https://github.com/dhis2/app-platform/compare/v9.0.0...v9.0.1) (2022-06-08)
+
+
+### Bug Fixes
+
+* **proxy:** ignore nulls in transformJsonResponse ([#719](https://github.com/dhis2/app-platform/issues/719)) ([b72dd79](https://github.com/dhis2/app-platform/commit/b72dd7908090f0d7b321d40e42a7f65a17c91438))
+
 # [9.0.0](https://github.com/dhis2/app-platform/compare/v8.3.3...v9.0.0) (2022-03-14)
 
 
