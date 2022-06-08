@@ -2,8 +2,8 @@ import { checkForSWUpdateAndReload, OfflineInterface } from '@dhis2/pwa'
 import PropTypes from 'prop-types'
 import React from 'react'
 import { AppWrapper } from './components/AppWrapper.js'
-import { ErrorBoundary } from './components/ErrorBoundary'
-import { ServerVersionProvider } from './components/ServerVersionProvider'
+import { ErrorBoundary } from './components/ErrorBoundary.js'
+import { ServerVersionProvider } from './components/ServerVersionProvider.js'
 
 const offlineInterface = new OfflineInterface()
 

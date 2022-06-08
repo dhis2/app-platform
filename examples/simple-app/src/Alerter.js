@@ -7,7 +7,7 @@ export const Alerter = () => {
     const [critical, setCritical] = useState(false)
 
     const { show, hide } = useAlert(
-        str => str,
+        (str) => str,
         () => ({ critical })
     )
 

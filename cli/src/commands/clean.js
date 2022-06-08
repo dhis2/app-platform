@@ -8,7 +8,7 @@ const handler = async ({ cwd }) => {
     const dirsToClean = [paths.d2, paths.buildOutput]
 
     reporter.info('Cleaning intermediate directories and build output...')
-    dirsToClean.forEach(dir => {
+    dirsToClean.forEach((dir) => {
         reporter.print(' * ' + dir)
         fs.removeSync(dir)
     })

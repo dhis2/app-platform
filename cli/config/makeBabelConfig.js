@@ -1,7 +1,7 @@
 const browserTargets = require('./.browserlistrc')
 const jestTargets = { node: 'current' }
 
-const getBabelModuleType = moduleType => {
+const getBabelModuleType = (moduleType) => {
     switch (moduleType) {
         case 'cjs':
         case 'commonjs':

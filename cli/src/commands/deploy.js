@@ -25,7 +25,7 @@ const dumpHttpError = (message, response) => {
     reporter.debugErr('Error details', response.data)
 }
 
-const promptForDhis2Config = async params => {
+const promptForDhis2Config = async (params) => {
     if (
         process.env.CI &&
         (!params.baseUrl || !params.username || !params.password)
@@ -36,7 +36,7 @@ const promptForDhis2Config = async params => {
         )
     }
 
-    const isValidUrl = input =>
+    const isValidUrl = (input) =>
         input && input.length && input.match(/^https?:\/\/[^/.]+/)
 
     const responses = await inquirer.prompt([
@@ -45,7 +45,7 @@ const promptForDhis2Config = async params => {
             name: 'baseUrl',
             message: 'DHIS2 instance URL:',
             when: () => !params.baseUrl,
-            validate: input =>
+            validate: (input) =>
                 isValidUrl(input)
                     ? true
                     : 'Please enter a valid URL, it must start with http:// or https://',

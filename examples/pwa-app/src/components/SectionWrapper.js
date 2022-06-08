@@ -30,7 +30,7 @@ function Controls({ id }) {
 
     function handleRecording() {
         const onStarted = () => {}
-        const onError = err =>
+        const onError = (err) =>
             show({
                 message: `Error during recording: ${err.message}`,
                 props: { critical: true },

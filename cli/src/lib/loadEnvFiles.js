@@ -19,7 +19,7 @@ module.exports = (paths, NODE_ENV) => {
     dotenvFiles
         .filter(Boolean)
         .filter(fs.existsSync)
-        .forEach(dotenvFile => {
+        .forEach((dotenvFile) => {
             dotenvExpand(
                 dotenv.config({
                     path: dotenvFile,

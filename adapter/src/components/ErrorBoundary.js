@@ -2,8 +2,8 @@ import i18n from '@dhis2/d2-i18n'
 import cx from 'classnames'
 import PropTypes from 'prop-types'
 import React, { Component } from 'react'
-import buttonStyles from './styles/Button.style'
-import styles from './styles/ErrorBoundary.style'
+import buttonStyles from './styles/Button.style.js'
+import styles from './styles/ErrorBoundary.style.js'
 
 // In order to avoid using @dhis2/ui components in the error boundary - as anything
 // that breaks within it will not be caught properly - we define a component

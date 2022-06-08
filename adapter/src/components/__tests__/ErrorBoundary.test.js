@@ -1,6 +1,6 @@
 import { shallow } from 'enzyme'
 import React from 'react'
-import { ErrorBoundary } from '../ErrorBoundary'
+import { ErrorBoundary } from '../ErrorBoundary.js'
 
 const Something = () => {
     // Placeholder

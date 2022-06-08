@@ -21,7 +21,7 @@ const { injectManifest } = require('workbox-build')
 
 function logManifestOutput({ count, filePaths, size, warnings }) {
     reporter.debug('The service worker precache manifest was written to:')
-    filePaths.forEach(filePath => reporter.debug(' * ', filePath))
+    filePaths.forEach((filePath) => reporter.debug(' * ', filePath))
     reporter.debug(
         `The service worker will precache ${count} URLs, totaling ${size} bytes.`
     )
