@@ -20,6 +20,28 @@ describe('transformJsonResponse', () => {
             'http://localhost:8080/api/endpoint'
         )
     })
+
+    it('should not convert nulls to {}', () => {
+        const transformedResponse = transformJsonResponse(
+            {
+                a: {
+                    b: {
+                        c: 'https://play.dhis2.org/dev/api/endpoint',
+                    },
+                    d: null
+                },
+            },
+            {
+                target: 'https://play.dhis2.org/dev',
+                baseUrl: 'http://localhost:8080',
+            }
+        )
+
+        expect(transformedResponse.a.b.c).toBe(
+            'http://localhost:8080/api/endpoint'
+        )
+        expect(transformedResponse.a.d).toBe(null)
+    })
 })
 
 describe('rewriteLocation', () => {
