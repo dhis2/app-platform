@@ -28,7 +28,7 @@ describe('transformJsonResponse', () => {
                     b: {
                         c: 'https://play.dhis2.org/dev/api/endpoint',
                     },
-                    d: null
+                    d: null,
                 },
             },
             {

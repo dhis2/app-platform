@@ -54,7 +54,7 @@ const transformJsonResponse = (res, { target, baseUrl }) => {
                     transformJsonResponse(r, { target, baseUrl })
                 )
             }
-            if(res === null) {
+            if (res === null) {
                 return res
             }
             return _.transform(
