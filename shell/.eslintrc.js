@@ -1,16 +1,16 @@
 const fs = require('fs')
 const path = require('path')
 
-const eslintRunningLocally = process.cwd() === __dirname
+// This should only exist when in development!
+const rootConfigPath = path.resolve(__dirname, '../.eslintrc.js')
 
-const delegateEslintConfig = path.resolve(__dirname, '../.eslintrc.js') // This should only exist when in development!
-const shouldDelegate =
-    !eslintRunningLocally && fs.existsSync(delegateEslintConfig)
+const isRunningHere = process.cwd() === __dirname
+const hasRootConfig = fs.existsSync(rootConfigPath)
+const isDevelopment = !isRunningHere && hasRootConfig
 
-const extendsList = shouldDelegate
-    ? [delegateEslintConfig, 'react-app']
-    : 'react-app'
 module.exports = {
-    ignorePatterns: shouldDelegate ? [] : ['src/D2App/*'],
-    extends: extendsList,
+    // Ignore app code that the dev has no control over
+    ignorePatterns: isDevelopment ? [] : ['src/D2App/*'],
+    // Use local config for developing this library, react-app preset for linting app code
+    extends: isDevelopment ? rootConfigPath : 'react-app',
 }
