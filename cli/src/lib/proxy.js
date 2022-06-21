@@ -4,10 +4,10 @@ const httpProxy = require('http-proxy')
 const _ = require('lodash')
 const transformProxyResponse = require('node-http-proxy-json')
 
-const stripCookieSecure = cookie => {
+const stripCookieSecure = (cookie) => {
     return cookie
         .split(';')
-        .filter(v => v.trim().toLowerCase() !== 'secure')
+        .filter((v) => v.trim().toLowerCase() !== 'secure')
         .join('; ')
 }
 
@@ -32,7 +32,7 @@ const rewriteLocation = ({ location, target, baseUrl }) => {
     return location
 }
 
-const isUrl = string => {
+const isUrl = (string) => {
     try {
         const { protocol } = new URL(string)
         return protocol === 'http:' || protocol === 'https:'
@@ -50,9 +50,12 @@ const transformJsonResponse = (res, { target, baseUrl }) => {
             return res
         case 'object':
             if (Array.isArray(res)) {
-                return res.map(r =>
+                return res.map((r) =>
                     transformJsonResponse(r, { target, baseUrl })
                 )
+            }
+            if (res === null) {
+                return res
             }
             return _.transform(
                 res,
@@ -104,7 +107,7 @@ exports = module.exports = ({ target, baseUrl, port, shellPort }) => {
             proxyRes.headers['content-type'] &&
             proxyRes.headers['content-type'].includes('application/json')
         ) {
-            transformProxyResponse(res, proxyRes, body => {
+            transformProxyResponse(res, proxyRes, (body) => {
                 if (body) {
                     return transformJsonResponse(body, {
                         target,
@@ -116,7 +119,7 @@ exports = module.exports = ({ target, baseUrl, port, shellPort }) => {
         }
     })
 
-    proxyServer.on('error', error => {
+    proxyServer.on('error', (error) => {
         reporter.warn(error)
     })
 

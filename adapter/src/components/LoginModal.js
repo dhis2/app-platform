@@ -7,8 +7,8 @@ import {
     InputField,
 } from '@dhis2/ui'
 import React, { useState } from 'react'
-import i18n from '../locales'
-import { post } from '../utils/api'
+import i18n from '../locales/index.js'
+import { post } from '../utils/api.js'
 
 const staticUrl = process.env.REACT_APP_DHIS2_BASE_URL
 
@@ -20,9 +20,9 @@ export const LoginModal = () => {
     const [password, setPassword] = useState('')
     const [isDirty, setIsDirty] = useState(false)
 
-    const isValid = val => val && val.length >= 2
+    const isValid = (val) => val && val.length >= 2
 
-    const onSubmit = async e => {
+    const onSubmit = async (e) => {
         e.preventDefault()
         setIsDirty(true)
         if (isValid(server) && isValid(username) && isValid(password)) {
@@ -61,7 +61,7 @@ export const LoginModal = () => {
                             name="server"
                             type="text"
                             value={server}
-                            onChange={input => setServer(input.value)}
+                            onChange={(input) => setServer(input.value)}
                         />
                     )}
 
@@ -72,7 +72,7 @@ export const LoginModal = () => {
                         name="j_username"
                         type="text"
                         value={username}
-                        onChange={input => setUsername(input.value)}
+                        onChange={(input) => setUsername(input.value)}
                     />
 
                     <InputField
@@ -82,7 +82,7 @@ export const LoginModal = () => {
                         name="j_password"
                         type="password"
                         value={password}
-                        onChange={input => setPassword(input.value)}
+                        onChange={(input) => setPassword(input.value)}
                     />
                 </ModalContent>
 

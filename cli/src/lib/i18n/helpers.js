@@ -4,7 +4,7 @@ const fs = require('fs-extra')
 
 const supportedExtensions = ['.js', '.jsx', '.ts', '.tsx']
 
-module.exports.checkDirectoryExists = dir => {
+module.exports.checkDirectoryExists = (dir) => {
     const dirPath = path.normalize(dir)
     try {
         const stat = fs.lstatSync(dirPath)
@@ -29,7 +29,7 @@ module.exports.arrayEqual = (arr1, arr2) =>
 function walkDirectory(dirPath, files = []) {
     const list = fs.readdirSync(dirPath)
 
-    list.forEach(fileName => {
+    list.forEach((fileName) => {
         const filePath = path.join(dirPath, fileName)
         const stat = fs.lstatSync(filePath)
 

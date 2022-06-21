@@ -35,7 +35,7 @@ exports.verifyEntrypoints = ({
         return
     }
 
-    const verifyLibraryEntrypoint = entrypoint => {
+    const verifyLibraryEntrypoint = (entrypoint) => {
         switch (typeof entrypoint) {
             case 'string':
                 verifyEntrypoint({
