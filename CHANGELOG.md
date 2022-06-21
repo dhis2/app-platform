@@ -1,3 +1,10 @@
+# [9.1.0-beta.1](https://github.com/dhis2/app-platform/compare/v9.0.2-beta.1...v9.1.0-beta.1) (2022-06-21)
+
+
+### Features
+
+* update react-scripts ([#721](https://github.com/dhis2/app-platform/issues/721)) ([dc1c5cb](https://github.com/dhis2/app-platform/commit/dc1c5cb3ab0efb7bb074dd6fb581bf865bdb980e))
+
 ## [9.0.2-beta.1](https://github.com/dhis2/app-platform/compare/v9.0.1...v9.0.2-beta.1) (2022-06-21)
 
 
