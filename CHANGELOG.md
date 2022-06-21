@@ -1,9 +1,29 @@
-## [8.3.3-beta.1](https://github.com/dhis2/app-platform/compare/v8.3.2...v8.3.3-beta.1) (2022-01-13)
+## [9.0.1](https://github.com/dhis2/app-platform/compare/v9.0.0...v9.0.1) (2022-06-08)
 
 
 ### Bug Fixes
 
-* remove lint step from publish step requirements ([#695](https://github.com/dhis2/app-platform/issues/695)) ([a04f8f7](https://github.com/dhis2/app-platform/commit/a04f8f715023fdcb568990fe478f19fb11e54fde))
+* **proxy:** ignore nulls in transformJsonResponse ([#719](https://github.com/dhis2/app-platform/issues/719)) ([b72dd79](https://github.com/dhis2/app-platform/commit/b72dd7908090f0d7b321d40e42a7f65a17c91438))
+
+# [9.0.0](https://github.com/dhis2/app-platform/compare/v8.3.3...v9.0.0) (2022-03-14)
+
+
+### chore
+
+* **app shell:** update @dhis2/ui to ^8 ([c16f3b1](https://github.com/dhis2/app-platform/commit/c16f3b170e3138e0a0109c342eeed5d000eece0d))
+
+
+### BREAKING CHANGES
+
+* **app shell:** To prevent issues with multiple ui versions, we bump
+the major version of the app-platform libraries as well
+
+## [8.3.3](https://github.com/dhis2/app-platform/compare/v8.3.2...v8.3.3) (2022-02-22)
+
+
+### Bug Fixes
+
+* **deps:** bump axios from 0.20.0 to 0.25.0 ([#698](https://github.com/dhis2/app-platform/issues/698)) ([77853c4](https://github.com/dhis2/app-platform/commit/77853c47a543f4a3147bdb167612b4efc30afcff))
 
 ## [8.3.2](https://github.com/dhis2/app-platform/compare/v8.3.1...v8.3.2) (2021-12-07)
 

@@ -10,7 +10,7 @@ describe('validateLockfile', () => {
         jest.clearAllMocks()
     })
 
-    const mockYarnLock = yarnLock => {
+    const mockYarnLock = (yarnLock) => {
         fs.readFileSync.mockReturnValue(yarnLock)
     }
 

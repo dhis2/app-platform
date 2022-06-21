@@ -7,7 +7,7 @@ const shellSource = path.dirname(
 )
 const shellAppDirname = 'src/D2App'
 
-const findYarnLock = base => {
+const findYarnLock = (base) => {
     if (base === '/') {
         return null
     }

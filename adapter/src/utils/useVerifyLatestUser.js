@@ -23,7 +23,7 @@ export function useVerifyLatestUser() {
     const { pwaEnabled } = useConfig()
     const [finished, setFinished] = useState(false)
     const { loading, error } = useDataQuery(USER_QUERY, {
-        onComplete: async data => {
+        onComplete: async (data) => {
             const latestUserId = localStorage.getItem(LATEST_USER_KEY)
             const currentUserId = data.user.id
             if (currentUserId !== latestUserId) {

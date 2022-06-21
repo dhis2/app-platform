@@ -6,21 +6,21 @@ const makePaths = require('../lib/paths')
 
 const ignorePatterns = ['node_modules', '.d2', 'src/locales', 'build']
 
-const parseGitignore = gitignoreFile => {
+const parseGitignore = (gitignoreFile) => {
     const newSection = { name: 'DHIS2 Platform', patterns: [] }
     if (fs.existsSync(gitignoreFile)) {
         const content = fs.readFileSync(gitignoreFile)
         const parsed = gitignore.parse(content)
 
         const existingSection = parsed.sections.filter(
-            section => section.name === newSection.name
+            (section) => section.name === newSection.name
         )[0]
 
         if (existingSection) {
             newSection.patterns = existingSection.patterns
         }
 
-        ignorePatterns.forEach(pattern => {
+        ignorePatterns.forEach((pattern) => {
             if (!parsed.patterns.includes(pattern)) {
                 newSection.patterns.push(pattern)
             }
@@ -36,9 +36,9 @@ const parseGitignore = gitignoreFile => {
 
         const defaultSection = {
             name: null,
-            patterns: parsed.patterns.filter(pattern => {
+            patterns: parsed.patterns.filter((pattern) => {
                 if (
-                    parsed.sections.some(section =>
+                    parsed.sections.some((section) =>
                         section.patterns.includes(pattern)
                     )
                 ) {
@@ -57,7 +57,7 @@ const parseGitignore = gitignoreFile => {
 }
 
 const writeGitignore = (gitignoreFile, sections) => {
-    const format = section => {
+    const format = (section) => {
         if (section.name === null && section.patterns.length) {
             return section.patterns.join('\n') + '\n\n'
         }

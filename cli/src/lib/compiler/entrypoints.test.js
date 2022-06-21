@@ -3,7 +3,7 @@ const { verifyEntrypoints } = require('./entrypoints.js')
 
 jest.mock('@dhis2/cli-helpers-engine', () => ({
     chalk: {
-        bold: string => string,
+        bold: (string) => string,
     },
     reporter: {
         error: jest.fn(),
@@ -96,7 +96,7 @@ describe('verifyEntrypoints', () => {
                 app: './src/SomeApp.js',
             },
         }
-        const resolveModule = jest.fn(path => {
+        const resolveModule = jest.fn((path) => {
             throw new Error(`Cannot find module '${path}'`)
         })
 
@@ -201,7 +201,7 @@ describe('verifyEntrypoints', () => {
                 lib: './src/index.js',
             },
         }
-        const resolveModule = jest.fn(path => {
+        const resolveModule = jest.fn((path) => {
             throw new Error(`Cannot find module '${path}'`)
         })
 

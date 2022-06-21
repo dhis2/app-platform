@@ -17,10 +17,10 @@ import React, { useState, useEffect } from 'react'
 const Alerts = () => {
     const alertManagerAlerts = useAlerts()
     const [alertStackAlerts, setAlertStackAlerts] = useState(alertManagerAlerts)
-    const removeAlertStackAlert = id =>
+    const removeAlertStackAlert = (id) =>
         setAlertStackAlerts(
             alertStackAlerts.filter(
-                alertStackAlert => alertStackAlert.id !== id
+                (alertStackAlert) => alertStackAlert.id !== id
             )
         )
 
@@ -42,7 +42,7 @@ const Alerts = () => {
                         onHidden={() => {
                             onHidden && onHidden()
                             removeAlertStackAlert(id)
-                            if (alertManagerAlerts.some(a => a.id === id)) {
+                            if (alertManagerAlerts.some((a) => a.id === id)) {
                                 remove()
                             }
                         }}

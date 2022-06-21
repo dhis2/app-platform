@@ -102,7 +102,7 @@ export async function checkForSWUpdateAndReload() {
 
     // 3. If updates are ready, wait for them, _then_ reload
     checkForUpdates({
-        onUpdate: reg => {
+        onUpdate: (reg) => {
             navigator.serviceWorker.oncontrollerchange = reload
             reg.waiting.postMessage({ type: 'SKIP_WAITING' })
         },
@@ -165,7 +165,7 @@ async function registerValidSW(swUrl /* config */) {
         // Will likely cause another refresh due to .oncontrollerchange event
         await unregister()
     }
-    navigator.serviceWorker.register(swUrl).catch(error => {
+    navigator.serviceWorker.register(swUrl).catch((error) => {
         console.error('Error during service worker registration:', error)
     })
 }
@@ -175,7 +175,7 @@ function checkValidSW(swUrl, config) {
     fetch(swUrl, {
         headers: { 'Service-Worker': 'script' },
     })
-        .then(response => {
+        .then((response) => {
             // Ensure service worker exists, and that we really are getting a JS file.
             const contentType = response.headers.get('content-type')
             if (
@@ -184,7 +184,7 @@ function checkValidSW(swUrl, config) {
                     contentType.indexOf('javascript') === -1)
             ) {
                 // No service worker found. Probably a different app. Reload the page.
-                navigator.serviceWorker.ready.then(registration => {
+                navigator.serviceWorker.ready.then((registration) => {
                     registration.unregister().then(() => {
                         window.location.reload()
                     })
@@ -217,10 +217,10 @@ function checkValidSW(swUrl, config) {
 export function unregister() {
     if ('serviceWorker' in navigator) {
         return navigator.serviceWorker.ready
-            .then(registration => {
+            .then((registration) => {
                 registration.unregister()
             })
-            .catch(error => {
+            .catch((error) => {
                 console.error(error.message)
             })
     }

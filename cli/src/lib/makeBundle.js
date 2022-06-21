@@ -35,7 +35,7 @@ module.exports = (inDir, outFile) => {
         const files = fs
             .readdirSync(inDir)
             .filter(
-                f => path.resolve(inDir, f) !== path.resolve(inDir, outFile)
+                (f) => path.resolve(inDir, f) !== path.resolve(inDir, outFile)
             )
 
         reporter.debug('Pack list', files)

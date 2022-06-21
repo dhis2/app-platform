@@ -8,7 +8,7 @@ const requiredConfigFields = {
     lib: ['name', 'version', 'entryPoints.lib'],
 }
 
-const parseAuthor = author => {
+const parseAuthor = (author) => {
     if (isPlainObject(author)) {
         return {
             name: author.name,
@@ -24,7 +24,7 @@ const parseAuthor = author => {
     return undefined
 }
 
-const validateConfig = config => {
+const validateConfig = (config) => {
     if (!requiredConfigFields[config.type]) {
         reporter.error(
             `Unknown type ${chalk.bold(config.type)} specified in d2.config.js.`
@@ -32,7 +32,7 @@ const validateConfig = config => {
         reporter.error(`\tValid types:`, Object.keys(requiredConfigFields))
         process.exit(1)
     }
-    requiredConfigFields[config.type].forEach(field => {
+    requiredConfigFields[config.type].forEach((field) => {
         if (!has(config, field)) {
             reporter.error(
                 `Required config field ${chalk.bold(
@@ -45,7 +45,7 @@ const validateConfig = config => {
     return true
 }
 
-const parseConfig = paths => {
+const parseConfig = (paths) => {
     try {
         let config = {}
         // if (!fs.existsSync(paths.config)) {

@@ -2,7 +2,7 @@ const { reporter } = require('@dhis2/cli-helpers-engine')
 
 const filterEnv = () =>
     Object.keys(process.env)
-        .filter(key => key.indexOf('DHIS2_') === 0)
+        .filter((key) => key.indexOf('DHIS2_') === 0)
         .reduce(
             (out, key) => ({
                 ...out,
@@ -11,7 +11,7 @@ const filterEnv = () =>
             {}
         )
 
-const prefixEnvForCRA = env =>
+const prefixEnvForCRA = (env) =>
     Object.keys(env).reduce(
         (out, key) => ({
             ...out,
@@ -20,7 +20,7 @@ const prefixEnvForCRA = env =>
         {}
     )
 
-const makeShellEnv = vars =>
+const makeShellEnv = (vars) =>
     Object.entries(vars).reduce(
         (out, [key, value]) => ({
             ...out,

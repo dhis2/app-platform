@@ -3,7 +3,7 @@ const currentShellVersion = require('@dhis2/app-shell/package.json').version
 const { reporter, chalk } = require('@dhis2/cli-helpers-engine')
 const fs = require('fs-extra')
 
-const getShellVersion = shellDir => {
+const getShellVersion = (shellDir) => {
     const shellPkg = path.join(shellDir, 'package.json')
     if (fs.existsSync(shellPkg)) {
         try {
@@ -58,7 +58,7 @@ const bootstrapShell = async (paths, { shell, force = false } = {}) => {
 
     await fs.copy(source, dest, {
         dereference: true,
-        filter: src =>
+        filter: (src) =>
             src.indexOf('node_modules', source.length) === -1 &&
             src.indexOf('.pnp', source.length) === -1 &&
             src.indexOf(paths.shellAppDirname) === -1,

@@ -13,8 +13,8 @@ self.addEventListener('activate', async () => {
     self.registration.unregister()
     // Delete all caches
     const keys = await self.caches.keys()
-    await Promise.all(keys.map(key => self.caches.delete(key)))
+    await Promise.all(keys.map((key) => self.caches.delete(key)))
     // Force refresh all windows
     const clients = await self.clients.matchAll({ type: 'window' })
-    clients.forEach(client => client.navigate(client.url))
+    clients.forEach((client) => client.navigate(client.url))
 })

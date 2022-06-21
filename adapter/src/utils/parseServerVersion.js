@@ -1,4 +1,4 @@
-export const parseServerVersion = versionString => {
+export const parseServerVersion = (versionString) => {
     const [mainVersion, tag] = versionString?.split('-') || []
     const [major, minor, patch] = mainVersion?.split('.') || []
 

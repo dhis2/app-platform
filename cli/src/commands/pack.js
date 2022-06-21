@@ -10,7 +10,7 @@ exports.command = 'pack [source]'
 
 exports.describe = 'Create a .zip archive of a built application'
 
-exports.builder = yargs =>
+exports.builder = (yargs) =>
     yargs
         .positional('source', {
             describe: 'The source directory to pack relative to cwd.',
@@ -39,7 +39,7 @@ exports.builder = yargs =>
             defaultDescription: '${config.version}',
         })
 
-exports.handler = async argv => {
+exports.handler = async (argv) => {
     const {
         cwd = process.cwd(),
         source,
