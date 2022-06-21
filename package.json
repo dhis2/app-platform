@@ -1,6 +1,6 @@
 {
     "name": "root",
-    "version": "9.0.1",
+    "version": "9.0.2-beta.1",
     "private": true,
     "repository": {
         "type": "git",

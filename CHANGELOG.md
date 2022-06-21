@@ -1,3 +1,10 @@
+## [9.0.2-beta.1](https://github.com/dhis2/app-platform/compare/v9.0.1...v9.0.2-beta.1) (2022-06-21)
+
+
+### Bug Fixes
+
+* remove lint step from publish step requirements ([#695](https://github.com/dhis2/app-platform/issues/695)) ([a04f8f7](https://github.com/dhis2/app-platform/commit/a04f8f715023fdcb568990fe478f19fb11e54fde))
+
 ## [9.0.1](https://github.com/dhis2/app-platform/compare/v9.0.0...v9.0.1) (2022-06-08)
 
 
