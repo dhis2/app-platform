@@ -1,6 +1,9 @@
 {
     "name": "@dhis2/pwa",
     "version": "9.1.0-beta.1",
+    "engines": {
+        "node": ">=14"
+    },
     "description": "",
     "license": "BSD-3-Clause",
     "publishConfig": {
