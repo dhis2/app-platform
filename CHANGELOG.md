@@ -1,3 +1,15 @@
+# [10.0.0-beta.1](https://github.com/dhis2/app-platform/compare/v9.1.0-beta.1...v10.0.0-beta.1) (2022-07-25)
+
+
+### chore
+
+* drop support for node 12 ([937e5e2](https://github.com/dhis2/app-platform/commit/937e5e2e3dac30af529594d03872b0ae53353882))
+
+
+### BREAKING CHANGES
+
+* dropped support for node 12. The platform now requires node 14+.
+
 # [9.1.0-beta.1](https://github.com/dhis2/app-platform/compare/v9.0.2-beta.1...v9.1.0-beta.1) (2022-06-21)
 
 

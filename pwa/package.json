@@ -1,6 +1,6 @@
 {
     "name": "@dhis2/pwa",
-    "version": "9.1.0-beta.1",
+    "version": "10.0.0-beta.1",
     "engines": {
         "node": ">=14"
     },
@@ -16,7 +16,7 @@
         "deploy": "d2-app-scripts deploy"
     },
     "devDependencies": {
-        "@dhis2/cli-app-scripts": "9.1.0-beta.1"
+        "@dhis2/cli-app-scripts": "10.0.0-beta.1"
     },
     "dependencies": {
         "idb": "^6.0.0",
