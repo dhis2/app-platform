@@ -1,3 +1,26 @@
+# [10.0.0](https://github.com/dhis2/app-platform/compare/v9.0.1...v10.0.0) (2022-07-26)
+
+
+### Bug Fixes
+
+* remove engines field from pwa and adapter ([c3878f2](https://github.com/dhis2/app-platform/commit/c3878f2955352667f9a1ca9c428d8ed0ff77c777))
+* remove lint step from publish step requirements ([#695](https://github.com/dhis2/app-platform/issues/695)) ([a04f8f7](https://github.com/dhis2/app-platform/commit/a04f8f715023fdcb568990fe478f19fb11e54fde))
+
+
+### chore
+
+* drop support for node 12 ([937e5e2](https://github.com/dhis2/app-platform/commit/937e5e2e3dac30af529594d03872b0ae53353882))
+
+
+### Features
+
+* update react-scripts ([#721](https://github.com/dhis2/app-platform/issues/721)) ([dc1c5cb](https://github.com/dhis2/app-platform/commit/dc1c5cb3ab0efb7bb074dd6fb581bf865bdb980e))
+
+
+### BREAKING CHANGES
+
+* dropped support for node 12. The platform now requires node 14+.
+
 # [10.0.0-beta.2](https://github.com/dhis2/app-platform/compare/v10.0.0-beta.1...v10.0.0-beta.2) (2022-07-26)
 
 
