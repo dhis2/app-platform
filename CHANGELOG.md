@@ -1,3 +1,10 @@
+# [10.0.0-beta.2](https://github.com/dhis2/app-platform/compare/v10.0.0-beta.1...v10.0.0-beta.2) (2022-07-26)
+
+
+### Bug Fixes
+
+* remove engines field from pwa and adapter ([c3878f2](https://github.com/dhis2/app-platform/commit/c3878f2955352667f9a1ca9c428d8ed0ff77c777))
+
 # [10.0.0-beta.1](https://github.com/dhis2/app-platform/compare/v9.1.0-beta.1...v10.0.0-beta.1) (2022-07-25)
 
 
