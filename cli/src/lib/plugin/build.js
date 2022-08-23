@@ -38,7 +38,7 @@ module.exports = async ({ paths }) => {
             if (stats.hasErrors()) {
                 reject(
                     new Error(
-                        info.errors.map(error => error.message).join('\n')
+                        info.errors.map((error) => error.message).join('\n')
                     )
                 )
                 return

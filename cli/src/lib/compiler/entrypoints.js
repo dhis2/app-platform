@@ -55,7 +55,7 @@ exports.verifyEntrypoints = ({
         throw new Error('Libraries must define a lib entrypoint')
     }
 
-    const verifyLibraryEntrypoint = entrypoint => {
+    const verifyLibraryEntrypoint = (entrypoint) => {
         switch (typeof entrypoint) {
             case 'string':
                 verifyEntrypoint({

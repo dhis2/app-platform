@@ -38,7 +38,7 @@ module.exports = ({ env: webpackEnv, paths }) => {
     // "postcss" loader applies autoprefixer to our CSS.
     // In production, we use MiniCSSExtractPlugin to extract that CSS to a file,
     // but in development "style" loader enables hot editing of CSS.
-    const getStyleLoaders = cssOptions => {
+    const getStyleLoaders = (cssOptions) => {
         return [
             isDevelopment && require.resolve('style-loader'),
             isProduction && {

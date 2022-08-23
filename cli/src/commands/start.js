@@ -149,7 +149,7 @@ const handler = async ({
         },
         {
             name: 'start',
-            onError: err => {
+            onError: (err) => {
                 reporter.error(err)
                 reporter.error('Start script exited with non-zero exit code')
             },

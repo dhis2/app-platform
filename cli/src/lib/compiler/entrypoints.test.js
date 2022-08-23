@@ -342,7 +342,7 @@ describe('verifyEntrypoints', () => {
                 plugin: './src/plugin.js',
             },
         }
-        const resolveModule = jest.fn(path => {
+        const resolveModule = jest.fn((path) => {
             throw new Error(`Cannot find module '${path}'`)
         })
 
