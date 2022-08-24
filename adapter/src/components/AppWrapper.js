@@ -9,7 +9,7 @@ import { LoadingMask } from './LoadingMask.js'
 import PWAUpdateManager from './PWAUpdateManager.js'
 import { styles } from './styles/AppWrapper.style.js'
 
-export const AppWrapper = ({ appName, children, offlineInterface }) => {
+export const AppWrapper = ({ appName, children, offlineInterface, plugin }) => {
     const { loading: localeLoading } = useCurrentUserLocale()
     const { loading: latestUserLoading } = useVerifyLatestUser()
 
@@ -20,7 +20,7 @@ export const AppWrapper = ({ appName, children, offlineInterface }) => {
     return (
         <div className="app-shell-adapter">
             <style jsx>{styles}</style>
-            <HeaderBar appName={appName} />
+            {!plugin && <HeaderBar appName={appName} />}
             <div className="app-shell-app">
                 <ErrorBoundary onRetry={() => window.location.reload()}>
                     {children}
@@ -36,4 +36,5 @@ AppWrapper.propTypes = {
     appName: PropTypes.string.isRequired,
     offlineInterface: PropTypes.object.isRequired,
     children: PropTypes.node,
+    plugin: PropTypes.bool,
 }
