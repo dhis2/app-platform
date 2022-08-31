@@ -1,3 +1,10 @@
+# [10.1.0-alpha.2](https://github.com/dhis2/app-platform/compare/v10.1.0-alpha.1...v10.1.0-alpha.2) (2022-08-31)
+
+
+### Bug Fixes
+
+* **cli:** update webpack plugin options ([d084b44](https://github.com/dhis2/app-platform/commit/d084b441ee0dd8aecb2d563a0b1dc16275c11bcd))
+
 # [10.1.0-alpha.1](https://github.com/dhis2/app-platform/compare/v10.0.0...v10.1.0-alpha.1) (2022-08-24)
 
 
