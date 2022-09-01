@@ -1,3 +1,10 @@
+# [10.1.0-alpha.3](https://github.com/dhis2/app-platform/compare/v10.1.0-alpha.2...v10.1.0-alpha.3) (2022-09-01)
+
+
+### Bug Fixes
+
+* add missing webpack dependencies to cli package ([9e58c58](https://github.com/dhis2/app-platform/commit/9e58c58322e56f905abd473af9957f8b24119b95))
+
 # [10.1.0-alpha.2](https://github.com/dhis2/app-platform/compare/v10.1.0-alpha.1...v10.1.0-alpha.2) (2022-08-31)
 
 
