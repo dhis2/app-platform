@@ -8,10 +8,14 @@ const { reporter } = require('@dhis2/cli-helpers-engine')
 const webpack = require('webpack')
 const webpackConfigFactory = require('./webpack.config')
 
-module.exports = async ({ paths }) => {
+module.exports = async ({ config, paths }) => {
     reporter.debug('Building plugin...')
 
-    const webpackConfig = webpackConfigFactory({ env: 'production', paths })
+    const webpackConfig = webpackConfigFactory({
+        env: 'production',
+        config,
+        paths,
+    })
     const compiler = webpack(webpackConfig)
     return new Promise((resolve, reject) => {
         compiler.run((err, stats) => {

@@ -9,8 +9,12 @@ const webpack = require('webpack')
 const WebpackDevServer = require('webpack-dev-server')
 const webpackConfigFactory = require('./webpack.config')
 
-module.exports = async ({ port, paths }) => {
-    const webpackConfig = webpackConfigFactory({ env: 'production', paths })
+module.exports = async ({ port, config, paths }) => {
+    const webpackConfig = webpackConfigFactory({
+        env: 'production',
+        config,
+        paths,
+    })
     const compiler = webpack(webpackConfig)
 
     const host = process.env.HOST || 'localhost'

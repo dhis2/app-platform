@@ -132,11 +132,14 @@ const handler = async ({
                 await shell.build()
 
                 if (config.entryPoints.plugin) {
+                    reporter.info('Building plugin...')
                     await plugin.build()
                 }
 
                 if (config.pwa.enabled) {
-                    reporter.info('Injecting precache manifest...')
+                    reporter.info(
+                        'Injecting supplementary precache manifest...'
+                    )
                     await injectPrecacheManifest(paths, config)
                 }
             } else {

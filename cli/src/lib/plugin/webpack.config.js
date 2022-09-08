@@ -8,7 +8,9 @@ const getCSSModuleLocalIdent = require('react-dev-utils/getCSSModuleLocalIdent')
 const getPublicUrlOrPath = require('react-dev-utils/getPublicUrlOrPath')
 const TerserPlugin = require('terser-webpack-plugin')
 const webpack = require('webpack')
+const WorkboxWebpackPlugin = require('workbox-webpack-plugin')
 const makeBabelConfig = require('../../../config/makeBabelConfig')
+const { getPWAEnvVars } = require('../pwa')
 const getShellEnv = require('../shell/env')
 
 const babelWebpackConfig = {
@@ -21,7 +23,7 @@ const babelWebpackConfig = {
 const cssRegex = /\.css$/
 const cssModuleRegex = /\.module\.css$/
 
-module.exports = ({ env: webpackEnv, paths }) => {
+module.exports = ({ env: webpackEnv, config, paths }) => {
     const isProduction = webpackEnv === 'production'
     const isDevelopment = !isProduction
 
@@ -31,7 +33,12 @@ module.exports = ({ env: webpackEnv, paths }) => {
         process.env.PUBLIC_URL
     )
 
-    const shellEnv = getShellEnv({ plugin: 'true' })
+    const shellEnv = getShellEnv({
+        plugin: 'true',
+        name: config.title,
+        // todo: need to make sure PWA is enabled for plugins
+        ...getPWAEnvVars(config),
+    })
 
     // "style" loader turns CSS into JS modules that inject <style> tags.
     // "css" loader resolves paths in CSS and adds assets as dependencies.
@@ -180,6 +187,26 @@ module.exports = ({ env: webpackEnv, paths }) => {
                 resourceRegExp: /^\.\/locale$/,
                 contextRegExp: /moment$/,
             }),
+            new WorkboxWebpackPlugin.InjectManifest({
+                swSrc: paths.shellBuildServiceWorker,
+                injectionPoint: 'self.__WB_PLUGIN_MANIFEST',
+                // Skip compiling the SW, which happens in the app build step
+                compileSrc: false,
+                dontCacheBustURLsMatching: /\.[0-9a-f]{8}\./,
+                exclude: [
+                    /\.map$/,
+                    /asset-manifest\.json$/,
+                    /LICENSE/,
+                    // TODO: locales and font files are weird in the plugin build.
+                    // Ignore them in precache manifest for now
+                    /moment-locales/,
+                    /\.woff/,
+                ],
+                // Bump up the default maximum size (2mb) that's precached,
+                // to make lazy-loading failure scenarios less likely.
+                // See https://github.com/cra-template/pwa/issues/13#issuecomment-722667270
+                maximumFileSizeToCacheInBytes: 5 * 1024 * 1024,
+            }),
         ].filter(Boolean),
         module: {
             rules: [
@@ -264,5 +291,7 @@ module.exports = ({ env: webpackEnv, paths }) => {
                 },
             ],
         },
+        // Saves some chunk size logging
+        performance: false,
     }
 }
