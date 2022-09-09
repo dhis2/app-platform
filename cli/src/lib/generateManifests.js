@@ -149,7 +149,7 @@ module.exports = (paths, config, publicUrl) => {
     delete appConfig['entryPoints']
     appConfig.entryPoints = {
         app: paths.launchPath,
-        plugin: config.entryPoints.plugin ? paths.pluginLaunchPath : undefined
+        plugin: config.entryPoints.plugin ? paths.pluginLaunchPath : undefined,
     }
     delete appConfig['pwa']
 
