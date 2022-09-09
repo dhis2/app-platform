@@ -109,7 +109,7 @@ module.exports = (paths, config, publicUrl) => {
         core_app: config.coreApp,
 
         launch_path: paths.launchPath,
-        plugin_lauch_path: paths.pluginLaunchPath,
+        plugin_launch_path: paths.pluginLaunchPath,
         default_locale: 'en',
         activities: {
             dhis: {
