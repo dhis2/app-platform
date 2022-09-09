@@ -135,7 +135,7 @@ module.exports = ({ env: webpackEnv, paths }) => {
                 Object.assign(
                     {
                         inject: true,
-                        filename: 'plugin.html',
+                        filename: paths.pluginLaunchPath,
                         template: paths.shellPublicPluginHtml,
                     },
                     isProduction

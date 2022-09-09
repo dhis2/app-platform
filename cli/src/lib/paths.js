@@ -111,6 +111,9 @@ module.exports = (cwd = process.cwd()) => {
         ),
         buildLibBundleFile: '{name}-{version}.zip',
         buildLibBundleOutput: path.join(base),
+
+        launchPath: 'index.html',
+        pluginLaunchPath: 'plugin.html',
     }
 
     reporter.debug('PATHS', paths)

@@ -108,7 +108,8 @@ module.exports = (paths, config, publicUrl) => {
         version: config.version,
         core_app: config.coreApp,
 
-        launch_path: 'index.html',
+        launch_path: paths.launchPath,
+        plugin_lauch_path: paths.pluginLaunchPath,
         default_locale: 'en',
         activities: {
             dhis: {
@@ -146,6 +147,10 @@ module.exports = (paths, config, publicUrl) => {
     // Write d2 config json
     const appConfig = { ...config }
     delete appConfig['entryPoints']
+    appConfig.entryPoints = {
+        app: paths.launchPath,
+        plugin: config.entryPoints.plugin ? paths.pluginLaunchPath : undefined
+    }
     delete appConfig['pwa']
 
     fs.writeJsonSync(paths.shellPublicConfigJson, appConfig, { spaces: 2 })
