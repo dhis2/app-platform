@@ -106,6 +106,10 @@ module.exports = ({ env: webpackEnv, config, paths }) => {
             chunkFilename: isProduction
                 ? 'static/js/plugin-[name].[contenthash:8].chunk.js'
                 : 'static/js/plugin-[name].chunk.js',
+            // ! dhis2: this at least gets fonts to match the CRA build,
+            // but is re-outputting them
+            assetModuleFilename: 'static/media/[name].[hash][ext]',
+            // TODO: investigate dev source maps here (devtoolModuleFilenameTemplate)
         },
         optimization: {
             minimize: isProduction,
@@ -197,10 +201,9 @@ module.exports = ({ env: webpackEnv, config, paths }) => {
                     /\.map$/,
                     /asset-manifest\.json$/,
                     /LICENSE/,
-                    // TODO: locales and font files are weird in the plugin build.
+                    // TODO: locales are weird in the plugin build -
                     // Ignore them in precache manifest for now
                     /moment-locales/,
-                    /\.woff/,
                 ],
                 // Bump up the default maximum size (2mb) that's precached,
                 // to make lazy-loading failure scenarios less likely.
@@ -295,5 +298,6 @@ module.exports = ({ env: webpackEnv, config, paths }) => {
         },
         // Saves some chunk size logging
         performance: false,
+        // stats: 'verbose',
     }
 }
