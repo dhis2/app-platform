@@ -48,11 +48,11 @@ const parseConfigObjects = (config = {}, pkg = {}, { defaultsLib, defaultsApp, d
 
     const defaults =
         type === 'lib' ? defaultsLib : defaultsApp
-    config = defaultsDeep(config, require(defaults))
+    config = defaultsDeep(config, defaults)
 
     // Add PWA defaults to apps
     if (type === 'app') {
-        config = defaultsDeep(config, require(defaultsPWA))
+        config = defaultsDeep(config, defaultsPWA)
     }
 
     config.name = config.name || pkg.name
@@ -84,9 +84,9 @@ const parseConfig = (paths) => {
         }
 
         const parsedConfig = parseConfigObjects(config, pkg, {
-            defaultsLib: paths.configDefaultsLib,
-            defaultsApp: paths.configDefaultsApp,
-            defaultsPWA: paths.configDefaultsPWA
+            defaultsLib: require(paths.configDefaultsLib),
+            defaultsApp: require(paths.configDefaultsApp),
+            defaultsPWA: require(paths.configDefaultsPWA)
         })
 
         validateConfig(parsedConfig)
