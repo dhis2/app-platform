@@ -1,3 +1,10 @@
+# [10.1.0-alpha.4](https://github.com/dhis2/app-platform/compare/v10.1.0-alpha.3...v10.1.0-alpha.4) (2022-09-16)
+
+
+### Features
+
+* include plugin launch path plugin.html in built manifests [LIBS-346] ([#745](https://github.com/dhis2/app-platform/issues/745)) ([8843f6b](https://github.com/dhis2/app-platform/commit/8843f6b6396f0f60ef5cb0c6d09cfe90360e976f))
+
 # [10.1.0-alpha.3](https://github.com/dhis2/app-platform/compare/v10.1.0-alpha.2...v10.1.0-alpha.3) (2022-09-01)
 
 
