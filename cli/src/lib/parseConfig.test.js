@@ -52,8 +52,8 @@ describe('parseConfig', () => {
         ).toMatchObject({ name: 'Test Author', url: 'https://author.com/test' })
 
         // missing name
-        expect(
-            () => parseConfigObjects({
+        expect(() =>
+            parseConfigObjects({
                 author: {
                     email: 'test@author.com',
                     url: 'https://author.com/test',
@@ -61,21 +61,23 @@ describe('parseConfig', () => {
             })
         ).toThrow()
         expect(
-            () => parseConfigObjects({ author: { email: 'test@author.com' } }).author
+            () =>
+                parseConfigObjects({ author: { email: 'test@author.com' } })
+                    .author
         ).toThrow()
-        expect(
-            () => parseConfigObjects({ author: { url: 'https://author.com/test' } })
+        expect(() =>
+            parseConfigObjects({ author: { url: 'https://author.com/test' } })
         ).toThrow()
-        expect(
-            () => parseConfigObjects({ author: '(https://author.com/test)' })
+        expect(() =>
+            parseConfigObjects({ author: '(https://author.com/test)' })
         ).toThrow()
-        expect(
-            () => parseConfigObjects({
+        expect(() =>
+            parseConfigObjects({
                 author: '<test@author.com> (https://author.com/test)',
             })
         ).toThrow()
-        expect(
-            () => parseConfigObjects({ author: '<test@author.com>' })
+        expect(() =>
+            parseConfigObjects({ author: '<test@author.com>' })
         ).toThrow()
     })
 })

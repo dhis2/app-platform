@@ -27,7 +27,11 @@ const parseAuthor = (author) => {
 const validateConfig = (config) => {
     if (!requiredConfigFields[config.type]) {
         throw new Error(
-            `Unknown type ${chalk.bold(config.type)} specified in d2.config.js.\n\tValid types: ${Object.keys(requiredConfigFields)}`
+            `Unknown type ${chalk.bold(
+                config.type
+            )} specified in d2.config.js.\n\tValid types: ${Object.keys(
+                requiredConfigFields
+            )}`
         )
     }
     requiredConfigFields[config.type].forEach((field) => {
@@ -42,12 +46,15 @@ const validateConfig = (config) => {
     return true
 }
 
-const parseConfigObjects = (config = {}, pkg = {}, { defaultsLib, defaultsApp, defaultsPWA } = {}) => {
+const parseConfigObjects = (
+    config = {},
+    pkg = {},
+    { defaultsLib, defaultsApp, defaultsPWA } = {}
+) => {
     const type = config.type || 'app'
     reporter.debug(`Type identified : ${chalk.bold(type)}`)
 
-    const defaults =
-        type === 'lib' ? defaultsLib : defaultsApp
+    const defaults = type === 'lib' ? defaultsLib : defaultsApp
     config = defaultsDeep(config, defaults)
 
     // Add PWA defaults to apps
@@ -86,7 +93,7 @@ const parseConfig = (paths) => {
         const parsedConfig = parseConfigObjects(config, pkg, {
             defaultsLib: require(paths.configDefaultsLib),
             defaultsApp: require(paths.configDefaultsApp),
-            defaultsPWA: require(paths.configDefaultsPWA)
+            defaultsPWA: require(paths.configDefaultsPWA),
         })
 
         validateConfig(parsedConfig)
