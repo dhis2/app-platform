@@ -203,7 +203,7 @@ module.exports = ({ env: webpackEnv, config, paths }) => {
                         /\.map$/,
                         /asset-manifest\.json$/,
                         /LICENSE/,
-                        // TODO: locales are weird in the plugin build -
+                        // TODO dhis2: locales are weird in the plugin build -
                         // Ignore them in precache manifest for now
                         /moment-locales/,
                     ],

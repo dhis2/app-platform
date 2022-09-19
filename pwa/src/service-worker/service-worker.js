@@ -134,12 +134,6 @@ export function setUpServiceWorker() {
         // 'injectPrecacheManifest.js' in the CLI package.
         // '[]' fallback prevents an error when switching pwa enabled to disabled
         const sharedBuildManifest = self.__WB_BUILD_MANIFEST || []
-        // todo: remove after testing
-        // console.log({
-        //     precacheManifest,
-        //     pluginPrecacheManifest,
-        //     sharedBuildManifest,
-        // })
         precacheAndRoute(sharedBuildManifest)
     }
 
