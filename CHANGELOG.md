@@ -1,3 +1,10 @@
+# [10.1.0-alpha.5](https://github.com/dhis2/app-platform/compare/v10.1.0-alpha.4...v10.1.0-alpha.5) (2022-09-19)
+
+
+### Features
+
+* **cli:** add pwa to plugins; fix plugin build details ([#746](https://github.com/dhis2/app-platform/issues/746)) ([fd920a4](https://github.com/dhis2/app-platform/commit/fd920a41d6d63e1bb4e4934d39e4aef96ead1e4d))
+
 # [10.1.0-alpha.4](https://github.com/dhis2/app-platform/compare/v10.1.0-alpha.3...v10.1.0-alpha.4) (2022-09-16)
 
 
