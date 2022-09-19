@@ -11,6 +11,7 @@ const webpackConfigFactory = require('./webpack.config')
 
 module.exports = async ({ port, config, paths }) => {
     const webpackConfig = webpackConfigFactory({
+        // todo: change to development, but this creates a compilation error
         env: 'production',
         config,
         paths,
