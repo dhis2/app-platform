@@ -9,8 +9,13 @@ const webpack = require('webpack')
 const WebpackDevServer = require('webpack-dev-server')
 const webpackConfigFactory = require('./webpack.config')
 
-module.exports = async ({ port, paths }) => {
-    const webpackConfig = webpackConfigFactory({ env: 'production', paths })
+module.exports = async ({ port, config, paths }) => {
+    const webpackConfig = webpackConfigFactory({
+        // todo: change to development, but this creates a compilation error
+        env: 'production',
+        config,
+        paths,
+    })
     const compiler = webpack(webpackConfig)
 
     const host = process.env.HOST || 'localhost'

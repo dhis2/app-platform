@@ -8,7 +8,9 @@ const getCSSModuleLocalIdent = require('react-dev-utils/getCSSModuleLocalIdent')
 const getPublicUrlOrPath = require('react-dev-utils/getPublicUrlOrPath')
 const TerserPlugin = require('terser-webpack-plugin')
 const webpack = require('webpack')
+const WorkboxWebpackPlugin = require('workbox-webpack-plugin')
 const makeBabelConfig = require('../../../config/makeBabelConfig')
+const { getPWAEnvVars } = require('../pwa')
 const getShellEnv = require('../shell/env')
 
 const babelWebpackConfig = {
@@ -21,7 +23,7 @@ const babelWebpackConfig = {
 const cssRegex = /\.css$/
 const cssModuleRegex = /\.module\.css$/
 
-module.exports = ({ env: webpackEnv, paths }) => {
+module.exports = ({ env: webpackEnv, config, paths }) => {
     const isProduction = webpackEnv === 'production'
     const isDevelopment = !isProduction
 
@@ -31,7 +33,12 @@ module.exports = ({ env: webpackEnv, paths }) => {
         process.env.PUBLIC_URL
     )
 
-    const shellEnv = getShellEnv({ plugin: 'true' })
+    const shellEnv = getShellEnv({
+        plugin: 'true',
+        name: config.title,
+        // todo: need to make sure PWA is enabled for plugins
+        ...getPWAEnvVars(config),
+    })
 
     // "style" loader turns CSS into JS modules that inject <style> tags.
     // "css" loader resolves paths in CSS and adds assets as dependencies.
@@ -99,6 +106,10 @@ module.exports = ({ env: webpackEnv, paths }) => {
             chunkFilename: isProduction
                 ? 'static/js/plugin-[name].[contenthash:8].chunk.js'
                 : 'static/js/plugin-[name].chunk.js',
+            // ! dhis2: this at least gets fonts to match the CRA build,
+            // but is re-outputting them
+            assetModuleFilename: 'static/media/[name].[hash][ext]',
+            // TODO: investigate dev source maps here (devtoolModuleFilenameTemplate)
         },
         optimization: {
             minimize: isProduction,
@@ -180,6 +191,27 @@ module.exports = ({ env: webpackEnv, paths }) => {
                 resourceRegExp: /^\.\/locale$/,
                 contextRegExp: /moment$/,
             }),
+            // dhis2: Inject plugin static assets to the existing SW's precache manifest
+            process.env.NODE_ENV === 'production' &&
+                new WorkboxWebpackPlugin.InjectManifest({
+                    swSrc: paths.shellBuildServiceWorker,
+                    injectionPoint: 'self.__WB_PLUGIN_MANIFEST',
+                    // Skip compiling the SW, which happens in the app build step
+                    compileSrc: false,
+                    dontCacheBustURLsMatching: /\.[0-9a-f]{8}\./,
+                    exclude: [
+                        /\.map$/,
+                        /asset-manifest\.json$/,
+                        /LICENSE/,
+                        // TODO dhis2: locales are weird in the plugin build -
+                        // Ignore them in precache manifest for now
+                        /moment-locales/,
+                    ],
+                    // Bump up the default maximum size (2mb) that's precached,
+                    // to make lazy-loading failure scenarios less likely.
+                    // See https://github.com/cra-template/pwa/issues/13#issuecomment-722667270
+                    maximumFileSizeToCacheInBytes: 5 * 1024 * 1024,
+                }),
         ].filter(Boolean),
         module: {
             rules: [
@@ -223,6 +255,9 @@ module.exports = ({ env: webpackEnv, paths }) => {
                             use: getStyleLoaders({
                                 importLoaders: 1,
                                 sourceMap: true,
+                                modules: {
+                                    mode: 'icss',
+                                },
                             }),
                             // Don't consider CSS imports dead code even if the
                             // containing package claims to have no side effects.
@@ -236,6 +271,7 @@ module.exports = ({ env: webpackEnv, paths }) => {
                                 importLoaders: 1,
                                 sourceMap: true,
                                 modules: {
+                                    mode: 'local',
                                     getLocalIdent: getCSSModuleLocalIdent,
                                 },
                             }),
@@ -246,23 +282,24 @@ module.exports = ({ env: webpackEnv, paths }) => {
                         // This loader doesn't use a "test" so it will catch all modules
                         // that fall through the other loaders.
                         {
-                            loader: require.resolve('file-loader'),
                             // Exclude `js` files to keep "css" loader working as it injects
                             // its runtime that would otherwise be processed through "file" loader.
                             // Also exclude `html` and `json` extensions so they get processed
                             // by webpacks internal loaders.
                             exclude: [
+                                /^$/,
                                 /\.(js|mjs|jsx|ts|tsx)$/,
                                 /\.html$/,
                                 /\.json$/,
                             ],
-                            options: {
-                                name: 'static/media/[name].[hash:8].[ext]',
-                            },
+                            type: 'asset/resource',
                         },
                     ],
                 },
             ],
         },
+        // Saves some chunk size logging
+        performance: false,
+        // stats: 'verbose',
     }
 }

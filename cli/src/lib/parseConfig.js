@@ -42,6 +42,7 @@ const validateConfig = (config) => {
             process.exit(1)
         }
     })
+    // Todo: make sure apps with plugins have `pwa_enabled: true` in the config
     return true
 }
 
