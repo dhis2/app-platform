@@ -7,7 +7,7 @@ import {
     ModalTitle,
 } from '@dhis2/ui'
 import PropTypes from 'prop-types'
-import { React } from 'react'
+import React from 'react'
 import i18n from '../locales'
 
 export function ConfirmUpdateModal({ clientsCount, onCancel, onConfirm }) {
