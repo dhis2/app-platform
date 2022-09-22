@@ -133,7 +133,7 @@ export function register(config) {
         window.addEventListener('load', () => {
             // By compiling the dev SW to the 'public' dir, this URL works in
             // both dev and production modes
-            const swUrl = `${process.env.PUBLIC_URL}/service-worker.js`
+            const swUrl = new URL('service-worker.js', publicUrl)
 
             if (isLocalhost) {
                 // This is running on localhost. Let's check if a service worker still exists or not.
