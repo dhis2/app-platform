@@ -1,7 +1,4 @@
-const {
-    parseVersion,
-    parseDHIS2ServerVersion,
-} = require('./parseVersion')
+const { parseVersion, parseDHIS2ServerVersion } = require('./parseVersion')
 
 describe('parseVersion', () => {
     let originalConsoleWarn
@@ -89,7 +86,7 @@ describe('parseDHIS2ServerVersion', () => {
 
         expect(console.warn).toHaveBeenCalledTimes(2)
     })
-    
+
     it('Should correctly parse a future major version, but log a warning', () => {
         expect(parseDHIS2ServerVersion('6.4.2')).toMatchObject({
             full: '6.4.2',
