@@ -1,7 +1,7 @@
 const {
     parseVersion,
     parseDHIS2ServerVersion,
-} = require('./parseServerVersion')
+} = require('./parseVersion')
 
 describe('parseVersion', () => {
     let originalConsoleWarn
@@ -54,11 +54,42 @@ describe('parseVersion', () => {
             patch: undefined,
             tag: undefined,
         })
-        expect(console.warn).toHaveBeenCalledTimes(2)
     })
 })
 
 describe('parseDHIS2ServerVersion', () => {
+    let originalConsoleWarn
+    beforeAll(() => {
+        originalConsoleWarn = console.warn
+    })
+    beforeEach(() => {
+        // Capture console warnings
+        console.warn = jest.fn()
+    })
+    afterAll(() => {
+        console.warn = originalConsoleWarn
+    })
+
+    it('Should warn on null or undefined', () => {
+        expect(parseDHIS2ServerVersion(null)).toMatchObject({
+            full: null,
+            major: undefined,
+            minor: undefined,
+            patch: undefined,
+            tag: undefined,
+        })
+
+        expect(parseDHIS2ServerVersion(undefined)).toMatchObject({
+            full: undefined,
+            major: undefined,
+            minor: undefined,
+            patch: undefined,
+            tag: undefined,
+        })
+
+        expect(console.warn).toHaveBeenCalledTimes(2)
+    })
+    
     it('Should correctly parse a future major version, but log a warning', () => {
         expect(parseDHIS2ServerVersion('6.4.2')).toMatchObject({
             full: '6.4.2',
