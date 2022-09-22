@@ -1,6 +1,6 @@
-const { parseServerVersion } = require('./parseServerVersion')
+const { parseDHIS2ServerVersion } = require('./parseServerVersion')
 
-describe('parseServerVersion', () => {
+describe('parseVersion', () => {
     let originalConsoleWarn
     beforeAll(() => {
         originalConsoleWarn = console.warn
@@ -14,7 +14,8 @@ describe('parseServerVersion', () => {
     })
 
     it('Should correctly parse a simple released version', () => {
-        expect(parseServerVersion('2.34.3')).toMatchObject({
+        expect(parseVersion('2.34.3')).toMatchObject({
+            full: '2.34.3',
             major: 2,
             minor: 34,
             patch: 3,
@@ -24,7 +25,8 @@ describe('parseServerVersion', () => {
     })
 
     it('Should correctly parse a snapshot version', () => {
-        expect(parseServerVersion('2.34-SNAPSHOT')).toMatchObject({
+        expect(parseVersion('2.34-SNAPSHOT')).toMatchObject({
+            full: '2.34-SNAPSHOT',
             major: 2,
             minor: 34,
             patch: undefined,
@@ -34,14 +36,16 @@ describe('parseServerVersion', () => {
     })
 
     it('Should not break on null or undefined', () => {
-        expect(parseServerVersion(null)).toMatchObject({
+        expect(parseVersion(null)).toMatchObject({
+            full: null,
             major: undefined,
             minor: undefined,
             patch: undefined,
             tag: undefined,
         })
 
-        expect(parseServerVersion(undefined)).toMatchObject({
+        expect(parseVersion(undefined)).toMatchObject({
+            full: undefined,
             major: undefined,
             minor: undefined,
             patch: undefined,
@@ -49,9 +53,12 @@ describe('parseServerVersion', () => {
         })
         expect(console.warn).toHaveBeenCalledTimes(2)
     })
+})
 
-    it('Should correctly parse a future major version', () => {
-        expect(parseServerVersion('6.4.2')).toMatchObject({
+describe('parseDHIS2ServerVersion', () => {
+    it('Should correctly parse a future major version, but log a warning', () => {
+        expect(parseDHIS2ServerVersion('6.4.2')).toMatchObject({
+            full: '6.4.2',
             major: 6,
             minor: 4,
             patch: 2,
@@ -60,8 +67,9 @@ describe('parseServerVersion', () => {
         expect(console.warn).toHaveBeenCalledTimes(1)
     })
 
-    it('Should not break on non-numeric version string', () => {
-        expect(parseServerVersion('this.is.a.version-test')).toMatchObject({
+    it('Should not break on non-numeric version string, but log a warning', () => {
+        expect(parseDHIS2ServerVersion('this.is.a.version-test')).toMatchObject({
+            full: 'this.is.a.version-test',
             major: undefined,
             minor: undefined,
             patch: undefined,
