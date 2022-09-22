@@ -1,6 +1,8 @@
 import { useConfig } from '@dhis2/app-runtime'
 import { HeaderBar } from '@dhis2/ui'
-import { ConfirmReloadModal } from './ConfirmReloadModal'
+import React from 'react'
+import { usePWAUpdateState } from '../utils/usePWAUpdateState'
+import { ConfirmUpdateModal } from './ConfirmUpdateModal'
 
 /**
  * Check for SW updates or a first activation, displaying an update notification
@@ -17,8 +19,8 @@ export function ConnectedHeaderBar() {
         confirmReload,
         confirmationRequired,
         clientsCount,
-        onConfirm,
-        onCancel,
+        onConfirmUpdate,
+        onCancelUpdate,
     } = usePWAUpdateState()
 
     return (
@@ -29,10 +31,10 @@ export function ConnectedHeaderBar() {
                 onApplyAvailableUpdate={confirmReload}
             />
             {confirmationRequired ? (
-                <ConfirmReloadModal
+                <ConfirmUpdateModal
                     clientsCount={clientsCount}
-                    onConfirm={onConfirm}
-                    onCancel={onCancel}
+                    onConfirm={onConfirmUpdate}
+                    onCancel={onCancelUpdate}
                 />
             ) : null}
         </>

@@ -6,7 +6,14 @@ import { ErrorBoundary } from './components/ErrorBoundary.js'
 import { OfflineInterfaceProvider } from './components/OfflineInterfaceContext.js'
 import { ServerVersionProvider } from './components/ServerVersionProvider.js'
 
-const AppAdapter = ({ appName, appVersion, url, apiVersion, pwaEnabled, children }) => (
+const AppAdapter = ({
+    appName,
+    appVersion,
+    url,
+    apiVersion,
+    pwaEnabled,
+    children,
+}) => (
     <ErrorBoundary fullscreen onRetry={checkForSWUpdateAndReload}>
         <OfflineInterfaceProvider>
             <ServerVersionProvider
@@ -16,9 +23,7 @@ const AppAdapter = ({ appName, appVersion, url, apiVersion, pwaEnabled, children
                 apiVersion={apiVersion}
                 pwaEnabled={pwaEnabled}
             >
-                <AppWrapper offlineInterface={offlineInterface}>
-                    {children}
-                </AppWrapper>
+                <AppWrapper>{children}</AppWrapper>
             </ServerVersionProvider>
         </OfflineInterfaceProvider>
     </ErrorBoundary>

@@ -6,8 +6,11 @@ import {
     ModalContent,
     ModalTitle,
 } from '@dhis2/ui'
+import PropTypes from 'prop-types'
+import { React } from 'react'
+import i18n from '../locales'
 
-export function ConfirmReloadModal({ clientsCount, onCancel, onConfirm }) {
+export function ConfirmUpdateModal({ clientsCount, onCancel, onConfirm }) {
     return (
         <Modal position="middle">
             <ModalTitle>{i18n.t('Save your data')}</ModalTitle>
@@ -33,7 +36,7 @@ export function ConfirmReloadModal({ clientsCount, onCancel, onConfirm }) {
         </Modal>
     )
 }
-ConfirmReloadModal.propTypes = {
+ConfirmUpdateModal.propTypes = {
     clientsCount: PropTypes.number,
     onCancel: PropTypes.func,
     onConfirm: PropTypes.func,

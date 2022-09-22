@@ -1,4 +1,7 @@
-const { parseDHIS2ServerVersion } = require('./parseServerVersion')
+const {
+    parseVersion,
+    parseDHIS2ServerVersion,
+} = require('./parseServerVersion')
 
 describe('parseVersion', () => {
     let originalConsoleWarn
@@ -68,13 +71,15 @@ describe('parseDHIS2ServerVersion', () => {
     })
 
     it('Should not break on non-numeric version string, but log a warning', () => {
-        expect(parseDHIS2ServerVersion('this.is.a.version-test')).toMatchObject({
-            full: 'this.is.a.version-test',
-            major: undefined,
-            minor: undefined,
-            patch: undefined,
-            tag: 'test',
-        })
+        expect(parseDHIS2ServerVersion('this.is.a.version-test')).toMatchObject(
+            {
+                full: 'this.is.a.version-test',
+                major: undefined,
+                minor: undefined,
+                patch: undefined,
+                tag: 'test',
+            }
+        )
         expect(console.warn).toHaveBeenCalledTimes(1)
     })
 })

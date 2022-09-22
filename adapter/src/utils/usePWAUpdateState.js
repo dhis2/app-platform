@@ -1,12 +1,16 @@
-import { useOfflineInterface } from "../components/OfflineInterfaceContext"
+import { useEffect, useState } from 'react'
+import { useOfflineInterface } from '../components/OfflineInterfaceContext'
 
 export const usePWAUpdateState = () => {
     const offlineInterface = useOfflineInterface()
     const [updateAvailable, setUpdateAvailable] = useState(false)
     const [clientsCount, setClientsCount] = useState(null)
 
-    const onConfirm = () => {
+    const onConfirmUpdate = () => {
         offlineInterface.useNewSW()
+    }
+    const onCancelUpdate = () => {
+        setClientsCount(null)
     }
 
     const confirmReload = () => {
@@ -15,7 +19,7 @@ export const usePWAUpdateState = () => {
             .then(({ clientsCount }) => {
                 if (clientsCount === 1) {
                     // Just one client; go ahead and reload
-                    onConfirm()
+                    onConfirmUpdate()
                 } else {
                     // Multiple clients; warn about data loss before reloading
                     setClientsCount(clientsCount)
@@ -36,8 +40,15 @@ export const usePWAUpdateState = () => {
                 setUpdateAvailable(true)
             },
         })
-    }, [])
+    }, [offlineInterface])
 
     const confirmationRequired = clientsCount !== null
-    return { updateAvailable, confirmReload, confirmationRequired, clientsCount, onConfirm, onCancel }
+    return {
+        updateAvailable,
+        confirmReload,
+        confirmationRequired,
+        clientsCount,
+        onConfirmUpdate,
+        onCancelUpdate,
+    }
 }

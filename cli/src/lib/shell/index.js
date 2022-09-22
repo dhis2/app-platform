@@ -14,7 +14,6 @@ module.exports = ({ config, paths }) => {
             await bootstrap(paths, args)
         },
 
-        
         build: async () => {
             await exec({
                 cmd: 'yarn',
@@ -43,4 +42,4 @@ module.exports = ({ config, paths }) => {
             })
         },
     }
-})
+}
