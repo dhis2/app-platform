@@ -1,3 +1,10 @@
+# [10.1.0-alpha.6](https://github.com/dhis2/app-platform/compare/v10.1.0-alpha.5...v10.1.0-alpha.6) (2022-09-26)
+
+
+### Bug Fixes
+
+* **cli:** improve plugin builds ([#749](https://github.com/dhis2/app-platform/issues/749)) ([b3b317c](https://github.com/dhis2/app-platform/commit/b3b317c781a9952b223236e33bf31c75088ae107))
+
 # [10.1.0-alpha.5](https://github.com/dhis2/app-platform/compare/v10.1.0-alpha.4...v10.1.0-alpha.5) (2022-09-19)
 
 
