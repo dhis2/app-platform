@@ -154,8 +154,12 @@ export function setUpServiceWorker() {
     )
 
     // Network-first caching by default
+    // (and for static assets while in development)
+    // * NOTE: there may be lazy-loading errors while offline in dev mode
     registerRoute(
-        ({ url }) => urlMeetsAppShellCachingCriteria(url),
+        ({ url }) =>
+            urlMeetsAppShellCachingCriteria(url) ||
+            (!PRODUCTION_ENV && fileExtensionRegexp.test(url.pathname)),
         new NetworkFirst({ cacheName: 'app-shell' })
     )
 
