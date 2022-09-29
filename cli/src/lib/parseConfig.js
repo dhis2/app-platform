@@ -26,69 +26,86 @@ const parseAuthor = (author) => {
 
 const validateConfig = (config) => {
     if (!requiredConfigFields[config.type]) {
-        reporter.error(
-            `Unknown type ${chalk.bold(config.type)} specified in d2.config.js.`
+        throw new Error(
+            `Unknown type ${chalk.bold(
+                config.type
+            )} specified in d2.config.js.\n\tValid types: ${Object.keys(
+                requiredConfigFields
+            )}`
         )
-        reporter.error(`\tValid types:`, Object.keys(requiredConfigFields))
-        process.exit(1)
     }
     requiredConfigFields[config.type].forEach((field) => {
         if (!has(config, field)) {
-            reporter.error(
+            throw new Error(
                 `Required config field ${chalk.bold(
                     field
                 )} not found in d2.config.js or package.json`
             )
-            process.exit(1)
         }
     })
     return true
 }
 
+const parseConfigObjects = (
+    config = {},
+    pkg = {},
+    { defaultsLib, defaultsApp, defaultsPWA } = {}
+) => {
+    const type = config.type || 'app'
+    reporter.debug(`Type identified : ${chalk.bold(type)}`)
+
+    const defaults = type === 'lib' ? defaultsLib : defaultsApp
+    config = defaultsDeep(config, defaults)
+
+    // Add PWA defaults to apps
+    if (type === 'app') {
+        config = defaultsDeep(config, defaultsPWA)
+    }
+
+    config.name = config.name || pkg.name
+    config.version = config.version || pkg.version
+    config.author = parseAuthor(config.author || pkg.author)
+    if (config.author && !config.author.name) {
+        throw new Error('If author is specified, it must include a valid name')
+    }
+    config.description = config.description || pkg.description
+    config.title = config.title || config.name
+
+    reporter.debug('config loaded', config)
+
+    return config
+}
+
 const parseConfig = (paths) => {
     try {
-        let config = {}
-        // if (!fs.existsSync(paths.config)) {
-        //     reporter.error('Config file d2.config.js not found - use the init command to create one!')
-        //     process.exit(1)
-        // }
+        let config
+        let pkg
 
         if (fs.existsSync(paths.config)) {
             reporter.debug('Loading d2 config at', paths.config)
             config = require(paths.config)
             reporter.debug('loaded', config)
         }
-
-        const type = config.type || 'app'
-        reporter.debug(`Type identified : ${chalk.bold(type)}`)
-
-        const defaults =
-            type === 'lib' ? paths.configDefaultsLib : paths.configDefaultsApp
-        config = defaultsDeep(config, require(defaults))
-
-        // Add PWA defaults to apps
-        if (type === 'app') {
-            config = defaultsDeep(config, require(paths.configDefaultsPWA))
-        }
-
         if (fs.existsSync(paths.package)) {
-            const pkg = fs.readJsonSync(paths.package)
-            config.name = config.name || pkg.name
-            config.version = config.version || pkg.version
-            config.author = config.author || parseAuthor(pkg.author)
-            config.description = config.description || pkg.description
+            pkg = fs.readJsonSync(paths.package)
         }
-        config.title = config.title || config.name
 
-        validateConfig(config)
+        const parsedConfig = parseConfigObjects(config, pkg, {
+            defaultsLib: require(paths.configDefaultsLib),
+            defaultsApp: require(paths.configDefaultsApp),
+            defaultsPWA: require(paths.configDefaultsPWA),
+        })
 
-        reporter.debug('config loaded', config)
-        return config
+        validateConfig(parsedConfig)
+
+        return parsedConfig
     } catch (e) {
         reporter.error('Failed to load d2 config!')
-        reporter.debugErr(e)
+        reporter.error(e)
         process.exit(1)
     }
 }
 
 module.exports = parseConfig
+
+module.exports.parseConfigObjects = parseConfigObjects
