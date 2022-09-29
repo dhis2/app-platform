@@ -1,3 +1,10 @@
+## [10.0.1](https://github.com/dhis2/app-platform/compare/v10.0.0...v10.0.1) (2022-09-29)
+
+
+### Bug Fixes
+
+* support author parsing in d2.config.js [LIBS-347] ([#747](https://github.com/dhis2/app-platform/issues/747)) ([e6838a7](https://github.com/dhis2/app-platform/commit/e6838a7b21000fa01265b8dfbb059d8ab53eb8db))
+
 # [10.0.0](https://github.com/dhis2/app-platform/compare/v9.0.1...v10.0.0) (2022-07-26)
 
 
