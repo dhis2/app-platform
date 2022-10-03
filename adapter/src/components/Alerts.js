@@ -25,8 +25,8 @@ const Alerts = () => {
         )
 
     useEffect(() => {
-        if (alertManagerAlerts.length > 0 || alertStackAlerts.length > 0) {
-            setAlertStackAlerts(
+        if (alertManagerAlerts.length > 0) {
+            setAlertStackAlerts(alertStackAlerts =>
                 mergeAlertStackAlerts(alertStackAlerts, alertManagerAlerts)
             )
         }
