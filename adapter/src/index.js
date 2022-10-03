@@ -4,6 +4,7 @@ import React from 'react'
 import { AppWrapper } from './components/AppWrapper.js'
 import { ErrorBoundary } from './components/ErrorBoundary.js'
 import { OfflineInterfaceProvider } from './components/OfflineInterfaceContext.js'
+import { PWALoadingBoundary } from './components/PWALoadingBoundary.js'
 import { ServerVersionProvider } from './components/ServerVersionProvider.js'
 
 const AppAdapter = ({
@@ -16,15 +17,17 @@ const AppAdapter = ({
 }) => (
     <ErrorBoundary fullscreen onRetry={checkForSWUpdateAndReload}>
         <OfflineInterfaceProvider>
-            <ServerVersionProvider
-                appName={appName}
-                appVersion={appVersion}
-                url={url}
-                apiVersion={apiVersion}
-                pwaEnabled={pwaEnabled}
-            >
-                <AppWrapper>{children}</AppWrapper>
-            </ServerVersionProvider>
+            <PWALoadingBoundary>
+                <ServerVersionProvider
+                    appName={appName}
+                    appVersion={appVersion}
+                    url={url}
+                    apiVersion={apiVersion}
+                    pwaEnabled={pwaEnabled}
+                >
+                    <AppWrapper>{children}</AppWrapper>
+                </ServerVersionProvider>
+            </PWALoadingBoundary>
         </OfflineInterfaceProvider>
     </ErrorBoundary>
 )
