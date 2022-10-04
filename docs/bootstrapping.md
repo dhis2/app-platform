@@ -1,4 +1,6 @@
-# Bootstrapping
+---
+title: Bootstrapping
+---
 
 To create a new template application (or upgrade an existing React app), use the [init](scripts/init) command.
 

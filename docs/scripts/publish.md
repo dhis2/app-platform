@@ -1,4 +1,7 @@
-# d2 app scripts publish
+---
+title: d2 app scripts publish
+sidebar_label: d2-app-scripts publish
+---
 
 Publishes a built application bundle to the [App Hub](https://apps.dhis2.org/).
 

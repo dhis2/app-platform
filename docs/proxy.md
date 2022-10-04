@@ -1,4 +1,6 @@
-# Proxy
+---
+title: Proxy
+---
 
 When developing against a remote instance, some browsers may block cookies due
 to the cross-site nature of requests.

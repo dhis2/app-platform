@@ -1,4 +1,7 @@
-# d2 app scripts init
+---
+title: d2 app scripts init
+sidebar_label: d2-app-scripts init
+---
 
 Bootraps a new (or updates an existing) DHIS2 application in the directory `./<name>`, installing all required dependencies.
 

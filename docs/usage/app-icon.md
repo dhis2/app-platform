@@ -1,4 +1,6 @@
-# App Icon
+---
+title: App Icon
+---
 
 The App Icon should allow a user to quickly and uniquely identify your application. It will appear in the DHIS2 App Hub and in the list of available applications in the Headerbar of a running DHIS2 instance.
 

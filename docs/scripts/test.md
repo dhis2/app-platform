@@ -1,4 +1,7 @@
-# d2 app scripts test
+---
+title: d2 app scripts test
+sidebar_label: d2-app-scripts test
+---
 
 Runs all unit tests found in `/src` with `jest`.
 

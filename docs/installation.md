@@ -1,7 +1,12 @@
-# Installation
+---
+title: Installation
+---
 
-> **NOTE** - whether creating a new application or upgrading an existing, it shouldn't be necessary to manually install `d2-app-scripts` as a devDependency.
->
+::note
+whether creating a new application or upgrading an existing, it shouldn't be necessary to manually install `d2-app-scripts` as a devDependency.
+:::
+
+
 > See the [Bootstrapping](bootstrapping) section for details on how to set up a platform application.
 
 To install the [App Platform Scripts](scripts) tool `d2-app-scripts` as a devDependency in an existing package

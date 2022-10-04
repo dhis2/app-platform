@@ -1,4 +1,6 @@
-# Types - `app` vs `lib`
+---
+title: Types - app vs lib
+---
 
 The application platform works to compile, test, and bundle both **applications** and **front-end libraries** in a consistent way. This ensures that all DHIS2 application components are cross-compatible and build processes can be configured from a central location.
 

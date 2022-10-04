@@ -1,8 +1,12 @@
-# Progressive Web App tools
+---
+title: Progressive Web App tools
+---
 
 The App Platform provides some tools that can enable some PWA features and offline caching.
 
-!> **WARNING** These features are considered **experimental** and are **subject to breaking changes outside of the normal release cycle.** They are for advanced purposes only and have some significant drawbacks in their first implementation. Keep an eye out for a more robust implementation in the future!
+:::warning 
+These features are considered **experimental** and are **subject to breaking changes outside of the normal release cycle.** They are for advanced purposes only and have some significant drawbacks in their first implementation. Keep an eye out for a more robust implementation in the future!
+:::
 
 ### Opting In
 

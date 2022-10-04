@@ -1,8 +1,14 @@
-# d2 app scripts pack
+---
+title: d2 app scripts pack
+sidebar_label: d2-app-scripts pack
+---
 
 Create a .zip archive of a built application.
 
-> **NOTE**: This command is currently unsupported for libraries
+
+:::note 
+This command is currently unsupported for libraries
+:::
 
 ```sh
 > d2 app scripts pack --help

@@ -1,4 +1,7 @@
-# d2 app scripts build
+---
+title: d2 app scripts build
+sidebar_label: d2-app-scripts build
+---
 
 Create a standalone production app build in the `./build` directory
 

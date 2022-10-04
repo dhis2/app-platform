@@ -1,4 +1,6 @@
-# Static Files
+---
+title: Static Files
+---
 
 The DHIS2 Application Platform supports
 
@@ -16,9 +18,14 @@ function MyImage() {
 
 ## Custom static files
 
-!> **WARNING** Only use if you know what you're doing, in most cases it is preferable to `include` static assets from your javascript source
+:::warning
+Only use if you know what you're doing, in most cases it is preferable to `include` static assets from your javascript source
+:::
 
-> **NOTE** When referencing these files, make sure you prefix any paths with the `PUBLIC_URL` [environment variable](../config/environment) (`process.env.PUBLIC_URL`) to ensure that the file is always referenced relative to your application's root, rather than the domain root!
+:::note
+When referencing these files, make sure you prefix any paths with the `PUBLIC_URL` [environment variable](../config/environment) (`process.env.PUBLIC_URL`) to ensure that the file is always referenced relative to your application's root, rather than the domain root!
+:::
+
 
 Any files located in the `./public` directory (relative to the app's `package.json` file) will be served as a static file by the compiled app. For instance, if you do the following:
 

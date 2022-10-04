@@ -1,8 +1,13 @@
-# d2 app scripts start
+---
+title: d2 app scripts start
+sidebar_label: d2-app-scripts start
+---
 
 Run a live-reloading development server on localhost
 
-> **NOTE**: This command is currently unsupported for libraries
+:::note 
+This command is currently unsupported for libraries
+:::
 
 ```sh
 > d2 app scripts start --help

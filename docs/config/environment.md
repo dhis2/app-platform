@@ -1,6 +1,10 @@
-# Environment Variables
+---
+title: Environment Variables
+---
 
-!> **WARNING** In almost all applications the defaults should work out of the box - avoid using environment variable configuration! Leave these variables undefined unless you know what you're doing and have a very unique requirement.
+:::warning 
+In almost all applications the defaults should work out of the box - avoid using environment variable configuration! Leave these variables undefined unless you know what you're doing and have a very unique requirement.
+:::
 
 The following environment variables are supported for `start` and/or `build` commands. They can be specified in the shell environment on in a local `.env` file.
 
