@@ -5,8 +5,8 @@ msgstr ""
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1)\n"
-"POT-Creation-Date: 2022-09-22T19:11:17.660Z\n"
-"PO-Revision-Date: 2022-09-22T19:11:17.660Z\n"
+"POT-Creation-Date: 2022-10-04T22:55:46.815Z\n"
+"PO-Revision-Date: 2022-10-04T22:55:46.815Z\n"
 
 msgid "Save your data"
 msgstr "Save your data"
@@ -69,5 +69,17 @@ msgstr "Username"
 msgid "Password"
 msgstr "Password"
 
+msgid "Login using two factor authentication"
+msgstr "Login using two factor authentication"
+
+msgid "Two factor authentication code"
+msgstr "Two factor authentication code"
+
 msgid "Sign in"
 msgstr "Sign in"
+
+msgid "You have been signed out"
+msgstr "You have been signed out"
+
+msgid "Sign back in"
+msgstr "Sign back in"
