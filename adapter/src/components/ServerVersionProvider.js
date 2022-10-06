@@ -46,7 +46,15 @@ export const ServerVersionProvider = ({
     }
 
     if (error) {
-        return <LoginModal />
+        return (
+            <LoginModal
+                server={process.env.REACT_APP_DHIS2_BASE_URL}
+                onLoginSuccess={() => {
+                    // TODO: Hacky solution... this shouldn't require a reload
+                    window.location.reload()
+                }}
+            />
+        )
     }
 
     const serverVersion = parseDHIS2ServerVersion(systemInfo.version)

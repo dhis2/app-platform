@@ -6,11 +6,12 @@ import { Alerts } from './Alerts.js'
 import { ConnectedHeaderBar } from './ConnectedHeaderBar.js'
 import { ErrorBoundary } from './ErrorBoundary.js'
 import { LoadingMask } from './LoadingMask.js'
+import { ReauthenticationHandler } from './ReauthenticationHandler.js'
 import { styles } from './styles/AppWrapper.style.js'
 
 export const AppWrapper = ({ children }) => {
     const { loading: localeLoading } = useCurrentUserLocale()
-    const { loading: latestUserLoading } = useVerifyLatestUser()
+    const { loading: latestUserLoading, user } = useVerifyLatestUser()
 
     if (localeLoading || latestUserLoading) {
         return <LoadingMask />
@@ -26,6 +27,7 @@ export const AppWrapper = ({ children }) => {
                 </ErrorBoundary>
             </div>
             <Alerts />
+            <ReauthenticationHandler user={user} />
         </div>
     )
 }

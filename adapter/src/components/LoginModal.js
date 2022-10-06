@@ -5,20 +5,28 @@ import {
     ModalActions,
     Button,
     InputField,
+    ButtonStrip,
+    CheckboxField,
 } from '@dhis2/ui'
 import React, { useState } from 'react'
 import i18n from '../locales/index.js'
-import { post } from '../utils/api.js'
+import { attemptLogin } from '../utils/api.js'
 
-const staticUrl = process.env.REACT_APP_DHIS2_BASE_URL
-
-export const LoginModal = () => {
+export const LoginModal = ({
+    server: staticUrl,
+    username: staticUsername,
+    onLoginSuccess,
+    onLoginFailure,
+    onCancel,
+} = {}) => {
     const [server, setServer] = useState(
         staticUrl || window.localStorage.DHIS2_BASE_URL || ''
     )
-    const [username, setUsername] = useState('')
+    const [username, setUsername] = useState(staticUsername || '')
     const [password, setPassword] = useState('')
     const [isDirty, setIsDirty] = useState(false)
+    const [mfaChecked, setMfaChecked] = useState(false)
+    const [mfaToken, setMfaToken] = useState(undefined)
 
     const isValid = (val) => val && val.length >= 2
 
@@ -29,21 +37,23 @@ export const LoginModal = () => {
             if (!staticUrl) {
                 window.localStorage.DHIS2_BASE_URL = server
             }
-            try {
-                await post(
-                    `${server}/dhis-web-commons-security/login.action`,
-                    `j_username=${encodeURIComponent(
-                        username
-                    )}&j_password=${encodeURIComponent(password)}`
-                )
-            } catch (e) {
-                console.log(
-                    'TODO: This will always error and cancel the request until we get a real login endpoint!'
-                )
-            }
-
-            // TODO: Hacky solution... this shouldn't require a reload
-            window.location.reload()
+            await attemptLogin({
+                server,
+                username,
+                password,
+                mfaToken,
+                onSuccess: () => {
+                    setIsDirty(false)
+                    setPassword('')
+                    setMfaToken(undefined)
+                    onLoginSuccess && onLoginSuccess()
+                },
+                onFailure: () => {
+                    setPassword('')
+                    setMfaToken(undefined)
+                    onLoginFailure && onLoginFailure()
+                }
+            })
         }
     }
 
@@ -53,47 +63,71 @@ export const LoginModal = () => {
                 <ModalTitle>{i18n.t('Please sign in')}</ModalTitle>
 
                 <ModalContent>
-                    {!staticUrl && (
+                        {!staticUrl && (
+                            <InputField
+                                dataTest="dhis2-adapter-loginserver"
+                                error={isDirty && !isValid(server)}
+                                label={i18n.t('Server')}
+                                name="server"
+                                type="text"
+                                value={server}
+                                onChange={(input) => setServer(input.value)}
+                            />
+                        )}
+
                         <InputField
-                            dataTest="dhis2-adapter-loginserver"
-                            error={isDirty && !isValid(server)}
-                            label={i18n.t('Server')}
-                            name="server"
+                            dataTest="dhis2-adapter-loginname"
+                            error={isDirty && !isValid(username)}
+                            label={i18n.t('Username')}
+                            disabled={staticUsername}
                             type="text"
-                            value={server}
-                            onChange={(input) => setServer(input.value)}
+                            value={username}
+                            onChange={(input) => setUsername(input.value)}
                         />
-                    )}
 
-                    <InputField
-                        dataTest="dhis2-adapter-loginname"
-                        error={isDirty && !isValid(username)}
-                        label={i18n.t('Username')}
-                        name="j_username"
-                        type="text"
-                        value={username}
-                        onChange={(input) => setUsername(input.value)}
-                    />
-
-                    <InputField
-                        dataTest="dhis2-adapter-loginpassword"
-                        error={isDirty && !isValid(password)}
-                        label={i18n.t('Password')}
-                        name="j_password"
-                        type="password"
-                        value={password}
-                        onChange={(input) => setPassword(input.value)}
-                    />
+                        <InputField
+                            dataTest="dhis2-adapter-loginpassword"
+                            error={isDirty && !isValid(password)}
+                            label={i18n.t('Password')}
+                            type="password"
+                            value={password}
+                            onChange={(input) => setPassword(input.value)}
+                        />
+                        <CheckboxField
+                            dataTest="dhis2-adapter-login-mfacheck"
+                            label={i18n.t('Login using two factor authentication')}
+                            checked={mfaChecked}
+                            onChange={(input) => {
+                                !input.checked && setMfaToken(undefined)
+                                setMfaChecked(input.checked)
+                            }}
+                        />
+                        {mfaChecked && (
+                            <InputField dataTest="dhis2-adapter-login-mfatoken"
+                                label={i18n.t('Two factor authentication code')}
+                                error={isDirty && mfaChecked && !isValid(mfaToken)}
+                                value={mfaToken}
+                                type="text"
+                                onChange={(input) => setMfaToken(input.value)}
+                            />
+                        )}
                 </ModalContent>
 
                 <ModalActions>
-                    <Button
-                        primary
-                        dataTest="dhis2-adapter-loginsubmit"
-                        type="submit"
-                    >
-                        {i18n.t('Sign in')}
-                    </Button>
+                    <ButtonStrip>
+                        {onCancel && (
+                            <Button onClick={onCancel}>
+                                {i18n.t('Cancel')}
+                            </Button>
+                        )}
+                        <Button
+                            primary
+                            dataTest="dhis2-adapter-loginsubmit"
+                            type="submit"
+                        >
+                            {i18n.t('Sign in')}
+                        </Button>
+                    </ButtonStrip>
                 </ModalActions>
             </form>
         </Modal>
