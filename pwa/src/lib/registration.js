@@ -187,14 +187,6 @@ export function register(config) {
 }
 
 async function registerValidSW(swUrl /* config */) {
-    const reg = await navigator.serviceWorker.getRegistration()
-    if (reg?.active && navigator.serviceWorker.controller === null) {
-        // The page was hard-reloaded; service worker is disabled
-        // (navigator.serviceWorker.controller becomes null after a hard reload)
-        // Unregister before registering again to reenable service worker.
-        // Will likely cause another refresh due to .oncontrollerchange event
-        await unregister()
-    }
     navigator.serviceWorker.register(swUrl).catch((error) => {
         console.error('Error during service worker registration:', error)
     })
