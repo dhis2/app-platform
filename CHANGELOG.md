@@ -1,3 +1,10 @@
+# [10.1.0](https://github.com/dhis2/app-platform/compare/v10.0.1...v10.1.0) (2022-10-06)
+
+
+### Features
+
+* headerbar PWA update notifications [LIBS-344] ([#748](https://github.com/dhis2/app-platform/issues/748)) ([b245bf1](https://github.com/dhis2/app-platform/commit/b245bf199785bf2ba62843c74a9d29f6e62c0a06))
+
 ## [10.0.1](https://github.com/dhis2/app-platform/compare/v10.0.0...v10.0.1) (2022-09-29)
 
 
