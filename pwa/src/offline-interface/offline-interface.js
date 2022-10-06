@@ -1,6 +1,11 @@
 import EventEmitter from 'events'
 import { swMsgs } from '../lib/constants.js'
-import { register, unregister, checkForUpdates } from '../lib/registration.js'
+import {
+    register,
+    unregister,
+    checkForUpdates,
+    getRegistrationState,
+} from '../lib/registration.js'
 import { openSectionsDB, SECTIONS_STORE } from '../lib/sections-db.js'
 
 /** Helper to simplify SW message sending */
@@ -64,6 +69,10 @@ export class OfflineInterface {
         checkForUpdates({ onUpdate: onNewSW })
     }
 
+    async getRegistrationState() {
+        return await getRegistrationState()
+    }
+
     /**
      * Requests clients info from the active service worker.
      * @returns {Promise}
@@ -71,11 +80,13 @@ export class OfflineInterface {
     getClientsInfo() {
         return new Promise((resolve, reject) => {
             navigator.serviceWorker.getRegistration().then((registration) => {
-                if (!registration || !registration.active) {
-                    reject('There is no active service worker')
+                const newestSW = registration?.waiting || registration?.active
+                if (!newestSW) {
+                    resolve({ clientsCount: 0 })
+                    return
                 }
+
                 // Send request message to newest SW
-                const newestSW = registration.waiting || registration.active
                 newestSW.postMessage({ type: swMsgs.getClientsInfo })
                 // Resolve with payload received from SW `clientsInfo` message
                 this.offlineEvents.once(swMsgs.clientsInfo, resolve)

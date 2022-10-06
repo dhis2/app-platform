@@ -1,3 +1,33 @@
+export const REGISTRATION_STATE_UNREGISTERED = 'UNREGISTERED'
+export const REGISTRATION_STATE_WAITING = 'WAITING'
+export const REGISTRATION_STATE_FIRST_ACTIVATION = 'FIRST_ACTIVATION'
+export const REGISTRATION_STATE_ACTIVE = 'ACTIVE'
+
+async function getRegistration() {
+    if (!('serviceWorker' in navigator)) {
+        return undefined
+    }
+    return await navigator.serviceWorker.getRegistration()
+}
+
+// These states are technically not mutually-exclusive,
+// but we only care about the "most relevant" state
+export async function getRegistrationState() {
+    const registration = await getRegistration()
+
+    if (!registration) {
+        return REGISTRATION_STATE_UNREGISTERED
+    } else if (registration.waiting) {
+        // An update is available
+        return REGISTRATION_STATE_WAITING
+    } else if (registration.active) {
+        if (navigator.serviceWorker.controller === null) {
+            return REGISTRATION_STATE_FIRST_ACTIVATION
+        }
+        return REGISTRATION_STATE_ACTIVE
+    }
+}
+
 export async function checkForUpdates({ onUpdate }) {
     if (!('serviceWorker' in navigator)) {
         return
@@ -157,14 +187,6 @@ export function register(config) {
 }
 
 async function registerValidSW(swUrl /* config */) {
-    const reg = await navigator.serviceWorker.getRegistration()
-    if (reg?.active && navigator.serviceWorker.controller === null) {
-        // The page was hard-reloaded; service worker is disabled
-        // (navigator.serviceWorker.controller becomes null after a hard reload)
-        // Unregister before registering again to reenable service worker.
-        // Will likely cause another refresh due to .oncontrollerchange event
-        await unregister()
-    }
     navigator.serviceWorker.register(swUrl).catch((error) => {
         console.error('Error during service worker registration:', error)
     })
