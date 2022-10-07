@@ -3,7 +3,8 @@
 
 ### Features
 
-* headerbar PWA update notifications [LIBS-344] ([#748](https://github.com/dhis2/app-platform/issues/748)) ([b245bf1](https://github.com/dhis2/app-platform/commit/b245bf199785bf2ba62843c74a9d29f6e62c0a06))
+* headerbar PWA update notifications [LIBS-344](https://dhis2.atlassian.net/browse/LIBS-344) ([#748](https://github.com/dhis2/app-platform/issues/748)) ([b245bf1](https://github.com/dhis2/app-platform/commit/b245bf199785bf2ba62843c74a9d29f6e62c0a06))
+* display app and server debug information in headerbar profile menu [LIBS-176](https://dhis2.atlassian.net/browse/LIBS-176) ([#748](https://github.com/dhis2/app-platform/issues/748)) ([b245bf1](https://github.com/dhis2/app-platform/commit/b245bf199785bf2ba62843c74a9d29f6e62c0a06))
 
 ## [10.0.1](https://github.com/dhis2/app-platform/compare/v10.0.0...v10.0.1) (2022-09-29)
 
