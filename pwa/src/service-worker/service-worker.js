@@ -99,9 +99,10 @@ export function setUpServiceWorker() {
         const navigationRouteHandler = ({ request }) => {
             return fetch(request)
                 .then((response) => {
-                    if (response.type === 'opaqueredirect') {
-                        // It's sending a redirect to the login page. Return
-                        // that to the client
+                    if (response.type === 'opaqueredirect' || !response.ok) {
+                        // It's sending a redirect to the login page,
+                        // or an 'unauthorized'/'forbidden' response.
+                        // Return that to the client
                         return response
                     }
 
@@ -109,7 +110,7 @@ export function setUpServiceWorker() {
                     return matchPrecache(indexUrl)
                 })
                 .catch(() => {
-                    // Request failed (maybe offline). Return cached response
+                    // Request failed (probably offline). Return cached response
                     return matchPrecache(indexUrl)
                 })
         }
