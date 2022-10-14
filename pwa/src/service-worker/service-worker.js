@@ -144,7 +144,8 @@ export function setUpServiceWorker() {
         ({ url }) =>
             PRODUCTION_ENV &&
             urlMeetsAppShellCachingCriteria(url) &&
-            fileExtensionRegexp.test(url.pathname),
+            fileExtensionRegexp.test(url.pathname) &&
+            !/\.(json|action)/.test(url.pathname), // don't SWR these
         new StaleWhileRevalidate({ cacheName: 'other-assets' })
     )
 
