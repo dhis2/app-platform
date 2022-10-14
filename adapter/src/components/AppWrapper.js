@@ -3,6 +3,7 @@ import React from 'react'
 import { useCurrentUserLocale } from '../utils/useLocale.js'
 import { useVerifyLatestUser } from '../utils/useVerifyLatestUser.js'
 import { Alerts } from './Alerts.js'
+import { AuthBoundary } from './AuthBoundary.js'
 import { ConnectedHeaderBar } from './ConnectedHeaderBar.js'
 import { ErrorBoundary } from './ErrorBoundary.js'
 import { LoadingMask } from './LoadingMask.js'
@@ -19,13 +20,15 @@ export const AppWrapper = ({ children }) => {
     return (
         <div className="app-shell-adapter">
             <style jsx>{styles}</style>
-            <ConnectedHeaderBar />
-            <div className="app-shell-app">
-                <ErrorBoundary onRetry={() => window.location.reload()}>
-                    {children}
-                </ErrorBoundary>
-            </div>
-            <Alerts />
+            <AuthBoundary>
+                <ConnectedHeaderBar />
+                <div className="app-shell-app">
+                    <ErrorBoundary onRetry={() => window.location.reload()}>
+                        {children}
+                    </ErrorBoundary>
+                </div>
+                <Alerts />
+            </AuthBoundary>
         </div>
     )
 }
