@@ -7,30 +7,19 @@ import PropTypes from 'prop-types'
 import React, { useState } from 'react'
 import { LoadingMask } from './LoadingMask'
 
-// TODO: Remove useVerifyLatestUser
-// TODO: add actual appName to config; rename existing to appTitle (& refactor)
-//       - will also need to change app-runtime and headerbar-ui APIs
+// TODO: Remove useVerifyLatestUser.js (and in app wrapper)
+
+const LATEST_USER_KEY = 'dhis2.latestUser'
+const IS_PRODUCTION_ENV = process.env.NODE_ENV === 'production'
+
+const APP_MANAGER_AUTHORITY = 'M_dhis-web-maintenance-appmanager'
+const REQUIRED_APP_AUTHORITY = process.env.REACT_APP_DHIS2_APP_AUTH_NAME
 
 const USER_QUERY = {
     user: {
         resource: 'me',
         params: { fields: ['id', 'authorities'] },
     },
-}
-
-const LATEST_USER_KEY = 'dhis2.latestUser'
-
-const getRequiredAppAuthority = (appName) => {
-    // TODO: this only works for installed, non-core apps. Need other logic for those (dhis-web-app-name)
-    // Maybe add this logic to CLI add this to config, instead of needing more env vars here
-    // Need 'coreApp', 'name', 'title' (rename current appName to appTitle)
-    return (
-        'M_' +
-        appName
-            .trim()
-            .replaceAll(/[^a-zA-Z0-9\s]/g, '')
-            .replaceAll(/\s/g, '_')
-    )
 }
 
 async function clearCachesIfUserChanged({ currentUserId, pwaEnabled }) {
@@ -46,6 +35,20 @@ async function clearCachesIfUserChanged({ currentUserId, pwaEnabled }) {
     }
 }
 
+const isAppAvailable = (authorities) => {
+    // Skip check on dev
+    // TODO: should we check on dev environments too?
+    if (!IS_PRODUCTION_ENV) {
+        return true
+    }
+    // Check for three possible authorities
+    return authorities.some((authority) =>
+        ['ALL', APP_MANAGER_AUTHORITY, REQUIRED_APP_AUTHORITY].includes(
+            authority
+        )
+    )
+}
+
 /**
  * This hook is used to clear sensitive caches if a user other than the one
  * that cached that data logs in
@@ -56,8 +59,6 @@ export function AuthBoundary({ children }) {
     const [finished, setFinished] = useState(false)
     const { loading, error, data } = useDataQuery(USER_QUERY, {
         onComplete: async ({ user }) => {
-            console.log({ authorities: user.authorities })
-
             await clearCachesIfUserChanged({
                 currentUserId: user.id,
                 pwaEnabled,
@@ -74,21 +75,13 @@ export function AuthBoundary({ children }) {
         throw new Error('Failed to fetch user ID: ' + error)
     }
 
-    if (data) {
-        const userHasAllAuthority = data.user.authorities.includes('ALL')
-
-        const requiredAppAuthority = getRequiredAppAuthority(appName)
-        console.log({ requiredAppAuthority })
-
-        const userHasRequiredAppAuthority =
-            data.user.authorities.includes(requiredAppAuthority)
-        if (!userHasAllAuthority && !userHasRequiredAppAuthority) {
-            // TODO: better UI element than error boundary?
-            throw new Error('Forbidden: not authorized to view this app')
-        }
+    if (isAppAvailable(data.user.authorities)) {
+        return children
+    } else {
+        throw new Error(
+            `Forbidden: you don't have access to the ${appName} app`
+        )
     }
-
-    return children
 }
 AuthBoundary.propTypes = {
     children: PropTypes.node,

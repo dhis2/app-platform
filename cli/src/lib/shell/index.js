@@ -1,4 +1,5 @@
 const { exec } = require('@dhis2/cli-helpers-engine')
+const formatAppAuthName = require('../formatAppAuthName')
 const { getPWAEnvVars } = require('../pwa')
 const bootstrap = require('./bootstrap')
 const getEnv = require('./env')
@@ -7,6 +8,7 @@ module.exports = ({ config, paths }) => {
     const baseEnvVars = {
         name: config.title,
         version: config.version,
+        auth_name: formatAppAuthName(config),
     }
 
     return {
