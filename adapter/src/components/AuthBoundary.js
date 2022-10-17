@@ -10,8 +10,6 @@ import i18n from '../locales'
 import { LoadingMask } from './LoadingMask'
 import styles from './styles/ErrorBoundary.style.js'
 
-// TODO: Remove useVerifyLatestUser.js (and in app wrapper)
-
 const LATEST_USER_KEY = 'dhis2.latestUser'
 const IS_PRODUCTION_ENV = process.env.NODE_ENV === 'production'
 
