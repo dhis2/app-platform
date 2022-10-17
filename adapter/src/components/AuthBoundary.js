@@ -76,9 +76,10 @@ ForbiddenScreen.propTypes = {
 }
 
 /**
- * This hook is used to clear sensitive caches if a user other than the one
- * that cached that data logs in
- * @returns {Object} - { loading: boolean }
+ * Block the app if the user doesn't have the correct permissions to view this
+ * app.
+ *
+ * Also clear cached data if the current user is different from the previous.
  */
 export function AuthBoundary({ children }) {
     const { pwaEnabled, appName, baseUrl } = useConfig()
