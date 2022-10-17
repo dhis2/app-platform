@@ -42,7 +42,7 @@ const isAppAvailable = (authorities) => {
     // Skip check on dev
     // TODO: should we check on dev environments too?
     if (!IS_PRODUCTION_ENV) {
-        // return true
+        return true
     }
     // Check for three possible authorities
     return authorities.some((authority) =>
