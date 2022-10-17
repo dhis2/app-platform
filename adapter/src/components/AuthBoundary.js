@@ -3,9 +3,12 @@ import {
     useDataQuery,
     clearSensitiveCaches,
 } from '@dhis2/app-runtime'
+import { CenteredContent, NoticeBox } from '@dhis2/ui'
 import PropTypes from 'prop-types'
 import React, { useState } from 'react'
+import i18n from '../locales'
 import { LoadingMask } from './LoadingMask'
+import styles from './styles/ErrorBoundary.style.js'
 
 // TODO: Remove useVerifyLatestUser.js (and in app wrapper)
 
@@ -39,7 +42,7 @@ const isAppAvailable = (authorities) => {
     // Skip check on dev
     // TODO: should we check on dev environments too?
     if (!IS_PRODUCTION_ENV) {
-        return true
+        // return true
     }
     // Check for three possible authorities
     return authorities.some((authority) =>
@@ -49,13 +52,38 @@ const isAppAvailable = (authorities) => {
     )
 }
 
+const ForbiddenScreen = ({ appName, baseUrl }) => {
+    return (
+        <div className="mask fullscreen">
+            <style jsx>{styles}</style>
+            <CenteredContent>
+                <NoticeBox error title={i18n.t('Forbidden')}>
+                    <div>
+                        {i18n.t(
+                            "You don't have access to the {{appName}} app. Contact your system administrator if this seems to be an error.",
+                            { appName }
+                        )}
+                    </div>
+                    <div>
+                        <a href={baseUrl}>{i18n.t('Return to DHIS2 Home')}</a>
+                    </div>
+                </NoticeBox>
+            </CenteredContent>
+        </div>
+    )
+}
+ForbiddenScreen.propTypes = {
+    appName: PropTypes.string,
+    baseUrl: PropTypes.string,
+}
+
 /**
  * This hook is used to clear sensitive caches if a user other than the one
  * that cached that data logs in
  * @returns {Object} - { loading: boolean }
  */
 export function AuthBoundary({ children }) {
-    const { pwaEnabled, appName } = useConfig()
+    const { pwaEnabled, appName, baseUrl } = useConfig()
     const [finished, setFinished] = useState(false)
     const { loading, error, data } = useDataQuery(USER_QUERY, {
         onComplete: async ({ user }) => {
@@ -75,13 +103,11 @@ export function AuthBoundary({ children }) {
         throw new Error('Failed to fetch user ID: ' + error)
     }
 
-    if (isAppAvailable(data.user.authorities)) {
-        return children
-    } else {
-        throw new Error(
-            `Forbidden: you don't have access to the ${appName} app`
-        )
-    }
+    return isAppAvailable(data.user.authorities) ? (
+        children
+    ) : (
+        <ForbiddenScreen appName={appName} baseUrl={baseUrl} />
+    )
 }
 AuthBoundary.propTypes = {
     children: PropTypes.node,
