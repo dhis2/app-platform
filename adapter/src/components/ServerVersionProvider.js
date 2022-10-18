@@ -33,12 +33,12 @@ export const ServerVersionProvider = ({
         // Submitting valid login form with server and credentials reloads page,
         // ostensibly with a filled url prop (now persisted locally)
         if (!baseUrl) {
-            setBaseUrlState(state =>
+            setBaseUrlState((state) =>
                 state.loading ? state : { loading: true }
             )
             // try getting URL from IndexedDB
             getBaseUrlByAppName(appName)
-                .then(baseUrlFromDB => {
+                .then((baseUrlFromDB) => {
                     if (baseUrlFromDB) {
                         // Set baseUrl in state if found in DB
                         setBaseUrlState({
@@ -68,7 +68,7 @@ export const ServerVersionProvider = ({
                         error: new Error('No url specified'),
                     })
                 })
-                .catch(err => {
+                .catch((err) => {
                     console.error(err)
                     setBaseUrlState({ loading: false, error: err })
                 })
@@ -79,7 +79,9 @@ export const ServerVersionProvider = ({
         // If url IS set, try querying API to test authentication and get
         // server version. If it fails, set error to show login modal
 
-        setSystemInfoState((state) => (state.loading ? state : { loading: true }))
+        setSystemInfoState((state) =>
+            state.loading ? state : { loading: true }
+        )
         const request = get(`${baseUrl}/api/system/info`)
         request
             .then((systemInfo) => {
