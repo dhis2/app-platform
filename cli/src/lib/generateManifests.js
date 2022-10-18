@@ -1,13 +1,13 @@
 const { reporter, chalk } = require('@dhis2/cli-helpers-engine')
 const fs = require('fs-extra')
 
-const parseCustomAuthorities = authorities => {
+const parseCustomAuthorities = (authorities) => {
     if (!authorities) {
         return undefined
     }
     if (
         !Array.isArray(authorities) ||
-        !authorities.every(auth => typeof auth === 'string')
+        !authorities.every((auth) => typeof auth === 'string')
     ) {
         reporter.warn(
             `Invalid value ${chalk.bold(
@@ -20,7 +20,7 @@ const parseCustomAuthorities = authorities => {
     }
     return authorities
 }
-const parseDataStoreNamespace = namespace => {
+const parseDataStoreNamespace = (namespace) => {
     if (!namespace) {
         return undefined
     }

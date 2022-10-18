@@ -5,6 +5,9 @@ module.exports = {
     parserOptions: {
         allowImportExportEverywhere: true,
     },
+    rules: {
+        'import/extensions': 'off',
+    },
     overrides: [
         {
             files: ['*.test.js'],

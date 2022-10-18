@@ -3,18 +3,20 @@ import { getBaseUrlByAppName, setBaseUrlByAppName } from '@dhis2/pwa'
 import PropTypes from 'prop-types'
 import React, { useEffect, useState } from 'react'
 import { get } from '../utils/api.js'
-import { parseServerVersion } from '../utils/parseServerVersion.js'
+import { parseDHIS2ServerVersion, parseVersion } from '../utils/parseVersion.js'
 import { LoadingMask } from './LoadingMask.js'
 import { LoginModal } from './LoginModal.js'
+import { useOfflineInterface } from './OfflineInterfaceContext.js'
 
 export const ServerVersionProvider = ({
-    url, // URL from env vars
     appName,
+    appVersion,
+    url, // url from env vars
     apiVersion,
-    offlineInterface,
     pwaEnabled,
     children,
 }) => {
+    const offlineInterface = useOfflineInterface()
     const [systemInfoState, setSystemInfoState] = useState({
         loading: true,
     })
@@ -77,13 +79,13 @@ export const ServerVersionProvider = ({
         // If url IS set, try querying API to test authentication and get
         // server version. If it fails, set error to show login modal
 
-        setSystemInfoState(state => (state.loading ? state : { loading: true }))
+        setSystemInfoState((state) => (state.loading ? state : { loading: true }))
         const request = get(`${baseUrl}/api/system/info`)
         request
-            .then(systemInfo => {
+            .then((systemInfo) => {
                 setSystemInfoState({ loading: false, systemInfo })
             })
-            .catch(e => {
+            .catch((e) => {
                 setSystemInfoState({ loading: false, error: e })
             })
 
@@ -101,12 +103,14 @@ export const ServerVersionProvider = ({
         return <LoadingMask />
     }
 
-    const serverVersion = parseServerVersion(systemInfo.version)
+    const serverVersion = parseDHIS2ServerVersion(systemInfo.version)
     const realApiVersion = serverVersion.minor
 
     return (
         <Provider
             config={{
+                appName,
+                appVersion: parseVersion(appVersion),
                 baseUrl,
                 apiVersion: apiVersion || realApiVersion,
                 serverVersion,
@@ -121,10 +125,10 @@ export const ServerVersionProvider = ({
 }
 
 ServerVersionProvider.propTypes = {
+    appName: PropTypes.string.isRequired,
+    appVersion: PropTypes.string.isRequired,
     apiVersion: PropTypes.number,
-    appName: PropTypes.string,
     children: PropTypes.element,
-    offlineInterface: PropTypes.shape({}),
     pwaEnabled: PropTypes.bool,
     url: PropTypes.string,
 }

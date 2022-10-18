@@ -1,13 +1,13 @@
 import { Strategy } from 'workbox-strategies'
-import { swMsgs } from '../lib/constants'
-import { openSectionsDB, SECTIONS_STORE } from '../lib/sections-db'
+import { swMsgs } from '../lib/constants.js'
+import { openSectionsDB, SECTIONS_STORE } from '../lib/sections-db.js'
 
 // '[]' Fallback prevents error when switching from pwa enabled to disabled
 const CACHEABLE_SECTION_URL_FILTER_PATTERNS = JSON.parse(
     process.env
         .REACT_APP_DHIS2_APP_PWA_CACHING_PATTERNS_TO_OMIT_FROM_CACHEABLE_SECTIONS ||
         '[]'
-).map(pattern => new RegExp(pattern))
+).map((pattern) => new RegExp(pattern))
 
 /**
  * Tracks recording states for multiple clients to handle multiple windows
@@ -46,7 +46,7 @@ export function startRecording(event) {
     self.clientRecordingStates[clientId] = newClientRecordingState
 
     // Send confirmation message to client
-    self.clients.get(clientId).then(client => {
+    self.clients.get(clientId).then((client) => {
         client.postMessage({ type: swMsgs.recordingStarted })
     })
 }
@@ -76,7 +76,7 @@ export function shouldRequestBeRecorded({ url, event }) {
 
     // Don't cache if url matches filter in pattern list from d2.config.js
     const urlMatchesFilter = CACHEABLE_SECTION_URL_FILTER_PATTERNS.some(
-        pattern => pattern.test(url.href)
+        (pattern) => pattern.test(url.href)
     )
     if (urlMatchesFilter) {
         return false
@@ -96,10 +96,10 @@ export class RecordingMode extends Strategy {
 
         return handler
             .fetch(request)
-            .then(response => {
+            .then((response) => {
                 return handleRecordedResponse(request, response, event.clientId)
             })
-            .catch(error => {
+            .catch((error) => {
                 stopRecording(error, event.clientId)
                 // trigger 'fetchDidFail' callback
                 throw error
@@ -160,7 +160,7 @@ function stopRecording(error, clientId) {
     // In case of error, notify client and remove recording.
     // Post message even if !recordingState to ensure client stops.
     if (error) {
-        self.clients.get(clientId).then(client => {
+        self.clients.get(clientId).then((client) => {
             // use plain object instead of Error for firefox compatibility
             client.postMessage({
                 type: swMsgs.recordingError,
@@ -184,7 +184,7 @@ function getCacheKey(...args) {
 function addToCache(cacheKey, request, response) {
     if (response.ok) {
         const responseClone = response.clone()
-        caches.open(cacheKey).then(cache => cache.put(request, responseClone))
+        caches.open(cacheKey).then((cache) => cache.put(request, responseClone))
     }
 }
 
@@ -254,7 +254,7 @@ export async function completeRecording(clientId) {
         const sectionCache = await caches.open(recordingState.sectionId)
         const tempCache = await caches.open(getCacheKey('temp', clientId))
         const tempCacheItemKeys = await tempCache.keys()
-        tempCacheItemKeys.forEach(async request => {
+        tempCacheItemKeys.forEach(async (request) => {
             const response = await tempCache.match(request)
             sectionCache.put(request, response)
         })
@@ -263,7 +263,7 @@ export async function completeRecording(clientId) {
         removeRecording(clientId)
 
         // Send confirmation message to client
-        self.clients.get(clientId).then(client => {
+        self.clients.get(clientId).then((client) => {
             client.postMessage({ type: swMsgs.recordingCompleted })
         })
     } catch (err) {

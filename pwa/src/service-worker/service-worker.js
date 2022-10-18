@@ -5,7 +5,7 @@ import {
     StaleWhileRevalidate,
     Strategy,
 } from 'workbox-strategies'
-import { swMsgs } from '../lib/constants'
+import { swMsgs } from '../lib/constants.js'
 import {
     dhis2ConnectionStatusPlugin,
     initDhis2ConnectionStatus,
@@ -16,7 +16,7 @@ import {
     shouldRequestBeRecorded,
     initClientRecordingStates,
     RecordingMode,
-} from './recording-mode'
+} from './recording-mode.js'
 import {
     urlMeetsAppShellCachingCriteria,
     createDB,
@@ -24,7 +24,7 @@ import {
     setUpKillSwitchServiceWorker,
     getClientsInfo,
     claimClients,
-} from './utils'
+} from './utils.js'
 
 export function setUpServiceWorker() {
     const pwaEnabled = process.env.REACT_APP_DHIS2_APP_PWA_ENABLED === 'true'
@@ -102,7 +102,7 @@ export function setUpServiceWorker() {
         const indexUrl = process.env.PUBLIC_URL + '/index.html'
         const navigationRouteHandler = ({ request }) => {
             return fetch(request)
-                .then(response => {
+                .then((response) => {
                     if (response.type === 'opaqueredirect') {
                         // It's sending a redirect to the login page. Return
                         // that to the client
@@ -121,7 +121,7 @@ export function setUpServiceWorker() {
 
         // Handle the rest of files in the manifest
         const restOfManifest = precacheManifest.filter(
-            e => e !== indexHtmlManifestEntry
+            (e) => e !== indexHtmlManifestEntry
         )
         precacheAndRoute(restOfManifest)
 
@@ -170,9 +170,9 @@ export function setUpServiceWorker() {
     // but don't add anything to cache
     class NetworkAndTryCache extends Strategy {
         _handle(request, handler) {
-            return handler.fetch(request).catch(fetchErr => {
+            return handler.fetch(request).catch((fetchErr) => {
                 // handler.cacheMatch doesn't work b/c it doesn't check all caches
-                return caches.match(request).then(res => {
+                return caches.match(request).then((res) => {
                     // If not found in cache, throw original fetchErr
                     // (if there's a cache err, that will be returned)
                     if (!res) {
@@ -190,7 +190,7 @@ export function setUpServiceWorker() {
 
     // Service Worker event handlers
 
-    self.addEventListener('message', event => {
+    self.addEventListener('message', (event) => {
         if (!event.data) {
             return
         }
@@ -220,7 +220,7 @@ export function setUpServiceWorker() {
     })
 
     // Open DB on activation
-    self.addEventListener('activate', event => {
+    self.addEventListener('activate', (event) => {
         event.waitUntil(createDB().then(removeUnusedCaches))
     })
 }

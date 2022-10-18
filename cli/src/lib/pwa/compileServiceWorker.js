@@ -56,7 +56,7 @@ function compileServiceWorker({ config, paths, mode }) {
     }
 
     return new Promise((resolve, reject) => {
-        const logErr = err => {
+        const logErr = (err) => {
             reporter.debugErr(err.stack || err)
             if (err.details) {
                 reporter.debugErr(err.details)

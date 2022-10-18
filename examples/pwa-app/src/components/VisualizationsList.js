@@ -13,8 +13,8 @@ const query = {
 }
 
 // Usage: 'await wait(500)'
-const wait = ms =>
-    new Promise(resolve => {
+const wait = (ms) =>
+    new Promise((resolve) => {
         setTimeout(resolve, ms)
     })
 
@@ -38,13 +38,13 @@ export default function VisualizationsList() {
                     variables: { page: i + 1 },
                 })
 
-                setVizList(prev =>
+                setVizList((prev) =>
                     prev.concat(res.visualizations.visualizations)
                 )
             }
         }
         cascadingFetch()
-    }, [])
+    }, [engine])
 
     return (
         <>

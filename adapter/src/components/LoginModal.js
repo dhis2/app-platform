@@ -9,8 +9,8 @@ import {
 } from '@dhis2/ui'
 import PropTypes from 'prop-types'
 import React, { useState } from 'react'
-import i18n from '../locales'
-import { post } from '../utils/api'
+import i18n from '../locales/index.js'
+import { post } from '../utils/api.js'
 
 // Check if base URL is set statically as an env var (typical in production)
 const staticUrl = process.env.REACT_APP_DHIS2_BASE_URL
@@ -21,9 +21,9 @@ export const LoginModal = ({ appName, baseUrl }) => {
     const [password, setPassword] = useState('')
     const [isDirty, setIsDirty] = useState(false)
 
-    const isValid = val => val && val.length >= 2
+    const isValid = (val) => val && val.length >= 2
 
-    const onSubmit = async e => {
+    const onSubmit = async (e) => {
         e.preventDefault()
         setIsDirty(true)
         if (isValid(server) && isValid(username) && isValid(password)) {
@@ -64,7 +64,7 @@ export const LoginModal = ({ appName, baseUrl }) => {
                             name="server"
                             type="text"
                             value={server}
-                            onChange={input => setServer(input.value)}
+                            onChange={(input) => setServer(input.value)}
                         />
                     )}
 
@@ -75,7 +75,7 @@ export const LoginModal = ({ appName, baseUrl }) => {
                         name="j_username"
                         type="text"
                         value={username}
-                        onChange={input => setUsername(input.value)}
+                        onChange={(input) => setUsername(input.value)}
                     />
 
                     <InputField
@@ -85,7 +85,7 @@ export const LoginModal = ({ appName, baseUrl }) => {
                         name="j_password"
                         type="password"
                         value={password}
-                        onChange={input => setPassword(input.value)}
+                        onChange={(input) => setPassword(input.value)}
                     />
                 </ModalContent>
 

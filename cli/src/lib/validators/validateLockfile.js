@@ -10,7 +10,7 @@ const singletonDependencies = [
     'styled-jsx',
 ]
 
-const listSingletonDuplicates = yarnLock =>
+const listSingletonDuplicates = (yarnLock) =>
     listDuplicates(yarnLock, {
         includePackages: singletonDependencies,
         singleton: true,
