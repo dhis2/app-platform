@@ -5,8 +5,14 @@ msgstr ""
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1)\n"
-"POT-Creation-Date: 2022-09-22T19:11:17.660Z\n"
-"PO-Revision-Date: 2022-09-22T19:11:17.660Z\n"
+"POT-Creation-Date: 2022-10-18T07:20:55.997Z\n"
+"PO-Revision-Date: 2022-10-18T07:20:55.997Z\n"
+
+msgid "You don't have access to the {{appName}} app"
+msgstr "You don't have access to the {{appName}} app"
+
+msgid "Contact your system administrator for assistance with app access."
+msgstr "Contact your system administrator for assistance with app access."
 
 msgid "Save your data"
 msgstr "Save your data"
