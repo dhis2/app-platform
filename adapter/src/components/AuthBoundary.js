@@ -33,10 +33,14 @@ export function AuthBoundary({ user, children }) {
         children
     ) : (
         <CenteredContent>
-            <NoticeBox error title={i18n.t('Forbidden')}>
+            <NoticeBox
+                error
+                title={i18n.t("You don't have access to the {{appName}} app", {
+                    appName,
+                })}
+            >
                 {i18n.t(
-                    "You don't have access to the {{appName}} app. Contact your system administrator if this seems to be an error.",
-                    { appName }
+                    'Contact your system administrator for assistance with app access.'
                 )}
             </NoticeBox>
         </CenteredContent>
