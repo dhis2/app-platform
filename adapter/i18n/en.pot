@@ -5,8 +5,33 @@ msgstr ""
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1)\n"
-"POT-Creation-Date: 2021-10-12T12:20:51.045Z\n"
-"PO-Revision-Date: 2021-10-12T12:20:51.045Z\n"
+"POT-Creation-Date: 2022-09-22T19:11:17.660Z\n"
+"PO-Revision-Date: 2022-09-22T19:11:17.660Z\n"
+
+msgid "Save your data"
+msgstr "Save your data"
+
+msgid ""
+"Updating will reload all {{n}} open instances of this app, and any unsaved "
+"data will be lost. Save any data you need to, then click 'Reload' when "
+"ready."
+msgstr ""
+"Updating will reload all {{n}} open instances of this app, and any unsaved "
+"data will be lost. Save any data you need to, then click 'Reload' when "
+"ready."
+
+msgid ""
+"Updating will reload all open instances of this app, and any unsaved data "
+"will be lost. Save any data you need to, then click 'Reload' when ready."
+msgstr ""
+"Updating will reload all open instances of this app, and any unsaved data "
+"will be lost. Save any data you need to, then click 'Reload' when ready."
+
+msgid "Cancel"
+msgstr "Cancel"
+
+msgid "Reload"
+msgstr "Reload"
 
 msgid "An error occurred in the DHIS2 application."
 msgstr "An error occurred in the DHIS2 application."
@@ -46,37 +71,3 @@ msgstr "Password"
 
 msgid "Sign in"
 msgstr "Sign in"
-
-msgid "Save your data"
-msgstr "Save your data"
-
-msgid ""
-"Updating will reload all {{n}} open instances of this app, and any unsaved "
-"data will be lost. Save any data you need to, then click 'Reload' when "
-"ready."
-msgstr ""
-"Updating will reload all {{n}} open instances of this app, and any unsaved "
-"data will be lost. Save any data you need to, then click 'Reload' when "
-"ready."
-
-msgid ""
-"Updating will reload all open instances of this app, and any unsaved data "
-"will be lost. Save any data you need to, then click 'Reload' when ready."
-msgstr ""
-"Updating will reload all open instances of this app, and any unsaved data "
-"will be lost. Save any data you need to, then click 'Reload' when ready."
-
-msgid "Cancel"
-msgstr "Cancel"
-
-msgid "Reload"
-msgstr "Reload"
-
-msgid "There's an update available for this app."
-msgstr "There's an update available for this app."
-
-msgid "Update and reload"
-msgstr "Update and reload"
-
-msgid "Not now"
-msgstr "Not now"

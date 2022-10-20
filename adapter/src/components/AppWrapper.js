@@ -1,15 +1,14 @@
-import { HeaderBar } from '@dhis2/ui'
 import PropTypes from 'prop-types'
 import React from 'react'
 import { useCurrentUserLocale } from '../utils/useLocale.js'
 import { useVerifyLatestUser } from '../utils/useVerifyLatestUser.js'
 import { Alerts } from './Alerts.js'
+import { ConnectedHeaderBar } from './ConnectedHeaderBar.js'
 import { ErrorBoundary } from './ErrorBoundary.js'
 import { LoadingMask } from './LoadingMask.js'
-import PWAUpdateManager from './PWAUpdateManager.js'
 import { styles } from './styles/AppWrapper.style.js'
 
-export const AppWrapper = ({ appName, children, offlineInterface, plugin }) => {
+export const AppWrapper = ({ children, plugin }) => {
     const { loading: localeLoading } = useCurrentUserLocale()
     const { loading: latestUserLoading } = useVerifyLatestUser()
 
@@ -20,21 +19,18 @@ export const AppWrapper = ({ appName, children, offlineInterface, plugin }) => {
     return (
         <div className="app-shell-adapter">
             <style jsx>{styles}</style>
-            {!plugin && <HeaderBar appName={appName} />}
+            {!plugin && <ConnectedHeaderBar />}
             <div className="app-shell-app">
                 <ErrorBoundary onRetry={() => window.location.reload()}>
                     {children}
                 </ErrorBoundary>
             </div>
             <Alerts />
-            <PWAUpdateManager offlineInterface={offlineInterface} />
         </div>
     )
 }
 
 AppWrapper.propTypes = {
-    appName: PropTypes.string.isRequired,
-    offlineInterface: PropTypes.object.isRequired,
     children: PropTypes.node,
     plugin: PropTypes.bool,
 }

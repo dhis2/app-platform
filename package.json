@@ -44,5 +44,6 @@
             "name": "DHIS2 Application Platform",
             "description": "Unified application architecture and build pipeline to simplify and standardize application development within the DHIS2 ecosystem."
         }
-    }
+    },
+    "dependencies": {}
 }
