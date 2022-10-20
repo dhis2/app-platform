@@ -8,7 +8,8 @@ module.exports = ({ config, paths }) => {
     const baseEnvVars = {
         name: config.title,
         version: config.version,
-        auth_name: formatAppAuthName(config),
+        auth_name: formatAppAuthName({ config }),
+        legacy_auth_name: formatAppAuthName({ config, legacy: true }),
     }
 
     return {

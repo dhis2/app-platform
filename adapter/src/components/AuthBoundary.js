@@ -6,19 +6,22 @@ import i18n from '../locales'
 
 const IS_PRODUCTION_ENV = process.env.NODE_ENV === 'production'
 const APP_MANAGER_AUTHORITY = 'M_dhis-web-maintenance-appmanager'
-const REQUIRED_APP_AUTHORITY = process.env.REACT_APP_DHIS2_APP_AUTH_NAME
+const APP_AUTH_NAME = process.env.REACT_APP_DHIS2_APP_AUTH_NAME
+const LEGACY_APP_AUTH_NAME = process.env.REACT_APP_DHIS2_APP_LEGACY_AUTH_NAME
 
-const isAppAvailable = (authorities) => {
+const isAppAvailable = ({ userAuthorities, apiVersion }) => {
     // Skip check on dev
-    // TODO: should we check on dev environments too?
     if (!IS_PRODUCTION_ENV) {
         return true
     }
+
+    // On server versions < 35, auth name uses config.title instead of .name
+    const requiredAppAuthority =
+        apiVersion >= 35 ? APP_AUTH_NAME : LEGACY_APP_AUTH_NAME
+
     // Check for three possible authorities
-    return authorities.some((authority) =>
-        ['ALL', APP_MANAGER_AUTHORITY, REQUIRED_APP_AUTHORITY].includes(
-            authority
-        )
+    return userAuthorities.some((authority) =>
+        ['ALL', APP_MANAGER_AUTHORITY, requiredAppAuthority].includes(authority)
     )
 }
 
@@ -27,9 +30,9 @@ const isAppAvailable = (authorities) => {
  * app.
  */
 export function AuthBoundary({ user, children }) {
-    const { appName } = useConfig()
+    const { appName, apiVersion } = useConfig()
 
-    return isAppAvailable(user.authorities) ? (
+    return isAppAvailable({ userAuthorities: user.authorities, apiVersion }) ? (
         children
     ) : (
         <CenteredContent>
