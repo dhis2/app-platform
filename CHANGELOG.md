@@ -1,3 +1,10 @@
+## [10.1.1](https://github.com/dhis2/app-platform/compare/v10.1.0...v10.1.1) (2022-10-21)
+
+
+### Bug Fixes
+
+* **deps:** update app-runtime and ui packages ([#761](https://github.com/dhis2/app-platform/issues/761)) ([f6406c5](https://github.com/dhis2/app-platform/commit/f6406c55be747793317021423e39bf98dc7f04bb))
+
 # [10.1.0](https://github.com/dhis2/app-platform/compare/v10.0.1...v10.1.0) (2022-10-06)
 
 
