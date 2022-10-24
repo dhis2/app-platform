@@ -1,3 +1,10 @@
+## [10.1.2](https://github.com/dhis2/app-platform/compare/v10.1.1...v10.1.2) (2022-10-24)
+
+
+### Bug Fixes
+
+* **pwa:** file SWR filter & allow navigation 403s [LIBS-356] [LIBS-357] ([#762](https://github.com/dhis2/app-platform/issues/762)) ([bbfd3eb](https://github.com/dhis2/app-platform/commit/bbfd3eb2172e81126af0f1515e575134e1c2d79e))
+
 ## [10.1.1](https://github.com/dhis2/app-platform/compare/v10.1.0...v10.1.1) (2022-10-21)
 
 
