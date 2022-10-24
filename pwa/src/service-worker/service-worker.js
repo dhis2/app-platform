@@ -144,7 +144,7 @@ export function setUpServiceWorker() {
         ({ url }) =>
             PRODUCTION_ENV &&
             urlMeetsAppShellCachingCriteria(url) &&
-            /\.(jpg|gif|png|bmp|tiff|ico)$/.test(url.pathname),
+            /\.(jpg|gif|png|bmp|tiff|ico|woff)$/.test(url.pathname),
         new StaleWhileRevalidate({ cacheName: 'other-assets' })
     )
 
