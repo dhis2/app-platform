@@ -1,3 +1,10 @@
+## [10.1.3](https://github.com/dhis2/app-platform/compare/v10.1.2...v10.1.3) (2022-10-26)
+
+
+### Bug Fixes
+
+* **deps:** bump app-runtime to 3.6.1 [LIBS-356] ([#763](https://github.com/dhis2/app-platform/issues/763)) ([190b9e7](https://github.com/dhis2/app-platform/commit/190b9e7a16220421d269410c6482a10c8ff2b6ea))
+
 ## [10.1.2](https://github.com/dhis2/app-platform/compare/v10.1.1...v10.1.2) (2022-10-24)
 
 
