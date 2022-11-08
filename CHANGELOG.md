@@ -1,3 +1,11 @@
+## [10.1.4](https://github.com/dhis2/app-platform/compare/v10.1.3...v10.1.4) (2022-11-08)
+
+
+### Bug Fixes
+
+* **offline-interface:** protect against SW errors ([ad3e476](https://github.com/dhis2/app-platform/commit/ad3e476273823c1c4983c50ac0500e3b9eb19c30))
+* **pwa-boundary:** catch errors ([ecd8b21](https://github.com/dhis2/app-platform/commit/ecd8b21dc34f1eee7497331cb254c459252d355d))
+
 ## [10.1.3](https://github.com/dhis2/app-platform/compare/v10.1.2...v10.1.3) (2022-10-26)
 
 
