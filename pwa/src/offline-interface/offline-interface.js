@@ -8,6 +8,45 @@ import {
 } from '../lib/registration.js'
 import { openSectionsDB, SECTIONS_STORE } from '../lib/sections-db.js'
 
+const PWA_ENABLED = process.env.REACT_APP_DHIS2_APP_PWA_ENABLED === 'true'
+
+/**
+ * This and the following 'test' functions test for PWA features and log errors
+ * if there's an issue so they can be reused in the Offline Interface methods.
+ *
+ * Known situations when navigator.serviceWorker is not available:
+ * 1. Private browsing in firefox
+ * 2. Insecure contexts (e.g. http that's not local host)
+ */
+function testSWAvailable() {
+    if ('serviceWorker' in navigator) {
+        return true
+    }
+
+    const msg =
+        (!window.isSecureContext
+            ? 'This window is not a secure context -- see https://developer.mozilla.org/en-US/docs/Web/Security/Secure_Contexts.'
+            : '`serviceWorker` is not available on `navigator`.') +
+        ' PWA features will not work.'
+    console.error(new Error(msg))
+    return false
+}
+
+function testPWAEnabled() {
+    if (PWA_ENABLED) {
+        return true
+    }
+
+    const msg =
+        'PWA is not enabled in `d2.config.js`. No service worker will be registered and offline interface features will not work.'
+    console.error(new Error(msg))
+    return false
+}
+
+function testPWAAndSW() {
+    return testSWAvailable() && testPWAEnabled()
+}
+
 /** Helper to simplify SW message sending */
 function swMessage(type, payload) {
     if (!navigator.serviceWorker.controller) {
@@ -26,7 +65,8 @@ function swMessage(type, payload) {
  */
 export class OfflineInterface {
     constructor() {
-        this.pwaEnabled = process.env.REACT_APP_DHIS2_APP_PWA_ENABLED === 'true'
+        // Helper property that consumers can check
+        this.pwaEnabled = PWA_ENABLED
 
         if (this.pwaEnabled) {
             register()
@@ -34,7 +74,7 @@ export class OfflineInterface {
             unregister()
         }
 
-        if (!('serviceWorker' in navigator)) {
+        if (!testSWAvailable()) {
             return
         }
 
@@ -78,6 +118,10 @@ export class OfflineInterface {
      * @returns {Promise}
      */
     getClientsInfo() {
+        if (!testSWAvailable()) {
+            return Promise.resolve({ clientsCount: 0 })
+        }
+
         return new Promise((resolve, reject) => {
             navigator.serviceWorker.getRegistration().then((registration) => {
                 const newestSW = registration?.waiting || registration?.active
@@ -104,22 +148,28 @@ export class OfflineInterface {
      * or claim clients if it's the first SW activation
      */
     useNewSW() {
-        navigator.serviceWorker.getRegistration().then((registration) => {
-            if (!registration) {
-                throw new Error('No service worker is registered')
-            }
-            if (registration.waiting) {
-                // Update existing service worker
-                registration.waiting.postMessage({
-                    type: swMsgs.skipWaiting,
-                })
-            } else if (registration.active) {
-                // (First SW activation) Have SW take control of clients
-                registration.active.postMessage({
-                    type: swMsgs.claimClients,
-                })
-            }
-        })
+        if (!testSWAvailable()) {
+            return Promise.resolve()
+        }
+
+        return navigator.serviceWorker
+            .getRegistration()
+            .then((registration) => {
+                if (!registration) {
+                    throw new Error('No service worker is registered')
+                }
+                if (registration.waiting) {
+                    // Update existing service worker
+                    registration.waiting.postMessage({
+                        type: swMsgs.skipWaiting,
+                    })
+                } else if (registration.active) {
+                    // (First SW activation) Have SW take control of clients
+                    registration.active.postMessage({
+                        type: swMsgs.claimClients,
+                    })
+                }
+            })
     }
 
     /**
@@ -157,11 +207,10 @@ export class OfflineInterface {
         onCompleted,
         onError,
     }) {
-        if (!this.pwaEnabled) {
-            throw new Error(
-                'Offline features are not enabled. Make sure `pwa.enabled` is `true` in `d2.config.js`'
-            )
+        if (!testPWAAndSW()) {
+            return
         }
+
         if (!sectionId || !onStarted || !onCompleted || !onError) {
             throw new Error(
                 '[Offline interface] The options { sectionId, onStarted, onCompleted, onError } are required when calling startRecording()'
@@ -213,10 +262,8 @@ export class OfflineInterface {
      * @returns {Promise} A promise that resolves to an array of cached sections.
      */
     async getCachedSections() {
-        if (!this.pwaEnabled) {
-            throw new Error(
-                'Cannot get cached sections - PWA is not enabled in d2.config.js'
-            )
+        if (!testPWAAndSW()) {
+            return []
         }
 
         await navigator.serviceWorker.ready
@@ -241,10 +288,8 @@ export class OfflineInterface {
      * @returns {Promise} A promise that resolves to `true` if at least one of the cache or the idb entry are deleted or `false` if neither were found.
      */
     async removeSection(sectionId) {
-        if (!this.pwaEnabled) {
-            throw new Error(
-                'Cannot remove section - PWA is not enabled in d2.config.js'
-            )
+        if (!testPWAAndSW()) {
+            return false
         }
         if (!sectionId) {
             throw new Error('No section ID specified to delete')
