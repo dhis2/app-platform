@@ -46,5 +46,5 @@ export async function setBaseUrlByAppName({ appName, baseUrl }) {
 
 export async function getBaseUrlByAppName(appName) {
     const db = await openBaseUrlsDB()
-    return db.get(BASE_URL_STORE, appName).then(entry => entry?.baseUrl)
+    return db.get(BASE_URL_STORE, appName).then((entry) => entry?.baseUrl)
 }

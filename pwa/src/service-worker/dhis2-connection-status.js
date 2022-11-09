@@ -40,7 +40,7 @@ export async function updateDhis2ConnectionStatus(isConnectedToDhis2) {
     self.isConnectedToDhis2 = isConnectedToDhis2
 
     const clients = await self.clients.matchAll({ type: 'window' })
-    clients.forEach(client =>
+    clients.forEach((client) =>
         client.postMessage({
             type: swMsgs.dhis2ConnectionStatusUpdate,
             payload: { isConnectedToDhis2 },
