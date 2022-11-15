@@ -1,3 +1,14 @@
+# [10.2.0-alpha.2](https://github.com/dhis2/app-platform/compare/v10.2.0-alpha.1...v10.2.0-alpha.2) (2022-11-15)
+
+
+### Bug Fixes
+
+* **deps:** bump app-runtime to 3.6.1 [LIBS-356] ([#763](https://github.com/dhis2/app-platform/issues/763)) ([190b9e7](https://github.com/dhis2/app-platform/commit/190b9e7a16220421d269410c6482a10c8ff2b6ea))
+* **deps:** update app-runtime and ui packages ([#761](https://github.com/dhis2/app-platform/issues/761)) ([f6406c5](https://github.com/dhis2/app-platform/commit/f6406c55be747793317021423e39bf98dc7f04bb))
+* **offline-interface:** protect against SW errors ([ad3e476](https://github.com/dhis2/app-platform/commit/ad3e476273823c1c4983c50ac0500e3b9eb19c30))
+* **pwa:** file SWR filter & allow navigation 403s [LIBS-356] [LIBS-357] ([#762](https://github.com/dhis2/app-platform/issues/762)) ([bbfd3eb](https://github.com/dhis2/app-platform/commit/bbfd3eb2172e81126af0f1515e575134e1c2d79e))
+* **pwa-boundary:** catch errors ([ecd8b21](https://github.com/dhis2/app-platform/commit/ecd8b21dc34f1eee7497331cb254c459252d355d))
+
 ## [10.1.4](https://github.com/dhis2/app-platform/compare/v10.1.3...v10.1.4) (2022-11-08)
 
 
