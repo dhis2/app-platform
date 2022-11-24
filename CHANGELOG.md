@@ -1,3 +1,10 @@
+## [10.1.6](https://github.com/dhis2/app-platform/compare/v10.1.5...v10.1.6) (2022-11-24)
+
+
+### Bug Fixes
+
+* **pwa:** only count clients in scope ([#760](https://github.com/dhis2/app-platform/issues/760)) ([41113c0](https://github.com/dhis2/app-platform/commit/41113c04f50f6677844f3248d65fcfdbc67a2b58))
+
 ## [10.1.5](https://github.com/dhis2/app-platform/compare/v10.1.4...v10.1.5) (2022-11-15)
 
 
