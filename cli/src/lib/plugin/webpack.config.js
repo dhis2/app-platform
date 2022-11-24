@@ -275,7 +275,7 @@ module.exports = ({ env: webpackEnv, config, paths }) => {
                                 },
                             }),
                         },
-                        // 'asset/resource' fixes fonts, but 'file-loader' breaks css modules
+                        // dhis2: 'asset/resource' fixes fonts, but 'file-loader' breaks css modules
                         // when used for all asset types. So use each for respective files
                         {
                             test: /\.(woff|woff2|eot|ttf|otf)$/i,
@@ -310,6 +310,5 @@ module.exports = ({ env: webpackEnv, config, paths }) => {
         },
         // Saves some chunk size logging
         performance: false,
-        // stats: 'verbose',
     }
 }
