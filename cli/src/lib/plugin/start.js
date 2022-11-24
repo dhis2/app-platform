@@ -7,7 +7,7 @@ process.env.NODE_ENV = 'development'
 const getPublicUrlOrPath = require('react-dev-utils/getPublicUrlOrPath')
 const webpack = require('webpack')
 const WebpackDevServer = require('webpack-dev-server')
-const webpackConfigFactory = require('./webpack.config')
+const webpackConfigFactory = require('../../../config/plugin.webpack.config')
 
 module.exports = async ({ port, config, paths }) => {
     const webpackConfig = webpackConfigFactory({

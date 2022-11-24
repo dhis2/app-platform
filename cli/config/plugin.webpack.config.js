@@ -9,9 +9,9 @@ const getPublicUrlOrPath = require('react-dev-utils/getPublicUrlOrPath')
 const TerserPlugin = require('terser-webpack-plugin')
 const webpack = require('webpack')
 const WorkboxWebpackPlugin = require('workbox-webpack-plugin')
-const makeBabelConfig = require('../../../config/makeBabelConfig')
-const { getPWAEnvVars } = require('../pwa')
-const getShellEnv = require('../shell/env')
+const { getPWAEnvVars } = require('../src/lib/pwa')
+const getShellEnv = require('../src/lib/shell/env')
+const makeBabelConfig = require('./makeBabelConfig')
 
 const babelWebpackConfig = {
     babelrc: false,

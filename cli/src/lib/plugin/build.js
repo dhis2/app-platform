@@ -6,7 +6,7 @@ process.env.NODE_ENV = 'production'
 
 const { reporter } = require('@dhis2/cli-helpers-engine')
 const webpack = require('webpack')
-const webpackConfigFactory = require('./webpack.config')
+const webpackConfigFactory = require('../../../config/plugin.webpack.config')
 
 module.exports = async ({ config, paths }) => {
     reporter.debug('Building plugin...')
