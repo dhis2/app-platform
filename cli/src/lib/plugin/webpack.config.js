@@ -36,7 +36,6 @@ module.exports = ({ env: webpackEnv, config, paths }) => {
     const shellEnv = getShellEnv({
         plugin: 'true',
         name: config.title,
-        // todo: need to make sure PWA is enabled for plugins
         ...getPWAEnvVars(config),
     })
 
