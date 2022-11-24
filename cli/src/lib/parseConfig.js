@@ -43,7 +43,6 @@ const validateConfig = (config) => {
             )
         }
     })
-    // Todo: make sure apps with plugins have `pwa_enabled: true` in the config
     return true
 }
 
