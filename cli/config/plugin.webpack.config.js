@@ -9,9 +9,9 @@ const getPublicUrlOrPath = require('react-dev-utils/getPublicUrlOrPath')
 const TerserPlugin = require('terser-webpack-plugin')
 const webpack = require('webpack')
 const WorkboxWebpackPlugin = require('workbox-webpack-plugin')
-const makeBabelConfig = require('../../../config/makeBabelConfig')
-const { getPWAEnvVars } = require('../pwa')
-const getShellEnv = require('../shell/env')
+const { getPWAEnvVars } = require('../src/lib/pwa')
+const getShellEnv = require('../src/lib/shell/env')
+const makeBabelConfig = require('./makeBabelConfig')
 
 const babelWebpackConfig = {
     babelrc: false,
@@ -36,7 +36,6 @@ module.exports = ({ env: webpackEnv, config, paths }) => {
     const shellEnv = getShellEnv({
         plugin: 'true',
         name: config.title,
-        // todo: need to make sure PWA is enabled for plugins
         ...getPWAEnvVars(config),
     })
 
@@ -276,7 +275,7 @@ module.exports = ({ env: webpackEnv, config, paths }) => {
                                 },
                             }),
                         },
-                        // 'asset/resource' fixes fonts, but 'file-loader' breaks css modules
+                        // dhis2: 'asset/resource' fixes fonts, but 'file-loader' breaks css modules
                         // when used for all asset types. So use each for respective files
                         {
                             test: /\.(woff|woff2|eot|ttf|otf)$/i,
@@ -311,6 +310,5 @@ module.exports = ({ env: webpackEnv, config, paths }) => {
         },
         // Saves some chunk size logging
         performance: false,
-        // stats: 'verbose',
     }
 }
