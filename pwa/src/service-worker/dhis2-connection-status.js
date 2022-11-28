@@ -55,8 +55,8 @@ async function shouldUpdateDhis2ConnectionStatus(request) {
             process.env.REACT_APP_DHIS2_APP_NAME
         )
         if (!baseUrl) {
-            // No base URL is set; go ahead and update status based on this request
-            // even though it might not be to the DHIS2 server
+            // No base URL is set; as a best effort, go ahead and update status
+            // based on this request, even though it might not be to the DHIS2 server
             return true
         } else {
             self.dhis2BaseUrl = baseUrl

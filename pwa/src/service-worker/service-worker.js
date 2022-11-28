@@ -2,6 +2,7 @@ import { precacheAndRoute, matchPrecache, precache } from 'workbox-precaching'
 import { registerRoute, setDefaultHandler } from 'workbox-routing'
 import {
     NetworkFirst,
+    NetworkOnly,
     StaleWhileRevalidate,
     Strategy,
 } from 'workbox-strategies'
@@ -135,6 +136,13 @@ export function setUpServiceWorker() {
         // '[]' fallback prevents an error when switching pwa enabled to disabled
         precacheAndRoute(self.__WB_BUILD_MANIFEST || [])
     }
+
+    // Handling pings: only use the network, and don't update the connection
+    // status (let the runtime do that)
+    registerRoute(
+        ({ url }) => /\/api(\/\d+)?\/system\/ping/.test(url.pathname),
+        new NetworkOnly()
+    )
 
     // Request handler during recording mode: ALL requests are cached
     // Handling routing: https://developers.google.com/web/tools/workbox/modules/workbox-routing#matching_and_handling_in_routes
