@@ -94,7 +94,11 @@ export const dhis2ConnectionStatusPlugin = {
         })
 
         if (await shouldUpdateDhis2ConnectionStatus(request)) {
-            updateDhis2ConnectionStatus(true)
+            // todo: check if we want this
+            // `401 Unauthorized` status should be treated as disconnected.
+            // Other 400+ responses can be considered connected.
+            const isConnected = response.status !== 401
+            updateDhis2ConnectionStatus(isConnected)
         }
         return response
     },
