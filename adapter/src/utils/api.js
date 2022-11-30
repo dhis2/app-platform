@@ -14,7 +14,7 @@ const request = (url, options) => {
         })
             .then((response) => {
                 if (response.status !== 200) {
-                    reject('Request failed', response.statusText)
+                    reject('Request failed ' + response.statusText)
                     return
                 }
                 try {

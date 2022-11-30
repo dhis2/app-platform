@@ -1,6 +1,6 @@
 {
     "name": "root",
-    "version": "10.1.6",
+    "version": "10.2.0-alpha.3",
     "private": true,
     "repository": {
         "type": "git",
@@ -17,7 +17,7 @@
         ]
     },
     "devDependencies": {
-        "@dhis2/cli-style": "^10.4.1",
+        "@dhis2/cli-style": "^10.4.3",
         "@dhis2/cli-utils-docsite": "^3.0.0",
         "concurrently": "^6.0.0",
         "serve": "^12.0.0"

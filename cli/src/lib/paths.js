@@ -57,14 +57,24 @@ module.exports = (cwd = process.cwd()) => {
         d2: path.join(base, './.d2/'),
         appOutputFilename: 'App.js',
         shell: path.join(base, './.d2/shell'),
+        shellSrc: path.join(base, './.d2/shell/src'),
         shellAppEntrypoint: path.join(base, './.d2/shell/src/App.js'),
         shellAppDirname,
         shellApp: path.join(base, `./.d2/shell/${shellAppDirname}`),
+        shellPluginBundleEntrypoint: path.join(
+            base,
+            './.d2/shell/src/plugin.index.js'
+        ),
+        shellPluginEntrypoint: path.join(base, './.d2/shell/src/Plugin.js'),
         shellSrcServiceWorker: path.join(
             base,
             './.d2/shell/src/service-worker.js'
         ),
         shellPublic: path.join(base, './.d2/shell/public'),
+        shellPublicPluginHtml: path.join(
+            base,
+            './.d2/shell/public/plugin.html'
+        ),
         shellPublicServiceWorker: path.join(
             base,
             './.d2/shell/public/service-worker.js'
@@ -101,6 +111,9 @@ module.exports = (cwd = process.cwd()) => {
         ),
         buildLibBundleFile: '{name}-{version}.zip',
         buildLibBundleOutput: path.join(base),
+
+        launchPath: 'index.html',
+        pluginLaunchPath: 'plugin.html',
     }
 
     reporter.debug('PATHS', paths)

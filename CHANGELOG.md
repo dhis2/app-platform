@@ -1,3 +1,11 @@
+# [10.2.0-alpha.3](https://github.com/dhis2/app-platform/compare/v10.2.0-alpha.2...v10.2.0-alpha.3) (2022-11-30)
+
+
+### Bug Fixes
+
+* **deps:** bump platform deps and unpin ([bd2582f](https://github.com/dhis2/app-platform/commit/bd2582f3faa17e46142210c530584e79d4b5998a))
+* **pwa:** only count clients in scope ([#760](https://github.com/dhis2/app-platform/issues/760)) ([41113c0](https://github.com/dhis2/app-platform/commit/41113c04f50f6677844f3248d65fcfdbc67a2b58))
+
 ## [10.1.6](https://github.com/dhis2/app-platform/compare/v10.1.5...v10.1.6) (2022-11-24)
 
 

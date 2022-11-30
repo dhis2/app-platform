@@ -13,6 +13,7 @@ const AppAdapter = ({
     url,
     apiVersion,
     pwaEnabled,
+    plugin,
     children,
 }) => (
     <ErrorBoundary fullscreen onRetry={checkForSWUpdateAndReload}>
@@ -25,7 +26,7 @@ const AppAdapter = ({
                     apiVersion={apiVersion}
                     pwaEnabled={pwaEnabled}
                 >
-                    <AppWrapper>{children}</AppWrapper>
+                    <AppWrapper plugin={plugin}>{children}</AppWrapper>
                 </ServerVersionProvider>
             </PWALoadingBoundary>
         </OfflineInterfaceProvider>
@@ -37,6 +38,7 @@ AppAdapter.propTypes = {
     appVersion: PropTypes.string.isRequired,
     apiVersion: PropTypes.number,
     children: PropTypes.element,
+    plugin: PropTypes.bool,
     pwaEnabled: PropTypes.bool,
     url: PropTypes.string,
 }

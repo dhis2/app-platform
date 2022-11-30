@@ -8,7 +8,7 @@ import { ErrorBoundary } from './ErrorBoundary.js'
 import { LoadingMask } from './LoadingMask.js'
 import { styles } from './styles/AppWrapper.style.js'
 
-export const AppWrapper = ({ children }) => {
+export const AppWrapper = ({ children, plugin }) => {
     const { loading: localeLoading } = useCurrentUserLocale()
     const { loading: latestUserLoading } = useVerifyLatestUser()
 
@@ -19,7 +19,7 @@ export const AppWrapper = ({ children }) => {
     return (
         <div className="app-shell-adapter">
             <style jsx>{styles}</style>
-            <ConnectedHeaderBar />
+            {!plugin && <ConnectedHeaderBar />}
             <div className="app-shell-app">
                 <ErrorBoundary onRetry={() => window.location.reload()}>
                     {children}
@@ -32,4 +32,5 @@ export const AppWrapper = ({ children }) => {
 
 AppWrapper.propTypes = {
     children: PropTypes.node,
+    plugin: PropTypes.bool,
 }

@@ -60,6 +60,11 @@ export function setUpServiceWorker() {
         // Includes all built assets and index.html
         const precacheManifest = self.__WB_MANIFEST || []
 
+        // Same thing for built plugin assets
+        const pluginPrecacheManifest = self.__WB_PLUGIN_MANIFEST || []
+        precacheAndRoute(pluginPrecacheManifest)
+
+        // todo: also do this routing for plugin.html
         // Extract index.html from the manifest to precache, then route
         // in a custom way
         const indexHtmlManifestEntry = precacheManifest.find(({ url }) =>
@@ -129,7 +134,8 @@ export function setUpServiceWorker() {
         // `additionalManifestEntries` option in d2.config.js; see the docs and
         // 'injectPrecacheManifest.js' in the CLI package.
         // '[]' fallback prevents an error when switching pwa enabled to disabled
-        precacheAndRoute(self.__WB_BUILD_MANIFEST || [])
+        const sharedBuildManifest = self.__WB_BUILD_MANIFEST || []
+        precacheAndRoute(sharedBuildManifest)
     }
 
     // Request handler during recording mode: ALL requests are cached
@@ -149,8 +155,12 @@ export function setUpServiceWorker() {
     )
 
     // Network-first caching by default
+    // (and for static assets while in development)
+    // * NOTE: there may be lazy-loading errors while offline in dev mode
     registerRoute(
-        ({ url }) => urlMeetsAppShellCachingCriteria(url),
+        ({ url }) =>
+            urlMeetsAppShellCachingCriteria(url) ||
+            (!PRODUCTION_ENV && fileExtensionRegexp.test(url.pathname)),
         new NetworkFirst({ cacheName: 'app-shell' })
     )
 
