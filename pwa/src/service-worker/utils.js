@@ -118,15 +118,23 @@ export async function getClientsInfo(event) {
 
     // Include uncontrolled clients: necessary to know if there are multiple
     // tabs open upon first SW installation
-    const clientsList = await self.clients.matchAll({
-        includeUncontrolled: true,
-    })
+    const filteredClientsList = await self.clients
+        .matchAll({
+            includeUncontrolled: true,
+        })
+        .then((clientsList) =>
+            // Filter to just clients within this SW scope, because other clients
+            // on this domain but outside of SW scope are returned otherwise
+            clientsList.filter((client) =>
+                client.url.startsWith(self.registration.scope)
+            )
+        )
 
     self.clients.get(clientId).then((client) => {
         client.postMessage({
             type: swMsgs.clientsInfo,
             payload: {
-                clientsCount: clientsList.length,
+                clientsCount: filteredClientsList.length,
             },
         })
     })
