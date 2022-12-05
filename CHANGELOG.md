@@ -1,3 +1,56 @@
+# [10.2.0](https://github.com/dhis2/app-platform/compare/v10.1.6...v10.2.0) (2022-11-30)
+
+
+### Bug Fixes
+
+* **cli:** improve plugin builds ([#749](https://github.com/dhis2/app-platform/issues/749)) ([b3b317c](https://github.com/dhis2/app-platform/commit/b3b317c781a9952b223236e33bf31c75088ae107))
+* add missing webpack dependencies to cli package ([9e58c58](https://github.com/dhis2/app-platform/commit/9e58c58322e56f905abd473af9957f8b24119b95))
+* **cli:** update webpack plugin options ([d084b44](https://github.com/dhis2/app-platform/commit/d084b441ee0dd8aecb2d563a0b1dc16275c11bcd))
+* casing ([ff5aa6b](https://github.com/dhis2/app-platform/commit/ff5aa6bd1da8705811ec62f7e47537ba7c7f0822))
+* handle webpack errors as described in https://webpack.js.org/api/node/\#error-handling ([c557534](https://github.com/dhis2/app-platform/commit/c557534f6ff18eb0990a6eaeb037b0d83bc1c87f))
+* plugin placeholder ([1eea12c](https://github.com/dhis2/app-platform/commit/1eea12c825145480d4fbf2807d3078ef608f2325))
+
+
+### Features
+
+* **cli:** add pwa to plugins; fix plugin build details ([#746](https://github.com/dhis2/app-platform/issues/746)) ([fd920a4](https://github.com/dhis2/app-platform/commit/fd920a41d6d63e1bb4e4934d39e4aef96ead1e4d))
+* include plugin launch path plugin.html in built manifests [LIBS-346] ([#745](https://github.com/dhis2/app-platform/issues/745)) ([8843f6b](https://github.com/dhis2/app-platform/commit/8843f6b6396f0f60ef5cb0c6d09cfe90360e976f))
+* **adapter:** don't render headerbar for plugins ([4ac6d54](https://github.com/dhis2/app-platform/commit/4ac6d541b7369a580f2947ad3987cbfa980bb5ee))
+* **cli:** add webpack config for JS and CSS ([a04b7c6](https://github.com/dhis2/app-platform/commit/a04b7c6c7bd82cbb1bfddbea0e9c0a28fee7ba75))
+* **cli:** add webpack config for JS and CSS ([cec6339](https://github.com/dhis2/app-platform/commit/cec63391562ace95cfc1ce94019fd395fd0f8aa8))
+* **cli:** create plugin entrypoint wrapper during compilation ([8e4dbff](https://github.com/dhis2/app-platform/commit/8e4dbfffdc923d9810d79f2faa739658f8ab768a))
+* **cli:** enable split chunks optimisation in webpack config ([e8ebcbf](https://github.com/dhis2/app-platform/commit/e8ebcbf4a5be6249754c40f623e1b2561e3e77b6))
+* **cli:** plugin start script ([9fea158](https://github.com/dhis2/app-platform/commit/9fea1583a2c9c869ed64e8b6ff2d92e324f25358))
+* **cli:** setup css minimiser webpack plugin ([3f1b1f2](https://github.com/dhis2/app-platform/commit/3f1b1f25dfc3199227bac623616fae49362fff75))
+* **cli:** setup define webpack plugin ([5d8f374](https://github.com/dhis2/app-platform/commit/5d8f3741bfd8c2b7257db2c5078bb5d5664af2f9))
+* **cli:** setup htmlwebpackplugin ([202225c](https://github.com/dhis2/app-platform/commit/202225c9dc21a2fceb44c4fdf8e449455c9d3a0e))
+* **cli:** setup ignore webpack plugin for moment.js ([223b191](https://github.com/dhis2/app-platform/commit/223b19146914cc4fad6c25070da3022d23ea159a))
+* **cli:** setup terser webpack plugin ([2693258](https://github.com/dhis2/app-platform/commit/2693258485cbeec6edca59e60513c05010b785fe))
+* webpack config for plugin ([3e4275c](https://github.com/dhis2/app-platform/commit/3e4275c9cf02b8d198ff075560f09b40ce865cea))
+* **cli:** support plugin entrypoint when validating entrypoints ([04ece0a](https://github.com/dhis2/app-platform/commit/04ece0a034ff88eedd06268f5dc0469226600a50))
+
+# [10.2.0-alpha.3](https://github.com/dhis2/app-platform/compare/v10.2.0-alpha.2...v10.2.0-alpha.3) (2022-11-30)
+
+
+### Bug Fixes
+
+* **deps:** bump platform deps and unpin ([bd2582f](https://github.com/dhis2/app-platform/commit/bd2582f3faa17e46142210c530584e79d4b5998a))
+* **pwa:** only count clients in scope ([#760](https://github.com/dhis2/app-platform/issues/760)) ([41113c0](https://github.com/dhis2/app-platform/commit/41113c04f50f6677844f3248d65fcfdbc67a2b58))
+
+## [10.1.6](https://github.com/dhis2/app-platform/compare/v10.1.5...v10.1.6) (2022-11-24)
+
+
+### Bug Fixes
+
+* **pwa:** only count clients in scope ([#760](https://github.com/dhis2/app-platform/issues/760)) ([41113c0](https://github.com/dhis2/app-platform/commit/41113c04f50f6677844f3248d65fcfdbc67a2b58))
+
+## [10.1.5](https://github.com/dhis2/app-platform/compare/v10.1.4...v10.1.5) (2022-11-15)
+
+
+### Bug Fixes
+
+* **deps:** bump platform deps and unpin ([bd2582f](https://github.com/dhis2/app-platform/commit/bd2582f3faa17e46142210c530584e79d4b5998a))
+
 ## [10.1.4](https://github.com/dhis2/app-platform/compare/v10.1.3...v10.1.4) (2022-11-08)
 
 

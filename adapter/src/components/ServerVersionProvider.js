@@ -88,6 +88,8 @@ export const ServerVersionProvider = ({
                 setSystemInfoState({ loading: false, systemInfo })
             })
             .catch((e) => {
+                // Todo: If this is a network error, the app cannot load -- handle that gracefully here
+                // if (e === 'Network error') { ... }
                 setSystemInfoState({ loading: false, error: e })
             })
 

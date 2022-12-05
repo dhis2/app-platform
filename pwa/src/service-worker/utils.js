@@ -6,6 +6,12 @@ import {
 } from '../lib/sections-db.js'
 
 const CACHE_KEEP_LIST = ['other-assets', 'app-shell']
+const APP_ADAPTER_URL_PATTERNS = [
+    /\/api(\/\d+)?\/system\/info/, // from ServerVersionProvider
+    /\/api(\/\d+)?\/userSettings/, // useLocale
+    /\/api(\/\d+)?\/me\?fields=id$/, // useVerifyLatestUser
+]
+
 // '[]' Fallback prevents error when switching from pwa enabled to disabled
 const APP_SHELL_URL_FILTER_PATTERNS = JSON.parse(
     process.env
@@ -46,6 +52,14 @@ export function setUpKillSwitchServiceWorker() {
 }
 
 export function urlMeetsAppShellCachingCriteria(url) {
+    // Cache this request if it is important for the app adapter to load
+    const isAdapterRequest = APP_ADAPTER_URL_PATTERNS.some((pattern) =>
+        pattern.test(url.href)
+    )
+    if (isAdapterRequest) {
+        return true
+    }
+
     // Don't cache if pwa.caching.omitExternalRequests in d2.config is true
     if (
         OMIT_EXTERNAL_REQUESTS_FROM_APP_SHELL &&
@@ -104,15 +118,23 @@ export async function getClientsInfo(event) {
 
     // Include uncontrolled clients: necessary to know if there are multiple
     // tabs open upon first SW installation
-    const clientsList = await self.clients.matchAll({
-        includeUncontrolled: true,
-    })
+    const filteredClientsList = await self.clients
+        .matchAll({
+            includeUncontrolled: true,
+        })
+        .then((clientsList) =>
+            // Filter to just clients within this SW scope, because other clients
+            // on this domain but outside of SW scope are returned otherwise
+            clientsList.filter((client) =>
+                client.url.startsWith(self.registration.scope)
+            )
+        )
 
     self.clients.get(clientId).then((client) => {
         client.postMessage({
             type: swMsgs.clientsInfo,
             payload: {
-                clientsCount: clientsList.length,
+                clientsCount: filteredClientsList.length,
             },
         })
     })

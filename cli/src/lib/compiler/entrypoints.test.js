@@ -256,4 +256,166 @@ describe('verifyEntrypoints', () => {
         )
         expect(resolveModule).toHaveBeenCalledTimes(3)
     })
+
+    it(`does not throw an error if a plugin's entrypoint is located in the 'src' directory`, () => {
+        const resolveModule = jest.fn()
+
+        const appConfig1 = {
+            type: 'app',
+            entryPoints: {
+                plugin: './src/plugin.js',
+            },
+        }
+        expect(() =>
+            verifyEntrypoints({
+                config: appConfig1,
+                paths: {
+                    base: '/the/base/path',
+                },
+                resolveModule,
+            })
+        ).not.toThrow()
+
+        const appConfig2 = {
+            type: 'app',
+            entryPoints: {
+                plugin: 'src/plugin.js',
+            },
+        }
+        expect(() =>
+            verifyEntrypoints({
+                config: appConfig2,
+                paths: {
+                    base: '/the/base/path',
+                },
+                resolveModule,
+            })
+        ).not.toThrow()
+    })
+
+    it(`throws an error if a plugin's entrypoint is not located in the 'src' directory`, () => {
+        const appConfig = {
+            type: 'app',
+            entryPoints: {
+                plugin: 'plugin.js',
+            },
+        }
+        expect(() =>
+            verifyEntrypoints({
+                config: appConfig,
+                paths: {
+                    base: '/the/base/path',
+                },
+            })
+        ).toThrow(
+            `Entrypoint plugin.js must be located within the ./src directory`
+        )
+    })
+
+    it(`does not throw an error if a plugin's entrypoint exists`, () => {
+        const appConfig = {
+            type: 'app',
+            entryPoints: {
+                plugin: './src/plugin.js',
+            },
+        }
+        const resolveModule = jest.fn()
+
+        expect(() =>
+            verifyEntrypoints({
+                config: appConfig,
+                paths: {
+                    base: '/the/base/path',
+                },
+                resolveModule,
+            })
+        ).not.toThrow()
+        expect(resolveModule).toHaveBeenCalledWith(
+            '/the/base/path/src/plugin.js'
+        )
+    })
+
+    it(`throws an error if a plugin's entrypoint does not exist`, () => {
+        const appConfig = {
+            type: 'app',
+            entryPoints: {
+                plugin: './src/plugin.js',
+            },
+        }
+        const resolveModule = jest.fn((path) => {
+            throw new Error(`Cannot find module '${path}'`)
+        })
+
+        const expectedError = 'Could not resolve entrypoint ./src/plugin.js'
+        expect(() =>
+            verifyEntrypoints({
+                config: appConfig,
+                paths: {
+                    base: '/the/base/path',
+                },
+                resolveModule,
+            })
+        ).toThrow(expectedError)
+        expect(reporter.error).toHaveBeenCalledWith(expectedError)
+        expect(resolveModule).toHaveBeenCalledWith(
+            '/the/base/path/src/plugin.js'
+        )
+    })
+
+    it(`throws an error if an app does not define any entrypoints`, () => {
+        const resolveModule = jest.fn()
+        const paths = {
+            base: '/the/base/path',
+        }
+
+        const appConfig1 = {
+            type: 'app',
+            entryPoints: {},
+        }
+        const appConfig2 = {
+            type: 'app',
+            entryPoints: undefined,
+        }
+
+        const expectedAppError = 'Apps must define an app or plugin entrypoint'
+        expect(() =>
+            verifyEntrypoints({
+                config: appConfig1,
+                paths,
+                resolveModule,
+            })
+        ).toThrow(expectedAppError)
+        expect(() =>
+            verifyEntrypoints({
+                config: appConfig2,
+                paths,
+                resolveModule,
+            })
+        ).toThrow(expectedAppError)
+
+        const libConfig1 = {
+            type: 'lib',
+            entryPoints: {},
+        }
+        const libConfig2 = {
+            type: 'lib',
+            entryPoints: undefined,
+        }
+
+        const expectedLibError = 'Libraries must define a lib entrypoint'
+        expect(() =>
+            verifyEntrypoints({
+                config: libConfig1,
+                paths,
+                resolveModule,
+            })
+        ).toThrow(expectedLibError)
+        expect(() =>
+            verifyEntrypoints({
+                config: libConfig2,
+                paths,
+                resolveModule,
+            })
+        ).toThrow(expectedLibError)
+    })
 })
