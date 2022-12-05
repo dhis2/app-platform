@@ -107,18 +107,11 @@ export async function removeUnusedCaches() {
     )
 }
 
-/**
- * Can be used to access information about this service worker's clients.
- * Sends back information on a message with 'CLIENTS_INFO' type; the payload
- * currently contains the number of current clients, including uncontrolled.
- * @returns {Object} { clientsCounts: number }
- */
-export async function getClientsInfo(event) {
-    const clientId = event.source.id
-
+/** Get all clients including uncontrolled, but only those within SW scope */
+export function getAllClientsInScope() {
     // Include uncontrolled clients: necessary to know if there are multiple
     // tabs open upon first SW installation
-    const filteredClientsList = await self.clients
+    return self.clients
         .matchAll({
             includeUncontrolled: true,
         })
@@ -129,12 +122,24 @@ export async function getClientsInfo(event) {
                 client.url.startsWith(self.registration.scope)
             )
         )
+}
+
+/**
+ * Can be used to access information about this service worker's clients.
+ * Sends back information on a message with 'CLIENTS_INFO' type; the payload
+ * currently contains the number of current clients, including uncontrolled.
+ * @returns {Object} { clientsCounts: number }
+ */
+export async function getClientsInfo(event) {
+    const clientId = event.source.id
+
+    const clientsList = await getAllClientsInScope()
 
     self.clients.get(clientId).then((client) => {
         client.postMessage({
             type: swMsgs.clientsInfo,
             payload: {
-                clientsCount: filteredClientsList.length,
+                clientsCount: clientsList.length,
             },
         })
     })
