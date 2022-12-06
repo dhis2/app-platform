@@ -1,13 +1,12 @@
 import { getBaseUrlByAppName } from '../lib/base-url-db.js'
 import { swMsgs } from '../lib/constants.js'
+import { getAllClientsInScope } from './utils.js'
 
 /**
  * Tracks connection to the DHIS2 server based on fetch successes or failures.
  * Starts as null because it can't be determined until a request is sent
  */
 export function initDhis2ConnectionStatus() {
-    self.isConnectedToDhis2 = null
-
     // base url is only set as an env var in production.
     // in dev/standalone env, this may be undefined,
     // and the base URL can be accessed from IDB later.
@@ -24,31 +23,23 @@ export function initDhis2ConnectionStatus() {
     }
 }
 
-export async function updateDhis2ConnectionStatus(isConnectedToDhis2) {
+export async function updateDhis2ConnectionStatus(isConnected) {
     // todo: remove
     console.log('in update', {
-        isConnectedToDhis2,
+        isConnected: isConnected,
         oldIsConnectedToDhis2: self.isConnectedToDhis2,
     })
 
-    // todo: avoid spamming duplicate status updates
-    const hasStatusChanged = isConnectedToDhis2 !== self.isConnectedToDhis2
-    if (!hasStatusChanged) {
-        // return
-    }
-
-    self.isConnectedToDhis2 = isConnectedToDhis2
-
-    const clients = await self.clients.matchAll({ type: 'window' })
+    const clients = await getAllClientsInScope()
     clients.forEach((client) =>
         client.postMessage({
             type: swMsgs.dhis2ConnectionStatusUpdate,
-            payload: { isConnectedToDhis2 },
+            payload: { isConnectedToDhis2: isConnected },
         })
     )
 }
 
-async function shouldUpdateDhis2ConnectionStatus(request) {
+async function isRequestToDhis2Server(request) {
     // If dhis2BaseUrl isn't set, try getting it from IDB
     if (!self.dhis2BaseUrl) {
         const baseUrl = await getBaseUrlByAppName(
@@ -63,8 +54,6 @@ async function shouldUpdateDhis2ConnectionStatus(request) {
         }
     }
 
-    // assuming self.dhis2BaseUrl is an absolute url, update online status if
-    // this request URL matches the DHIS2 server base URL
     return request.url.startsWith(self.dhis2BaseUrl)
 }
 
@@ -81,7 +70,7 @@ export const dhis2ConnectionStatusPlugin = {
             baseUrl: self.dhis2BaseUrl,
         })
 
-        if (await shouldUpdateDhis2ConnectionStatus(request)) {
+        if (await isRequestToDhis2Server(request)) {
             updateDhis2ConnectionStatus(false)
         }
     },
@@ -93,7 +82,7 @@ export const dhis2ConnectionStatusPlugin = {
             env: process.env,
         })
 
-        if (await shouldUpdateDhis2ConnectionStatus(request)) {
+        if (await isRequestToDhis2Server(request)) {
             updateDhis2ConnectionStatus(true)
         }
         return response
