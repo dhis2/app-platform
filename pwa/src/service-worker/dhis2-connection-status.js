@@ -1,3 +1,4 @@
+import throttle from 'lodash/throttle'
 import { getBaseUrlByAppName } from '../lib/base-url-db.js'
 import { swMsgs } from '../lib/constants.js'
 import { getAllClientsInScope } from './utils.js'
@@ -23,7 +24,9 @@ export function initDhis2ConnectionStatus() {
     }
 }
 
-export async function updateDhis2ConnectionStatus(isConnected) {
+const BROADCAST_INTERVAL_MS = 1000
+// Throttle this a bit to reduce SW-client messaging
+const broadcastDhis2ConnectionStatus = throttle(async (isConnected) => {
     // todo: remove
     console.log('in update', {
         isConnected: isConnected,
@@ -37,7 +40,7 @@ export async function updateDhis2ConnectionStatus(isConnected) {
             payload: { isConnectedToDhis2: isConnected },
         })
     )
-}
+}, BROADCAST_INTERVAL_MS)
 
 async function isRequestToDhis2Server(request) {
     // If dhis2BaseUrl isn't set, try getting it from IDB
@@ -67,23 +70,20 @@ export const dhis2ConnectionStatusPlugin = {
         console.log('fetch did FAIL', {
             request,
             error,
-            baseUrl: self.dhis2BaseUrl,
         })
 
         if (await isRequestToDhis2Server(request)) {
-            updateDhis2ConnectionStatus(false)
+            broadcastDhis2ConnectionStatus(false)
         }
     },
     fetchDidSucceed: async ({ request, response }) => {
         console.log('fetch did SUCCEED', {
             request,
             response,
-            baseUrl: self.dhis2BaseUrl,
-            env: process.env,
         })
 
         if (await isRequestToDhis2Server(request)) {
-            updateDhis2ConnectionStatus(true)
+            broadcastDhis2ConnectionStatus(true)
         }
         return response
     },
