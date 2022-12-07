@@ -174,7 +174,7 @@ export class OfflineInterface {
 
     /**
      * @param {Object} params
-     * @param {Function} params.onChange - Called on status updates with argument { isConnectedToDhis2: bool }
+     * @param {Function} params.onChange - Called on status updates with argument { isConnected: bool }
      * @returns {Function} - An unsubscribe function
      */
     subscribeToDhis2ConnectionStatus({ onChange }) {

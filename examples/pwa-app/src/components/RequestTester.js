@@ -15,15 +15,15 @@ const query = {
 export default function RequestTester() {
     const engine = useDataEngine()
 
-    // const { isConnectedToDhis2 } = useDhis2ConnectionStatus()
-    const isConnectedToDhis2 = true
+    // const { isConnected } = useDhis2ConnectionStatus()
+    const isConnected = true
 
     const internalRequest = () => {
-        console.log('internal request')
+        console.log('Request tester: internal request')
         engine.query(query)
     }
     const externalRequest = () => {
-        console.log('external request')
+        console.log('Request tester: external request')
         fetch('https://random.dog/woof.json')
     }
 
@@ -31,7 +31,7 @@ export default function RequestTester() {
         <div>
             <div>
                 Connection to DHIS2 server:{' '}
-                {isConnectedToDhis2 ? (
+                {isConnected ? (
                     <span style={{ color: 'green' }}>Connected</span>
                 ) : (
                     <span style={{ color: 'red' }}>NOT CONNECTED</span>

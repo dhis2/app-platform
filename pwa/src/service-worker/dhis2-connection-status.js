@@ -24,20 +24,17 @@ export function initDhis2ConnectionStatus() {
     }
 }
 
+// Throttle this a bit to reduce SW/client messaging
 const BROADCAST_INTERVAL_MS = 1000
-// Throttle this a bit to reduce SW-client messaging
 const broadcastDhis2ConnectionStatus = throttle(async (isConnected) => {
     // todo: remove
-    console.log('in update', {
-        isConnected: isConnected,
-        oldIsConnectedToDhis2: self.isConnectedToDhis2,
-    })
+    console.log('in update', { newIsConnected: isConnected })
 
     const clients = await getAllClientsInScope()
     clients.forEach((client) =>
         client.postMessage({
             type: swMsgs.dhis2ConnectionStatusUpdate,
-            payload: { isConnectedToDhis2: isConnected },
+            payload: { isConnected },
         })
     )
 }, BROADCAST_INTERVAL_MS)
@@ -67,20 +64,14 @@ async function isRequestToDhis2Server(request) {
 export const dhis2ConnectionStatusPlugin = {
     // todo: remove console logs
     fetchDidFail: async ({ request, error }) => {
-        console.log('fetch did FAIL', {
-            request,
-            error,
-        })
+        console.log('fetch did FAIL', { request, error })
 
         if (await isRequestToDhis2Server(request)) {
             broadcastDhis2ConnectionStatus(false)
         }
     },
     fetchDidSucceed: async ({ request, response }) => {
-        console.log('fetch did SUCCEED', {
-            request,
-            response,
-        })
+        console.log('fetch did SUCCEED', { request, response })
 
         if (await isRequestToDhis2Server(request)) {
             broadcastDhis2ConnectionStatus(true)
