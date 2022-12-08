@@ -174,13 +174,13 @@ export class OfflineInterface {
 
     /**
      * @param {Object} params
-     * @param {Function} params.onChange - Called on status updates with argument { isConnected: bool }
+     * @param {Function} params.onUpdate - Called on status updates with argument { isConnected: bool }
      * @returns {Function} - An unsubscribe function
      */
-    subscribeToDhis2ConnectionStatus({ onChange }) {
-        this.offlineEvents.on(swMsgs.dhis2ConnectionStatusUpdate, onChange)
+    subscribeToDhis2ConnectionStatus({ onUpdate }) {
+        this.offlineEvents.on(swMsgs.dhis2ConnectionStatusUpdate, onUpdate)
         return () =>
-            this.offlineEvents.off(swMsgs.dhis2ConnectionStatusUpdate, onChange)
+            this.offlineEvents.off(swMsgs.dhis2ConnectionStatusUpdate, onUpdate)
     }
 
     /**
