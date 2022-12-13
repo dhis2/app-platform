@@ -1,4 +1,5 @@
 import { useDataEngine } from '@dhis2/app-runtime'
+// todo: update import once app-runtime is released
 // import { useDhis2ConnectionStatus } from '@dhis2/app-service-offline'
 import { Box, Button, ButtonStrip, Help } from '@dhis2/ui'
 import React from 'react'
@@ -15,8 +16,10 @@ const query = {
 export default function RequestTester() {
     const engine = useDataEngine()
 
-    // const { isConnected } = useDhis2ConnectionStatus()
-    const isConnected = true
+    // todo: uncomment this and the import to test once the 'temp' scripts in
+    // pkg.json have been run
+    // const { isConnected, lastConnected } = useDhis2ConnectionStatus()
+    const [isConnected, lastConnected] = [true, null]
 
     const internalRequest = () => {
         console.log('Request tester: internal request')
@@ -36,6 +39,9 @@ export default function RequestTester() {
                 ) : (
                     <span style={{ color: 'red' }}>NOT CONNECTED</span>
                 )}
+            </div>
+            <div>
+                Last connected: {lastConnected?.toLocaleTimeString() || 'null'}
             </div>
             <Help>Based on useDhis2ConnectionStatus()</Help>
             <Box marginTop={'12px'}>

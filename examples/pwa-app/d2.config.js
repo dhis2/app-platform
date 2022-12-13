@@ -11,7 +11,8 @@ const config = {
 
     entryPoints: {
         app: './src/App.js',
-        plugin: './src/components/VisualizationsList.js',
+        // Uncomment this to test plugin builds:
+        // plugin: './src/components/VisualizationsList.js',
     },
 }
 

@@ -38,8 +38,9 @@
         "test:adapter": "yarn workspace @dhis2/app-adapter test",
         "test:cli": "yarn workspace @dhis2/cli-app-scripts test",
         "test": "yarn test:adapter && yarn test:cli",
-        "temp-cp-app-runtime": "rm -rf node_modules/@dhis2/app-service-offline/build && rm -rf examples/pwa-app/.d2/shell/node_modules/.cache && cp -r ../app-runtime/services/offline/build node_modules/@dhis2/app-service-offline/",
-        "temp-app-start": "yarn workspace pwa-app start"
+        "temp:cp-app-runtime": "rm -rf node_modules/@dhis2/app-service-offline/build && rm -rf examples/pwa-app/.d2/shell/node_modules/.cache && cp -r ../app-runtime/services/offline/build node_modules/@dhis2/app-service-offline/",
+        "temp:start-pwa-app": "yarn workspace pwa-app start",
+        "temp:start": "yarn temp:cp-app-runtime && yarn temp:start-pwa-app"
     },
     "d2": {
         "docsite": {
