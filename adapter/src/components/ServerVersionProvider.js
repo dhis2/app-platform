@@ -19,10 +19,12 @@ export const ServerVersionProvider = ({
     const offlineInterface = useOfflineInterface()
     const [systemInfoState, setSystemInfoState] = useState({
         loading: true,
+        error: undefined,
+        systemInfo: undefined,
     })
     const [baseUrlState, setBaseUrlState] = useState({
         loading: !url,
-        error: null,
+        error: undefined,
         baseUrl: url,
     })
     const { systemInfo } = systemInfoState
@@ -33,8 +35,12 @@ export const ServerVersionProvider = ({
         // Submitting valid login form with server and credentials reloads page,
         // ostensibly with a filled url prop (now persisted locally)
         if (!baseUrl) {
+            // Use a function as the argument to avoid needing baseUrlState as
+            // a dependency for useEffect
             setBaseUrlState((state) =>
-                state.loading ? state : { loading: true }
+                state.loading
+                    ? state
+                    : { loading: true, error: undefined, systemInfo: undefined }
             )
             // try getting URL from IndexedDB
             getBaseUrlByAppName(appName)
@@ -43,6 +49,7 @@ export const ServerVersionProvider = ({
                         // Set baseUrl in state if found in DB
                         setBaseUrlState({
                             loading: false,
+                            error: undefined,
                             baseUrl: baseUrlFromDB,
                         })
                         return
@@ -54,6 +61,7 @@ export const ServerVersionProvider = ({
                     if (baseUrlFromLocalStorage) {
                         setBaseUrlState({
                             loading: false,
+                            error: undefined,
                             baseUrl: baseUrlFromLocalStorage,
                         })
                         // Also set it in IndexedDB for SW to access
@@ -66,11 +74,16 @@ export const ServerVersionProvider = ({
                     setBaseUrlState({
                         loading: false,
                         error: new Error('No url specified'),
+                        baseUrl: undefined,
                     })
                 })
                 .catch((err) => {
                     console.error(err)
-                    setBaseUrlState({ loading: false, error: err })
+                    setBaseUrlState({
+                        loading: false,
+                        error: err,
+                        baseUrl: undefined,
+                    })
                 })
 
             return
@@ -80,17 +93,27 @@ export const ServerVersionProvider = ({
         // server version. If it fails, set error to show login modal
 
         setSystemInfoState((state) =>
-            state.loading ? state : { loading: true }
+            state.loading
+                ? state
+                : { loading: true, error: undefined, systemInfo: undefined }
         )
         const request = get(`${baseUrl}/api/system/info`)
         request
             .then((systemInfo) => {
-                setSystemInfoState({ loading: false, systemInfo })
+                setSystemInfoState({
+                    loading: false,
+                    error: undefined,
+                    systemInfo: systemInfo,
+                })
             })
             .catch((e) => {
                 // Todo: If this is a network error, the app cannot load -- handle that gracefully here
                 // if (e === 'Network error') { ... }
-                setSystemInfoState({ loading: false, error: e })
+                setSystemInfoState({
+                    loading: false,
+                    error: e,
+                    systemInfo: undefined,
+                })
             })
 
         return () => {
