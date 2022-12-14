@@ -96,7 +96,7 @@ export const ServerVersionProvider = ({
         return () => {
             request.abort()
         }
-    }, [baseUrl])
+    }, [appName, baseUrl])
 
     // This needs to come before 'loading' case to show modal at correct times
     if (systemInfoState.error || baseUrlState.error) {
