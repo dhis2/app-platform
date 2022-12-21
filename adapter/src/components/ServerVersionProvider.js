@@ -55,7 +55,7 @@ export const ServerVersionProvider = ({
                         return
                     }
                     // If no URL found in DB, try localStorage
-                    // TODO: deprecate
+                    // (previous adapter versions stored the base URL there)
                     const baseUrlFromLocalStorage =
                         window.localStorage.DHIS2_BASE_URL
                     if (baseUrlFromLocalStorage) {

@@ -27,7 +27,7 @@ export function initDhis2ConnectionStatus() {
 // Throttle this a bit to reduce SW/client messaging
 const BROADCAST_INTERVAL_MS = 1000
 const broadcastDhis2ConnectionStatus = throttle(async (isConnected) => {
-    // todo: remove
+    // todo: remove log after testing the PR
     console.log('sw: broadcasting update', { newIsConnected: isConnected })
 
     const clients = await getAllClientsInScope()
@@ -62,7 +62,7 @@ async function isRequestToDhis2Server(request) {
  * https://developer.chrome.com/docs/workbox/using-plugins/
  */
 export const dhis2ConnectionStatusPlugin = {
-    // todo: remove console logs
+    // todo: remove console logs after testing the PR
     fetchDidFail: async ({ request, error }) => {
         console.log('sw: fetch FAILED', { request, error })
 

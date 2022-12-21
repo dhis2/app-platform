@@ -32,13 +32,11 @@ function openBaseUrlsDB() {
     })
 }
 
-/** Deletes the DB */
+/** Deletes the DB (probably not needed) */
 // function deleteBaseUrlsDB() {
 //     return deleteDB(BASE_URL_DB)
 // }
 
-// todo: maybe this should also send a message to the service worker
-// that can be handled by the next requests... but what if no requests happen?
 export async function setBaseUrlByAppName({ appName, baseUrl }) {
     const db = await openBaseUrlsDB()
     return db.put(BASE_URL_STORE, { appName, baseUrl })
