@@ -75,11 +75,14 @@ const compile = async ({
             entrypoint: config.entryPoints.app,
             paths,
         })
-        if (config.entryPoints.plugin) {
-            await createPluginEntrypointWrapper({
-                entrypoint: config.entryPoints.plugin,
-                paths,
-            })
+        if (config.entryPoints.plugins) {
+            for (const plugin of config.entryPoints?.plugins) {
+                await createPluginEntrypointWrapper({
+                    pluginName: plugin.name,
+                    entrypoint: plugin.src,
+                    paths,
+                })
+            }
         }
     }
 

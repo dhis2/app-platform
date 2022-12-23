@@ -96,9 +96,36 @@ exports.createAppEntrypointWrapper = async ({ entrypoint, paths }) => {
     )
 }
 
-exports.createPluginEntrypointWrapper = async ({ entrypoint, paths }) => {
+const createPluginFile = (pluginName) =>
+    `import { CssReset } from '@dhis2/ui'
+import React from 'react'
+import ReactDOM from 'react-dom'
+` +
+    `import Plugin from './Plugin-${pluginName}.js'
+` +
+    `import 'typeface-roboto'
+import './index.css'
+
+ReactDOM.render(
+    <>
+        <CssReset />
+        <Plugin />
+    </>,
+    document.getElementById('dhis2-app-root')
+)
+`
+
+exports.createPluginEntrypointWrapper = async ({
+    pluginName,
+    entrypoint,
+    paths,
+}) => {
     await fs.writeFile(
-        paths.shellPluginEntrypoint,
+        paths.getShellPluginEntrypoint(pluginName),
         await getEntrypointWrapper({ entrypoint, paths })
+    )
+    await fs.writeFile(
+        paths.getShellPluginBundleEntrypoint(pluginName),
+        createPluginFile(pluginName)
     )
 }

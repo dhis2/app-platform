@@ -30,7 +30,7 @@ const handler = async ({
 
     const config = parseConfig(paths)
     const shell = makeShell({ config, paths })
-    const plugin = makePlugin({ config, paths })
+    const pluginCommands = makePlugin({ config, paths })
 
     if (config.type !== 'app') {
         reporter.error(
@@ -132,17 +132,21 @@ const handler = async ({
 
             const shellStartPromise = shell.start({ port: newPort })
 
-            if (config.entryPoints.plugin) {
-                const pluginPort = await detectPort(newPort + 1)
-                reporter.print(
-                    `The plugin is now available on port ${pluginPort}`
-                )
-                reporter.print('')
+            if (config.entryPoints.plugins) {
+                let pluginPort = await detectPort(newPort + 1)
+                for (const plugin of config.entryPoints.plugins) {
+                    reporter.print(
+                        `The plugin is now available on port ${pluginPort}`
+                    )
+                    reporter.print('')
 
-                await Promise.all([
-                    shellStartPromise,
-                    plugin.start({ port: pluginPort }),
-                ])
+                    await pluginCommands.start({
+                        pluginName: plugin.name,
+                        port: pluginPort,
+                    })
+
+                    pluginPort = await detectPort(pluginPort + 1)
+                }
             } else {
                 await shellStartPromise
             }

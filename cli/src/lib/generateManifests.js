@@ -98,6 +98,16 @@ module.exports = (paths, config, publicUrl) => {
         background_color: '#f4f6f8',
     }
 
+    const pluginLaunchPaths = config.entryPoints.plugins
+        ? config.entryPoints.plugins.reduce(
+              (all, current) => ({
+                  ...all,
+                  [current.name]: paths.getPluginLaunchPath(current.name),
+              }),
+              {}
+          )
+        : undefined
+
     // Legacy manifest
     const manifestWebapp = {
         app_hub_id: config.id,
@@ -109,7 +119,7 @@ module.exports = (paths, config, publicUrl) => {
         core_app: config.coreApp,
 
         launch_path: paths.launchPath,
-        plugin_launch_path: paths.pluginLaunchPath,
+        plugin_launch_paths: pluginLaunchPaths,
         default_locale: 'en',
         activities: {
             dhis: {
@@ -149,7 +159,7 @@ module.exports = (paths, config, publicUrl) => {
     delete appConfig['entryPoints']
     appConfig.entryPoints = {
         app: paths.launchPath,
-        plugin: config.entryPoints.plugin ? paths.pluginLaunchPath : undefined,
+        plugins: pluginLaunchPaths,
     }
     delete appConfig['pwa']
 

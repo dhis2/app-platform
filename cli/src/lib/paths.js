@@ -61,11 +61,10 @@ module.exports = (cwd = process.cwd()) => {
         shellAppEntrypoint: path.join(base, './.d2/shell/src/App.js'),
         shellAppDirname,
         shellApp: path.join(base, `./.d2/shell/${shellAppDirname}`),
-        shellPluginBundleEntrypoint: path.join(
-            base,
-            './.d2/shell/src/plugin.index.js'
-        ),
-        shellPluginEntrypoint: path.join(base, './.d2/shell/src/Plugin.js'),
+        getShellPluginBundleEntrypoint: (pluginName) =>
+            path.join(base, `./.d2/shell/src/plugin-${pluginName}.index.js`),
+        getShellPluginEntrypoint: (pluginName) =>
+            path.join(base, `./.d2/shell/src/Plugin-${pluginName}.js`),
         shellSrcServiceWorker: path.join(
             base,
             './.d2/shell/src/service-worker.js'
@@ -113,7 +112,7 @@ module.exports = (cwd = process.cwd()) => {
         buildLibBundleOutput: path.join(base),
 
         launchPath: 'index.html',
-        pluginLaunchPath: 'plugin.html',
+        getPluginLaunchPath: (pluginName) => `plugin_${pluginName}.html`,
     }
 
     reporter.debug('PATHS', paths)

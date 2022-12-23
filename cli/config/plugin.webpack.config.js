@@ -23,7 +23,7 @@ const babelWebpackConfig = {
 const cssRegex = /\.css$/
 const cssModuleRegex = /\.module\.css$/
 
-module.exports = ({ env: webpackEnv, config, paths }) => {
+module.exports = ({ pluginName, env: webpackEnv, config, paths }) => {
     const isProduction = webpackEnv === 'production'
     const isDevelopment = !isProduction
 
@@ -145,7 +145,7 @@ module.exports = ({ env: webpackEnv, config, paths }) => {
                 Object.assign(
                     {
                         inject: true,
-                        filename: paths.pluginLaunchPath,
+                        filename: paths.getPluginLaunchPath(pluginName),
                         template: paths.shellPublicPluginHtml,
                     },
                     isProduction

@@ -68,7 +68,7 @@ const handler = async ({
 
     const config = parseConfig(paths)
     const shell = makeShell({ config, paths })
-    const plugin = makePlugin({ config, paths })
+    const pluginCommands = makePlugin({ config, paths })
 
     if (config.type === 'app') {
         setAppParameters(standalone, config)
@@ -131,9 +131,11 @@ const handler = async ({
                 reporter.info('Building appShell...')
                 await shell.build()
 
-                if (config.entryPoints.plugin) {
-                    reporter.info('Building plugin...')
-                    await plugin.build()
+                if (config.entryPoints.plugins) {
+                    reporter.info('Building plugins...')
+                    for (const plugin of config.entryPoints.plugins) {
+                        await pluginCommands.build({ pluginName: plugin.name })
+                    }
                 }
 
                 if (config.pwa.enabled) {

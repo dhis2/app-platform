@@ -9,10 +9,11 @@ const webpack = require('webpack')
 const WebpackDevServer = require('webpack-dev-server')
 const webpackConfigFactory = require('../../../config/plugin.webpack.config')
 
-module.exports = async ({ port, config, paths }) => {
+module.exports = async ({ pluginName, port, config, paths }) => {
     const webpackConfig = webpackConfigFactory({
         // todo: change to development, but this creates a compilation error
         // can read more here: https://github.com/dhis2/app-platform/pull/740/files/69411d9b61845cbd0d053f2313bdbd4e80fdf2ac#r1031576956
+        pluginName,
         env: 'production',
         config,
         paths,
@@ -26,7 +27,7 @@ module.exports = async ({ port, config, paths }) => {
             port,
             host,
             // open browser
-            open: [`/${paths.pluginLaunchPath}`],
+            open: [`/${paths.getPluginLaunchPath(pluginName)}`],
             client: {
                 logging: 'none',
                 overlay: {
