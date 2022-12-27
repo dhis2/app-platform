@@ -28,7 +28,8 @@ export const LoginModal = ({ appName, baseUrl }) => {
         setIsDirty(true)
         if (isValid(server) && isValid(username) && isValid(password)) {
             if (!staticUrl) {
-                // todo: deprecate localStorage value here (replaced by IDB)
+                // keep the localStorage value here -- it's still used in some
+                // obscure cases, like in the cypress network shim
                 window.localStorage.DHIS2_BASE_URL = server
                 await setBaseUrlByAppName({ appName, baseUrl: server })
             }
