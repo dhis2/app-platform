@@ -27,6 +27,7 @@ export const ServerVersionProvider = ({
         error: undefined,
         baseUrl: url,
     })
+    const [offlineInterfaceLoading, setOfflinInterfaceLoading] = useState(true)
     const { systemInfo } = systemInfoState
     const { baseUrl } = baseUrlState
 
@@ -121,12 +122,22 @@ export const ServerVersionProvider = ({
         }
     }, [appName, baseUrl])
 
+    useEffect(() => {
+        offlineInterface.ready.then(() => {
+            setOfflinInterfaceLoading(false)
+        })
+    }, [offlineInterface])
+
     // This needs to come before 'loading' case to show modal at correct times
     if (systemInfoState.error || baseUrlState.error) {
         return <LoginModal appName={appName} baseUrl={baseUrl} />
     }
 
-    if (systemInfoState.loading || baseUrlState.loading) {
+    if (
+        systemInfoState.loading ||
+        baseUrlState.loading ||
+        offlineInterfaceLoading
+    ) {
         return <LoadingMask />
     }
 

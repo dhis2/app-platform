@@ -26,7 +26,7 @@ export function initDhis2ConnectionStatus() {
 
 // Throttle this a bit to reduce SW/client messaging
 const BROADCAST_INTERVAL_MS = 1000
-const broadcastDhis2ConnectionStatus = throttle(async (isConnected) => {
+export const broadcastDhis2ConnectionStatus = throttle(async (isConnected) => {
     // todo: remove log after testing the PR
     console.log('sw: broadcasting update', { newIsConnected: isConnected })
 

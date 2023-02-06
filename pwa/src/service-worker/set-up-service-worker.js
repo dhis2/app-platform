@@ -8,6 +8,7 @@ import {
 } from 'workbox-strategies'
 import { swMsgs } from '../lib/constants.js'
 import {
+    broadcastDhis2ConnectionStatus,
     dhis2ConnectionStatusPlugin,
     initDhis2ConnectionStatus,
 } from './dhis2-connection-status'
@@ -227,6 +228,15 @@ export function setUpServiceWorker() {
         // registration.waiting.postMessage({type: 'SKIP_WAITING'})
         if (event.data.type === swMsgs.skipWaiting) {
             self.skipWaiting()
+        }
+
+        // Immediately trigger this throttled function -- this allows the app
+        // to get the value ASAP upon startup, which it otherwise usually
+        // has to wait for
+        if (
+            event.data.type === swMsgs.getImmediateDhis2ConnectionStatusUpdate
+        ) {
+            broadcastDhis2ConnectionStatus.flush()
         }
 
         if (event.data.type === swMsgs.startRecording) {
