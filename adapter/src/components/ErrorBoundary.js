@@ -36,6 +36,13 @@ export class ErrorBoundary extends Component {
     }
 
     componentDidCatch(error, errorInfo) {
+        if (this.props.plugin) {
+            if (this.props.onPluginError) {
+                console.log('special handling for error (from app)')
+                console.error(error)
+                this.props.onPluginError(error)
+            }
+        }
         this.setState({
             error,
             errorInfo,
@@ -58,6 +65,16 @@ export class ErrorBoundary extends Component {
     render() {
         const { children, fullscreen, onRetry } = this.props
         if (this.state.error) {
+            if (this.props.plugin) {
+                return (
+                    <>
+                        <style jsx>{styles}</style>
+                        <div className='pluginBoundary'>
+                            <span>I am the default plugin boundary</span>
+                        </div>
+                    </>
+                )
+            }
             return (
                 <div className={cx('mask', { fullscreen })}>
                     <style jsx>{styles}</style>

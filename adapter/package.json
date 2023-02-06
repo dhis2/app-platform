@@ -22,7 +22,8 @@
     ],
     "dependencies": {
         "@dhis2/pwa": "10.2.0",
-        "moment": "^2.24.0"
+        "moment": "^2.24.0",
+        "post-robot": "^10.0.46"
     },
     "devDependencies": {
         "@dhis2/cli-app-scripts": "10.2.0",

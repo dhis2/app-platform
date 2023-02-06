@@ -1,7 +1,7 @@
 import { checkForSWUpdateAndReload } from '@dhis2/pwa'
 import PropTypes from 'prop-types'
 import React from 'react'
-import { AppWrapper } from './components/AppWrapper.js'
+import { usePluginErrorContext, AppWrapper } from './components/AppWrapper.js'
 import { ErrorBoundary } from './components/ErrorBoundary.js'
 import { OfflineInterfaceProvider } from './components/OfflineInterfaceContext.js'
 import { PWALoadingBoundary } from './components/PWALoadingBoundary.js'
@@ -16,7 +16,11 @@ const AppAdapter = ({
     plugin,
     children,
 }) => (
-    <ErrorBoundary fullscreen onRetry={checkForSWUpdateAndReload}>
+    <ErrorBoundary
+        plugin={plugin}
+        fullscreen
+        onRetry={checkForSWUpdateAndReload}
+    >
         <OfflineInterfaceProvider>
             <PWALoadingBoundary>
                 <ServerVersionProvider
@@ -44,3 +48,4 @@ AppAdapter.propTypes = {
 }
 
 export default AppAdapter
+export { AppAdapter as AppAdapter, usePluginErrorContext }
