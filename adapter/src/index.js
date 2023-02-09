@@ -1,7 +1,7 @@
 import { checkForSWUpdateAndReload } from '@dhis2/pwa'
 import PropTypes from 'prop-types'
 import React from 'react'
-import { usePluginErrorContext, AppWrapper } from './components/AppWrapper.js'
+import { AppWrapper } from './components/AppWrapper.js'
 import { ErrorBoundary } from './components/ErrorBoundary.js'
 import { OfflineInterfaceProvider } from './components/OfflineInterfaceContext.js'
 import { PWALoadingBoundary } from './components/PWALoadingBoundary.js'
@@ -29,6 +29,7 @@ const AppAdapter = ({
                     url={url}
                     apiVersion={apiVersion}
                     pwaEnabled={pwaEnabled}
+                    plugin={plugin}
                 >
                     <AppWrapper plugin={plugin}>{children}</AppWrapper>
                 </ServerVersionProvider>
@@ -48,4 +49,3 @@ AppAdapter.propTypes = {
 }
 
 export default AppAdapter
-export { AppAdapter as AppAdapter, usePluginErrorContext }

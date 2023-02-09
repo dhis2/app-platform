@@ -69,8 +69,15 @@ export class ErrorBoundary extends Component {
                 return (
                     <>
                         <style jsx>{styles}</style>
-                        <div className='pluginBoundary'>
+                        <div className="pluginBoundary">
                             <span>I am the default plugin boundary</span>
+                            {onRetry && (
+                                <div className="retry">
+                                    <UIButton onClick={onRetry}>
+                                        {i18n.t('Try again')}
+                                    </UIButton>
+                                </div>
+                            )}
                         </div>
                     </>
                 )

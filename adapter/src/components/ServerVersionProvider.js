@@ -13,6 +13,7 @@ export const ServerVersionProvider = ({
     url,
     apiVersion,
     pwaEnabled,
+    plugin,
     children,
 }) => {
     const offlineInterface = useOfflineInterface()
@@ -66,6 +67,7 @@ export const ServerVersionProvider = ({
                 pwaEnabled,
             }}
             offlineInterface={offlineInterface}
+            plugin={plugin}
         >
             {children}
         </Provider>
@@ -79,4 +81,5 @@ ServerVersionProvider.propTypes = {
     children: PropTypes.element,
     pwaEnabled: PropTypes.bool,
     url: PropTypes.string,
+    plugin: PropTypes.bool,
 }

@@ -109,5 +109,4 @@ export default css`
     .pluginBoundary span {
         display: inline-block;
     }
-    
 `
