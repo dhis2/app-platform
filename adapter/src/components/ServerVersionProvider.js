@@ -27,7 +27,7 @@ export const ServerVersionProvider = ({
         error: undefined,
         baseUrl: url,
     })
-    const [offlineInterfaceLoading, setOfflinInterfaceLoading] = useState(true)
+    const [offlineInterfaceLoading, setOfflineInterfaceLoading] = useState(true)
     const { systemInfo } = systemInfoState
     const { baseUrl } = baseUrlState
 
@@ -124,7 +124,7 @@ export const ServerVersionProvider = ({
 
     useEffect(() => {
         offlineInterface.ready.then(() => {
-            setOfflinInterfaceLoading(false)
+            setOfflineInterfaceLoading(false)
         })
     }, [offlineInterface])
 
