@@ -57,7 +57,7 @@ const handler = async ({
                 {
                     // This arg actually expects an array
                     // https://github.com/facebook/jest/blob/21a92711a22c7b6633909fd42a87499e179d80c2/packages/jest-config/src/normalize.ts#L391-L417
-                    testPathPattern: [testRegex],
+                    testPathPattern: testRegex && [testRegex],
                     config: JSON.stringify(jestConfig),
                     updateSnapshot: !ci && updateSnapshot,
                     collectCoverage: coverage,
