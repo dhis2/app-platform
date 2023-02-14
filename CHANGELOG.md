@@ -1,3 +1,10 @@
+## [10.2.1](https://github.com/dhis2/app-platform/compare/v10.2.0...v10.2.1) (2023-02-14)
+
+
+### Bug Fixes
+
+* bump d2-i18n ([#783](https://github.com/dhis2/app-platform/issues/783)) ([2acb301](https://github.com/dhis2/app-platform/commit/2acb301c812bd804f54dfa55ca82dc3629e5ac8c))
+
 # [10.2.0](https://github.com/dhis2/app-platform/compare/v10.1.6...v10.2.0) (2022-11-30)
 
 
