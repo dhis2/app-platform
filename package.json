@@ -37,11 +37,7 @@
         "docs:build": "d2-utils-docsite build ./docs -o ./dist",
         "test:adapter": "yarn workspace @dhis2/app-adapter test",
         "test:cli": "yarn workspace @dhis2/cli-app-scripts test",
-        "test": "yarn test:adapter && yarn test:cli",
-        "temp:cp-app-service-offline": "rm -rf node_modules/@dhis2/app-service-offline/build && rm -rf examples/pwa-app/.d2/shell/node_modules/.cache && cp -r ../app-runtime/services/offline/build node_modules/@dhis2/app-service-offline/",
-        "temp:cp-app-service-data": "rm -rf node_modules/@dhis2/app-service-data/build && cp -r ../app-runtime/services/data/build node_modules/@dhis2/app-service-data/",
-        "temp:start-pwa-app": "yarn workspace pwa-app start",
-        "temp:start": "echo \"REMEMBER: build the pwa and adapter packages if necessary\" && yarn temp:cp-app-service-offline && yarn temp:cp-app-service-data && yarn temp:start-pwa-app"
+        "test": "yarn test:adapter && yarn test:cli"
     },
     "d2": {
         "docsite": {
