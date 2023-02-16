@@ -1,3 +1,10 @@
+## [10.2.2](https://github.com/dhis2/app-platform/compare/v10.2.1...v10.2.2) (2023-02-16)
+
+
+### Bug Fixes
+
+* **cli:** fix `--testRegex` option on `test` command ([#784](https://github.com/dhis2/app-platform/issues/784)) ([049cdf3](https://github.com/dhis2/app-platform/commit/049cdf3610b28ada4b4241870ff8f2f5cc9f09fa))
+
 ## [10.2.1](https://github.com/dhis2/app-platform/compare/v10.2.0...v10.2.1) (2023-02-14)
 
 
