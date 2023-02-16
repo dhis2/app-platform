@@ -1,3 +1,10 @@
+## [10.2.3](https://github.com/dhis2/app-platform/compare/v10.2.2...v10.2.3) (2023-02-16)
+
+
+### Bug Fixes
+
+* **plugins:** fix file loader behavior ([#779](https://github.com/dhis2/app-platform/issues/779)) ([dcdd918](https://github.com/dhis2/app-platform/commit/dcdd9188f5a64c5ec842a347ed6aa5acc053cc58))
+
 ## [10.2.2](https://github.com/dhis2/app-platform/compare/v10.2.1...v10.2.2) (2023-02-16)
 
 
