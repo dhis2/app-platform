@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types'
-import React, { createContext, useContext, useState } from 'react'
+import React from 'react'
 import { useCurrentUserLocale } from '../utils/useLocale.js'
 import { useVerifyLatestUser } from '../utils/useVerifyLatestUser.js'
 import { Alerts } from './Alerts.js'
@@ -7,27 +7,8 @@ import { ConnectedHeaderBar } from './ConnectedHeaderBar.js'
 import { ErrorBoundary } from './ErrorBoundary.js'
 import { LoadingMask } from './LoadingMask.js'
 import { styles } from './styles/AppWrapper.style.js'
-import { usePluginContext } from '@dhis2/app-runtime'
 
-const PluginErrorBoundaryWrapper = ({ children }) => {
-    const { onPluginError, clearPluginError } = usePluginContext()
-
-    const retry = () => {
-        clearPluginError()
-        window.location.reload()
-    }
-    return (
-        <ErrorBoundary
-            plugin={true}
-            onPluginError={onPluginError}
-            onRetry={retry}
-        >
-            {children}
-        </ErrorBoundary>
-    )
-}
-
-const AppWrapper = ({ children, plugin }) => {
+const AppWrapper = ({ children, plugin, onPluginError, clearPluginError }) => {
     const { loading: localeLoading } = useCurrentUserLocale()
     const { loading: latestUserLoading } = useVerifyLatestUser()
 
@@ -40,9 +21,16 @@ const AppWrapper = ({ children, plugin }) => {
             <div className="app-shell-adapter">
                 <style jsx>{styles}</style>
                 <div className="app-shell-app">
-                    <PluginErrorBoundaryWrapper>
+                    <ErrorBoundary
+                        plugin={true}
+                        onPluginError={onPluginError}
+                        onRetry={() => {
+                            clearPluginError()
+                            window.location.reload()
+                        }}
+                    >
                         {children}
-                    </PluginErrorBoundaryWrapper>
+                    </ErrorBoundary>
                 </div>
                 <Alerts />
             </div>
@@ -52,7 +40,7 @@ const AppWrapper = ({ children, plugin }) => {
     return (
         <div className="app-shell-adapter">
             <style jsx>{styles}</style>
-            {!plugin && <ConnectedHeaderBar />}
+            <ConnectedHeaderBar />
             <div className="app-shell-app">
                 <ErrorBoundary onRetry={() => window.location.reload()}>
                     {children}
@@ -65,7 +53,9 @@ const AppWrapper = ({ children, plugin }) => {
 
 AppWrapper.propTypes = {
     children: PropTypes.node,
+    clearPluginError: PropTypes.func,
     plugin: PropTypes.bool,
+    onPluginError: PropTypes.func,
 }
 
 export { AppWrapper }

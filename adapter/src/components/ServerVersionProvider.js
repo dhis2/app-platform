@@ -14,6 +14,8 @@ export const ServerVersionProvider = ({
     apiVersion,
     pwaEnabled,
     plugin,
+    parentAlertsAdd,
+    showAlertsInPlugin,
     children,
 }) => {
     const offlineInterface = useOfflineInterface()
@@ -68,6 +70,8 @@ export const ServerVersionProvider = ({
             }}
             offlineInterface={offlineInterface}
             plugin={plugin}
+            parentAlertsAdd={parentAlertsAdd}
+            showAlertsInPlugin={showAlertsInPlugin}
         >
             {children}
         </Provider>
@@ -79,7 +83,9 @@ ServerVersionProvider.propTypes = {
     appVersion: PropTypes.string.isRequired,
     apiVersion: PropTypes.number,
     children: PropTypes.element,
-    pwaEnabled: PropTypes.bool,
-    url: PropTypes.string,
+    parentAlertsAdd: PropTypes.func,
     plugin: PropTypes.bool,
+    pwaEnabled: PropTypes.bool,
+    showAlertsInPlugin: PropTypes.bool,
+    url: PropTypes.string,
 }

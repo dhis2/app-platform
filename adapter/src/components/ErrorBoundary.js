@@ -38,7 +38,6 @@ export class ErrorBoundary extends Component {
     componentDidCatch(error, errorInfo) {
         if (this.props.plugin) {
             if (this.props.onPluginError) {
-                console.log('special handling for error (from app)')
                 console.error(error)
                 this.props.onPluginError(error)
             }
@@ -143,5 +142,7 @@ export class ErrorBoundary extends Component {
 ErrorBoundary.propTypes = {
     children: PropTypes.node.isRequired,
     fullscreen: PropTypes.bool,
+    plugin: PropTypes.bool,
+    onPluginError: PropTypes.func,
     onRetry: PropTypes.func,
 }
