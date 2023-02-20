@@ -40,21 +40,15 @@ export const PluginLoader = ({ config, requiredProps, D2App }) => {
             if (setInErrorState) {
                 if (onError) {
                     setOnPluginError(() => (error) => {
-                        setCommunicationReceived(false)
-                        setInErrorState(true)
                         onError(error)
-                    })
-                } else {
-                    setOnPluginError(() => () => {
-                        setCommunicationReceived(false)
-                        setInErrorState(true)
                     })
                 }
             }
 
-            if (setInErrorState) {
+            // when users clears error, set communicationReceived=false to retrigger communication
+            if (setCommunicationReceived) {
                 setClearPluginError(() => () => {
-                    setInErrorState(false)
+                    setCommunicationReceived(false)
                 })
             }
 
