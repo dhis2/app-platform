@@ -1,6 +1,7 @@
 const path = require('path')
 const { reporter, chalk } = require('@dhis2/cli-helpers-engine')
 const fs = require('fs-extra')
+const { appTypes } = require('../parseConfig')
 const { normalizeExtension } = require('./extensionHelpers.js')
 
 const verifyEntrypoint = ({ entrypoint, basePath, resolveModule }) => {
@@ -26,7 +27,7 @@ exports.verifyEntrypoints = ({
     paths,
     resolveModule = require.resolve,
 }) => {
-    if (config.type === 'app') {
+    if (appTypes.includes(config.type)) {
         if (
             !config.entryPoints ||
             (!config.entryPoints.app && !config.entryPoints.plugin)

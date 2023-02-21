@@ -15,6 +15,7 @@ const appConfig = {
     apiVersion: parseInt(process.env.REACT_APP_DHIS2_API_VERSION),
     pwaEnabled: process.env.REACT_APP_DHIS2_APP_PWA_ENABLED === 'true',
     plugin: process.env.REACT_APP_DHIS2_APP_PLUGIN === 'true',
+    loginApp: process.env.REACT_APP_DHIS2_APP_LOGINAPP === 'true',
 }
 
 const App = () => (

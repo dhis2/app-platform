@@ -4,6 +4,7 @@ const { reporter, prettyPrint } = require('@dhis2/cli-helpers-engine')
 const chokidar = require('chokidar')
 const fs = require('fs-extra')
 const makeBabelConfig = require('../../../config/makeBabelConfig.js')
+const { appTypes } = require('../parseConfig')
 const {
     verifyEntrypoints,
     createAppEntrypointWrapper,
@@ -67,7 +68,7 @@ const compile = async ({
     mode = 'development',
     watch = false,
 }) => {
-    const isApp = config.type === 'app'
+    const isApp = appTypes.includes(config.type)
 
     verifyEntrypoints({ config, paths })
     if (isApp) {

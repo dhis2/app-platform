@@ -13,6 +13,7 @@ export const ServerVersionProvider = ({
     url,
     apiVersion,
     pwaEnabled,
+    loginApp,
     children,
 }) => {
     const offlineInterface = useOfflineInterface()
@@ -27,28 +28,39 @@ export const ServerVersionProvider = ({
         }
 
         setState((state) => (state.loading ? state : { loading: true }))
-        const request = get(`${url}/api/system/info`)
-        request
-            .then((systemInfo) => {
-                setState({ loading: false, systemInfo })
-            })
-            .catch((e) => {
-                // Todo: If this is a network error, the app cannot load -- handle that gracefully here
-                // if (e === 'Network error') { ... }
-                setState({ loading: false, error: e })
-            })
 
-        return () => {
-            request.abort()
+        // in reality we probably want a request to get api version
+        if (loginApp) {
+            const fakeSystemInfo = { version: '2.40-SNAPSHOT' }
+            setState({ loading: false, systemInfo: fakeSystemInfo })
+        } else {
+            const request = get(`${url}/api/system/info`)
+            request
+                .then((systemInfo) => {
+                    setState({ loading: false, systemInfo })
+                })
+                .catch((e) => {
+                    // Todo: If this is a network error, the app cannot load -- handle that gracefully here
+                    // if (e === 'Network error') { ... }
+                    setState({ loading: false, error: e })
+                })
+
+            return () => {
+                request.abort()
+            }
         }
-    }, [url])
+    }, [url, loginApp])
 
     if (loading) {
         return <LoadingMask />
     }
 
     if (error) {
-        return <LoginModal />
+        return !loginApp ? (
+            <LoginModal />
+        ) : (
+            <p>Specify DHIS2_BASE_URL environment variable</p>
+        )
     }
 
     const serverVersion = parseDHIS2ServerVersion(systemInfo.version)
@@ -65,7 +77,7 @@ export const ServerVersionProvider = ({
                 systemInfo,
                 pwaEnabled,
             }}
-            offlineInterface={offlineInterface}
+            offlineInterface={loginApp ? null : offlineInterface}
         >
             {children}
         </Provider>
@@ -77,6 +89,7 @@ ServerVersionProvider.propTypes = {
     appVersion: PropTypes.string.isRequired,
     apiVersion: PropTypes.number,
     children: PropTypes.element,
+    loginApp: PropTypes.bool,
     pwaEnabled: PropTypes.bool,
     url: PropTypes.string,
 }

@@ -60,3 +60,10 @@ export const useCurrentUserLocale = () => {
 
     return { loading: loading || !locale, locale }
 }
+
+export const useSystemDefaultLocale = () => {
+    // TO-DO: system language query (not currently available)
+    const defaultLocale = window.navigator.language
+    const locale = useLocale(defaultLocale)
+    return { loading: !locale, locale }
+}
