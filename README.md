@@ -10,11 +10,7 @@ See [platform.dhis2.nu](https://platform.dhis2.nu) for documentation.
 
 ## Report an issue
 
-The issue tracker can be found in [DHIS2 JIRA](https://jira.dhis2.org)
-under the [LIBS](https://jira.dhis2.org/projects/LIBS) project.
+The issue tracker can be found in [DHIS2 JIRA](https://dhis2.atlassian.net)
+under the [LIBS](https://dhis2.atlassian.net/browse/LIBS) project.
 
-Deep links:
-
--   [Bug](https://jira.dhis2.org/secure/CreateIssueDetails!init.jspa?pid=10700&issuetype=10006&components=11025)
--   [Feature](https://jira.dhis2.org/secure/CreateIssueDetails!init.jspa?pid=10700&issuetype=10300&components=11025)
--   [Task](https://jira.dhis2.org/secure/CreateIssueDetails!init.jspa?pid=10700&issuetype=10003&components=11025)
+To report an issue create a ticket using the proper type (bug, feature) depending on your use case. You can create a new ticket by clicking `Create` on top of JIRA, then proceed to select the `LIBS` project and then define the ticket type. Make sure to select `app-platform` components drop-down accordingly.

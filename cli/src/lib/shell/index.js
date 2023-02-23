@@ -35,6 +35,7 @@ module.exports = ({ config, paths }) => {
                 pipe: false,
             })
         },
+        // TODO: remove? Test command does not seem to call this method
         test: async () => {
             await exec({
                 cmd: 'yarn',

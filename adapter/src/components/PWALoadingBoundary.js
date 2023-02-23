@@ -29,7 +29,10 @@ export const PWALoadingBoundary = ({ children }) => {
                 setPWAReady(true)
             }
         }
-        checkRegistration()
+        checkRegistration().catch((err) => {
+            console.error(err)
+            setPWAReady(true)
+        })
     }, [offlineInterface])
 
     return pwaReady ? children : null
