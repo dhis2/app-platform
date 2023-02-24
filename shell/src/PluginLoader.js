@@ -120,7 +120,7 @@ export const PluginLoader = ({ config, requiredProps, D2App }) => {
                     </Layer>
                 }
             >
-                <D2App config={config} propsFromParent={propsFromParent} />
+                <D2App config={config} {...propsFromParent} />
             </React.Suspense>
         </AppAdapter>
     )
