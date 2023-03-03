@@ -2,15 +2,22 @@ import { precacheAndRoute, matchPrecache, precache } from 'workbox-precaching'
 import { registerRoute, setDefaultHandler } from 'workbox-routing'
 import {
     NetworkFirst,
+    NetworkOnly,
     StaleWhileRevalidate,
     Strategy,
 } from 'workbox-strategies'
 import { swMsgs } from '../lib/constants.js'
 import {
+    broadcastDhis2ConnectionStatus,
+    dhis2ConnectionStatusPlugin,
+    initDhis2ConnectionStatus,
+} from './dhis2-connection-status'
+import {
     startRecording,
     completeRecording,
-    handleRecordedRequest,
     shouldRequestBeRecorded,
+    initClientRecordingStates,
+    RecordingMode,
 } from './recording-mode.js'
 import {
     urlMeetsAppShellCachingCriteria,
@@ -38,9 +45,8 @@ export function setUpServiceWorker() {
 
     // Globals (Note: global state resets each time SW goes idle)
 
-    // Tracks recording states for multiple clients to handle multiple windows
-    // recording simultaneously
-    self.clientRecordingStates = {}
+    initClientRecordingStates()
+    initDhis2ConnectionStatus()
 
     // Local constants
 
@@ -138,9 +144,20 @@ export function setUpServiceWorker() {
         precacheAndRoute(sharedBuildManifest)
     }
 
+    // Handling pings: only use the network, and don't update the connection
+    // status (let the runtime do that)
+    // Two endpoints: /api(/version)/system/ping and /api/ping
+    registerRoute(
+        ({ url }) => /\/api(\/\d+)?(\/system)?\/ping/.test(url.pathname),
+        new NetworkOnly()
+    )
+
     // Request handler during recording mode: ALL requests are cached
     // Handling routing: https://developers.google.com/web/tools/workbox/modules/workbox-routing#matching_and_handling_in_routes
-    registerRoute(shouldRequestBeRecorded, handleRecordedRequest)
+    registerRoute(
+        shouldRequestBeRecorded,
+        new RecordingMode({ plugins: [dhis2ConnectionStatusPlugin] })
+    )
 
     // If not recording, fall through to default caching strategies for app
     // shell:
@@ -151,7 +168,10 @@ export function setUpServiceWorker() {
             PRODUCTION_ENV &&
             urlMeetsAppShellCachingCriteria(url) &&
             /\.(jpg|gif|png|bmp|tiff|ico|woff)$/.test(url.pathname),
-        new StaleWhileRevalidate({ cacheName: 'other-assets' })
+        new StaleWhileRevalidate({
+            cacheName: 'other-assets',
+            plugins: [dhis2ConnectionStatusPlugin],
+        })
     )
 
     // Network-first caching by default
@@ -161,7 +181,10 @@ export function setUpServiceWorker() {
         ({ url }) =>
             urlMeetsAppShellCachingCriteria(url) ||
             (!PRODUCTION_ENV && fileExtensionRegexp.test(url.pathname)),
-        new NetworkFirst({ cacheName: 'app-shell' })
+        new NetworkFirst({
+            cacheName: 'app-shell',
+            plugins: [dhis2ConnectionStatusPlugin],
+        })
     )
 
     // Strategy for all other requests: try cache if network fails,
@@ -182,7 +205,9 @@ export function setUpServiceWorker() {
         }
     }
     // Use fallback strategy as default
-    setDefaultHandler(new NetworkAndTryCache())
+    setDefaultHandler(
+        new NetworkAndTryCache({ plugins: [dhis2ConnectionStatusPlugin] })
+    )
 
     // Service Worker event handlers
 
@@ -204,6 +229,15 @@ export function setUpServiceWorker() {
         // registration.waiting.postMessage({type: 'SKIP_WAITING'})
         if (event.data.type === swMsgs.skipWaiting) {
             self.skipWaiting()
+        }
+
+        // Immediately trigger this throttled function -- this allows the app
+        // to get the value ASAP upon startup, which it otherwise usually
+        // has to wait for
+        if (
+            event.data.type === swMsgs.getImmediateDhis2ConnectionStatusUpdate
+        ) {
+            broadcastDhis2ConnectionStatus.flush()
         }
 
         if (event.data.type === swMsgs.startRecording) {

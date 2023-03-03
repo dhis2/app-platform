@@ -68,6 +68,10 @@ export class OfflineInterface {
         // Helper property that consumers can check
         this.pwaEnabled = PWA_ENABLED
 
+        // The latest value from the service worker. The `this.ready` promise
+        // will resolve when this gets a boolean value from the SW
+        this.latestIsConnected = null
+
         if (this.pwaEnabled) {
             register()
         } else {
@@ -101,6 +105,30 @@ export class OfflineInterface {
             this.offlineEvents.emit(type, payload)
         }
         navigator.serviceWorker.addEventListener('message', handleSWMessage)
+
+        // When this promise resolves, it indicates that a connection status
+        // value has been received from the service worker and is available
+        // as a property on this offlineInterface.
+        // Expected to be used by ServerVersionProvider in the app adapter
+        // to delay rendering the app-runtime Provider until ready.
+        this.ready = new Promise((resolve) => {
+            // Listen to status updates and store the latest value here so the
+            // connection status hook can initialize to this value
+            this.offlineEvents.on(
+                swMsgs.dhis2ConnectionStatusUpdate,
+                ({ isConnected }) => {
+                    // If this is the first time receiving an update from the
+                    // SW, resolve the this.ready promise
+                    const shouldResolveReady = this.latestIsConnected === null
+                    this.latestIsConnected = isConnected
+                    if (shouldResolveReady) {
+                        resolve()
+                    }
+                }
+            )
+        })
+        // Prompt the SW to send back connection status without its usual delay
+        swMessage(swMsgs.getImmediateDhis2ConnectionStatusUpdate)
     }
 
     /** Basically `checkForUpdates` from registration.js exposed here */
@@ -170,6 +198,17 @@ export class OfflineInterface {
                     })
                 }
             })
+    }
+
+    /**
+     * @param {Object} params
+     * @param {Function} params.onUpdate - Called on status updates with argument { isConnected: bool }
+     * @returns {Function} - An unsubscribe function
+     */
+    subscribeToDhis2ConnectionStatus({ onUpdate }) {
+        this.offlineEvents.on(swMsgs.dhis2ConnectionStatusUpdate, onUpdate)
+        return () =>
+            this.offlineEvents.off(swMsgs.dhis2ConnectionStatusUpdate, onUpdate)
     }
 
     /**

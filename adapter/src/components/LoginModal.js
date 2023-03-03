@@ -1,3 +1,4 @@
+import { setBaseUrlByAppName } from '@dhis2/pwa'
 import {
     Modal,
     ModalTitle,
@@ -6,16 +7,16 @@ import {
     Button,
     InputField,
 } from '@dhis2/ui'
+import PropTypes from 'prop-types'
 import React, { useState } from 'react'
 import i18n from '../locales/index.js'
 import { post } from '../utils/api.js'
 
+// Check if base URL is set statically as an env var (typical in production)
 const staticUrl = process.env.REACT_APP_DHIS2_BASE_URL
 
-export const LoginModal = () => {
-    const [server, setServer] = useState(
-        staticUrl || window.localStorage.DHIS2_BASE_URL || ''
-    )
+export const LoginModal = ({ appName, baseUrl }) => {
+    const [server, setServer] = useState(baseUrl || '')
     const [username, setUsername] = useState('')
     const [password, setPassword] = useState('')
     const [isDirty, setIsDirty] = useState(false)
@@ -27,7 +28,10 @@ export const LoginModal = () => {
         setIsDirty(true)
         if (isValid(server) && isValid(username) && isValid(password)) {
             if (!staticUrl) {
+                // keep the localStorage value here -- it's still used in some
+                // obscure cases, like in the cypress network shim
                 window.localStorage.DHIS2_BASE_URL = server
+                await setBaseUrlByAppName({ appName, baseUrl: server })
             }
             try {
                 await post(
@@ -98,4 +102,8 @@ export const LoginModal = () => {
             </form>
         </Modal>
     )
+}
+LoginModal.propTypes = {
+    appName: PropTypes.string,
+    baseUrl: PropTypes.string,
 }

@@ -1,4 +1,5 @@
 import { Provider } from '@dhis2/app-runtime'
+import { getBaseUrlByAppName, setBaseUrlByAppName } from '@dhis2/pwa'
 import PropTypes from 'prop-types'
 import React, { useEffect, useState } from 'react'
 import { get } from '../utils/api.js'
@@ -10,45 +11,134 @@ import { useOfflineInterface } from './OfflineInterfaceContext.js'
 export const ServerVersionProvider = ({
     appName,
     appVersion,
-    url,
+    url, // url from env vars
     apiVersion,
     pwaEnabled,
     children,
 }) => {
     const offlineInterface = useOfflineInterface()
-    const [{ loading, error, systemInfo }, setState] = useState({
+    const [systemInfoState, setSystemInfoState] = useState({
         loading: true,
+        error: undefined,
+        systemInfo: undefined,
     })
+    const [baseUrlState, setBaseUrlState] = useState({
+        loading: !url,
+        error: undefined,
+        baseUrl: url,
+    })
+    const [offlineInterfaceLoading, setOfflineInterfaceLoading] = useState(true)
+    const { systemInfo } = systemInfoState
+    const { baseUrl } = baseUrlState
 
     useEffect(() => {
-        if (!url) {
-            setState({ loading: false, error: new Error('No url specified') })
+        // if URL prop is not set, set state to error to show login modal.
+        // Submitting valid login form with server and credentials reloads page,
+        // ostensibly with a filled url prop (now persisted locally)
+        if (!baseUrl) {
+            // Use a function as the argument to avoid needing baseUrlState as
+            // a dependency for useEffect
+            setBaseUrlState((state) =>
+                state.loading
+                    ? state
+                    : { loading: true, error: undefined, systemInfo: undefined }
+            )
+            // try getting URL from IndexedDB
+            getBaseUrlByAppName(appName)
+                .then((baseUrlFromDB) => {
+                    if (baseUrlFromDB) {
+                        // Set baseUrl in state if found in DB
+                        setBaseUrlState({
+                            loading: false,
+                            error: undefined,
+                            baseUrl: baseUrlFromDB,
+                        })
+                        return
+                    }
+                    // If no URL found in DB, try localStorage
+                    // (previous adapter versions stored the base URL there)
+                    const baseUrlFromLocalStorage =
+                        window.localStorage.DHIS2_BASE_URL
+                    if (baseUrlFromLocalStorage) {
+                        setBaseUrlState({
+                            loading: false,
+                            error: undefined,
+                            baseUrl: baseUrlFromLocalStorage,
+                        })
+                        // Also set it in IndexedDB for SW to access
+                        return setBaseUrlByAppName({
+                            appName,
+                            baseUrl: baseUrlFromLocalStorage,
+                        })
+                    }
+                    // If no base URL found in either, set error to show login modal
+                    setBaseUrlState({
+                        loading: false,
+                        error: new Error('No url specified'),
+                        baseUrl: undefined,
+                    })
+                })
+                .catch((err) => {
+                    console.error(err)
+                    setBaseUrlState({
+                        loading: false,
+                        error: err,
+                        baseUrl: undefined,
+                    })
+                })
+
             return
         }
 
-        setState((state) => (state.loading ? state : { loading: true }))
-        const request = get(`${url}/api/system/info`)
+        // If url IS set, try querying API to test authentication and get
+        // server version. If it fails, set error to show login modal
+
+        setSystemInfoState((state) =>
+            state.loading
+                ? state
+                : { loading: true, error: undefined, systemInfo: undefined }
+        )
+        const request = get(`${baseUrl}/api/system/info`)
         request
             .then((systemInfo) => {
-                setState({ loading: false, systemInfo })
+                setSystemInfoState({
+                    loading: false,
+                    error: undefined,
+                    systemInfo: systemInfo,
+                })
             })
             .catch((e) => {
                 // Todo: If this is a network error, the app cannot load -- handle that gracefully here
                 // if (e === 'Network error') { ... }
-                setState({ loading: false, error: e })
+                setSystemInfoState({
+                    loading: false,
+                    error: e,
+                    systemInfo: undefined,
+                })
             })
 
         return () => {
             request.abort()
         }
-    }, [url])
+    }, [appName, baseUrl])
 
-    if (loading) {
-        return <LoadingMask />
+    useEffect(() => {
+        offlineInterface.ready.then(() => {
+            setOfflineInterfaceLoading(false)
+        })
+    }, [offlineInterface])
+
+    // This needs to come before 'loading' case to show modal at correct times
+    if (systemInfoState.error || baseUrlState.error) {
+        return <LoginModal appName={appName} baseUrl={baseUrl} />
     }
 
-    if (error) {
-        return <LoginModal />
+    if (
+        systemInfoState.loading ||
+        baseUrlState.loading ||
+        offlineInterfaceLoading
+    ) {
+        return <LoadingMask />
     }
 
     const serverVersion = parseDHIS2ServerVersion(systemInfo.version)
@@ -59,7 +149,7 @@ export const ServerVersionProvider = ({
             config={{
                 appName,
                 appVersion: parseVersion(appVersion),
-                baseUrl: url,
+                baseUrl,
                 apiVersion: apiVersion || realApiVersion,
                 serverVersion,
                 systemInfo,
