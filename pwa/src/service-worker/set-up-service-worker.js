@@ -146,8 +146,9 @@ export function setUpServiceWorker() {
 
     // Handling pings: only use the network, and don't update the connection
     // status (let the runtime do that)
+    // Two endpoints: /api(/version)/system/ping and /api/ping
     registerRoute(
-        ({ url }) => /\/api(\/\d+)?\/system\/ping/.test(url.pathname),
+        ({ url }) => /\/api(\/\d+)?(\/system)?\/ping/.test(url.pathname),
         new NetworkOnly()
     )
 
