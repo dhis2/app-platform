@@ -1,3 +1,10 @@
+# [10.3.0](https://github.com/dhis2/app-platform/compare/v10.2.3...v10.3.0) (2023-03-03)
+
+
+### Features
+
+* **pwa:** track online status [LIBS-315] ([#718](https://github.com/dhis2/app-platform/issues/718)) ([1dfd1e6](https://github.com/dhis2/app-platform/commit/1dfd1e6249fa22412eb87ea8e693d908af835498))
+
 ## [10.2.3](https://github.com/dhis2/app-platform/compare/v10.2.2...v10.2.3) (2023-02-16)
 
 
