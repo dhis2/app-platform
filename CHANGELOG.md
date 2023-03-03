@@ -1,3 +1,24 @@
+## [10.2.3](https://github.com/dhis2/app-platform/compare/v10.2.2...v10.2.3) (2023-02-16)
+
+
+### Bug Fixes
+
+* **plugins:** fix file loader behavior ([#779](https://github.com/dhis2/app-platform/issues/779)) ([dcdd918](https://github.com/dhis2/app-platform/commit/dcdd9188f5a64c5ec842a347ed6aa5acc053cc58))
+
+## [10.2.2](https://github.com/dhis2/app-platform/compare/v10.2.1...v10.2.2) (2023-02-16)
+
+
+### Bug Fixes
+
+* **cli:** fix `--testRegex` option on `test` command ([#784](https://github.com/dhis2/app-platform/issues/784)) ([049cdf3](https://github.com/dhis2/app-platform/commit/049cdf3610b28ada4b4241870ff8f2f5cc9f09fa))
+
+## [10.2.1](https://github.com/dhis2/app-platform/compare/v10.2.0...v10.2.1) (2023-02-14)
+
+
+### Bug Fixes
+
+* bump d2-i18n ([#783](https://github.com/dhis2/app-platform/issues/783)) ([2acb301](https://github.com/dhis2/app-platform/commit/2acb301c812bd804f54dfa55ca82dc3629e5ac8c))
+
 # [10.2.0](https://github.com/dhis2/app-platform/compare/v10.1.6...v10.2.0) (2022-11-30)
 
 
