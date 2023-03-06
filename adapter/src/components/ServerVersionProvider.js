@@ -27,7 +27,9 @@ export const ServerVersionProvider = ({
         error: undefined,
         baseUrl: url,
     })
-    const [offlineInterfaceLoading, setOfflineInterfaceLoading] = useState(true)
+    // Skip this loading step in non-pwa apps
+    const [offlineInterfaceLoading, setOfflineInterfaceLoading] =
+        useState(pwaEnabled)
     const { systemInfo } = systemInfoState
     const { baseUrl } = baseUrlState
 
@@ -123,10 +125,12 @@ export const ServerVersionProvider = ({
     }, [appName, baseUrl])
 
     useEffect(() => {
-        offlineInterface.ready.then(() => {
-            setOfflineInterfaceLoading(false)
-        })
-    }, [offlineInterface])
+        if (pwaEnabled) {
+            offlineInterface.ready.then(() => {
+                setOfflineInterfaceLoading(false)
+            })
+        }
+    }, [offlineInterface, pwaEnabled])
 
     // This needs to come before 'loading' case to show modal at correct times
     if (systemInfoState.error || baseUrlState.error) {

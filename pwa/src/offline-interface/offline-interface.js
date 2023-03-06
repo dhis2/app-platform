@@ -49,6 +49,7 @@ function testPWAAndSW() {
 
 /** Helper to simplify SW message sending */
 function swMessage(type, payload) {
+    console.log('SW Message:', { type, payload })
     if (!navigator.serviceWorker.controller) {
         throw new Error(
             '[Offine interface] Cannot send service worker message - no service worker is controlling this page.'
@@ -111,24 +112,37 @@ export class OfflineInterface {
         // as a property on this offlineInterface.
         // Expected to be used by ServerVersionProvider in the app adapter
         // to delay rendering the app-runtime Provider until ready.
-        this.ready = new Promise((resolve) => {
-            // Listen to status updates and store the latest value here so the
-            // connection status hook can initialize to this value
-            this.offlineEvents.on(
-                swMsgs.dhis2ConnectionStatusUpdate,
-                ({ isConnected }) => {
-                    // If this is the first time receiving an update from the
-                    // SW, resolve the this.ready promise
-                    const shouldResolveReady = this.latestIsConnected === null
-                    this.latestIsConnected = isConnected
-                    if (shouldResolveReady) {
-                        resolve()
-                    }
-                }
-            )
-        })
-        // Prompt the SW to send back connection status without its usual delay
-        swMessage(swMsgs.getImmediateDhis2ConnectionStatusUpdate)
+        this.ready = !this.pwaEnabled
+            ? Promise.resolve()
+            : new Promise((resolve) => {
+                  // Listen to status updates and store the latest value here so the
+                  // connection status hook can initialize to this value
+                  this.offlineEvents.on(
+                      swMsgs.dhis2ConnectionStatusUpdate,
+                      ({ isConnected }) => {
+                          // If this is the first time receiving an update from the
+                          // SW, resolve the this.ready promise
+                          const shouldResolveReady =
+                              this.latestIsConnected === null
+                          this.latestIsConnected = isConnected
+                          if (shouldResolveReady) {
+                              resolve()
+                          }
+                      }
+                  )
+
+                  try {
+                      // Prompt the SW to send back connection status
+                      // without its usual delay
+                      swMessage(swMsgs.getImmediateDhis2ConnectionStatusUpdate)
+                  } catch {
+                      // It's likely the SW hasn't installed yet, so go ahead and
+                      // resolve `ready` -- the app must be online to get to this case
+                      // anyway
+                      this.latestIsConnected = true
+                      resolve()
+                  }
+              })
     }
 
     /** Basically `checkForUpdates` from registration.js exposed here */
