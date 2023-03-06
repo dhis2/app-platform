@@ -1,3 +1,10 @@
+## [10.3.1](https://github.com/dhis2/app-platform/compare/v10.3.0...v10.3.1) (2023-03-06)
+
+
+### Bug Fixes
+
+* error in non-pwa apps [LIBS-315] ([#789](https://github.com/dhis2/app-platform/issues/789)) ([590530e](https://github.com/dhis2/app-platform/commit/590530e74424c65f41c540b123faec902a594e75))
+
 # [10.3.0](https://github.com/dhis2/app-platform/compare/v10.2.3...v10.3.0) (2023-03-03)
 
 
