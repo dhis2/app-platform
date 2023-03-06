@@ -49,7 +49,6 @@ function testPWAAndSW() {
 
 /** Helper to simplify SW message sending */
 function swMessage(type, payload) {
-    console.log('SW Message:', { type, payload })
     if (!navigator.serviceWorker.controller) {
         throw new Error(
             '[Offine interface] Cannot send service worker message - no service worker is controlling this page.'
@@ -107,6 +106,7 @@ export class OfflineInterface {
         }
         navigator.serviceWorker.addEventListener('message', handleSWMessage)
 
+        // (todo: refactor to another function)
         // When this promise resolves, it indicates that a connection status
         // value has been received from the service worker and is available
         // as a property on this offlineInterface.
