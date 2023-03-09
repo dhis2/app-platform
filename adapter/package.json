@@ -20,7 +20,7 @@
     "files": [
         "build"
     ],
-    "dependencies": {        
+    "dependencies": {
         "@dhis2/pwa": "10.3.1",
         "moment": "^2.24.0",
         "post-robot": "^10.0.46"
