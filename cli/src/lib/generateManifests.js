@@ -93,7 +93,7 @@ module.exports = (paths, config, publicUrl) => {
             },
         ],
         start_url: '.',
-        display: 'browser',
+        display: 'standalone',
         theme_color: '#ffffff',
         background_color: '#f4f6f8',
     }
