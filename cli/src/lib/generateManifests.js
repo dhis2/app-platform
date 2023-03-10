@@ -108,8 +108,11 @@ module.exports = (paths, config, publicUrl) => {
         version: config.version,
         core_app: config.coreApp,
 
+        // todo: omit this for plugins without apps (LIBS-477>479)
         launch_path: paths.launchPath,
-        plugin_launch_path: paths.pluginLaunchPath,
+        plugin_launch_path: config.entryPoints.plugin
+            ? paths.pluginLaunchPath
+            : undefined,
         default_locale: 'en',
         activities: {
             dhis: {
