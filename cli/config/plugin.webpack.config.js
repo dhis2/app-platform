@@ -187,8 +187,10 @@ module.exports = ({ env: webpackEnv, config, paths }) => {
                 resourceRegExp: /^\.\/locale$/,
                 contextRegExp: /moment$/,
             }),
-            // dhis2: Inject plugin static assets to the existing SW's precache manifest
-            process.env.NODE_ENV === 'production' &&
+            // dhis2: Inject plugin static assets to the existing SW's precache
+            // manifest. Don't need to do in dev because precaching isn't done
+            // in dev environments
+            isProduction &&
                 new WorkboxWebpackPlugin.InjectManifest({
                     swSrc: paths.shellBuildServiceWorker,
                     injectionPoint: 'self.__WB_PLUGIN_MANIFEST',
