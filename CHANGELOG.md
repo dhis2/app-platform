@@ -1,3 +1,20 @@
+# [10.4.0-alpha.1](https://github.com/dhis2/app-platform/compare/v10.3.1...v10.4.0-alpha.1) (2023-03-13)
+
+
+### Bug Fixes
+
+* merge in master branch of app-platform ([5c637c0](https://github.com/dhis2/app-platform/commit/5c637c0e6c344c9372f679f4e997b5430e2a26cc))
+* pass props with spread operator ([bd4dccb](https://github.com/dhis2/app-platform/commit/bd4dccb370823651322d9ea89b3c6112d281b824))
+* simplify error reset logic ([d40dfba](https://github.com/dhis2/app-platform/commit/d40dfba50cc9fa2e8ada03bf03cc9e4b52ef28bc))
+* style adapter package file ([d5e17e1](https://github.com/dhis2/app-platform/commit/d5e17e1ae44a14efc1a4c03291c86e566be964de))
+
+
+### Features
+
+* implement plugin wrapper (receiver in plugin) (alpha) ([#786](https://github.com/dhis2/app-platform/issues/786)) ([d4f1ee2](https://github.com/dhis2/app-platform/commit/d4f1ee21e50bb6d0d79a4cf402d7efe6b99458e8))
+* plugin error handling ([7fd0605](https://github.com/dhis2/app-platform/commit/7fd0605c3e4ff52f30a1fb3bd0d8da2168f583f5))
+* plugin handling ([7ee8ed6](https://github.com/dhis2/app-platform/commit/7ee8ed68b888e3bebb61858fd9002ad2c8c0cd4c))
+
 ## [10.3.1](https://github.com/dhis2/app-platform/compare/v10.3.0...v10.3.1) (2023-03-06)
 
 
