@@ -1,6 +1,6 @@
 {
     "name": "@dhis2/pwa",
-    "version": "10.3.2",
+    "version": "10.3.3",
     "description": "",
     "license": "BSD-3-Clause",
     "publishConfig": {
@@ -13,7 +13,7 @@
         "deploy": "d2-app-scripts deploy"
     },
     "devDependencies": {
-        "@dhis2/cli-app-scripts": "10.3.2"
+        "@dhis2/cli-app-scripts": "10.3.3"
     },
     "dependencies": {
         "idb": "^6.0.0",
