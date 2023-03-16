@@ -1,3 +1,10 @@
+## [10.3.4](https://github.com/dhis2/app-platform/compare/v10.3.3...v10.3.4) (2023-03-16)
+
+
+### Bug Fixes
+
+* make loading placeholders transparent ([#795](https://github.com/dhis2/app-platform/issues/795)) ([6e64756](https://github.com/dhis2/app-platform/commit/6e64756325b366b413acbdce8dd0d6b70632d118))
+
 ## [10.3.3](https://github.com/dhis2/app-platform/compare/v10.3.2...v10.3.3) (2023-03-13)
 
 
