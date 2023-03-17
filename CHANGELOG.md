@@ -1,3 +1,10 @@
+## [10.3.5](https://github.com/dhis2/app-platform/compare/v10.3.4...v10.3.5) (2023-03-17)
+
+
+### Bug Fixes
+
+* **pwa:** bump ui version for headerbar connection status [LIBS-315] ([#797](https://github.com/dhis2/app-platform/issues/797)) ([61ff0a4](https://github.com/dhis2/app-platform/commit/61ff0a49e63189d892403db8df24c57e170dac0a))
+
 ## [10.3.4](https://github.com/dhis2/app-platform/compare/v10.3.3...v10.3.4) (2023-03-16)
 
 
