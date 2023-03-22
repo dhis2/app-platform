@@ -1,3 +1,10 @@
+## [10.3.6](https://github.com/dhis2/app-platform/compare/v10.3.5...v10.3.6) (2023-03-22)
+
+
+### Bug Fixes
+
+* **cli:** fix envs to fix plugins in dev ([#799](https://github.com/dhis2/app-platform/issues/799)) ([ba29cea](https://github.com/dhis2/app-platform/commit/ba29ceacfe5a25d42a406f80a9896ccbc7bc82f8))
+
 ## [10.3.5](https://github.com/dhis2/app-platform/compare/v10.3.4...v10.3.5) (2023-03-17)
 
 
