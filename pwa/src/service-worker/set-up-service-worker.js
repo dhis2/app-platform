@@ -141,10 +141,7 @@ export function setUpServiceWorker() {
             const entryShouldBeExcluded = CRA_MANIFEST_EXCLUDE_PATTERNS.some(
                 (pattern) => pattern.test(e.url)
             )
-            if (entryShouldBeExcluded) {
-                return false
-            }
-            return true
+            return !entryShouldBeExcluded
         })
         precacheAndRoute(restOfManifest)
 
