@@ -1,3 +1,10 @@
+## [10.3.7](https://github.com/dhis2/app-platform/compare/v10.3.6...v10.3.7) (2023-04-27)
+
+
+### Bug Fixes
+
+* omit `moment-locales` from precache ([#806](https://github.com/dhis2/app-platform/issues/806)) ([c8d5494](https://github.com/dhis2/app-platform/commit/c8d5494c5eaf6a2f021166d208a1cc289701a47a))
+
 ## [10.3.6](https://github.com/dhis2/app-platform/compare/v10.3.5...v10.3.6) (2023-03-22)
 
 
