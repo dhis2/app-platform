@@ -52,6 +52,14 @@ export function setUpKillSwitchServiceWorker() {
 }
 
 export function urlMeetsAppShellCachingCriteria(url) {
+    // If this request is for a file that belongs to this app, cache it
+    // (in production, many, but not all, app files will be precached -
+    // e.g. moment-locales is omitted)
+    const appScope = new URL('./', self.location.href)
+    if (url.href.startsWith(appScope.href)) {
+        return true
+    }
+
     // Cache this request if it is important for the app adapter to load
     const isAdapterRequest = APP_ADAPTER_URL_PATTERNS.some((pattern) =>
         pattern.test(url.href)

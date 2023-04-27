@@ -127,10 +127,15 @@ export function setUpServiceWorker() {
         }
         registerRoute(navigationRouteMatcher, navigationRouteHandler)
 
-        // Handle the rest of files in the manifest
-        const restOfManifest = precacheManifest.filter(
-            (e) => e !== indexHtmlManifestEntry
-        )
+        // Handle the rest of files in the manifest - filter out index.html,
+        // and all moment-locales, which bulk up the precache and slow down
+        // installation significantly. Handle them network-first in app shell
+        const restOfManifest = precacheManifest.filter((e) => {
+            return (
+                e !== indexHtmlManifestEntry &&
+                !e.url.startsWith('./static/js/moment-locales/')
+            )
+        })
         precacheAndRoute(restOfManifest)
 
         // Similar to above; manifest injection from `workbox-build`
@@ -175,12 +180,9 @@ export function setUpServiceWorker() {
     )
 
     // Network-first caching by default
-    // (and for static assets while in development)
     // * NOTE: there may be lazy-loading errors while offline in dev mode
     registerRoute(
-        ({ url }) =>
-            urlMeetsAppShellCachingCriteria(url) ||
-            (!PRODUCTION_ENV && fileExtensionRegexp.test(url.pathname)),
+        ({ url }) => urlMeetsAppShellCachingCriteria(url),
         new NetworkFirst({
             cacheName: 'app-shell',
             plugins: [dhis2ConnectionStatusPlugin],
