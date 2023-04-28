@@ -79,6 +79,8 @@ export class OfflineInterface {
         }
 
         if (!testSWAvailable()) {
+            // Make this value available for ServerVersionProvider
+            this.ready = Promise.resolve()
             return
         }
 
