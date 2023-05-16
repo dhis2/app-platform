@@ -1,3 +1,10 @@
+## [10.3.9](https://github.com/dhis2/app-platform/compare/v10.3.8...v10.3.9) (2023-05-16)
+
+
+### Bug Fixes
+
+* move precache route to reenable navigation handler on login redirects [LIBS-473] ([#809](https://github.com/dhis2/app-platform/issues/809)) ([1ff29b6](https://github.com/dhis2/app-platform/commit/1ff29b645ec07e0bcce76efedbc08f1b76014a42))
+
 ## [10.3.8](https://github.com/dhis2/app-platform/compare/v10.3.7...v10.3.8) (2023-05-03)
 
 
