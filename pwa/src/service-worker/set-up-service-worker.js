@@ -67,10 +67,6 @@ export function setUpServiceWorker() {
         // Includes all built assets and index.html
         const precacheManifest = self.__WB_MANIFEST || []
 
-        // Same thing for built plugin assets
-        const pluginPrecacheManifest = self.__WB_PLUGIN_MANIFEST || []
-        precacheAndRoute(pluginPrecacheManifest)
-
         // todo: also do this routing for plugin.html
         // Extract index.html from the manifest to precache, then route
         // in a custom way
@@ -126,6 +122,7 @@ export function setUpServiceWorker() {
                     return matchPrecache(indexUrl)
                 })
         }
+        // NOTE: This route must come before any precacheAndRoute calls
         registerRoute(navigationRouteMatcher, navigationRouteHandler)
 
         // Handle the rest of files in the manifest - filter out index.html,
@@ -144,6 +141,10 @@ export function setUpServiceWorker() {
             return !entryShouldBeExcluded
         })
         precacheAndRoute(restOfManifest)
+
+        // Same thing for built plugin assets
+        const pluginPrecacheManifest = self.__WB_PLUGIN_MANIFEST || []
+        precacheAndRoute(pluginPrecacheManifest)
 
         // Similar to above; manifest injection from `workbox-build`
         // Precaches all assets in the shell's build folder except in `static`
