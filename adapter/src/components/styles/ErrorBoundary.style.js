@@ -6,7 +6,7 @@ const bgColor = '#F4F6F8',
     secondaryTextColor = '#494949',
     errorColor = '#D32F2F',
     grey050 = '#FBFCFD',
-    red200 = '#ffcdd2'
+    grey100 = '#F8F9FA'
 
 export default css`
     .mask {
@@ -102,11 +102,45 @@ export default css`
         font-family: Menlo, Courier, monospace !important;
     }
 
-    .pluginBoundary {
-        background-color: ${red200};
+    .pluginBoundaryWrapper {
+        background-color: white;
+        height: 100%;
+        width: 100%;
     }
 
-    .pluginBoundary span {
-        display: inline-block;
+    .pluginBoundaryWrapperName {
+        display: block;
+        color: black;
+        margin-block-end: 8px;
+        font-size: 18px;
+    }
+
+    .pluginBoundary {
+        background-color: ${grey100};
+        padding: 8px;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .pluginErrorItems {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        margin-block: auto;
+    }
+
+    .pluginErrorItems * {
+        margin-block-start: 8px;
+        color: #6c7787;
+    }
+
+    .pluginErrorText {
+        font-size: 18px;
+    }
+
+    .pluginErrorCopyToClipboard {
+        text-decoration: underline;
+        font-size: 14px;
+        cursor: pointer;
     }
 `

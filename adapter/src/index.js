@@ -64,4 +64,5 @@ AppAdapter.propTypes = {
     onPluginError: PropTypes.func,
 }
 
+export { PluginErrorComponent } from './components/PluginErrorComponent.js'
 export default AppAdapter

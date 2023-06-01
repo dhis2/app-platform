@@ -2,6 +2,7 @@ import i18n from '@dhis2/d2-i18n'
 import cx from 'classnames'
 import PropTypes from 'prop-types'
 import React, { Component } from 'react'
+import { PluginErrorComponent } from './PluginErrorComponent.js'
 import buttonStyles from './styles/Button.style.js'
 import styles from './styles/ErrorBoundary.style.js'
 
@@ -66,19 +67,11 @@ export class ErrorBoundary extends Component {
         if (this.state.error) {
             if (this.props.plugin) {
                 return (
-                    <>
-                        <style jsx>{styles}</style>
-                        <div className="pluginBoundary">
-                            <span>I am the default plugin boundary</span>
-                            {onRetry && (
-                                <div className="retry">
-                                    <UIButton onClick={onRetry}>
-                                        {i18n.t('Try again')}
-                                    </UIButton>
-                                </div>
-                            )}
-                        </div>
-                    </>
+                    <PluginErrorComponent
+                        error={this.state.error}
+                        errorInfo={this.state.errorInfo}
+                        onRetry={onRetry}
+                    />
                 )
             }
             return (
