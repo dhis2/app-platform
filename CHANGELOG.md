@@ -1,3 +1,10 @@
+# [10.4.0-alpha.2](https://github.com/dhis2/app-platform/compare/v10.4.0-alpha.1...v10.4.0-alpha.2) (2023-06-16)
+
+
+### Bug Fixes
+
+* update app-runtime dependencies ([3433129](https://github.com/dhis2/app-platform/commit/343312996e4879f186ecbdf58f1f9816cca8c7f1))
+
 # [10.4.0-alpha.1](https://github.com/dhis2/app-platform/compare/v10.3.1...v10.4.0-alpha.1) (2023-03-13)
 
 
