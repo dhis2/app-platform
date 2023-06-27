@@ -1,6 +1,8 @@
 const fs = require('fs')
 const path = require('path')
 const { reporter } = require('@dhis2/cli-helpers-engine')
+const os = require('os');
+
 
 const shellSource = path.dirname(
     require.resolve('@dhis2/app-shell/package.json')
@@ -8,7 +10,10 @@ const shellSource = path.dirname(
 const shellAppDirname = 'src/D2App'
 
 const findYarnLock = (base) => {
-    if (base === '/') {
+    // Get the root path or drive based on the operating system
+    const rootPathByOS = os.platform() === 'win32' ? path.parse(process.cwd()).root : '/';
+
+    if (base === rootPathByOS) {
         return null
     }
 
