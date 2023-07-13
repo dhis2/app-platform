@@ -78,6 +78,7 @@ export const ServerVersionProvider = ({
                 pwaEnabled,
             }}
             offlineInterface={loginApp ? null : offlineInterface}
+            loginApp={loginApp}
         >
             {children}
         </Provider>
