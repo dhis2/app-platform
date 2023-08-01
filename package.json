@@ -20,6 +20,8 @@
         "@dhis2/cli-style": "^10.4.3",
         "@dhis2/cli-utils-docsite": "^3.0.0",
         "concurrently": "^6.0.0",
+        "patch-package": "^8.0.0",
+        "postinstall-postinstall": "^2.1.0",
         "serve": "^12.0.0"
     },
     "scripts": {
@@ -37,7 +39,8 @@
         "docs:build": "d2-utils-docsite build ./docs -o ./dist",
         "test:adapter": "yarn workspace @dhis2/app-adapter test",
         "test:cli": "yarn workspace @dhis2/cli-app-scripts test",
-        "test": "yarn test:adapter && yarn test:cli"
+        "test": "yarn test:adapter && yarn test:cli",
+        "postinstall": "patch-package"
     },
     "d2": {
         "docsite": {

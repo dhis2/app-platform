@@ -1,0 +1,16 @@
+diff --git a/node_modules/workbox-precaching/PrecacheController.js b/node_modules/workbox-precaching/PrecacheController.js
+index e00975e..b67ba2b 100644
+--- a/node_modules/workbox-precaching/PrecacheController.js
++++ b/node_modules/workbox-precaching/PrecacheController.js
+@@ -164,7 +164,10 @@ class PrecacheController {
+                     params: { cacheKey },
+                     request,
+                     event,
+-                }));
++                })).catch(err => {
++                    console.warn("Whoops! There was a precaching error. This app may be missing important assets.")
++                    console.error(err)
++                });
+             }
+             const { updatedURLs, notUpdatedURLs } = installReportPlugin;
+             if (process.env.NODE_ENV !== 'production') {
