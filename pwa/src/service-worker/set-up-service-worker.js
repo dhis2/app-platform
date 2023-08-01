@@ -1,4 +1,10 @@
-import { precacheAndRoute, matchPrecache, precache } from 'workbox-precaching'
+import {
+    precacheAndRoute,
+    matchPrecache,
+    precache,
+    // PrecacheController,
+    // PrecacheRoute,
+} from 'workbox-precaching'
 import { registerRoute, setDefaultHandler } from 'workbox-routing'
 import {
     NetworkFirst,
@@ -42,7 +48,7 @@ export function setUpServiceWorker() {
 
     // Disable verbose logs
     // TODO: control with env var
-    self.__WB_DISABLE_DEV_LOGS = true
+    // self.__WB_DISABLE_DEV_LOGS = true
 
     // Globals (Note: global state resets each time SW goes idle)
 
@@ -155,6 +161,75 @@ export function setUpServiceWorker() {
         // '[]' fallback prevents an error when switching pwa enabled to disabled
         const sharedBuildManifest = self.__WB_BUILD_MANIFEST || []
         precacheAndRoute(sharedBuildManifest)
+    } else {
+        // Test these by using the "Network request blocking" dev tools to cause errors
+        precacheAndRoute([
+            // Let this one work
+            { url: './index.html', revision: '1' },
+            // Set one or more of the following to fail
+            { url: './hey.jpg', revision: '1' },
+            { url: './bogus1.jpg', revision: '1' },
+            { url: './derp2.jpg', revision: '1' },
+            { url: './diddlibap3.jpg', revision: '1' },
+            { url: './squip4.jpg', revision: '1' },
+        ])
+
+        /* An alternative to patch package, where a custom precache controller is made and implemented
+        class CustomPrecacheController extends PrecacheController {
+            // Copied and modified slightly from the original `install` method
+            // in order to catch errors without scrapping the entire SW
+            // installation
+            install(event) {
+                const fetchAndCache = async () => {
+                    // Cache entries one at a time.
+                    // See https://github.com/GoogleChrome/workbox/issues/2528
+                    for (const [url, cacheKey] of this._urlsToCacheKeys) {
+                        const integrity =
+                            this._cacheKeysToIntegrities.get(cacheKey)
+                        const cacheMode = this._urlsToCacheModes.get(url)
+
+                        const request = new Request(url, {
+                            integrity,
+                            cache: cacheMode,
+                            credentials: 'same-origin',
+                        })
+
+                        await Promise.all(
+                            this.strategy.handleAll({
+                                params: { cacheKey },
+                                request,
+                                event,
+                            })
+                        ).catch((err) => {
+                            console.log('Whoops there was a precaching err!')
+                            console.error(err)
+                        })
+                    }
+                }
+                event.waitUntil(fetchAndCache())
+            }
+        }
+        const precacheController = new CustomPrecacheController()
+
+        precacheController.addToCacheList([
+            { url: './index.html', revision: '5' },
+            { url: './hey.jpg', revision: '1000' },
+            { url: './bogus1.jpg', revision: '1000' },
+            { url: './derp2.jpg', revision: '1000' },
+            { url: './diddlibap3.jpg', revision: '1000' },
+            { url: './squip4.jpg', revision: '1000' },
+        ])
+
+        self.addEventListener('install', (event) => {
+            precacheController.install(event)
+        })
+
+        self.addEventListener('activate', (event) => {
+            precacheController.activate(event)
+        })
+
+        const precacheRoute = new PrecacheRoute(precacheController)
+        registerRoute(precacheRoute) */
     }
 
     // Handling pings: only use the network, and don't update the connection
