@@ -1,5 +1,5 @@
 diff --git a/node_modules/workbox-precaching/PrecacheController.js b/node_modules/workbox-precaching/PrecacheController.js
-index e00975e..bfee1cb 100644
+index e00975e..b728b6a 100644
 --- a/node_modules/workbox-precaching/PrecacheController.js
 +++ b/node_modules/workbox-precaching/PrecacheController.js
 @@ -150,6 +150,7 @@ class PrecacheController {
@@ -10,7 +10,7 @@ index e00975e..bfee1cb 100644
              // Cache entries one at a time.
              // See https://github.com/GoogleChrome/workbox/issues/2528
              for (const [url, cacheKey] of this._urlsToCacheKeys) {
-@@ -164,12 +165,44 @@ class PrecacheController {
+@@ -164,12 +165,43 @@ class PrecacheController {
                      params: { cacheKey },
                      request,
                      event,
@@ -20,7 +20,7 @@ index e00975e..bfee1cb 100644
 +                // error message
 +                .catch(err => {
 +                    failedUrls.push(url)
-+                    console.error(err)
++                    console.error(`Error when attempting to fetch and cache URL ${url}:\n`, err)
 +                });
              }
              const { updatedURLs, notUpdatedURLs } = installReportPlugin;
@@ -33,9 +33,10 @@ index e00975e..bfee1cb 100644
 +                const appVersion = process.env.REACT_APP_DHIS2_APP_VERSION
 +                const appName = process.env.REACT_APP_DHIS2_APP_NAME
 +                const errorMessage = 
-+                    `Some assets were unable to be fetched and cached when ` +
-+                    `installing ${appName} version ${appVersion}, so the ` +
-+                    `installation has been aborted.\n\n` + 
++                    `The following assets were unable to be precached when ` +
++                    `attempting to install ${appName} version ${appVersion}, ` +
++                    `so the installation has been aborted:\n` + 
++                    `${failedUrls.reduce((acc, curr) => acc + ` * ${curr}\n`, '')}\n` +
 +                    `If another version of the app is installed in the browser, ` +
 +                    `you will continue to see that version. If not, you will ` +
 +                    `see version ${appVersion}, but caching and offline ` +
@@ -47,9 +48,7 @@ index e00975e..bfee1cb 100644
 +                    `and you would like to attempt to view version ` +
 +                    `${appVersion} (knowing the above caveats), you may use ` +
 +                    `your browser's developer tools to find the service worker ` +
-+                    `that's currently active for this app and unregister it.\n\n` +
-+                    `These are the files that were unable to be fetched and cached:\n` +
-+                    `${failedUrls.reduce((acc, curr) => acc + ` * ${curr}\n`, '')}`
++                    `that's currently active for this app and unregister it.`
 +                throw new Error(errorMessage)
 +            }
 +
