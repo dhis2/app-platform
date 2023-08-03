@@ -162,16 +162,16 @@ export function setUpServiceWorker() {
         const sharedBuildManifest = self.__WB_BUILD_MANIFEST || []
         precacheAndRoute(sharedBuildManifest)
     } else {
-        // Test these by using the "Network request blocking" dev tools to cause errors
+        // This will execute in dev environments
         precacheAndRoute([
             // Let this one work
             { url: './index.html', revision: '1' },
-            // Set one or more of the following to fail
-            { url: './hey.jpg', revision: '1' },
-            { url: './bogus1.jpg', revision: '1' },
-            { url: './derp2.jpg', revision: '1' },
-            { url: './diddlibap3.jpg', revision: '1' },
-            { url: './squip4.jpg', revision: '1' },
+            // The following are expected to fail
+            { url: 'https://not-a-site.com/hey.jpg', revision: '1' },
+            { url: 'https://not-a-site.com/bogus1.jpg', revision: '1' },
+            { url: 'https://not-a-site.com/derp2.jpg', revision: '1' },
+            { url: 'https://not-a-site.com/diddlibap3.jpg', revision: '1' },
+            { url: 'https://not-a-site.com/squip4.jpg', revision: '1' },
         ])
 
         /* An alternative to patch package, where a custom precache controller is made and implemented
@@ -212,12 +212,12 @@ export function setUpServiceWorker() {
         const precacheController = new CustomPrecacheController()
 
         precacheController.addToCacheList([
-            { url: './index.html', revision: '5' },
-            { url: './hey.jpg', revision: '1000' },
-            { url: './bogus1.jpg', revision: '1000' },
-            { url: './derp2.jpg', revision: '1000' },
-            { url: './diddlibap3.jpg', revision: '1000' },
-            { url: './squip4.jpg', revision: '1000' },
+            { url: 'https://not-a-site.com/index.html', revision: '5' },
+            { url: 'https://not-a-site.com/hey.jpg', revision: '1000' },
+            { url: 'https://not-a-site.com/bogus1.jpg', revision: '1000' },
+            { url: 'https://not-a-site.com/derp2.jpg', revision: '1000' },
+            { url: 'https://not-a-site.com/diddlibap3.jpg', revision: '1000' },
+            { url: 'https://not-a-site.com/squip4.jpg', revision: '1000' },
         ])
 
         self.addEventListener('install', (event) => {
