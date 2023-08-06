@@ -7,21 +7,20 @@ const shellSource = path.dirname(
 )
 const shellAppDirname = 'src/D2App'
 
-const findYarnLock = (base, directoryRoot) => {
-    if (base === directoryRoot) {
+const findYarnLock = (base, rootDirectory) => {
+    if (base === rootDirectory) {
         return null
     }
     const yarnLock = path.join(base, './yarn.lock')
     if (fs.existsSync(yarnLock)) {
         return yarnLock
     }
-    return findYarnLock(path.dirname(base), directoryRoot)
+    return findYarnLock(path.dirname(base), rootDirectory)
 }
 
 module.exports = (cwd = process.cwd()) => {
     const base = path.resolve(cwd)
-    // Get the root path or drive based on the operating system
-    const rootPathByOS = path.parse(cwd).root;
+    const rootDirectory = path.parse(cwd).root;
     const paths = {
         babelConfig: path.join(__dirname, '../../config/babel.config.js'),
         configDefaultsApp: path.join(
@@ -45,7 +44,7 @@ module.exports = (cwd = process.cwd()) => {
 
         base,
         package: path.join(base, './package.json'),
-        yarnLock: findYarnLock(base, rootPathByOS),
+        yarnLock: findYarnLock(base, rootDirectory),
         dotenv: path.join(base, './.env'),
         config: path.join(base, './d2.config.js'),
         readme: path.join(base, './README.md'),
