@@ -11,6 +11,11 @@ const APP_ADAPTER_URL_PATTERNS = [
     /\/api(\/\d+)?\/userSettings/, // useLocale
     /\/api(\/\d+)?\/me\?fields=id$/, // useVerifyLatestUser
 ]
+// Note that the CRA precache manifest files start with './'
+// TODO: Make this extensible with a d2.config.js option
+export const CRA_MANIFEST_EXCLUDE_PATTERNS = [
+    /^\.\/static\/js\/moment-locales\//,
+]
 
 // '[]' Fallback prevents error when switching from pwa enabled to disabled
 const APP_SHELL_URL_FILTER_PATTERNS = JSON.parse(
@@ -52,6 +57,14 @@ export function setUpKillSwitchServiceWorker() {
 }
 
 export function urlMeetsAppShellCachingCriteria(url) {
+    // If this request is for a file that belongs to this app, cache it
+    // (in production, many, but not all, app files will be precached -
+    // e.g. moment-locales is omitted)
+    const appScope = new URL('./', self.location.href)
+    if (url.href.startsWith(appScope.href)) {
+        return true
+    }
+
     // Cache this request if it is important for the app adapter to load
     const isAdapterRequest = APP_ADAPTER_URL_PATTERNS.some((pattern) =>
         pattern.test(url.href)

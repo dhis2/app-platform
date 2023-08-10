@@ -39,7 +39,7 @@ const App = ({ config }) => (
     <AppAdapter {...config}>
         <React.Suspense
             fallback={
-                <Layer translucent level={layers.alert}>
+                <Layer level={layers.alert}>
                     <CenteredContent>
                         <CircularLoader />
                     </CenteredContent>

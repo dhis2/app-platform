@@ -79,6 +79,10 @@ export class OfflineInterface {
         }
 
         if (!testSWAvailable()) {
+            // Make this value available for ServerVersionProvider
+            this.ready = Promise.resolve()
+            // Must be connected if we can't use a SW for offline features
+            this.latestIsConnected = true
             return
         }
 
@@ -220,6 +224,10 @@ export class OfflineInterface {
      * @returns {Function} - An unsubscribe function
      */
     subscribeToDhis2ConnectionStatus({ onUpdate }) {
+        if (!testSWAvailable()) {
+            return () => undefined
+        }
+
         this.offlineEvents.on(swMsgs.dhis2ConnectionStatusUpdate, onUpdate)
         return () =>
             this.offlineEvents.off(swMsgs.dhis2ConnectionStatusUpdate, onUpdate)

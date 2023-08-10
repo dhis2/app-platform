@@ -6,6 +6,8 @@ const config = {
         caching: {
             // For the purposes of this demo, to simulate dashboard content:
             patternsToOmitFromAppShell: ['visualizations'],
+            // To test precache filtering: (relative to PUBLIC_DIR)
+            globsToOmitFromPrecache: ['exclude-from-precache/**'],
         },
     },
 
