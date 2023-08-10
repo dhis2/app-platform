@@ -26,6 +26,7 @@ const handler = async ({
     const paths = makePaths(cwd)
 
     const mode = 'development'
+    process.env.BABEL_ENV = process.env.NODE_ENV = mode
     loadEnvFiles(paths, mode)
 
     const config = parseConfig(paths)

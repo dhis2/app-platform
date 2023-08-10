@@ -38,6 +38,18 @@ module.exports = {
              * https://developers.google.com/web/tools/workbox/modules/workbox-precaching#explanation_of_the_precache_list
              */
             additionalManifestEntries: [],
+            /**
+             * By default, all the contents of the `build` folder are added to
+             * the precache to give the app the best chances of functioning
+             * completely while offline. Developers may choose to omit some
+             * of these files (for example, thousands of font or image files)
+             * if they cause cache bloat and the app can work fine without
+             * them precached. See LIBS-482
+             *
+             * The globs should be relative to the public dir of the built app.
+             * Used in injectPrecacheManifest.js
+             */
+            globsToOmitFromPrecache: [],
         },
     },
 }
