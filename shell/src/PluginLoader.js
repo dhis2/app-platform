@@ -2,7 +2,80 @@ import AppAdapter from '@dhis2/app-adapter'
 import { Layer, layers, CenteredContent, CircularLoader } from '@dhis2/ui'
 import postRobot from 'post-robot'
 import PropTypes from 'prop-types'
-import React, { useCallback, useEffect, useState } from 'react'
+import React, { useCallback, useEffect, useRef, useState } from 'react'
+
+const PluginInner = ({
+    D2App,
+    config,
+    propsFromParent,
+    resizePluginHeight,
+    resizePluginWidth,
+}) => {
+    const divRef = useRef()
+    const innerDivRef = useRef()
+    useEffect(() => {
+        if (
+            divRef &&
+            divRef.current &&
+            (resizePluginHeight || resizePluginWidth)
+        ) {
+            const resizeObserver = new ResizeObserver(() => {
+                console.log(
+                    'height,scrollHeight,offsetWidth,scrollWidth',
+                    divRef.current.offsetHeight,
+                    divRef.current.scrollHeight,
+                    divRef.current.offsetWidth,
+                    divRef.current.scrollWidth
+                )
+                // the additional pixels currently account for possible horizontal scroll bar
+                if (resizePluginHeight) {
+                    resizePluginHeight(divRef.current.offsetHeight + 20)
+                }
+            })
+            resizeObserver.observe(divRef.current)
+        }
+    }, [])
+
+    let previousWidth
+
+    const resetWidth = () => {
+        const currentWidth = innerDivRef.current?.scrollWidth
+        if (resizePluginWidth && currentWidth) {
+            if (previousWidth && Math.abs(currentWidth - previousWidth) > 20) {
+                resizePluginWidth(currentWidth + 20)
+            }
+            previousWidth = currentWidth
+        }
+        requestAnimationFrame(resetWidth)
+    }
+
+    useEffect(() => {
+        requestAnimationFrame(resetWidth)
+    }, [])
+
+    // inner div disables margin collapsing which would prevent computing correct height
+    return (
+        <div ref={divRef}>
+            <div style={{ display: 'flex', width: 'fitContent' }}>
+                <div id="innerDiv" ref={innerDivRef}>
+                    <D2App
+                        config={config}
+                        resizePluginWidth={resizePluginWidth}
+                        {...propsFromParent}
+                    />
+                </div>
+            </div>
+        </div>
+    )
+}
+
+PluginInner.propTypes = {
+    D2App: PropTypes.object,
+    config: PropTypes.object,
+    propsFromParent: PropTypes.array,
+    resizePluginHeight: PropTypes.func,
+    resizePluginWidth: PropTypes.func,
+}
 
 export const PluginLoader = ({ config, requiredProps, D2App }) => {
     const [propsFromParent, setPropsFromParent] = useState({})
@@ -11,6 +84,8 @@ export const PluginLoader = ({ config, requiredProps, D2App }) => {
     const [showAlertsInPlugin, setShowAlertsInPlugin] = useState(false)
     const [onPluginError, setOnPluginError] = useState(() => () => {})
     const [clearPluginError, setClearPluginError] = useState(() => () => {})
+    const [resizePluginHeight, setResizePluginHeight] = useState(null)
+    const [resizePluginWidth, setResizePluginWidth] = useState(null)
 
     const receivePropsFromParent = useCallback(
         (event) => {
@@ -20,6 +95,10 @@ export const PluginLoader = ({ config, requiredProps, D2App }) => {
                 setCommunicationReceived,
                 alertsAdd,
                 showAlertsInPlugin,
+                height,
+                setPluginHeight,
+                width,
+                setPluginWidth,
                 onError,
                 ...explicitlyPassedProps
             } = receivedProps
@@ -61,6 +140,14 @@ export const PluginLoader = ({ config, requiredProps, D2App }) => {
             if (showAlertsInPlugin) {
                 setShowAlertsInPlugin(Boolean(showAlertsInPlugin))
             }
+
+            if (!height && setPluginHeight) {
+                setResizePluginHeight(() => (height) => setPluginHeight(height))
+            }
+
+            if (!width && setPluginWidth) {
+                setResizePluginWidth(() => (width) => setPluginWidth(width))
+            }
         },
         [
             requiredProps,
@@ -68,6 +155,8 @@ export const PluginLoader = ({ config, requiredProps, D2App }) => {
             setClearPluginError,
             setParentAlertsAdd,
             setShowAlertsInPlugin,
+            setResizePluginHeight,
+            setResizePluginWidth,
         ]
     )
 
@@ -120,7 +209,13 @@ export const PluginLoader = ({ config, requiredProps, D2App }) => {
                     </Layer>
                 }
             >
-                <D2App config={config} {...propsFromParent} />
+                <PluginInner
+                    D2App={D2App}
+                    config={config}
+                    propsFromParent={propsFromParent}
+                    resizePluginHeight={resizePluginHeight}
+                    resizePluginWidth={resizePluginWidth}
+                />
             </React.Suspense>
         </AppAdapter>
     )
