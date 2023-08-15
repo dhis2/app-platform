@@ -8,7 +8,13 @@ import { ErrorBoundary } from './ErrorBoundary.js'
 import { LoadingMask } from './LoadingMask.js'
 import { styles } from './styles/AppWrapper.style.js'
 
-const AppWrapper = ({ children, plugin, onPluginError, clearPluginError }) => {
+const AppWrapper = ({
+    children,
+    plugin,
+    autoResizePlugin,
+    onPluginError,
+    clearPluginError,
+}) => {
     const { loading: localeLoading } = useCurrentUserLocale()
     const { loading: latestUserLoading } = useVerifyLatestUser()
 
@@ -20,7 +26,11 @@ const AppWrapper = ({ children, plugin, onPluginError, clearPluginError }) => {
         return (
             <div className="app-shell-adapter">
                 <style jsx>{styles}</style>
-                <div className="app-shell-app">
+                <div
+                    className={
+                        autoResizePlugin ? 'app-shell-plugin' : 'app-shell-app'
+                    }
+                >
                     <ErrorBoundary
                         plugin={true}
                         onPluginError={onPluginError}
@@ -52,6 +62,7 @@ const AppWrapper = ({ children, plugin, onPluginError, clearPluginError }) => {
 }
 
 AppWrapper.propTypes = {
+    autoResizePlugin: PropTypes.bool,
     children: PropTypes.node,
     clearPluginError: PropTypes.func,
     plugin: PropTypes.bool,

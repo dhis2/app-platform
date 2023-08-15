@@ -20,14 +20,6 @@ const PluginInner = ({
             (resizePluginHeight || resizePluginWidth)
         ) {
             const resizeObserver = new ResizeObserver(() => {
-                console.log(
-                    'height,scrollHeight,offsetWidth,scrollWidth',
-                    divRef.current.offsetHeight,
-                    divRef.current.scrollHeight,
-                    divRef.current.offsetWidth,
-                    divRef.current.scrollWidth
-                )
-                // the additional pixels currently account for possible horizontal scroll bar
                 if (resizePluginHeight) {
                     resizePluginHeight(divRef.current.offsetHeight + 20)
                 }
@@ -198,6 +190,7 @@ export const PluginLoader = ({ config, requiredProps, D2App }) => {
             showAlertsInPlugin={showAlertsInPlugin}
             onPluginError={onPluginError}
             clearPluginError={clearPluginError}
+            autoResizePlugin={resizePluginHeight || resizePluginWidth}
             {...config}
         >
             <React.Suspense

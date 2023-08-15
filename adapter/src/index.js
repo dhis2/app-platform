@@ -10,6 +10,7 @@ import { ServerVersionProvider } from './components/ServerVersionProvider.js'
 const AppAdapter = ({
     appName,
     appVersion,
+    autoResizePlugin,
     url,
     apiVersion,
     pwaEnabled,
@@ -39,6 +40,7 @@ const AppAdapter = ({
                 >
                     <AppWrapper
                         plugin={plugin}
+                        autoResizePlugin={autoResizePlugin}
                         onPluginError={onPluginError}
                         clearPluginError={clearPluginError}
                     >
@@ -54,6 +56,7 @@ AppAdapter.propTypes = {
     appName: PropTypes.string.isRequired,
     appVersion: PropTypes.string.isRequired,
     apiVersion: PropTypes.number,
+    autoResizePlugin: PropTypes.bool,
     children: PropTypes.element,
     clearPluginError: PropTypes.func,
     parentAlertsAdd: PropTypes.func,
