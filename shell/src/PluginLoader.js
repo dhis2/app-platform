@@ -26,24 +26,27 @@ const PluginInner = ({
             })
             resizeObserver.observe(divRef.current)
         }
-    }, [])
+    }, [resizePluginHeight, resizePluginWidth])
 
-    let previousWidth
+    const previousWidth = useRef()
 
-    const resetWidth = () => {
+    const resetWidth = useCallback(() => {
         const currentWidth = innerDivRef.current?.scrollWidth
         if (resizePluginWidth && currentWidth) {
-            if (previousWidth && Math.abs(currentWidth - previousWidth) > 20) {
+            if (
+                previousWidth.current &&
+                Math.abs(currentWidth - previousWidth.current) > 20
+            ) {
                 resizePluginWidth(currentWidth + 20)
             }
-            previousWidth = currentWidth
+            previousWidth.current = currentWidth
         }
         requestAnimationFrame(resetWidth)
-    }
+    }, [resizePluginWidth])
 
     useEffect(() => {
         requestAnimationFrame(resetWidth)
-    }, [])
+    }, [resetWidth])
 
     // inner div disables margin collapsing which would prevent computing correct height
     return (
