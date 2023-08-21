@@ -20,7 +20,7 @@ const findYarnLock = (base, rootDirectory) => {
 
 module.exports = (cwd = process.cwd()) => {
     const base = path.resolve(cwd)
-    const rootDirectory = path.parse(cwd).root;
+    const rootDirectory = path.parse(cwd).root
     const paths = {
         babelConfig: path.join(__dirname, '../../config/babel.config.js'),
         configDefaultsApp: path.join(
