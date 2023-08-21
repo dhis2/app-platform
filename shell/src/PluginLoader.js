@@ -14,19 +14,8 @@ const PluginInner = ({
     const divRef = useRef()
     const innerDivRef = useRef()
     useEffect(() => {
-        if (
-            divRef &&
-            divRef.current &&
-            (resizePluginHeight || resizePluginWidth)
-        ) {
+        if (divRef && divRef.current && resizePluginHeight) {
             const resizeObserver = new ResizeObserver(() => {
-                console.log(
-                    'height,scrollHeight,offsetWidth,scrollWidth',
-                    divRef.current.offsetHeight,
-                    divRef.current.scrollHeight,
-                    divRef.current.offsetWidth,
-                    divRef.current.scrollWidth
-                )
                 // the additional pixels currently account for possible horizontal scroll bar
                 if (resizePluginHeight) {
                     resizePluginHeight(divRef.current.offsetHeight + 20)
@@ -34,11 +23,11 @@ const PluginInner = ({
             })
             resizeObserver.observe(divRef.current)
         }
-    }, [])
+    }, [resizePluginHeight])
 
     let previousWidth
 
-    const resetWidth = () => {
+    const resetWidth = useCallback(() => {
         const currentWidth = innerDivRef.current?.scrollWidth
         if (resizePluginWidth && currentWidth) {
             if (previousWidth && Math.abs(currentWidth - previousWidth) > 20) {
@@ -47,11 +36,13 @@ const PluginInner = ({
             previousWidth = currentWidth
         }
         requestAnimationFrame(resetWidth)
-    }
+    }, [resizePluginWidth])
 
     useEffect(() => {
-        requestAnimationFrame(resetWidth)
-    }, [])
+        if (resizePluginWidth) {
+            requestAnimationFrame(resetWidth)
+        }
+    }, [resetWidth, resizePluginWidth])
 
     // inner div disables margin collapsing which would prevent computing correct height
     return (
