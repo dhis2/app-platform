@@ -1,3 +1,10 @@
+## [10.3.10](https://github.com/dhis2/app-platform/compare/v10.3.9...v10.3.10) (2023-08-21)
+
+
+### Bug Fixes
+
+* support yarn.lock discovery on non-unix ([#811](https://github.com/dhis2/app-platform/issues/811)) ([22a6863](https://github.com/dhis2/app-platform/commit/22a6863c1b4a5d9c6c026c502a1b77dded318be7))
+
 ## [10.3.9](https://github.com/dhis2/app-platform/compare/v10.3.8...v10.3.9) (2023-05-16)
 
 
