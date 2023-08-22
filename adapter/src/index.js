@@ -14,9 +14,17 @@ const AppAdapter = ({
     apiVersion,
     pwaEnabled,
     plugin,
+    parentAlertsAdd,
+    showAlertsInPlugin,
+    onPluginError,
+    clearPluginError,
     children,
 }) => (
-    <ErrorBoundary fullscreen onRetry={checkForSWUpdateAndReload}>
+    <ErrorBoundary
+        plugin={plugin}
+        fullscreen
+        onRetry={checkForSWUpdateAndReload}
+    >
         <OfflineInterfaceProvider>
             <PWALoadingBoundary>
                 <ServerVersionProvider
@@ -25,8 +33,17 @@ const AppAdapter = ({
                     url={url}
                     apiVersion={apiVersion}
                     pwaEnabled={pwaEnabled}
+                    plugin={plugin}
+                    parentAlertsAdd={parentAlertsAdd}
+                    showAlertsInPlugin={showAlertsInPlugin}
                 >
-                    <AppWrapper plugin={plugin}>{children}</AppWrapper>
+                    <AppWrapper
+                        plugin={plugin}
+                        onPluginError={onPluginError}
+                        clearPluginError={clearPluginError}
+                    >
+                        {children}
+                    </AppWrapper>
                 </ServerVersionProvider>
             </PWALoadingBoundary>
         </OfflineInterfaceProvider>
@@ -38,9 +55,13 @@ AppAdapter.propTypes = {
     appVersion: PropTypes.string.isRequired,
     apiVersion: PropTypes.number,
     children: PropTypes.element,
+    clearPluginError: PropTypes.func,
+    parentAlertsAdd: PropTypes.func,
     plugin: PropTypes.bool,
     pwaEnabled: PropTypes.bool,
+    showAlertsInPlugin: PropTypes.func,
     url: PropTypes.string,
+    onPluginError: PropTypes.func,
 }
 
 export default AppAdapter

@@ -8,7 +8,7 @@ import { ErrorBoundary } from './ErrorBoundary.js'
 import { LoadingMask } from './LoadingMask.js'
 import { styles } from './styles/AppWrapper.style.js'
 
-export const AppWrapper = ({ children, plugin }) => {
+const AppWrapper = ({ children, plugin, onPluginError, clearPluginError }) => {
     const { loading: localeLoading } = useCurrentUserLocale()
     const { loading: latestUserLoading } = useVerifyLatestUser()
 
@@ -16,10 +16,31 @@ export const AppWrapper = ({ children, plugin }) => {
         return <LoadingMask />
     }
 
+    if (plugin) {
+        return (
+            <div className="app-shell-adapter">
+                <style jsx>{styles}</style>
+                <div className="app-shell-app">
+                    <ErrorBoundary
+                        plugin={true}
+                        onPluginError={onPluginError}
+                        onRetry={() => {
+                            clearPluginError()
+                            window.location.reload()
+                        }}
+                    >
+                        {children}
+                    </ErrorBoundary>
+                </div>
+                <Alerts />
+            </div>
+        )
+    }
+
     return (
         <div className="app-shell-adapter">
             <style jsx>{styles}</style>
-            {!plugin && <ConnectedHeaderBar />}
+            <ConnectedHeaderBar />
             <div className="app-shell-app">
                 <ErrorBoundary onRetry={() => window.location.reload()}>
                     {children}
@@ -32,5 +53,9 @@ export const AppWrapper = ({ children, plugin }) => {
 
 AppWrapper.propTypes = {
     children: PropTypes.node,
+    clearPluginError: PropTypes.func,
     plugin: PropTypes.bool,
+    onPluginError: PropTypes.func,
 }
+
+export { AppWrapper }
