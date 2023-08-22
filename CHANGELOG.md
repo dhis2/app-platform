@@ -1,9 +1,18 @@
-## [10.3.10](https://github.com/dhis2/app-platform/compare/v10.3.9...v10.3.10) (2023-08-21)
+# [10.4.0-alpha.3](https://github.com/dhis2/app-platform/compare/v10.4.0-alpha.2...v10.4.0-alpha.3) (2023-08-10)
 
 
 ### Bug Fixes
 
 * support yarn.lock discovery on non-unix ([#811](https://github.com/dhis2/app-platform/issues/811)) ([22a6863](https://github.com/dhis2/app-platform/commit/22a6863c1b4a5d9c6c026c502a1b77dded318be7))
+* move precache route to reenable navigation handler on login redirects [LIBS-473] ([#809](https://github.com/dhis2/app-platform/issues/809)) ([1ff29b6](https://github.com/dhis2/app-platform/commit/1ff29b645ec07e0bcce76efedbc08f1b76014a42))
+* **pwa:** avoid crashing when SW is not available [LIBS-499] ([#807](https://github.com/dhis2/app-platform/issues/807)) ([b681022](https://github.com/dhis2/app-platform/commit/b68102248fad98303dd2c01d954f4430b1934a25))
+* omit `moment-locales` from precache ([#806](https://github.com/dhis2/app-platform/issues/806)) ([c8d5494](https://github.com/dhis2/app-platform/commit/c8d5494c5eaf6a2f021166d208a1cc289701a47a))
+* **cli:** fix envs to fix plugins in dev ([#799](https://github.com/dhis2/app-platform/issues/799)) ([ba29cea](https://github.com/dhis2/app-platform/commit/ba29ceacfe5a25d42a406f80a9896ccbc7bc82f8))
+* **plugins:** omit launch paths when unused [LIBS-477] ([#791](https://github.com/dhis2/app-platform/issues/791)) ([e49a51f](https://github.com/dhis2/app-platform/commit/e49a51fec39a323350c71d4e09caff836aab2262))
+* **pwa:** bump ui version for headerbar connection status [LIBS-315] ([#797](https://github.com/dhis2/app-platform/issues/797)) ([61ff0a4](https://github.com/dhis2/app-platform/commit/61ff0a49e63189d892403db8df24c57e170dac0a))
+* make loading placeholders transparent ([#795](https://github.com/dhis2/app-platform/issues/795)) ([6e64756](https://github.com/dhis2/app-platform/commit/6e64756325b366b413acbdce8dd0d6b70632d118))
+* **plugins:** inject precache manifest correctly ([#792](https://github.com/dhis2/app-platform/issues/792)) ([c0d172e](https://github.com/dhis2/app-platform/commit/c0d172ec362182ce978e43b16e9c411ec61e5039))
+* **pwa:** add config option to omit files from precache [LIBS-482] ([#793](https://github.com/dhis2/app-platform/issues/793)) ([d089dda](https://github.com/dhis2/app-platform/commit/d089dda25433ca52f84c42c9369fce95419e4f83))
 
 ## [10.3.9](https://github.com/dhis2/app-platform/compare/v10.3.8...v10.3.9) (2023-05-16)
 
