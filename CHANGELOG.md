@@ -1,3 +1,10 @@
+# [10.4.0-alpha.4](https://github.com/dhis2/app-platform/compare/v10.4.0-alpha.3...v10.4.0-alpha.4) (2023-08-22)
+
+
+### Bug Fixes
+
+* support yarn.lock discovery on non-unix ([#811](https://github.com/dhis2/app-platform/issues/811)) ([22a6863](https://github.com/dhis2/app-platform/commit/22a6863c1b4a5d9c6c026c502a1b77dded318be7))
+
 # [10.4.0-alpha.3](https://github.com/dhis2/app-platform/compare/v10.4.0-alpha.2...v10.4.0-alpha.3) (2023-08-10)
 
 
