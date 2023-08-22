@@ -21,6 +21,11 @@
         "build"
     ],
     "dependencies": {
+        "@dhis2/pwa": "10.3.10",
+        "moment": "^2.24.0"
+    },
+    "devDependencies": {
+        "@dhis2/cli-app-scripts": "10.3.10",
         "@dhis2/pwa": "10.4.0-alpha.3",
         "moment": "^2.24.0",
         "post-robot": "^10.0.46"

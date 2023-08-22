@@ -3,6 +3,7 @@
 
 ### Bug Fixes
 
+* support yarn.lock discovery on non-unix ([#811](https://github.com/dhis2/app-platform/issues/811)) ([22a6863](https://github.com/dhis2/app-platform/commit/22a6863c1b4a5d9c6c026c502a1b77dded318be7))
 * move precache route to reenable navigation handler on login redirects [LIBS-473] ([#809](https://github.com/dhis2/app-platform/issues/809)) ([1ff29b6](https://github.com/dhis2/app-platform/commit/1ff29b645ec07e0bcce76efedbc08f1b76014a42))
 * **pwa:** avoid crashing when SW is not available [LIBS-499] ([#807](https://github.com/dhis2/app-platform/issues/807)) ([b681022](https://github.com/dhis2/app-platform/commit/b68102248fad98303dd2c01d954f4430b1934a25))
 * omit `moment-locales` from precache ([#806](https://github.com/dhis2/app-platform/issues/806)) ([c8d5494](https://github.com/dhis2/app-platform/commit/c8d5494c5eaf6a2f021166d208a1cc289701a47a))
