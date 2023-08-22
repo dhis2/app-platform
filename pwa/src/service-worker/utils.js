@@ -6,6 +6,17 @@ import {
 } from '../lib/sections-db.js'
 
 const CACHE_KEEP_LIST = ['other-assets', 'app-shell']
+const APP_ADAPTER_URL_PATTERNS = [
+    /\/api(\/\d+)?\/system\/info/, // from ServerVersionProvider
+    /\/api(\/\d+)?\/userSettings/, // useLocale
+    /\/api(\/\d+)?\/me\?fields=id$/, // useVerifyLatestUser
+]
+// Note that the CRA precache manifest files start with './'
+// TODO: Make this extensible with a d2.config.js option
+export const CRA_MANIFEST_EXCLUDE_PATTERNS = [
+    /^\.\/static\/js\/moment-locales\//,
+]
+
 // '[]' Fallback prevents error when switching from pwa enabled to disabled
 const APP_SHELL_URL_FILTER_PATTERNS = JSON.parse(
     process.env
@@ -46,6 +57,22 @@ export function setUpKillSwitchServiceWorker() {
 }
 
 export function urlMeetsAppShellCachingCriteria(url) {
+    // If this request is for a file that belongs to this app, cache it
+    // (in production, many, but not all, app files will be precached -
+    // e.g. moment-locales is omitted)
+    const appScope = new URL('./', self.location.href)
+    if (url.href.startsWith(appScope.href)) {
+        return true
+    }
+
+    // Cache this request if it is important for the app adapter to load
+    const isAdapterRequest = APP_ADAPTER_URL_PATTERNS.some((pattern) =>
+        pattern.test(url.href)
+    )
+    if (isAdapterRequest) {
+        return true
+    }
+
     // Don't cache if pwa.caching.omitExternalRequests in d2.config is true
     if (
         OMIT_EXTERNAL_REQUESTS_FROM_APP_SHELL &&
@@ -93,6 +120,23 @@ export async function removeUnusedCaches() {
     )
 }
 
+/** Get all clients including uncontrolled, but only those within SW scope */
+export function getAllClientsInScope() {
+    // Include uncontrolled clients: necessary to know if there are multiple
+    // tabs open upon first SW installation
+    return self.clients
+        .matchAll({
+            includeUncontrolled: true,
+        })
+        .then((clientsList) =>
+            // Filter to just clients within this SW scope, because other clients
+            // on this domain but outside of SW scope are returned otherwise
+            clientsList.filter((client) =>
+                client.url.startsWith(self.registration.scope)
+            )
+        )
+}
+
 /**
  * Can be used to access information about this service worker's clients.
  * Sends back information on a message with 'CLIENTS_INFO' type; the payload
@@ -102,11 +146,7 @@ export async function removeUnusedCaches() {
 export async function getClientsInfo(event) {
     const clientId = event.source.id
 
-    // Include uncontrolled clients: necessary to know if there are multiple
-    // tabs open upon first SW installation
-    const clientsList = await self.clients.matchAll({
-        includeUncontrolled: true,
-    })
+    const clientsList = await getAllClientsInScope()
 
     self.clients.get(clientId).then((client) => {
         client.postMessage({

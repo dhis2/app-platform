@@ -7,6 +7,7 @@ const i18n = require('../lib/i18n')
 const loadEnvFiles = require('../lib/loadEnvFiles')
 const parseConfig = require('../lib/parseConfig')
 const makePaths = require('../lib/paths')
+const makePlugin = require('../lib/plugin')
 const createProxyServer = require('../lib/proxy')
 const { compileServiceWorker } = require('../lib/pwa')
 const makeShell = require('../lib/shell')
@@ -25,10 +26,12 @@ const handler = async ({
     const paths = makePaths(cwd)
 
     const mode = 'development'
+    process.env.BABEL_ENV = process.env.NODE_ENV = mode
     loadEnvFiles(paths, mode)
 
     const config = parseConfig(paths)
     const shell = makeShell({ config, paths })
+    const plugin = makePlugin({ config, paths })
 
     if (config.type !== 'app') {
         reporter.error(
@@ -128,12 +131,29 @@ const handler = async ({
             )
             reporter.print('')
 
-            await shell.start({ port: newPort })
+            const shellStartPromise = shell.start({ port: newPort })
+
+            if (config.entryPoints.plugin) {
+                const pluginPort = await detectPort(newPort + 1)
+                reporter.print(
+                    `The plugin is now available on port ${pluginPort}`
+                )
+                reporter.print('')
+
+                await Promise.all([
+                    shellStartPromise,
+                    plugin.start({ port: pluginPort }),
+                ])
+            } else {
+                await shellStartPromise
+            }
         },
         {
             name: 'start',
-            onError: () =>
-                reporter.error('Start script exited with non-zero exit code'),
+            onError: (err) => {
+                reporter.error(err)
+                reporter.error('Start script exited with non-zero exit code')
+            },
         }
     )
 }

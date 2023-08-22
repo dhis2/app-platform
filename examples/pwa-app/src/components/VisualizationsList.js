@@ -44,7 +44,7 @@ export default function VisualizationsList() {
             }
         }
         cascadingFetch()
-    }, [])
+    }, [engine])
 
     return (
         <>

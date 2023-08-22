@@ -9,4 +9,7 @@ export const swMsgs = Object.freeze({
     confirmRecordingCompletion: 'CONFIRM_RECORDING_COMPLETION',
     completeRecording: 'COMPLETE_RECORDING',
     recordingCompleted: 'RECORDING_COMPLETED',
+    dhis2ConnectionStatusUpdate: 'DHIS2_CONNECTION_STATUS_UPDATE',
+    getImmediateDhis2ConnectionStatusUpdate:
+        'GET_IMMEDIATE_DHIS2_CONNECTION_STATUS_UPDATE',
 })

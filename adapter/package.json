@@ -1,6 +1,6 @@
 {
     "name": "@dhis2/app-adapter",
-    "version": "10.0.0-beta.2",
+    "version": "10.3.10",
     "repository": {
         "type": "git",
         "url": "https://github.com/amcgee/dhis2-app-platform",
@@ -21,11 +21,11 @@
         "build"
     ],
     "dependencies": {
-        "@dhis2/pwa": "10.0.0-beta.2",
+        "@dhis2/pwa": "10.3.10",
         "moment": "^2.24.0"
     },
     "devDependencies": {
-        "@dhis2/cli-app-scripts": "10.0.0-beta.2",
+        "@dhis2/cli-app-scripts": "10.3.10",
         "@testing-library/react": "^12.0.0",
         "enzyme": "^3.11.0",
         "enzyme-adapter-react-16": "^1.15.5",
@@ -37,9 +37,9 @@
         "test": "d2-app-scripts test"
     },
     "peerDependencies": {
-        "@dhis2/app-runtime": "^3",
+        "@dhis2/app-runtime": "^3.5",
         "@dhis2/d2-i18n": "^1",
-        "@dhis2/ui": ">=7",
+        "@dhis2/ui": ">=8.5",
         "classnames": "^2",
         "moment": "^2",
         "prop-types": "^15",
