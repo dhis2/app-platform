@@ -11,6 +11,8 @@ const requiredConfigFields = {
 
 const appTypes = ['app', 'login_app']
 
+const isApp = (type) => appTypes.includes(type)
+
 const parseAuthor = (author) => {
     if (isPlainObject(author)) {
         return {
@@ -61,7 +63,7 @@ const parseConfigObjects = (
     config = defaultsDeep(config, defaults)
 
     // Add PWA defaults to apps
-    if (appTypes.includes(type)) {
+    if (isApp(type)) {
         config = defaultsDeep(config, defaultsPWA)
     }
 
@@ -114,4 +116,4 @@ module.exports = parseConfig
 module.exports.parseConfigObjects = parseConfigObjects
 
 module.exports.parseConfigObjects = parseConfigObjects
-module.exports.appTypes = appTypes
+module.exports.isApp = isApp

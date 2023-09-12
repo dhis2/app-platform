@@ -6,7 +6,7 @@ const generateManifests = require('../lib/generateManifests')
 const i18n = require('../lib/i18n')
 const loadEnvFiles = require('../lib/loadEnvFiles')
 const parseConfig = require('../lib/parseConfig')
-const { appTypes } = require('../lib/parseConfig')
+const { isApp } = require('../lib/parseConfig')
 const makePaths = require('../lib/paths')
 const makePlugin = require('../lib/plugin')
 const createProxyServer = require('../lib/proxy')
@@ -33,7 +33,7 @@ const handler = async ({
     const shell = makeShell({ config, paths })
     const plugin = makePlugin({ config, paths })
 
-    if (!appTypes.includes(config.type)) {
+    if (!isApp(config.type)) {
         reporter.error(
             `The command ${chalk.bold(
                 'd2-app-scripts start'

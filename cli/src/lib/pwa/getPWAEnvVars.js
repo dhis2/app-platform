@@ -1,4 +1,4 @@
-const { appTypes } = require('../parseConfig')
+const { isApp } = require('../parseConfig')
 
 /** Preps string literals for regex conversion by escaping special chars */
 function escapeForRegex(string) {
@@ -33,7 +33,7 @@ function stringifyPatterns(patternsList) {
  * @param {Object} config
  */
 function getPWAEnvVars(config) {
-    if (!appTypes.includes(config.type) || !config.pwa.enabled) {
+    if (!isApp(config.type) || !config.pwa.enabled) {
         return null
     }
     return {
