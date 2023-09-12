@@ -33,21 +33,21 @@ export const ServerVersionProvider = ({
         if (loginApp) {
             const fakeSystemInfo = { version: '2.40-SNAPSHOT' }
             setState({ loading: false, systemInfo: fakeSystemInfo })
-        } else {
-            const request = get(`${url}/api/system/info`)
-            request
-                .then((systemInfo) => {
-                    setState({ loading: false, systemInfo })
-                })
-                .catch((e) => {
-                    // Todo: If this is a network error, the app cannot load -- handle that gracefully here
-                    // if (e === 'Network error') { ... }
-                    setState({ loading: false, error: e })
-                })
+            return
+        }
+        const request = get(`${url}/api/system/info`)
+        request
+            .then((systemInfo) => {
+                setState({ loading: false, systemInfo })
+            })
+            .catch((e) => {
+                // Todo: If this is a network error, the app cannot load -- handle that gracefully here
+                // if (e === 'Network error') { ... }
+                setState({ loading: false, error: e })
+            })
 
-            return () => {
-                request.abort()
-            }
+        return () => {
+            request.abort()
         }
     }, [url, loginApp])
 
