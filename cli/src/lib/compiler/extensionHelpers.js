@@ -1,4 +1,4 @@
-const extensionPattern = /\.[jt]sx?$/
+const extensionPattern = /(?<!\.d)\.[jt]sx?$/
 const normalizeExtension = (ext) => ext.replace(extensionPattern, '.js')
 
 module.exports.extensionPattern = extensionPattern
