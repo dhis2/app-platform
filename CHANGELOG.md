@@ -1,3 +1,17 @@
+# [10.4.0-alpha.5](https://github.com/dhis2/app-platform/compare/v10.4.0-alpha.4...v10.4.0-alpha.5) (2023-09-28)
+
+
+### Bug Fixes
+
+* auto width adjustment ([a80ea56](https://github.com/dhis2/app-platform/commit/a80ea56f1cd887e3458af8b6995f3136017fa9c2))
+* clean up dependencies ([9863ae0](https://github.com/dhis2/app-platform/commit/9863ae09c72b65e11ce69ba03034ecd2737dacb3))
+* use useRef for previous width ([f6c07cf](https://github.com/dhis2/app-platform/commit/f6c07cf222254379c5e7574087a9364507e9cdd1))
+
+
+### Features
+
+* auto resizing for height ([74bbe00](https://github.com/dhis2/app-platform/commit/74bbe00c0f64364b96b2b5b4fb68830b1d91a016))
+
 # [10.4.0-alpha.4](https://github.com/dhis2/app-platform/compare/v10.4.0-alpha.3...v10.4.0-alpha.4) (2023-08-22)
 
 
