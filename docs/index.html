@@ -11,7 +11,7 @@
             const hash = window.location.hash.substring(2)
 
             const newUrl = `https://developers.dhis2.org/docs/app-platform/${hash}`
-            document.querySelector('p a').href = newUrl
+            document.getElementById('url').href = newUrl
             window.location.href = newUrl
         </script>
     </body>
