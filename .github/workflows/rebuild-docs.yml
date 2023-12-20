@@ -1,0 +1,19 @@
+name: 'dhis2: rebuild developer docs'
+
+on:
+    push:
+        branches:
+            - master
+        paths:
+            - 'docs/**'
+            - 'CHANGELOG.md'
+
+concurrency:
+    group: ${{ github.workflow}}-${{ github.ref }}
+    cancel-in-progress: true
+
+jobs:
+    rebuild-docs:
+        runs-on: ubuntu-latest
+        steps:
+            - run: curl -X POST -d {} https://api.netlify.com/build_hooks/${{ secrets.NETLIFY_DEVELOPER_DOCS_TOKEN }}
