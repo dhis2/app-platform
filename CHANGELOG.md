@@ -1,3 +1,10 @@
+## [10.3.11](https://github.com/dhis2/app-platform/compare/v10.3.10...v10.3.11) (2023-12-11)
+
+
+### Bug Fixes
+
+* don't open browser for plugins on start [LIBS-503] ([#821](https://github.com/dhis2/app-platform/issues/821)) ([7db7a69](https://github.com/dhis2/app-platform/commit/7db7a69b55d88f681e14e49d4b774e75d7289776))
+
 # [10.4.0-alpha.5](https://github.com/dhis2/app-platform/compare/v10.4.0-alpha.4...v10.4.0-alpha.5) (2023-09-28)
 
 

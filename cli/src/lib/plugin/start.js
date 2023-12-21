@@ -21,8 +21,6 @@ module.exports = async ({ port, config, paths }) => {
         {
             port,
             host,
-            // open browser
-            open: [`/${paths.pluginLaunchPath}`],
             client: {
                 logging: 'none',
                 overlay: {

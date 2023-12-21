@@ -136,7 +136,7 @@ const handler = async ({
             if (config.entryPoints.plugin) {
                 const pluginPort = await detectPort(newPort + 1)
                 reporter.print(
-                    `The plugin is now available on port ${pluginPort}`
+                    `The plugin is now available on port ${pluginPort} at /${paths.pluginLaunchPath}`
                 )
                 reporter.print('')
 
