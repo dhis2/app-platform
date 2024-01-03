@@ -3,6 +3,7 @@ import React from 'react'
 import { useCurrentUserLocale } from '../utils/useLocale.js'
 import { useVerifyLatestUser } from '../utils/useVerifyLatestUser.js'
 import { Alerts } from './Alerts.js'
+import { AuthBoundary } from './AuthBoundary.js'
 import { ConnectedHeaderBar } from './ConnectedHeaderBar.js'
 import { ErrorBoundary } from './ErrorBoundary.js'
 import { LoadingMask } from './LoadingMask.js'
@@ -10,7 +11,7 @@ import { styles } from './styles/AppWrapper.style.js'
 
 export const AppWrapper = ({ children, plugin }) => {
     const { loading: localeLoading } = useCurrentUserLocale()
-    const { loading: latestUserLoading } = useVerifyLatestUser()
+    const { loading: latestUserLoading, user } = useVerifyLatestUser()
 
     if (localeLoading || latestUserLoading) {
         return <LoadingMask />
@@ -22,7 +23,7 @@ export const AppWrapper = ({ children, plugin }) => {
             {!plugin && <ConnectedHeaderBar />}
             <div className="app-shell-app">
                 <ErrorBoundary onRetry={() => window.location.reload()}>
-                    {children}
+                    <AuthBoundary user={user}>{children}</AuthBoundary>
                 </ErrorBoundary>
             </div>
             <Alerts />

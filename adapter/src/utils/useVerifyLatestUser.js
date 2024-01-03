@@ -8,7 +8,7 @@ import { useState } from 'react'
 const USER_QUERY = {
     user: {
         resource: 'me',
-        params: { fields: ['id'] },
+        params: { fields: ['id', 'username', 'authorities'] },
     },
 }
 
@@ -22,7 +22,7 @@ const LATEST_USER_KEY = 'dhis2.latestUser'
 export function useVerifyLatestUser() {
     const { pwaEnabled } = useConfig()
     const [finished, setFinished] = useState(false)
-    const { loading, error } = useDataQuery(USER_QUERY, {
+    const { loading, error, data } = useDataQuery(USER_QUERY, {
         onComplete: async (data) => {
             const latestUserId = localStorage.getItem(LATEST_USER_KEY)
             const currentUserId = data.user.id
@@ -38,10 +38,9 @@ export function useVerifyLatestUser() {
             setFinished(true)
         },
     })
-
     if (error) {
         throw new Error('Failed to fetch user ID: ' + error)
     }
 
-    return { loading: loading || !finished }
+    return { loading: loading || !finished, user: data?.user }
 }

@@ -1,5 +1,7 @@
 const config = {
     type: 'app',
+    name: 'pwa-example',
+    title: 'PWA Example',
 
     pwa: {
         enabled: true,
