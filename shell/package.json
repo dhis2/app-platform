@@ -1,6 +1,6 @@
 {
     "name": "@dhis2/app-shell",
-    "version": "10.3.11",
+    "version": "10.4.0-alpha.6",
     "engines": {
         "node": ">=14"
     },
@@ -15,13 +15,14 @@
         "access": "public"
     },
     "dependencies": {
-        "@dhis2/app-adapter": "10.3.11",
-        "@dhis2/app-runtime": "^3.9.0",
+        "@dhis2/app-adapter": "10.4.0-alpha.6",
+        "@dhis2/app-runtime": "^3.10.0-alpha.2",
         "@dhis2/d2-i18n": "^1.1.1",
-        "@dhis2/pwa": "10.3.11",
+        "@dhis2/pwa": "10.4.0-alpha.6",
         "@dhis2/ui": "^8.12.3",
         "classnames": "^2.2.6",
         "moment": "^2.29.1",
+        "post-robot": "^10.0.46",
         "prop-types": "^15.7.2",
         "react": "^16.8.6",
         "react-dom": "^16.8.6",
