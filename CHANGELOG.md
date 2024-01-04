@@ -1,3 +1,10 @@
+# [10.4.0](https://github.com/dhis2/app-platform/compare/v10.3.11...v10.4.0) (2024-01-04)
+
+
+### Features
+
+* support plugin wrappers [LIBS-397] ([#823](https://github.com/dhis2/app-platform/issues/823)) ([f779e13](https://github.com/dhis2/app-platform/commit/f779e13a0e18808368782873fb350773a7191966))
+
 # [10.4.0-alpha.6](https://github.com/dhis2/app-platform/compare/v10.4.0-alpha.5...v10.4.0-alpha.6) (2023-12-21)
 
 
