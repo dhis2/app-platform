@@ -7,6 +7,7 @@ module.exports = ({ config, paths }) => {
     const baseEnvVars = {
         name: config.title,
         version: config.version,
+        direction: config.direction,
     }
 
     return {

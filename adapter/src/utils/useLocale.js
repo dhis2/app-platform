@@ -52,19 +52,29 @@ const setGlobalLocale = (locale) => {
     }
     moment.locale(locale)
 
-    // for i18n.dir, need JS-formatted locale
-    const jsLocale = transformJavaLocale(locale)
-    const direction = i18n.dir(jsLocale)
-    // set `dir` globally (then override in app wrapper if needed)
-    document.body.setAttribute('dir', direction)
-
     const resolvedLocale = validateLocaleByBundle(locale)
     i18n.changeLanguage(resolvedLocale)
 
     console.log('🗺 Global d2-i18n locale initialized:', resolvedLocale)
 }
 
-export const useLocale = (locale) => {
+// Sets the global direction based on the app's configured direction
+// (which should be done to affect modals, alerts, and other portal elements),
+// then returns the locale's direction for use on the header bar
+const handleDirection = ({ locale, configDirection }) => {
+    // for i18n.dir, need JS-formatted locale
+    const jsLocale = transformJavaLocale(locale)
+    const localeDirection = i18n.dir(jsLocale)
+
+    const globalDirection =
+        configDirection === 'auto' ? localeDirection : configDirection
+    // set `dir` globally (then override in app wrapper if needed)
+    document.documentElement.setAttribute('dir', globalDirection)
+
+    return localeDirection
+}
+
+export const useLocale = ({ locale, configDirection }) => {
     const [result, setResult] = useState({})
 
     useEffect(() => {
@@ -72,9 +82,10 @@ export const useLocale = (locale) => {
             return
         }
 
+        const direction = handleDirection({ locale, configDirection })
         setGlobalLocale(locale)
-        setResult(locale)
-    }, [locale])
+        setResult({ locale, direction })
+    }, [locale, configDirection])
 
     return result
 }
@@ -86,16 +97,19 @@ const settingsQuery = {
 }
 // note: userSettings.keyUiLocale is expected to be in the Java format,
 // e.g. 'ar', 'ar_IQ', 'uz_UZ_Cyrl', etc.
-export const useCurrentUserLocale = () => {
+export const useCurrentUserLocale = (configDirection) => {
     const { loading, error, data } = useDataQuery(settingsQuery)
-    const locale = useLocale(
-        data && (data.userSettings.keyUiLocale || window.navigator.language)
-    )
+    const { locale, direction } = useLocale({
+        locale:
+            data &&
+            (data.userSettings.keyUiLocale || window.navigator.language),
+        configDirection,
+    })
 
     if (error) {
         // This shouldn't happen, trigger the fatal error boundary
         throw new Error('Failed to fetch user locale: ' + error)
     }
 
-    return { loading: loading || !locale, locale }
+    return { loading: loading || !locale, locale, direction }
 }
