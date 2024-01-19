@@ -6,10 +6,6 @@ import { useState, useEffect } from 'react'
 const I18N_NAMESPACE = 'default'
 i18n.setDefaultNamespace(I18N_NAMESPACE)
 
-const transformJavaLocale = (locale) => {
-    return locale.replace('_', '-')
-}
-
 // if translation resources aren't found for the given locale, try shorter
 // versions of the locale
 // e.g. 'pt_BR_Cyrl_asdf' => 'pt_BR', or 'ar-NotFound' => 'ar'
@@ -58,20 +54,19 @@ const setGlobalLocale = (locale) => {
     console.log('🗺 Global d2-i18n locale initialized:', resolvedLocale)
 }
 
-// Sets the global direction based on the app's configured direction
-// (which should be done to affect modals, alerts, and other portal elements),
-// then returns the locale's direction for use on the header bar
-const handleDirection = ({ locale, configDirection }) => {
+const getLocaleDirection = (locale) => {
     // for i18n.dir, need JS-formatted locale
-    const jsLocale = transformJavaLocale(locale)
-    const localeDirection = i18n.dir(jsLocale)
+    const jsLocale = locale.replace('_', '-')
+    return i18n.dir(jsLocale)
+}
 
+// Sets the global direction based on the app's configured direction
+// (which should be done to affect modals, alerts, and other portal elements).
+// Note that the header bar will use the localeDirection regardless
+const setGlobalDirection = ({ localeDirection, configDirection }) => {
     const globalDirection =
         configDirection === 'auto' ? localeDirection : configDirection
-    // set `dir` globally (then override in app wrapper if needed)
     document.documentElement.setAttribute('dir', globalDirection)
-
-    return localeDirection
 }
 
 export const useLocale = ({ locale, configDirection }) => {
@@ -82,9 +77,12 @@ export const useLocale = ({ locale, configDirection }) => {
             return
         }
 
-        const direction = handleDirection({ locale, configDirection })
         setGlobalLocale(locale)
-        setResult({ locale, direction })
+
+        const localeDirection = getLocaleDirection(locale)
+        setGlobalDirection({ localeDirection, configDirection })
+
+        setResult({ locale, direction: localeDirection })
     }, [locale, configDirection])
 
     return result
