@@ -9,13 +9,12 @@ i18n.setDefaultNamespace(I18N_NAMESPACE)
 // if translation resources aren't found for the given locale, try shorter
 // versions of the locale
 // e.g. 'pt_BR_Cyrl_asdf' => 'pt_BR', or 'ar-NotFound' => 'ar'
-const validateLocaleByBundle = (locale) => {
+const getResolvedLocale = (locale) => {
     if (i18n.hasResourceBundle(locale, I18N_NAMESPACE)) {
         return locale
     }
 
     console.log(`Translations for locale ${locale} not found`)
-
     // see if we can try basic versions of the locale
     // (e.g. 'ar' instead of 'ar_IQ')
     const match = /[_-]/.exec(locale)
@@ -48,7 +47,7 @@ const setGlobalLocale = (locale) => {
     }
     moment.locale(locale)
 
-    const resolvedLocale = validateLocaleByBundle(locale)
+    const resolvedLocale = getResolvedLocale(locale)
     i18n.changeLanguage(resolvedLocale)
 
     console.log('🗺 Global d2-i18n locale initialized:', resolvedLocale)
@@ -62,10 +61,11 @@ const getLocaleDirection = (locale) => {
 
 // Sets the global direction based on the app's configured direction
 // (which should be done to affect modals, alerts, and other portal elements).
+// Defaults to 'ltr' if not set.
 // Note that the header bar will use the localeDirection regardless
 const setGlobalDirection = ({ localeDirection, configDirection }) => {
     const globalDirection =
-        configDirection === 'auto' ? localeDirection : configDirection
+        configDirection === 'auto' ? localeDirection : configDirection || 'ltr'
     document.documentElement.setAttribute('dir', globalDirection)
 }
 
