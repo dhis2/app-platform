@@ -60,19 +60,37 @@ const setI18nLocale = (locale) => {
     console.log('🗺 Global d2-i18n locale initialized:', finalLocaleString)
 }
 
-const setMomentLocale = (locale) => {
-    const localeString = locale.baseName
-    console.log({ locale, localeString })
+// Moment locales use a hyphenated, lowercase format.
+// Since not all locales are included in Moment, this
+// function tries permutations of the locale to find one that's supported.
+// NB: None of them use both a region AND a script.
+const setMomentLocale = async (locale) => {
+    const { language, region, script } = locale
 
-    // todo: try/catch here to try different arrangements
-    if (locale.language !== 'en' && locale.region !== 'US') {
-        import(
-            /* webpackChunkName: "moment-locales/[request]" */ `moment/locale/${localeString}`
-        ).catch(() => {
-            /* ignore */
-        })
+    if (locale.language === 'en' && locale.region === 'US') {
+        return // this is Moment's default locale
     }
-    moment.locale(localeString)
+
+    const localeNameOptions = []
+    if (script) {
+        localeNameOptions.push(`${language}-${script}`.toLowerCase())
+    }
+    if (region) {
+        localeNameOptions.push(`${language}-${region}`.toLowerCase())
+    }
+    localeNameOptions.push(language)
+
+    for (const localeName of localeNameOptions) {
+        try {
+            await import(
+                /* webpackChunkName: "moment-locales/[request]" */ `moment/locale/${localeName}`
+            )
+            moment.locale(localeName)
+            break
+        } catch {
+            continue
+        }
+    }
 }
 
 // Sets the global direction based on the app's configured direction
