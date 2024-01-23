@@ -97,7 +97,7 @@ const setMomentLocale = async (locale) => {
 // (which should be done to affect modals, alerts, and other portal elements).
 // Defaults to 'ltr' if not set.
 // Note that the header bar will use the localeDirection regardless
-const setGlobalDirection = ({ localeDirection, configDirection }) => {
+const setDocumentDirection = ({ localeDirection, configDirection }) => {
     const globalDirection =
         configDirection === 'auto' ? localeDirection : configDirection || 'ltr'
     document.documentElement.setAttribute('dir', globalDirection)
@@ -125,7 +125,7 @@ const parseJavaLocale = (locale) => {
 
 /** Returns a JS Intl.Locale object */
 const parseLocale = (userSettings) => {
-    // new property
+    // proposed property
     if (userSettings.keyUiLanguageTag) {
         return new Intl.Locale(userSettings.keyUiLanguageTag)
     }
@@ -156,7 +156,7 @@ export const useLocale = ({ userSettings, configDirection }) => {
 
         // Intl.Locale dir utils aren't supported in firefox, so use i18n
         const localeDirection = i18n.dir(locale.language)
-        setGlobalDirection({ localeDirection, configDirection })
+        setDocumentDirection({ localeDirection, configDirection })
 
         setResult({ locale, direction: localeDirection })
     }, [userSettings, configDirection])
