@@ -6,38 +6,61 @@ import { useState, useEffect } from 'react'
 const I18N_NAMESPACE = 'default'
 i18n.setDefaultNamespace(I18N_NAMESPACE)
 
-// if translation resources aren't found for the given locale, try shorter
-// versions of the locale
-// e.g. 'pt_BR_Cyrl_asdf' => 'pt_BR', or 'ar-NotFound' => 'ar'
-const getResolvedLocale = (locale) => {
-    if (i18n.hasResourceBundle(locale, I18N_NAMESPACE)) {
-        return locale
-    }
+// Test locales for available translation files -- if they're not found,
+// try less-specific versions.
+// Both "Java Locale.toString()" and BCP 47 language tag formats are tested
+const setI18nLocale = (locale) => {
+    const { language, script, region } = locale
 
-    console.log(`Translations for locale ${locale} not found`)
-    // see if we can try basic versions of the locale
-    // (e.g. 'ar' instead of 'ar_IQ')
-    const match = /[_-]/.exec(locale)
-    if (!match) {
-        return locale
+    const localeStringOptions = []
+    if (script && region) {
+        localeStringOptions.push(
+            `${language}_${region}_${script}`,
+            `${language}-${script}-${region}` // NB: different order
+        )
     }
+    if (region) {
+        localeStringOptions.push(
+            `${language}_${region}`,
+            `${language}-${region}`
+        )
+    }
+    if (script) {
+        localeStringOptions.push(
+            `${language}_${script}`,
+            `${language}-${script}`
+        )
+    }
+    localeStringOptions.push(language)
 
-    const separator = match[0] // '-' or '_'
-    const splitLocale = locale.split(separator)
-    for (let i = splitLocale.length - 1; i > 0; i--) {
-        const shorterLocale = splitLocale.slice(0, i).join(separator)
-        if (i18n.hasResourceBundle(shorterLocale, I18N_NAMESPACE)) {
-            return shorterLocale
+    let localeStringWithTranslations
+    const unsuccessfulLocaleStrings = []
+    for (const localeString of localeStringOptions) {
+        if (i18n.hasResourceBundle(localeString, I18N_NAMESPACE)) {
+            localeStringWithTranslations = localeString
+            break
         }
-        console.log(`Translations for locale ${shorterLocale} not found`)
+        unsuccessfulLocaleStrings.push(localeString)
+        // even though the localeString === language will be the default below,
+        // it still tested here to provide feedback if translation files
+        // are not found
     }
 
-    // if nothing else works, use the initially provided locale
-    return locale
+    if (unsuccessfulLocaleStrings.length > 0) {
+        console.log(
+            `Translations for locale(s) ${unsuccessfulLocaleStrings.join(
+                ', '
+            )} not found`
+        )
+    }
+
+    // if no translation files are found, still try to fall back to `language`
+    const finalLocaleString = localeStringWithTranslations || language
+    i18n.changeLanguage(finalLocaleString)
+    console.log('🗺 Global d2-i18n locale initialized:', finalLocaleString)
 }
 
-// Set locale for Moment and i18n
-const setGlobalLocale = (locale) => {
+const setMomentLocale = (locale) => {
     const localeString = locale.baseName
     console.log({ locale, localeString })
 
@@ -50,11 +73,6 @@ const setGlobalLocale = (locale) => {
         })
     }
     moment.locale(localeString)
-
-    const resolvedLocale = getResolvedLocale(localeString)
-    i18n.changeLanguage(resolvedLocale)
-
-    console.log('🗺 Global d2-i18n locale initialized:', resolvedLocale)
 }
 
 // Sets the global direction based on the app's configured direction
@@ -84,7 +102,6 @@ const parseJavaLocale = (locale) => {
         languageTag += `-${region}`
     }
 
-    console.log({ locale, language, script, region, languageTag })
     return new Intl.Locale(languageTag)
 }
 
@@ -116,9 +133,8 @@ export const useLocale = ({ userSettings, configDirection }) => {
 
         const locale = parseLocale(userSettings)
 
-        setGlobalLocale(locale)
-        // setI18nLocale(locale)
-        // setMomentLocale(locale)
+        setI18nLocale(locale)
+        setMomentLocale(locale)
 
         // Intl.Locale dir utils aren't supported in firefox, so use i18n
         const localeDirection = i18n.dir(locale.language)
