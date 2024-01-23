@@ -38,25 +38,23 @@ const getResolvedLocale = (locale) => {
 
 // Set locale for Moment and i18n
 const setGlobalLocale = (locale) => {
-    if (locale !== 'en' && locale !== 'en-us') {
+    const localeString = locale.baseName
+    console.log({ locale, localeString })
+
+    // todo: try/catch here to try different arrangements
+    if (locale.language !== 'en' && locale.region !== 'US') {
         import(
-            /* webpackChunkName: "moment-locales/[request]" */ `moment/locale/${locale}`
+            /* webpackChunkName: "moment-locales/[request]" */ `moment/locale/${localeString}`
         ).catch(() => {
             /* ignore */
         })
     }
-    moment.locale(locale)
+    moment.locale(localeString)
 
-    const resolvedLocale = getResolvedLocale(locale)
+    const resolvedLocale = getResolvedLocale(localeString)
     i18n.changeLanguage(resolvedLocale)
 
     console.log('🗺 Global d2-i18n locale initialized:', resolvedLocale)
-}
-
-const getLocaleDirection = (locale) => {
-    // for i18n.dir, need JS-formatted locale
-    const jsLocale = locale.replace('_', '-')
-    return i18n.dir(jsLocale)
 }
 
 // Sets the global direction based on the app's configured direction
@@ -69,21 +67,65 @@ const setGlobalDirection = ({ localeDirection, configDirection }) => {
     document.documentElement.setAttribute('dir', globalDirection)
 }
 
-export const useLocale = ({ locale, configDirection }) => {
-    const [result, setResult] = useState({})
+/**
+ * userSettings.keyUiLocale is expected to be formatted by Java's
+ * Locale.toString():
+ * https://docs.oracle.com/javase/8/docs/api/java/util/Locale.html#toString--
+ * We can assume there are no Variants or Extensions to locales used by DHIS2
+ */
+const parseJavaLocale = (locale) => {
+    const [language, region, script] = locale.split('_')
+
+    let languageTag = language
+    if (script) {
+        languageTag += `-${script}`
+    }
+    if (region) {
+        languageTag += `-${region}`
+    }
+
+    console.log({ locale, language, script, region, languageTag })
+    return new Intl.Locale(languageTag)
+}
+
+/** Returns a JS Intl.Locale object */
+const parseLocale = (userSettings) => {
+    // new property
+    if (userSettings.keyUiLanguageTag) {
+        return new Intl.Locale(userSettings.keyUiLanguageTag)
+    }
+    // legacy property
+    if (userSettings.keyUiLocale) {
+        return parseJavaLocale(userSettings.keyUiLocale)
+    }
+
+    // worst-case fallback
+    return new Intl.Locale(window.navigator.language)
+}
+
+export const useLocale = ({ userSettings, configDirection }) => {
+    const [result, setResult] = useState({
+        locale: undefined,
+        direction: undefined,
+    })
 
     useEffect(() => {
-        if (!locale) {
+        if (!userSettings) {
             return
         }
 
-        setGlobalLocale(locale)
+        const locale = parseLocale(userSettings)
 
-        const localeDirection = getLocaleDirection(locale)
+        setGlobalLocale(locale)
+        // setI18nLocale(locale)
+        // setMomentLocale(locale)
+
+        // Intl.Locale dir utils aren't supported in firefox, so use i18n
+        const localeDirection = i18n.dir(locale.language)
         setGlobalDirection({ localeDirection, configDirection })
 
         setResult({ locale, direction: localeDirection })
-    }, [locale, configDirection])
+    }, [userSettings, configDirection])
 
     return result
 }
@@ -98,9 +140,7 @@ const settingsQuery = {
 export const useCurrentUserLocale = (configDirection) => {
     const { loading, error, data } = useDataQuery(settingsQuery)
     const { locale, direction } = useLocale({
-        locale:
-            data &&
-            (data.userSettings.keyUiLocale || window.navigator.language),
+        userSettings: data && data.userSettings,
         configDirection,
     })
 
