@@ -111,7 +111,7 @@ export const setI18nLocale = (locale) => {
 export const setMomentLocale = async (locale) => {
     const { language, region, script } = locale
 
-    if (locale.language === 'en' && locale.region === 'US') {
+    if (locale.language === 'en' || locale.baseName === 'en-US') {
         return // this is Moment's default locale
     }
 
