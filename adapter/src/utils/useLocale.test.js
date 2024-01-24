@@ -1,68 +1,156 @@
-import { renderHook /*, act */ } from '@testing-library/react-hooks'
+import i18n from '@dhis2/d2-i18n'
+import { renderHook, act } from '@testing-library/react-hooks'
+import moment from 'moment'
 import { useLocale } from './useLocale.js'
 
-jest.mock('@dhis2/d2-i18n', () => ({
-    setDefaultNamespace: (namespace) => console.log({ namespace }),
-    hasResourceBundle: (bundleName) => {
-        console.log({ bundleName })
-        return true // todo
-    },
-    dir: (localeString) => {
-        console.log({ localeString })
-        // rough approximation of function
-        return localeString.startsWith('ar') ? 'rtl' : 'ltr'
-    },
-    changeLanguage: (langArg) => console.log({ langArg }),
-}))
+// TODO
+// Test undefined locale
+// Test nonsense locale
+// Test BCP47 locale on keyUiLanguageTag
+// Make sure i18n locale either has translations or is reasonable
+// ^ (should it be 'en'? wondering about maintanance_tl_keys)
+
+jest.mock('@dhis2/d2-i18n', () => {
+    return {
+        setDefaultNamespace: jest.fn(),
+        // These cases match translation files we have
+        hasResourceBundle: jest.fn((localeString) => {
+            switch (localeString) {
+                case 'uz_UZ_Cyrl':
+                case 'uz_UZ_Latn':
+                case 'pt_BR':
+                case 'ar':
+                case 'en':
+                    return true
+                default:
+                    return false
+            }
+        }),
+        changeLanguage: jest.fn(),
+        // rough approximation of behavior for locales used in this file:
+        dir: jest.fn((localeString) =>
+            localeString.startsWith('ar') ? 'rtl' : 'ltr'
+        ),
+    }
+})
 
 jest.mock('moment', () => ({
-    locale: (momentLocale) => console.log({ momentLocale }),
+    locale: jest.fn(),
+    defineLocale: jest.fn(),
 }))
 
-const defaultUserSettings = { keyUiLocale: 'en' }
+afterEach(() => {
+    jest.clearAllMocks()
+})
 
-test('it renders', async () => {
-    const { result } = renderHook(() =>
-        useLocale({
+test('happy path initial load with en language', () => {
+    const defaultUserSettings = { keyUiLocale: 'en' }
+    const { result, rerender } = renderHook((newProps) => useLocale(newProps), {
+        initialProps: defaultUserSettings,
+    })
+
+    expect(result.current.locale).toBe(undefined)
+    expect(result.current.direction).toBe(undefined)
+
+    act(() => {
+        rerender({
             userSettings: defaultUserSettings,
+            configDirection: undefined,
+        })
+    })
+
+    expect(result.current.locale.baseName).toBe('en')
+    expect(result.current.direction).toBe('ltr')
+    expect(i18n.changeLanguage).toHaveBeenCalledWith('en')
+    // this will only be valid on the first test:
+    expect(i18n.setDefaultNamespace).toHaveBeenCalledWith('default')
+    // moment.locale doesn't need to get called if the language is 'en'...
+    // but it's asynchronous anyway. See following tests
+    expect(moment.locale).not.toHaveBeenCalled()
+})
+
+// For pt_BR (Portuguese in Brazil), before fixes:
+// 1. i18n.dir didn't work because it needs a BCP47-formatted string
+// 2. The Moment locale didn't work, because it uses another format
+test('pt_BR locale', async () => {
+    const userSettings = { keyUiLocale: 'pt_BR' }
+    const { result, waitFor } = renderHook(() =>
+        useLocale({
+            userSettings,
             configDirection: undefined,
         })
     )
 
-    console.log('current result', result.current)
-
-    expect(result.current.locale.baseName).toBe('en')
     expect(result.current.direction).toBe('ltr')
-})
-
-// TODO Tests
-// Test undefined userSettings - todo'd
-// Test undefined userSettings.keyUiLocale - todo'd
-// Test undefined locale
-// Test nonsense locale -- todo'd
-// Test Java locale
-// Test BCP 47 locale on keyUiLanguageTag
-// Test ar_EG locale (before: had no translations)
-// Test pt_BR
-// Make sure directions are correct
-// Make sure moment locale is correct
-// Make sure i18n locale either has translations or is reasonable
-// ^ (should it be 'en'? wondering about maintanance_tl_keys)
-
-// TODO Mocks
-// i18n.dir
-// i18n.hasResourceBundle(name, namespace)
-// moment.locale()
-// import ('moment/locales/${localeString})
-
-describe('basic edge case handling', () => {
-    test('it handles undefined userSettings', () => {
-        // todo
+    // Notice different locale formats
+    expect(result.current.locale.baseName).toBe('pt-BR')
+    expect(i18n.changeLanguage).toHaveBeenCalledWith('pt_BR')
+    // Dynamic imports of Moment locales is asynchronous
+    await waitFor(() => {
+        expect(moment.locale).toHaveBeenCalledWith('pt-br')
     })
-
-    test.todo('it handles undefined userSettings.keyUiLocale')
-
-    test.todo('it handles nonsense locales')
 })
 
-// describe('language test cases')
+// For ar_EG (Arabic in Egypt), before fixes:
+// 1. i18n.dir didn't work because it needs a BCP47-formatted string
+// 2. Setting the i18next language didn't work because there are not translation
+// files for it (as of now, Jan 2024). This behavior is mocked above with
+// `i18n.hasResourceBundle()`
+// [Recent fixes allow for a fallback to simpler locales, e.g. 'ar',
+// for much better support]
+// 3. The Moment locale didn't work, both because of formatting and failing to
+// fall back to simpler locales
+test('ar_EG locale', async () => {
+    const userSettings = { keyUiLocale: 'ar_EG' }
+    const { result, waitFor } = renderHook(() =>
+        useLocale({
+            userSettings,
+            configDirection: undefined,
+        })
+    )
+
+    expect(result.current.direction).toBe('rtl')
+    expect(result.current.locale.baseName).toBe('ar-EG')
+    // Notice fallbacks
+    expect(i18n.changeLanguage).toHaveBeenCalledWith('ar')
+    await waitFor(() => {
+        expect(moment.locale).toHaveBeenCalledWith('ar')
+    })
+})
+
+// for uz_UZ_Cyrl before fixes:
+// 1. i18n.dir didn't work because it needs a BCP47-formatted string
+// 2. Moment locales didn't work due to formatting and lack of fallback
+test('uz_UZ_Cyrl locale', async () => {
+    const userSettings = { keyUiLocale: 'uz_UZ_Cyrl' }
+    const { result, waitFor } = renderHook(() =>
+        useLocale({
+            userSettings,
+            configDirection: undefined,
+        })
+    )
+
+    expect(result.current.direction).toBe('ltr')
+    expect(result.current.locale.baseName).toBe('uz-Cyrl-UZ')
+    expect(i18n.changeLanguage).toHaveBeenCalledWith('uz_UZ_Cyrl')
+    await waitFor(() => {
+        expect(moment.locale).toHaveBeenCalledWith('uz')
+    })
+})
+// Similar for UZ Latin -- notice difference in the Moment locale
+test('uz_UZ_Latn locale', async () => {
+    const userSettings = { keyUiLocale: 'uz_UZ_Latn' }
+    const { result, waitFor } = renderHook(() =>
+        useLocale({
+            userSettings,
+            configDirection: undefined,
+        })
+    )
+
+    expect(result.current.direction).toBe('ltr')
+    expect(result.current.locale.baseName).toBe('uz-Latn-UZ')
+    expect(i18n.changeLanguage).toHaveBeenCalledWith('uz_UZ_Latn')
+    await waitFor(() => {
+        expect(moment.locale).toHaveBeenCalledWith('uz-latn')
+    })
+})
