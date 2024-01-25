@@ -3,13 +3,6 @@ import { renderHook, act } from '@testing-library/react-hooks'
 import moment from 'moment'
 import { useLocale } from './useLocale.js'
 
-// TODO
-// Test undefined locale
-// Test nonsense locale
-// Test BCP47 locale on keyUiLanguageTag
-// Make sure i18n locale either has translations or is reasonable
-// ^ (should it be 'en'? wondering about maintanance_tl_keys)
-
 // NOTE ABOUT MOCKS:
 // Luckily, `await import(`moment/locale/${locale}`)` as used in
 // `setMomentLocale` in `localeUtils.js` works the same in the Jest environment
@@ -225,4 +218,70 @@ describe('other userSettings cases', () => {
     })
 })
 
-test.todo('document direction is set by config direction')
+describe('config direction is respected for the document direction', () => {
+    jest.spyOn(document.documentElement, 'setAttribute')
+
+    test('ltr is the default and is used even for rtl languages', async () => {
+        const userSettings = { keyUiLocale: 'ar' }
+        const { result } = renderHook(() =>
+            useLocale({
+                userSettings,
+                configDirection: undefined,
+            })
+        )
+
+        expect(result.current.direction).toBe('rtl')
+        expect(document.documentElement.setAttribute).toHaveBeenCalledWith(
+            'dir',
+            'ltr'
+        )
+    })
+
+    test('rtl will be used for the document if configured, even for an ltr language', () => {
+        const userSettings = { keyUiLocale: 'en' }
+        const { result } = renderHook(() =>
+            useLocale({
+                userSettings,
+                configDirection: 'rtl',
+            })
+        )
+
+        expect(result.current.direction).toBe('ltr')
+        expect(document.documentElement.setAttribute).toHaveBeenCalledWith(
+            'dir',
+            'rtl'
+        )
+    })
+
+    test('if auto is used, document dir will match the language dir (ltr)', () => {
+        const userSettings = { keyUiLocale: 'en' }
+        const { result } = renderHook(() =>
+            useLocale({
+                userSettings,
+                configDirection: 'auto',
+            })
+        )
+
+        expect(result.current.direction).toBe('ltr')
+        expect(document.documentElement.setAttribute).toHaveBeenCalledWith(
+            'dir',
+            'ltr'
+        )
+    })
+
+    test('if auto is used, document dir will match the language dir (ltr)', () => {
+        const userSettings = { keyUiLocale: 'ar' }
+        const { result } = renderHook(() =>
+            useLocale({
+                userSettings,
+                configDirection: 'auto',
+            })
+        )
+
+        expect(result.current.direction).toBe('rtl')
+        expect(document.documentElement.setAttribute).toHaveBeenCalledWith(
+            'dir',
+            'rtl'
+        )
+    })
+})
