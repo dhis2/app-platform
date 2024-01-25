@@ -284,4 +284,20 @@ describe('config direction is respected for the document direction', () => {
             'rtl'
         )
     })
+
+    test('nonstandard config directions fall back to ltr', () => {
+        const userSettings = { keyUiLocale: 'ar' }
+        const { result } = renderHook(() =>
+            useLocale({
+                userSettings,
+                configDirection: 'whoopslol',
+            })
+        )
+
+        expect(result.current.direction).toBe('rtl')
+        expect(document.documentElement.setAttribute).toHaveBeenCalledWith(
+            'dir',
+            'ltr'
+        )
+    })
 })

@@ -150,7 +150,13 @@ export const setMomentLocale = async (locale) => {
  * Note that the header bar will use the localeDirection regardless
  */
 export const setDocumentDirection = ({ localeDirection, configDirection }) => {
+    // validate config direction (also handles `undefined`)
+    if (!['auto', 'ltr', 'rtl'].includes(configDirection)) {
+        document.documentElement.setAttribute('dir', 'ltr')
+        return
+    }
+
     const globalDirection =
-        configDirection === 'auto' ? localeDirection : configDirection || 'ltr'
+        configDirection === 'auto' ? localeDirection : configDirection
     document.documentElement.setAttribute('dir', globalDirection)
 }
