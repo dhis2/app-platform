@@ -301,3 +301,20 @@ describe('config direction is respected for the document direction', () => {
         )
     })
 })
+
+test('document `lang` attribute is set', () => {
+    jest.spyOn(document.documentElement, 'setAttribute')
+    const userSettings = { keyUiLocale: 'pt-BR' }
+
+    renderHook(() =>
+        useLocale({
+            userSettings,
+            configDirection: undefined,
+        })
+    )
+
+    expect(document.documentElement.setAttribute).toHaveBeenCalledWith(
+        'lang',
+        'pt-BR'
+    )
+})

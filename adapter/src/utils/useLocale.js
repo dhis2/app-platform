@@ -27,6 +27,7 @@ export const useLocale = ({ userSettings, configDirection }) => {
         // Intl.Locale dir utils aren't supported in firefox, so use i18n
         const localeDirection = i18n.dir(locale.language)
         setDocumentDirection({ localeDirection, configDirection })
+        document.documentElement.setAttribute('lang', locale.baseName)
 
         setResult({ locale, direction: localeDirection })
     }, [userSettings, configDirection])
