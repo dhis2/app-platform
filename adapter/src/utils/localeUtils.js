@@ -31,13 +31,19 @@ const parseJavaLocale = (locale) => {
  * @returns Intl.Locale
  */
 export const parseLocale = (userSettings) => {
-    // proposed property
-    if (userSettings.keyUiLanguageTag) {
-        return new Intl.Locale(userSettings.keyUiLanguageTag)
-    }
-    // legacy property
-    if (userSettings.keyUiLocale) {
-        return parseJavaLocale(userSettings.keyUiLocale)
+    try {
+        // proposed property
+        if (userSettings.keyUiLanguageTag) {
+            return new Intl.Locale(userSettings.keyUiLanguageTag)
+        }
+        // legacy property
+        if (userSettings.keyUiLocale) {
+            return parseJavaLocale(userSettings.keyUiLocale)
+        }
+    } catch (err) {
+        console.error('Unable to parse locale from user settings:', {
+            userSettings,
+        })
     }
 
     // worst-case fallback
