@@ -1,44 +1,37 @@
 import { useDataQuery } from '@dhis2/app-runtime'
 import i18n from '@dhis2/d2-i18n'
-import moment from 'moment'
 import { useState, useEffect } from 'react'
+import {
+    setI18nLocale,
+    parseLocale,
+    setDocumentDirection,
+    setMomentLocale,
+} from './localeUtils.js'
 
-i18n.setDefaultNamespace('default')
+export const useLocale = ({ userSettings, configDirection }) => {
+    const [result, setResult] = useState({
+        locale: undefined,
+        direction: undefined,
+    })
 
-const simplifyLocale = (locale) => {
-    const idx = locale.indexOf('-')
-    if (idx === -1) {
-        return locale
-    }
-    return locale.substr(0, idx)
-}
-
-const setGlobalLocale = (locale) => {
-    if (locale !== 'en' && locale !== 'en-us') {
-        import(
-            /* webpackChunkName: "moment-locales/[request]" */ `moment/locale/${locale}`
-        ).catch(() => {
-            /* ignore */
-        })
-    }
-    moment.locale(locale)
-
-    const simplifiedLocale = simplifyLocale(locale)
-    i18n.changeLanguage(simplifiedLocale)
-}
-
-export const useLocale = (locale) => {
-    const [result, setResult] = useState(undefined)
     useEffect(() => {
-        if (!locale) {
+        if (!userSettings) {
             return
         }
 
-        setGlobalLocale(locale)
-        setResult(locale)
+        const locale = parseLocale(userSettings)
 
-        console.log('🗺 Global d2-i18n locale initialized:', locale)
-    }, [locale])
+        setI18nLocale(locale)
+        setMomentLocale(locale)
+
+        // Intl.Locale dir utils aren't supported in firefox, so use i18n
+        const localeDirection = i18n.dir(locale.language)
+        setDocumentDirection({ localeDirection, configDirection })
+        document.documentElement.setAttribute('lang', locale.baseName)
+
+        setResult({ locale, direction: localeDirection })
+    }, [userSettings, configDirection])
+
     return result
 }
 
@@ -47,16 +40,19 @@ const settingsQuery = {
         resource: 'userSettings',
     },
 }
-export const useCurrentUserLocale = () => {
+// note: userSettings.keyUiLocale is expected to be in the Java format,
+// e.g. 'ar', 'ar_IQ', 'uz_UZ_Cyrl', etc.
+export const useCurrentUserLocale = (configDirection) => {
     const { loading, error, data } = useDataQuery(settingsQuery)
-    const locale = useLocale(
-        data && (data.userSettings.keyUiLocale || window.navigator.language)
-    )
+    const { locale, direction } = useLocale({
+        userSettings: data && data.userSettings,
+        configDirection,
+    })
 
     if (error) {
         // This shouldn't happen, trigger the fatal error boundary
         throw new Error('Failed to fetch user locale: ' + error)
     }
 
-    return { loading: loading || !locale, locale }
+    return { loading: loading || !locale, locale, direction }
 }

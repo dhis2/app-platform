@@ -8,8 +8,15 @@ import { ErrorBoundary } from './ErrorBoundary.js'
 import { LoadingMask } from './LoadingMask.js'
 import { styles } from './styles/AppWrapper.style.js'
 
-const AppWrapper = ({ children, plugin, onPluginError, clearPluginError }) => {
-    const { loading: localeLoading } = useCurrentUserLocale()
+const AppWrapper = ({
+    children,
+    plugin,
+    onPluginError,
+    clearPluginError,
+    direction: configDirection,
+}) => {
+    const { loading: localeLoading, direction: localeDirection } =
+        useCurrentUserLocale(configDirection)
     const { loading: latestUserLoading } = useVerifyLatestUser()
 
     if (localeLoading || latestUserLoading) {
@@ -40,7 +47,9 @@ const AppWrapper = ({ children, plugin, onPluginError, clearPluginError }) => {
     return (
         <div className="app-shell-adapter">
             <style jsx>{styles}</style>
-            <ConnectedHeaderBar />
+            <div dir={localeDirection}>
+                <ConnectedHeaderBar />
+            </div>
             <div className="app-shell-app">
                 <ErrorBoundary onRetry={() => window.location.reload()}>
                     {children}
@@ -54,6 +63,7 @@ const AppWrapper = ({ children, plugin, onPluginError, clearPluginError }) => {
 AppWrapper.propTypes = {
     children: PropTypes.node,
     clearPluginError: PropTypes.func,
+    direction: PropTypes.oneOf(['ltr', 'rtl', 'auto']),
     plugin: PropTypes.bool,
     onPluginError: PropTypes.func,
 }

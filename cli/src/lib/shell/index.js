@@ -9,6 +9,10 @@ module.exports = ({ config, paths }) => {
         version: config.version,
     }
 
+    if (config.direction) {
+        baseEnvVars.direction = config.direction
+    }
+
     return {
         bootstrap: async (args = {}) => {
             await bootstrap(paths, args)
