@@ -28,6 +28,7 @@ const appConfig = {
     apiVersion: parseInt(process.env.REACT_APP_DHIS2_API_VERSION),
     pwaEnabled: process.env.REACT_APP_DHIS2_APP_PWA_ENABLED === 'true',
     plugin: isPlugin,
+    direction: process.env.REACT_APP_DHIS2_APP_DIRECTION,
 }
 
 const pluginConfig = {
