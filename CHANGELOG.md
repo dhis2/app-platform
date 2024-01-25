@@ -1,3 +1,10 @@
+# [10.5.0-alpha.2](https://github.com/dhis2/app-platform/compare/v10.5.0-alpha.1...v10.5.0-alpha.2) (2024-01-25)
+
+
+### Bug Fixes
+
+* remove unused export for useLocale (and update tests) ([#826](https://github.com/dhis2/app-platform/issues/826)) ([d4262e1](https://github.com/dhis2/app-platform/commit/d4262e1f1c4e64ef451d9e8d08ff07e003c82e6f))
+
 # [10.5.0-alpha.1](https://github.com/dhis2/app-platform/compare/v10.4.0...v10.5.0-alpha.1) (2024-01-25)
 
 
