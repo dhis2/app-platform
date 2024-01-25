@@ -1,12 +1,20 @@
+import { useDataQuery } from '@dhis2/app-runtime'
 import i18n from '@dhis2/d2-i18n'
-import { renderHook, act } from '@testing-library/react-hooks'
+import { renderHook } from '@testing-library/react-hooks'
 import moment from 'moment'
-import { useLocale } from './useLocale.js'
+import { useCurrentUserLocale } from './useLocale.js'
 
-// NOTE ABOUT MOCKS:
+// Note about mocks:
 // Luckily, `await import(`moment/locale/${locale}`)` as used in
 // `setMomentLocale` in `localeUtils.js` works the same in the Jest environment
 // as in the real world, so it doesn't need mocking
+
+// NB: To keep tests simpler, useDataQuery will be considered synchronous,
+// and loading logic isn't tested
+jest.mock('@dhis2/app-runtime', () => ({
+    ...jest.requireActual('@dhis2/app-runtime'),
+    useDataQuery: jest.fn(),
+}))
 
 jest.mock('@dhis2/d2-i18n', () => {
     return {
@@ -37,26 +45,19 @@ jest.mock('moment', () => ({
     defineLocale: jest.fn(),
 }))
 
+jest.spyOn(document.documentElement, 'setAttribute')
+
 afterEach(() => {
     jest.clearAllMocks()
 })
 
-test('happy path initial load with en language', () => {
-    const defaultUserSettings = { keyUiLocale: 'en' }
-    const { result, rerender } = renderHook((newProps) => useLocale(newProps), {
-        initialProps: defaultUserSettings,
+test('happy path initial load with en language', async () => {
+    useDataQuery.mockReturnValue({
+        data: { userSettings: { keyUiLocale: 'en' } },
     })
+    const { result } = renderHook(() => useCurrentUserLocale())
 
-    expect(result.current.locale).toBe(undefined)
-    expect(result.current.direction).toBe(undefined)
-
-    act(() => {
-        rerender({
-            userSettings: defaultUserSettings,
-            configDirection: undefined,
-        })
-    })
-
+    expect(result.current.loading).toBe(false)
     expect(result.current.locale.baseName).toBe('en')
     expect(result.current.direction).toBe('ltr')
     expect(i18n.changeLanguage).toHaveBeenCalledWith('en')
@@ -65,6 +66,14 @@ test('happy path initial load with en language', () => {
     // moment.locale doesn't need to get called if the language is 'en'...
     // but it's asynchronous anyway. See following tests
     expect(moment.locale).not.toHaveBeenCalled()
+    expect(document.documentElement.setAttribute).toHaveBeenCalledWith(
+        'dir',
+        'ltr'
+    )
+    expect(document.documentElement.setAttribute).toHaveBeenCalledWith(
+        'lang',
+        'en'
+    )
 })
 
 describe('formerly problematic locales', () => {
@@ -72,13 +81,10 @@ describe('formerly problematic locales', () => {
     // 1. i18n.dir didn't work because it needs a BCP47-formatted string
     // 2. The Moment locale didn't work, because it uses another format
     test('pt_BR locale', async () => {
-        const userSettings = { keyUiLocale: 'pt_BR' }
-        const { result, waitFor } = renderHook(() =>
-            useLocale({
-                userSettings,
-                configDirection: undefined,
-            })
-        )
+        useDataQuery.mockReturnValue({
+            data: { userSettings: { keyUiLocale: 'pt_BR' } },
+        })
+        const { result, waitFor } = renderHook(() => useCurrentUserLocale())
 
         expect(result.current.direction).toBe('ltr')
         // Notice different locale formats
@@ -100,13 +106,10 @@ describe('formerly problematic locales', () => {
     // 3. The Moment locale didn't work, both because of formatting and failing to
     // fall back to simpler locales
     test('ar_EG locale', async () => {
-        const userSettings = { keyUiLocale: 'ar_EG' }
-        const { result, waitFor } = renderHook(() =>
-            useLocale({
-                userSettings,
-                configDirection: undefined,
-            })
-        )
+        useDataQuery.mockReturnValue({
+            data: { userSettings: { keyUiLocale: 'ar_EG' } },
+        })
+        const { result, waitFor } = renderHook(() => useCurrentUserLocale())
 
         expect(result.current.direction).toBe('rtl')
         expect(result.current.locale.baseName).toBe('ar-EG')
@@ -121,13 +124,10 @@ describe('formerly problematic locales', () => {
     // 1. i18n.dir didn't work because it needs a BCP47-formatted string
     // 2. Moment locales didn't work due to formatting and lack of fallback
     test('uz_UZ_Cyrl locale', async () => {
-        const userSettings = { keyUiLocale: 'uz_UZ_Cyrl' }
-        const { result, waitFor } = renderHook(() =>
-            useLocale({
-                userSettings,
-                configDirection: undefined,
-            })
-        )
+        useDataQuery.mockReturnValue({
+            data: { userSettings: { keyUiLocale: 'uz_UZ_Cyrl' } },
+        })
+        const { result, waitFor } = renderHook(() => useCurrentUserLocale())
 
         expect(result.current.direction).toBe('ltr')
         expect(result.current.locale.baseName).toBe('uz-Cyrl-UZ')
@@ -138,13 +138,10 @@ describe('formerly problematic locales', () => {
     })
     // Similar for UZ Latin -- notice difference in the Moment locale
     test('uz_UZ_Latn locale', async () => {
-        const userSettings = { keyUiLocale: 'uz_UZ_Latn' }
-        const { result, waitFor } = renderHook(() =>
-            useLocale({
-                userSettings,
-                configDirection: undefined,
-            })
-        )
+        useDataQuery.mockReturnValue({
+            data: { userSettings: { keyUiLocale: 'uz_UZ_Latn' } },
+        })
+        const { result, waitFor } = renderHook(() => useCurrentUserLocale())
 
         expect(result.current.direction).toBe('ltr')
         expect(result.current.locale.baseName).toBe('uz-Latn-UZ')
@@ -164,16 +161,12 @@ describe('other userSettings cases', () => {
     })
 
     test('proposed keyUiLanguageTag property is used (preferrentially)', async () => {
-        const userSettings = {
-            keyUiLocale: 'en',
-            keyUiLanguageTag: 'pt-BR',
-        }
-        const { result, waitFor } = renderHook(() =>
-            useLocale({
-                userSettings,
-                configDirection: undefined,
-            })
-        )
+        useDataQuery.mockReturnValue({
+            data: {
+                userSettings: { keyUiLocale: 'en', keyUiLanguageTag: 'pt-BR' },
+            },
+        })
+        const { result, waitFor } = renderHook(() => useCurrentUserLocale())
 
         expect(result.current.direction).toBe('ltr')
         expect(result.current.locale.baseName).toBe('pt-BR')
@@ -184,13 +177,10 @@ describe('other userSettings cases', () => {
     })
 
     test('keyUiLocale is missing from user settings for some reason (should fall back to browser language)', async () => {
-        const userSettings = {}
-        const { result, waitFor } = renderHook(() =>
-            useLocale({
-                userSettings,
-                configDirection: undefined,
-            })
-        )
+        useDataQuery.mockReturnValue({
+            data: { userSettings: {} },
+        })
+        const { result, waitFor } = renderHook(() => useCurrentUserLocale())
 
         expect(result.current.direction).toBe('rtl')
         expect(result.current.locale.baseName).toBe('ar-EG')
@@ -201,13 +191,10 @@ describe('other userSettings cases', () => {
     })
 
     test('keyUiLocale is nonsense (should fall back to browser language)', async () => {
-        const userSettings = { keyUiLocale: 'shouldCauseError' }
-        const { result, waitFor } = renderHook(() =>
-            useLocale({
-                userSettings,
-                configDirection: undefined,
-            })
-        )
+        useDataQuery.mockReturnValue({
+            data: { userSettings: { keyUiLocale: 'shouldCauseError' } },
+        })
+        const { result, waitFor } = renderHook(() => useCurrentUserLocale())
 
         expect(result.current.direction).toBe('rtl')
         expect(result.current.locale.baseName).toBe('ar-EG')
@@ -219,16 +206,11 @@ describe('other userSettings cases', () => {
 })
 
 describe('config direction is respected for the document direction', () => {
-    jest.spyOn(document.documentElement, 'setAttribute')
-
     test('ltr is the default and is used even for rtl languages', async () => {
-        const userSettings = { keyUiLocale: 'ar' }
-        const { result } = renderHook(() =>
-            useLocale({
-                userSettings,
-                configDirection: undefined,
-            })
-        )
+        useDataQuery.mockReturnValue({
+            data: { userSettings: { keyUiLocale: 'ar' } },
+        })
+        const { result } = renderHook(() => useCurrentUserLocale())
 
         expect(result.current.direction).toBe('rtl')
         expect(document.documentElement.setAttribute).toHaveBeenCalledWith(
@@ -238,13 +220,10 @@ describe('config direction is respected for the document direction', () => {
     })
 
     test('rtl will be used for the document if configured, even for an ltr language', () => {
-        const userSettings = { keyUiLocale: 'en' }
-        const { result } = renderHook(() =>
-            useLocale({
-                userSettings,
-                configDirection: 'rtl',
-            })
-        )
+        useDataQuery.mockReturnValue({
+            data: { userSettings: { keyUiLocale: 'en' } },
+        })
+        const { result } = renderHook(() => useCurrentUserLocale('rtl'))
 
         expect(result.current.direction).toBe('ltr')
         expect(document.documentElement.setAttribute).toHaveBeenCalledWith(
@@ -254,13 +233,10 @@ describe('config direction is respected for the document direction', () => {
     })
 
     test('if auto is used, document dir will match the language dir (ltr)', () => {
-        const userSettings = { keyUiLocale: 'en' }
-        const { result } = renderHook(() =>
-            useLocale({
-                userSettings,
-                configDirection: 'auto',
-            })
-        )
+        useDataQuery.mockReturnValue({
+            data: { userSettings: { keyUiLocale: 'en' } },
+        })
+        const { result } = renderHook(() => useCurrentUserLocale('auto'))
 
         expect(result.current.direction).toBe('ltr')
         expect(document.documentElement.setAttribute).toHaveBeenCalledWith(
@@ -270,13 +246,10 @@ describe('config direction is respected for the document direction', () => {
     })
 
     test('if auto is used, document dir will match the language dir (ltr)', () => {
-        const userSettings = { keyUiLocale: 'ar' }
-        const { result } = renderHook(() =>
-            useLocale({
-                userSettings,
-                configDirection: 'auto',
-            })
-        )
+        useDataQuery.mockReturnValue({
+            data: { userSettings: { keyUiLocale: 'ar' } },
+        })
+        const { result } = renderHook(() => useCurrentUserLocale('auto'))
 
         expect(result.current.direction).toBe('rtl')
         expect(document.documentElement.setAttribute).toHaveBeenCalledWith(
@@ -286,13 +259,10 @@ describe('config direction is respected for the document direction', () => {
     })
 
     test('nonstandard config directions fall back to ltr', () => {
-        const userSettings = { keyUiLocale: 'ar' }
-        const { result } = renderHook(() =>
-            useLocale({
-                userSettings,
-                configDirection: 'whoopslol',
-            })
-        )
+        useDataQuery.mockReturnValue({
+            data: { userSettings: { keyUiLocale: 'ar' } },
+        })
+        const { result } = renderHook(() => useCurrentUserLocale('whoopslol'))
 
         expect(result.current.direction).toBe('rtl')
         expect(document.documentElement.setAttribute).toHaveBeenCalledWith(
@@ -303,15 +273,10 @@ describe('config direction is respected for the document direction', () => {
 })
 
 test('document `lang` attribute is set', () => {
-    jest.spyOn(document.documentElement, 'setAttribute')
-    const userSettings = { keyUiLocale: 'pt-BR' }
-
-    renderHook(() =>
-        useLocale({
-            userSettings,
-            configDirection: undefined,
-        })
-    )
+    useDataQuery.mockReturnValue({
+        data: { userSettings: { keyUiLocale: 'pt_BR' } },
+    })
+    renderHook(() => useCurrentUserLocale())
 
     expect(document.documentElement.setAttribute).toHaveBeenCalledWith(
         'lang',

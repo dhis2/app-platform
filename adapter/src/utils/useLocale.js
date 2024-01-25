@@ -8,7 +8,7 @@ import {
     setMomentLocale,
 } from './localeUtils.js'
 
-export const useLocale = ({ userSettings, configDirection }) => {
+const useLocale = ({ userSettings, configDirection }) => {
     const [result, setResult] = useState({
         locale: undefined,
         direction: undefined,
