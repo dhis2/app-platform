@@ -1,3 +1,10 @@
+# [10.5.0-alpha.1](https://github.com/dhis2/app-platform/compare/v10.4.0...v10.5.0-alpha.1) (2024-01-25)
+
+
+### Features
+
+* `dir` config for language directions and other i18n fixes [DHIS2-16480] ([#825](https://github.com/dhis2/app-platform/issues/825)) ([e605143](https://github.com/dhis2/app-platform/commit/e605143f3c5e0038313fc0bcb2afaa15b9890145))
+
 # [10.4.0](https://github.com/dhis2/app-platform/compare/v10.3.11...v10.4.0) (2024-01-04)
 
 
