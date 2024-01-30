@@ -1,3 +1,10 @@
+## [10.4.1](https://github.com/dhis2/app-platform/compare/v10.4.0...v10.4.1) (2024-01-30)
+
+
+### Bug Fixes
+
+* use main app-runtime release ([#827](https://github.com/dhis2/app-platform/issues/827)) ([4c254e9](https://github.com/dhis2/app-platform/commit/4c254e98d8bb233a05c2d2de36cb6cc40e8cfb28))
+
 # [10.4.0](https://github.com/dhis2/app-platform/compare/v10.3.11...v10.4.0) (2024-01-04)
 
 
