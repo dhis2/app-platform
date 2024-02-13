@@ -59,6 +59,7 @@ module.exports = (cwd = process.cwd()) => {
         shell: path.join(base, './.d2/shell'),
         shellSrc: path.join(base, './.d2/shell/src'),
         shellAppEntrypoint: path.join(base, './.d2/shell/src/App.js'),
+        shellAppBundleEntrypoint: path.join(base, './.d2/shell/src/index.js'),
         shellAppDirname,
         shellApp: path.join(base, `./.d2/shell/${shellAppDirname}`),
         shellPluginBundleEntrypoint: path.join(
@@ -74,6 +75,10 @@ module.exports = (cwd = process.cwd()) => {
         shellPublicPluginHtml: path.join(
             base,
             './.d2/shell/public/plugin.html'
+        ),
+        shellPublicPluginifiedAppHtml: path.join(
+            base,
+            './.d2/shell/public/app.html'
         ),
         shellPublicServiceWorker: path.join(
             base,
@@ -114,6 +119,7 @@ module.exports = (cwd = process.cwd()) => {
 
         launchPath: 'index.html',
         pluginLaunchPath: 'plugin.html',
+        pluginifiedAppLaunchPath: 'app.html',
     }
 
     reporter.debug('PATHS', paths)

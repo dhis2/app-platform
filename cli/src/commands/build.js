@@ -70,6 +70,7 @@ const handler = async ({
     const config = parseConfig(paths)
     const shell = makeShell({ config, paths })
     const plugin = makePlugin({ config, paths })
+    const pluginifiedApp = makePlugin({ config, paths, pluginifiedApp: true })
 
     if (config.type === 'app') {
         setAppParameters(standalone, config)
@@ -131,6 +132,9 @@ const handler = async ({
                 // CRA Manages service worker compilation here
                 reporter.info('Building appShell...')
                 await shell.build()
+
+                reporter.info('Building pluginified app...')
+                await pluginifiedApp.build()
 
                 if (config.entryPoints.plugin) {
                     reporter.info('Building plugin...')
