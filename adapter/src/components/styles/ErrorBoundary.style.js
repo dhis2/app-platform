@@ -5,7 +5,8 @@ const bgColor = '#F4F6F8',
     primaryTextColor = '#000000',
     secondaryTextColor = '#494949',
     errorColor = '#D32F2F',
-    grey050 = '#FBFCFD'
+    grey050 = '#FBFCFD',
+    red200 = '#ffcdd2'
 
 export default css`
     .mask {
@@ -99,5 +100,13 @@ export default css`
         line-height: 1.2;
         color: ${errorColor};
         font-family: Menlo, Courier, monospace !important;
+    }
+
+    .pluginBoundary {
+        background-color: ${red200};
+    }
+
+    .pluginBoundary span {
+        display: inline-block;
     }
 `

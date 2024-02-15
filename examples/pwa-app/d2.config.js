@@ -6,12 +6,15 @@ const config = {
         caching: {
             // For the purposes of this demo, to simulate dashboard content:
             patternsToOmitFromAppShell: ['visualizations'],
+            // To test precache filtering: (relative to PUBLIC_DIR)
+            globsToOmitFromPrecache: ['exclude-from-precache/**'],
         },
     },
 
     entryPoints: {
         app: './src/App.js',
-        plugin: './src/components/VisualizationsList.js',
+        // Uncomment this to test plugin builds:
+        // plugin: './src/components/VisualizationsList.js',
     },
 }
 

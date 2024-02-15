@@ -35,6 +35,7 @@ module.exports = ({ env: webpackEnv, config, paths }) => {
 
     const shellEnv = getShellEnv({
         plugin: 'true',
+        requiredProps: config.requiredProps ? config.requiredProps.join() : '',
         name: config.title,
         ...getPWAEnvVars(config),
     })
@@ -187,7 +188,11 @@ module.exports = ({ env: webpackEnv, config, paths }) => {
                 resourceRegExp: /^\.\/locale$/,
                 contextRegExp: /moment$/,
             }),
-            // dhis2: Inject plugin static assets to the existing SW's precache manifest
+            // dhis2: Inject plugin static assets to the existing SW's precache
+            // manifest. Don't need to do in dev because precaching isn't done
+            // in dev environments.
+            // Check the actual NODE_ENV because `isProduction` is currently
+            // always true due to a bug (see src/lib/plugin/start.js)
             process.env.NODE_ENV === 'production' &&
                 new WorkboxWebpackPlugin.InjectManifest({
                     swSrc: paths.shellBuildServiceWorker,

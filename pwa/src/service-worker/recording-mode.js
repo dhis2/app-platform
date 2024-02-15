@@ -1,3 +1,4 @@
+import { Strategy } from 'workbox-strategies'
 import { swMsgs } from '../lib/constants.js'
 import { openSectionsDB, SECTIONS_STORE } from '../lib/sections-db.js'
 
@@ -7,6 +8,14 @@ const CACHEABLE_SECTION_URL_FILTER_PATTERNS = JSON.parse(
         .REACT_APP_DHIS2_APP_PWA_CACHING_PATTERNS_TO_OMIT_FROM_CACHEABLE_SECTIONS ||
         '[]'
 ).map((pattern) => new RegExp(pattern))
+
+/**
+ * Tracks recording states for multiple clients to handle multiple windows
+ * recording simultaneously
+ */
+export function initClientRecordingStates() {
+    self.clientRecordingStates = {}
+}
 
 // Triggered on 'START_RECORDING' message
 export function startRecording(event) {
@@ -77,19 +86,25 @@ export function shouldRequestBeRecorded({ url, event }) {
 }
 
 /** Request handler during recording mode */
-export function handleRecordedRequest({ request, event }) {
-    const recordingState = self.clientRecordingStates[event.clientId]
+export class RecordingMode extends Strategy {
+    _handle(request, handler) {
+        const { event } = handler
+        const recordingState = self.clientRecordingStates[event.clientId]
 
-    clearTimeout(recordingState.recordingTimeout)
-    recordingState.pendingRequests.add(request)
+        clearTimeout(recordingState.recordingTimeout)
+        recordingState.pendingRequests.add(request)
 
-    fetch(request)
-        .then((response) => {
-            return handleRecordedResponse(request, response, event.clientId)
-        })
-        .catch((error) => {
-            stopRecording(error, event.clientId)
-        })
+        return handler
+            .fetch(request)
+            .then((response) => {
+                return handleRecordedResponse(request, response, event.clientId)
+            })
+            .catch((error) => {
+                stopRecording(error, event.clientId)
+                // trigger 'fetchDidFail' callback
+                throw error
+            })
+    }
 }
 
 /** Response handler during recording mode */

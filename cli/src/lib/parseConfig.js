@@ -1,6 +1,6 @@
 const { reporter, chalk } = require('@dhis2/cli-helpers-engine')
 const fs = require('fs-extra')
-const { defaultsDeep, has, isPlainObject } = require('lodash')
+const { defaultsDeep, cloneDeep, has, isPlainObject } = require('lodash')
 const parseAuthorString = require('parse-author')
 
 const requiredConfigFields = {
@@ -88,7 +88,10 @@ const parseConfig = (paths) => {
 
         if (fs.existsSync(paths.config)) {
             reporter.debug('Loading d2 config at', paths.config)
-            config = require(paths.config)
+            const importedConfig = require(paths.config)
+            // Make sure not to overwrite imported object
+            // (need to use it later in generateManifest)
+            config = cloneDeep(importedConfig)
             reporter.debug('loaded', config)
         }
         if (fs.existsSync(paths.package)) {

@@ -1,3 +1,141 @@
+## [10.4.1](https://github.com/dhis2/app-platform/compare/v10.4.0...v10.4.1) (2024-01-30)
+
+
+### Bug Fixes
+
+* use main app-runtime release ([#827](https://github.com/dhis2/app-platform/issues/827)) ([4c254e9](https://github.com/dhis2/app-platform/commit/4c254e98d8bb233a05c2d2de36cb6cc40e8cfb28))
+
+# [10.4.0](https://github.com/dhis2/app-platform/compare/v10.3.11...v10.4.0) (2024-01-04)
+
+
+### Features
+
+* support plugin wrappers [LIBS-397] ([#823](https://github.com/dhis2/app-platform/issues/823)) ([f779e13](https://github.com/dhis2/app-platform/commit/f779e13a0e18808368782873fb350773a7191966))
+
+# [10.4.0-alpha.6](https://github.com/dhis2/app-platform/compare/v10.4.0-alpha.5...v10.4.0-alpha.6) (2023-12-21)
+
+
+### Bug Fixes
+
+* don't open browser for plugins on start [LIBS-503] ([#821](https://github.com/dhis2/app-platform/issues/821)) ([7db7a69](https://github.com/dhis2/app-platform/commit/7db7a69b55d88f681e14e49d4b774e75d7289776))
+* update alpha ([e66a8ea](https://github.com/dhis2/app-platform/commit/e66a8ea62c7b30c929f7b5cebab08df3fa4cbf62))
+* update alpha [skip release] ([ec772f6](https://github.com/dhis2/app-platform/commit/ec772f655f3160446ab74f523e147d3e129b94a9))
+
+## [10.3.11](https://github.com/dhis2/app-platform/compare/v10.3.10...v10.3.11) (2023-12-11)
+
+
+### Bug Fixes
+
+* don't open browser for plugins on start [LIBS-503] ([#821](https://github.com/dhis2/app-platform/issues/821)) ([7db7a69](https://github.com/dhis2/app-platform/commit/7db7a69b55d88f681e14e49d4b774e75d7289776))
+
+# [10.4.0-alpha.5](https://github.com/dhis2/app-platform/compare/v10.4.0-alpha.4...v10.4.0-alpha.5) (2023-09-28)
+
+
+### Bug Fixes
+
+* auto width adjustment ([a80ea56](https://github.com/dhis2/app-platform/commit/a80ea56f1cd887e3458af8b6995f3136017fa9c2))
+* clean up dependencies ([9863ae0](https://github.com/dhis2/app-platform/commit/9863ae09c72b65e11ce69ba03034ecd2737dacb3))
+* use useRef for previous width ([f6c07cf](https://github.com/dhis2/app-platform/commit/f6c07cf222254379c5e7574087a9364507e9cdd1))
+
+
+### Features
+
+* auto resizing for height ([74bbe00](https://github.com/dhis2/app-platform/commit/74bbe00c0f64364b96b2b5b4fb68830b1d91a016))
+
+# [10.4.0-alpha.4](https://github.com/dhis2/app-platform/compare/v10.4.0-alpha.3...v10.4.0-alpha.4) (2023-08-22)
+
+
+### Bug Fixes
+
+* support yarn.lock discovery on non-unix ([#811](https://github.com/dhis2/app-platform/issues/811)) ([22a6863](https://github.com/dhis2/app-platform/commit/22a6863c1b4a5d9c6c026c502a1b77dded318be7))
+
+# [10.4.0-alpha.3](https://github.com/dhis2/app-platform/compare/v10.4.0-alpha.2...v10.4.0-alpha.3) (2023-08-10)
+
+
+### Bug Fixes
+
+* support yarn.lock discovery on non-unix ([#811](https://github.com/dhis2/app-platform/issues/811)) ([22a6863](https://github.com/dhis2/app-platform/commit/22a6863c1b4a5d9c6c026c502a1b77dded318be7))
+* move precache route to reenable navigation handler on login redirects [LIBS-473] ([#809](https://github.com/dhis2/app-platform/issues/809)) ([1ff29b6](https://github.com/dhis2/app-platform/commit/1ff29b645ec07e0bcce76efedbc08f1b76014a42))
+* **pwa:** avoid crashing when SW is not available [LIBS-499] ([#807](https://github.com/dhis2/app-platform/issues/807)) ([b681022](https://github.com/dhis2/app-platform/commit/b68102248fad98303dd2c01d954f4430b1934a25))
+* omit `moment-locales` from precache ([#806](https://github.com/dhis2/app-platform/issues/806)) ([c8d5494](https://github.com/dhis2/app-platform/commit/c8d5494c5eaf6a2f021166d208a1cc289701a47a))
+* **cli:** fix envs to fix plugins in dev ([#799](https://github.com/dhis2/app-platform/issues/799)) ([ba29cea](https://github.com/dhis2/app-platform/commit/ba29ceacfe5a25d42a406f80a9896ccbc7bc82f8))
+* **plugins:** omit launch paths when unused [LIBS-477] ([#791](https://github.com/dhis2/app-platform/issues/791)) ([e49a51f](https://github.com/dhis2/app-platform/commit/e49a51fec39a323350c71d4e09caff836aab2262))
+* **pwa:** bump ui version for headerbar connection status [LIBS-315] ([#797](https://github.com/dhis2/app-platform/issues/797)) ([61ff0a4](https://github.com/dhis2/app-platform/commit/61ff0a49e63189d892403db8df24c57e170dac0a))
+* make loading placeholders transparent ([#795](https://github.com/dhis2/app-platform/issues/795)) ([6e64756](https://github.com/dhis2/app-platform/commit/6e64756325b366b413acbdce8dd0d6b70632d118))
+* **plugins:** inject precache manifest correctly ([#792](https://github.com/dhis2/app-platform/issues/792)) ([c0d172e](https://github.com/dhis2/app-platform/commit/c0d172ec362182ce978e43b16e9c411ec61e5039))
+* **pwa:** add config option to omit files from precache [LIBS-482] ([#793](https://github.com/dhis2/app-platform/issues/793)) ([d089dda](https://github.com/dhis2/app-platform/commit/d089dda25433ca52f84c42c9369fce95419e4f83))
+
+## [10.3.9](https://github.com/dhis2/app-platform/compare/v10.3.8...v10.3.9) (2023-05-16)
+
+
+### Bug Fixes
+
+* move precache route to reenable navigation handler on login redirects [LIBS-473] ([#809](https://github.com/dhis2/app-platform/issues/809)) ([1ff29b6](https://github.com/dhis2/app-platform/commit/1ff29b645ec07e0bcce76efedbc08f1b76014a42))
+
+## [10.3.8](https://github.com/dhis2/app-platform/compare/v10.3.7...v10.3.8) (2023-05-03)
+
+
+### Bug Fixes
+
+* **pwa:** avoid crashing when SW is not available [LIBS-499] ([#807](https://github.com/dhis2/app-platform/issues/807)) ([b681022](https://github.com/dhis2/app-platform/commit/b68102248fad98303dd2c01d954f4430b1934a25))
+
+## [10.3.7](https://github.com/dhis2/app-platform/compare/v10.3.6...v10.3.7) (2023-04-27)
+
+
+### Bug Fixes
+
+* omit `moment-locales` from precache ([#806](https://github.com/dhis2/app-platform/issues/806)) ([c8d5494](https://github.com/dhis2/app-platform/commit/c8d5494c5eaf6a2f021166d208a1cc289701a47a))
+
+## [10.3.6](https://github.com/dhis2/app-platform/compare/v10.3.5...v10.3.6) (2023-03-22)
+
+
+### Bug Fixes
+
+* **cli:** fix envs to fix plugins in dev ([#799](https://github.com/dhis2/app-platform/issues/799)) ([ba29cea](https://github.com/dhis2/app-platform/commit/ba29ceacfe5a25d42a406f80a9896ccbc7bc82f8))
+
+## [10.3.5](https://github.com/dhis2/app-platform/compare/v10.3.4...v10.3.5) (2023-03-17)
+
+
+### Bug Fixes
+
+* **pwa:** bump ui version for headerbar connection status [LIBS-315] ([#797](https://github.com/dhis2/app-platform/issues/797)) ([61ff0a4](https://github.com/dhis2/app-platform/commit/61ff0a49e63189d892403db8df24c57e170dac0a))
+
+## [10.3.4](https://github.com/dhis2/app-platform/compare/v10.3.3...v10.3.4) (2023-03-16)
+
+
+### Bug Fixes
+
+* make loading placeholders transparent ([#795](https://github.com/dhis2/app-platform/issues/795)) ([6e64756](https://github.com/dhis2/app-platform/commit/6e64756325b366b413acbdce8dd0d6b70632d118))
+
+## [10.3.3](https://github.com/dhis2/app-platform/compare/v10.3.2...v10.3.3) (2023-03-13)
+
+
+### Bug Fixes
+
+* **plugins:** inject precache manifest correctly ([#792](https://github.com/dhis2/app-platform/issues/792)) ([c0d172e](https://github.com/dhis2/app-platform/commit/c0d172ec362182ce978e43b16e9c411ec61e5039))
+* **pwa:** add config option to omit files from precache [LIBS-482] ([#793](https://github.com/dhis2/app-platform/issues/793)) ([d089dda](https://github.com/dhis2/app-platform/commit/d089dda25433ca52f84c42c9369fce95419e4f83))
+
+## [10.3.2](https://github.com/dhis2/app-platform/compare/v10.3.1...v10.3.2) (2023-03-10)
+
+
+### Bug Fixes
+
+* **plugins:** omit launch paths when unused [LIBS-477] ([#791](https://github.com/dhis2/app-platform/issues/791)) ([e49a51f](https://github.com/dhis2/app-platform/commit/e49a51fec39a323350c71d4e09caff836aab2262))
+
+## [10.3.1](https://github.com/dhis2/app-platform/compare/v10.3.0...v10.3.1) (2023-03-06)
+
+
+### Bug Fixes
+
+* error in non-pwa apps [LIBS-315] ([#789](https://github.com/dhis2/app-platform/issues/789)) ([590530e](https://github.com/dhis2/app-platform/commit/590530e74424c65f41c540b123faec902a594e75))
+
+# [10.3.0](https://github.com/dhis2/app-platform/compare/v10.2.3...v10.3.0) (2023-03-03)
+
+
+### Features
+
+* **pwa:** track online status [LIBS-315] ([#718](https://github.com/dhis2/app-platform/issues/718)) ([1dfd1e6](https://github.com/dhis2/app-platform/commit/1dfd1e6249fa22412eb87ea8e693d908af835498))
+
 ## [10.2.3](https://github.com/dhis2/app-platform/compare/v10.2.2...v10.2.3) (2023-02-16)
 
 

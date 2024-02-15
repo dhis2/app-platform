@@ -62,6 +62,7 @@ const handler = async ({
     const paths = makePaths(cwd)
 
     mode = mode || (dev && 'development') || getNodeEnv() || 'production'
+    process.env.BABEL_ENV = process.env.NODE_ENV = mode
     loadEnvFiles(paths, mode)
 
     reporter.print(chalk.green.bold('Build parameters:'))
