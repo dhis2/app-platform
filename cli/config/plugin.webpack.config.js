@@ -94,6 +94,7 @@ module.exports = ({ env: webpackEnv, config, paths, pluginifiedApp }) => {
         ].filter(Boolean)
     }
 
+    // DHIS2
     // .d2/shell/src/index.js or .../plugin.index.js
     const entry = pluginifiedApp
         ? paths.shellAppBundleEntrypoint
@@ -109,10 +110,21 @@ module.exports = ({ env: webpackEnv, config, paths, pluginifiedApp }) => {
 
     const outputFilenamePrefix = pluginifiedApp ? 'app' : 'plugin'
 
+    // DHIS2
+    // in dev (using process.env.NODE_ENV because `isProduction` is currently
+    // hard-coded to 'true' as a workaround), add 'react-devtools' to the entry
+    // to enabled standalone React Dev Tools to work in iframes
+    // Intro: https://stackoverflow.com/a/71513012
+    // https://github.com/facebook/react/tree/main/packages/react-devtools#usage-with-react-dom
+    const resolvedEntry =
+        process.env.NODE_ENV === 'development'
+            ? ['react-devtools', entry]
+            : entry
+
     return {
         mode: webpackEnv,
         bail: isProduction,
-        entry: entry,
+        entry: resolvedEntry,
         output: {
             path: paths.shellBuildOutput,
             filename: isProduction
