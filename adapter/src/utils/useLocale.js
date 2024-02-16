@@ -61,9 +61,19 @@ export const useCurrentUserLocale = () => {
     return { loading: loading || !locale, locale }
 }
 
+const loginConfigQuery = {
+    loginConfig: {
+        resource: 'loginConfig',
+    },
+}
 export const useSystemDefaultLocale = () => {
     // TO-DO: system language query (not currently available)
-    const defaultLocale = window.navigator.language
-    const locale = useLocale(defaultLocale)
-    return { loading: !locale, locale }
+    const { loading, data, error } = useDataQuery(loginConfigQuery)
+    // use uiLocale from query, if not fall back to window.navigator.language
+    // do not triger error boundary for login app
+    const locale = useLocale(
+        (data || error) &&
+            (data?.loginConfig?.uiLocale || window.navigator.language)
+    )
+    return { loading: loading || !locale, locale }
 }
