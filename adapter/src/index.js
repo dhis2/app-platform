@@ -37,6 +37,7 @@ const AppAdapter = ({
                     url={url}
                     apiVersion={apiVersion}
                     pwaEnabled={pwaEnabled}
+                    loginApp={loginApp}
                     plugin={false}
                 >
                     <LoginAppWrapper>{children}</LoginAppWrapper>

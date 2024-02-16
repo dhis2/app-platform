@@ -105,13 +105,12 @@ export const ServerVersionProvider = ({
                 : { loading: true, error: undefined, systemInfo: undefined }
         )
 
-        // in reality we probably want a request to get api version
+        // version is hardcoded to 2.41-SNAPSHOT to access correct api, but should be populated from public endpoint
         if (loginApp) {
-            const fakeSystemInfo = { version: '2.40-SNAPSHOT' }
             setSystemInfoState({
                 loading: false,
                 error: undefined,
-                systemInfo: fakeSystemInfo,
+                systemInfo: { version: '2.41-SNAPSHOT' },
             })
             return
         }
@@ -182,7 +181,6 @@ export const ServerVersionProvider = ({
             plugin={plugin}
             parentAlertsAdd={parentAlertsAdd}
             showAlertsInPlugin={showAlertsInPlugin}
-            loginApp={loginApp}
         >
             {children}
         </Provider>
