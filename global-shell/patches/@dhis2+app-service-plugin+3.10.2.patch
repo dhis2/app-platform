@@ -1,0 +1,44 @@
+diff --git a/node_modules/@dhis2/app-service-plugin/build/es/Plugin.js b/node_modules/@dhis2/app-service-plugin/build/es/Plugin.js
+index eb805b0..0b94e00 100644
+--- a/node_modules/@dhis2/app-service-plugin/build/es/Plugin.js
++++ b/node_modules/@dhis2/app-service-plugin/build/es/Plugin.js
+@@ -28,6 +28,7 @@ export const Plugin = (_ref3) => {
+   let {
+     pluginSource,
+     pluginShortName,
++    onLoad,
+     ...propsToPassNonMemoized
+   } = _ref3;
+   const iframeRef = useRef(null); // we do not know what is being sent in passed props, so for stable reference, memoize using JSON representation
+@@ -53,8 +54,8 @@ export const Plugin = (_ref3) => {
+   const [communicationReceived, setCommunicationReceived] = useState(false);
+   const [prevCommunicationReceived, setPrevCommunicationReceived] = useState(false);
+   const [inErrorState, setInErrorState] = useState(false);
+-  const [pluginHeight, setPluginHeight] = useState(150);
+-  const [pluginWidth, setPluginWidth] = useState(500);
++  const [pluginHeight, setPluginHeight] = useState('150px');
++  const [pluginWidth, setPluginWidth] = useState('500px');
+   useEffect(() => {
+     if (height) {
+       setPluginHeight(height);
+@@ -124,8 +125,8 @@ export const Plugin = (_ref3) => {
+   if (pluginEntryPoint) {
+     return /*#__PURE__*/React.createElement("div", {
+       style: {
+-        height: `${pluginHeight}px`,
+-        width: `${pluginWidth}px`
++        height: `${pluginHeight}`,
++        width: `${pluginWidth}`
+       }
+     }, /*#__PURE__*/React.createElement("iframe", {
+       ref: iframeRef,
+@@ -134,7 +135,8 @@ export const Plugin = (_ref3) => {
+         width: '100%',
+         height: '100%',
+         border: 'none'
+-      }
++      },
++      onLoad: onLoad
+     }));
+   }
+ 

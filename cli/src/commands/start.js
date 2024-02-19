@@ -32,6 +32,7 @@ const handler = async ({
     const config = parseConfig(paths)
     const shell = makeShell({ config, paths })
     const plugin = makePlugin({ config, paths })
+    const pluginifiedApp = makePlugin({ config, paths, pluginifiedApp: true })
 
     if (config.type !== 'app') {
         reporter.error(
@@ -133,8 +134,17 @@ const handler = async ({
 
             const shellStartPromise = shell.start({ port: newPort })
 
+            const pluginifiedAppPort = await detectPort(newPort + 1)
+            reporter.print(
+                `The pluginifiedApp is now available on port ${pluginifiedAppPort} at /${paths.pluginifiedAppLaunchPath}`
+            )
+            reporter.print('')
+            const pluginifiedAppStartPromise = pluginifiedApp.start({
+                port: pluginifiedAppPort,
+            })
+
             if (config.entryPoints.plugin) {
-                const pluginPort = await detectPort(newPort + 1)
+                const pluginPort = await detectPort(pluginifiedAppPort + 1)
                 reporter.print(
                     `The plugin is now available on port ${pluginPort} at /${paths.pluginLaunchPath}`
                 )
@@ -142,10 +152,14 @@ const handler = async ({
 
                 await Promise.all([
                     shellStartPromise,
+                    pluginifiedAppStartPromise,
                     plugin.start({ port: pluginPort }),
                 ])
             } else {
-                await shellStartPromise
+                await Promise.all([
+                    shellStartPromise,
+                    pluginifiedAppStartPromise,
+                ])
             }
         },
         {

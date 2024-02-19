@@ -23,7 +23,7 @@ const babelWebpackConfig = {
 const cssRegex = /\.css$/
 const cssModuleRegex = /\.module\.css$/
 
-module.exports = ({ env: webpackEnv, config, paths }) => {
+module.exports = ({ env: webpackEnv, config, paths, pluginifiedApp }) => {
     const isProduction = webpackEnv === 'production'
     const isDevelopment = !isProduction
 
@@ -94,18 +94,45 @@ module.exports = ({ env: webpackEnv, config, paths }) => {
         ].filter(Boolean)
     }
 
+    // DHIS2
+    // .d2/shell/src/index.js or .../plugin.index.js
+    const entry = pluginifiedApp
+        ? paths.shellAppBundleEntrypoint
+        : paths.shellPluginBundleEntrypoint
+    // plugin.html or app.html
+    const htmlFilename = pluginifiedApp
+        ? paths.pluginifiedAppLaunchPath
+        : paths.pluginLaunchPath
+    // .d2/shell/public/app.html or .../plugin.html
+    const htmlTemplate = pluginifiedApp
+        ? paths.shellPublicPluginifiedAppHtml
+        : paths.shellPublicPluginHtml
+
+    const outputFilenamePrefix = pluginifiedApp ? 'app' : 'plugin'
+
+    // DHIS2
+    // in dev (using process.env.NODE_ENV because `isProduction` is currently
+    // hard-coded to 'true' as a workaround), add 'react-devtools' to the entry
+    // to enabled standalone React Dev Tools to work in iframes
+    // Intro: https://stackoverflow.com/a/71513012
+    // https://github.com/facebook/react/tree/main/packages/react-devtools#usage-with-react-dom
+    const resolvedEntry =
+        process.env.NODE_ENV === 'development'
+            ? ['react-devtools', entry]
+            : entry
+
     return {
         mode: webpackEnv,
         bail: isProduction,
-        entry: paths.shellPluginBundleEntrypoint,
+        entry: resolvedEntry,
         output: {
             path: paths.shellBuildOutput,
             filename: isProduction
-                ? 'static/js/plugin-[name].[contenthash:8].js'
-                : 'static/js/plugin.bundle.js',
+                ? `static/js/${outputFilenamePrefix}-[name].[contenthash:8].js`
+                : `static/js/${outputFilenamePrefix}.bundle.js`,
             chunkFilename: isProduction
-                ? 'static/js/plugin-[name].[contenthash:8].chunk.js'
-                : 'static/js/plugin-[name].chunk.js',
+                ? `static/js/${outputFilenamePrefix}-[name].[contenthash:8].chunk.js`
+                : `static/js/${outputFilenamePrefix}-[name].chunk.js`,
             // TODO: investigate dev source maps here (devtoolModuleFilenameTemplate)
         },
         optimization: {
@@ -143,8 +170,8 @@ module.exports = ({ env: webpackEnv, config, paths }) => {
                 Object.assign(
                     {
                         inject: true,
-                        filename: paths.pluginLaunchPath,
-                        template: paths.shellPublicPluginHtml,
+                        filename: htmlFilename,
+                        template: htmlTemplate,
                     },
                     isProduction
                         ? {

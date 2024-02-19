@@ -1,0 +1,71 @@
+diff --git a/node_modules/@dhis2/app-adapter/build/cjs/components/ServerVersionProvider.js b/node_modules/@dhis2/app-adapter/build/cjs/components/ServerVersionProvider.js
+index c03212d..148d94e 100644
+--- a/node_modules/@dhis2/app-adapter/build/cjs/components/ServerVersionProvider.js
++++ b/node_modules/@dhis2/app-adapter/build/cjs/components/ServerVersionProvider.js
+@@ -29,6 +29,9 @@ function _interopRequireWildcard(obj, nodeInterop) { if (!nodeInterop && obj &&
+ 
+ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+ 
++// Save this location so that it's usable after client-side navigations
++const originalWindowLocation = new URL(window.location);
++
+ const ServerVersionProvider = _ref => {
+   let {
+     appName,
+@@ -163,15 +166,18 @@ const ServerVersionProvider = _ref => {
+ 
+   if (systemInfoState.loading || baseUrlState.loading || offlineInterfaceLoading) {
+     return /*#__PURE__*/_react.default.createElement(_LoadingMask.LoadingMask, null);
+-  }
++  } // Make sure the base URL is absolute to avoid errors with relative URLs after
++  // client-side navigation/route changes
++
+ 
++  const absoluteBaseUrl = new URL(baseUrl, originalWindowLocation);
+   const serverVersion = (0, _parseVersion.parseDHIS2ServerVersion)(systemInfo.version);
+   const realApiVersion = serverVersion.minor;
+   return /*#__PURE__*/_react.default.createElement(_appRuntime.Provider, {
+     config: {
+       appName,
+       appVersion: (0, _parseVersion.parseVersion)(appVersion),
+-      baseUrl,
++      baseUrl: absoluteBaseUrl,
+       apiVersion: apiVersion || realApiVersion,
+       serverVersion,
+       systemInfo,
+diff --git a/node_modules/@dhis2/app-adapter/build/es/components/ServerVersionProvider.js b/node_modules/@dhis2/app-adapter/build/es/components/ServerVersionProvider.js
+index 513e332..6faff8c 100644
+--- a/node_modules/@dhis2/app-adapter/build/es/components/ServerVersionProvider.js
++++ b/node_modules/@dhis2/app-adapter/build/es/components/ServerVersionProvider.js
+@@ -6,7 +6,9 @@ import { get } from '../utils/api.js';
+ import { parseDHIS2ServerVersion, parseVersion } from '../utils/parseVersion.js';
+ import { LoadingMask } from './LoadingMask.js';
+ import { LoginModal } from './LoginModal.js';
+-import { useOfflineInterface } from './OfflineInterfaceContext.js';
++import { useOfflineInterface } from './OfflineInterfaceContext.js'; // Save this location so that it's usable after client-side navigations
++
++const originalWindowLocation = new URL(window.location);
+ export const ServerVersionProvider = _ref => {
+   let {
+     appName,
+@@ -141,15 +143,18 @@ export const ServerVersionProvider = _ref => {
+ 
+   if (systemInfoState.loading || baseUrlState.loading || offlineInterfaceLoading) {
+     return /*#__PURE__*/React.createElement(LoadingMask, null);
+-  }
++  } // Make sure the base URL is absolute to avoid errors with relative URLs after
++  // client-side navigation/route changes
++
+ 
++  const absoluteBaseUrl = new URL(baseUrl, originalWindowLocation).href;
+   const serverVersion = parseDHIS2ServerVersion(systemInfo.version);
+   const realApiVersion = serverVersion.minor;
+   return /*#__PURE__*/React.createElement(Provider, {
+     config: {
+       appName,
+       appVersion: parseVersion(appVersion),
+-      baseUrl,
++      baseUrl: absoluteBaseUrl,
+       apiVersion: apiVersion || realApiVersion,
+       serverVersion,
+       systemInfo,
