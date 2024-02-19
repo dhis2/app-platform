@@ -3,6 +3,7 @@ const config = {
     name: 'simple-app',
     title: 'Simple Example App',
     description: 'This is a simple example application',
+    direction: 'auto',
 
     // standalone: true, // Don't bake-in a DHIS2 base URL, allow the user to choose
 
