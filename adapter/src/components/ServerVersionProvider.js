@@ -105,12 +105,12 @@ export const ServerVersionProvider = ({
                 : { loading: true, error: undefined, systemInfo: undefined }
         )
 
-        // version is hardcoded to 2.41-SNAPSHOT to access correct api, but should be populated from public endpoint
+        // version is not currently available, minimum for login app
         if (loginApp) {
             setSystemInfoState({
                 loading: false,
                 error: undefined,
-                systemInfo: { version: '2.41-SNAPSHOT' },
+                systemInfo: { version: '2.41' },
             })
             return
         }
@@ -181,6 +181,7 @@ export const ServerVersionProvider = ({
             plugin={plugin}
             parentAlertsAdd={parentAlertsAdd}
             showAlertsInPlugin={showAlertsInPlugin}
+            skipApiVersion={loginApp ? true : false}
         >
             {children}
         </Provider>
