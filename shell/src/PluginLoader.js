@@ -48,17 +48,18 @@ const PluginInner = ({
     }, [resetWidth, resizePluginWidth])
 
     // inner div disables margin collapsing which would prevent computing correct height
+    // todo: rework to allow height = 100% smartly
     return (
-        <div ref={divRef}>
-            <div style={{ display: 'flex', width: 'fitContent' }}>
-                <div id="innerDiv" ref={innerDivRef}>
-                    <D2App
-                        config={config}
-                        resizePluginWidth={resizePluginWidth}
-                        {...propsFromParent}
-                    />
-                </div>
+        <div ref={divRef} style={{ height: '100%' }}>
+            {/* <div style={{ display: 'flex', width: 'fitContent' }}> */}
+            <div id="innerDiv" ref={innerDivRef} style={{ height: '100%' }}>
+                <D2App
+                    config={config}
+                    resizePluginWidth={resizePluginWidth}
+                    {...propsFromParent}
+                />
             </div>
+            {/* </div> */}
         </div>
     )
 }
@@ -80,6 +81,7 @@ export const PluginLoader = ({ config, requiredProps, D2App }) => {
     const [clearPluginError, setClearPluginError] = useState(() => () => {})
     const [resizePluginHeight, setResizePluginHeight] = useState(null)
     const [resizePluginWidth, setResizePluginWidth] = useState(null)
+    const [reportPWAUpdateStatus, setReportPWAUpdateStatus] = useState(null)
 
     const receivePropsFromParent = useCallback(
         (event) => {
@@ -94,9 +96,11 @@ export const PluginLoader = ({ config, requiredProps, D2App }) => {
                 width,
                 setPluginWidth,
                 onError,
+                reportPWAUpdateStatus,
                 ...explicitlyPassedProps
             } = receivedProps
 
+            console.log('in pluginLoader callback', { receivedProps })
             setPropsFromParent(explicitlyPassedProps)
 
             // check for required props
@@ -141,6 +145,10 @@ export const PluginLoader = ({ config, requiredProps, D2App }) => {
 
             if (!width && setPluginWidth) {
                 setResizePluginWidth(() => (width) => setPluginWidth(width))
+            }
+
+            if (reportPWAUpdateStatus) {
+                setReportPWAUpdateStatus(() => reportPWAUpdateStatus)
             }
         },
         [
@@ -192,11 +200,12 @@ export const PluginLoader = ({ config, requiredProps, D2App }) => {
             showAlertsInPlugin={showAlertsInPlugin}
             onPluginError={onPluginError}
             clearPluginError={clearPluginError}
+            reportPWAUpdateStatus={reportPWAUpdateStatus}
             {...config}
         >
             <React.Suspense
                 fallback={
-                    <Layer translucent level={layers.alert}>
+                    <Layer /* translucent */ level={layers.alert}>
                         <CenteredContent>
                             <CircularLoader />
                         </CenteredContent>
