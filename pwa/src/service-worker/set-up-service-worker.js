@@ -142,9 +142,12 @@ export function setUpServiceWorker() {
         })
         precacheAndRoute(restOfManifest)
 
-        // Same thing for built plugin assets
+        // Same thing for built plugin and pluginified app assets
         const pluginPrecacheManifest = self.__WB_PLUGIN_MANIFEST || []
         precacheAndRoute(pluginPrecacheManifest)
+        const pluginifiedAppPrecacheManifest =
+            self.__WB_PLUGINIFIED_APP_MANIFEST || []
+        precacheAndRoute(pluginifiedAppPrecacheManifest)
 
         // Similar to above; manifest injection from `workbox-build`
         // Precaches all assets in the shell's build folder except in `static`

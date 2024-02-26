@@ -107,8 +107,10 @@ module.exports = ({ env: webpackEnv, config, paths, pluginifiedApp }) => {
     const htmlTemplate = pluginifiedApp
         ? paths.shellPublicPluginifiedAppHtml
         : paths.shellPublicPluginHtml
-
     const outputFilenamePrefix = pluginifiedApp ? 'app' : 'plugin'
+    const precacheInjectionPoint = pluginifiedApp
+        ? 'self.__WB_PLUGINIFIED_APP_MANIFEST'
+        : 'self.__WB_PLUGIN_MANIFEST'
 
     // DHIS2
     // in dev (using process.env.NODE_ENV because `isProduction` is currently
@@ -223,7 +225,7 @@ module.exports = ({ env: webpackEnv, config, paths, pluginifiedApp }) => {
             process.env.NODE_ENV === 'production' &&
                 new WorkboxWebpackPlugin.InjectManifest({
                     swSrc: paths.shellBuildServiceWorker,
-                    injectionPoint: 'self.__WB_PLUGIN_MANIFEST',
+                    injectionPoint: precacheInjectionPoint,
                     // Skip compiling the SW, which happens in the app build step
                     compileSrc: false,
                     dontCacheBustURLsMatching: /\.[0-9a-f]{8}\./,
