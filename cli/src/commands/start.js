@@ -22,6 +22,8 @@ const handler = async ({
     shell: shellSource,
     proxy,
     proxyPort,
+    pluginifyApp, // todo: workshop this flag name
+    plugin: shouldStartPlugin,
 }) => {
     const paths = makePaths(cwd)
 
@@ -125,42 +127,36 @@ const handler = async ({
 
             reporter.print('')
             reporter.info('Starting development server...')
+
+            // only run one mode of the app;
+            // another script can always be run in parallel
+            if (pluginifyApp) {
+                reporter.print(
+                    `The pluginified app is now available on port ${newPort} at /${paths.pluginifiedAppLaunchPath}`
+                )
+                reporter.print('')
+                await pluginifiedApp.start({
+                    port: newPort,
+                })
+                return
+            }
+
+            if (shouldStartPlugin) {
+                reporter.print(
+                    `The plugin is now available on port ${newPort} at /${paths.pluginLaunchPath}`
+                )
+                reporter.print('')
+                await plugin.start({ port: newPort })
+                return
+            }
+
             reporter.print(
                 `The app ${chalk.bold(
                     config.name
                 )} is now available on port ${newPort}`
             )
             reporter.print('')
-
-            const shellStartPromise = shell.start({ port: newPort })
-
-            const pluginifiedAppPort = await detectPort(newPort + 1)
-            reporter.print(
-                `The pluginifiedApp is now available on port ${pluginifiedAppPort} at /${paths.pluginifiedAppLaunchPath}`
-            )
-            reporter.print('')
-            const pluginifiedAppStartPromise = pluginifiedApp.start({
-                port: pluginifiedAppPort,
-            })
-
-            if (config.entryPoints.plugin) {
-                const pluginPort = await detectPort(pluginifiedAppPort + 1)
-                reporter.print(
-                    `The plugin is now available on port ${pluginPort} at /${paths.pluginLaunchPath}`
-                )
-                reporter.print('')
-
-                await Promise.all([
-                    shellStartPromise,
-                    pluginifiedAppStartPromise,
-                    plugin.start({ port: pluginPort }),
-                ])
-            } else {
-                await Promise.all([
-                    shellStartPromise,
-                    pluginifiedAppStartPromise,
-                ])
-            }
+            await shell.start({ port: newPort })
         },
         {
             name: 'start',
