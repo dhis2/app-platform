@@ -9,6 +9,8 @@ const testPaths = {
     '/dhis-web-user-settings/': '/',
     '/hmis/staging/v41/api/apps/WHO-Data-Quality-App/app.html':
         '/hmis/staging/v41/',
+    // this is a strange base URL, but it should be considered as a core app
+    '/api/apps/dhis-web-maps/': '/api/apps/',
 }
 
 const windowLocationMock = jest
