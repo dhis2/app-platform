@@ -29,6 +29,7 @@ const appConfig = {
     pwaEnabled: process.env.REACT_APP_DHIS2_APP_PWA_ENABLED === 'true',
     plugin: isPlugin,
     loginApp: process.env.REACT_APP_DHIS2_APP_LOGINAPP === 'true',
+    direction: process.env.REACT_APP_DHIS2_APP_DIRECTION,
 }
 
 const pluginConfig = {

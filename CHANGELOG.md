@@ -1,3 +1,10 @@
+# [10.5.0](https://github.com/dhis2/app-platform/compare/v10.4.1...v10.5.0) (2024-02-19)
+
+
+### Features
+
+* changes to support right-to-left ([#830](https://github.com/dhis2/app-platform/issues/830)) ([6d5433c](https://github.com/dhis2/app-platform/commit/6d5433c017f6c776c379e2397eba78731c96c8f1)), closes [#825](https://github.com/dhis2/app-platform/issues/825) [#826](https://github.com/dhis2/app-platform/issues/826)
+
 ## [10.4.1](https://github.com/dhis2/app-platform/compare/v10.4.0...v10.4.1) (2024-01-30)
 
 

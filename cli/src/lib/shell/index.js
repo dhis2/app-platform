@@ -10,6 +10,10 @@ module.exports = ({ config, paths }) => {
         loginApp: config.type === 'login_app',
     }
 
+    if (config.direction) {
+        baseEnvVars.direction = config.direction
+    }
+
     return {
         bootstrap: async (args = {}) => {
             await bootstrap(paths, args)
