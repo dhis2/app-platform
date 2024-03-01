@@ -36,6 +36,7 @@ module.exports = ({ env: webpackEnv, config, paths }) => {
     const shellEnv = getShellEnv({
         plugin: 'true',
         requiredProps: config.requiredProps ? config.requiredProps.join() : '',
+        skipPluginLogic: config.skipPluginLogic,
         name: config.title,
         ...getPWAEnvVars(config),
     })
