@@ -1,6 +1,6 @@
+import { usePWAUpdateState } from '@dhis2/pwa'
 import PropTypes from 'prop-types'
 import React, { useEffect } from 'react'
-import { usePWAUpdateState } from '../utils/usePWAUpdateState'
 import { ConfirmUpdateModal } from './ConfirmUpdateModal'
 
 /**
@@ -9,8 +9,8 @@ import { ConfirmUpdateModal } from './ConfirmUpdateModal'
  */
 
 /**
- * Check for SW updates or a first activation, displaying an update notification
- * message in the HeaderBar profile menu. When an update is applied, if there are
+ * Check for SW updates or a first activation, sending a message to the host
+ * app if an update is ready. When an update is applied, if there are
  * multiple tabs of this app open, there's anadditional warning step because all
  * clients of the service worker will reload when there's an update, which may
  * cause data loss.

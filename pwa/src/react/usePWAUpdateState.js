@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { useOfflineInterface } from '../components/OfflineInterfaceContext'
+import { useOfflineInterface } from './OfflineInterfaceContext.js'
 
 export const usePWAUpdateState = () => {
     const offlineInterface = useOfflineInterface()

@@ -1,12 +1,15 @@
 import { Provider } from '@dhis2/app-runtime'
-import { getBaseUrlByAppName, setBaseUrlByAppName } from '@dhis2/pwa'
+import {
+    getBaseUrlByAppName,
+    setBaseUrlByAppName,
+    useOfflineInterface,
+} from '@dhis2/pwa'
 import PropTypes from 'prop-types'
 import React, { useEffect, useState } from 'react'
 import { get } from '../utils/api.js'
 import { parseDHIS2ServerVersion, parseVersion } from '../utils/parseVersion.js'
 import { LoadingMask } from './LoadingMask.js'
 import { LoginModal } from './LoginModal.js'
-import { useOfflineInterface } from './OfflineInterfaceContext.js'
 
 // Save this location so that it's usable after client-side navigations
 const originalWindowLocation = new URL(window.location)

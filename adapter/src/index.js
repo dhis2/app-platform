@@ -1,11 +1,16 @@
-import { checkForSWUpdateAndReload } from '@dhis2/pwa'
+import {
+    checkForSWUpdateAndReload,
+    OfflineInterface,
+    OfflineInterfaceProvider,
+} from '@dhis2/pwa'
 import PropTypes from 'prop-types'
 import React from 'react'
 import { AppWrapper } from './components/AppWrapper.js'
 import { ErrorBoundary } from './components/ErrorBoundary.js'
-import { OfflineInterfaceProvider } from './components/OfflineInterfaceContext.js'
 import { PWALoadingBoundary } from './components/PWALoadingBoundary.js'
 import { ServerVersionProvider } from './components/ServerVersionProvider.js'
+
+const offlineInterface = new OfflineInterface()
 
 const AppAdapter = ({
     appName,
@@ -26,7 +31,7 @@ const AppAdapter = ({
         fullscreen
         onRetry={checkForSWUpdateAndReload}
     >
-        <OfflineInterfaceProvider>
+        <OfflineInterfaceProvider offlineInterface={offlineInterface}>
             <PWALoadingBoundary>
                 <ServerVersionProvider
                     appName={appName}
