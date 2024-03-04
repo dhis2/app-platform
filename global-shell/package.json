@@ -8,8 +8,16 @@
         "build": "d2-app-scripts build",
         "start": "d2-app-scripts start",
         "test": "d2-app-scripts test",
-        "deploy": "d2-app-scripts deploy http://localhost:8080 --username admin",
-        "postinstall": "patch-package"
+        "deploy": "D2_PASSWORD=district d2-app-scripts deploy http://localhost:8080 --username admin",
+        "postinstall": "patch-package",
+        "bd": "yarn build && yarn deploy",
+        "del-plugin": "rm -rf node_modules/@dhis2/app-service-plugin/build",
+        "del-offline": "rm -rf node_modules/@dhis2/app-service-offline/build",
+        "del-nm-cache": "rm -rf .d2/shell/node_modules/.cache",
+        "cp-plugin": "cp -r ../app-runtime/services/plugin/build node_modules/@dhis2/app-service-plugin/build",
+        "cp-offline": "cp -r ../app-runtime/services/offline/build node_modules/@dhis2/app-service-offline/build",
+        "import-plugin": "yarn del-plugin && yarn del-nm-cache && yarn cp-plugin",
+        "import-offline": "yarn del-offline && yarn del-nm-cache && yarn cp-offline"
     },
     "devDependencies": {
         "@babel/plugin-proposal-private-property-in-object": "^7.21.11",
@@ -20,6 +28,7 @@
     },
     "dependencies": {
         "@dhis2/app-runtime": "^3.10.2",
+        "@dhis2/pwa": "10.4.1",
         "@dhis2/ui": "^8.16.0",
         "react-router-dom": "^6.22.0"
     }
