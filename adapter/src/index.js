@@ -12,6 +12,7 @@ const AppAdapter = ({
     appVersion,
     url,
     apiVersion,
+    direction,
     pwaEnabled,
     plugin,
     parentAlertsAdd,
@@ -41,6 +42,7 @@ const AppAdapter = ({
                         plugin={plugin}
                         onPluginError={onPluginError}
                         clearPluginError={clearPluginError}
+                        direction={direction}
                     >
                         {children}
                     </AppWrapper>
@@ -56,6 +58,7 @@ AppAdapter.propTypes = {
     apiVersion: PropTypes.number,
     children: PropTypes.element,
     clearPluginError: PropTypes.func,
+    direction: PropTypes.oneOf(['ltr', 'rtl', 'auto']),
     parentAlertsAdd: PropTypes.func,
     plugin: PropTypes.bool,
     pwaEnabled: PropTypes.bool,

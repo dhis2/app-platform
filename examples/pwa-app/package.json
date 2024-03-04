@@ -1,6 +1,6 @@
 {
     "name": "pwa-app",
-    "version": "10.4.0",
+    "version": "10.5.0",
     "description": "",
     "license": "BSD-3-Clause",
     "private": true,
@@ -13,7 +13,7 @@
         "demo": "yarn build --force --standalone --debug && yarn serve"
     },
     "peerDependencies": {
-        "@dhis2/app-runtime": "^3.10.0-alpha.2",
+        "@dhis2/app-runtime": "*",
         "@dhis2/d2-i18n": "*",
         "react": "^16.8",
         "react-dom": "^16.8"
