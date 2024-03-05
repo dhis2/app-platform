@@ -1,3 +1,10 @@
+# [10.6.0-alpha.1](https://github.com/dhis2/app-platform/compare/v10.5.0...v10.6.0-alpha.1) (2024-03-05)
+
+
+### Features
+
+* updates for login_app type [LIBS-405]  ([#831](https://github.com/dhis2/app-platform/issues/831)) ([0cc2fbd](https://github.com/dhis2/app-platform/commit/0cc2fbd5b633b9b8953ba29d8450f93b0037d458))
+
 # [10.5.0](https://github.com/dhis2/app-platform/compare/v10.4.1...v10.5.0) (2024-02-19)
 
 
