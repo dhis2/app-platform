@@ -5,8 +5,13 @@ const parseAuthorString = require('parse-author')
 
 const requiredConfigFields = {
     app: ['name', 'version', 'title', 'entryPoints.app'],
+    login_app: ['name', 'version', 'title', 'entryPoints.app'],
     lib: ['name', 'version', 'entryPoints.lib'],
 }
+
+const appTypes = ['app', 'login_app']
+
+const isApp = (type) => appTypes.includes(type)
 
 const parseAuthor = (author) => {
     if (isPlainObject(author)) {
@@ -58,7 +63,7 @@ const parseConfigObjects = (
     config = defaultsDeep(config, defaults)
 
     // Add PWA defaults to apps
-    if (type === 'app') {
+    if (isApp(type)) {
         config = defaultsDeep(config, defaultsPWA)
     }
 
@@ -112,3 +117,6 @@ const parseConfig = (paths) => {
 module.exports = parseConfig
 
 module.exports.parseConfigObjects = parseConfigObjects
+
+module.exports.parseConfigObjects = parseConfigObjects
+module.exports.isApp = isApp

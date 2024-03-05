@@ -1,6 +1,6 @@
 import { useDataQuery } from '@dhis2/app-runtime'
 import i18n from '@dhis2/d2-i18n'
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useMemo } from 'react'
 import {
     setI18nLocale,
     parseLocale,
@@ -55,4 +55,32 @@ export const useCurrentUserLocale = (configDirection) => {
     }
 
     return { loading: loading || !locale, locale, direction }
+}
+
+const loginConfigQuery = {
+    loginConfig: {
+        resource: 'loginConfig',
+    },
+}
+
+export const useSystemDefaultLocale = () => {
+    // system language from loginConfiqQuery
+    const { loading, data, error } = useDataQuery(loginConfigQuery)
+    // set userSettings to use system locale by default
+    const localeInformation = useMemo(
+        () => ({
+            userSettings: {
+                keyUiLocale:
+                    data &&
+                    (data?.loginConfig?.uiLocale || window.navigator.language),
+            },
+            configDirection: 'auto',
+        }),
+        [data]
+    )
+    const locale = useLocale(localeInformation)
+    if (error) {
+        console.error(error)
+    }
+    return { loading: loading || !locale, locale }
 }
