@@ -107,11 +107,22 @@ export const ServerVersionProvider = ({
 
         // version is not currently available, minimum for login app
         if (loginApp) {
-            setSystemInfoState({
-                loading: false,
-                error: undefined,
-                systemInfo: { version: '2.41' },
-            })
+            const requestLogin = get(`${baseUrl}/api/loginConfig`)
+            requestLogin
+                .then((loginConfig) => {
+                    setSystemInfoState({
+                        loading: false,
+                        error: undefined,
+                        systemInfo: { version: loginConfig.apiVersion },
+                    })
+                })
+                .catch((e) => {
+                    setSystemInfoState({
+                        loading: false,
+                        error: e,
+                        systemInfo: undefined,
+                    })
+                })
             return
         }
         const request = get(`${baseUrl}/api/system/info`)
