@@ -1,3 +1,15 @@
+# [11.0.0](https://github.com/dhis2/app-platform/compare/v10.5.0...v11.0.0) (2024-03-05)
+
+
+### chore
+
+* **deps:** update shell to ui@9 ([#824](https://github.com/dhis2/app-platform/issues/824)) ([b6a12fa](https://github.com/dhis2/app-platform/commit/b6a12faee7e48764a341dfadc36c991fbab37ec2))
+
+
+### BREAKING CHANGES
+
+* **deps:** Updated major version of UI
+
 # [10.5.0](https://github.com/dhis2/app-platform/compare/v10.4.1...v10.5.0) (2024-02-19)
 
 
