@@ -31,6 +31,8 @@ const AppAdapter = ({
                     window.location.reload()
                 }}
                 plugin={false}
+                login={true}
+                url={url}
             >
                 <ServerVersionProvider
                     appName={appName}
@@ -41,7 +43,7 @@ const AppAdapter = ({
                     loginApp={loginApp}
                     plugin={false}
                 >
-                    <LoginAppWrapper>{children}</LoginAppWrapper>
+                    <LoginAppWrapper url={url}>{children}</LoginAppWrapper>
                 </ServerVersionProvider>
             </ErrorBoundary>
         )
