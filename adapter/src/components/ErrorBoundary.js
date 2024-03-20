@@ -63,11 +63,13 @@ export class ErrorBoundary extends Component {
 
     handleSafeLoginRedirect = () => {
         window.location.href =
-            this.props.url + '/dhis-web-commons/security/login.action'
+            this.props.baseURL +
+            (this.props.baseURL.endsWith('/') ? '' : '/') +
+            'dhis-web-commons/security/login.action'
     }
 
     render() {
-        const { children, fullscreen, onRetry, login, url } = this.props
+        const { children, fullscreen, onRetry, login, baseURL } = this.props
 
         if (this.state.error) {
             if (this.props.plugin) {
@@ -94,7 +96,7 @@ export class ErrorBoundary extends Component {
                         <h1 className="message">
                             {i18n.t('Something went wrong')}
                         </h1>
-                        {login && url && (
+                        {login && baseURL && (
                             <div className="retry">
                                 <UIButton
                                     onClick={this.handleSafeLoginRedirect}
@@ -156,10 +158,10 @@ export class ErrorBoundary extends Component {
 
 ErrorBoundary.propTypes = {
     children: PropTypes.node.isRequired,
+    baseURL: PropTypes.string,
     fullscreen: PropTypes.bool,
     login: PropTypes.bool,
     plugin: PropTypes.bool,
-    url: PropTypes.string,
     onPluginError: PropTypes.func,
     onRetry: PropTypes.func,
 }

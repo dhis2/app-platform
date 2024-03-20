@@ -32,7 +32,7 @@ const AppAdapter = ({
                 }}
                 plugin={false}
                 login={true}
-                url={url}
+                baseURL={url}
             >
                 <ServerVersionProvider
                     appName={appName}

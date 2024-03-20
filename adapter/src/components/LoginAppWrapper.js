@@ -21,7 +21,7 @@ export const LoginAppWrapper = ({ url, children }) => {
                 <ErrorBoundary
                     onRetry={() => window.location.reload()}
                     login={true}
-                    url={url}
+                    baseURL={url}
                 >
                     {children}
                 </ErrorBoundary>
