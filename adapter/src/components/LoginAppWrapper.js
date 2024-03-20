@@ -6,7 +6,7 @@ import { ErrorBoundary } from './ErrorBoundary.js'
 import { LoadingMask } from './LoadingMask.js'
 import { styles } from './styles/AppWrapper.style.js'
 
-export const LoginAppWrapper = ({ children }) => {
+export const LoginAppWrapper = ({ url, children }) => {
     const { loading: localeLoading } = useSystemDefaultLocale()
     // cannot check current user for a loginApp (no api/me)
 
@@ -18,7 +18,11 @@ export const LoginAppWrapper = ({ children }) => {
         <div className="app-shell-adapter">
             <style jsx>{styles}</style>
             <div className="app-shell-app">
-                <ErrorBoundary onRetry={() => window.location.reload()}>
+                <ErrorBoundary
+                    onRetry={() => window.location.reload()}
+                    login={true}
+                    baseURL={url}
+                >
                     {children}
                 </ErrorBoundary>
             </div>
@@ -29,4 +33,5 @@ export const LoginAppWrapper = ({ children }) => {
 
 LoginAppWrapper.propTypes = {
     children: PropTypes.node,
+    url: PropTypes.string,
 }
