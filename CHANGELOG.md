@@ -1,3 +1,10 @@
+# [10.6.0-alpha.3](https://github.com/dhis2/app-platform/compare/v10.6.0-alpha.2...v10.6.0-alpha.3) (2024-03-21)
+
+
+### Features
+
+* enable publishing login_app apps ([93093ca](https://github.com/dhis2/app-platform/commit/93093ca9ce286801e0c0a9bb421ae847be0fd8e6))
+
 # [10.6.0-alpha.2](https://github.com/dhis2/app-platform/compare/v10.6.0-alpha.1...v10.6.0-alpha.2) (2024-03-20)
 
 
