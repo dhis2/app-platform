@@ -6,8 +6,16 @@ const D2App = React.lazy(() =>
     import(/*webpackChunkName: 'app'*/ './D2App/app')
 ) // Automatic bundle splitting!
 
+const getInjectedBaseUrl = () => {
+    const baseUrl = document.querySelector('meta[name="dhis2-base-url"]')?.getAttribute("content");
+    if (baseUrl && baseUrl !== '__DHIS2_BASE_URL__') {
+        return baseUrl;
+    }
+    return null;
+}
+
 const appConfig = {
-    url: process.env.REACT_APP_DHIS2_BASE_URL,
+    url: getInjectedBaseUrl() || process.env.REACT_APP_DHIS2_BASE_URL,
     appName: process.env.REACT_APP_DHIS2_APP_NAME || '',
     appVersion: process.env.REACT_APP_DHIS2_APP_VERSION || '',
     apiVersion: parseInt(process.env.REACT_APP_DHIS2_API_VERSION),
