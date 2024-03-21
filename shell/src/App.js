@@ -7,11 +7,13 @@ const D2App = React.lazy(() =>
 ) // Automatic bundle splitting!
 
 const getInjectedBaseUrl = () => {
-    const baseUrl = document.querySelector('meta[name="dhis2-base-url"]')?.getAttribute("content");
+    const baseUrl = document
+        .querySelector('meta[name="dhis2-base-url"]')
+        ?.getAttribute('content')
     if (baseUrl && baseUrl !== '__DHIS2_BASE_URL__') {
-        return baseUrl;
+        return baseUrl
     }
-    return null;
+    return null
 }
 
 const appConfig = {
