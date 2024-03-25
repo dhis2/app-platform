@@ -1,9 +1,5 @@
 // Based on CRA start script
 
-// Do this as the first thing so that any code reading it knows the right env.
-process.env.BABEL_ENV = 'development'
-process.env.NODE_ENV = 'development'
-
 const getPublicUrlOrPath = require('react-dev-utils/getPublicUrlOrPath')
 const webpack = require('webpack')
 const WebpackDevServer = require('webpack-dev-server')
@@ -25,8 +21,6 @@ module.exports = async ({ port, config, paths }) => {
         {
             port,
             host,
-            // open browser
-            open: [`/${paths.pluginLaunchPath}`],
             client: {
                 logging: 'none',
                 overlay: {

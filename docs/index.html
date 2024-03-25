@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8" />
+        <title>Redirecting to Developer Portal</title>
+    </head>
+    <body>
+        <p>Redirecting to <a id="url" href="#">Developer Portal</a>...</p>
+
+        <script>
+            const hash = window.location.hash.substring(2)
+
+            const newUrl = `https://developers.dhis2.org/docs/app-platform/${hash}`
+            document.getElementById('url').href = newUrl
+            window.location.href = newUrl
+        </script>
+    </body>
+</html>

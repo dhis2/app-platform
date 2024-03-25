@@ -26,6 +26,7 @@ const handler = async ({
     const paths = makePaths(cwd)
 
     const mode = 'development'
+    process.env.BABEL_ENV = process.env.NODE_ENV = mode
     loadEnvFiles(paths, mode)
 
     const config = parseConfig(paths)
@@ -135,7 +136,7 @@ const handler = async ({
             if (config.entryPoints.plugin) {
                 const pluginPort = await detectPort(newPort + 1)
                 reporter.print(
-                    `The plugin is now available on port ${pluginPort}`
+                    `The plugin is now available on port ${pluginPort} at /${paths.pluginLaunchPath}`
                 )
                 reporter.print('')
 
