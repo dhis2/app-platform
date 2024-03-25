@@ -1,3 +1,10 @@
+# [11.1.0](https://github.com/dhis2/app-platform/compare/v11.0.0...v11.1.0) (2024-03-25)
+
+
+### Features
+
+* support core-injected base url ([#836](https://github.com/dhis2/app-platform/issues/836)) ([3f1ca71](https://github.com/dhis2/app-platform/commit/3f1ca71a871037316f130f960108c689c36365ba))
+
 # [11.0.0](https://github.com/dhis2/app-platform/compare/v10.5.0...v11.0.0) (2024-03-05)
 
 
