@@ -6,6 +6,8 @@ const D2App = React.lazy(() =>
     import(/*webpackChunkName: 'app'*/ './D2App/app')
 ) // Automatic bundle splitting!
 
+// Injected by backend when serving HTML
+// https://github.com/dhis2/dhis2-core/pull/16703
 const getInjectedBaseUrl = () => {
     const baseUrl = document
         .querySelector('meta[name="dhis2-base-url"]')
