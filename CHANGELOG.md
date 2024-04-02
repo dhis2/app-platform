@@ -1,3 +1,10 @@
+## [11.1.1-alpha.1](https://github.com/dhis2/app-platform/compare/v11.1.0...v11.1.1-alpha.1) (2024-04-02)
+
+
+### Bug Fixes
+
+* **deps:** use alpha version of app-runtime ([#838](https://github.com/dhis2/app-platform/issues/838)) ([e863ec5](https://github.com/dhis2/app-platform/commit/e863ec5b36e80ffca984a08cbfd3516077ef8306))
+
 # [11.1.0](https://github.com/dhis2/app-platform/compare/v11.0.0...v11.1.0) (2024-03-25)
 
 
