@@ -1,3 +1,10 @@
+## [11.1.1-alpha.2](https://github.com/dhis2/app-platform/compare/v11.1.1-alpha.1...v11.1.1-alpha.2) (2024-04-05)
+
+
+### Bug Fixes
+
+* **deps:** resolution for app-runtime alpha ([#839](https://github.com/dhis2/app-platform/issues/839)) ([c4a90d9](https://github.com/dhis2/app-platform/commit/c4a90d956ce0f0d22c1b4ef740a05b1bbdd8d404))
+
 ## [11.1.1-alpha.1](https://github.com/dhis2/app-platform/compare/v11.1.0...v11.1.1-alpha.1) (2024-04-02)
 
 
