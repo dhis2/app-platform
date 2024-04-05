@@ -1913,7 +1913,7 @@
     classnames "^2.3.1"
     prop-types "^15.7.2"
 
-"@dhis2/app-runtime@alpha":
+"@dhis2/app-runtime@^3.10.4-alpha.1":
   version "3.10.4-alpha.1"
   resolved "https://registry.yarnpkg.com/@dhis2/app-runtime/-/app-runtime-3.10.4-alpha.1.tgz#241aad114dba03666a4d06e3dbbf69ea5fd13250"
   integrity sha512-NXW/FHERdT3aShO9hokZai9OmaBn4ZymFrQWyowkjGc71ZCdr4VrdGDFyZdrqnyjNiysIa1mxUMThygXMGO8Kg==
