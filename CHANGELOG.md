@@ -1,3 +1,10 @@
+## [11.1.1-alpha.3](https://github.com/dhis2/app-platform/compare/v11.1.1-alpha.2...v11.1.1-alpha.3) (2024-04-09)
+
+
+### Bug Fixes
+
+* **deps:** new versions of UI and app runtime ([#840](https://github.com/dhis2/app-platform/issues/840)) ([54c984d](https://github.com/dhis2/app-platform/commit/54c984d475ee38904abe794f489f564e07e2b7e6))
+
 ## [11.1.1-alpha.2](https://github.com/dhis2/app-platform/compare/v11.1.1-alpha.1...v11.1.1-alpha.2) (2024-04-05)
 
 
