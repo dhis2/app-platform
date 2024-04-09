@@ -1,3 +1,10 @@
+## [11.1.1](https://github.com/dhis2/app-platform/compare/v11.1.0...v11.1.1) (2024-04-09)
+
+
+### Bug Fixes
+
+* **deps:** upgrade @dhis2/app-runtime and @dhis2/ui for peer deps fixes ([#842](https://github.com/dhis2/app-platform/issues/842)) ([2804527](https://github.com/dhis2/app-platform/commit/280452785ab1404e124d7ae6c9b886e241f2e826))
+
 # [11.1.0](https://github.com/dhis2/app-platform/compare/v11.0.0...v11.1.0) (2024-03-25)
 
 
