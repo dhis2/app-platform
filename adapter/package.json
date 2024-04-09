@@ -38,7 +38,7 @@
         "test": "d2-app-scripts test"
     },
     "peerDependencies": {
-        "@dhis2/app-runtime": "^3.10.4-alpha.1",
+        "@dhis2/app-runtime": "^3.10.4",
         "@dhis2/d2-i18n": "^1",
         "@dhis2/ui": ">=9.2.0",
         "classnames": "^2",
