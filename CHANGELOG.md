@@ -1,3 +1,10 @@
+## [11.1.1-alpha.4](https://github.com/dhis2/app-platform/compare/v11.1.1-alpha.3...v11.1.1-alpha.4) (2024-04-10)
+
+
+### Bug Fixes
+
+* **deps:** use exact version of workbox to avoid broken 6.6.1 version ([#844](https://github.com/dhis2/app-platform/issues/844)) ([683d86a](https://github.com/dhis2/app-platform/commit/683d86a72813ea745569f3ab69edc2a0c8c3109d))
+
 ## [11.1.1-alpha.3](https://github.com/dhis2/app-platform/compare/v11.1.1-alpha.2...v11.1.1-alpha.3) (2024-04-09)
 
 
