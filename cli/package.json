@@ -73,8 +73,8 @@
         "workbox-build": "6.5.4",
         "workbox-webpack-plugin": "6.5.4"
     },
-    "resolutions": {
-        "workbox-webpack-plugin": "6.5.4"
+    "peerDependencies": {
+        "workbox-webpack-plugin": "<6.6.0"
     },
     "bin": {
         "d2-app-scripts": "./bin/d2-app-scripts"
