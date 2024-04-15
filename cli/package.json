@@ -20,6 +20,9 @@
         "config",
         "src"
     ],
+    "devDependencies": {
+        "outdent": "^0.8.0"
+    },
     "dependencies": {
         "@babel/core": "^7.6.2",
         "@babel/plugin-proposal-class-properties": "^7.8.3",
@@ -70,6 +73,9 @@
         "workbox-build": "6.5.4",
         "workbox-webpack-plugin": "6.5.4"
     },
+    "resolutions": {
+        "workbox-webpack-plugin": "6.5.4"
+    },
     "bin": {
         "d2-app-scripts": "./bin/d2-app-scripts"
     },
@@ -81,8 +87,5 @@
             "src/commands/test.js"
         ],
         "testEnvironment": "node"
-    },
-    "devDependencies": {
-        "outdent": "^0.8.0"
     }
 }
