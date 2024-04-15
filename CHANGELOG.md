@@ -1,3 +1,10 @@
+## [11.1.1-alpha.6](https://github.com/dhis2/app-platform/compare/v11.1.1-alpha.5...v11.1.1-alpha.6) (2024-04-15)
+
+
+### Bug Fixes
+
+* test peerDep on wwp to avoid broken version ([3ddff89](https://github.com/dhis2/app-platform/commit/3ddff897989ccdcd6113c0474051045ccbfaa46c))
+
 ## [11.1.1-alpha.5](https://github.com/dhis2/app-platform/compare/v11.1.1-alpha.4...v11.1.1-alpha.5) (2024-04-15)
 
 
