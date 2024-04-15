@@ -1,3 +1,10 @@
+## [11.1.1-alpha.5](https://github.com/dhis2/app-platform/compare/v11.1.1-alpha.4...v11.1.1-alpha.5) (2024-04-15)
+
+
+### Bug Fixes
+
+* **deps:** test workbox-webpack-plugin resolution ([3c2392d](https://github.com/dhis2/app-platform/commit/3c2392dc9bd29dfdcbb44a3071dd10a406b0742c))
+
 ## [11.1.1-alpha.4](https://github.com/dhis2/app-platform/compare/v11.1.1-alpha.3...v11.1.1-alpha.4) (2024-04-10)
 
 
