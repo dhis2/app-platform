@@ -131,6 +131,7 @@ const handler = async ({
             )
             reporter.print('')
 
+            // todo: split up app and plugin starts
             const shellStartPromise = shell.start({ port: newPort })
 
             if (config.entryPoints.plugin) {

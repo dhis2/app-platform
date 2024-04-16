@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+    <head>
+        <meta charset="utf-8" />
+        <meta
+            name="viewport"
+            content="width=device-width, initial-scale=1, shrink-to-fit=no"
+        />
+        <meta name="theme-color" content="#ffffff" />
+
+        <!-- Injection point for base URL from backend -->
+        <meta name="dhis2-base-url" content="__DHIS2_BASE_URL__" />
+
+        <!--
+            manifest.json provides metadata used when your web app is installed on a
+            user's mobile device or desktop. See https://developers.google.com/web/fundamentals/web-app-manifest/
+        -->
+        <link
+            rel="manifest"
+            crossorigin="use-credentials"
+            href="/manifest.json"
+        />
+        <meta name="msapplication-config" content="browserconfig.xml" />
+
+        <link rel="icon" href="/favicon.ico" />
+        <link
+            rel="apple-touch-icon"
+            sizes="180x180"
+            href="/apple-touch-icon.png"
+        />
+        <link
+            rel="icon"
+            type="image/png"
+            sizes="48x48"
+            href="/favicon-48x48.png"
+        />
+        <link
+            rel="icon"
+            type="image/png"
+            sizes="32x32"
+            href="/favicon-32x32.png"
+        />
+        <link
+            rel="icon"
+            type="image/png"
+            sizes="16x16"
+            href="/favicon-16x16.png"
+        />
+        <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#235b8b" />
+
+        <title>%REACT_APP_DHIS2_APP_NAME% | DHIS2</title>
+    </head>
+    <body>
+        <noscript>You need to enable JavaScript to run this app.</noscript>
+        <div id="dhis2-app-root"></div>
+        <div id="dhis2-portal-root"></div>
+
+        <!-- The entrypoint for Vite -->
+        <script type="module" src="./src/index.js"></script>
+
+        <!--
+            This HTML file is a template.
+            If you open it directly in the browser, you will see an empty page.
+
+            You can add webfonts, meta tags, or analytics to this file.
+            The build step will place the bundled scripts into the <body> tag.
+
+            To begin the development, run `npm start` or `yarn start`.
+            To create a production bundle, use `npm run build` or `yarn build`.
+        -->
+    </body>
+</html>
