@@ -84,7 +84,7 @@ const getEntrypointWrapper = async ({ entrypoint, paths }) => {
 
     return shellAppSource
         .toString()
-        .replace(/'.\/D2App\/app'/g, `'./D2App/${relativeEntrypoint}'`)
+        .replace(/'.\/D2App\/app\.jsx'/g, `'./D2App/${relativeEntrypoint}'`)
 }
 
 exports.createAppEntrypointWrapper = async ({ entrypoint, paths }) => {

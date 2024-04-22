@@ -39,7 +39,7 @@ module.exports = (cwd = process.cwd()) => {
         readmeDefault: path.join(__dirname, '../../config/init.README.md'),
 
         shellSource,
-        shellSourceEntrypoint: path.join(shellSource, 'src/App.js'),
+        shellSourceEntrypoint: path.join(shellSource, 'src/App.jsx'),
         shellSourcePublic: path.join(shellSource, 'public'),
 
         base,
@@ -55,17 +55,17 @@ module.exports = (cwd = process.cwd()) => {
         i18nLocales: path.join(base, './src/locales'),
 
         d2: path.join(base, './.d2/'),
-        appOutputFilename: 'App.js',
+        appOutputFilename: 'App.jsx',
         shell: path.join(base, './.d2/shell'),
         shellSrc: path.join(base, './.d2/shell/src'),
-        shellAppEntrypoint: path.join(base, './.d2/shell/src/App.js'),
+        shellAppEntrypoint: path.join(base, './.d2/shell/src/App.jsx'),
         shellAppDirname,
         shellApp: path.join(base, `./.d2/shell/${shellAppDirname}`),
         shellPluginBundleEntrypoint: path.join(
             base,
-            './.d2/shell/src/plugin.index.js'
+            './.d2/shell/src/plugin.index.jsx'
         ),
-        shellPluginEntrypoint: path.join(base, './.d2/shell/src/Plugin.js'),
+        shellPluginEntrypoint: path.join(base, './.d2/shell/src/Plugin.jsx'),
         shellSrcServiceWorker: path.join(
             base,
             './.d2/shell/src/service-worker.js'
