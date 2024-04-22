@@ -54,14 +54,6 @@ export default defineConfig(({ mode }) => {
         // Need to add vars on process.env here -- drop-in replacement
         define: defineOptions,
 
-        server: {
-            port: 5173,
-            // strictPort: true,
-            // hmr: {
-            //     port: 5573,
-            // },
-        },
-
         build: {
             outDir: 'build',
             rollupOptions: {
@@ -70,7 +62,7 @@ export default defineConfig(({ mode }) => {
                     // Build an optional plugin -- shares code with main app
                     // TODO: Dynamically build a plugin, based on context
                     // plugin: resolve(__dirname, 'plugin.html'),
-                    // TODO: Build the service worker
+                    // TODO: Build the service worker; make dynamic
                     // 'service-worker': resolve(
                     //     __dirname,
                     //     'src/service-worker.js'
@@ -95,36 +87,5 @@ export default defineConfig(({ mode }) => {
                 },
             },
         },
-
-        // Allow JSX in .js files (at the cost of performance):
-        // https://stackoverflow.com/a/74620428
-        // todo: (switching JSX files to .jsx to not need this allows optimization):
-        // https://twitter.com/youyuxi/status/1362050255009816577
-        // esbuild: {
-        // loader: 'jsx',
-        // include: [
-        //     // Business as usual for .jsx and .tsx files
-        //     'src/**/*.jsx',
-        //     'src/**/*.tsx',
-        //     'node_modules/**/*.jsx',
-        //     'node_modules/**/*.tsx',
-
-        //     // Optional: Add the specific files you want to allow JSX syntax in
-        //     // "src/LocalJsxInJsComponent.js",
-        //     // "node_modules/bad-jsx-in-js-component/js/BadJSXinJS.js",
-        //     // "node_modules/bad-jsx-in-js-component/ts/BadTSXInTs.ts",
-
-        //     // Add these lines to allow all .js files to contain JSX
-        //     'src/**/*.js',
-        //     'node_modules/**/*.js',
-
-        //     // Add these lines to allow all .ts files to contain JSX
-        //     'src/**/*.ts',
-        //     'node_modules/**/*.ts',
-        // ],
-        // exclude: [],
-        // ensure React is imported in files with JSX
-        // jsx: 'automatic',
-        // },
     }
 })
