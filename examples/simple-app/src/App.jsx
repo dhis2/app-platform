@@ -1,7 +1,7 @@
 import { useDataQuery } from '@dhis2/app-runtime'
 import moment from 'moment'
 import React from 'react'
-import { Alerter } from './Alerter.js'
+import { Alerter } from './Alerter.jsx'
 import style from './App.style.js'
 import i18n from './locales/index.js'
 
@@ -21,6 +21,7 @@ const Component = () => {
             {data && (
                 <>
                     <h1>{i18n.t('Hello {{name}}', { name: data.me.name })}</h1>
+                    <h2>:O</h2>
                     <h3>
                         {i18n.t('Have a great {{dayOfTheWeek}}!', {
                             dayOfTheWeek:

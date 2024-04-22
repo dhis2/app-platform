@@ -1,7 +1,6 @@
 const path = require('path')
 const { reporter, chalk } = require('@dhis2/cli-helpers-engine')
 const fs = require('fs-extra')
-const { normalizeExtension } = require('./extensionHelpers.js')
 
 const verifyEntrypoint = ({ entrypoint, basePath, resolveModule }) => {
     if (!entrypoint.match(/^(\.\/)?src\//)) {
@@ -81,12 +80,11 @@ exports.verifyEntrypoints = ({
 
 const getEntrypointWrapper = async ({ entrypoint, paths }) => {
     const relativeEntrypoint = entrypoint.replace(/^(\.\/)?src\//, '')
-    const outRelativeEntrypoint = normalizeExtension(relativeEntrypoint)
     const shellAppSource = await fs.readFile(paths.shellSourceEntrypoint)
 
     return shellAppSource
         .toString()
-        .replace(/'.\/D2App\/app'/g, `'./D2App/${outRelativeEntrypoint}'`)
+        .replace(/'.\/D2App\/app'/g, `'./D2App/${relativeEntrypoint}'`)
 }
 
 exports.createAppEntrypointWrapper = async ({ entrypoint, paths }) => {

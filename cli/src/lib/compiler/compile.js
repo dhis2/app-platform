@@ -1,22 +1,23 @@
 const path = require('path')
-const babel = require('@babel/core')
-const { reporter, prettyPrint } = require('@dhis2/cli-helpers-engine')
+// const babel = require('@babel/core')
+const { reporter /* prettyPrint */ } = require('@dhis2/cli-helpers-engine')
 const chokidar = require('chokidar')
 const fs = require('fs-extra')
-const makeBabelConfig = require('../../../config/makeBabelConfig.js')
+// const makeBabelConfig = require('../../../config/makeBabelConfig.js')
 const {
     verifyEntrypoints,
     createAppEntrypointWrapper,
     createPluginEntrypointWrapper,
 } = require('./entrypoints.js')
-const {
-    extensionPattern,
-    normalizeExtension,
-} = require('./extensionHelpers.js')
+// const {
+// extensionPattern,
+// normalizeExtension,
+// } = require('./extensionHelpers.js')
 
 const watchFiles = ({ inputDir, outputDir, processFileCallback, watch }) => {
     const compileFile = async (source) => {
-        const relative = normalizeExtension(path.relative(inputDir, source))
+        const relative = path.relative(inputDir, source)
+        // const relative = normalizeExtension(path.relative(inputDir, source))
         const destination = path.join(outputDir, relative)
         reporter.debug(
             `File ${relative} changed or added... dest: `,
@@ -64,7 +65,7 @@ const compile = async ({
     config,
     paths,
     moduleType = 'es',
-    mode = 'development',
+    // mode = 'development',
     watch = false,
 }) => {
     const isApp = config.type === 'app'
@@ -94,37 +95,40 @@ const compile = async ({
         fs.copySync(paths.shellSourcePublic, paths.shellPublic)
     }
 
-    const babelConfig = makeBabelConfig({ moduleType, mode })
+    // const babelConfig = makeBabelConfig({ moduleType, mode })
 
     const copyFile = async (source, destination) => {
+        reporter.info(`Copying file ${source}`)
         await fs.copy(source, destination)
     }
-    const compileFile = async (source, destination) => {
-        if (source.match(extensionPattern)) {
-            try {
-                const result = await babel.transformFileAsync(
-                    source,
-                    babelConfig
-                )
-                await fs.writeFile(destination, result.code)
-            } catch (err) {
-                reporter.dumpErr(err)
-                reporter.error(
-                    `Failed to compile ${prettyPrint.relativePath(
-                        source
-                    )}. Fix the problem and save the file to automatically reload.`
-                )
-            }
-        } else {
-            await copyFile(source, destination)
-        }
-    }
+    // const compileFile = async (source, destination) => {
+    //     reporter.info(`compiling file ${source}`)
+    //     if (source.match(extensionPattern)) {
+    //         try {
+    //             const result = await babel.transformFileAsync(
+    //                 source,
+    //                 babelConfig
+    //             )
+    //             await fs.writeFile(destination, result.code)
+    //         } catch (err) {
+    //             reporter.dumpErr(err)
+    //             reporter.error(
+    //                 `Failed to compile ${prettyPrint.relativePath(
+    //                     source
+    //                 )}. Fix the problem and save the file to automatically reload.`
+    //             )
+    //         }
+    //     } else {
+    //         await copyFile(source, destination)
+    //     }
+    // }
 
     return Promise.all([
         watchFiles({
             inputDir: paths.src,
             outputDir: outDir,
-            processFileCallback: compileFile,
+            // todo: still compile for libs?
+            processFileCallback: copyFile,
             watch,
         }),
         isApp &&

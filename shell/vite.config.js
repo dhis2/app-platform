@@ -18,6 +18,7 @@ export default defineConfig(({ mode }) => {
 
     return {
         plugins: [
+            // Allow JSX in JS files pt. 1
             {
                 name: 'treat-js-files-as-jsx',
                 async transform(code, id) {
@@ -33,7 +34,11 @@ export default defineConfig(({ mode }) => {
                     })
                 },
             },
-            react(),
+            react({
+                babel: {
+                    plugins: ['styled-jsx/babel'],
+                },
+            }),
         ],
 
         // By default, assets are resolved to the root of the domain ('/'), but
@@ -48,6 +53,14 @@ export default defineConfig(({ mode }) => {
 
         // Need to add vars on process.env here -- drop-in replacement
         define: defineOptions,
+
+        server: {
+            port: 5173,
+            // strictPort: true,
+            // hmr: {
+            //     port: 5573,
+            // },
+        },
 
         build: {
             rollupOptions: {
@@ -72,6 +85,7 @@ export default defineConfig(({ mode }) => {
             },
         },
 
+        // Allow JSX in JS files pt. 2
         optimizeDeps: {
             force: true,
             esbuildOptions: {
