@@ -23,7 +23,7 @@ export const Alerter = () => {
                 checked={critical}
                 onChange={() => setCritical(!critical)}
             />
-            <Button onClick={() => show(message)}>Show alert loolooloo</Button>
+            <Button onClick={() => show(message)}>Show alert</Button>
             <Button onClick={hide}>Hide alert</Button>
             <style jsx>{`
                 div {

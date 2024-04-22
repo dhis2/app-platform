@@ -63,6 +63,7 @@ export default defineConfig(({ mode }) => {
         },
 
         build: {
+            outDir: 'build',
             rollupOptions: {
                 input: {
                     main: resolve(__dirname, 'index.html'),
