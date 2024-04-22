@@ -98,7 +98,6 @@ const compile = async ({
     // const babelConfig = makeBabelConfig({ moduleType, mode })
 
     const copyFile = async (source, destination) => {
-        reporter.info(`Copying file ${source}`)
         await fs.copy(source, destination)
     }
     // const compileFile = async (source, destination) => {
