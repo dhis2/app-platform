@@ -1,3 +1,29 @@
+## [11.1.1](https://github.com/dhis2/app-platform/compare/v11.1.0...v11.1.1) (2024-04-09)
+
+
+### Bug Fixes
+
+* **deps:** upgrade @dhis2/app-runtime and @dhis2/ui for peer deps fixes ([#842](https://github.com/dhis2/app-platform/issues/842)) ([2804527](https://github.com/dhis2/app-platform/commit/280452785ab1404e124d7ae6c9b886e241f2e826))
+
+# [11.1.0](https://github.com/dhis2/app-platform/compare/v11.0.0...v11.1.0) (2024-03-25)
+
+
+### Features
+
+* support core-injected base url ([#836](https://github.com/dhis2/app-platform/issues/836)) ([3f1ca71](https://github.com/dhis2/app-platform/commit/3f1ca71a871037316f130f960108c689c36365ba))
+
+# [11.0.0](https://github.com/dhis2/app-platform/compare/v10.5.0...v11.0.0) (2024-03-05)
+
+
+### chore
+
+* **deps:** update shell to ui@9 ([#824](https://github.com/dhis2/app-platform/issues/824)) ([b6a12fa](https://github.com/dhis2/app-platform/commit/b6a12faee7e48764a341dfadc36c991fbab37ec2))
+
+
+### BREAKING CHANGES
+
+* **deps:** Updated major version of UI
+
 # [10.6.0-alpha.3](https://github.com/dhis2/app-platform/compare/v10.6.0-alpha.2...v10.6.0-alpha.3) (2024-03-21)
 
 
