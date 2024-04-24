@@ -9,7 +9,7 @@ const loadEnvFiles = require('../lib/loadEnvFiles')
 const parseConfig = require('../lib/parseConfig')
 const makePaths = require('../lib/paths')
 const makePlugin = require('../lib/plugin')
-const { injectPrecacheManifest } = require('../lib/pwa')
+// const { injectPrecacheManifest } = require('../lib/pwa')
 const makeShell = require('../lib/shell')
 const { validatePackage } = require('../lib/validatePackage')
 const { handler: pack } = require('./pack.js')
@@ -141,7 +141,8 @@ const handler = async ({
                     reporter.info(
                         'Injecting supplementary precache manifest...'
                     )
-                    await injectPrecacheManifest(paths, config)
+                    // todo: update precache manifest
+                    // await injectPrecacheManifest(paths, config)
                 }
             } else {
                 await Promise.all([
