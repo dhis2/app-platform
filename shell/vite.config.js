@@ -1,6 +1,7 @@
 import { resolve } from 'path'
 import react from '@vitejs/plugin-react'
 import { defineConfig, loadEnv, transformWithEsbuild } from 'vite'
+import dynamicImport from 'vite-plugin-dynamic-import'
 
 // https://vitejs.dev/config/
 export default defineConfig(({ mode }) => {
@@ -34,6 +35,14 @@ export default defineConfig(({ mode }) => {
                     })
                 },
             },
+            /**
+             * Allows the dynamic import of `moment/dist/locale/${locale}`
+             * in /adapter/src/utils/localeUtils.js.
+             * Also works for other bare packages; approximates behavior of
+             * inline `webpackChunkName` usage.
+             * Third-party plugin
+             */
+            dynamicImport(),
             react({
                 babel: {
                     plugins: ['styled-jsx/babel'],

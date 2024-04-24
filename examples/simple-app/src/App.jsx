@@ -24,6 +24,10 @@ const Component = () => {
                     <h2>:O</h2>
                     <h3>
                         {i18n.t('Have a great {{dayOfTheWeek}}!', {
+                            // NB: This won't localize on a dev build due to
+                            // Vite's monorepo dep pre-bundling behavior.
+                            // `moment` localization works outside the monorepo
+                            // and in production here though
                             dayOfTheWeek:
                                 moment.weekdays(true)[moment().weekday()],
                         })}

@@ -132,12 +132,11 @@ export const setMomentLocale = async (locale) => {
 
     for (const localeName of localeNameOptions) {
         try {
-            await import(
-                /* webpackChunkName: "moment-locales/[request]" */ `moment/locale/${localeName}`
-            )
+            await import(`moment/dist/locale/${locale}`)
             moment.locale(localeName)
             break
-        } catch {
+        } catch (e) {
+            console.error(e)
             continue
         }
     }
