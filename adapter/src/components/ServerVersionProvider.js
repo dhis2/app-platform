@@ -215,6 +215,7 @@ ServerVersionProvider.propTypes = {
     parentAlertsAdd: PropTypes.func,
     plugin: PropTypes.bool,
     pwaEnabled: PropTypes.bool,
+    setLoginBaseUrl: PropTypes.func,
     showAlertsInPlugin: PropTypes.bool,
     url: PropTypes.string,
 }
