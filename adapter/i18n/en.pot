@@ -48,6 +48,9 @@ msgstr "Something went wrong"
 msgid "Redirect to safe login mode"
 msgstr "Redirect to safe login mode"
 
+msgid "Redirect to safe login mode"
+msgstr "Redirect to safe login mode"
+
 msgid "Hide technical details"
 msgstr "Hide technical details"
 

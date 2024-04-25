@@ -4,6 +4,7 @@ import React from 'react'
 import { AppWrapper } from './components/AppWrapper.js'
 import { ErrorBoundary } from './components/ErrorBoundary.js'
 import { LoginAppWrapper } from './components/LoginAppWrapper.js'
+import { LoginAppWrapper } from './components/LoginAppWrapper.js'
 import { OfflineInterfaceProvider } from './components/OfflineInterfaceContext.js'
 import { PWALoadingBoundary } from './components/PWALoadingBoundary.js'
 import { ServerVersionProvider } from './components/ServerVersionProvider.js'
@@ -31,7 +32,7 @@ const AppAdapter = ({
                     window.location.reload()
                 }}
                 plugin={false}
-                login={true}
+                loginApp={true}
                 baseURL={url}
             >
                 <ServerVersionProvider
