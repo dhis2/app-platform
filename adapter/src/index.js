@@ -31,7 +31,7 @@ const AppAdapter = ({
                     window.location.reload()
                 }}
                 plugin={false}
-                login={true}
+                loginApp={true}
                 baseURL={url}
             >
                 <ServerVersionProvider
