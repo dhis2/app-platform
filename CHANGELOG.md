@@ -1,3 +1,10 @@
+# [11.2.0](https://github.com/dhis2/app-platform/compare/v11.1.1...v11.2.0) (2024-04-25)
+
+
+### Features
+
+* enable login app type ([#845](https://github.com/dhis2/app-platform/issues/845)) ([2586e38](https://github.com/dhis2/app-platform/commit/2586e38327700eef210906dea7d0bd951dc9c24b))
+
 ## [11.1.1](https://github.com/dhis2/app-platform/compare/v11.1.0...v11.1.1) (2024-04-09)
 
 
