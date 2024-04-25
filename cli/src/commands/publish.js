@@ -9,6 +9,8 @@ const publishVersion = require('../lib/publishVersion.js')
 const updateManifest = require('../lib/updateManifest.js')
 const { handler: pack } = require('./pack.js')
 
+const { isApp } = parseConfig
+
 const isValidServerVersion = (v) => !!/(\d+)\.(\d+)/.exec(v)
 
 const requiredFields = new Set(['id', 'version', 'minDHIS2Version'])
@@ -171,7 +173,7 @@ const handler = async ({ cwd = process.cwd(), ...params }) => {
         params: publishConfig,
     })
 
-    if (appConfig.type !== 'app') {
+    if (!isApp(appConfig.type)) {
         exit(
             1,
             'Only publishing apps to the App Hub is currently supported. Please upload other types manually.'

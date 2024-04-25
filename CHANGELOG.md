@@ -24,6 +24,27 @@
 
 * **deps:** Updated major version of UI
 
+# [10.6.0-alpha.3](https://github.com/dhis2/app-platform/compare/v10.6.0-alpha.2...v10.6.0-alpha.3) (2024-03-21)
+
+
+### Features
+
+* enable publishing login_app apps ([93093ca](https://github.com/dhis2/app-platform/commit/93093ca9ce286801e0c0a9bb421ae847be0fd8e6))
+
+# [10.6.0-alpha.2](https://github.com/dhis2/app-platform/compare/v10.6.0-alpha.1...v10.6.0-alpha.2) (2024-03-20)
+
+
+### Features
+
+* add redirect to safe login mode for login apps ([#835](https://github.com/dhis2/app-platform/issues/835)) ([ba26ada](https://github.com/dhis2/app-platform/commit/ba26adaab450eaeda19c3b29410275ac563d370b))
+
+# [10.6.0-alpha.1](https://github.com/dhis2/app-platform/compare/v10.5.0...v10.6.0-alpha.1) (2024-03-05)
+
+
+### Features
+
+* updates for login_app type [LIBS-405]  ([#831](https://github.com/dhis2/app-platform/issues/831)) ([0cc2fbd](https://github.com/dhis2/app-platform/commit/0cc2fbd5b633b9b8953ba29d8450f93b0037d458))
+
 # [10.5.0](https://github.com/dhis2/app-platform/compare/v10.4.1...v10.5.0) (2024-02-19)
 
 
