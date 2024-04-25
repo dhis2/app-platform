@@ -159,10 +159,12 @@ export const ServerVersionProvider = ({
 
     // This needs to come before 'loading' case to show modal at correct times
     if (systemInfoState.error || baseUrlState.error) {
-        return !loginApp ? (
-            <LoginModal appName={appName} baseUrl={baseUrl} />
-        ) : (
-            <p>Specify DHIS2_BASE_URL environment variable</p>
+        return (
+            <LoginModal
+                appName={appName}
+                baseUrl={baseUrl}
+                loginApp={loginApp}
+            />
         )
     }
 

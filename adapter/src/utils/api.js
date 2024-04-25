@@ -42,3 +42,12 @@ export const post = (url, body) =>
             'Content-Type': 'application/x-www-form-urlencoded',
         },
     })
+
+export const postJSON = (url, body) =>
+    request(url, {
+        method: 'POST',
+        body,
+        headers: {
+            'Content-Type': 'application/json',
+        },
+    })
