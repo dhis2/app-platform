@@ -69,7 +69,7 @@ export class ErrorBoundary extends Component {
     }
 
     render() {
-        const { children, fullscreen, onRetry, login, baseURL } = this.props
+        const { children, fullscreen, onRetry, loginApp, baseURL } = this.props
 
         if (this.state.error) {
             if (this.props.plugin) {
@@ -96,7 +96,7 @@ export class ErrorBoundary extends Component {
                         <h1 className="message">
                             {i18n.t('Something went wrong')}
                         </h1>
-                        {login && baseURL && (
+                        {loginApp && baseURL && (
                             <div className="retry">
                                 <UIButton
                                     onClick={this.handleSafeLoginRedirect}
@@ -160,7 +160,7 @@ ErrorBoundary.propTypes = {
     children: PropTypes.node.isRequired,
     baseURL: PropTypes.string,
     fullscreen: PropTypes.bool,
-    login: PropTypes.bool,
+    loginApp: PropTypes.bool,
     plugin: PropTypes.bool,
     onPluginError: PropTypes.func,
     onRetry: PropTypes.func,

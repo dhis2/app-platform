@@ -105,7 +105,7 @@ export const ServerVersionProvider = ({
                 : { loading: true, error: undefined, systemInfo: undefined }
         )
 
-        // version is not currently available, minimum for login app
+        // version is available from api/loginConfig
         if (loginApp) {
             const requestLogin = get(`${baseUrl}/api/loginConfig`)
             requestLogin
@@ -192,7 +192,6 @@ export const ServerVersionProvider = ({
             plugin={plugin}
             parentAlertsAdd={parentAlertsAdd}
             showAlertsInPlugin={showAlertsInPlugin}
-            skipApiVersion={loginApp ? true : false}
         >
             {children}
         </Provider>
