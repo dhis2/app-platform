@@ -36,14 +36,16 @@ function logManifestOutput({ count, filePaths, size, warnings }) {
  * `workbox-build`.
  */
 module.exports = function injectPrecacheManifest(paths, config) {
-    // See https://developers.google.com/web/tools/workbox/reference-docs/latest/module-workbox-build#.injectManifest
+    // See https://developer.chrome.com/docs/workbox/modules/workbox-build#injectmanifest_mode
     const injectManifestOptions = {
         swSrc: paths.shellBuildServiceWorker,
         swDest: paths.shellBuildServiceWorker,
         globDirectory: paths.shellBuildOutput,
         globPatterns: ['**/*'],
         globIgnores: [
-            // todo: skip moment locales (requires putting them in their own dir)
+            // skip moment locales -- they result in many network requests and
+            // slow down service worker installation
+            '**/moment-locales/*',
             '**/*.map',
             ...config.pwa.caching.globsToOmitFromPrecache,
         ],
