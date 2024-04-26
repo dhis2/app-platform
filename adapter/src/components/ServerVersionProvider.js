@@ -18,7 +18,6 @@ export const ServerVersionProvider = ({
     parentAlertsAdd,
     showAlertsInPlugin,
     loginApp,
-    setLoginBaseUrl,
     children,
 }) => {
     const offlineInterface = useOfflineInterface()
@@ -151,10 +150,6 @@ export const ServerVersionProvider = ({
     }, [appName, baseUrl, loginApp])
 
     useEffect(() => {
-        setLoginBaseUrl(baseUrl)
-    }, [setLoginBaseUrl, baseUrl])
-
-    useEffect(() => {
         if (pwaEnabled) {
             offlineInterface.ready.then(() => {
                 setOfflineInterfaceLoading(false)
@@ -215,7 +210,6 @@ ServerVersionProvider.propTypes = {
     parentAlertsAdd: PropTypes.func,
     plugin: PropTypes.bool,
     pwaEnabled: PropTypes.bool,
-    setLoginBaseUrl: PropTypes.func,
     showAlertsInPlugin: PropTypes.bool,
     url: PropTypes.string,
 }

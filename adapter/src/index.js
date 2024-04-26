@@ -1,6 +1,6 @@
 import { checkForSWUpdateAndReload } from '@dhis2/pwa'
 import PropTypes from 'prop-types'
-import React, { useState } from 'react'
+import React from 'react'
 import { AppWrapper } from './components/AppWrapper.js'
 import { ErrorBoundary } from './components/ErrorBoundary.js'
 import { LoginAppWrapper } from './components/LoginAppWrapper.js'
@@ -23,7 +23,6 @@ const AppAdapter = ({
     loginApp,
     children,
 }) => {
-    const [loginBaseUrl, setLoginBaseUrl] = useState(url)
     if (loginApp) {
         return (
             <ErrorBoundary
@@ -43,11 +42,8 @@ const AppAdapter = ({
                     pwaEnabled={pwaEnabled}
                     loginApp={loginApp}
                     plugin={false}
-                    setLoginBaseUrl={setLoginBaseUrl}
                 >
-                    <LoginAppWrapper url={loginBaseUrl}>
-                        {children}
-                    </LoginAppWrapper>
+                    <LoginAppWrapper>{children}</LoginAppWrapper>
                 </ServerVersionProvider>
             </ErrorBoundary>
         )
