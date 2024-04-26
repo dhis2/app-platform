@@ -23,22 +23,24 @@ const getPWAEnvVars = require('./getPWAEnvVars')
  */
 function compileServiceWorker({ config, paths, mode }) {
     // Choose appropriate destination for compiled SW based on 'mode'
-    const outputPath =
-        mode === 'production'
-            ? paths.shellBuildServiceWorker
-            : paths.shellPublicServiceWorker
+    const isProduction = mode === 'production'
+    const outputPath = isProduction
+        ? paths.shellBuildServiceWorker
+        : paths.shellPublicServiceWorker
     const { dir: outputDir, base: outputFilename } = path.parse(outputPath)
 
     // This is part of a bit of a hacky way to provide the same env vars to dev
     // SWs as in production by adding them to `process.env` using the plugin
     // below.
     // TODO: This could be cleaner if the production SW is built in the same
+    // TODO: It is now; clean this up
     // way instead of using the CRA webpack config, so both can more easily
     // share environment variables.
     const env = getEnv({ name: config.title, ...getPWAEnvVars(config) })
 
     const webpackConfig = {
         mode, // "production" or "development"
+        devtool: isProduction ? false : 'source-map',
         entry: paths.shellSrcServiceWorker,
         output: {
             path: outputDir,

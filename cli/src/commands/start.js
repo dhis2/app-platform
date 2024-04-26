@@ -115,11 +115,9 @@ const handler = async ({
 
             if (config.pwa.enabled) {
                 reporter.info('Compiling service worker...')
-                await compileServiceWorker({
-                    config,
-                    paths,
-                    mode: 'development',
-                })
+                await compileServiceWorker({ config, paths, mode })
+                // don't need to inject precache manifest because no precaching
+                // is done in development environments
             }
 
             reporter.print('')
