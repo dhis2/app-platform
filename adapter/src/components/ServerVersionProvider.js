@@ -194,7 +194,6 @@ export const ServerVersionProvider = ({
             plugin={plugin}
             parentAlertsAdd={parentAlertsAdd}
             showAlertsInPlugin={showAlertsInPlugin}
-            skipApiVersion={loginApp ? true : false}
         >
             {children}
         </Provider>

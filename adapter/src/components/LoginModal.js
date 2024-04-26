@@ -17,13 +17,14 @@ import { styles } from './styles/LoginModal.style.js'
 // Check if base URL is set statically as an env var (typical in production)
 const staticUrl = process.env.REACT_APP_DHIS2_BASE_URL
 
-const getUseNewLoginAPI = async (server) => {
+const getIsNewLoginAPIAvailable = async (server) => {
     try {
         // if loginConfig is available, the instance can use new endpoints
         await get(`${server}/api/loginConfig`)
         return true
     } catch (e) {
         // if loginConfig is not available, the instance must use old endpoints
+        console.error(e)
         return false
     }
 }
@@ -99,9 +100,11 @@ export const LoginModal = ({ appName, baseUrl, loginApp = false }) => {
                 }
             }
 
-            const useNewLoginAPI = await getUseNewLoginAPI(server)
+            const isNewLoginAPIAvailable = await getIsNewLoginAPIAvailable(
+                server
+            )
 
-            if (useNewLoginAPI) {
+            if (isNewLoginAPIAvailable) {
                 loginWithNewEndpoints({
                     server,
                     username,
@@ -129,7 +132,7 @@ export const LoginModal = ({ appName, baseUrl, loginApp = false }) => {
                     {error && (
                         <div className="errorNotification">
                             <NoticeBox error title={i18n.t('Could not log in')}>
-                                {error?.message || error?.details?.message}
+                                {error?.message}
                             </NoticeBox>
                         </div>
                     )}

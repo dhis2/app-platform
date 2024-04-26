@@ -14,7 +14,14 @@ const request = (url, options) => {
         })
             .then((response) => {
                 if (response.status !== 200) {
-                    reject('Request failed ' + response.statusText)
+                    response
+                        .json()
+                        .then((json) => {
+                            reject(json)
+                        })
+                        .catch(() => {
+                            reject('Request failed ' + response.statusText)
+                        })
                     return
                 }
                 try {

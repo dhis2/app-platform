@@ -65,7 +65,6 @@ const AppAdapter = ({
                         plugin={plugin}
                         parentAlertsAdd={parentAlertsAdd}
                         showAlertsInPlugin={showAlertsInPlugin}
-                        setLoginBaseUrl={() => {}}
                     >
                         <AppWrapper
                             plugin={plugin}
