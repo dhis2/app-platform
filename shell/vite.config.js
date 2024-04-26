@@ -3,6 +3,9 @@ import react from '@vitejs/plugin-react'
 import { defineConfig, loadEnv, transformWithEsbuild } from 'vite'
 import dynamicImport from 'vite-plugin-dynamic-import'
 
+// Matches locale file and captures locale identifier in the filename
+const momentLocaleRegex = /moment\/dist\/locale\/(.*)\.js$/
+
 // https://vitejs.dev/config/
 export default defineConfig(({ mode }) => {
     // https://vitejs.dev/config/#using-environment-variables-in-config
@@ -71,18 +74,21 @@ export default defineConfig(({ mode }) => {
                     // Build an optional plugin -- shares code with main app
                     // TODO: Dynamically build a plugin, based on context
                     // plugin: resolve(__dirname, 'plugin.html'),
-                    // TODO: Build the service worker; make dynamic
-                    // 'service-worker': resolve(
-                    //     __dirname,
-                    //     'src/service-worker.js'
-                    // ),
                 },
                 output: {
-                    // Make sure the service worker output file has the right name
-                    entryFileNames: (assetInfo) =>
-                        assetInfo.name === 'service-worker'
-                            ? '[name].js'
-                            : 'assets/[name]-[hash].js',
+                    manualChunks: (id) => {
+                        // Assign moment locale chunks into their own dir.
+                        // Ends up e.g. /assets/moment-locales/pt-br-[hash].js
+                        const match = id.match(momentLocaleRegex)
+                        if (match) {
+                            return `moment-locales/${match[1]}`
+                        }
+                        // Separate moment itself out,
+                        // otherwise it gets chunked with a locale
+                        if (id.endsWith('moment/dist/moment.js')) {
+                            return 'moment'
+                        }
+                    },
                 },
             },
         },
