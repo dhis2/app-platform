@@ -1,3 +1,5 @@
+const { isApp } = require('../parseConfig')
+
 /** Preps string literals for regex conversion by escaping special chars */
 function escapeForRegex(string) {
     return string.replace(/[-\\^$*+?.()|[\]{}]/g, '\\$&')
@@ -31,7 +33,7 @@ function stringifyPatterns(patternsList) {
  * @param {Object} config
  */
 function getPWAEnvVars(config) {
-    if (config.type !== 'app') {
+    if (!isApp(config.type)) {
         return null
     }
     if (!config.pwa.enabled) {

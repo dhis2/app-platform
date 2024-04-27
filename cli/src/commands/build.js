@@ -7,6 +7,7 @@ const generateManifests = require('../lib/generateManifests')
 const i18n = require('../lib/i18n')
 const loadEnvFiles = require('../lib/loadEnvFiles')
 const parseConfig = require('../lib/parseConfig')
+const { isApp } = require('../lib/parseConfig')
 const makePaths = require('../lib/paths')
 const makePlugin = require('../lib/plugin')
 const { injectPrecacheManifest, compileServiceWorker } = require('../lib/pwa')
@@ -71,7 +72,7 @@ const handler = async ({
     const shell = makeShell({ config, paths })
     const plugin = makePlugin({ config, paths })
 
-    if (config.type === 'app') {
+    if (isApp(config.type)) {
         setAppParameters(standalone, config)
     }
 
@@ -106,7 +107,7 @@ const handler = async ({
                 paths,
             })
 
-            if (config.type === 'app') {
+            if (isApp(config.type)) {
                 reporter.info('Bootstrapping local appShell...')
                 await shell.bootstrap({ shell: shellSource, force })
             }
@@ -115,7 +116,7 @@ const handler = async ({
                 `Building ${config.type} ${chalk.bold(config.name)}...`
             )
 
-            if (config.type === 'app') {
+            if (isApp(config.type)) {
                 await compile({
                     config,
                     paths,
@@ -171,7 +172,7 @@ const handler = async ({
         }
     )
 
-    if (config.type === 'app') {
+    if (isApp(config.type)) {
         if (!fs.pathExistsSync(paths.shellBuildOutput)) {
             reporter.error('No build output found')
             process.exit(1)
