@@ -127,7 +127,7 @@ const compile = async ({
             inputDir: paths.src,
             outputDir: outDir,
             // todo: still compile for libs?
-            processFileCallback: isApp ? copyFile : compileFile,
+            processFileCallback: isAppType ? copyFile : compileFile,
             watch,
         }),
         isAppType &&
