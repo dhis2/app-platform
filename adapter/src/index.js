@@ -43,7 +43,7 @@ const AppAdapter = ({
                     loginApp={loginApp}
                     plugin={false}
                 >
-                    <LoginAppWrapper url={url}>{children}</LoginAppWrapper>
+                    <LoginAppWrapper>{children}</LoginAppWrapper>
                 </ServerVersionProvider>
             </ErrorBoundary>
         )
