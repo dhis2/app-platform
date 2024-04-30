@@ -5,9 +5,8 @@ import React from 'react'
 import { PluginLoader } from './PluginLoader.jsx'
 import { PluginOuterErrorBoundary } from './PluginOuterErrorBoundary.jsx'
 
-const D2App = React.lazy(() =>
-    import(/*webpackChunkName: 'app'*/ './D2App/app.jsx')
-) // Automatic bundle splitting!
+// Automatic bundle splitting!
+const D2App = React.lazy(() => import('./D2App/app.jsx'))
 
 // Injected by backend when serving index or plugin HTML
 // https://github.com/dhis2/dhis2-core/pull/16703

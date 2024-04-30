@@ -21,7 +21,6 @@ const Component = () => {
             {data && (
                 <>
                     <h1>{i18n.t('Hello {{name}}', { name: data.me.name })}</h1>
-                    <h2>:O</h2>
                     <h3>
                         {i18n.t('Have a great {{dayOfTheWeek}}!', {
                             // NB: This won't localize on a dev build due to
