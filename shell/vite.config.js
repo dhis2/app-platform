@@ -13,6 +13,7 @@ const momentLocaleRegex = /moment\/dist\/locale\/(.*)\.js$/
  * performance by not parsing JS files for JSX.
  * This plugin is 1 of 2 config options that allow JSX to be used in
  * .js or .ts files -- the options in `optimizeDeps` below are part 2.
+ *
  * NB: State-preserving HMR will not work on React components unless they have
  * a .jsx or .tsx extension though, unfortunately
  */
@@ -31,7 +32,7 @@ const jsxInJSPlugin = {
     },
 }
 
-const manualChunks = (id) => {
+const handleManualChunks = (id) => {
     // Assign moment locale chunks into their own dir.
     // Ends up e.g. /assets/moment-locales/pt-br-[hash].js
     const match = id.match(momentLocaleRegex)
@@ -65,7 +66,8 @@ export default defineConfig(({ mode }) => {
         // Works for both dev and production.
         base: './',
 
-        // Change default ENV prefix from VITE_ to be backward compatible with CRA
+        // Change default ENV prefix from VITE_ to be backward compatible with
+        // CRA -- this populates things like %REACT_APP_...% in index.html
         // https://vitejs.dev/config/shared-options.html#envprefix
         envPrefix: 'REACT_APP',
 
@@ -81,7 +83,7 @@ export default defineConfig(({ mode }) => {
                     // TODO: Dynamically build a plugin, based on context
                     // plugin: resolve(__dirname, 'plugin.html'),
                 },
-                output: { manualChunks },
+                output: { manualChunks: handleManualChunks },
             },
         },
 
