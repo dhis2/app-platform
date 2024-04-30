@@ -75,6 +75,9 @@ export default defineConfig(({ mode }) => {
         // (adding env vars to import.meta is the default for vite)
         define: defineOptions,
 
+        // todo: make this dynamic/configurable
+        server: { port: 3000 },
+
         build: {
             outDir: 'build',
             rollupOptions: {
