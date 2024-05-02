@@ -3,9 +3,6 @@ import react from '@vitejs/plugin-react'
 import { defineConfig, loadEnv, transformWithEsbuild } from 'vite'
 import dynamicImport from 'vite-plugin-dynamic-import'
 
-// Matches locale file and captures locale identifier in the filename
-const momentLocaleRegex = /moment\/dist\/locale\/(.*)\.js$/
-
 /**
  * Allows JSX in .js files:
  * Vite normally throws an error when JSX syntax is used in a file without a
@@ -32,18 +29,26 @@ const jsxInJSPlugin = {
     },
 }
 
-const handleManualChunks = (id) => {
-    // Assign moment locale chunks into their own dir.
-    // Ends up e.g. /assets/moment-locales/pt-br-[hash].js
-    const match = id.match(momentLocaleRegex)
-    if (match) {
-        return `moment-locales/${match[1]}`
-    }
-    // Separate moment itself out,
-    // otherwise it gets chunked with a locale
-    if (id.endsWith('moment/dist/moment.js')) {
-        return 'moment'
-    }
+const momentLocaleRegex = /moment\/dist\/locale\/(.*)\.js$/
+/**
+ * Configure chunk output a bit to make a tidier build folder:
+ * Assign moment locale chunks into their own dir
+ * (they are already individually split out due to the dynamic import
+ * in localeUtils.js in the adapter)
+ */
+const handleChunkFileNames = (info) => {
+    const { facadeModuleId } = info // This id is the module's filepath
+    return momentLocaleRegex.test(facadeModuleId)
+        ? 'assets/moment-locales/[name]-[hash].js'
+        : 'assets/[name]-[hash].js' // the Rollup default
+}
+
+const fontRegex = /\.woff2?/
+/** Tidy up fonts in the build/assets folder */
+const handleAssetFileNames = ({ name }) => {
+    return fontRegex.test(name)
+        ? 'assets/fonts/[name]-[hash][extname]'
+        : 'assets/[name]-[hash][extname]' // the Rollup default
 }
 
 // https://vitejs.dev/config/
@@ -86,7 +91,10 @@ export default defineConfig(({ mode }) => {
                     // TODO: Dynamically build a plugin, based on context
                     // plugin: resolve(__dirname, 'plugin.html'),
                 },
-                output: { manualChunks: handleManualChunks },
+                output: {
+                    chunkFileNames: handleChunkFileNames,
+                    assetFileNames: handleAssetFileNames,
+                },
             },
         },
 
