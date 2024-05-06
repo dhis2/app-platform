@@ -2033,10 +2033,10 @@
     handlebars "^4.7.3"
     isbinaryfile "^4.0.4"
 
-"@dhis2/cli-style@^10.4.3":
-  version "10.4.3"
-  resolved "https://registry.yarnpkg.com/@dhis2/cli-style/-/cli-style-10.4.3.tgz#a5048c21be3d660975f8cbaf91b0c67ffa62a7f2"
-  integrity sha512-SffsjUXNT1LVJxcpDA3XkwnfVw14oUIn1WQqQACLmVqsYZrVUR7L163+A194RnF0Ga7BZu3q59DZn/nGGBYbdw==
+"@dhis2/cli-style@^10.5.2":
+  version "10.5.2"
+  resolved "https://registry.yarnpkg.com/@dhis2/cli-style/-/cli-style-10.5.2.tgz#318682446805c1b582eedcba84b6ffda7fec909f"
+  integrity sha512-pzkfTI+QU/57yKUFMTGGOWLMKJyxw5fJj8MN738PyY/+TsuSASAMrORhriNafVpwZDsR2swO7J0IZN/u2oTf8Q==
   dependencies:
     "@commitlint/cli" "^12.1.4"
     "@commitlint/config-conventional" "^13.1.0"
@@ -2047,6 +2047,7 @@
     eslint-config-prettier "^8.3.0"
     eslint-plugin-import "^2.22.1"
     eslint-plugin-react "^7.31.10"
+    eslint-plugin-react-hooks "^4.6.2"
     fast-glob "^3.2.5"
     find-up "^5.0.0"
     fs-extra "^10.0.0"
@@ -6099,6 +6100,11 @@ eslint-plugin-import@^2.22.1:
     object.values "^1.1.5"
     resolve "^1.22.0"
     tsconfig-paths "^3.14.1"
+
+eslint-plugin-react-hooks@^4.6.2:
+  version "4.6.2"
+  resolved "https://registry.yarnpkg.com/eslint-plugin-react-hooks/-/eslint-plugin-react-hooks-4.6.2.tgz#c829eb06c0e6f484b3fbb85a97e57784f328c596"
+  integrity sha512-QzliNJq4GinDBcD8gPB5v0wh6g8q3SUi6EFF0x8N/BL9PoVs0atuGc47ozMRyOWAKdwaZ5OnbOEa3WR+dSGKuQ==
 
 eslint-plugin-react@^7.31.10:
   version "7.31.11"
