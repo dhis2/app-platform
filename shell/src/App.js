@@ -29,6 +29,7 @@ const parseRequiredProps = (propsEnvVariable) => {
 }
 
 const isPlugin = process.env.REACT_APP_DHIS2_APP_PLUGIN === 'true'
+const skipPluginLogic = process.env.REACT_APP_DHIS2_APP_SKIPPLUGINLOGIC
 const requiredPluginProps = parseRequiredProps(
     process.env.REACT_APP_DHIS2_APP_REQUIREDPROPS
 )
@@ -86,7 +87,7 @@ Plugin.propTypes = {
 }
 
 const AppOrPlugin = () => {
-    if (isPlugin) {
+    if (isPlugin && !skipPluginLogic) {
         return <Plugin config={pluginConfig} />
     }
     return <App config={appConfig} />
