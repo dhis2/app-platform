@@ -22,8 +22,7 @@ module.exports = ({ config, paths }) => {
         build: async () => {
             await exec({
                 cmd: 'yarn',
-                // todo: command
-                args: ['build:vite'],
+                args: ['build'],
                 cwd: paths.shell,
                 env: getEnv({ ...baseEnvVars, ...getPWAEnvVars(config) }),
                 pipe: false,
@@ -32,8 +31,7 @@ module.exports = ({ config, paths }) => {
         start: async ({ port }) => {
             await exec({
                 cmd: 'yarn',
-                // todo: change command
-                args: ['start:vite'],
+                args: ['start'],
                 cwd: paths.shell,
                 env: getEnv({ ...baseEnvVars, port, ...getPWAEnvVars(config) }),
                 pipe: false,
