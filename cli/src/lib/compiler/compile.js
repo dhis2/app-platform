@@ -4,6 +4,7 @@ const { reporter, prettyPrint } = require('@dhis2/cli-helpers-engine')
 const chokidar = require('chokidar')
 const fs = require('fs-extra')
 const makeBabelConfig = require('../../../config/makeBabelConfig.js')
+const { isApp } = require('../parseConfig')
 const {
     verifyEntrypoints,
     createAppEntrypointWrapper,
@@ -67,10 +68,10 @@ const compile = async ({
     mode = 'development',
     watch = false,
 }) => {
-    const isApp = config.type === 'app'
+    const isAppType = isApp(config.type)
 
     verifyEntrypoints({ config, paths })
-    if (isApp) {
+    if (isAppType) {
         await createAppEntrypointWrapper({
             entrypoint: config.entryPoints.app,
             paths,
@@ -83,13 +84,13 @@ const compile = async ({
         }
     }
 
-    const outDir = isApp
+    const outDir = isAppType
         ? paths.shellApp
         : path.join(paths.buildOutput, moduleType)
     fs.removeSync(outDir)
     fs.ensureDirSync(outDir)
 
-    if (isApp) {
+    if (isAppType) {
         fs.removeSync(paths.shellPublic)
         fs.copySync(paths.shellSourcePublic, paths.shellPublic)
     }
@@ -127,7 +128,7 @@ const compile = async ({
             processFileCallback: compileFile,
             watch,
         }),
-        isApp &&
+        isAppType &&
             watchFiles({
                 inputDir: paths.public,
                 outputDir: paths.shellPublic,

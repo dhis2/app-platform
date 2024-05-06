@@ -9,6 +9,18 @@ const D2App = React.lazy(() =>
     import(/*webpackChunkName: 'app'*/ './D2App/app')
 ) // Automatic bundle splitting!
 
+// Injected by backend when serving index or plugin HTML
+// https://github.com/dhis2/dhis2-core/pull/16703
+const getInjectedBaseUrl = () => {
+    const baseUrl = document
+        .querySelector('meta[name="dhis2-base-url"]')
+        ?.getAttribute('content')
+    if (baseUrl && baseUrl !== '__DHIS2_BASE_URL__') {
+        return baseUrl
+    }
+    return null
+}
+
 const parseRequiredProps = (propsEnvVariable) => {
     if (!propsEnvVariable || propsEnvVariable === '') {
         return []
@@ -23,12 +35,13 @@ const requiredPluginProps = parseRequiredProps(
 )
 
 const appConfig = {
-    url: process.env.REACT_APP_DHIS2_BASE_URL,
+    url: getInjectedBaseUrl() || process.env.REACT_APP_DHIS2_BASE_URL,
     appName: process.env.REACT_APP_DHIS2_APP_NAME || '',
     appVersion: process.env.REACT_APP_DHIS2_APP_VERSION || '',
     apiVersion: parseInt(process.env.REACT_APP_DHIS2_API_VERSION),
     pwaEnabled: process.env.REACT_APP_DHIS2_APP_PWA_ENABLED === 'true',
     plugin: isPlugin,
+    loginApp: process.env.REACT_APP_DHIS2_APP_LOGINAPP === 'true',
     direction: process.env.REACT_APP_DHIS2_APP_DIRECTION,
 }
 

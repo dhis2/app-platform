@@ -1,3 +1,64 @@
+## [11.2.1](https://github.com/dhis2/app-platform/compare/v11.2.0...v11.2.1) (2024-04-29)
+
+
+### Bug Fixes
+
+* handle new login endpoints [LIBS-600] ([#846](https://github.com/dhis2/app-platform/issues/846)) ([4512825](https://github.com/dhis2/app-platform/commit/4512825bab1a58be78ed7183763c4e0568489fab))
+
+# [11.2.0](https://github.com/dhis2/app-platform/compare/v11.1.1...v11.2.0) (2024-04-25)
+
+
+### Features
+
+* enable login app type ([#845](https://github.com/dhis2/app-platform/issues/845)) ([2586e38](https://github.com/dhis2/app-platform/commit/2586e38327700eef210906dea7d0bd951dc9c24b))
+
+## [11.1.1](https://github.com/dhis2/app-platform/compare/v11.1.0...v11.1.1) (2024-04-09)
+
+
+### Bug Fixes
+
+* **deps:** upgrade @dhis2/app-runtime and @dhis2/ui for peer deps fixes ([#842](https://github.com/dhis2/app-platform/issues/842)) ([2804527](https://github.com/dhis2/app-platform/commit/280452785ab1404e124d7ae6c9b886e241f2e826))
+
+# [11.1.0](https://github.com/dhis2/app-platform/compare/v11.0.0...v11.1.0) (2024-03-25)
+
+
+### Features
+
+* support core-injected base url ([#836](https://github.com/dhis2/app-platform/issues/836)) ([3f1ca71](https://github.com/dhis2/app-platform/commit/3f1ca71a871037316f130f960108c689c36365ba))
+
+# [11.0.0](https://github.com/dhis2/app-platform/compare/v10.5.0...v11.0.0) (2024-03-05)
+
+
+### chore
+
+* **deps:** update shell to ui@9 ([#824](https://github.com/dhis2/app-platform/issues/824)) ([b6a12fa](https://github.com/dhis2/app-platform/commit/b6a12faee7e48764a341dfadc36c991fbab37ec2))
+
+
+### BREAKING CHANGES
+
+* **deps:** Updated major version of UI
+
+# [10.6.0-alpha.3](https://github.com/dhis2/app-platform/compare/v10.6.0-alpha.2...v10.6.0-alpha.3) (2024-03-21)
+
+
+### Features
+
+* enable publishing login_app apps ([93093ca](https://github.com/dhis2/app-platform/commit/93093ca9ce286801e0c0a9bb421ae847be0fd8e6))
+
+# [10.6.0-alpha.2](https://github.com/dhis2/app-platform/compare/v10.6.0-alpha.1...v10.6.0-alpha.2) (2024-03-20)
+
+
+### Features
+
+* add redirect to safe login mode for login apps ([#835](https://github.com/dhis2/app-platform/issues/835)) ([ba26ada](https://github.com/dhis2/app-platform/commit/ba26adaab450eaeda19c3b29410275ac563d370b))
+
+# [10.6.0-alpha.1](https://github.com/dhis2/app-platform/compare/v10.5.0...v10.6.0-alpha.1) (2024-03-05)
+
+
+### Features
+
+* updates for login_app type [LIBS-405]  ([#831](https://github.com/dhis2/app-platform/issues/831)) ([0cc2fbd](https://github.com/dhis2/app-platform/commit/0cc2fbd5b633b9b8953ba29d8450f93b0037d458))
+
 # [10.5.0](https://github.com/dhis2/app-platform/compare/v10.4.1...v10.5.0) (2024-02-19)
 
 

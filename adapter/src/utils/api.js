@@ -14,7 +14,14 @@ const request = (url, options) => {
         })
             .then((response) => {
                 if (response.status !== 200) {
-                    reject('Request failed ' + response.statusText)
+                    response
+                        .json()
+                        .then((json) => {
+                            reject(json)
+                        })
+                        .catch(() => {
+                            reject('Request failed ' + response.statusText)
+                        })
                     return
                 }
                 try {
@@ -40,5 +47,14 @@ export const post = (url, body) =>
         body,
         headers: {
             'Content-Type': 'application/x-www-form-urlencoded',
+        },
+    })
+
+export const postJSON = (url, body) =>
+    request(url, {
+        method: 'POST',
+        body,
+        headers: {
+            'Content-Type': 'application/json',
         },
     })
