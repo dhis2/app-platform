@@ -1,3 +1,10 @@
+## [11.2.2](https://github.com/dhis2/app-platform/compare/v11.2.1...v11.2.2) (2024-05-06)
+
+
+### Bug Fixes
+
+* allow apps to opt out of plugin logic [LIBS-579] ([#833](https://github.com/dhis2/app-platform/issues/833)) ([d450758](https://github.com/dhis2/app-platform/commit/d450758ef2e7cde7bf45a19e97f0e262a0e5f3d8))
+
 ## [11.2.1](https://github.com/dhis2/app-platform/compare/v11.2.0...v11.2.1) (2024-04-29)
 
 
