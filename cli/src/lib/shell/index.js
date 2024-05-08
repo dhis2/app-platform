@@ -34,7 +34,8 @@ module.exports = ({ config, paths }) => {
                 args: ['start'],
                 cwd: paths.shell,
                 env: getEnv({ ...baseEnvVars, port, ...getPWAEnvVars(config) }),
-                pipe: false,
+                // this option allows the colorful and interactive output from Vite:
+                stdio: 'inherit',
             })
         },
         // TODO: remove? Test command does not seem to call this method
