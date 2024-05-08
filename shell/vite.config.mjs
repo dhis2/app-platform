@@ -56,7 +56,7 @@ export default defineConfig(({ mode }) => {
     // Set up env vars to support consumers of existing REACT_APP_DHIS2_APP_
     // env vars:
     // https://vitejs.dev/config/#using-environment-variables-in-config
-    const env = loadEnv(mode, process.cwd(), ['REACT_APP', 'NODE_ENV'])
+    const env = loadEnv(mode, process.cwd(), ['REACT_APP', 'NODE_ENV', 'PORT'])
     // Use individual properties for drop-in replacements instead of a whole
     // object, which allows for better code trimming optimizations
     const defineOptions = {}
@@ -80,8 +80,8 @@ export default defineConfig(({ mode }) => {
         // (adding env vars to import.meta is the default for vite)
         define: defineOptions,
 
-        // todo: make this dynamic/configurable
-        server: { port: 3000 },
+        // Start the server at 3000 or a configured port
+        server: { port: env.PORT || 3000 },
 
         build: {
             outDir: 'build',
