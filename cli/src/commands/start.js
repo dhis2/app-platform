@@ -23,6 +23,7 @@ const handler = async ({
     shell: shellSource,
     proxy,
     proxyPort,
+    plugin: shouldStartPlugin,
 }) => {
     const paths = makePaths(cwd)
 
@@ -125,29 +126,24 @@ const handler = async ({
 
             reporter.print('')
             reporter.info('Starting development server...')
+
+            // start either plugin or app, based on --plugin flag
+            if (shouldStartPlugin) {
+                reporter.print(
+                    `The plugin is now available on port ${newPort} at /${paths.pluginLaunchPath}`
+                )
+                reporter.print('')
+                await plugin.start({ port: newPort })
+                return
+            }
+
             reporter.print(
                 `The app ${chalk.bold(
                     config.name
                 )} is now available on port ${newPort}`
             )
             reporter.print('')
-
-            const shellStartPromise = shell.start({ port: newPort })
-
-            if (config.entryPoints.plugin) {
-                const pluginPort = await detectPort(newPort + 1)
-                reporter.print(
-                    `The plugin is now available on port ${pluginPort} at /${paths.pluginLaunchPath}`
-                )
-                reporter.print('')
-
-                await Promise.all([
-                    shellStartPromise,
-                    plugin.start({ port: pluginPort }),
-                ])
-            } else {
-                await shellStartPromise
-            }
+            await shell.start({ port: newPort })
         },
         {
             name: 'start',
