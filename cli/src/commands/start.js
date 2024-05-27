@@ -23,7 +23,8 @@ const handler = async ({
     shell: shellSource,
     proxy,
     proxyPort,
-    plugin: shouldStartPlugin,
+    app: shouldStartOnlyApp,
+    plugin: shouldStartOnlyPlugin,
 }) => {
     const paths = makePaths(cwd)
 
@@ -127,23 +128,33 @@ const handler = async ({
             reporter.print('')
             reporter.info('Starting development server...')
 
-            // start either plugin or app, based on --plugin flag
-            if (shouldStartPlugin) {
+            // start app and/or plugin, depending on flags
+            const shouldStartBoth =
+                (!shouldStartOnlyApp && !shouldStartOnlyPlugin) ||
+                // it would be weird to use both flags, but start both if so
+                (shouldStartOnlyApp && shouldStartOnlyPlugin)
+            const startPromises = []
+
+            if (shouldStartBoth || shouldStartOnlyApp) {
+                reporter.print(
+                    `The app ${chalk.bold(
+                        config.name
+                    )} is now available on port ${newPort}`
+                )
+                reporter.print('')
+                startPromises.push(shell.start({ port: newPort }))
+            }
+
+            if (shouldStartBoth || shouldStartOnlyPlugin) {
                 reporter.print(
                     `The plugin is now available on port ${newPort} at /${paths.pluginLaunchPath}`
                 )
                 reporter.print('')
-                await plugin.start({ port: newPort })
-                return
+                const pluginPort = shouldStartBoth ? newPort + 1 : newPort
+                startPromises.push(plugin.start({ port: pluginPort }))
             }
 
-            reporter.print(
-                `The app ${chalk.bold(
-                    config.name
-                )} is now available on port ${newPort}`
-            )
-            reporter.print('')
-            await shell.start({ port: newPort })
+            await Promise.all(startPromises)
         },
         {
             name: 'start',
