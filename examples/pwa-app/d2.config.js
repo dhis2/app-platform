@@ -16,6 +16,9 @@ const config = {
         // Uncomment this to test plugin builds:
         // plugin: './src/components/VisualizationsList.js',
     },
+
+    // pluginType: 'DASHBOARD',
+    skipPluginLogic: true,
 }
 
 module.exports = config
