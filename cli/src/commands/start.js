@@ -186,6 +186,16 @@ const command = {
             description: 'The port to use when running the proxy',
             default: 8080,
         },
+        // todo: change with Vite
+        app: {
+            type: 'boolean',
+            description:
+                'Start a dev server for just the app entrypoint (instead of both app and plugin, if this app has a plugin)',
+        },
+        plugin: {
+            type: 'boolean',
+            description: 'Start a dev server for just the plugin entrypoint',
+        },
     },
     handler,
 }
