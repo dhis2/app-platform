@@ -1,3 +1,10 @@
+# [11.3.0](https://github.com/dhis2/app-platform/compare/v11.2.2...v11.3.0) (2024-05-30)
+
+
+### Features
+
+* start plugin and app separately [LIBS-391] [LIBS-392] ([#848](https://github.com/dhis2/app-platform/issues/848)) ([82003e7](https://github.com/dhis2/app-platform/commit/82003e73fce995a83318c623da6028d9975e6686))
+
 ## [11.2.2](https://github.com/dhis2/app-platform/compare/v11.2.1...v11.2.2) (2024-05-06)
 
 
