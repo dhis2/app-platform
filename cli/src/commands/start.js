@@ -145,7 +145,10 @@ const handler = async ({
                 startPromises.push(shell.start({ port: newPort }))
             }
 
-            if (shouldStartBoth || shouldStartOnlyPlugin) {
+            if (
+                config.entryPoints.plugin &&
+                (shouldStartBoth || shouldStartOnlyPlugin)
+            ) {
                 reporter.print(
                     `The plugin is now available on port ${newPort} at /${paths.pluginLaunchPath}`
                 )
