@@ -48,6 +48,18 @@ const validateConfig = (config) => {
             )
         }
     })
+
+    const { pluginType } = config
+    if (pluginType?.toUpperCase() !== pluginType) {
+        throw new Error(
+            `Field ${chalk.bold(
+                'pluginType'
+            )} must be an all-uppercase string. Got: ${chalk.bold(
+                `"${pluginType}"`
+            )}`
+        )
+    }
+
     return true
 }
 
