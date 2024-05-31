@@ -23,6 +23,8 @@ const handler = async ({
     shell: shellSource,
     proxy,
     proxyPort,
+    app: shouldStartOnlyApp,
+    plugin: shouldStartOnlyPlugin,
 }) => {
     const paths = makePaths(cwd)
 
@@ -125,29 +127,34 @@ const handler = async ({
 
             reporter.print('')
             reporter.info('Starting development server...')
-            reporter.print(
-                `The app ${chalk.bold(
-                    config.name
-                )} is now available on port ${newPort}`
-            )
-            reporter.print('')
 
-            const shellStartPromise = shell.start({ port: newPort })
+            // start app and/or plugin, depending on flags
+            const shouldStartBoth =
+                (!shouldStartOnlyApp && !shouldStartOnlyPlugin) ||
+                // it would be weird to use both flags, but start both if so
+                (shouldStartOnlyApp && shouldStartOnlyPlugin)
+            const startPromises = []
 
-            if (config.entryPoints.plugin) {
-                const pluginPort = await detectPort(newPort + 1)
+            if (shouldStartBoth || shouldStartOnlyApp) {
                 reporter.print(
-                    `The plugin is now available on port ${pluginPort} at /${paths.pluginLaunchPath}`
+                    `The app ${chalk.bold(
+                        config.name
+                    )} is now available on port ${newPort}`
                 )
                 reporter.print('')
-
-                await Promise.all([
-                    shellStartPromise,
-                    plugin.start({ port: pluginPort }),
-                ])
-            } else {
-                await shellStartPromise
+                startPromises.push(shell.start({ port: newPort }))
             }
+
+            if (shouldStartBoth || shouldStartOnlyPlugin) {
+                reporter.print(
+                    `The plugin is now available on port ${newPort} at /${paths.pluginLaunchPath}`
+                )
+                reporter.print('')
+                const pluginPort = shouldStartBoth ? newPort + 1 : newPort
+                startPromises.push(plugin.start({ port: pluginPort }))
+            }
+
+            await Promise.all(startPromises)
         },
         {
             name: 'start',
@@ -178,6 +185,16 @@ const command = {
             type: 'number',
             description: 'The port to use when running the proxy',
             default: 8080,
+        },
+        // todo: change with Vite
+        app: {
+            type: 'boolean',
+            description:
+                'Start a dev server for just the app entrypoint (instead of both app and plugin, if this app has a plugin)',
+        },
+        plugin: {
+            type: 'boolean',
+            description: 'Start a dev server for just the plugin entrypoint',
         },
     },
     handler,

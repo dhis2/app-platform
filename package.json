@@ -1,6 +1,6 @@
 {
     "name": "root",
-    "version": "11.2.2",
+    "version": "11.3.0",
     "private": true,
     "repository": {
         "type": "git",
