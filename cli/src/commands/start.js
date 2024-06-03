@@ -146,7 +146,7 @@ const handler = async ({
 
             if (!shouldStartApp && !shouldStartPlugin) {
                 throw new Error(
-                    'The requested app/plugin is not configured to start. Check the start script and the configured entrypoints, then try again.'
+                    'The requested app/plugin is not configured to start. Check the flags passed to the start script and the entrypoints configured in d2.config.js, then try again.'
                 )
             }
 
