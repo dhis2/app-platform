@@ -138,14 +138,12 @@ const handler = async ({
             const entryPoints =
                 getOriginalEntrypoints(paths) || config.entryPoints
 
-            const shouldStartBoth =
-                (!shouldStartOnlyApp && !shouldStartOnlyPlugin) ||
-                // it would be weird to use both flags, but start both if so
-                (shouldStartOnlyApp && shouldStartOnlyPlugin)
+            const noFlagsPassed = !shouldStartOnlyApp && !shouldStartOnlyPlugin
             const shouldStartApp =
-                entryPoints.app && (shouldStartBoth || shouldStartOnlyApp)
+                entryPoints.app && (noFlagsPassed || shouldStartOnlyApp)
             const shouldStartPlugin =
-                entryPoints.plugin && (shouldStartBoth || shouldStartOnlyPlugin)
+                entryPoints.plugin && (noFlagsPassed || shouldStartOnlyPlugin)
+
             if (!shouldStartApp && !shouldStartPlugin) {
                 throw new Error(
                     'The requested app/plugin is not configured to start. Check the start script and the configured entrypoints, then try again.'
