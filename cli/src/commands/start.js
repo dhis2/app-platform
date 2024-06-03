@@ -148,7 +148,7 @@ const handler = async ({
                 entryPoints.plugin && (shouldStartBoth || shouldStartOnlyPlugin)
             if (!shouldStartApp && !shouldStartPlugin) {
                 throw new Error(
-                    'Nothing is configured to start. Check the start script and the configured entrypoints, then try again.'
+                    'The requested app/plugin is not configured to start. Check the start script and the configured entrypoints, then try again.'
                 )
             }
 
@@ -164,7 +164,7 @@ const handler = async ({
             }
 
             if (shouldStartPlugin) {
-                const pluginPort = shouldStartBoth ? newPort + 1 : newPort
+                const pluginPort = shouldStartApp ? newPort + 1 : newPort
                 reporter.print(
                     `The plugin is now available on port ${pluginPort} at /${paths.pluginLaunchPath}`
                 )
