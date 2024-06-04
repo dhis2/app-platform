@@ -120,6 +120,7 @@ module.exports = (paths, config, publicUrl) => {
 
         launch_path: shouldIncludeAppLaunchPath ? paths.launchPath : undefined,
         plugin_launch_path: includesPlugin ? paths.pluginLaunchPath : undefined,
+        plugin_type: includesPlugin ? config.pluginType : undefined,
         default_locale: 'en',
         activities: {
             dhis: {

@@ -48,6 +48,18 @@ const validateConfig = (config) => {
             )
         }
     })
+
+    const { pluginType } = config
+    if (pluginType && !/^[A-Z0-9-_]+$/.test(pluginType)) {
+        throw new Error(
+            `Field ${chalk.bold(
+                'pluginType'
+            )} must contain only the characters A-Z (uppercase), 0-9, -, or _. Got: ${chalk.bold(
+                `"${pluginType}"`
+            )}`
+        )
+    }
+
     return true
 }
 
