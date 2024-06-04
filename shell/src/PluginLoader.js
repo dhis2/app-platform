@@ -50,7 +50,7 @@ const PluginInner = ({
     // inner div disables margin collapsing which would prevent computing correct height
     return (
         <div ref={divRef}>
-            <div style={{ display: 'flex', width: 'fitContent' }}>
+            <div>
                 <div id="innerDiv" ref={innerDivRef}>
                     <D2App
                         config={config}
