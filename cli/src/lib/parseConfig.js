@@ -50,11 +50,11 @@ const validateConfig = (config) => {
     })
 
     const { pluginType } = config
-    if (pluginType?.toUpperCase() !== pluginType) {
+    if (pluginType && !/^[A-Z0-9-_]+$/.test(pluginType)) {
         throw new Error(
             `Field ${chalk.bold(
                 'pluginType'
-            )} must be an all-uppercase string. Got: ${chalk.bold(
+            )} must contain only the characters A-Z (uppercase), 0-9, -, or _. Got: ${chalk.bold(
                 `"${pluginType}"`
             )}`
         )
