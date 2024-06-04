@@ -92,7 +92,7 @@ AppAdapter.propTypes = {
     parentAlertsAdd: PropTypes.func,
     plugin: PropTypes.bool,
     pwaEnabled: PropTypes.bool,
-    showAlertsInPlugin: PropTypes.func,
+    showAlertsInPlugin: PropTypes.bool,
     url: PropTypes.string,
     onPluginError: PropTypes.func,
 }

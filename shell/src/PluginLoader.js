@@ -66,7 +66,7 @@ const PluginInner = ({
 PluginInner.propTypes = {
     D2App: PropTypes.object,
     config: PropTypes.object,
-    propsFromParent: PropTypes.array,
+    propsFromParent: PropTypes.object,
     resizePluginHeight: PropTypes.func,
     resizePluginWidth: PropTypes.func,
 }
