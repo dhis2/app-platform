@@ -1,3 +1,10 @@
+## [11.3.1](https://github.com/dhis2/app-platform/compare/v11.3.0...v11.3.1) (2024-06-03)
+
+
+### Bug Fixes
+
+* don't start plugins for apps without a plugin entrypoint ([#850](https://github.com/dhis2/app-platform/issues/850)) ([a89d4cf](https://github.com/dhis2/app-platform/commit/a89d4cf348f7edc0a52b8ab9aacf96f2de939de4))
+
 # [11.3.0](https://github.com/dhis2/app-platform/compare/v11.2.2...v11.3.0) (2024-05-30)
 
 

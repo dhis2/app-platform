@@ -3,6 +3,7 @@ const detectPort = require('detect-port')
 const { compile } = require('../lib/compiler')
 const exitOnCatch = require('../lib/exitOnCatch')
 const generateManifests = require('../lib/generateManifests')
+const { getOriginalEntrypoints } = require('../lib/getOriginalEntrypoints')
 const i18n = require('../lib/i18n')
 const loadEnvFiles = require('../lib/loadEnvFiles')
 const parseConfig = require('../lib/parseConfig')
@@ -129,13 +130,28 @@ const handler = async ({
             reporter.info('Starting development server...')
 
             // start app and/or plugin, depending on flags
-            const shouldStartBoth =
-                (!shouldStartOnlyApp && !shouldStartOnlyPlugin) ||
-                // it would be weird to use both flags, but start both if so
-                (shouldStartOnlyApp && shouldStartOnlyPlugin)
-            const startPromises = []
 
-            if (shouldStartBoth || shouldStartOnlyApp) {
+            // entryPoints.app is populated by default -- get the app's raw
+            // entry points from the d2.config.js file to tell if there is an
+            // app entrypoint configured (and fall back to the whatever we do
+            // have available)
+            const entryPoints =
+                getOriginalEntrypoints(paths) || config.entryPoints
+
+            const noFlagsPassed = !shouldStartOnlyApp && !shouldStartOnlyPlugin
+            const shouldStartApp =
+                entryPoints.app && (noFlagsPassed || shouldStartOnlyApp)
+            const shouldStartPlugin =
+                entryPoints.plugin && (noFlagsPassed || shouldStartOnlyPlugin)
+
+            if (!shouldStartApp && !shouldStartPlugin) {
+                throw new Error(
+                    'The requested app/plugin is not configured to start. Check the flags passed to the start script and the entrypoints configured in d2.config.js, then try again.'
+                )
+            }
+
+            const startPromises = []
+            if (shouldStartApp) {
                 reporter.print(
                     `The app ${chalk.bold(
                         config.name
@@ -145,12 +161,12 @@ const handler = async ({
                 startPromises.push(shell.start({ port: newPort }))
             }
 
-            if (shouldStartBoth || shouldStartOnlyPlugin) {
+            if (shouldStartPlugin) {
+                const pluginPort = shouldStartApp ? newPort + 1 : newPort
                 reporter.print(
-                    `The plugin is now available on port ${newPort} at /${paths.pluginLaunchPath}`
+                    `The plugin is now available on port ${pluginPort} at /${paths.pluginLaunchPath}`
                 )
                 reporter.print('')
-                const pluginPort = shouldStartBoth ? newPort + 1 : newPort
                 startPromises.push(plugin.start({ port: pluginPort }))
             }
 
