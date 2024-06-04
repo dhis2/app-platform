@@ -1,3 +1,10 @@
+# [11.4.0](https://github.com/dhis2/app-platform/compare/v11.3.1...v11.4.0) (2024-06-04)
+
+
+### Features
+
+* parse pluginType from d2 config to add to manifest.webapp ([#849](https://github.com/dhis2/app-platform/issues/849)) ([c1dae23](https://github.com/dhis2/app-platform/commit/c1dae238b92183922962811a52ab50d1b73e7995))
+
 ## [11.3.1](https://github.com/dhis2/app-platform/compare/v11.3.0...v11.3.1) (2024-06-03)
 
 
