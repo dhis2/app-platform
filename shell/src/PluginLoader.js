@@ -196,7 +196,7 @@ export const PluginLoader = ({ config, requiredProps, D2App }) => {
         >
             <React.Suspense
                 fallback={
-                    <Layer translucent level={layers.alert}>
+                    <Layer level={layers.alert}>
                         <CenteredContent>
                             <CircularLoader />
                         </CenteredContent>
