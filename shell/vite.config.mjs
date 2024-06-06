@@ -13,6 +13,8 @@ import dynamicImport from 'vite-plugin-dynamic-import'
  *
  * NB: State-preserving HMR will not work on React components unless they have
  * a .jsx or .tsx extension though, unfortunately
+ * 
+ * todo: deprecate
  */
 const jsxInJSPlugin = {
     name: 'treat-js-files-as-jsx',
@@ -20,6 +22,7 @@ const jsxInJSPlugin = {
         if (!id.match(/src\/.*\.js$/)) {
             return null
         }
+        // todo: consider JSX warning if </ or />
         // Use the exposed transform from vite, instead of directly
         // transforming with esbuild
         return transformWithEsbuild(code, id, {
@@ -53,14 +56,17 @@ const handleAssetFileNames = ({ name }) => {
 
 // https://vitejs.dev/config/
 export default defineConfig(({ mode }) => {
-    // Set up env vars to support consumers of existing REACT_APP_DHIS2_APP_
-    // env vars:
     // https://vitejs.dev/config/#using-environment-variables-in-config
-    const env = loadEnv(mode, process.cwd(), ['REACT_APP', 'NODE_ENV', 'PORT'])
+    const env = loadEnv(mode, process.cwd(), ['DHIS2_', 'REACT_APP_', 'NODE_ENV', 'PORT'])
+
+    // Setting up process.env replacements for backwards compatibility:
     // Use individual properties for drop-in replacements instead of a whole
-    // object, which allows for better code trimming optimizations
+    // object, which allows for better dead code elimination
     const defineOptions = {}
-    Object.entries(env).forEach(([key, val]) => {
+    Object.entries(env)
+        // Don't expose "just DHIS2"-prefixed env vars on process.env
+        .filter(([key]) => !key.startsWith('DHIS2_'))
+        .forEach(([key, val]) => {
         defineOptions[`process.env.${key}`] = JSON.stringify(val)
     })
 
@@ -71,13 +77,16 @@ export default defineConfig(({ mode }) => {
         // Works for both dev and production.
         base: './',
 
-        // Change default ENV prefix from VITE_ to be backward compatible with
-        // CRA -- this populates things like %REACT_APP_...% in index.html
+        // Expose env vars with DHIS2_ prefix in index.html and on
+        // import.meta.env -- process.env.REACT_APP_DHIS2_... variables should
+        // migrate to the import.meta.env format
         // https://vitejs.dev/config/shared-options.html#envprefix
-        envPrefix: 'REACT_APP',
+        envPrefix: 'DHIS2_',
 
-        // Need to add vars on process.env here -- drop-in replacement
-        // (adding env vars to import.meta is the default for vite)
+        // For backwards compatibility, add REACT_APP_DHIS2_... env vars
+        // to process.env. They will be statically replaced at build time
+        // This will be removed in future versions
+        // todo: deprecate in favor of import.meta.env
         define: defineOptions,
 
         // Start the server at 3000 or a configured port

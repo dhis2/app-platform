@@ -35,6 +35,8 @@ module.exports = ({ port, ...vars }) => {
             ...filterEnv(),
             ...makeShellEnv(vars),
         }),
+        ...filterEnv(),
+        ...makeShellEnv(vars),
         PORT: port,
         PUBLIC_URL: process.env.PUBLIC_URL,
     }
