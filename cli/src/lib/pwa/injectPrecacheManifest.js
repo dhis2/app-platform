@@ -36,25 +36,24 @@ function logManifestOutput({ count, filePaths, size, warnings }) {
  * `workbox-build`.
  */
 module.exports = function injectPrecacheManifest(paths, config) {
-    // See https://developers.google.com/web/tools/workbox/reference-docs/latest/module-workbox-build#.injectManifest
+    // See https://developer.chrome.com/docs/workbox/modules/workbox-build#injectmanifest_mode
     const injectManifestOptions = {
         swSrc: paths.shellBuildServiceWorker,
         swDest: paths.shellBuildServiceWorker,
         globDirectory: paths.shellBuildOutput,
         globPatterns: ['**/*'],
-        // Skip index.html, (plugin.html,) and `static` directory;
-        // CRA's workbox-webpack-plugin handles it smartly
         globIgnores: [
-            'static/**/*',
-            paths.launchPath,
-            paths.pluginLaunchPath,
+            // skip moment locales -- they result in many network requests and
+            // slow down service worker installation
+            '**/moment-locales/*',
+            '**/*.map',
             ...config.pwa.caching.globsToOmitFromPrecache,
         ],
         additionalManifestEntries: config.pwa.caching.additionalManifestEntries,
-        injectionPoint: 'self.__WB_BUILD_MANIFEST',
+        injectionPoint: 'self.__WB_MANIFEST',
         // Skip revision hashing for files with hash or semver in name:
-        // (see https://regex101.com/r/z4Hy9k/1/ for RegEx details)
-        dontCacheBustURLsMatching: /\.[a-z0-9]{8}\.|\d+\.\d+\.\d+/,
+        // (see https://regex101.com/r/z4Hy9k/3/ for RegEx details)
+        dontCacheBustURLsMatching: /[.-][A-Za-z0-9-_]{8}\.|\d+\.\d+\.\d+/,
     }
 
     return injectManifest(injectManifestOptions).then(logManifestOutput)

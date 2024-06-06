@@ -33,8 +33,13 @@ function stringifyPatterns(patternsList) {
  * @param {Object} config
  */
 function getPWAEnvVars(config) {
-    if (!isApp(config.type) || !config.pwa.enabled) {
+    if (!isApp(config.type)) {
         return null
+    }
+    if (!config.pwa.enabled) {
+        // Explicitly adding this value to the env helps pare down code in
+        // non-PWA apps when doing static bundle analysis
+        return { pwa_enabled: 'false' }
     }
     return {
         pwa_enabled: JSON.stringify(config.pwa.enabled),

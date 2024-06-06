@@ -10,14 +10,11 @@ const {
     createAppEntrypointWrapper,
     createPluginEntrypointWrapper,
 } = require('./entrypoints.js')
-const {
-    extensionPattern,
-    normalizeExtension,
-} = require('./extensionHelpers.js')
+const { extensionPattern } = require('./extensionHelpers.js')
 
 const watchFiles = ({ inputDir, outputDir, processFileCallback, watch }) => {
     const compileFile = async (source) => {
-        const relative = normalizeExtension(path.relative(inputDir, source))
+        const relative = path.relative(inputDir, source)
         const destination = path.join(outputDir, relative)
         reporter.debug(
             `File ${relative} changed or added... dest: `,
@@ -125,7 +122,8 @@ const compile = async ({
         watchFiles({
             inputDir: paths.src,
             outputDir: outDir,
-            processFileCallback: compileFile,
+            // todo: handle lib compilations with Vite
+            processFileCallback: isAppType ? copyFile : compileFile,
             watch,
         }),
         isAppType &&

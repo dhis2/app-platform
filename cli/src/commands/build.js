@@ -10,7 +10,7 @@ const parseConfig = require('../lib/parseConfig')
 const { isApp } = require('../lib/parseConfig')
 const makePaths = require('../lib/paths')
 const makePlugin = require('../lib/plugin')
-const { injectPrecacheManifest } = require('../lib/pwa')
+const { injectPrecacheManifest, compileServiceWorker } = require('../lib/pwa')
 const makeShell = require('../lib/shell')
 const { validatePackage } = require('../lib/validatePackage')
 const { handler: pack } = require('./pack.js')
@@ -139,6 +139,9 @@ const handler = async ({
                 }
 
                 if (config.pwa.enabled) {
+                    reporter.info('Compiling service worker...')
+                    await compileServiceWorker({ config, paths, mode })
+
                     reporter.info(
                         'Injecting supplementary precache manifest...'
                     )

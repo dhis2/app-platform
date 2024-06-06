@@ -1,7 +1,7 @@
 import { CssReset } from '@dhis2/ui'
 import React from 'react'
 import ReactDOM from 'react-dom'
-import Plugin from './Plugin.js'
+import Plugin from './Plugin.jsx'
 import 'typeface-roboto'
 import './index.css'
 

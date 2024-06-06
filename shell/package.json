@@ -2,7 +2,7 @@
     "name": "@dhis2/app-shell",
     "version": "11.2.2",
     "engines": {
-        "node": ">=14"
+        "node": "^18.0.0 || >=20.0.0"
     },
     "repository": {
         "type": "git",
@@ -20,24 +20,24 @@
         "@dhis2/d2-i18n": "^1.1.1",
         "@dhis2/pwa": "11.2.2",
         "@dhis2/ui": "^9.4.4",
+        "@vitejs/plugin-react": "^4.2.1",
         "classnames": "^2.2.6",
         "moment": "^2.29.1",
         "post-robot": "^10.0.46",
         "prop-types": "^15.7.2",
         "react": "^16.8.6",
         "react-dom": "^16.8.6",
-        "react-scripts": "^5.0.1",
         "source-map-explorer": "^2.1.0",
         "styled-jsx": "^4.0.1",
         "typeface-roboto": "^0.0.75",
-        "typescript": "^3.6.3"
+        "typescript": "^3.6.3",
+        "vite": "^5.2.9",
+        "vite-plugin-dynamic-import": "^1.5.0"
     },
     "scripts": {
-        "start": "react-scripts start",
-        "build": "react-scripts build",
-        "test": "react-scripts test",
-        "eject": "react-scripts eject",
-        "analyze": "source-map-explorer 'build/static/js/*.js'"
+        "start": "vite",
+        "build": "vite build",
+        "analyze": "source-map-explorer 'build/assets/*.js'"
     },
     "devDependencies": {
         "enzyme": "^3.10.0",

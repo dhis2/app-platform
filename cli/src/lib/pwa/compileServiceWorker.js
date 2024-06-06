@@ -10,10 +10,9 @@ const getPWAEnvVars = require('./getPWAEnvVars')
  * dir for use with a dev server. In production mode, compiles a minified
  * service worker and outputs it into the apps `build` dir.
  *
- * Currently used only for 'dev' SWs, since CRA handles production bundling.
- * TODO: Use this for production bundling as well, which gives greater control
- * over 'injectManifest' configuration (CRA omits files > 2MB) and bundling
- * options.
+ * This could be migrated to a Vite config. Note that it still needs to be
+ * separate from the main app's Vite build because the SW needs a
+ * single-file IIFE output
  *
  * @param {Object} param0
  * @param {Object} param0.config - d2 app config
@@ -23,22 +22,22 @@ const getPWAEnvVars = require('./getPWAEnvVars')
  */
 function compileServiceWorker({ config, paths, mode }) {
     // Choose appropriate destination for compiled SW based on 'mode'
-    const outputPath =
-        mode === 'production'
-            ? paths.shellBuildServiceWorker
-            : paths.shellPublicServiceWorker
+    const isProduction = mode === 'production'
+    const outputPath = isProduction
+        ? paths.shellBuildServiceWorker
+        : paths.shellPublicServiceWorker
     const { dir: outputDir, base: outputFilename } = path.parse(outputPath)
 
     // This is part of a bit of a hacky way to provide the same env vars to dev
     // SWs as in production by adding them to `process.env` using the plugin
     // below.
-    // TODO: This could be cleaner if the production SW is built in the same
-    // way instead of using the CRA webpack config, so both can more easily
-    // share environment variables.
+    // TODO: This could be refactored to be simpler now that we're not using
+    // CRA to build the service worker
     const env = getEnv({ name: config.title, ...getPWAEnvVars(config) })
 
     const webpackConfig = {
         mode, // "production" or "development"
+        devtool: isProduction ? false : 'source-map',
         entry: paths.shellSrcServiceWorker,
         output: {
             path: outputDir,
