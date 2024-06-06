@@ -1,3 +1,10 @@
+## [11.4.1](https://github.com/dhis2/app-platform/compare/v11.4.0...v11.4.1) (2024-06-06)
+
+
+### Bug Fixes
+
+* clean up for plugins [LIBS-620] ([#851](https://github.com/dhis2/app-platform/issues/851)) ([13af3b5](https://github.com/dhis2/app-platform/commit/13af3b5ee862ea4b7952c6a9199505cfe6a1bdaa))
+
 # [11.4.0](https://github.com/dhis2/app-platform/compare/v11.3.1...v11.4.0) (2024-06-04)
 
 
