@@ -50,7 +50,7 @@ const PluginInner = ({
     // inner div disables margin collapsing which would prevent computing correct height
     return (
         <div ref={divRef}>
-            <div style={{ display: 'flex', width: 'fitContent' }}>
+            <div>
                 <div id="innerDiv" ref={innerDivRef}>
                     <D2App
                         config={config}
@@ -66,7 +66,7 @@ const PluginInner = ({
 PluginInner.propTypes = {
     D2App: PropTypes.object,
     config: PropTypes.object,
-    propsFromParent: PropTypes.array,
+    propsFromParent: PropTypes.object,
     resizePluginHeight: PropTypes.func,
     resizePluginWidth: PropTypes.func,
 }
@@ -196,7 +196,7 @@ export const PluginLoader = ({ config, requiredProps, D2App }) => {
         >
             <React.Suspense
                 fallback={
-                    <Layer translucent level={layers.alert}>
+                    <Layer level={layers.alert}>
                         <CenteredContent>
                             <CircularLoader />
                         </CenteredContent>

@@ -1,56 +1,30 @@
-# [12.0.0-alpha.1](https://github.com/dhis2/app-platform/compare/v11.2.2...v12.0.0-alpha.1) (2024-06-06)
+## [11.4.1](https://github.com/dhis2/app-platform/compare/v11.4.0...v11.4.1) (2024-06-06)
+
+
+### Bug Fixes
+
+* clean up for plugins [LIBS-620] ([#851](https://github.com/dhis2/app-platform/issues/851)) ([13af3b5](https://github.com/dhis2/app-platform/commit/13af3b5ee862ea4b7952c6a9199505cfe6a1bdaa))
+
+# [11.4.0](https://github.com/dhis2/app-platform/compare/v11.3.1...v11.4.0) (2024-06-04)
 
 
 ### Features
 
-* replace CRA with Vite [LIBS-598] ([#847](https://github.com/dhis2/app-platform/issues/847)) ([3dd0e59](https://github.com/dhis2/app-platform/commit/3dd0e5938dda443751cb1a5627226a6ecf13377c))
+* parse pluginType from d2 config to add to manifest.webapp ([#849](https://github.com/dhis2/app-platform/issues/849)) ([c1dae23](https://github.com/dhis2/app-platform/commit/c1dae238b92183922962811a52ab50d1b73e7995))
+
+## [11.3.1](https://github.com/dhis2/app-platform/compare/v11.3.0...v11.3.1) (2024-06-03)
 
 
-### BREAKING CHANGES
+### Bug Fixes
 
-* Supported Node versions are 18.x or 20+
+* don't start plugins for apps without a plugin entrypoint ([#850](https://github.com/dhis2/app-platform/issues/850)) ([a89d4cf](https://github.com/dhis2/app-platform/commit/a89d4cf348f7edc0a52b8ab9aacf96f2de939de4))
 
-* ci: upgrade Node version
+# [11.3.0](https://github.com/dhis2/app-platform/compare/v11.2.2...v11.3.0) (2024-05-30)
 
-* fix: always add PWA_ENABLED to app env for better static analysis
 
-* chore: pause precache manifest injection
+### Features
 
-* fix: building SW without CRA
-
-* chore: comment update
-
-* fix: group moment locales in their own dir
-
-* refactor: clean up precache injection
-
-* fix: locale utils and handling moment in jest
-
-* fix: compile correctly after merging changes
-
-* chore: comment in compile.js
-
-* chore: some clean-up
-
-* chore: comments
-
-* fix: use port 3000 for the dev server
-
-* fix: improve moment locale chunk naming
-
-* chore: remove CRA
-
-* fix: use mjs build of Vite
-
-* fix: bump cli-style for CRA fix
-
-* feat: use interactive dev server output from Vite
-
-* fix: make dev server port configurable
-
-* chore: remove old index.html
-
-* fix: env tweaks
+* start plugin and app separately [LIBS-391] [LIBS-392] ([#848](https://github.com/dhis2/app-platform/issues/848)) ([82003e7](https://github.com/dhis2/app-platform/commit/82003e73fce995a83318c623da6028d9975e6686))
 
 ## [11.2.2](https://github.com/dhis2/app-platform/compare/v11.2.1...v11.2.2) (2024-05-06)
 
