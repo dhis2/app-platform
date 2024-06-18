@@ -40,8 +40,8 @@ const loginWithNewEndpoints = async ({
         await postJSON(
             `${server}/api/auth/login`,
             JSON.stringify({
-                username: encodeURIComponent(username),
-                password: encodeURIComponent(password),
+                username,
+                password,
             })
         )
         window.location.reload()
