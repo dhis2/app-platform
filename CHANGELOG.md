@@ -1,3 +1,10 @@
+## [11.4.2](https://github.com/dhis2/app-platform/compare/v11.4.1...v11.4.2) (2024-06-18)
+
+
+### Bug Fixes
+
+* do not encode username, password ([#852](https://github.com/dhis2/app-platform/issues/852)) ([2fb4272](https://github.com/dhis2/app-platform/commit/2fb4272130000b383c91d46ba1b3dac44bb13ebf))
+
 ## [11.4.1](https://github.com/dhis2/app-platform/compare/v11.4.0...v11.4.1) (2024-06-06)
 
 
