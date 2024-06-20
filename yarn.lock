@@ -1954,11 +1954,11 @@
     classnames "^2.3.1"
     prop-types "^15.7.2"
 
-"@dhis2/app-adapter@12.0.0-alpha.1", "@dhis2/app-adapter@file:/home/runner/work/app-platform/app-platform/adapter":
-  version "12.0.0-alpha.1"
+"@dhis2/app-adapter@12.0.0-alpha.2", "@dhis2/app-adapter@file:/home/runner/work/app-platform/app-platform/adapter":
+  version "12.0.0-alpha.2"
   resolved "file:adapter"
   dependencies:
-    "@dhis2/pwa" "12.0.0-alpha.1"
+    "@dhis2/pwa" "12.0.0-alpha.2"
     moment "^2.24.0"
 
 "@dhis2/app-runtime@*", "@dhis2/app-runtime@^3", "@dhis2/app-runtime@^3.10.4":
@@ -2003,14 +2003,14 @@
   dependencies:
     post-robot "^10.0.46"
 
-"@dhis2/app-shell@12.0.0-alpha.1", "@dhis2/app-shell@file:/home/runner/work/app-platform/app-platform/shell":
-  version "12.0.0-alpha.1"
+"@dhis2/app-shell@12.0.0-alpha.2", "@dhis2/app-shell@file:/home/runner/work/app-platform/app-platform/shell":
+  version "12.0.0-alpha.2"
   resolved "file:shell"
   dependencies:
-    "@dhis2/app-adapter" "12.0.0-alpha.1"
+    "@dhis2/app-adapter" "12.0.0-alpha.2"
     "@dhis2/app-runtime" "^3.10.4"
     "@dhis2/d2-i18n" "^1.1.1"
-    "@dhis2/pwa" "12.0.0-alpha.1"
+    "@dhis2/pwa" "12.0.0-alpha.2"
     "@dhis2/ui" "^9.4.4"
     "@vitejs/plugin-react" "^4.2.1"
     classnames "^2.2.6"
@@ -2026,8 +2026,8 @@
     vite "^5.2.9"
     vite-plugin-dynamic-import "^1.5.0"
 
-"@dhis2/cli-app-scripts@12.0.0-alpha.1", "@dhis2/cli-app-scripts@file:/home/runner/work/app-platform/app-platform/cli":
-  version "12.0.0-alpha.1"
+"@dhis2/cli-app-scripts@12.0.0-alpha.2", "@dhis2/cli-app-scripts@file:/home/runner/work/app-platform/app-platform/cli":
+  version "12.0.0-alpha.2"
   resolved "file:cli"
   dependencies:
     "@babel/core" "^7.6.2"
@@ -2037,7 +2037,7 @@
     "@babel/preset-env" "^7.14.7"
     "@babel/preset-react" "^7.0.0"
     "@babel/preset-typescript" "^7.6.0"
-    "@dhis2/app-shell" "12.0.0-alpha.1"
+    "@dhis2/app-shell" "12.0.0-alpha.2"
     "@dhis2/cli-helpers-engine" "^3.2.2"
     "@jest/core" "^27.0.6"
     "@pmmmwh/react-refresh-webpack-plugin" "^0.5.4"
@@ -2197,8 +2197,8 @@
   resolved "https://registry.npmjs.org/@dhis2/prop-types/-/prop-types-3.1.2.tgz"
   integrity sha512-eM0jjLOWvtXWqSFp5YC4DHFpkP8Y1D2eUwGV7MBWjni+o27oesVan+oT7WHeOeLdlAd4acRJrnaaAyB4Ck1wGQ==
 
-"@dhis2/pwa@12.0.0-alpha.1", "@dhis2/pwa@file:/home/runner/work/app-platform/app-platform/pwa":
-  version "12.0.0-alpha.1"
+"@dhis2/pwa@12.0.0-alpha.2", "@dhis2/pwa@file:/home/runner/work/app-platform/app-platform/pwa":
+  version "12.0.0-alpha.2"
   resolved "file:pwa"
   dependencies:
     idb "^6.0.0"
@@ -10591,7 +10591,7 @@ punycode@^2.1.0, punycode@^2.1.1:
   integrity sha512-XRsRjdf+j5ml+y/6GKHPZbrF/8p2Yga0JPtdqTIY2Xe5ohJPD9saDJJLPvp9+NSBprVvevdXZybnj2cv8OEd0A==
 
 "pwa-app@file:/home/runner/work/app-platform/app-platform/examples/pwa-app":
-  version "12.0.0-alpha.1"
+  version "12.0.0-alpha.2"
   resolved "file:examples/pwa-app"
 
 q@^1.5.1:
@@ -11714,7 +11714,7 @@ signal-exit@^3.0.0, signal-exit@^3.0.2, signal-exit@^3.0.3:
   integrity sha512-wnD2ZE+l+SPC/uoS0vXeE9L1+0wuaMqKlfz9AMUo38JsyLSBWSFcHR1Rri62LZc12vLr1gb3jl7iwQhgwpAbGQ==
 
 "simple-app@file:/home/runner/work/app-platform/app-platform/examples/simple-app":
-  version "12.0.0-alpha.1"
+  version "12.0.0-alpha.2"
   resolved "file:examples/simple-app"
 
 sisteransi@^1.0.5:

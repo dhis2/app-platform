@@ -1,3 +1,18 @@
+# [12.0.0-alpha.2](https://github.com/dhis2/app-platform/compare/v12.0.0-alpha.1...v12.0.0-alpha.2) (2024-06-20)
+
+
+### Bug Fixes
+
+* clean up for plugins [LIBS-620] ([#851](https://github.com/dhis2/app-platform/issues/851)) ([13af3b5](https://github.com/dhis2/app-platform/commit/13af3b5ee862ea4b7952c6a9199505cfe6a1bdaa))
+* do not encode username, password ([#852](https://github.com/dhis2/app-platform/issues/852)) ([2fb4272](https://github.com/dhis2/app-platform/commit/2fb4272130000b383c91d46ba1b3dac44bb13ebf))
+* don't start plugins for apps without a plugin entrypoint ([#850](https://github.com/dhis2/app-platform/issues/850)) ([a89d4cf](https://github.com/dhis2/app-platform/commit/a89d4cf348f7edc0a52b8ab9aacf96f2de939de4))
+
+
+### Features
+
+* parse pluginType from d2 config to add to manifest.webapp ([#849](https://github.com/dhis2/app-platform/issues/849)) ([c1dae23](https://github.com/dhis2/app-platform/commit/c1dae238b92183922962811a52ab50d1b73e7995))
+* start plugin and app separately [LIBS-391] [LIBS-392] ([#848](https://github.com/dhis2/app-platform/issues/848)) ([82003e7](https://github.com/dhis2/app-platform/commit/82003e73fce995a83318c623da6028d9975e6686))
+
 ## [11.4.2](https://github.com/dhis2/app-platform/compare/v11.4.1...v11.4.2) (2024-06-18)
 
 
