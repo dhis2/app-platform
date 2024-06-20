@@ -3,6 +3,7 @@ const detectPort = require('detect-port')
 const { compile } = require('../lib/compiler')
 const exitOnCatch = require('../lib/exitOnCatch')
 const generateManifests = require('../lib/generateManifests')
+const { getOriginalEntrypoints } = require('../lib/getOriginalEntrypoints')
 const i18n = require('../lib/i18n')
 const loadEnvFiles = require('../lib/loadEnvFiles')
 const parseConfig = require('../lib/parseConfig')
@@ -23,6 +24,8 @@ const handler = async ({
     shell: shellSource,
     proxy,
     proxyPort,
+    app: shouldStartOnlyApp,
+    plugin: shouldStartOnlyPlugin,
 }) => {
     const paths = makePaths(cwd)
 
@@ -123,30 +126,49 @@ const handler = async ({
 
             reporter.print('')
             reporter.info('Starting development server...')
-            reporter.print(
-                `The app ${chalk.bold(
-                    config.name
-                )} is now available on port ${newPort}`
-            )
-            reporter.print('')
 
-            // todo: split up app and plugin starts
-            const shellStartPromise = shell.start({ port: newPort })
+            // start app and/or plugin, depending on flags
 
-            if (config.entryPoints.plugin) {
-                const pluginPort = await detectPort(newPort + 1)
+            // entryPoints.app is populated by default -- get the app's raw
+            // entry points from the d2.config.js file to tell if there is an
+            // app entrypoint configured (and fall back to the whatever we do
+            // have available)
+            const entryPoints =
+                getOriginalEntrypoints(paths) || config.entryPoints
+
+            const noFlagsPassed = !shouldStartOnlyApp && !shouldStartOnlyPlugin
+            const shouldStartApp =
+                entryPoints.app && (noFlagsPassed || shouldStartOnlyApp)
+            const shouldStartPlugin =
+                entryPoints.plugin && (noFlagsPassed || shouldStartOnlyPlugin)
+
+            if (!shouldStartApp && !shouldStartPlugin) {
+                throw new Error(
+                    'The requested app/plugin is not configured to start. Check the flags passed to the start script and the entrypoints configured in d2.config.js, then try again.'
+                )
+            }
+
+            const startPromises = []
+            if (shouldStartApp) {
+                reporter.print(
+                    `The app ${chalk.bold(
+                        config.name
+                    )} is now available on port ${newPort}`
+                )
+                reporter.print('')
+                startPromises.push(shell.start({ port: newPort }))
+            }
+
+            if (shouldStartPlugin) {
+                const pluginPort = shouldStartApp ? newPort + 1 : newPort
                 reporter.print(
                     `The plugin is now available on port ${pluginPort} at /${paths.pluginLaunchPath}`
                 )
                 reporter.print('')
-
-                await Promise.all([
-                    shellStartPromise,
-                    plugin.start({ port: pluginPort }),
-                ])
-            } else {
-                await shellStartPromise
+                startPromises.push(plugin.start({ port: pluginPort }))
             }
+
+            await Promise.all(startPromises)
         },
         {
             name: 'start',
@@ -177,6 +199,16 @@ const command = {
             type: 'number',
             description: 'The port to use when running the proxy',
             default: 8080,
+        },
+        // todo: change with Vite
+        app: {
+            type: 'boolean',
+            description:
+                'Start a dev server for just the app entrypoint (instead of both app and plugin, if this app has a plugin)',
+        },
+        plugin: {
+            type: 'boolean',
+            description: 'Start a dev server for just the plugin entrypoint',
         },
     },
     handler,
