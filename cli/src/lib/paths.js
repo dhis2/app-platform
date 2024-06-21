@@ -61,6 +61,7 @@ module.exports = (cwd = process.cwd()) => {
         shellAppEntrypoint: path.join(base, './.d2/shell/src/App.jsx'),
         shellAppDirname,
         shellApp: path.join(base, `./.d2/shell/${shellAppDirname}`),
+        shellIndexHtml: path.join(base, './.d2/shell/index.html'),
         shellPluginBundleEntrypoint: path.join(
             base,
             './.d2/shell/src/plugin.index.jsx'

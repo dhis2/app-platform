@@ -7,6 +7,7 @@ module.exports = ({ config, paths }) => {
     const baseEnvVars = {
         name: config.title,
         version: config.version,
+        // todo: only add this if true
         loginApp: config.type === 'login_app',
     }
 
@@ -18,6 +19,7 @@ module.exports = ({ config, paths }) => {
         bootstrap: async (args = {}) => {
             await bootstrap(paths, args)
         },
+        env: getEnv({ ...baseEnvVars, ...getPWAEnvVars(config) }),
 
         build: async () => {
             await exec({
@@ -31,7 +33,11 @@ module.exports = ({ config, paths }) => {
         start: async ({ port }) => {
             await exec({
                 cmd: 'yarn',
-                args: ['start'],
+                args: [
+                    'start',
+                    '-c',
+                    require.resolve('../../../config/vite.config.mjs'),
+                ],
                 cwd: paths.shell,
                 env: getEnv({ ...baseEnvVars, port, ...getPWAEnvVars(config) }),
                 // this option allows the colorful and interactive output from Vite:

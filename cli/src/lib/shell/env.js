@@ -31,12 +31,15 @@ const makeShellEnv = (vars) =>
 
 module.exports = ({ port, ...vars }) => {
     const env = {
+        // Legacy env vars; deprecated
         ...prefixEnvForCRA({
             ...filterEnv(),
             ...makeShellEnv(vars),
         }),
+        // New form for env vars: import.meta.env.DHIS2_etc
         ...filterEnv(),
         ...makeShellEnv(vars),
+        // todo: remove?
         PORT: port,
         PUBLIC_URL: process.env.PUBLIC_URL,
     }

@@ -148,6 +148,16 @@ const handler = async ({
                 )
             }
 
+            // These imports are done asynchronously to allow Vite to use its
+            // ESM build of its Node API (the CJS build will be removed in v6)
+            // https://vitejs.dev/guide/troubleshooting.html#vite-cjs-node-api-deprecated
+            const { createServer } = await import('vite')
+            const { default: createConfig } = await import(
+                '../../config/makeViteConfig.mjs'
+            )
+            const viteConfig = createConfig({ paths, env: shell.env })
+            const server = await createServer(viteConfig)
+
             const startPromises = []
             if (shouldStartApp) {
                 reporter.print(
@@ -156,9 +166,13 @@ const handler = async ({
                     )} is now available on port ${newPort}`
                 )
                 reporter.print('')
-                startPromises.push(shell.start({ port: newPort }))
+                startPromises.push(server.listen({ port: newPort }))
+
+                // TODO: remove
+                // startPromises.push(shell.start({ port: newPort }))
             }
 
+            // TODO: just use the Vite server
             if (shouldStartPlugin) {
                 const pluginPort = shouldStartApp ? newPort + 1 : newPort
                 reporter.print(
@@ -169,6 +183,8 @@ const handler = async ({
             }
 
             await Promise.all(startPromises)
+            server.printUrls()
+            server.bindCLIShortcuts({ print: true })
         },
         {
             name: 'start',
