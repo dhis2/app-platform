@@ -1,3 +1,10 @@
+# [11.5.0](https://github.com/dhis2/app-platform/compare/v11.4.3...v11.5.0) (2024-06-24)
+
+
+### Features
+
+* cleanup plugin error boundary [UX-136] ([#856](https://github.com/dhis2/app-platform/issues/856)) ([de252fe](https://github.com/dhis2/app-platform/commit/de252fef91c5037b8b1c238ce25c7e3b90f7c20e))
+
 ## [11.4.3](https://github.com/dhis2/app-platform/compare/v11.4.2...v11.4.3) (2024-06-24)
 
 
