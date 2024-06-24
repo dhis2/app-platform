@@ -119,7 +119,7 @@ export default ({ paths, env }) => {
             outDir: 'build', // todo: new path here
             rollupOptions: {
                 input: {
-                    main: paths.shellIndexHtml + 'asdf', // ! lol why does this work?
+                    main: paths.shellIndexHtml,
                     // TODO: Dynamically build a plugin, based on context
                     // plugin: resolve(__dirname, 'plugin.html'),
                 },

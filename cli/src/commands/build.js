@@ -129,10 +129,18 @@ const handler = async ({
                 reporter.info('Generating manifests...')
                 await generateManifests(paths, config, process.env.PUBLIC_URL)
 
-                // CRA Manages service worker compilation here
                 reporter.info('Building appShell...')
-                await shell.build()
+                // These imports are done asynchronously to allow Vite to use its
+                // ESM build of its Node API (the CJS build will be removed in v6)
+                // https://vitejs.dev/guide/troubleshooting.html#vite-cjs-node-api-deprecated
+                const { build } = await import('vite')
+                const { default: createConfig } = await import(
+                    '../../config/makeViteConfig.mjs'
+                )
+                const viteConfig = createConfig({ paths, env: shell.env })
+                await build(viteConfig)
 
+                // todo:
                 if (config.entryPoints.plugin) {
                     reporter.info('Building plugin...')
                     await plugin.build()
