@@ -1,3 +1,10 @@
+## [11.4.3](https://github.com/dhis2/app-platform/compare/v11.4.2...v11.4.3) (2024-06-24)
+
+
+### Bug Fixes
+
+* small text change in changelog ([824dd2f](https://github.com/dhis2/app-platform/commit/824dd2f877d03a7c4d492dff8999e72421297165))
+
 ## [11.4.2](https://github.com/dhis2/app-platform/compare/v11.4.1...v11.4.2) (2024-06-18)
 
 
