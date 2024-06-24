@@ -6,7 +6,8 @@ const bgColor = '#F4F6F8',
     secondaryTextColor = '#494949',
     errorColor = '#D32F2F',
     grey050 = '#FBFCFD',
-    red200 = '#ffcdd2'
+    grey100 = '#F8F9FA',
+    grey600 = '#6C7787'
 
 export default css`
     .mask {
@@ -103,10 +104,28 @@ export default css`
     }
 
     .pluginBoundary {
-        background-color: ${red200};
+        background-color: ${grey100};
+        height: 100vh;
+        width: 100vw;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding-block-start: 16px;
     }
 
-    .pluginBoundary span {
-        display: inline-block;
+    .pluginErrorMessage {
+        margin-block-start: 8px;
+        color: ${grey600};
+    }
+
+    .pluginErrorCopy {
+        margin-block-start: 8px;
+        color: ${grey600};
+        text-decoration: underline;
+        font-size: 14px;
+    }
+
+    .pluginRetry {
+        margin-block-start: 16px;
     }
 `
