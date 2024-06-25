@@ -7,8 +7,8 @@ import {
 import { Button, ButtonStrip } from '@dhis2/ui'
 import PropTypes from 'prop-types'
 import React from 'react'
-import LoadingMask from './LoadingMask.js'
-import VisualizationsList from './VisualizationsList.js'
+import LoadingMask from './LoadingMask.jsx'
+import VisualizationsList from './VisualizationsList.jsx'
 
 // Demonstrates the offline service APIs
 

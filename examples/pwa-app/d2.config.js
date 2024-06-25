@@ -12,9 +12,9 @@ const config = {
     },
 
     entryPoints: {
-        app: './src/App.js',
+        app: './src/App.jsx',
         // Uncomment this to test plugin builds:
-        // plugin: './src/components/VisualizationsList.js',
+        plugin: './src/components/VisualizationsList.jsx',
     },
 
     // pluginType: 'DASHBOARD',
