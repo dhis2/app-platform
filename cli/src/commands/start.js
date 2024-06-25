@@ -8,7 +8,6 @@ const loadEnvFiles = require('../lib/loadEnvFiles')
 const parseConfig = require('../lib/parseConfig')
 const { isApp } = require('../lib/parseConfig')
 const makePaths = require('../lib/paths')
-// const makePlugin = require('../lib/plugin')
 const createProxyServer = require('../lib/proxy')
 const { compileServiceWorker } = require('../lib/pwa')
 const makeShell = require('../lib/shell')
@@ -32,7 +31,6 @@ const handler = async ({
 
     const config = parseConfig(paths)
     const shell = makeShell({ config, paths })
-    // const plugin = makePlugin({ config, paths })
 
     if (!isApp(config.type)) {
         reporter.error(

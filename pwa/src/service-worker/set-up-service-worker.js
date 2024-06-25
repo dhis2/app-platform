@@ -127,13 +127,6 @@ export function setUpServiceWorker() {
             (e) => e !== indexHtmlManifestEntry
         )
         precacheAndRoute(restOfManifest)
-
-        // Injection point for built plugin assets; injected by the workbox
-        // webpack plugin in the plugin's webpack config
-        // todo: reinvestigate after switching plugin builds to Vite
-        // (maybe will be covered by the first injection point above)
-        const pluginPrecacheManifest = self.__WB_PLUGIN_MANIFEST || []
-        precacheAndRoute(pluginPrecacheManifest)
     }
 
     // Handling pings: only use the network, and don't update the connection

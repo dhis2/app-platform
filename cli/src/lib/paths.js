@@ -73,10 +73,6 @@ module.exports = (cwd = process.cwd()) => {
             './.d2/shell/src/service-worker.js'
         ),
         shellPublic: path.join(base, './.d2/shell/public'),
-        shellPublicPluginHtml: path.join(
-            base,
-            './.d2/shell/public/plugin.html'
-        ),
         shellPublicServiceWorker: path.join(
             base,
             './.d2/shell/public/service-worker.js'
