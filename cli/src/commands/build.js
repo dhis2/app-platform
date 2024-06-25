@@ -144,12 +144,6 @@ const handler = async ({
                 })
                 await build(viteConfig)
 
-                // todo:
-                if (config.entryPoints.plugin) {
-                    // reporter.info('Building plugin...')
-                    // await plugin.build()
-                }
-
                 if (config.pwa.enabled) {
                     reporter.info('Compiling service worker...')
                     await compileServiceWorker({ config, paths, mode })

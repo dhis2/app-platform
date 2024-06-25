@@ -23,7 +23,4 @@ Options:
   --port, -p  The port to use when running the development server       [number]
   --proxy, -P  The remote DHIS2 instance the proxy should point to      [string]
   --proxyPort  The port to use when running the proxy   [number] [default: 8080]
-  --app        Start a dev server for just the app entrypoint (instead of both
-               app and plugin, if this app has a plugin)               [boolean]
-  --plugin     Start a dev server for just the plugin entrypoint       [boolean]
 ```

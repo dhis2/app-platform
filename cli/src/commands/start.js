@@ -3,7 +3,6 @@ const detectPort = require('detect-port')
 const { compile } = require('../lib/compiler')
 const exitOnCatch = require('../lib/exitOnCatch')
 const generateManifests = require('../lib/generateManifests')
-const { getOriginalEntrypoints } = require('../lib/getOriginalEntrypoints')
 const i18n = require('../lib/i18n')
 const loadEnvFiles = require('../lib/loadEnvFiles')
 const parseConfig = require('../lib/parseConfig')
@@ -24,8 +23,6 @@ const handler = async ({
     shell: shellSource,
     proxy,
     proxyPort,
-    app: shouldStartOnlyApp,
-    plugin: shouldStartOnlyPlugin,
 }) => {
     const paths = makePaths(cwd)
 
@@ -127,27 +124,6 @@ const handler = async ({
             reporter.print('')
             reporter.info('Starting development server...')
 
-            // start app and/or plugin, depending on flags
-
-            // entryPoints.app is populated by default -- get the app's raw
-            // entry points from the d2.config.js file to tell if there is an
-            // app entrypoint configured (and fall back to the whatever we do
-            // have available)
-            const entryPoints =
-                getOriginalEntrypoints(paths) || config.entryPoints
-
-            const noFlagsPassed = !shouldStartOnlyApp && !shouldStartOnlyPlugin
-            const shouldStartApp =
-                entryPoints.app && (noFlagsPassed || shouldStartOnlyApp)
-            const shouldStartPlugin =
-                entryPoints.plugin && (noFlagsPassed || shouldStartOnlyPlugin)
-
-            if (!shouldStartApp && !shouldStartPlugin) {
-                throw new Error(
-                    'The requested app/plugin is not configured to start. Check the flags passed to the start script and the entrypoints configured in d2.config.js, then try again.'
-                )
-            }
-
             // These imports are done asynchronously to allow Vite to use its
             // ESM build of its Node API (the CJS build will be removed in v6)
             // https://vitejs.dev/guide/troubleshooting.html#vite-cjs-node-api-deprecated
@@ -158,31 +134,14 @@ const handler = async ({
             const viteConfig = createConfig({ config, paths, env: shell.env })
             const server = await createServer(viteConfig)
 
-            const startPromises = []
-            if (shouldStartApp) {
-                reporter.print(
-                    `The app ${chalk.bold(
-                        config.name
-                    )} is now available on port ${newPort}`
-                )
-                reporter.print('')
-                startPromises.push(server.listen({ port: newPort }))
-
-                // TODO: remove
-                // startPromises.push(shell.start({ port: newPort }))
-            }
-
-            // TODO: just use the Vite server
-            // if (shouldStartPlugin) {
-            //     const pluginPort = shouldStartApp ? newPort + 1 : newPort
-            //     reporter.print(
-            //         `The plugin is now available on port ${pluginPort} at /${paths.pluginLaunchPath}`
-            //     )
-            //     reporter.print('')
-            //     startPromises.push(plugin.start({ port: pluginPort }))
-            // }
-
-            await Promise.all(startPromises)
+            reporter.print(
+                `The app ${chalk.bold(
+                    config.name
+                )} is now available on port ${newPort}`
+            )
+            reporter.print('')
+            await server.listen({ port: newPort })
+            // Useful CLI output and interaction:
             server.printUrls()
             server.bindCLIShortcuts({ print: true })
         },
@@ -215,16 +174,6 @@ const command = {
             type: 'number',
             description: 'The port to use when running the proxy',
             default: 8080,
-        },
-        // todo: change with Vite
-        app: {
-            type: 'boolean',
-            description:
-                'Start a dev server for just the app entrypoint (instead of both app and plugin, if this app has a plugin)',
-        },
-        plugin: {
-            type: 'boolean',
-            description: 'Start a dev server for just the plugin entrypoint',
         },
     },
     handler,
