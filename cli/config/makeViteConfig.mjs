@@ -91,10 +91,17 @@ const getDefineOptions = (env) => {
     return defineOptions
 }
 
-// https://vitejs.dev/config/
-export default ({ paths, env }) => {
-    const defineOptions = getDefineOptions(env)
+const getBuildInputs = (config, paths) => {
+    // todo: adapt for 1) no app, and 2) multiple plugins
+    const inputs = { main: paths.shellIndexHtml }
+    if (config.entryPoints.plugin) {
+        inputs.plugin = paths.shellPluginHtml
+    }
+    return inputs
+}
 
+// https://vitejs.dev/config/
+export default ({ paths, config, env }) => {
     return defineConfig({
         // Need to specify the location of the app root, since we're not using
         // the Vite CLI from the app root
@@ -113,16 +120,12 @@ export default ({ paths, env }) => {
         envPrefix: 'DHIS2_',
 
         // Static replacement of vars at build time
-        define: defineOptions,
+        define: getDefineOptions(env),
 
         build: {
-            outDir: 'build', // todo: new path here
+            outDir: 'build',
             rollupOptions: {
-                input: {
-                    main: paths.shellIndexHtml,
-                    // TODO: Dynamically build a plugin, based on context
-                    // plugin: resolve(__dirname, 'plugin.html'),
-                },
+                input: getBuildInputs(config, paths),
                 output: {
                     chunkFileNames: handleChunkFileNames,
                     assetFileNames: handleAssetFileNames,

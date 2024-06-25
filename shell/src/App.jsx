@@ -20,6 +20,10 @@ const getInjectedBaseUrl = () => {
     return null
 }
 
+const getIsPlugin = () => {
+    return Boolean(document.querySelector('meta[name="dhis2-is-plugin"]'))
+}
+
 const parseRequiredProps = (propsEnvVariable) => {
     if (!propsEnvVariable || propsEnvVariable === '') {
         return []
@@ -27,7 +31,8 @@ const parseRequiredProps = (propsEnvVariable) => {
     return propsEnvVariable.split(',')
 }
 
-const isPlugin = process.env.REACT_APP_DHIS2_APP_PLUGIN === 'true'
+const isPlugin =
+    getIsPlugin() || process.env.REACT_APP_DHIS2_APP_PLUGIN === 'true'
 const skipPluginLogic = process.env.REACT_APP_DHIS2_APP_SKIPPLUGINLOGIC
 const requiredPluginProps = parseRequiredProps(
     process.env.REACT_APP_DHIS2_APP_REQUIREDPROPS

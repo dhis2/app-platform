@@ -16,6 +16,14 @@ module.exports = ({ config, paths }) => {
     if (config.direction) {
         baseEnvVars.direction = config.direction
     }
+    // NB: 'PLUGIN' is detected from the plugin HTML file, not an env var,
+    // since env is shared with the App entrypoint
+    if (config.requiredProps) {
+        baseEnvVars.requiredProps = config.requiredProps.join()
+    }
+    if (config.skipPluginLogic) {
+        baseEnvVars.skipPluginLogic = true
+    }
 
     return {
         bootstrap: async (args = {}) => {
@@ -38,7 +46,7 @@ module.exports = ({ config, paths }) => {
         //         args: [
         //             'start',
         //             '-c',
-        //             require.resolve('../../../config/vite.config.mjs'),
+        //             'old.vite.config.mjs'
         //         ],
         //         cwd: paths.shell,
         //         env: getEnv({ ...baseEnvVars, port, ...getPWAEnvVars(config) }),

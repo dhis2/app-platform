@@ -9,7 +9,7 @@ const loadEnvFiles = require('../lib/loadEnvFiles')
 const parseConfig = require('../lib/parseConfig')
 const { isApp } = require('../lib/parseConfig')
 const makePaths = require('../lib/paths')
-const makePlugin = require('../lib/plugin')
+// const makePlugin = require('../lib/plugin')
 const createProxyServer = require('../lib/proxy')
 const { compileServiceWorker } = require('../lib/pwa')
 const makeShell = require('../lib/shell')
@@ -35,7 +35,7 @@ const handler = async ({
 
     const config = parseConfig(paths)
     const shell = makeShell({ config, paths })
-    const plugin = makePlugin({ config, paths })
+    // const plugin = makePlugin({ config, paths })
 
     if (!isApp(config.type)) {
         reporter.error(
@@ -155,7 +155,7 @@ const handler = async ({
             const { default: createConfig } = await import(
                 '../../config/makeViteConfig.mjs'
             )
-            const viteConfig = createConfig({ paths, env: shell.env })
+            const viteConfig = createConfig({ config, paths, env: shell.env })
             const server = await createServer(viteConfig)
 
             const startPromises = []
@@ -173,14 +173,14 @@ const handler = async ({
             }
 
             // TODO: just use the Vite server
-            if (shouldStartPlugin) {
-                const pluginPort = shouldStartApp ? newPort + 1 : newPort
-                reporter.print(
-                    `The plugin is now available on port ${pluginPort} at /${paths.pluginLaunchPath}`
-                )
-                reporter.print('')
-                startPromises.push(plugin.start({ port: pluginPort }))
-            }
+            // if (shouldStartPlugin) {
+            //     const pluginPort = shouldStartApp ? newPort + 1 : newPort
+            //     reporter.print(
+            //         `The plugin is now available on port ${pluginPort} at /${paths.pluginLaunchPath}`
+            //     )
+            //     reporter.print('')
+            //     startPromises.push(plugin.start({ port: pluginPort }))
+            // }
 
             await Promise.all(startPromises)
             server.printUrls()
