@@ -92,8 +92,10 @@ const getDefineOptions = (env) => {
 }
 
 const getBuildInputs = (config, paths) => {
-    // todo: adapt for 1) no app, and 2) multiple plugins
-    const inputs = { main: paths.shellIndexHtml }
+    const inputs = {}
+    if (config.entryPoints.app) {
+        inputs.main = paths.shellIndexHtml
+    }
     if (config.entryPoints.plugin) {
         inputs.plugin = paths.shellPluginHtml
     }

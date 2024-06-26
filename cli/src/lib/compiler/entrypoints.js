@@ -3,6 +3,7 @@ const { reporter, chalk } = require('@dhis2/cli-helpers-engine')
 const fs = require('fs-extra')
 const { isApp } = require('../parseConfig')
 
+// todo: could this be moved to parseConfig?
 const verifyEntrypoint = ({ entrypoint, basePath, resolveModule }) => {
     if (!entrypoint.match(/^(\.\/)?src\//)) {
         const msg = `Entrypoint ${chalk.bold(
@@ -79,13 +80,21 @@ exports.verifyEntrypoints = ({
     verifyLibraryEntrypoint(config.entryPoints.lib)
 }
 
+/**
+ * Reads the default entrypoint wrapper file (shell/src/App.jsx) as a string,
+ * updates it to import from the user's configured entrypoint,
+ * then returns the string of the updated file contents
+ */
 const getEntrypointWrapper = async ({ entrypoint, paths }) => {
     const relativeEntrypoint = entrypoint.replace(/^(\.\/)?src\//, '')
     const shellAppSource = await fs.readFile(paths.shellSourceEntrypoint)
 
     return shellAppSource
         .toString()
-        .replace(/'.\/D2App\/app\.jsx'/g, `'./D2App/${relativeEntrypoint}'`)
+        .replace(
+            '() => <div id="dhis2-placeholder" />',
+            `React.lazy(() => import('./D2App/${relativeEntrypoint}'))`
+        )
 }
 
 exports.createAppEntrypointWrapper = async ({ entrypoint, paths }) => {
@@ -96,6 +105,8 @@ exports.createAppEntrypointWrapper = async ({ entrypoint, paths }) => {
 }
 
 exports.createPluginEntrypointWrapper = async ({ entrypoint, paths }) => {
+    // todo: could inject `import.meta.env.DHIS2_APP_PLUGIN` env var here
+    // (currently it's not in env since it's shared with the app)
     await fs.writeFile(
         paths.shellPluginEntrypoint,
         await getEntrypointWrapper({ entrypoint, paths })

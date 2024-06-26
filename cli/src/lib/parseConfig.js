@@ -4,7 +4,7 @@ const { defaultsDeep, cloneDeep, has, isPlainObject } = require('lodash')
 const parseAuthorString = require('parse-author')
 
 const requiredConfigFields = {
-    app: ['name', 'version', 'title', 'entryPoints.app'],
+    app: ['name', 'version', 'title'],
     login_app: ['name', 'version', 'title', 'entryPoints.app'],
     lib: ['name', 'version', 'entryPoints.lib'],
 }
@@ -49,6 +49,8 @@ const validateConfig = (config) => {
         }
     })
 
+    // todo: validate entrypoints here (instead of in entrypoints.js)?
+
     const { pluginType } = config
     if (pluginType && !/^[A-Z0-9-_]+$/.test(pluginType)) {
         throw new Error(
@@ -72,9 +74,17 @@ const parseConfigObjects = (
     reporter.debug(`Type identified : ${chalk.bold(type)}`)
 
     const defaults = type === 'lib' ? defaultsLib : defaultsApp
-    config = defaultsDeep(config, defaults)
+    // Apply default entrypoints if none are defined
+    // (If an 'app'-type project has a plugin entry, don't add an app entry)
+    if (!config.entryPoints || Object.keys(config.entryPoints).length === 0) {
+        config.entryPoints = defaultsDeep(
+            config.entryPoints,
+            defaults.entryPoints
+        )
+    }
 
     // Add PWA defaults to apps
+    // todo: reconsider this -- it clutters the ENV passed to the app
     if (isApp(type)) {
         config = defaultsDeep(config, defaultsPWA)
     }

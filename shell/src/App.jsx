@@ -5,8 +5,10 @@ import React from 'react'
 import { PluginLoader } from './PluginLoader.jsx'
 import { PluginOuterErrorBoundary } from './PluginOuterErrorBoundary.jsx'
 
-// Automatic bundle splitting!
-const D2App = React.lazy(() => import('./D2App/app.jsx'))
+// This placeholder component gets replaced at shell-bootstrapping time by
+// `React.lazy(() => import('./D2App/<entryPoint>'))`
+// The lazy import provides bundle splitting
+const D2App = () => <div id="dhis2-placeholder" />
 
 // Injected by backend when serving index or plugin HTML
 // https://github.com/dhis2/dhis2-core/pull/16703
