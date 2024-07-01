@@ -1,3 +1,10 @@
+## [11.5.1](https://github.com/dhis2/app-platform/compare/v11.5.0...v11.5.1) (2024-07-01)
+
+
+### Bug Fixes
+
+* fixed dimensions plugins [LIBS-634] ([#858](https://github.com/dhis2/app-platform/issues/858)) ([1f717f3](https://github.com/dhis2/app-platform/commit/1f717f391b96a88186c897b9b886e11d6168c87c))
+
 # [11.5.0](https://github.com/dhis2/app-platform/compare/v11.4.3...v11.5.0) (2024-06-24)
 
 
