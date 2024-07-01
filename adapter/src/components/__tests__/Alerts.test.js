@@ -49,9 +49,10 @@ describe('Alerts', () => {
 
     it('can hide an alert', async () => {
         const msg = 'TEST ALERT'
+        const options = { permanent: true }
         render(
             <Wrapper>
-                <AlertButtons message={msg} />
+                <AlertButtons message={msg} options={options} />
             </Wrapper>
         )
 
