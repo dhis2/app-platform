@@ -35,7 +35,11 @@ function compileServiceWorker({ config, paths, mode }) {
     // TODO: This could be cleaner if the production SW is built in the same
     // way instead of using the CRA webpack config, so both can more easily
     // share environment variables.
-    const env = getEnv({ name: config.title, ...getPWAEnvVars(config) })
+    const env = getEnv({
+        name: config.title,
+        version: config.version,
+        ...getPWAEnvVars(config),
+    })
 
     const webpackConfig = {
         mode, // "production" or "development"
