@@ -16,16 +16,16 @@ describe('Alerts', () => {
         </AlertsProvider>
     )
 
-    const AlertButtons = ({ message, options }) => {
+    const AlertButtons = ({ message, options, label }) => {
         const { show, hide } = useAlert(message, options)
 
         return (
             <>
                 <button className="show" onClick={show}>
-                    Show
+                    {label ? `Show ${label}` : 'Show'}
                 </button>
                 <button className="hide" onClick={hide}>
-                    Hide
+                    {label ? `Hide ${label}` : 'Hide'}
                 </button>
             </>
         )
@@ -101,6 +101,51 @@ describe('Alerts', () => {
 
         // But eventually it is gone
         expect(screen.queryByText(msg)).toBeNull()
+    })
+    it.only('removes multiple alerts that hide simultaniously correctly', async () => {
+        const duration = 1000
+        const options = { duration }
+        const message1 = 'message 1'
+        const message2 = 'message 2'
+
+        render(
+            <Wrapper>
+                <AlertButtons
+                    message={message1}
+                    options={options}
+                    label={message1}
+                />
+                <AlertButtons
+                    message={message2}
+                    options={options}
+                    label={message2}
+                />
+            </Wrapper>
+        )
+
+        act(() => {
+            fireEvent.click(screen.getByText(`Show ${message1}`))
+            fireEvent.click(screen.getByText(`Show ${message2}`))
+        })
+
+        // Both message should show
+        await waitFor(() => screen.getByText(message1))
+        await waitFor(() => screen.getByText(message2))
+        expect(screen.getAllByText(message1)).toHaveLength(1)
+        expect(screen.getAllByText(message2)).toHaveLength(1)
+
+        act(() => {
+            /* The time is advanced by the following value:
+             * show+duration + hide-animation-duration + show-animation-duration
+             * This is to reproduce a bug that would cause the first alert to be
+             * re-added during the removal of the second alert */
+            jest.advanceTimersByTime(duration + 200)
+        })
+
+        /* Now both should be gone. Prior to the bugfix,
+         * the alert with message1 would be showing */
+        expect(screen.queryByText(message1)).toBeNull()
+        expect(screen.queryByText(message2)).toBeNull()
     })
 })
 
