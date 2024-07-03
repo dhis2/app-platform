@@ -95,7 +95,7 @@ const config = {
         {
             namespace: 'extra4',
             authorities: ['M_extra4readwrite'],
-            writeAuthotities: ['M_extra4write'],
+            writeAuthorities: ['M_extra4write'],
         },
     ],
 }
