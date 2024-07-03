@@ -1,3 +1,10 @@
+# [11.6.0](https://github.com/dhis2/app-platform/compare/v11.5.1...v11.6.0) (2024-07-03)
+
+
+### Features
+
+* parse additional namespaces from `d2.config.js` and add to `manifest.webapp` [LIBS-638]  ([#860](https://github.com/dhis2/app-platform/issues/860)) ([62782fe](https://github.com/dhis2/app-platform/commit/62782fed6f59a439ab2ef7f00c7e7d88110a78bf))
+
 ## [11.5.1](https://github.com/dhis2/app-platform/compare/v11.5.0...v11.5.1) (2024-07-01)
 
 
