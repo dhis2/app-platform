@@ -63,24 +63,37 @@ const loginConfigQuery = {
     },
 }
 
+const localStorageLocaleKey = 'dhis2.locale.ui'
+
 export const useSystemDefaultLocale = () => {
     // system language from loginConfiqQuery
-    const { loading, data, error } = useDataQuery(loginConfigQuery)
-    // set userSettings to use system locale by default
+    const { loading, data, error, refetch } = useDataQuery(loginConfigQuery, {
+        lazy: true,
+    })
+
+    const localStorageLanguage = localStorage.getItem(localStorageLocaleKey)
+    if (!localStorageLanguage) {
+        refetch()
+    }
+
+    // set userSettings to use localStorageLanguage, system language, browser language (by preference)
     const localeInformation = useMemo(
         () => ({
             userSettings: {
                 keyUiLocale:
-                    data &&
+                    localStorageLanguage ??
                     (data?.loginConfig?.uiLocale || window.navigator.language),
             },
             configDirection: 'auto',
         }),
-        [data]
+        [data, localStorageLanguage]
     )
     const locale = useLocale(localeInformation)
     if (error) {
         console.error(error)
     }
-    return { loading: loading || !locale, locale }
+    return {
+        loading: (localStorageLanguage ? false : loading) || !locale,
+        locale,
+    }
 }
