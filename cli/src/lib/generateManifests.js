@@ -1,6 +1,7 @@
 const { reporter, chalk } = require('@dhis2/cli-helpers-engine')
 const fs = require('fs-extra')
 const { getOriginalEntrypoints } = require('./getOriginalEntrypoints')
+const { parseAdditionalNamespaces } = require('./parseAdditionalNamespaces')
 
 const parseCustomAuthorities = (authorities) => {
     if (!authorities) {
@@ -90,6 +91,7 @@ module.exports = (paths, config, publicUrl) => {
             },
             {
                 src: 'safari-pinned-tab.svg',
+                sizes: '16x16',
                 type: 'image/svg+xml',
             },
         ],
@@ -126,6 +128,9 @@ module.exports = (paths, config, publicUrl) => {
             dhis: {
                 href: '*',
                 namespace: parseDataStoreNamespace(config.dataStoreNamespace),
+                additionalNamespaces: parseAdditionalNamespaces(
+                    config.additionalNamespaces
+                ),
             },
         },
         authorities: parseCustomAuthorities(config.customAuthorities),
