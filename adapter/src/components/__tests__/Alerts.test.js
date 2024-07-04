@@ -2,7 +2,7 @@ import { useAlert } from '@dhis2/app-runtime'
 import { AlertsProvider } from '@dhis2/app-service-alerts'
 import { act, render, fireEvent, waitFor, screen } from '@testing-library/react'
 import React from 'react'
-import { Alerts, mergeAlertStackAlerts } from '../Alerts.js'
+import { Alerts } from '../Alerts.js'
 
 describe('Alerts', () => {
     beforeEach(() => {
@@ -102,7 +102,10 @@ describe('Alerts', () => {
         // But eventually it is gone
         expect(screen.queryByText(msg)).toBeNull()
     })
-    it.only('removes multiple alerts that hide simultaniously correctly', async () => {
+    it('removes multiple alerts that hide simultaniously correctly', async () => {
+        /* This test case was added to reproduce and fix a bug that
+         * would cause the second alert to be re-added during the
+         * removal of the first alert. */
         const duration = 1000
         const options = { duration }
         const message1 = 'message 1'
@@ -112,13 +115,66 @@ describe('Alerts', () => {
             <Wrapper>
                 <AlertButtons
                     message={message1}
-                    options={options}
                     label={message1}
+                    options={options}
                 />
                 <AlertButtons
                     message={message2}
-                    options={options}
                     label={message2}
+                    options={options}
+                />
+            </Wrapper>
+        )
+
+        act(() => {
+            fireEvent.click(screen.getByText(`Show ${message1}`))
+            /* A small delay between hides is required to reproduce the bug,
+             * because if the hiding is done at the same time, the alerts
+             * would both be removed correctly */
+            jest.advanceTimersByTime(10)
+            fireEvent.click(screen.getByText(`Show ${message2}`))
+        })
+
+        // Both message should show
+        await waitFor(() => screen.getByText(message1))
+        await waitFor(() => screen.getByText(message2))
+        expect(screen.getAllByText(message1)).toHaveLength(1)
+        expect(screen.getAllByText(message2)).toHaveLength(1)
+
+        act(() => {
+            jest.advanceTimersByTime(duration)
+        })
+
+        // Both should still be there while the hide animation runs
+        expect(screen.getAllByText(message1)).toHaveLength(1)
+        expect(screen.getAllByText(message2)).toHaveLength(1)
+
+        act(() => {
+            // Now we advance the time until the hide animation completes
+            jest.advanceTimersByTime(700)
+        })
+
+        /* Now both should be gone. Prior to the bugfix,
+         * the alert with message2 would be showing */
+        expect(screen.queryByText(message1)).toBeNull()
+        expect(screen.queryByText(message2)).toBeNull()
+    })
+    it('keeps alerts that have been removed programatically around until the animation is done', async () => {
+        const options = { permanent: true }
+        const message1 = 'message 1'
+        const message2 = 'message 2'
+
+        render(
+            <Wrapper>
+                <AlertButtons
+                    message={message1}
+                    label={message1}
+                    options={options}
+                />
+                <AlertButtons
+                    message={message2}
+                    label={message2}
+                    options={options}
                 />
             </Wrapper>
         )
@@ -135,152 +191,39 @@ describe('Alerts', () => {
         expect(screen.getAllByText(message2)).toHaveLength(1)
 
         act(() => {
-            /* The time is advanced by the following value:
-             * show+duration + hide-animation-duration + show-animation-duration
-             * This is to reproduce a bug that would cause the first alert to be
-             * re-added during the removal of the second alert */
-            jest.advanceTimersByTime(duration + 200)
+            fireEvent.click(screen.getByText(`Hide ${message1}`))
+            jest.advanceTimersByTime(50)
         })
 
-        /* Now both should be gone. Prior to the bugfix,
-         * the alert with message1 would be showing */
+        // Both should still be there while the hide animation runs
+        expect(screen.getAllByText(message1)).toHaveLength(1)
+        expect(screen.getAllByText(message2)).toHaveLength(1)
+
+        act(() => {
+            // Now we advance the time until the hide animation completes
+            jest.advanceTimersByTime(1000)
+        })
+
+        // The alert that was hidden should now be gone
+        expect(screen.queryByText(message1)).toBeNull()
+        expect(screen.getAllByText(message2)).toHaveLength(1)
+
+        act(() => {
+            fireEvent.click(screen.getByText(`Hide ${message2}`))
+            jest.advanceTimersByTime(50)
+        })
+
+        // The second alert should still be there while its hide animation runs
+        expect(screen.queryByText(message1)).toBeNull()
+        expect(screen.getAllByText(message2)).toHaveLength(1)
+
+        act(() => {
+            fireEvent.click(screen.getByText(`Hide ${message2}`))
+            jest.advanceTimersByTime(700)
+        })
+
+        // Now both should be gone
         expect(screen.queryByText(message1)).toBeNull()
         expect(screen.queryByText(message2)).toBeNull()
-    })
-})
-
-describe('mergeAlertStackAlerts', () => {
-    it('add alerts from the alert manager and adds `hidden: false` to the options', () => {
-        const alertStackAlerts = []
-        const alertManagerAlerts = [
-            {
-                id: 1,
-                message: 'test1',
-                options: { permanent: true },
-            },
-            {
-                id: 2,
-                message: 'test2',
-                options: { permanent: true },
-            },
-        ]
-        expect(
-            mergeAlertStackAlerts(alertStackAlerts, alertManagerAlerts)
-        ).toEqual([
-            {
-                id: 1,
-                message: 'test1',
-                options: { hidden: false, permanent: true },
-            },
-            {
-                id: 2,
-                message: 'test2',
-                options: { hidden: false, permanent: true },
-            },
-        ])
-    })
-    it('keeps alerts unchanged if the alert-manager and alert-stack contain equivalent items', () => {
-        const alertStackAlerts = [
-            {
-                id: 1,
-                message: 'test1',
-                options: { permanent: true, hidden: false },
-            },
-            {
-                id: 2,
-                message: 'test2',
-                options: { permanent: true, hidden: false },
-            },
-        ]
-        const alertManagerAlerts = [
-            {
-                id: 1,
-                message: 'test1',
-                options: { permanent: true },
-            },
-            {
-                id: 2,
-                message: 'test2',
-                options: { permanent: true },
-            },
-        ]
-        expect(
-            mergeAlertStackAlerts(alertStackAlerts, alertManagerAlerts)
-        ).toEqual(alertStackAlerts)
-    })
-    it('keeps alerts in the alert-stack and sets `hidden` to `true` if they are no longer in the alert-manager', () => {
-        const alertStackAlerts = [
-            {
-                id: 1,
-                message: 'test1',
-                options: { permanent: true, hidden: false },
-            },
-            {
-                id: 2,
-                message: 'test2',
-                options: { permanent: true, hidden: false },
-            },
-        ]
-        const alertManagerAlerts = [
-            {
-                id: 2,
-                message: 'test2',
-                options: { permanent: true },
-            },
-        ]
-        expect(
-            mergeAlertStackAlerts(alertStackAlerts, alertManagerAlerts)
-        ).toEqual([
-            {
-                id: 1,
-                message: 'test1',
-                options: { permanent: true, hidden: true },
-            },
-            {
-                id: 2,
-                message: 'test2',
-                options: { permanent: true, hidden: false },
-            },
-        ])
-    })
-    it('updates alerts in the alert-stack with the properties of the alerts in the alert-manager', () => {
-        const alertStackAlerts = [
-            {
-                id: 1,
-                message: 'test1',
-                options: { permanent: true, hidden: false },
-            },
-            {
-                id: 2,
-                message: 'test2',
-                options: { permanent: true, hidden: false },
-            },
-        ]
-        const alertManagerAlerts = [
-            {
-                id: 1,
-                message: 'test1 EDITED',
-                options: { success: true },
-            },
-            {
-                id: 2,
-                message: 'test2 EDITED',
-                options: { success: true },
-            },
-        ]
-        expect(
-            mergeAlertStackAlerts(alertStackAlerts, alertManagerAlerts)
-        ).toEqual([
-            {
-                id: 1,
-                message: 'test1 EDITED',
-                options: { success: true, hidden: false },
-            },
-            {
-                id: 2,
-                message: 'test2 EDITED',
-                options: { success: true, hidden: false },
-            },
-        ])
     })
 })
