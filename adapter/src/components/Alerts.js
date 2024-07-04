@@ -8,12 +8,12 @@ import React, { useCallback, useState } from 'react'
  * from `@dhis2/ui` should leave the screen with a hide-animation.
  * This works well, for alerts that hide "naturally" (after the
  * timeout expires or when the close icon is clicked). In these
- * cases the componsent will request to be removed from the alerts-
+ * cases the component will request to be removed from the alerts-
  * manager after the animation completes. However, when
  * programatically hiding an alert this is the other way around:
  * the alert is removed from the alerts-manager straight away and
  * if we were to render the alerts from the `useAlerts` hook, these
- * alerts would be removed from the DOM abrubdly without an animation.
+ * alerts would be removed from the DOM abruptly without an animation.
  * To prevent this from happening, we have implemented the
  * `useAlertsWithHideCache` hook:
  *  - It contains all alerts from the alert-manager, with
