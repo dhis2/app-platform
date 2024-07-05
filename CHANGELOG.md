@@ -1,3 +1,10 @@
+## [11.6.1](https://github.com/dhis2/app-platform/compare/v11.6.0...v11.6.1) (2024-07-05)
+
+
+### Bug Fixes
+
+* **alerts:** ensure hiding works correctly and alerts are not re-added [DHIS2-15438] ([#859](https://github.com/dhis2/app-platform/issues/859)) ([6b11fff](https://github.com/dhis2/app-platform/commit/6b11fff033cc16ed4d2f11caf74e8c18307abc3c))
+
 # [11.6.0](https://github.com/dhis2/app-platform/compare/v11.5.1...v11.6.0) (2024-07-03)
 
 
