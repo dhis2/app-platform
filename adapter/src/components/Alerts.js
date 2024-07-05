@@ -1,4 +1,4 @@
-import { useAlerts } from '@dhis2/app-service-alerts'
+import { useAlerts } from '@dhis2/app-runtime'
 import { AlertStack, AlertBar } from '@dhis2/ui'
 import React, { useCallback, useState } from 'react'
 
