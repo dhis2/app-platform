@@ -49,8 +49,6 @@ const validateConfig = (config) => {
         }
     })
 
-    // todo: validate entrypoints here (instead of in entrypoints.js)?
-
     const { pluginType } = config
     if (pluginType && !/^[A-Z0-9-_]+$/.test(pluginType)) {
         throw new Error(
@@ -61,6 +59,9 @@ const validateConfig = (config) => {
             )}`
         )
     }
+
+    // entrypoints are validated in compiler/entrypoints.js
+    // authorities and datastore namespaces are validated in generateManifests.js
 
     return true
 }
