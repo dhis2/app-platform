@@ -13,6 +13,17 @@ const config = {
 
     dataStoreNamespace: 'testapp-namespace',
     customAuthorities: ['testapp-authority'],
+    additionalNamespaces: [
+        {
+            namespace: 'testapp-additional-namespace1',
+            authorities: ['testapp-additional-auth'],
+        },
+        {
+            namespace: 'testapp-additional-namespace2',
+            writeAuthorities: ['testapp-additional-write'],
+            readAuthorities: ['testapp-additional-read'],
+        },
+    ],
 
     minDHIS2Version: '2.35',
 }
