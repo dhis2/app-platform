@@ -71,7 +71,11 @@ const parseConfigObjects = (
     pkg = {},
     { defaultsLib, defaultsApp, defaultsPWA } = {}
 ) => {
-    const type = config.type || 'app'
+    if (!config.type) {
+        // default value if undefined
+        config.type = 'app'
+    }
+    const { type } = config
     reporter.debug(`Type identified : ${chalk.bold(type)}`)
 
     const defaults = type === 'lib' ? defaultsLib : defaultsApp
