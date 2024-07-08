@@ -64,7 +64,7 @@ const handler = async ({
         })
     }
 
-    await exitOnCatch(
+    return await exitOnCatch(
         async () => {
             if (!(await validatePackage({ config, paths, offerFix: false }))) {
                 reporter.print(
@@ -139,6 +139,13 @@ const handler = async ({
             )
             reporter.print('')
             await server.listen({ port: newPort })
+
+            // Avoids clunky exit after Ctrl-C with bindCLIShortcuts:
+            // (q+Enter works great with the CLI shortcuts either way)
+            process.on('SIGINT', async function () {
+                await server.close()
+                process.exit(0)
+            })
             // Useful CLI output and interaction:
             server.printUrls()
             server.bindCLIShortcuts({ print: true })
