@@ -4,7 +4,7 @@ import postRobot from 'post-robot'
 import PropTypes from 'prop-types'
 import React, { useCallback, useEffect, useRef, useState } from 'react'
 
-const PluginInner = ({
+const PluginResizeInner = ({
     D2App,
     config,
     propsFromParent,
@@ -60,6 +60,41 @@ const PluginInner = ({
                 </div>
             </div>
         </div>
+    )
+}
+
+PluginResizeInner.propTypes = {
+    D2App: PropTypes.object,
+    config: PropTypes.object,
+    propsFromParent: PropTypes.object,
+    resizePluginHeight: PropTypes.func,
+    resizePluginWidth: PropTypes.func,
+}
+
+const PluginInner = ({
+    D2App,
+    config,
+    propsFromParent,
+    resizePluginHeight,
+    resizePluginWidth,
+}) => {
+    if (!resizePluginHeight && !resizePluginWidth) {
+        return (
+            <D2App
+                config={config}
+                resizePluginWidth={resizePluginWidth}
+                {...propsFromParent}
+            />
+        )
+    }
+    return (
+        <PluginResizeInner
+            D2App={D2App}
+            config={config}
+            propsFromParent={propsFromParent}
+            resizePluginHeight={resizePluginHeight}
+            resizePluginWidth={resizePluginWidth}
+        />
     )
 }
 

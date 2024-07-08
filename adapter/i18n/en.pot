@@ -5,8 +5,8 @@ msgstr ""
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1)\n"
-"POT-Creation-Date: 2024-04-24T13:58:13.591Z\n"
-"PO-Revision-Date: 2024-04-24T13:58:13.591Z\n"
+"POT-Creation-Date: 2024-06-21T08:27:55.991Z\n"
+"PO-Revision-Date: 2024-06-21T08:27:55.991Z\n"
 
 msgid "Save your data"
 msgstr "Save your data"
@@ -39,14 +39,17 @@ msgstr "An error occurred in the DHIS2 application."
 msgid "Technical details copied to clipboard"
 msgstr "Technical details copied to clipboard"
 
+msgid "There was a problem loading this plugin"
+msgstr "There was a problem loading this plugin"
+
+msgid "Copy debug info to clipboard"
+msgstr "Copy debug info to clipboard"
+
 msgid "Try again"
 msgstr "Try again"
 
 msgid "Something went wrong"
 msgstr "Something went wrong"
-
-msgid "Redirect to safe login mode"
-msgstr "Redirect to safe login mode"
 
 msgid "Redirect to safe login mode"
 msgstr "Redirect to safe login mode"

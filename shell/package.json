@@ -19,7 +19,7 @@
         "@dhis2/app-runtime": "^3.10.4",
         "@dhis2/d2-i18n": "^1.1.1",
         "@dhis2/pwa": "12.0.0-alpha.2",
-        "@dhis2/ui": "^9.4.4",
+        "@dhis2/ui": "^9.8.9",
         "@vitejs/plugin-react": "^4.2.1",
         "classnames": "^2.2.6",
         "moment": "^2.29.1",
