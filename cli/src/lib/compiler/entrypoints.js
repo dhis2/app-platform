@@ -3,7 +3,6 @@ const { reporter, chalk } = require('@dhis2/cli-helpers-engine')
 const fs = require('fs-extra')
 const { isApp } = require('../parseConfig')
 
-// todo: could this be moved to parseConfig?
 const verifyEntrypoint = ({ entrypoint, basePath, resolveModule }) => {
     if (!entrypoint.match(/^(\.\/)?src\//)) {
         const msg = `Entrypoint ${chalk.bold(

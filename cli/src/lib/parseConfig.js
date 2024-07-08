@@ -84,7 +84,7 @@ const parseConfigObjects = (
     if (!config.entryPoints || Object.keys(config.entryPoints).length === 0) {
         config.entryPoints = defaultsDeep(
             config.entryPoints,
-            defaults.entryPoints
+            defaults?.entryPoints
         )
     }
 
@@ -142,8 +142,5 @@ const parseConfig = (paths) => {
 }
 
 module.exports = parseConfig
-
-module.exports.parseConfigObjects = parseConfigObjects
-
 module.exports.parseConfigObjects = parseConfigObjects
 module.exports.isApp = isApp
