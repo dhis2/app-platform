@@ -5,7 +5,11 @@ import {
     SECTIONS_STORE,
 } from '../lib/sections-db.js'
 
-const CACHE_KEEP_LIST = ['other-assets', 'app-shell']
+const CACHE_KEEP_LIST = [
+    'other-assets',
+    'app-shell',
+    'app-shell-dev-[todo:appname]', // todo
+]
 const APP_ADAPTER_URL_PATTERNS = [
     /\/api(\/\d+)?\/system\/info/, // from ServerVersionProvider
     /\/api(\/\d+)?\/userSettings/, // useLocale
