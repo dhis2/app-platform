@@ -197,17 +197,19 @@ export function setUpServiceWorker() {
             } catch (fetchError) {
                 error = fetchError
             }
-            if (response?.ok && !error) {
+
+            if (!response || error) {
+                // try cache for response to return
+                response = await handler.cacheMatch(request)
+            } else if (response.ok) {
                 // If successful, clear similar requests w/ different versions
                 await this._cacheBust(request).catch((e) => console.error(e))
                 // and then cache
                 await handler.cachePut(request, response.clone())
-            } else {
-                // no response, or there was an error -- try cache instead.
-                // fallback to original response if missed
-                response = (await handler.cacheMatch(request)) ?? response
             }
 
+            // Note: 400+ & 500+ responses won't get cached,
+            // but they will get get returned to the browser
             return response
         }
 
