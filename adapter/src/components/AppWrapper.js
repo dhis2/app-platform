@@ -32,7 +32,9 @@ const AppWrapper = ({
                         plugin={true}
                         onPluginError={onPluginError}
                         onRetry={() => {
-                            clearPluginError()
+                            if (clearPluginError) {
+                                clearPluginError()
+                            }
                             window.location.reload()
                         }}
                     >
