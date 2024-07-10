@@ -1,3 +1,10 @@
+## [11.6.2](https://github.com/dhis2/app-platform/compare/v11.6.1...v11.6.2) (2024-07-10)
+
+
+### Bug Fixes
+
+* plugin boundary retry if plugin logic is skipped ([#862](https://github.com/dhis2/app-platform/issues/862)) ([01a3160](https://github.com/dhis2/app-platform/commit/01a3160242a8352f0bcde229b3e860e396ff5be5))
+
 ## [11.6.1](https://github.com/dhis2/app-platform/compare/v11.6.0...v11.6.1) (2024-07-05)
 
 
