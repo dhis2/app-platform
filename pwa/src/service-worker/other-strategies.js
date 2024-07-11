@@ -2,65 +2,64 @@ import { Strategy } from 'workbox-strategies'
 
 const versionRegex = /\?[tv]=[0-9a-z]+$/
 
+const isLocalFile = (request) => {
+    const appRoot = new URL('.', self.location.href).href
+    return request.url.startsWith(appRoot)
+}
+
+/** Remove version tag on local files */
+const getCacheKey = (request) => {
+    const versionMatch = request.url.match(versionRegex)
+    if (!isLocalFile(request) || !versionMatch) {
+        // don't need to handle this request
+        return request
+    }
+    // else return unversioned url
+    return request.url.substring(0, versionMatch.index)
+}
+
 /**
  * During development, the Vite server can end up creating a lot of
  * requests that add to the cache more and more, since assets get new
  * version hashes:
- * Each time the server restarts, dependencies get a new
- * '?v=<version-hash>' param added to the URL and a new cache entry for it.
- * Each time a file is hot-updated, that file gets a new cache entry with a
- * '?t=<timestamp>' param added to the URL
+ * Each time the server restarts, dependencies get a new '?v=<version-hash>'
+ * param added to the URL and a new cache entry for it.
+ * Each time a source file is hot-updated, that file gets a new cache entry
+ * with a '?t=<timestamp>' param added to the URL.
  *
- * To avoid caching a lot of things unnecessarily, clean out local files if
- * new ones are added with a 'v=' or 't=' param
+ * If, after fetching, we cache these requests using the URL _without_ the
+ * version tag as a key, we save adding lots of duplicate entries to the cache
+ * while still caching the latest version of the file.
  *
- * Examples:
- * /src/D2App/components/VisualizationsList.jsx
- * /src/D2App/components/VisualizationsList.jsx?t=1720458237569
- * /src/D2App/components/VisualizationsList.jsx?t=1720458241654
- * /node_modules/.vite/deps/@dhis2_ui.js?v=70f7ac65
- * /node_modules/.vite/deps/@dhis2_ui.js?v=82fc8238
+ * This also avoids a niche but crash-causing bug for PWA apps in development
+ * that happens after editing files locally to trigger HMR updates, then going
+ * offline and reloading the app
  */
 export class DevNetworkFirst extends Strategy {
     async _handle(request, handler) {
         let error, response
         try {
             // Try to fetch over the network
+            // -- include version params here
             response = await handler.fetch(request)
         } catch (fetchError) {
             error = fetchError
         }
 
-        if (!response || error) {
-            // try cache for response to return
-            response = await handler.cacheMatch(request)
-        } else if (response.ok) {
-            // If successful, clear similar requests w/ different versions
-            await this._cacheBust(request).catch((e) => console.error(e))
-            // and then cache
-            await handler.cachePut(request, response.clone())
+        // Handle local files with version params added
+        const cacheKey = getCacheKey(request)
+
+        if (response && !error) {
+            // Successful -- try to cache
+            // Note: 400+ & 500+ responses won't get cached here,
+            // but they will get get returned to the browser below
+            await handler.cachePut(cacheKey, response.clone())
+        } else {
+            // Unsuccessful -- try cache for response to return
+            response = await handler.cacheMatch(cacheKey)
         }
 
-        // Note: 400+ & 500+ responses won't get cached,
-        // but they will get get returned to the browser
         return response
-    }
-
-    async _cacheBust(request) {
-        const { url } = request
-        const appRoot = new URL('.', self.location.href).href
-
-        if (!url.startsWith(appRoot) || !versionRegex.test(url)) {
-            return
-        }
-
-        const cache = await self.caches.open(this.cacheName)
-        // get all cache entries with the same URL, ignoring query params
-        const keys = await cache.keys(request, { ignoreSearch: true })
-        const filteredKeys = keys.filter((req) => req.url !== url)
-        if (filteredKeys.length > 0) {
-            return cache.delete(request, { ignoreSearch: true })
-        }
     }
 }
 
