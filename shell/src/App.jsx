@@ -22,10 +22,6 @@ const getInjectedBaseUrl = () => {
     return null
 }
 
-const getIsPlugin = () => {
-    return Boolean(document.querySelector('meta[name="dhis2-is-plugin"]'))
-}
-
 const parseRequiredProps = (propsEnvVariable) => {
     if (!propsEnvVariable || propsEnvVariable === '') {
         return []
@@ -33,8 +29,10 @@ const parseRequiredProps = (propsEnvVariable) => {
     return propsEnvVariable.split(',')
 }
 
-const isPlugin =
-    getIsPlugin() || process.env.REACT_APP_DHIS2_APP_PLUGIN === 'true'
+// Since apps and plugins share the same env with Vite, this value is injected
+// via string replacement in cli/src/lib/compiler/entrypoints.js
+const isPlugin = self.__IS_PLUGIN
+
 const skipPluginLogic = process.env.REACT_APP_DHIS2_APP_SKIPPLUGINLOGIC
 const requiredPluginProps = parseRequiredProps(
     process.env.REACT_APP_DHIS2_APP_REQUIREDPROPS
