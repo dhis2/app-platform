@@ -1,3 +1,10 @@
+## [11.6.3](https://github.com/dhis2/app-platform/compare/v11.6.2...v11.6.3) (2024-07-16)
+
+
+### Bug Fixes
+
+* **deps:** update i18next-scanner version to support old plurals format again ([#861](https://github.com/dhis2/app-platform/issues/861)) ([d0e433b](https://github.com/dhis2/app-platform/commit/d0e433bf0ca213641770e68cf8beb0780570e5c3))
+
 ## [11.6.2](https://github.com/dhis2/app-platform/compare/v11.6.1...v11.6.2) (2024-07-10)
 
 
