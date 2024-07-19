@@ -1,3 +1,10 @@
+## [11.6.4](https://github.com/dhis2/app-platform/compare/v11.6.3...v11.6.4) (2024-07-19)
+
+
+### Bug Fixes
+
+* use i18next-scanner v3 for better i18next compatibility ([#864](https://github.com/dhis2/app-platform/issues/864)) ([84a5a59](https://github.com/dhis2/app-platform/commit/84a5a59747eef82ec85eb602cfef9040efc8fd8a))
+
 ## [11.6.3](https://github.com/dhis2/app-platform/compare/v11.6.2...v11.6.3) (2024-07-16)
 
 
