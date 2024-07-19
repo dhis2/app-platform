@@ -19,7 +19,8 @@ import dynamicImport from 'vite-plugin-dynamic-import'
  * NB: State-preserving HMR will not work on React components unless they have
  * a .jsx or .tsx extension though, unfortunately
  *
- * todo: deprecate
+ * todo: deprecate -- this and optimize deps below have a performance cost
+ * on startup
  */
 const jsxInJSPlugin = {
     name: 'treat-js-files-as-jsx',
@@ -149,6 +150,7 @@ export default ({ paths, config, env }) => {
         ],
 
         // Allow JSX in .js pt. 2
+        // todo: deprecate - has a performance cost on startup
         optimizeDeps: {
             force: true,
             esbuildOptions: { loader: { '.js': 'jsx' } },
