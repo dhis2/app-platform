@@ -13,7 +13,6 @@ const config = {
 
     entryPoints: {
         app: './src/App.jsx',
-        // Uncomment this to test plugin builds:
         plugin: './src/components/VisualizationsList.jsx',
     },
 
