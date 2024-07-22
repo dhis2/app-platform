@@ -172,7 +172,10 @@ const handler = async ({
         },
         {
             name: 'build',
-            onError: () => reporter.error('Build script failed'),
+            onError: (err) => {
+                reporter.error(err)
+                reporter.error('Build script failed')
+            },
         }
     )
 
