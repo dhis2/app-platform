@@ -4,6 +4,7 @@ const config = {
     entryPoints: {
         app: './src/App.js',
     },
+    dir: 'auto',
 }
 
 module.exports = config
