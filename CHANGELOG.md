@@ -1,3 +1,10 @@
+# [11.7.0](https://github.com/dhis2/app-platform/compare/v11.6.4...v11.7.0) (2024-07-23)
+
+
+### Features
+
+* update boilerplate app code for init command [LIBS-644] ([#866](https://github.com/dhis2/app-platform/issues/866)) ([bd6cfc0](https://github.com/dhis2/app-platform/commit/bd6cfc0d132b40c91b44fcdc715befabf2d7e4cf))
+
 ## [11.6.4](https://github.com/dhis2/app-platform/compare/v11.6.3...v11.6.4) (2024-07-19)
 
 
