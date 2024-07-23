@@ -1,3 +1,17 @@
+# [12.0.0-alpha.4](https://github.com/dhis2/app-platform/compare/v12.0.0-alpha.3...v12.0.0-alpha.4) (2024-07-23)
+
+
+### Bug Fixes
+
+* use i18next-scanner v3 for better i18next compatibility ([#864](https://github.com/dhis2/app-platform/issues/864)) ([84a5a59](https://github.com/dhis2/app-platform/commit/84a5a59747eef82ec85eb602cfef9040efc8fd8a))
+* **deps:** update i18next-scanner version to support old plurals format again ([#861](https://github.com/dhis2/app-platform/issues/861)) ([d0e433b](https://github.com/dhis2/app-platform/commit/d0e433bf0ca213641770e68cf8beb0780570e5c3))
+* plugin boundary retry if plugin logic is skipped ([#862](https://github.com/dhis2/app-platform/issues/862)) ([01a3160](https://github.com/dhis2/app-platform/commit/01a3160242a8352f0bcde229b3e860e396ff5be5))
+
+
+### Features
+
+* update boilerplate app code for init command [LIBS-644] ([#866](https://github.com/dhis2/app-platform/issues/866)) ([bd6cfc0](https://github.com/dhis2/app-platform/commit/bd6cfc0d132b40c91b44fcdc715befabf2d7e4cf))
+
 # [12.0.0-alpha.3](https://github.com/dhis2/app-platform/compare/v12.0.0-alpha.2...v12.0.0-alpha.3) (2024-07-08)
 
 
