@@ -104,7 +104,7 @@ const getBuildInputs = (config, paths) => {
 }
 
 // https://vitejs.dev/config/
-export default ({ paths, config, env }) => {
+export default ({ paths, config, env, host }) => {
     return defineConfig({
         // Need to specify the location of the app root, since we're not using
         // the Vite CLI from the app root
@@ -124,6 +124,8 @@ export default ({ paths, config, env }) => {
 
         // Static replacement of vars at build time
         define: getDefineOptions(env),
+
+        server: { host },
 
         build: {
             outDir: 'build',

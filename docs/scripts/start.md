@@ -23,4 +23,6 @@ Options:
   --port, -p  The port to use when running the development server       [number]
   --proxy, -P  The remote DHIS2 instance the proxy should point to      [string]
   --proxyPort  The port to use when running the proxy   [number] [default: 8080]
+  --host       Exposes the server on the local network. Can optionally provide
+              an address to use. [boolean or string]
 ```

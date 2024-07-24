@@ -22,6 +22,7 @@ const handler = async ({
     shell: shellSource,
     proxy,
     proxyPort,
+    host,
 }) => {
     const paths = makePaths(cwd)
 
@@ -129,7 +130,12 @@ const handler = async ({
             const { default: createConfig } = await import(
                 '../../config/makeViteConfig.mjs'
             )
-            const viteConfig = createConfig({ config, paths, env: shell.env })
+            const viteConfig = createConfig({
+                config,
+                paths,
+                env: shell.env,
+                host,
+            })
             const server = await createServer(viteConfig)
 
             const location = config.entryPoints.plugin
@@ -185,6 +191,11 @@ const command = {
             type: 'number',
             description: 'The port to use when running the proxy',
             default: 8080,
+        },
+        host: {
+            type: 'boolean|string',
+            description:
+                'Exposes the server on the local network. Can optionally provide an address to use. [boolean or string]',
         },
     },
     handler,
