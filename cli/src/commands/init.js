@@ -186,7 +186,7 @@ const handler = async ({ force, name, cwd, lib }) => {
         })
     }
 
-    const entrypoint = lib ? 'src/index.js' : 'src/App.js'
+    const entrypoint = lib ? 'src/index.jsx' : 'src/App.jsx'
 
     if (fs.existsSync(path.join(paths.base, entrypoint))) {
         reporter.warn(
@@ -196,14 +196,14 @@ const handler = async ({ force, name, cwd, lib }) => {
         reporter.info(`Creating entrypoint ${chalk.bold(entrypoint)}`)
         fs.mkdirpSync(path.join(paths.base, 'src'))
         fs.copyFileSync(
-            path.join(__dirname, '../../config/init.entrypoint.js'),
+            path.join(__dirname, '../../config/init.entrypoint.jsx'),
             path.join(paths.base, entrypoint)
         )
 
         if (!lib) {
             fs.copyFileSync(
-                path.join(__dirname, '../../config/init.App.test.js'),
-                path.join(paths.base, 'src/App.test.js')
+                path.join(__dirname, '../../config/init.App.test.jsx'),
+                path.join(paths.base, 'src/App.test.jsx')
             )
             fs.copyFileSync(
                 path.join(__dirname, '../../config/init.App.module.css'),

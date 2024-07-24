@@ -1,7 +1,7 @@
 import { CustomDataProvider } from '@dhis2/app-runtime'
 import React from 'react'
 import ReactDOM from 'react-dom'
-import App from './App.js'
+import App from './App.jsx'
 
 it('renders without crashing', () => {
     const div = document.createElement('div')
