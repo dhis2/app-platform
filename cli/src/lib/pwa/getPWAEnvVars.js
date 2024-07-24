@@ -29,7 +29,7 @@ function stringifyPatterns(patternsList) {
 /**
  * If `config.type` === `app` and PWA is enabled, returns an object of env vars
  * to be used for PWA setup.
- * See also `/config/d2.pwa.config.js`.
+ * See also `/config/d2ConfigDefaults.js`.
  * @param {Object} config
  */
 function getPWAEnvVars(config) {

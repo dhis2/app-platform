@@ -88,7 +88,8 @@ const parseConfigObjects = (
         )
     }
 
-    // Add PWA defaults to apps
+    // Add PWA defaults to apps: since these options are fairly nested, adding
+    // them as defaults here saves some optional chaining
     // todo: reconsider this -- it clutters the ENV passed to the app
     if (isApp(type)) {
         config = defaultsDeep(config, defaultsPWA)
@@ -125,11 +126,8 @@ const parseConfig = (paths) => {
             pkg = fs.readJsonSync(paths.package)
         }
 
-        const parsedConfig = parseConfigObjects(config, pkg, {
-            defaultsLib: require(paths.configDefaultsLib),
-            defaultsApp: require(paths.configDefaultsApp),
-            defaultsPWA: require(paths.configDefaultsPWA),
-        })
+        const configDefaults = require(paths.configDefaults)
+        const parsedConfig = parseConfigObjects(config, pkg, configDefaults)
 
         validateConfig(parsedConfig)
 
