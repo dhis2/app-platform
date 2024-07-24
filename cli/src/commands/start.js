@@ -132,10 +132,16 @@ const handler = async ({
             const viteConfig = createConfig({ config, paths, env: shell.env })
             const server = await createServer(viteConfig)
 
+            const location = config.entryPoints.plugin
+                ? config.entryPoints.app
+                    ? ' at / and /plugin.html'
+                    : ' at /plugin.html'
+                : ''
+
             reporter.print(
                 `The app ${chalk.bold(
                     config.name
-                )} is now available on port ${newPort}`
+                )} is now available on port ${newPort}${location}`
             )
             reporter.print('')
             await server.listen({ port: newPort })
