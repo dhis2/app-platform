@@ -177,10 +177,16 @@ const command = {
     aliases: 's',
     desc: 'Start a development server running a DHIS2 app within the DHIS2 app-shell',
     builder: {
+        force: {
+            type: 'boolean',
+            description:
+                'Force updating the app shell. Normally, this is only done when a new version of @dhis2/cli-app-scripts is detected',
+        },
         port: {
             alias: 'p',
             type: 'number',
             description: 'The port to use when running the development server',
+            default: defaultPort,
         },
         proxy: {
             alias: 'P',
