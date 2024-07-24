@@ -1,6 +1,12 @@
 const { reporter, chalk } = require('@dhis2/cli-helpers-engine')
 const fs = require('fs-extra')
-const { defaultsDeep, cloneDeep, has, isPlainObject } = require('lodash')
+const {
+    defaultsDeep,
+    cloneDeep,
+    has,
+    isPlainObject,
+    defaults,
+} = require('lodash')
 const parseAuthorString = require('parse-author')
 
 const requiredConfigFields = {
@@ -71,26 +77,17 @@ const parseConfigObjects = (
     pkg = {},
     { defaultsLib, defaultsApp, defaultsPWA } = {}
 ) => {
-    if (!config.type) {
-        // default value if undefined
-        config.type = 'app'
-    }
+    config.type = config.type || 'app'
     const { type } = config
     reporter.debug(`Type identified : ${chalk.bold(type)}`)
 
-    const defaults = type === 'lib' ? defaultsLib : defaultsApp
-    // Apply default entrypoints if none are defined
-    // (If an 'app'-type project has a plugin entry, don't add an app entry)
-    if (!config.entryPoints || Object.keys(config.entryPoints).length === 0) {
-        config.entryPoints = defaultsDeep(
-            config.entryPoints,
-            defaults?.entryPoints
-        )
-    }
+    const defaultsToUse = type === 'lib' ? defaultsLib : defaultsApp
+    // Use shallow defaults to not add unnecessary entrypoints
+    config = defaults(config, defaultsToUse)
 
     // Add PWA defaults to apps: since these options are fairly nested, adding
-    // them as defaults here saves some optional chaining
-    // todo: reconsider this -- it clutters the ENV passed to the app
+    // them as defaults here saves some optional chaining/value checking
+    // (todo: may be unnecessary)
     if (isApp(type)) {
         config = defaultsDeep(config, defaultsPWA)
     }
@@ -118,7 +115,6 @@ const parseConfig = (paths) => {
             reporter.debug('Loading d2 config at', paths.config)
             const importedConfig = require(paths.config)
             // Make sure not to overwrite imported object
-            // (need to use it later in generateManifest)
             config = cloneDeep(importedConfig)
             reporter.debug('loaded', config)
         }
