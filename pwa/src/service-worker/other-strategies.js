@@ -51,8 +51,9 @@ export class DevNetworkFirst extends Strategy {
 
         if (response && !error) {
             // Successful -- try to cache
-            // Note: 400+ & 500+ responses won't get cached here,
+            // Note: handler.cachePut doesn't cache 400+ & 500+ responses,
             // but they will get get returned to the browser below
+            // for the client to handle
             await handler.cachePut(cacheKey, response.clone())
         } else {
             // Unsuccessful -- try cache for response to return
