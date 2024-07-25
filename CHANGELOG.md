@@ -1,3 +1,10 @@
+# [12.0.0-alpha.5](https://github.com/dhis2/app-platform/compare/v12.0.0-alpha.4...v12.0.0-alpha.5) (2024-07-25)
+
+
+### Features
+
+* handle plugins with Vite [LIBS-610] ([#863](https://github.com/dhis2/app-platform/issues/863)) ([ca5be0d](https://github.com/dhis2/app-platform/commit/ca5be0dae4dafc1b100648ec5de65d517593490e))
+
 # [12.0.0-alpha.4](https://github.com/dhis2/app-platform/compare/v12.0.0-alpha.3...v12.0.0-alpha.4) (2024-07-23)
 
 

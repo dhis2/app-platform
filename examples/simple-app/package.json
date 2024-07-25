@@ -1,6 +1,6 @@
 {
     "name": "simple-app",
-    "version": "12.0.0-alpha.4",
+    "version": "12.0.0-alpha.5",
     "repository": "https://github.com/amcgee/dhis2-app-platform",
     "author": "Austin McGee <austin@dhis2.org>",
     "license": "BSD-3-Clause",
