@@ -1,7 +1,12 @@
-import { resolve } from 'path'
 import react from '@vitejs/plugin-react'
-import { defineConfig, loadEnv, transformWithEsbuild } from 'vite'
+import { defineConfig, transformWithEsbuild } from 'vite'
 import dynamicImport from 'vite-plugin-dynamic-import'
+
+// This file is used to create config to use with the Vite Node API
+// (i.e. vite.createServer() and vite.build())
+// It uses ESM format and has an .mjs extension, since the CJS build of
+// Vite's Node API is deprecated and will be removed in v6
+// https://vitejs.dev/guide/troubleshooting.html#vite-cjs-node-api-deprecated
 
 /**
  * Allows JSX in .js files:
@@ -13,8 +18,9 @@ import dynamicImport from 'vite-plugin-dynamic-import'
  *
  * NB: State-preserving HMR will not work on React components unless they have
  * a .jsx or .tsx extension though, unfortunately
- * 
- * todo: deprecate
+ *
+ * todo: deprecate -- this and optimize deps below have a performance cost
+ * on startup
  */
 const jsxInJSPlugin = {
     name: 'treat-js-files-as-jsx',
@@ -54,23 +60,56 @@ const handleAssetFileNames = ({ name }) => {
         : 'assets/[name]-[hash][extname]' // the Rollup default
 }
 
-// https://vitejs.dev/config/
-export default defineConfig(({ mode }) => {
-    // https://vitejs.dev/config/#using-environment-variables-in-config
-    const env = loadEnv(mode, process.cwd(), ['DHIS2_', 'REACT_APP_', 'NODE_ENV', 'PORT'])
-
-    // Setting up process.env replacements for backwards compatibility:
-    // Use individual properties for drop-in replacements instead of a whole
-    // object, which allows for better dead code elimination
-    const defineOptions = {}
-    Object.entries(env)
-        // Don't expose "just DHIS2"-prefixed env vars on process.env
-        .filter(([key]) => !key.startsWith('DHIS2_'))
-        .forEach(([key, val]) => {
+/**
+ * Setting up static variable replacements at build time.
+ * Use individual properties for drop-in replacements instead of a whole
+ * object, which allows for better dead code elimination.
+ * For env vars for now, we keep the behavior in /src/lib/shell/env.js:
+ * loading, filtering, and prefixing env vars for CRA.
+ * Once we remove support for those variables, we just need:
+ * 1. the Shell env vars, e.g. DHIS2_APP_NAME, -_VERSION, etc. This need to
+ * be added to the env by the `define` configuration below
+ * 2. the user's env, which can be loaded and filtered by Vite's
+ * `vite.loadEnv(mode, process.cwd(), ['DHIS2_'])`,
+ * and don't need to use `define`; they just need the envPrefix config.
+ */
+const getDefineOptions = (env) => {
+    const defineOptions = {
+        'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV),
+    }
+    Object.entries(env).forEach(([key, val]) => {
+        // 'DHIS2_'-prefixed vars go on import.meta.env
+        if (key.startsWith('DHIS2_')) {
+            defineOptions[`import.meta.env.${key}`] = JSON.stringify(val)
+            return
+        }
+        // For backwards compatibility, add REACT_APP_DHIS2_... and other env
+        // vars to process.env. They will be statically replaced at build time.
+        // This will be removed in future versions
+        // todo: deprecate in favor of import.meta.env
         defineOptions[`process.env.${key}`] = JSON.stringify(val)
     })
+    return defineOptions
+}
 
-    return {
+const getBuildInputs = (config, paths) => {
+    const inputs = {}
+    if (config.entryPoints.app) {
+        inputs.main = paths.shellIndexHtml
+    }
+    if (config.entryPoints.plugin) {
+        inputs.plugin = paths.shellPluginHtml
+    }
+    return inputs
+}
+
+// https://vitejs.dev/config/
+export default ({ paths, config, env, host }) => {
+    return defineConfig({
+        // Need to specify the location of the app root, since we're not using
+        // the Vite CLI from the app root
+        root: paths.shell,
+
         // By default, assets are resolved to the root of the domain ('/'), but
         // deployed apps aren't served from there.
         // This option is basically the same as PUBLIC_URL for CRA and Parcel.
@@ -83,23 +122,15 @@ export default defineConfig(({ mode }) => {
         // https://vitejs.dev/config/shared-options.html#envprefix
         envPrefix: 'DHIS2_',
 
-        // For backwards compatibility, add REACT_APP_DHIS2_... env vars
-        // to process.env. They will be statically replaced at build time
-        // This will be removed in future versions
-        // todo: deprecate in favor of import.meta.env
-        define: defineOptions,
+        // Static replacement of vars at build time
+        define: getDefineOptions(env),
 
-        // Start the server at 3000 or a configured port
-        server: { port: env.PORT || 3000 },
+        server: { host },
 
         build: {
             outDir: 'build',
             rollupOptions: {
-                input: {
-                    main: resolve(__dirname, 'index.html'),
-                    // TODO: Dynamically build a plugin, based on context
-                    // plugin: resolve(__dirname, 'plugin.html'),
-                },
+                input: getBuildInputs(config, paths),
                 output: {
                     chunkFileNames: handleChunkFileNames,
                     assetFileNames: handleAssetFileNames,
@@ -121,9 +152,10 @@ export default defineConfig(({ mode }) => {
         ],
 
         // Allow JSX in .js pt. 2
+        // todo: deprecate - has a performance cost on startup
         optimizeDeps: {
             force: true,
             esbuildOptions: { loader: { '.js': 'jsx' } },
         },
-    }
-})
+    })
+}

@@ -69,10 +69,12 @@ const compile = async ({
 
     verifyEntrypoints({ config, paths })
     if (isAppType) {
-        await createAppEntrypointWrapper({
-            entrypoint: config.entryPoints.app,
-            paths,
-        })
+        if (config.entryPoints.app) {
+            await createAppEntrypointWrapper({
+                entrypoint: config.entryPoints.app,
+                paths,
+            })
+        }
         if (config.entryPoints.plugin) {
             await createPluginEntrypointWrapper({
                 entrypoint: config.entryPoints.plugin,

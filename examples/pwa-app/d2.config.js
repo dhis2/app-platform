@@ -12,9 +12,8 @@ const config = {
     },
 
     entryPoints: {
-        app: './src/App.js',
-        // Uncomment this to test plugin builds:
-        // plugin: './src/components/VisualizationsList.js',
+        app: './src/App.jsx',
+        plugin: './src/components/VisualizationsList.jsx',
     },
 
     // pluginType: 'DASHBOARD',

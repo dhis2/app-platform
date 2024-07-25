@@ -79,13 +79,26 @@ exports.verifyEntrypoints = ({
     verifyLibraryEntrypoint(config.entryPoints.lib)
 }
 
-const getEntrypointWrapper = async ({ entrypoint, paths }) => {
+/**
+ * Reads the default entrypoint wrapper file (shell/src/App.jsx) as a string,
+ * updates it to import from the user's configured entrypoint,
+ * then returns the string of the updated file contents.
+ *
+ * Also injects the `isPlugin` variable; previously this was done
+ * as an env var, but apps and plugins share the same env now.
+ * Uses 'false' explicitly in apps for better dead code elimination
+ */
+const getEntrypointWrapper = async ({ entrypoint, paths, isPlugin }) => {
     const relativeEntrypoint = entrypoint.replace(/^(\.\/)?src\//, '')
     const shellAppSource = await fs.readFile(paths.shellSourceEntrypoint)
 
     return shellAppSource
         .toString()
-        .replace(/'.\/D2App\/app\.jsx'/g, `'./D2App/${relativeEntrypoint}'`)
+        .replace(
+            '() => <div id="dhis2-placeholder" />',
+            `React.lazy(() => import('./D2App/${relativeEntrypoint}'))`
+        )
+        .replace('self.__IS_PLUGIN', isPlugin ? 'true' : 'false')
 }
 
 exports.createAppEntrypointWrapper = async ({ entrypoint, paths }) => {
@@ -98,6 +111,6 @@ exports.createAppEntrypointWrapper = async ({ entrypoint, paths }) => {
 exports.createPluginEntrypointWrapper = async ({ entrypoint, paths }) => {
     await fs.writeFile(
         paths.shellPluginEntrypoint,
-        await getEntrypointWrapper({ entrypoint, paths })
+        await getEntrypointWrapper({ entrypoint, paths, isPlugin: true })
     )
 }

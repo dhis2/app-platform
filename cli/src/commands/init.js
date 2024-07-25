@@ -82,7 +82,7 @@ const handler = async ({ force, name, cwd, lib }) => {
     } else {
         reporter.info('Importing d2.config.js defaults')
         fs.copyFileSync(
-            lib ? paths.configDefaultsLib : paths.configDefaultsApp,
+            lib ? paths.initConfigLib : paths.initConfigApp,
             paths.config
         )
     }
@@ -90,10 +90,7 @@ const handler = async ({ force, name, cwd, lib }) => {
     if (!fs.existsSync(paths.package)) {
         reporter.info('No package.json found, creating one...')
 
-        const pkg = require(path.join(
-            __dirname,
-            '../../config/init.package.json'
-        ))
+        const pkg = require(paths.initPackageJson)
         pkg.name = name
         fs.writeJSONSync(paths.package, pkg, {
             spaces: 2,
@@ -186,7 +183,7 @@ const handler = async ({ force, name, cwd, lib }) => {
         })
     }
 
-    const entrypoint = lib ? 'src/index.js' : 'src/App.js'
+    const entrypoint = lib ? 'src/index.jsx' : 'src/App.jsx'
 
     if (fs.existsSync(path.join(paths.base, entrypoint))) {
         reporter.warn(
@@ -195,18 +192,15 @@ const handler = async ({ force, name, cwd, lib }) => {
     } else {
         reporter.info(`Creating entrypoint ${chalk.bold(entrypoint)}`)
         fs.mkdirpSync(path.join(paths.base, 'src'))
-        fs.copyFileSync(
-            path.join(__dirname, '../../config/init.entrypoint.js'),
-            path.join(paths.base, entrypoint)
-        )
+        fs.copyFileSync(paths.initEntrypoint, path.join(paths.base, entrypoint))
 
         if (!lib) {
             fs.copyFileSync(
-                path.join(__dirname, '../../config/init.App.test.js'),
-                path.join(paths.base, 'src/App.test.js')
+                paths.initAppTestJsx,
+                path.join(paths.base, 'src/App.test.jsx')
             )
             fs.copyFileSync(
-                path.join(__dirname, '../../config/init.App.module.css'),
+                paths.initAppModuleCss,
                 path.join(paths.base, 'src/App.module.css')
             )
         }
@@ -221,7 +215,7 @@ const handler = async ({ force, name, cwd, lib }) => {
         reporter.warn('A README already exists, use --force to overwrite it')
     } else {
         reporter.info('Writing README...')
-        fs.copyFileSync(paths.readmeDefault, paths.readme)
+        fs.copyFileSync(paths.initReadme, paths.readme)
     }
 
     reporter.print('')

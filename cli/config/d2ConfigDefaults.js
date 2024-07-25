@@ -1,9 +1,20 @@
-/**
- * Default config for PWA properties in `d2.config.js`. They are kept separate
- * from other defaults so they aren't included in the `d2.config.js` created
- * when a new app is initialized with `d2 app scripts init`
- */
-module.exports = {
+const defaultsApp = {
+    type: 'app',
+
+    entryPoints: {
+        app: './src/App.jsx',
+    },
+}
+
+const defaultsLib = {
+    type: 'lib',
+
+    entryPoints: {
+        lib: './src/index.jsx',
+    },
+}
+
+const defaultsPWA = {
     pwa: {
         /**
          * If true, service worker is registered to perform offline caching
@@ -53,3 +64,5 @@ module.exports = {
         },
     },
 }
+
+module.exports = { defaultsApp, defaultsLib, defaultsPWA }

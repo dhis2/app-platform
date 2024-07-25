@@ -1,4 +1,5 @@
 /cli/assets
 **/locales/index.js
-cli/config/init.entrypoint.js
-cli/config/init.App.test.js
+# These are to avoid lint errors like 'cannot find module App.jsx'
+cli/config/init/entrypoint.jsx
+cli/config/init/App.test.jsx

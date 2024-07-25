@@ -9,7 +9,6 @@ const loadEnvFiles = require('../lib/loadEnvFiles')
 const parseConfig = require('../lib/parseConfig')
 const { isApp } = require('../lib/parseConfig')
 const makePaths = require('../lib/paths')
-const makePlugin = require('../lib/plugin')
 const { injectPrecacheManifest, compileServiceWorker } = require('../lib/pwa')
 const makeShell = require('../lib/shell')
 const { validatePackage } = require('../lib/validatePackage')
@@ -70,7 +69,6 @@ const handler = async ({
 
     const config = parseConfig(paths)
     const shell = makeShell({ config, paths })
-    const plugin = makePlugin({ config, paths })
 
     if (isApp(config.type)) {
         setAppParameters(standalone, config)
@@ -129,14 +127,20 @@ const handler = async ({
                 reporter.info('Generating manifests...')
                 await generateManifests(paths, config, process.env.PUBLIC_URL)
 
-                // CRA Manages service worker compilation here
                 reporter.info('Building appShell...')
-                await shell.build()
-
-                if (config.entryPoints.plugin) {
-                    reporter.info('Building plugin...')
-                    await plugin.build()
-                }
+                // These imports are done asynchronously to allow Vite to use its
+                // ESM build of its Node API (the CJS build will be removed in v6)
+                // https://vitejs.dev/guide/troubleshooting.html#vite-cjs-node-api-deprecated
+                const { build } = await import('vite')
+                const { default: createConfig } = await import(
+                    '../../config/makeViteConfig.mjs'
+                )
+                const viteConfig = createConfig({
+                    paths,
+                    config,
+                    env: shell.env,
+                })
+                await build(viteConfig)
 
                 if (config.pwa.enabled) {
                     reporter.info('Compiling service worker...')
@@ -168,7 +172,10 @@ const handler = async ({
         },
         {
             name: 'build',
-            onError: () => reporter.error('Build script failed'),
+            onError: (err) => {
+                reporter.error(err)
+                reporter.error('Build script failed')
+            },
         }
     )
 

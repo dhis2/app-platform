@@ -1,8 +1,8 @@
 const config = {
-    type: 'lib',
+    type: 'app',
 
     entryPoints: {
-        lib: './src/index.js',
+        app: './src/App.jsx',
     },
 }
 

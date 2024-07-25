@@ -22,21 +22,32 @@ module.exports = (cwd = process.cwd()) => {
     const base = path.resolve(cwd)
     const rootDirectory = path.parse(cwd).root
     const paths = {
+        initAppModuleCss: path.join(
+            __dirname,
+            '../../config/init/App.module.css'
+        ),
+        initAppTestJsx: path.join(__dirname, '../../config/init/App.test.jsx'),
+        initConfigApp: path.join(
+            __dirname,
+            '../../config/init/d2.config.app.js'
+        ),
+        initConfigLib: path.join(
+            __dirname,
+            '../../config/init/d2.config.lib.js'
+        ),
+        initEntrypoint: path.join(
+            __dirname,
+            '../../config/init/entrypoint.jsx'
+        ),
+        initPackageJson: path.join(__dirname, '../../config/init/package.json'),
+        initReadme: path.join(__dirname, '../../config/init/README.md'),
+
+        configDefaults: path.join(
+            __dirname,
+            '../../config/d2ConfigDefaults.js'
+        ),
         babelConfig: path.join(__dirname, '../../config/babel.config.js'),
-        configDefaultsApp: path.join(
-            __dirname,
-            '../../config/d2.config.app.js'
-        ),
-        configDefaultsLib: path.join(
-            __dirname,
-            '../../config/d2.config.lib.js'
-        ),
-        configDefaultsPWA: path.join(
-            __dirname,
-            '../../config/d2.pwa.config.js'
-        ),
         jestConfigDefaults: path.join(__dirname, '../../config/jest.config.js'),
-        readmeDefault: path.join(__dirname, '../../config/init.README.md'),
 
         shellSource,
         shellSourceEntrypoint: path.join(shellSource, 'src/App.jsx'),
@@ -61,6 +72,8 @@ module.exports = (cwd = process.cwd()) => {
         shellAppEntrypoint: path.join(base, './.d2/shell/src/App.jsx'),
         shellAppDirname,
         shellApp: path.join(base, `./.d2/shell/${shellAppDirname}`),
+        shellIndexHtml: path.join(base, './.d2/shell/index.html'),
+        shellPluginHtml: path.join(base, './.d2/shell/plugin.html'),
         shellPluginBundleEntrypoint: path.join(
             base,
             './.d2/shell/src/plugin.index.jsx'
@@ -71,10 +84,6 @@ module.exports = (cwd = process.cwd()) => {
             './.d2/shell/src/service-worker.js'
         ),
         shellPublic: path.join(base, './.d2/shell/public'),
-        shellPublicPluginHtml: path.join(
-            base,
-            './.d2/shell/public/plugin.html'
-        ),
         shellPublicServiceWorker: path.join(
             base,
             './.d2/shell/public/service-worker.js'

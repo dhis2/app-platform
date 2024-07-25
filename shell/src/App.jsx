@@ -5,8 +5,10 @@ import React from 'react'
 import { PluginLoader } from './PluginLoader.jsx'
 import { PluginOuterErrorBoundary } from './PluginOuterErrorBoundary.jsx'
 
-// Automatic bundle splitting!
-const D2App = React.lazy(() => import('./D2App/app.jsx'))
+// This placeholder component gets replaced at shell-bootstrapping time by
+// `React.lazy(() => import('./D2App/<entryPoint>'))`
+// The lazy import provides bundle splitting
+const D2App = () => <div id="dhis2-placeholder" />
 
 // Injected by backend when serving index or plugin HTML
 // https://github.com/dhis2/dhis2-core/pull/16703
@@ -27,7 +29,10 @@ const parseRequiredProps = (propsEnvVariable) => {
     return propsEnvVariable.split(',')
 }
 
-const isPlugin = process.env.REACT_APP_DHIS2_APP_PLUGIN === 'true'
+// Since apps and plugins share the same env with Vite, this value is injected
+// via string replacement in cli/src/lib/compiler/entrypoints.js
+const isPlugin = self.__IS_PLUGIN
+
 const skipPluginLogic = process.env.REACT_APP_DHIS2_APP_SKIPPLUGINLOGIC
 const requiredPluginProps = parseRequiredProps(
     process.env.REACT_APP_DHIS2_APP_REQUIREDPROPS

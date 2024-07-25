@@ -47,8 +47,8 @@ function compileServiceWorker({ config, paths, mode }) {
         plugins: [
             new webpack.DefinePlugin({
                 'process.env': JSON.stringify({
-                    ...process.env,
                     ...env,
+                    NODE_ENV: process.env.NODE_ENV,
                 }),
             }),
         ],

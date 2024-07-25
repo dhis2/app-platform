@@ -1,7 +1,7 @@
 import React from 'react'
 import classes from './App.module.css'
-import RequestTester from './components/RequestTester.js'
-import SectionWrapper from './components/SectionWrapper.js'
+import RequestTester from './components/RequestTester.jsx'
+import SectionWrapper from './components/SectionWrapper.jsx'
 
 const MyApp = () => (
     <div className={classes.container}>

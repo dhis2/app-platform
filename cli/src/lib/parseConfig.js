@@ -1,10 +1,16 @@
 const { reporter, chalk } = require('@dhis2/cli-helpers-engine')
 const fs = require('fs-extra')
-const { defaultsDeep, cloneDeep, has, isPlainObject } = require('lodash')
+const {
+    defaultsDeep,
+    cloneDeep,
+    has,
+    isPlainObject,
+    defaults,
+} = require('lodash')
 const parseAuthorString = require('parse-author')
 
 const requiredConfigFields = {
-    app: ['name', 'version', 'title', 'entryPoints.app'],
+    app: ['name', 'version', 'title'],
     login_app: ['name', 'version', 'title', 'entryPoints.app'],
     lib: ['name', 'version', 'entryPoints.lib'],
 }
@@ -60,6 +66,9 @@ const validateConfig = (config) => {
         )
     }
 
+    // entrypoints are validated in compiler/entrypoints.js
+    // authorities and datastore namespaces are validated in generateManifests.js
+
     return true
 }
 
@@ -68,13 +77,17 @@ const parseConfigObjects = (
     pkg = {},
     { defaultsLib, defaultsApp, defaultsPWA } = {}
 ) => {
-    const type = config.type || 'app'
+    config.type = config.type || 'app'
+    const { type } = config
     reporter.debug(`Type identified : ${chalk.bold(type)}`)
 
-    const defaults = type === 'lib' ? defaultsLib : defaultsApp
-    config = defaultsDeep(config, defaults)
+    const defaultsToUse = type === 'lib' ? defaultsLib : defaultsApp
+    // Use shallow defaults to not add unnecessary entrypoints
+    config = defaults(config, defaultsToUse)
 
-    // Add PWA defaults to apps
+    // Add PWA defaults to apps: since these options are fairly nested, adding
+    // them as defaults here saves some optional chaining/value checking
+    // (todo: may be unnecessary)
     if (isApp(type)) {
         config = defaultsDeep(config, defaultsPWA)
     }
@@ -102,7 +115,6 @@ const parseConfig = (paths) => {
             reporter.debug('Loading d2 config at', paths.config)
             const importedConfig = require(paths.config)
             // Make sure not to overwrite imported object
-            // (need to use it later in generateManifest)
             config = cloneDeep(importedConfig)
             reporter.debug('loaded', config)
         }
@@ -110,11 +122,8 @@ const parseConfig = (paths) => {
             pkg = fs.readJsonSync(paths.package)
         }
 
-        const parsedConfig = parseConfigObjects(config, pkg, {
-            defaultsLib: require(paths.configDefaultsLib),
-            defaultsApp: require(paths.configDefaultsApp),
-            defaultsPWA: require(paths.configDefaultsPWA),
-        })
+        const configDefaults = require(paths.configDefaults)
+        const parsedConfig = parseConfigObjects(config, pkg, configDefaults)
 
         validateConfig(parsedConfig)
 
@@ -127,8 +136,5 @@ const parseConfig = (paths) => {
 }
 
 module.exports = parseConfig
-
-module.exports.parseConfigObjects = parseConfigObjects
-
 module.exports.parseConfigObjects = parseConfigObjects
 module.exports.isApp = isApp

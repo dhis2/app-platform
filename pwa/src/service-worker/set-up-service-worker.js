@@ -4,7 +4,6 @@ import {
     NetworkFirst,
     NetworkOnly,
     StaleWhileRevalidate,
-    Strategy,
 } from 'workbox-strategies'
 import { swMsgs } from '../lib/constants.js'
 import {
@@ -12,6 +11,7 @@ import {
     dhis2ConnectionStatusPlugin,
     initDhis2ConnectionStatus,
 } from './dhis2-connection-status'
+import { DevNetworkFirst, NetworkAndTryCache } from './other-strategies.js'
 import {
     startRecording,
     completeRecording,
@@ -127,13 +127,6 @@ export function setUpServiceWorker() {
             (e) => e !== indexHtmlManifestEntry
         )
         precacheAndRoute(restOfManifest)
-
-        // Injection point for built plugin assets; injected by the workbox
-        // webpack plugin in the plugin's webpack config
-        // todo: reinvestigate after switching plugin builds to Vite
-        // (maybe will be covered by the first injection point above)
-        const pluginPrecacheManifest = self.__WB_PLUGIN_MANIFEST || []
-        precacheAndRoute(pluginPrecacheManifest)
     }
 
     // Handling pings: only use the network, and don't update the connection
@@ -166,34 +159,20 @@ export function setUpServiceWorker() {
         })
     )
 
-    // Network-first caching by default
+    // Network-first caching for everything else.
+    // Uses a custom strategy in dev mode to avoid bloating cache
+    // with file duplicates
     // * NOTE: there may be lazy-loading errors while offline in dev mode
+    const ResolvedNetworkFirst = PRODUCTION_ENV ? NetworkFirst : DevNetworkFirst
     registerRoute(
         ({ url }) => urlMeetsAppShellCachingCriteria(url),
-        new NetworkFirst({
+        new ResolvedNetworkFirst({
             cacheName: 'app-shell',
             plugins: [dhis2ConnectionStatusPlugin],
         })
     )
 
-    // Strategy for all other requests: try cache if network fails,
-    // but don't add anything to cache
-    class NetworkAndTryCache extends Strategy {
-        _handle(request, handler) {
-            return handler.fetch(request).catch((fetchErr) => {
-                // handler.cacheMatch doesn't work b/c it doesn't check all caches
-                return caches.match(request).then((res) => {
-                    // If not found in cache, throw original fetchErr
-                    // (if there's a cache err, that will be returned)
-                    if (!res) {
-                        throw fetchErr
-                    }
-                    return res
-                })
-            })
-        }
-    }
-    // Use fallback strategy as default
+    // Fallback: try cache if network fails, but don't cache anything
     setDefaultHandler(
         new NetworkAndTryCache({ plugins: [dhis2ConnectionStatusPlugin] })
     )
