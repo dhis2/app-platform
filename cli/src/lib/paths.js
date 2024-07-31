@@ -69,7 +69,7 @@ module.exports = (cwd = process.cwd(), { typeScript }) => {
         jestConfigDefaults: path.join(__dirname, '../../config/jest.config.js'), // TODO: probably need a different jest.config for TS
 
         shellSource,
-        shellSourceEntrypoint: path.join(shellSource, `src/App.${extension}x`), // TODO: double check the effect of having TS in shell folder
+        shellSourceEntrypoint: path.join(shellSource, `src/App.jsx`), // TODO: double check the effect of having TS in shell folder
         shellSourcePublic: path.join(shellSource, 'public'),
 
         // destination paths where we copy files to
@@ -77,7 +77,7 @@ module.exports = (cwd = process.cwd(), { typeScript }) => {
         package: path.join(base, './package.json'),
         yarnLock: findYarnLock(base, rootDirectory),
         dotenv: path.join(base, './.env'),
-        config: path.join(base, `./d2.config.${extension}`), // TODO: double check this works
+        config: path.join(base, `./d2.config.js`), // TODO: double check this works
         readme: path.join(base, './README.md'),
         src: path.join(base, './src'),
         public: path.join(base, './public'),
@@ -90,10 +90,7 @@ module.exports = (cwd = process.cwd(), { typeScript }) => {
         appOutputFilename: 'App.jsx',
         shell: path.join(base, './.d2/shell'),
         shellSrc: path.join(base, './.d2/shell/src'),
-        shellAppEntrypoint: path.join(
-            base,
-            `./.d2/shell/src/App.${extension}x`
-        ),
+        shellAppEntrypoint: path.join(base, `./.d2/shell/src/App.jsx`),
         shellAppDirname,
         shellApp: path.join(base, `./.d2/shell/${shellAppDirname}`),
         shellIndexHtml: path.join(base, './.d2/shell/index.html'),
