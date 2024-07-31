@@ -18,67 +18,95 @@ const findYarnLock = (base, rootDirectory) => {
     return findYarnLock(path.dirname(base), rootDirectory)
 }
 
-module.exports = (cwd = process.cwd()) => {
+module.exports = (cwd = process.cwd(), { typeScript }) => {
     const base = path.resolve(cwd)
     const rootDirectory = path.parse(cwd).root
+    const initFolder = typeScript ? 'init-typescript' : 'init'
+    const extension = typeScript ? 'ts' : 'js'
+
     const paths = {
         initAppModuleCss: path.join(
             __dirname,
-            '../../config/init/App.module.css'
+            `../../config/${initFolder}/App.module.css`
         ),
-        initAppTestJsx: path.join(__dirname, '../../config/init/App.test.jsx'),
+        initAppTestJsx: path.join(
+            __dirname,
+            `../../config/${initFolder}/App.test.${extension}x`
+        ),
         initConfigApp: path.join(
             __dirname,
-            '../../config/init/d2.config.app.js'
+            `../../config/${initFolder}/d2.config.app.${extension}`
         ),
         initConfigLib: path.join(
             __dirname,
-            '../../config/init/d2.config.lib.js'
+            `../../config/${initFolder}/d2.config.lib.${extension}`
         ),
         initEntrypoint: path.join(
             __dirname,
-            '../../config/init/entrypoint.jsx'
+            `../../config/${initFolder}/entrypoint.${extension}x`
         ),
-        initPackageJson: path.join(__dirname, '../../config/init/package.json'),
-        initReadme: path.join(__dirname, '../../config/init/README.md'),
+        initPackageJson: path.join(
+            __dirname,
+            `../../config/${initFolder}/package.json`
+        ),
+        initReadme: path.join(
+            __dirname,
+            `../../config/${initFolder}/README.md`
+        ),
+
+        initTSConfig: path.join(
+            __dirname,
+            `../../config/init-typescript/tsconfig.json`
+        ),
 
         configDefaults: path.join(
             __dirname,
-            '../../config/d2ConfigDefaults.js'
+            typeScript
+                ? '../../config/d2ConfigDefaults.typescript.js'
+                : '../../config/d2ConfigDefaults.js'
         ),
         babelConfig: path.join(__dirname, '../../config/babel.config.js'),
-        jestConfigDefaults: path.join(__dirname, '../../config/jest.config.js'),
+        jestConfigDefaults: path.join(__dirname, '../../config/jest.config.js'), // TODO: probably need a different jest.config for TS
 
         shellSource,
-        shellSourceEntrypoint: path.join(shellSource, 'src/App.jsx'),
+        shellSourceEntrypoint: path.join(shellSource, `src/App.${extension}x`), // TODO: double check the effect of having TS in shell folder
         shellSourcePublic: path.join(shellSource, 'public'),
 
+        // destination paths where we copy files to
         base,
         package: path.join(base, './package.json'),
         yarnLock: findYarnLock(base, rootDirectory),
         dotenv: path.join(base, './.env'),
-        config: path.join(base, './d2.config.js'),
+        config: path.join(base, `./d2.config.${extension}`), // TODO: double check this works
         readme: path.join(base, './README.md'),
         src: path.join(base, './src'),
         public: path.join(base, './public'),
         jestConfig: path.join(base, 'jest.config.js'),
         i18nStrings: path.join(base, './i18n'),
         i18nLocales: path.join(base, './src/locales'),
+        tsConfig: path.join(base, './tsconfig.json'),
 
         d2: path.join(base, './.d2/'),
         appOutputFilename: 'App.jsx',
         shell: path.join(base, './.d2/shell'),
         shellSrc: path.join(base, './.d2/shell/src'),
-        shellAppEntrypoint: path.join(base, './.d2/shell/src/App.jsx'),
+        shellAppEntrypoint: path.join(
+            base,
+            `./.d2/shell/src/App.${extension}x`
+        ),
         shellAppDirname,
         shellApp: path.join(base, `./.d2/shell/${shellAppDirname}`),
         shellIndexHtml: path.join(base, './.d2/shell/index.html'),
         shellPluginHtml: path.join(base, './.d2/shell/plugin.html'),
         shellPluginBundleEntrypoint: path.join(
             base,
-            './.d2/shell/src/plugin.index.jsx'
+            `./.d2/shell/src/plugin.index.${extension}x`
         ),
-        shellPluginEntrypoint: path.join(base, './.d2/shell/src/Plugin.jsx'),
+        shellPluginEntrypoint: path.join(
+            base,
+            `./.d2/shell/src/Plugin.${extension}x`
+        ),
+        // TODO: look at what to do with service-worker files whether to move to TS or not
         shellSrcServiceWorker: path.join(
             base,
             './.d2/shell/src/service-worker.js'
