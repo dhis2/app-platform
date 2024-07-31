@@ -76,8 +76,6 @@ const handler = async ({ force, name, cwd, lib, typeScript }) => {
     fs.mkdirpSync(cwd)
     const paths = makePaths(cwd, { typeScript })
 
-    console.log('paths', paths)
-
     reporter.info('checking d2.config exists')
     if (fs.existsSync(paths.config) && !force) {
         reporter.warn(
@@ -216,6 +214,8 @@ const handler = async ({ force, name, cwd, lib, typeScript }) => {
 
         // also look at copying src/custom.d.ts https://github.com/dhis2/data-exchange-app/pull/79/files#diff-5f2ca1b1541dc3023f81543689da349e59b97c708462dd8da4640b399362edc7
 
+        // ToDO: we're hardcoding running TS, we need to figure out how to pass the argument from the CLI
+
         // ToDO: aim to have a TS project that runs with "yarn start" and "yarn build"
     }
 
@@ -280,16 +280,14 @@ const command = {
             type: 'boolean',
             default: false,
         },
-        typeScript: {},
+        typeScript: {
+            alias: ['typescript', 'ts'],
+            description: 'Use TypeScript template',
+            type: 'boolean',
+            default: false,
+        },
     },
     handler,
 }
-
-/*
- TODO: remove this - just a hacky way to run the init script quickly using 
- node ../app-platform/cli/src/commands/init.js
- (make sure to run it outside the monorepo)
-*/
-handler({ name: 'test-project', typeScript: true })
 
 module.exports = command
