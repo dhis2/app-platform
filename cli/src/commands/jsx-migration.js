@@ -1,5 +1,6 @@
 const fs = require('fs/promises')
 const path = require('path')
+const { reporter /* chalk */ } = require('@dhis2/cli-helpers-engine')
 const fg = require('fast-glob')
 
 // Looks for JSX syntax; avoids comments
@@ -11,7 +12,7 @@ const jsxRegex = /^(?![ \t]*(?:\/\/|\/?\*+)).*(<\/?[a-zA-Z]+[^>]*>)/gim
 // https://regex101.com/r/xsHZdQ/2
 const importRegex = /(import.*|from) ['"](\..*)['"]/gim
 
-;(async function () {
+const handler = async () => {
     const globMatches = await fg.glob('src/**/*.js')
 
     // 1. Search each file for JSX syntax
@@ -28,16 +29,14 @@ const importRegex = /(import.*|from) ['"](\..*)['"]/gim
 
             if (contents.match(jsxRegex)) {
                 const newPath = matchPath.concat('x') // Add 'x' to the end to make it 'jsx'
-                // todo: logging
-                // console.log(`Renaming ${matchPath} to ${newPath}`)
+                reporter.debug(`Renaming ${matchPath} to ${newPath}`)
 
                 await fs.rename(matchPath, newPath)
                 renamedFiles.add(matchPath)
             }
         })
     )
-    // todo: logging
-    console.log(`${renamedFiles.size} files renamed`)
+    reporter.info(`Renamed ${renamedFiles.size} file(s)`)
 
     // 2. Go through each file again for imports
     // (Run glob again because some files have been renamed)
@@ -46,6 +45,7 @@ const importRegex = /(import.*|from) ['"](\..*)['"]/gim
     // (Note: Files without extension aren't edited; Vite and TS
     // handle them, so it's up to eslint rules)
     const globMatches2 = await fg.glob('src/**/*.(js|jsx)')
+    let fileUpdatedCount = 0
     await Promise.all(
         globMatches2.map(async (matchPath) => {
             const fileContent = await fs.readFile(matchPath, {
@@ -53,6 +53,7 @@ const importRegex = /(import.*|from) ['"](\..*)['"]/gim
             })
 
             let newFileContent = fileContent
+            let contentUpdated = false
             const importMatches = Array.from(fileContent.matchAll(importRegex))
             importMatches.forEach((match) => {
                 // get the second capturing group, the import path
@@ -65,20 +66,29 @@ const importRegex = /(import.*|from) ['"](\..*)['"]/gim
                         importPath,
                         importPath + 'x'
                     )
+                    contentUpdated = true
                 }
             })
-            await fs.writeFile(matchPath, newFileContent)
+
+            if (contentUpdated) {
+                await fs.writeFile(matchPath, newFileContent)
+                fileUpdatedCount += 1
+            }
         })
     )
-    // todo: logging
+    if (fileUpdatedCount > 0) {
+        reporter.info(`Updated imports in ${fileUpdatedCount} file(s)`)
+    }
 
     // 3. Update d2.config.js
     // Read d2 config as JS for easier access to entryPoint strings
-    const { entryPoints } = require('./d2.config.js')
-    const d2ConfigContents = await fs.readFile('./d2.config.js', {
+    const d2ConfigPath = path.join(process.cwd(), './d2.config.js')
+    const { entryPoints } = require(d2ConfigPath)
+    const d2ConfigContents = await fs.readFile(d2ConfigPath, {
         encoding: 'utf8',
     })
     let newD2ConfigContents = d2ConfigContents
+    let configContentUpdated = false
     Object.values(entryPoints).forEach((entryPoint) => {
         // entryPoint is formatted as './src/...' -- drop first 2 chars
         // to match the glob format above
@@ -87,8 +97,32 @@ const importRegex = /(import.*|from) ['"](\..*)['"]/gim
                 entryPoint,
                 entryPoint + 'x'
             )
+            configContentUpdated = true
         }
     })
-    await fs.writeFile('./d2.config.js', newD2ConfigContents)
-    // todo: logging
-})()
+    if (configContentUpdated) {
+        await fs.writeFile(d2ConfigPath, newD2ConfigContents)
+        reporter.info('Updated d2.config.js entrypoints')
+    }
+}
+
+const command = {
+    command: 'jsx-migration',
+    desc: 'Renames .js files to .jsx -- also handles file imports and d2.config.js',
+    builder: {
+        // todo: update parameters
+        username: {
+            alias: 'u',
+            description:
+                'The username for authenticating with the DHIS2 instance',
+        },
+        timeout: {
+            description:
+                'The timeout (in seconds) for uploading the app bundle',
+            default: 300,
+        },
+    },
+    handler,
+}
+
+module.exports = command
