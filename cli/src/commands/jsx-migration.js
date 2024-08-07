@@ -9,8 +9,11 @@ const fg = require('fast-glob')
 const jsxRegex = /^(?![ \t]*(?:\/\/|\/?\*+)).*(<\/?[a-zA-Z]+[^>]*>)/gim
 
 // Looks for relative import statements
-// https://regex101.com/r/xsHZdQ/2
+// https://regex101.com/r/xsHZdQ/3
 const importRegex = /(import.*|from) ['"](\..*)['"]/gim
+
+// https://regex101.com/r/u5vIVb/1
+const hasFileExtensionRegex = /[^/]*\.[^/]*$/
 
 const handler = async () => {
     const globMatches = await fg.glob('src/**/*.js')
@@ -58,13 +61,31 @@ const handler = async () => {
             importMatches.forEach((match) => {
                 // get the second capturing group, the import path
                 const importPath = match[2]
-                const joinedPath = path.join(matchPath, '..', importPath)
-                const isRenamed = renamedFiles.has(joinedPath)
+                const importPathWithExtension = hasFileExtensionRegex.test(
+                    importPath
+                )
+                    ? importPath
+                    : importPath + '.js'
+                // get the full path of the imported file from the repo root
+                const importPathFromRoot = path.join(
+                    matchPath,
+                    '..',
+                    importPathWithExtension
+                )
+                const isRenamed = renamedFiles.has(importPathFromRoot)
+
+                // todo: 'updateImportsWithoutFileExtensions' option
 
                 if (isRenamed) {
-                    newFileContent = newFileContent.replace(
+                    // replacing the whole matched string ends up being more
+                    // precise and avoids side effects
+                    const newMatchContent = match[0].replace(
                         importPath,
-                        importPath + 'x'
+                        importPathWithExtension + 'x'
+                    )
+                    newFileContent = newFileContent.replace(
+                        match[0],
+                        newMatchContent
                     )
                     contentUpdated = true
                 }
