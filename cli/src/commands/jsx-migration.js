@@ -5,17 +5,14 @@ const fg = require('fast-glob')
 
 // Looks for JSX syntax; avoids comments
 // Known false positives: in strings or multiline comments (see regex101)
-// https://regex101.com/r/YDkml7/5
-const jsxRegex = /^(?![ \t]*(?:\/\/|\/?\*+)).*(<\/?[a-zA-Z]+[^>]*>)/gim
+// https://regex101.com/r/YDkml7/6
+const jsxRegex = /^(?![ \t]*(?:\/\/|\/?\*+)).*[^a-zA-Z](<\/?[a-zA-Z]+[^>]*>)/gim
 
 // Looks for relative import statements
 // https://regex101.com/r/xsHZdQ/3
 const importRegex = /(import.*|from) ['"](\..*)['"]/gim
 
-// https://regex101.com/r/u5vIVb/1
-const hasFileExtensionRegex = /[^/]*\.[^/]*$/
-
-const handler = async () => {
+const handler = async ({ dontAddExtensionsToImportsWithoutOne }) => {
     const globMatches = await fg.glob('src/**/*.js')
 
     // 1. Search each file for JSX syntax
@@ -59,11 +56,20 @@ const handler = async () => {
             let contentUpdated = false
             const importMatches = Array.from(fileContent.matchAll(importRegex))
             importMatches.forEach((match) => {
-                // get the second capturing group, the import path
+                // match[2] is the second capturing group, the import path
                 const importPath = match[2]
-                const importPathWithExtension = hasFileExtensionRegex.test(
-                    importPath
-                )
+                // This is a little weird for files with an extension other
+                // than .js, but it's okay since they won't need renaming
+                const importPathHasExtension = importPath.endsWith('.js')
+                if (
+                    !importPathHasExtension &&
+                    dontAddExtensionsToImportsWithoutOne
+                ) {
+                    return
+                }
+
+                // We'll need an extension to match with the renamed files Set
+                const importPathWithExtension = importPathHasExtension
                     ? importPath
                     : importPath + '.js'
                 // get the full path of the imported file from the repo root
@@ -74,11 +80,9 @@ const handler = async () => {
                 )
                 const isRenamed = renamedFiles.has(importPathFromRoot)
 
-                // todo: 'updateImportsWithoutFileExtensions' option
-
                 if (isRenamed) {
                     // replacing the whole matched string ends up being more
-                    // precise and avoids side effects
+                    // precise than just the import text and avoids side effects
                     const newMatchContent = match[0].replace(
                         importPath,
                         importPathWithExtension + 'x'
@@ -132,15 +136,11 @@ const command = {
     desc: 'Renames .js files to .jsx -- also handles file imports and d2.config.js',
     builder: {
         // todo: update parameters
-        username: {
-            alias: 'u',
+        dontAddExtensionsToImportsWithoutOne: {
             description:
-                'The username for authenticating with the DHIS2 instance',
-        },
-        timeout: {
-            description:
-                'The timeout (in seconds) for uploading the app bundle',
-            default: 300,
+                "Normally, this script will update `import './App'` to `import './App.jsx'`. Use this flag to skip adding the extension in this case. Imports that already end with .js will still be updated to .jsx",
+            type: 'boolean',
+            default: false,
         },
     },
     handler,
