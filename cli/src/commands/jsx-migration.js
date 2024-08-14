@@ -44,10 +44,12 @@ const updateImports = async ({
     skipUpdatingImportsWithoutExtension,
 }) => {
     const code = await fs.readFile(filepath, { encoding: 'utf8' })
-    let newCode = code
+    reporter.debug(`Parsing ${filepath}`)
+
     try {
         const ast = await babel.parseAsync(code, babelParseOptions)
 
+        let newCode = code
         let contentUpdated = false
         babel.traverse(ast, {
             ImportDeclaration: (astPath) => {
@@ -84,16 +86,19 @@ const updateImports = async ({
                     // updating & replacing the raw value, which includes quotes,
                     // ends up being more precise and avoids side effects
                     const rawImportSource = astPath.node.source.extra.raw
+                    const newImportSource = importSourceWithExtension + 'x'
                     const newRawImportSource = rawImportSource.replace(
                         importSource,
-                        importSourceWithExtension + 'x'
+                        newImportSource
+                    )
+                    reporter.debug(
+                        `    Replacing ${importSource} => ${newImportSource}`
                     )
                     newCode = newCode.replace(
                         rawImportSource,
                         newRawImportSource
                     )
                     contentUpdated = true
-                    console.log({ newRawImportSource, contentUpdated })
                 }
             },
         })
