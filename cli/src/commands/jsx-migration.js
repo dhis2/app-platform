@@ -59,7 +59,7 @@ const updateImportSource = ({
     // than .js, but it's okay since they won't need updating
     const importSourceHasExtension = importSource.endsWith('.js')
     if (skipUpdatingImportsWithoutExtension && !importSourceHasExtension) {
-        return
+        return importSource
     }
 
     // We'll need an extension to match with the renamed files Set
@@ -97,6 +97,7 @@ const updateImports = async ({
                 if (!astPath.node.source) {
                     return // for exports from this file itself
                 }
+
                 const importSource = astPath.node.source.value
                 if (!importSource.startsWith('.')) {
                     return // not a relative import
@@ -141,15 +142,25 @@ const updateImports = async ({
     }
 }
 
-// todo: test filepaths
-// const filepath = '../capture-app/src/core_modules/capture-core/rules/getApplicableRuleEffects.js'
-// const filepath = '../capture-app/src/core_modules/capture-core/components/D2Form/D2Form.component.js'
-// const filepath = 'examples/pwa-app/src/App.js'
+const validateGlobString = (glob) => {
+    if (!glob.endsWith('.js')) {
+        throw new Error('Glob string must end with .js')
+    }
+}
+// in case of custom glob string
+const globOptions = { ignore: ['**/node_modules/**'] }
 
-const handler = async ({ skipUpdatingImportsWithoutExtension }) => {
+const defaultGlobString = 'src/**/*.js'
+const handler = async ({
+    globString = defaultGlobString,
+    skipUpdatingImportsWithoutExtension,
+}) => {
+    validateGlobString(globString)
+
     // 1. Search each JS file for JSX syntax
     // If found, 1) add to Set and 2) rename file (add 'x' to end)
-    const globMatches = await fg.glob('src/**/*.js')
+    reporter.info(`Using glob ${globString}`)
+    const globMatches = await fg.glob(globString, globOptions)
     reporter.info(`Searching for JSX in ${globMatches.length} files...`)
     const renamedFiles = new Set()
     await Promise.all(
@@ -167,9 +178,7 @@ const handler = async ({ skipUpdatingImportsWithoutExtension }) => {
     // (Run glob again because some files have been renamed)
     // If there's a local file import, check to see if it matches
     // a renamed item in the set. If so, rewrite the new extension
-    // (Note: Files without extension aren't edited; Vite and TS
-    // handle them, so it's up to eslint rules)
-    const globMatches2 = await fg.glob('src/**/*.(js|jsx)')
+    const globMatches2 = await fg.glob(globString + '(|x)', globOptions)
     reporter.info(`Scanning ${globMatches2.length} files to update imports...`)
     let fileUpdatedCount = 0
     await Promise.all(
@@ -237,12 +246,17 @@ const command = {
     command: 'jsx-migration',
     desc: 'Renames .js files to .jsx -- also handles file imports and d2.config.js',
     builder: {
-        // todo: update parameters
         skipUpdatingImportsWithoutExtension: {
             description:
                 "Normally, this script will update `import './App'` to `import './App.jsx'`. Use this flag to skip adding the extension in this case. Imports that already end with .js will still be updated to .jsx",
             type: 'boolean',
             default: false,
+        },
+        globString: {
+            description:
+                'Glob string to use for finding files to parse, rename, and update imports. It will be manipulated by the script, so it must end with .js, and make sure to use quotes around this argument to keep it a string',
+            type: 'string',
+            default: defaultGlobString,
         },
     },
     handler,
