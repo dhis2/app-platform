@@ -91,7 +91,12 @@ const updateImports = async ({
         let newCode = code
         let contentUpdated = false
         babel.traverse(ast, {
-            ImportDeclaration: (astPath) => {
+            // Triggers on imports and exports, the latter for cases like
+            // `export * from './file.js'`
+            'ImportDeclaration|ExportDeclaration': (astPath) => {
+                if (!astPath.node.source) {
+                    return // for exports from this file itself
+                }
                 const importSource = astPath.node.source.value
                 if (!importSource.startsWith('.')) {
                     return // not a relative import
