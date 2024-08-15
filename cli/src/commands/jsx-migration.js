@@ -4,6 +4,8 @@ const babel = require('@babel/core')
 const { reporter /* chalk */ } = require('@dhis2/cli-helpers-engine')
 const fg = require('fast-glob')
 
+// These are the plugins needed to parse JS with various syntaxes --
+// typescript shouldn't be needed
 const babelParseOptions = {
     // could just use jsx syntax parser, but this is already a dep of CLI
     presets: ['@babel/preset-react'],
@@ -41,22 +43,21 @@ const renameFile = async (filepath) => {
 /**
  * For JS imports, this will handle imports either with or without a .js
  * extension, such that the result ends with .jsx if the target file has been
- * renamed.
+ * renamed
  * Files without extension are updated by default since some linting rules give
  * `import/no-unresolved` errors after switching to JSX if imports don't use
  * an extension
- *
  * If `skipUpdatingImportsWithoutExtension` is set, imports without an extension
  * will be left as-is
  */
-const updateImportSource = ({
+const resolveImportSource = ({
     filepath,
     importSource,
     renamedFiles,
     skipUpdatingImportsWithoutExtension,
 }) => {
-    // This is a little weird for files with an extension other
-    // than .js, but it's okay since they won't need updating
+    // This doesn't handle files with an extension other than .js,
+    // since they won't need updating
     const importSourceHasExtension = importSource.endsWith('.js')
     if (skipUpdatingImportsWithoutExtension && !importSourceHasExtension) {
         return importSource
@@ -103,7 +104,7 @@ const updateImports = async ({
                     return // not a relative import
                 }
 
-                const newImportSource = updateImportSource({
+                const newImportSource = resolveImportSource({
                     filepath,
                     importSource,
                     renamedFiles,
@@ -134,8 +135,8 @@ const updateImports = async ({
 
         if (contentUpdated) {
             await fs.writeFile(filepath, newCode)
-            return true
         }
+        return contentUpdated
     } catch (err) {
         console.log(err)
         return false
@@ -147,10 +148,10 @@ const validateGlobString = (glob) => {
         throw new Error('Glob string must end with .js')
     }
 }
-// in case of custom glob string
+const defaultGlobString = 'src/**/*.js'
+// in case a custom glob string includes node_modules somewhere:
 const globOptions = { ignore: ['**/node_modules/**'] }
 
-const defaultGlobString = 'src/**/*.js'
 const handler = async ({
     globString = defaultGlobString,
     skipUpdatingImportsWithoutExtension,
@@ -158,7 +159,7 @@ const handler = async ({
     validateGlobString(globString)
 
     // 1. Search each JS file for JSX syntax
-    // If found, 1) add to Set and 2) rename file (add 'x' to end)
+    // If found, 2) Rename (add 'x' to the end) and 2) add path to a Set
     reporter.info(`Using glob ${globString}`)
     const globMatches = await fg.glob(globString, globOptions)
     reporter.info(`Searching for JSX in ${globMatches.length} files...`)
@@ -175,7 +176,7 @@ const handler = async ({
     reporter.info(`Renamed ${renamedFiles.size} file(s)`)
 
     // 2. Go through each file again for imports
-    // (Run glob again because some files have been renamed)
+    // (Run glob again and include .jsx because some files have been renamed)
     // If there's a local file import, check to see if it matches
     // a renamed item in the set. If so, rewrite the new extension
     const globMatches2 = await fg.glob(globString + '(|x)', globOptions)
@@ -206,7 +207,7 @@ const handler = async ({
         const d2Config = require(d2ConfigPath)
         entryPoints = d2Config.entryPoints
     } catch (err) {
-        reporter.info(`Did not find d2.config.js at ${d2ConfigPath}; finishing`)
+        reporter.warn(`Did not find d2.config.js at ${d2ConfigPath}; finishing`)
         return
     }
 
@@ -216,7 +217,7 @@ const handler = async ({
     let newD2ConfigContents = d2ConfigContents
     let configContentUpdated = false
     Object.values(entryPoints).forEach((entryPoint) => {
-        const newEntryPointSource = updateImportSource({
+        const newEntryPointSource = resolveImportSource({
             filepath: 'd2.config.js',
             importSource: entryPoint,
             renamedFiles,
