@@ -1,3 +1,10 @@
+# [12.0.0-alpha.6](https://github.com/dhis2/app-platform/compare/v12.0.0-alpha.5...v12.0.0-alpha.6) (2024-08-12)
+
+
+### Features
+
+* **init:** set direction: 'auto' and import locales for new apps [LIBS-645] ([#867](https://github.com/dhis2/app-platform/issues/867)) ([4eda4a9](https://github.com/dhis2/app-platform/commit/4eda4a9287ee9d1abe93c5f82647c3a028939bb3))
+
 # [12.0.0-alpha.5](https://github.com/dhis2/app-platform/compare/v12.0.0-alpha.4...v12.0.0-alpha.5) (2024-07-25)
 
 
