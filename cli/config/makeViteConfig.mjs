@@ -162,7 +162,11 @@ export default ({ paths, config, env, host }) => {
              * inline `webpackChunkName` usage. Third-party plugin.
              */
             dynamicImport(),
-            react({ babel: { plugins: ['styled-jsx/babel'] } }),
+            react({
+                babel: { plugins: ['styled-jsx/babel'] },
+                // Enables HMR for .js files:
+                jsxRuntime: 'classic',
+            }),
         ],
 
         // Allow JSX in .js pt. 2
