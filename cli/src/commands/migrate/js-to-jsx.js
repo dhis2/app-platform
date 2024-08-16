@@ -173,7 +173,7 @@ const handler = async ({
             }
         })
     )
-    reporter.info(`Renamed ${renamedFiles.size} file(s)`)
+    reporter.print(`Renamed ${renamedFiles.size} file(s)`)
 
     // 2. Go through each file again for imports
     // (Run glob again and include .jsx because some files have been renamed)
@@ -194,7 +194,7 @@ const handler = async ({
             }
         })
     )
-    reporter.info(`Updated imports in ${fileUpdatedCount} file(s)`)
+    reporter.print(`Updated imports in ${fileUpdatedCount} file(s)`)
 
     // 3. Update d2.config.js
     const d2ConfigPath = path.join(process.cwd(), 'd2.config.js')
@@ -237,9 +237,9 @@ const handler = async ({
 
     if (configContentUpdated) {
         await fs.writeFile(d2ConfigPath, newD2ConfigContents)
-        reporter.info('Updated d2.config.js entry points')
+        reporter.print('Updated d2.config.js entry points')
     } else {
-        reporter.info('No entry points updated')
+        reporter.print('No entry points updated')
     }
 }
 
