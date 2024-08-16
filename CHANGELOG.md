@@ -1,3 +1,15 @@
+# [12.0.0-alpha.7](https://github.com/dhis2/app-platform/compare/v12.0.0-alpha.6...v12.0.0-alpha.7) (2024-08-16)
+
+
+### Bug Fixes
+
+* allow serving files from cwd node_modules ([0233949](https://github.com/dhis2/app-platform/commit/023394975c4e0cd719698160946908b342b580b2))
+
+
+### Features
+
+* enable HMR for .js files ([5f4683c](https://github.com/dhis2/app-platform/commit/5f4683ced150eafa9633b08e004662715d1a842c))
+
 # [12.0.0-alpha.6](https://github.com/dhis2/app-platform/compare/v12.0.0-alpha.5...v12.0.0-alpha.6) (2024-08-12)
 
 
