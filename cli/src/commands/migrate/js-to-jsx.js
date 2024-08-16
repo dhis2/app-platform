@@ -244,8 +244,8 @@ const handler = async ({
 }
 
 const command = {
-    command: 'jsx-migration',
-    desc: 'Renames .js files to .jsx -- also handles file imports and d2.config.js',
+    command: 'js-to-jsx',
+    desc: 'Renames .js files that include JSX to .jsx. Also handles file imports and d2.config.js',
     builder: {
         skipUpdatingImportsWithoutExtension: {
             description:
