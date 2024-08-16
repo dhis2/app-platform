@@ -1,5 +1,9 @@
 import react from '@vitejs/plugin-react'
-import { defineConfig, transformWithEsbuild } from 'vite'
+import {
+    defineConfig,
+    searchForWorkspaceRoot,
+    transformWithEsbuild,
+} from 'vite'
 import dynamicImport from 'vite-plugin-dynamic-import'
 
 // This file is used to create config to use with the Vite Node API
@@ -125,7 +129,17 @@ export default ({ paths, config, env, host }) => {
         // Static replacement of vars at build time
         define: getDefineOptions(env),
 
-        server: { host },
+        server: {
+            host,
+            // By default, Vite allows serving files from a workspace root or
+            // falls back to the app root. Since we run the app in .d2/shell/,
+            // if the app is not in a workspace, files in cwd/node_modules can
+            // be out of reach (like fonts, which don't get bundled).
+            // Start the workspace search from cwd so it falls back to that
+            // when not in a workspace; then fonts in node_modules are usable
+            // https://vitejs.dev/config/server-options.html#server-fs-allow
+            fs: { allow: [searchForWorkspaceRoot(process.cwd())] },
+        },
 
         build: {
             outDir: 'build',
@@ -148,7 +162,11 @@ export default ({ paths, config, env, host }) => {
              * inline `webpackChunkName` usage. Third-party plugin.
              */
             dynamicImport(),
-            react({ babel: { plugins: ['styled-jsx/babel'] } }),
+            react({
+                babel: { plugins: ['styled-jsx/babel'] },
+                // Enables HMR for .js files:
+                jsxRuntime: 'classic',
+            }),
         ],
 
         // Allow JSX in .js pt. 2
