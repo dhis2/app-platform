@@ -57,6 +57,7 @@ const handler = async ({
     verify,
     force,
     pack: packAppOutput,
+    allowJsxInJs,
 }) => {
     const paths = makePaths(cwd)
 
@@ -139,6 +140,7 @@ const handler = async ({
                     paths,
                     config,
                     env: shell.env,
+                    allowJsxInJs,
                 })
                 await build(viteConfig)
 
@@ -237,6 +239,11 @@ const command = {
             description:
                 'Build in standalone mode (overrides the d2.config.js setting)',
             default: undefined,
+        },
+        allowJsxInJs: {
+            type: 'boolean',
+            description:
+                'Add Vite config to handle JSX in .js files. DEPRECATED: Will be removed in @dhis2/cli-app-scripts v13. Consider using the migration script `d2-app-scripts migrate js-to-jsx` to avoid needing this option',
         },
     },
     handler,
