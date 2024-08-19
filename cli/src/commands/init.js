@@ -199,20 +199,43 @@ const handler = async ({ force, name, cwd, lib, typeScript }) => {
             cwd: paths.base,
         })
 
-        // Todo: check why d2 start is renaming TS files to JS
+        // install any other TS dependencies needed
+        reporter.info('install type definitions')
+        await exec({
+            cmd: 'yarn',
+            args: ['add', '@types/react @types/react-dom @types/jest', '--dev'],
+            cwd: paths.base,
+        })
 
+        // add global.d.ts to get rid of CSS module errors
+        // something like https://github.com/dhis2/data-exchange-app/pull/79/files#diff-858566d2d4cf06579a908cb85f587c5752fa0fa6a47d579277749006e86f0834
+        // (but maybe something better)
+        reporter.info('add declaration files')
+        const srcDir = path.join(paths.base, 'src')
+
+        if (!fs.existsSync(srcDir)) {
+            fs.mkdirpSync(srcDir);
+        }
+        fs.copyFileSync(paths.initGlobalDeclaration, path.join(srcDir, 'global.d.ts'))
+
+        // also look at copying src/custom.d.ts https://github.com/dhis2/data-exchange-app/pull/79/files#diff-5f2ca1b1541dc3023f81543689da349e59b97c708462dd8da4640b399362edc7
+
+        fs.copyFileSync(paths.initCustomDeclaration, path.join(srcDir, 'custom.d.ts'))
+       
         // ToDO: make custom eslint config part of the template (and copy it)0
         // similar to: https://github.com/dhis2/data-exchange-app/pull/79/files#diff-e2954b558f2aa82baff0e30964490d12942e0e251c1aa56c3294de6ec67b7cf5
         // install dependencies needed for eslint
         // "@typescript-eslint/eslint-plugin"
         // "@typescript-eslint/parser"
 
-        // ToDO: install any other TS dependencies needed
-        // add global.d.ts to get rid of CSS module errors
-        // something like https://github.com/dhis2/data-exchange-app/pull/79/files#diff-858566d2d4cf06579a908cb85f587c5752fa0fa6a47d579277749006e86f0834
-        // (but maybe something better)
-
-        // also look at copying src/custom.d.ts https://github.com/dhis2/data-exchange-app/pull/79/files#diff-5f2ca1b1541dc3023f81543689da349e59b97c708462dd8da4640b399362edc7
+        await exec({
+            cmd: 'yarn',
+            args: ['add', '@typescript-eslint/eslint-plugin @typescript-eslint/parser', '--dev'],
+            cwd: paths.base,
+        })
+         // copy eslint config
+         reporter.info('Copying eslint')
+         fs.copyFileSync(paths.initEslint, paths.eslintConfig)
 
         // ToDO: we're hardcoding running TS, we need to figure out how to pass the argument from the CLI
 

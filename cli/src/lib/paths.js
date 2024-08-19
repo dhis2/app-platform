@@ -27,7 +27,7 @@ module.exports = (cwd = process.cwd(), { typeScript } = {}) => {
     const paths = {
         initAppModuleCss: path.join(
             __dirname,
-            `../../config/${initFolder}/App.module.css`
+            `../../config/App.module.css`
         ),
         initAppTestJsx: path.join(
             __dirname,
@@ -47,16 +47,29 @@ module.exports = (cwd = process.cwd(), { typeScript } = {}) => {
         ),
         initPackageJson: path.join(
             __dirname,
-            `../../config/${initFolder}/package.json`
+            `../../config/package.json`
         ),
         initReadme: path.join(
             __dirname,
-            `../../config/${initFolder}/README.md`
+            `../../config/README.md`
         ),
 
         initTSConfig: path.join(
             __dirname,
             `../../config/init-typescript/tsconfig.json`
+        ),
+
+        initEslint: path.join(
+            __dirname,
+            `../../config/init-typescript/.eslintrc.js`
+        ),
+        initGlobalDeclaration: path.join(
+            __dirname,
+            '../../config/init-typescript/global.d.ts'
+        ),
+        initCustomDeclaration: path.join(
+            __dirname, 
+            '../../config/init-typescript/custom.d.ts'
         ),
 
         configDefaults: path.join(
@@ -85,6 +98,7 @@ module.exports = (cwd = process.cwd(), { typeScript } = {}) => {
         i18nStrings: path.join(base, './i18n'),
         i18nLocales: path.join(base, './src/locales'),
         tsConfig: path.join(base, './tsconfig.json'),
+        eslintConfig: path.join(base, './.eslintrc.js'),
 
         d2: path.join(base, './.d2/'),
         appOutputFilename: 'App.jsx',
