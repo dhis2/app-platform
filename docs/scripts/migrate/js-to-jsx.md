@@ -1,4 +1,4 @@
-# d2-app-scripts jsx-migration
+# d2-app-scripts migrate js-to-jsx
 
 Converts files with `.js` extensions to `.jsx` if the file contains JSX syntax. This is intended as a helper for moving `@dhis2/cli-app-scripts` to Vite, which prefers files to be named as such to avoid unnecessarily parsing vanilla JS files for JSX syntax.
 
@@ -7,7 +7,7 @@ Converts files with `.js` extensions to `.jsx` if the file contains JSX syntax. 
 This should usually be run from the root directory of a project.
 
 ```sh
-yarn d2-app-scripts jsx-migration
+yarn d2-app-scripts migrate js-to-jsx
 ```
 
 By default, this will crawl through each `.js` file in the `src` directory (using the glob `src/**/*.js`), look for JSX syntax in the file, then rename the file to use a `.jsx` extension if appropriate.
@@ -31,7 +31,7 @@ Since imports will only be updated within the scope of that glob, a directory th
 Example:
 
 ```sh
-yarn d2-app-scripts jsx-migration --globString "src/components/**/*.js"
+yarn d2-app-scripts migrate js-to-jsx --globString "src/components/**/*.js"
 ```
 
 Since the glob string will be reused and manipulated by the script, make sure to use quotes around the argument so that the shell doesn't handle it as a normal glob.
@@ -41,10 +41,11 @@ Contents of `node_modules` directories will always be ignored. `d2.config.js` wi
 ## Usage
 
 ```sh
-> d2-app-scripts jsx-migration --help
-d2-app-scripts jsx-migration
+> d2-app-scripts migrate js-to-jsx --help
+d2-app-scripts migrate js-to-jsx
 
-Renames .js files to .jsx -- also handles file imports and d2.config.js
+Renames .js files that include JSX to .jsx. Also handles file imports and
+d2.config.js
 
 Global Options:
   -h, --help     Show help                                             [boolean]
