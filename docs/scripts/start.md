@@ -22,7 +22,7 @@ Options:
   --cwd           working directory to use (defaults to cwd)
   --force         Force updating the app shell; normally, this is only done when
                   a new version of @dhis2/cli-app-scripts is detected. Also
-                  passes the --force option to the Vite server to reoptimize
+                  passes the --force option to the Vite server to re-optimize
                   dependencies                                         [boolean]
   --port, -p      The port to use when running the development server
                                                         [number] [default: 3000]
