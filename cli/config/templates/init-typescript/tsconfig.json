@@ -7,8 +7,7 @@
         "esModuleInterop": true,
         "target": "ESNext",
         "module": "esnext",
-        "moduleResolution": "node",
-        "allowImportingTsExtensions": true
+        "moduleResolution": "node"
     },
     "include": ["./src/**/*"]
 }

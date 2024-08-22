@@ -27,51 +27,50 @@ module.exports = (cwd = process.cwd(), { typeScript } = {}) => {
     const paths = {
         initAppModuleCss: path.join(
             __dirname,
-            `../../config/App.module.css`
+            `../../config/templates/common/App.module.css`
         ),
         initAppTestJsx: path.join(
             __dirname,
-            `../../config/${initFolder}/App.test.${extension}x`
+            `../../config/templates/${initFolder}/App.test.${extension}x`
         ),
         initConfigApp: path.join(
             __dirname,
-            `../../config/${initFolder}/d2.config.app.${extension}`
+            `../../config/templates/${initFolder}/d2.config.app.${extension}`
         ),
         initConfigLib: path.join(
             __dirname,
-            `../../config/${initFolder}/d2.config.lib.${extension}`
+            `../../config/templates/${initFolder}/d2.config.lib.${extension}`
         ),
         initEntrypoint: path.join(
             __dirname,
-            `../../config/${initFolder}/entrypoint.${extension}x`
+            `../../config/templates/${initFolder}/entrypoint.${extension}x`
         ),
         initPackageJson: path.join(
             __dirname,
-            `../../config/package.json`
+            `../../config/templates/common/package.json`
         ),
         initReadme: path.join(
             __dirname,
-            `../../config/README.md`
+            `../../config/templates/common/README.md`
         ),
 
         initTSConfig: path.join(
             __dirname,
-            `../../config/init-typescript/tsconfig.json`
+            `../../config/templates/init-typescript/tsconfig.json`
         ),
 
         initEslint: path.join(
             __dirname,
-            `../../config/init-typescript/.eslintrc.js`
+            `../../config/templates/init-typescript/eslint.config.js`
         ),
         initGlobalDeclaration: path.join(
             __dirname,
-            '../../config/init-typescript/global.d.ts'
+            '../../config/templates/init-typescript/global.d.ts'
         ),
-        initCustomDeclaration: path.join(
-            __dirname, 
-            '../../config/init-typescript/custom.d.ts'
+        initModulesDeclaration: path.join(
+            __dirname,
+            '../../config/templates/init-typescript/modules.d.ts'
         ),
-
         configDefaults: path.join(
             __dirname,
             typeScript
@@ -98,7 +97,7 @@ module.exports = (cwd = process.cwd(), { typeScript } = {}) => {
         i18nStrings: path.join(base, './i18n'),
         i18nLocales: path.join(base, './src/locales'),
         tsConfig: path.join(base, './tsconfig.json'),
-        eslintConfig: path.join(base, './.eslintrc.js'),
+        eslintConfig: path.join(base, './eslint.config.js'),
 
         d2: path.join(base, './.d2/'),
         appOutputFilename: 'App.jsx',

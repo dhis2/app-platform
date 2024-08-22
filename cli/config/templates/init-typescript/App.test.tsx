@@ -7,7 +7,7 @@ it('renders without crashing', () => {
     const div = document.createElement('div')
 
     const data = {
-        resource: "test",
+        resource: 'test',
     }
 
     ReactDOM.render(
