@@ -1,7 +1,8 @@
-const { getPWAEnvVars } = require('../pwa')
+const getPWAEnvVars = require('../env/getPWAEnvVars')
 const bootstrap = require('./bootstrap')
 const getEnv = require('./env')
 
+// todo: accounting for env -- see where we can pare it down
 module.exports = ({ config, paths }) => {
     const baseEnvVars = {
         name: config.title,
