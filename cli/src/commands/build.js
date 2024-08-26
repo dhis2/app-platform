@@ -107,8 +107,7 @@ const handler = async ({
 
             if (isApp(config.type)) {
                 reporter.info('Bootstrapping local appShell...')
-                // todo: args format?
-                await bootstrapShell(paths, { shell: shellSource, force })
+                await bootstrapShell({ paths, shell: shellSource, force })
             }
 
             reporter.info(

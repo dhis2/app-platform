@@ -92,9 +92,7 @@ const handler = async ({
             })
 
             reporter.info('Bootstrapping local appShell...')
-            await bootstrapShell(paths, { shell: shellSource, force })
-            // await shell.bootstrap({ shell: shellSource, force })
-            const env = getEnv({ config, publicUrl: '.' })
+            await bootstrapShell({ paths, shell: shellSource, force })
 
             reporter.info(`Building app ${chalk.bold(config.name)}...`)
             await compile({
@@ -114,6 +112,8 @@ const handler = async ({
                     `Something is already running on port ${port}, using ${newPort} instead.`
                 )
             }
+
+            const env = getEnv({ config, publicUrl: '.' })
 
             if (config.pwa.enabled) {
                 reporter.info('Compiling service worker...')
