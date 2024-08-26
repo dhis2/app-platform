@@ -74,7 +74,7 @@ module.exports = ({ config, baseUrl, publicUrl }) => {
         ...shellEnv,
         NODE_ENV: process.env.NODE_ENV,
         // todo: deprecated; migrate to import.meta.env.BASE_URL
-        PUBLIC_URL: publicUrl,
+        PUBLIC_URL: publicUrl || '.',
     }
 
     if (env.REACT_APP_DHIS2_API_VERSION) {
