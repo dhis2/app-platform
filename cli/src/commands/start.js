@@ -1,7 +1,8 @@
 const { reporter, chalk } = require('@dhis2/cli-helpers-engine')
 const detectPort = require('detect-port')
+const bootstrapShell = require('../lib/bootstrapShell')
 const { compile } = require('../lib/compiler')
-const { loadEnvFiles } = require('../lib/env')
+const { loadEnvFiles, getEnv } = require('../lib/env')
 const exitOnCatch = require('../lib/exitOnCatch')
 const generateManifests = require('../lib/generateManifests')
 const i18n = require('../lib/i18n')
@@ -10,7 +11,6 @@ const { isApp } = require('../lib/parseConfig')
 const makePaths = require('../lib/paths')
 const createProxyServer = require('../lib/proxy')
 const { compileServiceWorker } = require('../lib/pwa')
-const makeShell = require('../lib/shell')
 const { validatePackage } = require('../lib/validatePackage')
 
 const defaultPort = 3000
@@ -31,7 +31,7 @@ const handler = async ({
     loadEnvFiles(paths, mode)
 
     const config = parseConfig(paths)
-    const shell = makeShell({ config, paths })
+    // const shell = makeShell({ config, paths })
 
     if (!isApp(config.type)) {
         reporter.error(
@@ -92,7 +92,9 @@ const handler = async ({
             })
 
             reporter.info('Bootstrapping local appShell...')
-            await shell.bootstrap({ shell: shellSource, force })
+            await bootstrapShell(paths, { shell: shellSource, force })
+            // await shell.bootstrap({ shell: shellSource, force })
+            const env = getEnv({ config, publicUrl: '.' })
 
             reporter.info(`Building app ${chalk.bold(config.name)}...`)
             await compile({
@@ -115,7 +117,7 @@ const handler = async ({
 
             if (config.pwa.enabled) {
                 reporter.info('Compiling service worker...')
-                await compileServiceWorker({ config, paths, mode })
+                await compileServiceWorker({ env, paths, mode })
                 // don't need to inject precache manifest because no precaching
                 // is done in development environments
             }
@@ -130,12 +132,7 @@ const handler = async ({
             const { default: createConfig } = await import(
                 '../../config/makeViteConfig.mjs'
             )
-            const viteConfig = createConfig({
-                config,
-                paths,
-                env: shell.env,
-                host,
-            })
+            const viteConfig = createConfig({ config, paths, env, host })
             const server = await createServer(viteConfig)
 
             const location = config.entryPoints.plugin
