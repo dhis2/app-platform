@@ -29,11 +29,10 @@ const prefixEnvForCRA = (env) =>
         {}
     )
 
-const getShellEnv = ({ config, baseUrl }) => {
+const getShellEnv = (config) => {
     const shellEnv = {
         name: config.title,
         version: config.version,
-        base_url: baseUrl,
         loginApp: config.type === 'login_app' || undefined,
         direction: config.direction,
         // NB: 'IS_PLUGIN' is added by string replacement in
@@ -61,11 +60,13 @@ const getShellEnv = ({ config, baseUrl }) => {
 
 module.exports = ({ config, baseUrl, publicUrl }) => {
     const filteredEnv = filterEnv()
-    const shellEnv = getShellEnv({ config, baseUrl })
+    const shellEnv = getShellEnv(config)
+    const DHIS2_BASE_URL = baseUrl
 
     const env = {
         // Legacy env vars; deprecated
         ...prefixEnvForCRA({
+            DHIS2_BASE_URL,
             ...filteredEnv,
             ...shellEnv,
         }),
@@ -73,6 +74,7 @@ module.exports = ({ config, baseUrl, publicUrl }) => {
         ...filteredEnv,
         ...shellEnv,
         NODE_ENV: process.env.NODE_ENV,
+        DHIS2_BASE_URL,
         // todo: deprecated; migrate to import.meta.env.BASE_URL
         PUBLIC_URL: publicUrl || '.',
     }
