@@ -1,3 +1,10 @@
+## [11.7.1](https://github.com/dhis2/app-platform/compare/v11.7.0...v11.7.1) (2024-08-27)
+
+
+### Bug Fixes
+
+* update app-runtime dependency ([74a2165](https://github.com/dhis2/app-platform/commit/74a21655bee64c9ca4e6285486b4fabb8bc76959))
+
 # [11.7.0](https://github.com/dhis2/app-platform/compare/v11.6.4...v11.7.0) (2024-07-23)
 
 
