@@ -1,3 +1,10 @@
+# [12.0.0-alpha.9](https://github.com/dhis2/app-platform/compare/v12.0.0-alpha.8...v12.0.0-alpha.9) (2024-08-27)
+
+
+### Bug Fixes
+
+* injectPrecacheManifest warning logging ([a0d266e](https://github.com/dhis2/app-platform/commit/a0d266ed456053f37023c80f8dcfd36b3dee0d49))
+
 # [12.0.0-alpha.8](https://github.com/dhis2/app-platform/compare/v12.0.0-alpha.7...v12.0.0-alpha.8) (2024-08-27)
 
 
