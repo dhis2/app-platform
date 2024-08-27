@@ -31,7 +31,6 @@ const handler = async ({
     loadEnvFiles(paths, mode)
 
     const config = parseConfig(paths)
-    // const shell = makeShell({ config, paths })
 
     if (!isApp(config.type)) {
         reporter.error(
