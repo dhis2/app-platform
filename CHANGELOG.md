@@ -1,3 +1,10 @@
+# [12.0.0-alpha.8](https://github.com/dhis2/app-platform/compare/v12.0.0-alpha.7...v12.0.0-alpha.8) (2024-08-27)
+
+
+### Bug Fixes
+
+* base url env & refactor [LIBS-635] ([#872](https://github.com/dhis2/app-platform/issues/872)) ([7f19259](https://github.com/dhis2/app-platform/commit/7f19259c470e590201d7ec9e58d84892b1d418cd))
+
 # [12.0.0-alpha.7](https://github.com/dhis2/app-platform/compare/v12.0.0-alpha.6...v12.0.0-alpha.7) (2024-08-16)
 
 
