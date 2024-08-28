@@ -1,3 +1,10 @@
+# [12.0.0-alpha.10](https://github.com/dhis2/app-platform/compare/v12.0.0-alpha.9...v12.0.0-alpha.10) (2024-08-28)
+
+
+### Bug Fixes
+
+* use strings for 'boolean' env vars ([eaf5e66](https://github.com/dhis2/app-platform/commit/eaf5e66e4d655dc9709c34c04addcbe7b330f4fc))
+
 # [12.0.0-alpha.9](https://github.com/dhis2/app-platform/compare/v12.0.0-alpha.8...v12.0.0-alpha.9) (2024-08-27)
 
 
