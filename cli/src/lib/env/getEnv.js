@@ -33,12 +33,12 @@ const getShellEnv = (config) => {
     const shellEnv = {
         name: config.title,
         version: config.version,
-        loginApp: config.type === 'login_app' || undefined,
+        loginApp: config.type === 'login_app' ? 'true' : undefined,
         direction: config.direction,
         // NB: 'IS_PLUGIN' is added by string replacement in
         // compiler/entrypoints.js, since env is shared between app and plugin
         requiredProps: config.requiredProps?.join(),
-        skipPluginLogic: config.skipPluginLogic,
+        skipPluginLogic: config.skipPluginLogic ? 'true' : undefined,
         ...getPWAEnvVars(config),
     }
 
