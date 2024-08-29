@@ -25,7 +25,7 @@ function logManifestOutput({ count, filePaths, size, warnings }) {
     reporter.debug(
         `The service worker will precache ${count} URLs, totaling ${size} bytes.`
     )
-    warnings.forEach(reporter.warn)
+    warnings.forEach((warning) => reporter.warn(warning))
 }
 
 /**

@@ -78,9 +78,7 @@ const handleAssetFileNames = ({ name }) => {
  * and don't need to use `define`; they just need the envPrefix config.
  */
 const getDefineOptions = (env) => {
-    const defineOptions = {
-        'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV),
-    }
+    const defineOptions = {}
     Object.entries(env).forEach(([key, val]) => {
         // 'DHIS2_'-prefixed vars go on import.meta.env
         if (key.startsWith('DHIS2_')) {
@@ -88,8 +86,9 @@ const getDefineOptions = (env) => {
             return
         }
         // For backwards compatibility, add REACT_APP_DHIS2_... and other env
-        // vars to process.env. They will be statically replaced at build time.
-        // This will be removed in future versions
+        // vars to process.env. These env vars have been filtered by getEnv().
+        // They will be statically replaced at build time.
+        // Env vars in this format will be removed in future versions
         // todo: deprecate in favor of import.meta.env
         defineOptions[`process.env.${key}`] = JSON.stringify(val)
     })
@@ -110,14 +109,15 @@ const getBuildInputs = (config, paths) => {
 // https://vitejs.dev/config/
 export default ({ paths, config, env, host }) => {
     return defineConfig({
-        // Need to specify the location of the app root, since we're not using
-        // the Vite CLI from the app root
+        // Need to specify the location of the app root, since this CLI command
+        // gets run in a different directory than the bootstrapped app
         root: paths.shell,
 
         // By default, assets are resolved to the root of the domain ('/'), but
         // deployed apps aren't served from there.
         // This option is basically the same as PUBLIC_URL for CRA and Parcel.
         // Works for both dev and production.
+        // Gets applied to import.meta.env.BASE_URL in the runtime code
         base: './',
 
         // Expose env vars with DHIS2_ prefix in index.html and on
