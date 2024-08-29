@@ -1,3 +1,10 @@
+# [12.0.0-alpha.11](https://github.com/dhis2/app-platform/compare/v12.0.0-alpha.10...v12.0.0-alpha.11) (2024-08-29)
+
+
+### Features
+
+* jsx migration script ([#869](https://github.com/dhis2/app-platform/issues/869)) ([7764f49](https://github.com/dhis2/app-platform/commit/7764f49b6a73edce636abdf246c326ab7b848d52))
+
 # [12.0.0-alpha.10](https://github.com/dhis2/app-platform/compare/v12.0.0-alpha.9...v12.0.0-alpha.10) (2024-08-28)
 
 
