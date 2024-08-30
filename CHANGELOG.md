@@ -1,3 +1,10 @@
+# [12.0.0-alpha.12](https://github.com/dhis2/app-platform/compare/v12.0.0-alpha.11...v12.0.0-alpha.12) (2024-08-30)
+
+
+### Bug Fixes
+
+* update workbox deps to avoid deprecation warnings ([9a81c4a](https://github.com/dhis2/app-platform/commit/9a81c4a21e78be9c1d5fcb76db53e379583c7190))
+
 # [12.0.0-alpha.11](https://github.com/dhis2/app-platform/compare/v12.0.0-alpha.10...v12.0.0-alpha.11) (2024-08-29)
 
 
