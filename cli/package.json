@@ -72,8 +72,7 @@
         "vite-plugin-dynamic-import": "^1.5.0",
         "webpack": "^5.41.1",
         "webpack-dev-server": "^4.7.4",
-        "workbox-build": "^6.1.5",
-        "workbox-webpack-plugin": "^6.5.4"
+        "workbox-build": "^7.1.1"
     },
     "bin": {
         "d2-app-scripts": "./bin/d2-app-scripts"
