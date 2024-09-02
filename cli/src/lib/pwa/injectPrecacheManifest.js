@@ -54,6 +54,7 @@ module.exports = function injectPrecacheManifest(paths, config) {
         // Skip revision hashing for files with hash or semver in name:
         // (see https://regex101.com/r/z4Hy9k/3/ for RegEx details)
         dontCacheBustURLsMatching: /[.-][A-Za-z0-9-_]{8}\.|\d+\.\d+\.\d+/,
+        maximumFileSizeToCacheInBytes: 3072 * 1024, // 3 MB (default is 2 MB)
     }
 
     return injectManifest(injectManifestOptions).then(logManifestOutput)
