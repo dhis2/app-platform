@@ -1,8 +1,10 @@
+import { chalk } from '@dhis2/cli-helpers-engine'
 import react from '@vitejs/plugin-react'
 import {
     defineConfig,
     searchForWorkspaceRoot,
     transformWithEsbuild,
+    createLogger,
 } from 'vite'
 import dynamicImport from 'vite-plugin-dynamic-import'
 
@@ -62,6 +64,26 @@ const handleAssetFileNames = ({ name }) => {
     return fontRegex.test(name)
         ? 'assets/fonts/[name]-[hash][extname]'
         : 'assets/[name]-[hash][extname]' // the Rollup default
+}
+
+/**
+ * moment-locale chunks can clutter build logs (there are 135 of them) --
+ * this custom logger prints a static summary instead
+ */
+const momentLocalePattern = /.*moment-locales\/.*\.js/
+const momentLocalesMsg = chalk`{dim build/assets/}{cyan moment-locales/*} {dim (135 files, average size 1.90 kB)}`
+const customLogger = createLogger()
+const loggerInfo = customLogger.info
+let hasLoggedMomentLocales = false
+customLogger.info = (msg) => {
+    if (momentLocalePattern.test(msg)) {
+        if (!hasLoggedMomentLocales) {
+            loggerInfo(momentLocalesMsg)
+            hasLoggedMomentLocales = true
+        }
+        return
+    }
+    loggerInfo(msg)
 }
 
 /**
@@ -151,6 +173,9 @@ export default ({ paths, config, env, host }) => {
                 },
             },
         },
+
+        // https://vitejs.dev/config/shared-options.html#customlogger
+        customLogger,
 
         plugins: [
             // Allow JSX in .js files pt. 1
