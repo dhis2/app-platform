@@ -1,3 +1,10 @@
+# [12.0.0-alpha.13](https://github.com/dhis2/app-platform/compare/v12.0.0-alpha.12...v12.0.0-alpha.13) (2024-09-02)
+
+
+### Bug Fixes
+
+* increase precache max file size to 3 MB ([b20ed22](https://github.com/dhis2/app-platform/commit/b20ed22f6f2f4c615f712de3047d5f2d8c77d638))
+
 # [12.0.0-alpha.12](https://github.com/dhis2/app-platform/compare/v12.0.0-alpha.11...v12.0.0-alpha.12) (2024-08-30)
 
 
