@@ -20,4 +20,5 @@ Options:
   --cwd    working directory to use (defaults to cwd)
   --force  Overwrite existing files and configurations[boolean] [default: false]
   --lib    Create a library                           [boolean] [default: false]
+  --typescript || --ts create a TypeScript project
 ```
