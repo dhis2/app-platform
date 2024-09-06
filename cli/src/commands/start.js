@@ -132,6 +132,14 @@ const handler = async ({
             const { default: createConfig } = await import(
                 '../../config/makeViteConfig.mjs'
             )
+            if (allowJsxInJs) {
+                reporter.warn(
+                    'Adding Vite config to allow JSX syntax in .js files. This is deprecated and will be removed in future versions.'
+                )
+                reporter.warn(
+                    'Consider using the migration script `yarn d2-app-scripts migrate js-to-jsx` to rename your files to use .jsx extensions.'
+                )
+            }
             const viteConfig = createConfig({
                 config,
                 paths,
