@@ -12,13 +12,13 @@ yarn d2-app-scripts migrate js-to-jsx
 
 By default, this will crawl through each `.js` file in the `src` directory (using the glob `src/**/*.js`), look for JSX syntax in the file, then rename the file to use a `.jsx` extension if appropriate.
 
-Then, it will crawl through all `.js` _and_ `.jsx` file in `src` and update file imports to match the newly renamed files. **By default, this will update imports without a file extension**, e.g. `import Component from './Component'` => `import Component from './Component.jsx'`. This is because, in testing, updating files to `.jsx` extensions without updating the imports ends up causing linting errors. Functionally, the app will still work without extensions on imports though; Vite handles it. If you don't want to update imports without extensions, you can use the `--skipUpdatingImportsWithoutExtension` flag when running this script. Imports that use a `.js` extension will be updated to `.jsx` either way.
+Then, it will crawl through all `.js` _and_ `.jsx` files in `src` and update file imports to match the newly renamed files. **By default, this will update imports without a file extension**, e.g. `import Component from './Component'` => `import Component from './Component.jsx'`. This is because, in testing, updating files to `.jsx` extensions without updating the imports ends up causing linting errors. Functionally, the app will still work without extensions on imports though; Vite handles it. **If you don't want to update imports without extensions**, you can use the `--skipUpdatingImportsWithoutExtension` flag when running this script. Imports that use a `.js` extension will be updated to `.jsx` either way.
 
 Lastly, the script will check `d2.config.js` in the CWD for entry points to update if the respective files have been renamed.
 
 ## Tips
 
-This may update a _lot_ of files; be prepared with your source control to undo changes if needed. In VSCode, for example, there is an feature in the Source Control UI to "Discard All Changes" from unstaged files. Before running the script, stage the files you want to keep around, then run the script. If the outcome isn't what you want, you can use the "Discard All Changes" option to undo them easily.
+This may update a _lot_ of files; be prepared with your source control to undo changes if needed. In VSCode, for example, there is a feature in the Source Control UI to "Discard All Changes" from unstaged files. Before running the script, stage the files you want to keep around, then run the script. If the outcome isn't what you want, you can use the "Discard All Changes" option to undo them easily.
 
 Note that renamed files are only kept track of during script execution. If, for example, you run the script, then you want to redo it with the `--skipUpdatingImportsWithoutExtension` flag, it's best to undo all the renamed files before running the script again.
 
@@ -34,7 +34,7 @@ Example:
 yarn d2-app-scripts migrate js-to-jsx --globString "src/components/**/*.js"
 ```
 
-Since the glob string will be reused and manipulated by the script, make sure to use quotes around the argument so that the shell doesn't handle it as a normal glob.
+Since the glob string will be reused and manipulated by the script, **make sure to use quotes** around the argument so that the shell doesn't handle it as a normal glob.
 
 Contents of `node_modules` directories will always be ignored. `d2.config.js` will still be sought out in the CWD, but won't cause an error if one is not found.
 
