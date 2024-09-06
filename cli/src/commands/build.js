@@ -1,16 +1,16 @@
 const path = require('path')
 const { reporter, chalk } = require('@dhis2/cli-helpers-engine')
 const fs = require('fs-extra')
+const bootstrapShell = require('../lib/bootstrapShell')
 const { compile } = require('../lib/compiler')
+const { loadEnvFiles, getEnv } = require('../lib/env')
 const exitOnCatch = require('../lib/exitOnCatch')
 const generateManifests = require('../lib/generateManifests')
 const i18n = require('../lib/i18n')
-const loadEnvFiles = require('../lib/loadEnvFiles')
 const parseConfig = require('../lib/parseConfig')
 const { isApp } = require('../lib/parseConfig')
 const makePaths = require('../lib/paths')
 const { injectPrecacheManifest, compileServiceWorker } = require('../lib/pwa')
-const makeShell = require('../lib/shell')
 const { validatePackage } = require('../lib/validatePackage')
 const { handler: pack } = require('./pack.js')
 
@@ -30,20 +30,22 @@ const getNodeEnv = () => {
 const printBuildParam = (key, value) => {
     reporter.print(chalk.green(` - ${key} :`), chalk.yellow(value))
 }
-const setAppParameters = (standalone, config) => {
-    process.env.PUBLIC_URL = process.env.PUBLIC_URL || '.'
-    printBuildParam('PUBLIC_URL', process.env.PUBLIC_URL)
+const getAppParameters = (standalone, config) => {
+    const publicUrl = process.env.PUBLIC_URL || '.'
+    printBuildParam('PUBLIC_URL', publicUrl)
 
     if (
         standalone === false ||
         (typeof standalone === 'undefined' && !config.standalone)
     ) {
         const defaultBase = config.coreApp ? `..` : `../../..`
-        process.env.DHIS2_BASE_URL = process.env.DHIS2_BASE_URL || defaultBase
+        const baseUrl = process.env.DHIS2_BASE_URL || defaultBase
 
-        printBuildParam('DHIS2_BASE_URL', process.env.DHIS2_BASE_URL)
+        printBuildParam('DHIS2_BASE_URL', baseUrl)
+        return { publicUrl, baseUrl }
     } else {
         printBuildParam('DHIS2_BASE_URL', '<standalone>')
+        return { publicUrl }
     }
 }
 
@@ -69,11 +71,9 @@ const handler = async ({
     printBuildParam('Mode', mode)
 
     const config = parseConfig(paths)
-    const shell = makeShell({ config, paths })
-
-    if (isApp(config.type)) {
-        setAppParameters(standalone, config)
-    }
+    const appParameters = isApp(config.type)
+        ? getAppParameters(standalone, config)
+        : null
 
     await fs.remove(paths.buildOutput)
 
@@ -108,7 +108,7 @@ const handler = async ({
 
             if (isApp(config.type)) {
                 reporter.info('Bootstrapping local appShell...')
-                await shell.bootstrap({ shell: shellSource, force })
+                await bootstrapShell({ paths, shell: shellSource, force })
             }
 
             reporter.info(
@@ -136,17 +136,18 @@ const handler = async ({
                 const { default: createConfig } = await import(
                     '../../config/makeViteConfig.mjs'
                 )
+                const env = getEnv({ config, ...appParameters })
                 const viteConfig = createConfig({
                     paths,
                     config,
-                    env: shell.env,
+                    env,
                     allowJsxInJs,
                 })
                 await build(viteConfig)
 
                 if (config.pwa.enabled) {
                     reporter.info('Compiling service worker...')
-                    await compileServiceWorker({ config, paths, mode })
+                    await compileServiceWorker({ env, paths, mode })
 
                     reporter.info(
                         'Injecting supplementary precache manifest...'

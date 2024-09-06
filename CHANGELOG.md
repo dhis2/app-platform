@@ -1,3 +1,45 @@
+# [12.0.0-alpha.13](https://github.com/dhis2/app-platform/compare/v12.0.0-alpha.12...v12.0.0-alpha.13) (2024-09-02)
+
+
+### Bug Fixes
+
+* increase precache max file size to 3 MB ([b20ed22](https://github.com/dhis2/app-platform/commit/b20ed22f6f2f4c615f712de3047d5f2d8c77d638))
+
+# [12.0.0-alpha.12](https://github.com/dhis2/app-platform/compare/v12.0.0-alpha.11...v12.0.0-alpha.12) (2024-08-30)
+
+
+### Bug Fixes
+
+* update workbox deps to avoid deprecation warnings ([9a81c4a](https://github.com/dhis2/app-platform/commit/9a81c4a21e78be9c1d5fcb76db53e379583c7190))
+
+# [12.0.0-alpha.11](https://github.com/dhis2/app-platform/compare/v12.0.0-alpha.10...v12.0.0-alpha.11) (2024-08-29)
+
+
+### Features
+
+* jsx migration script ([#869](https://github.com/dhis2/app-platform/issues/869)) ([7764f49](https://github.com/dhis2/app-platform/commit/7764f49b6a73edce636abdf246c326ab7b848d52))
+
+# [12.0.0-alpha.10](https://github.com/dhis2/app-platform/compare/v12.0.0-alpha.9...v12.0.0-alpha.10) (2024-08-28)
+
+
+### Bug Fixes
+
+* use strings for 'boolean' env vars ([eaf5e66](https://github.com/dhis2/app-platform/commit/eaf5e66e4d655dc9709c34c04addcbe7b330f4fc))
+
+# [12.0.0-alpha.9](https://github.com/dhis2/app-platform/compare/v12.0.0-alpha.8...v12.0.0-alpha.9) (2024-08-27)
+
+
+### Bug Fixes
+
+* injectPrecacheManifest warning logging ([a0d266e](https://github.com/dhis2/app-platform/commit/a0d266ed456053f37023c80f8dcfd36b3dee0d49))
+
+# [12.0.0-alpha.8](https://github.com/dhis2/app-platform/compare/v12.0.0-alpha.7...v12.0.0-alpha.8) (2024-08-27)
+
+
+### Bug Fixes
+
+* base url env & refactor [LIBS-635] ([#872](https://github.com/dhis2/app-platform/issues/872)) ([7f19259](https://github.com/dhis2/app-platform/commit/7f19259c470e590201d7ec9e58d84892b1d418cd))
+
 # [12.0.0-alpha.7](https://github.com/dhis2/app-platform/compare/v12.0.0-alpha.6...v12.0.0-alpha.7) (2024-08-16)
 
 

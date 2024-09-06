@@ -9,6 +9,8 @@
     -   [`d2-app-scripts pack`](scripts/pack.md)
     -   [`d2-app-scripts deploy`](scripts/deploy.md)
     -   [`d2-app-scripts publish`](scripts/publish.md)
+    -   [**Migrate**](scripts/migrate)
+        -   [`d2-app-scripts migrate js-to-jsx`](scripts/migrate/js-to-jsx.md)
 -   [**Configuration**](config.md)
     -   [Types - `app`, `lib`](config/types)
     -   [`d2.config.js` Reference](config/d2-config-js-reference.md)
