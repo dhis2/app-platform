@@ -30,8 +30,8 @@
         "@testing-library/react-hooks": "^8.0.1",
         "enzyme": "^3.11.0",
         "enzyme-adapter-react-16": "^1.15.5",
-        "react": "^16.8",
-        "react-dom": "^16.8"
+        "react": "^18",
+        "react-dom": "^18"
     },
     "scripts": {
         "build": "d2-app-scripts build",
@@ -44,7 +44,7 @@
         "classnames": "^2",
         "moment": "^2",
         "prop-types": "^15",
-        "react": "^16.8",
+        "react": "^16.8 || ^18",
         "react-dom": "^16.8",
         "styled-jsx": "^4"
     },

@@ -24,6 +24,9 @@ const handler = async ({
     proxyPort,
     host,
 }) => {
+    // ToDo: remove before merging
+    reporter.info('     ::: using react@18 :::')
+
     const paths = makePaths(cwd)
 
     const mode = 'development'
