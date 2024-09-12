@@ -1,15 +1,16 @@
 import { CustomDataProvider } from '@dhis2/app-runtime'
 import React from 'react'
-import ReactDOM from 'react-dom'
+import { createRoot } from 'react-dom/client'
 import App from './App.jsx'
 
 it('renders without crashing', () => {
     const div = document.createElement('div')
-    ReactDOM.render(
+    const root = createRoot(div)
+
+    root.render(
         <CustomDataProvider>
             <App />
-        </CustomDataProvider>,
-        div
+        </CustomDataProvider>
     )
-    ReactDOM.unmountComponentAtNode(div)
+    root.unmount()
 })
