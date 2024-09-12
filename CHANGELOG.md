@@ -1,3 +1,19 @@
+# [12.0.0-alpha.14](https://github.com/dhis2/app-platform/compare/v12.0.0-alpha.13...v12.0.0-alpha.14) (2024-09-12)
+
+
+### Features
+
+* upgrade react to v18 ([#876](https://github.com/dhis2/app-platform/issues/876)) ([77ecf10](https://github.com/dhis2/app-platform/commit/77ecf1039cd4eafb5b5ef604706db6ca062f45df))
+
+
+### BREAKING CHANGES
+
+* require react version 18
+
+* fix: pin react version to 18
+
+* test: update test and test libraries for react 18
+
 # [12.0.0-alpha.13](https://github.com/dhis2/app-platform/compare/v12.0.0-alpha.12...v12.0.0-alpha.13) (2024-09-02)
 
 
