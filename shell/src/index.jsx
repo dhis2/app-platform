@@ -13,6 +13,3 @@ root.render(
         <App />
     </>
 )
-
-// ToDo: remove before merging
-console.log('     ::: using react@18 :::')
