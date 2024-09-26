@@ -1,3 +1,10 @@
+## [11.7.2](https://github.com/dhis2/app-platform/compare/v11.7.1...v11.7.2) (2024-09-26)
+
+
+### Bug Fixes
+
+* provide fallback api version [LIBS-683] ([#877](https://github.com/dhis2/app-platform/issues/877)) ([dc7bdfa](https://github.com/dhis2/app-platform/commit/dc7bdfab893bdf44ad439e49b25ad3611191ad7a))
+
 ## [11.7.1](https://github.com/dhis2/app-platform/compare/v11.7.0...v11.7.1) (2024-08-27)
 
 
