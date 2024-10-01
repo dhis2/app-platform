@@ -1,3 +1,11 @@
+# [12.0.0-alpha.15](https://github.com/dhis2/app-platform/compare/v12.0.0-alpha.14...v12.0.0-alpha.15) (2024-10-01)
+
+
+### Bug Fixes
+
+* handle jsx in js support [LIBS-633] ([#871](https://github.com/dhis2/app-platform/issues/871)) ([595a35d](https://github.com/dhis2/app-platform/commit/595a35df88ed2c2b43decf78a0259398eac07a33))
+* update deps ([1e7ce93](https://github.com/dhis2/app-platform/commit/1e7ce938ebc9ee8e7c680d2b29fbc4fbb401c8fd))
+
 # [12.0.0-alpha.14](https://github.com/dhis2/app-platform/compare/v12.0.0-alpha.13...v12.0.0-alpha.14) (2024-09-12)
 
 
