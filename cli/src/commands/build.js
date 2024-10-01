@@ -59,6 +59,7 @@ const handler = async ({
     verify,
     force,
     pack: packAppOutput,
+    allowJsxInJs,
 }) => {
     const paths = makePaths(cwd)
 
@@ -136,7 +137,20 @@ const handler = async ({
                     '../../config/makeViteConfig.mjs'
                 )
                 const env = getEnv({ config, ...appParameters })
-                const viteConfig = createConfig({ paths, config, env })
+                if (allowJsxInJs) {
+                    reporter.warn(
+                        'Adding Vite config to allow JSX syntax in .js files. This is deprecated and will be removed in future versions.'
+                    )
+                    reporter.warn(
+                        'Consider using the migration script `yarn d2-app-scripts migrate js-to-jsx` to rename your files to use .jsx extensions.'
+                    )
+                }
+                const viteConfig = createConfig({
+                    paths,
+                    config,
+                    env,
+                    allowJsxInJs,
+                })
                 await build(viteConfig)
 
                 if (config.pwa.enabled) {
@@ -234,6 +248,11 @@ const command = {
             description:
                 'Build in standalone mode (overrides the d2.config.js setting)',
             default: undefined,
+        },
+        allowJsxInJs: {
+            type: 'boolean',
+            description:
+                'Add Vite config to handle JSX in .js files. DEPRECATED: Will be removed in @dhis2/cli-app-scripts v13. Consider using the migration script `d2-app-scripts migrate js-to-jsx` to avoid needing this option',
         },
     },
     handler,

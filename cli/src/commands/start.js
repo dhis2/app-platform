@@ -23,6 +23,7 @@ const handler = async ({
     proxy,
     proxyPort,
     host,
+    allowJsxInJs,
 }) => {
     const paths = makePaths(cwd)
 
@@ -131,7 +132,22 @@ const handler = async ({
             const { default: createConfig } = await import(
                 '../../config/makeViteConfig.mjs'
             )
-            const viteConfig = createConfig({ config, paths, env, host })
+            if (allowJsxInJs) {
+                reporter.warn(
+                    'Adding Vite config to allow JSX syntax in .js files. This is deprecated and will be removed in future versions.'
+                )
+                reporter.warn(
+                    'Consider using the migration script `yarn d2-app-scripts migrate js-to-jsx` to rename your files to use .jsx extensions.'
+                )
+            }
+            const viteConfig = createConfig({
+                config,
+                paths,
+                env,
+                host,
+                force,
+                allowJsxInJs,
+            })
             const server = await createServer(viteConfig)
 
             const location = config.entryPoints.plugin
@@ -176,7 +192,7 @@ const command = {
         force: {
             type: 'boolean',
             description:
-                'Force updating the app shell. Normally, this is only done when a new version of @dhis2/cli-app-scripts is detected',
+                'Force updating the app shell; normally, this is only done when a new version of @dhis2/cli-app-scripts is detected. Also passes the --force option to the Vite server to reoptimize dependencies',
         },
         port: {
             alias: 'p',
@@ -198,6 +214,11 @@ const command = {
             type: 'boolean|string',
             description:
                 'Exposes the server on the local network. Can optionally provide an address to use. [boolean or string]',
+        },
+        allowJsxInJs: {
+            type: 'boolean',
+            description:
+                'Add Vite config to handle JSX in .js files. DEPRECATED: Will be removed in @dhis2/cli-app-scripts v13. Consider using the migration script `d2-app-scripts migrate js-to-jsx` to avoid needing this option',
         },
     },
     handler,
