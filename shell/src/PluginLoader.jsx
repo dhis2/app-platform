@@ -161,9 +161,9 @@ export const PluginLoader = ({ config, requiredProps, D2App }) => {
             }
 
             if (alertsAdd) {
-                setParentAlertsAdd(() => (alert, alertRef) => {
-                    alertsAdd(alert, alertRef)
-                })
+                setParentAlertsAdd(
+                    () => (alert, alertRef) => alertsAdd(alert, alertRef)
+                )
             }
 
             if (showAlertsInPlugin) {
