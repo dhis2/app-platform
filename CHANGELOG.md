@@ -1,3 +1,10 @@
+# [12.0.0-alpha.17](https://github.com/dhis2/app-platform/compare/v12.0.0-alpha.16...v12.0.0-alpha.17) (2024-10-08)
+
+
+### Bug Fixes
+
+* bump ui library ([#882](https://github.com/dhis2/app-platform/issues/882)) ([1ae9569](https://github.com/dhis2/app-platform/commit/1ae9569691771b372e477d6f122ae4e7e2190bf7))
+
 # [12.0.0-alpha.16](https://github.com/dhis2/app-platform/compare/v12.0.0-alpha.15...v12.0.0-alpha.16) (2024-10-08)
 
 
