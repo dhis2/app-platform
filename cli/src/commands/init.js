@@ -69,22 +69,25 @@ const writeGitignore = (gitignoreFile, sections) => {
     fs.writeFileSync(gitignoreFile, gitignore.stringify(sections, format))
 }
 
-const handler = async ({ force, name, cwd, lib }) => {
+const handler = async ({ force, name, cwd, lib, typeScript }) => {
+    // create the folder where the template will be generated
     cwd = cwd || process.cwd()
     cwd = path.join(cwd, name)
     fs.mkdirpSync(cwd)
-    const paths = makePaths(cwd)
+    const paths = makePaths(cwd, { typeScript })
 
+    reporter.info('checking d2.config exists')
     if (fs.existsSync(paths.config) && !force) {
         reporter.warn(
             'A config file already exists, use --force to overwrite it'
         )
     } else {
-        reporter.info('Importing d2.config.js defaults')
+        reporter.info('Importing d2.config defaults')
         fs.copyFileSync(
             lib ? paths.initConfigLib : paths.initConfigApp,
             paths.config
         )
+        reporter.debug(' copied default d2.config')
     }
 
     if (!fs.existsSync(paths.package)) {
@@ -183,7 +186,74 @@ const handler = async ({ force, name, cwd, lib }) => {
         })
     }
 
-    const entrypoint = lib ? 'src/index.jsx' : 'src/App.jsx'
+    if (typeScript) {
+        // copy tsconfig
+        reporter.info('Copying tsconfig')
+        fs.copyFileSync(paths.initTSConfig, paths.tsConfig)
+
+        reporter.info('install TypeScript as a dev dependency')
+        // ToDO: restrict the major version of TS we install
+        await exec({
+            cmd: 'yarn',
+            args: ['add', 'typescript', '--dev'],
+            cwd: paths.base,
+        })
+
+        // install any other TS dependencies needed
+        reporter.info('install type definitions')
+        await exec({
+            cmd: 'yarn',
+            args: [
+                'add',
+                '@types/react @types/react-dom @types/jest',
+                '@types/eslint',
+                '--dev',
+            ],
+            cwd: paths.base,
+        })
+
+        // add global.d.ts to get rid of CSS module errors
+        // something like https://github.com/dhis2/data-exchange-app/pull/79/files#diff-858566d2d4cf06579a908cb85f587c5752fa0fa6a47d579277749006e86f0834
+        // (but maybe something better)
+        // also look at copying src/custom.d.ts https://github.com/dhis2/data-exchange-app/pull/79/files#diff-5f2ca1b1541dc3023f81543689da349e59b97c708462dd8da4640b399362edc7
+        reporter.info('add declaration files')
+        const typesDir = path.join(paths.base, 'types')
+
+        if (!fs.existsSync(typesDir)) {
+            fs.mkdirpSync(typesDir)
+        }
+        fs.copyFileSync(
+            paths.initGlobalDeclaration,
+            path.join(typesDir, 'global.d.ts')
+        )
+        fs.copyFileSync(
+            paths.initModulesDeclaration,
+            path.join(typesDir, 'modules.d.ts')
+        )
+
+        // ToDO: make custom eslint config part of the template (and copy it)
+        // similar to: https://github.com/dhis2/data-exchange-app/pull/79/files#diff-e2954b558f2aa82baff0e30964490d12942e0e251c1aa56c3294de6ec67b7cf5
+        // install dependencies needed for eslint
+        // "@typescript-eslint/eslint-plugin"
+        // "@typescript-eslint/parser"
+
+        reporter.info('setting up eslint configuration')
+        await exec({
+            cmd: 'yarn',
+            args: ['add', 'eslint @eslint/js typescript-eslint', '--dev'],
+            cwd: paths.base,
+        })
+        // copy eslint config
+        fs.copyFileSync(paths.initEslint, paths.eslintConfig)
+
+        // ToDO: we're hardcoding running TS, we need to figure out how to pass the argument from the CLI
+
+        // ToDO: aim to have a TS project that runs with "yarn start" and "yarn build"
+    }
+
+    const extension = typeScript ? 'ts' : 'js'
+
+    const entrypoint = lib ? `src/index.${extension}x` : `src/App.${extension}x`
 
     if (fs.existsSync(path.join(paths.base, entrypoint))) {
         reporter.warn(
@@ -197,7 +267,7 @@ const handler = async ({ force, name, cwd, lib }) => {
         if (!lib) {
             fs.copyFileSync(
                 paths.initAppTestJsx,
-                path.join(paths.base, 'src/App.test.jsx')
+                path.join(paths.base, `src/App.test.${extension}x`)
             )
             fs.copyFileSync(
                 paths.initAppModuleCss,
@@ -239,6 +309,12 @@ const command = {
         },
         lib: {
             description: 'Create a library',
+            type: 'boolean',
+            default: false,
+        },
+        typeScript: {
+            alias: ['typescript', 'ts'],
+            description: 'Use TypeScript template',
             type: 'boolean',
             default: false,
         },

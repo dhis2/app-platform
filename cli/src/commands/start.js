@@ -1,5 +1,7 @@
+const path = require('path')
 const { reporter, chalk } = require('@dhis2/cli-helpers-engine')
 const detectPort = require('detect-port')
+const fs = require('fs-extra')
 const bootstrapShell = require('../lib/bootstrapShell')
 const { compile } = require('../lib/compiler')
 const { loadEnvFiles, getEnv } = require('../lib/env')
@@ -25,7 +27,16 @@ const handler = async ({
     host,
     allowJsxInJs,
 }) => {
-    const paths = makePaths(cwd)
+    // infer whether this is a TS project based on whether it contains a tsconfig
+    const typeScript = fs.existsSync(
+        path.join(cwd ?? process.cwd(), './tsconfig.json')
+    )
+
+    if (typeScript) {
+        reporter.debug('starting a TypeScript project')
+    }
+
+    const paths = makePaths(cwd, { typeScript })
 
     const mode = 'development'
     process.env.BABEL_ENV = process.env.NODE_ENV = mode

@@ -1,5 +1,10 @@
 /cli/assets
 **/locales/index.js
 # These are to avoid lint errors like 'cannot find module App.jsx'
-cli/config/init/entrypoint.jsx
-cli/config/init/App.test.jsx
+cli/config/templates/init/entrypoint.jsx
+cli/config/templates/init/App.test.jsx
+cli/config/templates/init-typescript/entrypoint.tsx
+cli/config/templates/init-typescript/App.test.tsx
+cli/config/templates/init-typescript/global.d.ts
+cli/config/templates/init-typescript/modules.d.ts
+cli/config/templates/init-typescript/eslint.config.js
