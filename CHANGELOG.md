@@ -1,3 +1,11 @@
+# [12.0.0-alpha.16](https://github.com/dhis2/app-platform/compare/v12.0.0-alpha.15...v12.0.0-alpha.16) (2024-10-08)
+
+
+### Features
+
+* create initial TS template ([#868](https://github.com/dhis2/app-platform/issues/868)) ([2795f79](https://github.com/dhis2/app-platform/commit/2795f79ff0c060aab0169faa3611c3e0f9d871a3))
+* migrate snap files too ([#878](https://github.com/dhis2/app-platform/issues/878)) ([521f483](https://github.com/dhis2/app-platform/commit/521f483433dd6f2a06ff5b2ba2c0c3433d0d2df1))
+
 # [12.0.0-alpha.15](https://github.com/dhis2/app-platform/compare/v12.0.0-alpha.14...v12.0.0-alpha.15) (2024-10-01)
 
 
