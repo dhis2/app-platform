@@ -34,8 +34,9 @@ const isJsxInFile = async (filepath) => {
     }
 }
 
+const jsRegex = /\.js(\.snap)?/ // handles .js or .js.snap files
 const renameFile = async (filepath) => {
-    const newPath = filepath.concat('x') // Add 'x' to the end to make it 'jsx'
+    const newPath = filepath.replace(jsRegex, '.jsx$1')
     reporter.debug(`Renaming ${filepath} to ${newPath}`)
     await fs.rename(filepath, newPath)
 }
@@ -168,7 +169,7 @@ const handler = async ({
         globMatches.map(async (matchPath) => {
             const jsxIsInFile = await isJsxInFile(matchPath)
             if (jsxIsInFile) {
-                await renameFile(matchPath, renamedFiles)
+                await renameFile(matchPath)
                 renamedFiles.add(matchPath)
             }
         })
@@ -181,7 +182,7 @@ const handler = async ({
     // a renamed item in the set. If so, rewrite the new extension
     const globMatches2 = await fg.glob(globString + '(|x)', globOptions)
     reporter.info(`Scanning ${globMatches2.length} files to update imports...`)
-    let fileUpdatedCount = 0
+    let filesUpdatedCount = 0
     await Promise.all(
         globMatches2.map(async (matchPath) => {
             const importsAreUpdated = await updateImports({
@@ -190,13 +191,35 @@ const handler = async ({
                 skipUpdatingImportsWithoutExtension,
             })
             if (importsAreUpdated) {
-                fileUpdatedCount++
+                filesUpdatedCount++
             }
         })
     )
-    reporter.print(`Updated imports in ${fileUpdatedCount} file(s)`)
+    reporter.print(`Updated imports in ${filesUpdatedCount} file(s)`)
 
-    // 3. Update d2.config.js
+    // 3. Update snapshot files
+    const snapshotGlobString = globString + '.snap'
+    const snapshotGlobMatches = await fg.glob(snapshotGlobString, globOptions)
+    reporter.info(
+        `Checking ${snapshotGlobMatches.length} snapshots to update filenames...`
+    )
+    let snapshotsUpdatedCount = 0
+    await Promise.all(
+        snapshotGlobMatches.map(async (matchPath) => {
+            // Default snapshot location is './__snapshots__/<baseTestFilename>.snap'
+            const baseTestFilename = matchPath
+                .replace(/\.snap$/, '')
+                .replace('__snapshots__/', '')
+            const baseTestFileIsUpdated = renamedFiles.has(baseTestFilename)
+            if (baseTestFileIsUpdated) {
+                await renameFile(matchPath)
+                snapshotsUpdatedCount++
+            }
+        })
+    )
+    reporter.print(`Updated ${snapshotsUpdatedCount} snapshot filename(s)`)
+
+    // 4. Update d2.config.js
     const d2ConfigPath = path.join(process.cwd(), 'd2.config.js')
     reporter.info('Checking d2.config.js for entry points to update...')
     reporter.debug(`d2 config path: ${d2ConfigPath}`)
