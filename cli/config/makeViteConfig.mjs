@@ -1,6 +1,7 @@
 import react from '@vitejs/plugin-react'
 import {
     defineConfig,
+    mergeConfig,
     searchForWorkspaceRoot,
     transformWithEsbuild,
 } from 'vite'
@@ -17,28 +18,33 @@ import dynamicImport from 'vite-plugin-dynamic-import'
  * Vite normally throws an error when JSX syntax is used in a file without a
  * .jsx or .tsx extension. This is by design, in order to improve transform
  * performance by not parsing JS files for JSX.
- * This plugin is 1 of 2 config options that allow JSX to be used in
- * .js or .ts files -- the options in `optimizeDeps` below are part 2.
+ * 
+ * This plugin and the `optimizeDeps` options in this config object,
+ * along with the `jsxRuntime: 'classic'` option in the React plugin of the main
+ * config, can enable support for JSX in .js files. This config object is
+ * merged with the main config if the `--allowJsxInJs` flag is passed
+ * to the CLI
  *
- * NB: State-preserving HMR will not work on React components unless they have
- * a .jsx or .tsx extension though, unfortunately
- *
- * todo: deprecate -- this and optimize deps below have a performance cost
- * on startup
+ * todo: deprecate -- this config has a performance cost, especially on startup
  */
-const jsxInJSPlugin = {
-    name: 'treat-js-files-as-jsx',
-    async transform(code, id) {
-        if (!id.match(/src\/.*\.js$/)) {
-            return null
-        }
-        // todo: consider JSX warning if </ or />
-        // Use the exposed transform from vite, instead of directly
-        // transforming with esbuild
-        return transformWithEsbuild(code, id, {
-            loader: 'jsx',
-            jsx: 'automatic',
-        })
+const jsxInJsConfig = {
+    plugins: [{
+        name: 'treat-js-files-as-jsx',
+        async transform(code, id) {
+            if (!id.match(/src\/.*\.js$/)) {
+                return null
+            }
+            // Use the exposed transform from vite, instead of directly
+            // transforming with esbuild
+            return transformWithEsbuild(code, id, {
+                loader: 'jsx',
+                jsx: 'automatic',
+            })
+        },
+    }],
+    optimizeDeps: {
+        force: true,
+        esbuildOptions: { loader: { '.js': 'jsx' } },
     },
 }
 
@@ -78,9 +84,7 @@ const handleAssetFileNames = ({ name }) => {
  * and don't need to use `define`; they just need the envPrefix config.
  */
 const getDefineOptions = (env) => {
-    const defineOptions = {
-        'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV),
-    }
+    const defineOptions = {}
     Object.entries(env).forEach(([key, val]) => {
         // 'DHIS2_'-prefixed vars go on import.meta.env
         if (key.startsWith('DHIS2_')) {
@@ -88,8 +92,9 @@ const getDefineOptions = (env) => {
             return
         }
         // For backwards compatibility, add REACT_APP_DHIS2_... and other env
-        // vars to process.env. They will be statically replaced at build time.
-        // This will be removed in future versions
+        // vars to process.env. These env vars have been filtered by getEnv().
+        // They will be statically replaced at build time.
+        // Env vars in this format will be removed in future versions
         // todo: deprecate in favor of import.meta.env
         defineOptions[`process.env.${key}`] = JSON.stringify(val)
     })
@@ -108,16 +113,17 @@ const getBuildInputs = (config, paths) => {
 }
 
 // https://vitejs.dev/config/
-export default ({ paths, config, env, host }) => {
-    return defineConfig({
-        // Need to specify the location of the app root, since we're not using
-        // the Vite CLI from the app root
+export default ({ paths, config, env, host, force, allowJsxInJs }) => {
+    const baseConfig = defineConfig({
+        // Need to specify the location of the app root, since this CLI command
+        // gets run in a different directory than the bootstrapped app
         root: paths.shell,
 
         // By default, assets are resolved to the root of the domain ('/'), but
         // deployed apps aren't served from there.
         // This option is basically the same as PUBLIC_URL for CRA and Parcel.
         // Works for both dev and production.
+        // Gets applied to import.meta.env.BASE_URL in the runtime code
         base: './',
 
         // Expose env vars with DHIS2_ prefix in index.html and on
@@ -153,8 +159,6 @@ export default ({ paths, config, env, host }) => {
         },
 
         plugins: [
-            // Allow JSX in .js files pt. 1
-            jsxInJSPlugin,
             /**
              * Allows the dynamic import of `moment/dist/locale/${locale}`
              * in /adapter/src/utils/localeUtils.js.
@@ -164,16 +168,15 @@ export default ({ paths, config, env, host }) => {
             dynamicImport(),
             react({
                 babel: { plugins: ['styled-jsx/babel'] },
-                // Enables HMR for .js files:
-                jsxRuntime: 'classic',
+                // todo: deprecate with other jsx-in-js config
+                // This option allows HMR of JSX-in-JS files, 
+                // but it isn't possible to add with merge config:
+                jsxRuntime: allowJsxInJs ? 'classic' : 'automatic',
             }),
         ],
 
-        // Allow JSX in .js pt. 2
-        // todo: deprecate - has a performance cost on startup
-        optimizeDeps: {
-            force: true,
-            esbuildOptions: { loader: { '.js': 'jsx' } },
-        },
+        optimizeDeps: { force },
     })
+
+    return allowJsxInJs ? mergeConfig(baseConfig, jsxInJsConfig) : baseConfig
 }

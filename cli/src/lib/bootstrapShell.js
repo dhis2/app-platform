@@ -17,7 +17,7 @@ const getShellVersion = (shellDir) => {
     return '0'
 }
 
-const bootstrapShell = async (paths, { shell, force = false } = {}) => {
+const bootstrapShell = async ({ paths, shell, force = false }) => {
     const source = shell ? path.resolve(shell) : paths.shellSource,
         dest = paths.shell
 

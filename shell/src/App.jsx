@@ -33,7 +33,8 @@ const parseRequiredProps = (propsEnvVariable) => {
 // via string replacement in cli/src/lib/compiler/entrypoints.js
 const isPlugin = self.__IS_PLUGIN
 
-const skipPluginLogic = process.env.REACT_APP_DHIS2_APP_SKIPPLUGINLOGIC
+const skipPluginLogic =
+    process.env.REACT_APP_DHIS2_APP_SKIPPLUGINLOGIC === 'true'
 const requiredPluginProps = parseRequiredProps(
     process.env.REACT_APP_DHIS2_APP_REQUIREDPROPS
 )

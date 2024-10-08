@@ -2,17 +2,17 @@ const path = require('path')
 const { reporter, chalk } = require('@dhis2/cli-helpers-engine')
 const detectPort = require('detect-port')
 const fs = require('fs-extra')
+const bootstrapShell = require('../lib/bootstrapShell')
 const { compile } = require('../lib/compiler')
+const { loadEnvFiles, getEnv } = require('../lib/env')
 const exitOnCatch = require('../lib/exitOnCatch')
 const generateManifests = require('../lib/generateManifests')
 const i18n = require('../lib/i18n')
-const loadEnvFiles = require('../lib/loadEnvFiles')
 const parseConfig = require('../lib/parseConfig')
 const { isApp } = require('../lib/parseConfig')
 const makePaths = require('../lib/paths')
 const createProxyServer = require('../lib/proxy')
 const { compileServiceWorker } = require('../lib/pwa')
-const makeShell = require('../lib/shell')
 const { validatePackage } = require('../lib/validatePackage')
 
 const defaultPort = 3000
@@ -25,6 +25,7 @@ const handler = async ({
     proxy,
     proxyPort,
     host,
+    allowJsxInJs,
 }) => {
     // infer whether this is a TS project based on whether it contains a tsconfig
     const typeScript = fs.existsSync(
@@ -42,7 +43,6 @@ const handler = async ({
     loadEnvFiles(paths, mode)
 
     const config = parseConfig(paths)
-    const shell = makeShell({ config, paths })
 
     if (!isApp(config.type)) {
         reporter.error(
@@ -103,7 +103,7 @@ const handler = async ({
             })
 
             reporter.info('Bootstrapping local appShell...')
-            await shell.bootstrap({ shell: shellSource, force })
+            await bootstrapShell({ paths, shell: shellSource, force })
 
             reporter.info(`Building app ${chalk.bold(config.name)}...`)
             await compile({
@@ -124,9 +124,11 @@ const handler = async ({
                 )
             }
 
+            const env = getEnv({ config, publicUrl: '.' })
+
             if (config.pwa.enabled) {
                 reporter.info('Compiling service worker...')
-                await compileServiceWorker({ config, paths, mode })
+                await compileServiceWorker({ env, paths, mode })
                 // don't need to inject precache manifest because no precaching
                 // is done in development environments
             }
@@ -141,11 +143,21 @@ const handler = async ({
             const { default: createConfig } = await import(
                 '../../config/makeViteConfig.mjs'
             )
+            if (allowJsxInJs) {
+                reporter.warn(
+                    'Adding Vite config to allow JSX syntax in .js files. This is deprecated and will be removed in future versions.'
+                )
+                reporter.warn(
+                    'Consider using the migration script `yarn d2-app-scripts migrate js-to-jsx` to rename your files to use .jsx extensions.'
+                )
+            }
             const viteConfig = createConfig({
                 config,
                 paths,
-                env: shell.env,
+                env,
                 host,
+                force,
+                allowJsxInJs,
             })
             const server = await createServer(viteConfig)
 
@@ -191,7 +203,7 @@ const command = {
         force: {
             type: 'boolean',
             description:
-                'Force updating the app shell. Normally, this is only done when a new version of @dhis2/cli-app-scripts is detected',
+                'Force updating the app shell; normally, this is only done when a new version of @dhis2/cli-app-scripts is detected. Also passes the --force option to the Vite server to reoptimize dependencies',
         },
         port: {
             alias: 'p',
@@ -213,6 +225,11 @@ const command = {
             type: 'boolean|string',
             description:
                 'Exposes the server on the local network. Can optionally provide an address to use. [boolean or string]',
+        },
+        allowJsxInJs: {
+            type: 'boolean',
+            description:
+                'Add Vite config to handle JSX in .js files. DEPRECATED: Will be removed in @dhis2/cli-app-scripts v13. Consider using the migration script `d2-app-scripts migrate js-to-jsx` to avoid needing this option',
         },
     },
     handler,
