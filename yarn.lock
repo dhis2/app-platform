@@ -1770,45 +1770,45 @@
     classnames "^2.3.1"
     prop-types "^15.7.2"
 
-"@dhis2/app-runtime@^3.10.4":
-  version "3.10.4"
-  resolved "https://registry.npmjs.org/@dhis2/app-runtime/-/app-runtime-3.10.4.tgz"
-  integrity sha512-W/d0WcYYcKAeE5/xCunZEMYUSD1fxG+JDQdRDEUsH5y5hB8i/4o2QQrZK8xa19Z3xQJhaW5ypWWqIQVjTJT2Ww==
+"@dhis2/app-runtime@^3.11.1":
+  version "3.11.1"
+  resolved "https://registry.yarnpkg.com/@dhis2/app-runtime/-/app-runtime-3.11.1.tgz#342fc54e412eefaf8710c7e74426db1ebf892636"
+  integrity sha512-kK44pSE8Ba8p2Pr8RQvePh3jgyf6zlhBNGW7MLOzYh2kz7nCam/GcHr9Opw5ZzOU0QazDwK1U+v3xVRKskgztw==
   dependencies:
-    "@dhis2/app-service-alerts" "3.10.4"
-    "@dhis2/app-service-config" "3.10.4"
-    "@dhis2/app-service-data" "3.10.4"
-    "@dhis2/app-service-offline" "3.10.4"
-    "@dhis2/app-service-plugin" "3.10.4"
+    "@dhis2/app-service-alerts" "3.11.1"
+    "@dhis2/app-service-config" "3.11.1"
+    "@dhis2/app-service-data" "3.11.1"
+    "@dhis2/app-service-offline" "3.11.1"
+    "@dhis2/app-service-plugin" "3.11.1"
 
-"@dhis2/app-service-alerts@3.10.4":
-  version "3.10.4"
-  resolved "https://registry.npmjs.org/@dhis2/app-service-alerts/-/app-service-alerts-3.10.4.tgz"
-  integrity sha512-DmSLx/kHOHpgGiL8zG0oa6D3MeCY3wPMDGqj+Gfegr654Lmyf4d2vLI7HSZUSOCdraP/fSYTypsdZmWYoXoLBQ==
+"@dhis2/app-service-alerts@3.11.1":
+  version "3.11.1"
+  resolved "https://registry.yarnpkg.com/@dhis2/app-service-alerts/-/app-service-alerts-3.11.1.tgz#f6e0310390553be37a80032e21d4b71d221c0193"
+  integrity sha512-svxd35e/WA+svF+SyFHKhP+eJSA33JNvOgb0tSak8zHFSmBDlici60qdr2yyH/F8+RbBupqWjJlFKJB2L3mLFg==
 
-"@dhis2/app-service-config@3.10.4":
-  version "3.10.4"
-  resolved "https://registry.npmjs.org/@dhis2/app-service-config/-/app-service-config-3.10.4.tgz"
-  integrity sha512-SCFdNxJKpiBjYsU9s0R+u9GrXjzmUEpGpudmC5eQqNV6ajLiebe/pS2jcSPFzjUtHVQMADk0X8TkERoOBqWcxA==
+"@dhis2/app-service-config@3.11.1":
+  version "3.11.1"
+  resolved "https://registry.yarnpkg.com/@dhis2/app-service-config/-/app-service-config-3.11.1.tgz#f1beb02ee08e78ae80a02a524d1913f997decd71"
+  integrity sha512-5sZTvtJVGrC42aFKG+/MeuGUgW4Ve0zHHyHqH8VNcZ2vY+HzPkWC/DDx7x3r7ONxsgajVqtP/zYHNlnOBTkh7A==
 
-"@dhis2/app-service-data@3.10.4":
-  version "3.10.4"
-  resolved "https://registry.npmjs.org/@dhis2/app-service-data/-/app-service-data-3.10.4.tgz"
-  integrity sha512-RaoWniioCe33PcPZoDuO66qOrIt0JeeCN8RzmCDrRVGvGmlDTZ3hNuWm9CnsAvO1U6sYDiulKPqrEQu8YKMG0w==
+"@dhis2/app-service-data@3.11.1":
+  version "3.11.1"
+  resolved "https://registry.yarnpkg.com/@dhis2/app-service-data/-/app-service-data-3.11.1.tgz#a0f899966de313a1ee314b1ccf1d0edc5cba0818"
+  integrity sha512-Hv3kIGnNB69wrawVLHdQaDjMKqEQ3RtXjnwOAM+E/VmzyrRDfyhqDMNApatmkv0ym1Ex7wVwkPMDl+fxwxXjwg==
   dependencies:
     react-query "^3.13.11"
 
-"@dhis2/app-service-offline@3.10.4":
-  version "3.10.4"
-  resolved "https://registry.npmjs.org/@dhis2/app-service-offline/-/app-service-offline-3.10.4.tgz"
-  integrity sha512-SUUS+sw3FjR0TMdKSSOVzL8IfPA185gSTHQ1WE4tLc2zE92elvxLL9FuSUuTbu+l1Kr4nRQNLh8muOMWKGnWDg==
+"@dhis2/app-service-offline@3.11.1":
+  version "3.11.1"
+  resolved "https://registry.yarnpkg.com/@dhis2/app-service-offline/-/app-service-offline-3.11.1.tgz#697df5957cb9cb0a52dd935aaec7ccb2967cfb7f"
+  integrity sha512-BLZBaq2CLSLYiXxLcjLRtHkZcnJZp+yVjWwIp3ankOojQ8AFmx8w8xdA26LwbA4ZTffeW8CN5VVwTO+x9poibg==
   dependencies:
     lodash "^4.17.21"
 
-"@dhis2/app-service-plugin@3.10.4":
-  version "3.10.4"
-  resolved "https://registry.npmjs.org/@dhis2/app-service-plugin/-/app-service-plugin-3.10.4.tgz"
-  integrity sha512-GW6xa/5y2yFXvhtLConnaOxKqyu6VPZWRBaQR73/bRRmFcnd7hlMkZ2M0GWSjoW4QHLXlLhXHFsgHPETBftkPg==
+"@dhis2/app-service-plugin@3.11.1":
+  version "3.11.1"
+  resolved "https://registry.yarnpkg.com/@dhis2/app-service-plugin/-/app-service-plugin-3.11.1.tgz#6be4eb20796a88e23728c90c69232489fefdf687"
+  integrity sha512-B3Wuw3Z52tnjBe04scPrcswConuM0HtRIc570UqlPU1camj53aNtLt6iQHgjiSBtoDn110p5uIVaYGKs+YAEgw==
   dependencies:
     post-robot "^10.0.46"
 
@@ -11053,12 +11053,7 @@ semver@7.3.5:
   dependencies:
     lru-cache "^6.0.0"
 
-semver@^6.0.0, semver@^6.1.1, semver@^6.1.2, semver@^6.2.0, semver@^6.3.0:
-  version "6.3.0"
-  resolved "https://registry.npmjs.org/semver/-/semver-6.3.0.tgz"
-  integrity sha512-b39TBaTSfV6yBrapU89p5fKekE2m/NwnDocOVruQFS1/veMgdzuPcnOM34M6CwxW8jH/lxEa5rBoDeUwu5HHTw==
-
-semver@^6.3.1:
+semver@^6.0.0, semver@^6.1.1, semver@^6.1.2, semver@^6.2.0, semver@^6.3.0, semver@^6.3.1:
   version "6.3.1"
   resolved "https://registry.npmjs.org/semver/-/semver-6.3.1.tgz"
   integrity sha512-BR7VvDCVHO+q2xBEWskxS6DJE1qRnb7DxzUrogb71CWoSficBxYsiAGd+Kl0mmq/MprG9yArRkyrQxTO6XjMzA==
