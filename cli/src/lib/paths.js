@@ -27,7 +27,7 @@ module.exports = (cwd = process.cwd(), { typeScript } = {}) => {
     const paths = {
         initAppModuleCss: path.join(
             __dirname,
-            `../../config/templates/common/App.module.css`
+            '../../config/templates/common/App.module.css'
         ),
         initAppTestJsx: path.join(
             __dirname,
@@ -47,21 +47,21 @@ module.exports = (cwd = process.cwd(), { typeScript } = {}) => {
         ),
         initPackageJson: path.join(
             __dirname,
-            `../../config/templates/common/package.json`
+            '../../config/templates/common/package.json'
         ),
         initReadme: path.join(
             __dirname,
-            `../../config/templates/common/README.md`
+            '../../config/templates/common/README.md'
         ),
 
         initTSConfig: path.join(
             __dirname,
-            `../../config/templates/init-typescript/tsconfig.json`
+            '../../config/templates/init-typescript/tsconfig.json'
         ),
 
         initEslint: path.join(
             __dirname,
-            `../../config/templates/init-typescript/eslint.config.js`
+            '../../config/templates/init-typescript/eslint.config.js'
         ),
         initGlobalDeclaration: path.join(
             __dirname,
@@ -81,7 +81,7 @@ module.exports = (cwd = process.cwd(), { typeScript } = {}) => {
         jestConfigDefaults: path.join(__dirname, '../../config/jest.config.js'), // TODO: probably need a different jest.config for TS
 
         shellSource,
-        shellSourceEntrypoint: path.join(shellSource, `src/App.jsx`), // TODO: double check the effect of having TS in shell folder
+        shellSourceEntrypoint: path.join(shellSource, 'src/App.jsx'), // TODO: double check the effect of having TS in shell folder
         shellSourcePublic: path.join(shellSource, 'public'),
 
         // destination paths where we copy files to
@@ -89,7 +89,7 @@ module.exports = (cwd = process.cwd(), { typeScript } = {}) => {
         package: path.join(base, './package.json'),
         yarnLock: findYarnLock(base, rootDirectory),
         dotenv: path.join(base, './.env'),
-        config: path.join(base, `./d2.config.js`), // TODO: double check this works
+        config: path.join(base, './d2.config.js'), // TODO: double check this works
         readme: path.join(base, './README.md'),
         src: path.join(base, './src'),
         public: path.join(base, './public'),
@@ -103,19 +103,16 @@ module.exports = (cwd = process.cwd(), { typeScript } = {}) => {
         appOutputFilename: 'App.jsx',
         shell: path.join(base, './.d2/shell'),
         shellSrc: path.join(base, './.d2/shell/src'),
-        shellAppEntrypoint: path.join(base, `./.d2/shell/src/App.jsx`),
+        shellAppEntrypoint: path.join(base, './.d2/shell/src/App.jsx'),
         shellAppDirname,
         shellApp: path.join(base, `./.d2/shell/${shellAppDirname}`),
         shellIndexHtml: path.join(base, './.d2/shell/index.html'),
         shellPluginHtml: path.join(base, './.d2/shell/plugin.html'),
         shellPluginBundleEntrypoint: path.join(
             base,
-            `./.d2/shell/src/plugin.index.${extension}x`
+            './.d2/shell/src/plugin.index.jsx'
         ),
-        shellPluginEntrypoint: path.join(
-            base,
-            `./.d2/shell/src/Plugin.${extension}x`
-        ),
+        shellPluginEntrypoint: path.join(base, './.d2/shell/src/Plugin.jsx'),
         // TODO: look at what to do with service-worker files whether to move to TS or not
         shellSrcServiceWorker: path.join(
             base,
