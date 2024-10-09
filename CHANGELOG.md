@@ -1,3 +1,10 @@
+# [12.0.0-alpha.18](https://github.com/dhis2/app-platform/compare/v12.0.0-alpha.17...v12.0.0-alpha.18) (2024-10-09)
+
+
+### Bug Fixes
+
+* alerts from plugins [LIBS-695] ([#881](https://github.com/dhis2/app-platform/issues/881)) ([21be0d2](https://github.com/dhis2/app-platform/commit/21be0d225c67a8af67dc43d7bfe306cfa1dd0008))
+
 # [12.0.0-alpha.17](https://github.com/dhis2/app-platform/compare/v12.0.0-alpha.16...v12.0.0-alpha.17) (2024-10-08)
 
 
