@@ -1,3 +1,10 @@
+# [12.0.0-alpha.19](https://github.com/dhis2/app-platform/compare/v12.0.0-alpha.18...v12.0.0-alpha.19) (2024-10-10)
+
+
+### Bug Fixes
+
+* correct app shell paths ([#883](https://github.com/dhis2/app-platform/issues/883)) ([a1af71c](https://github.com/dhis2/app-platform/commit/a1af71cf56d3a01d57abfb1e3d2e477e4edea03d))
+
 # [12.0.0-alpha.18](https://github.com/dhis2/app-platform/compare/v12.0.0-alpha.17...v12.0.0-alpha.18) (2024-10-09)
 
 
