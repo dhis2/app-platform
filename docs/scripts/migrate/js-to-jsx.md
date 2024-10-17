@@ -25,6 +25,16 @@ Note that renamed files are only kept track of during script execution. If, for 
 
 :::
 
+## Known caveats
+
+Some file paths used in other ways will not be updated, for example in a Jest module mock declaration:
+
+```js
+jest.mock('../../ItemHeader/DeleteItemButton.js')
+```
+
+These tend to be few in number and easy to identify, so shouldn't pose much of a problem to change.
+
 ## Details
 
 ### Crawling files
