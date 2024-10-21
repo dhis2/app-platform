@@ -1,6 +1,8 @@
 -   [**Getting Started**](getting-started.md)
 -   [**Installation**](installation.md)
 -   [**Bootstrapping**](bootstrapping.md)
+-   [**Migration**](migration)
+    -   [v12: Vite and React 18](migration/v12.md)
 -   [**Scripts**](scripts)
     -   [`d2-app-scripts init`](scripts/init.md)
     -   [`d2-app-scripts build`](scripts/build.md)
