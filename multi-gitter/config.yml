@@ -1,0 +1,18 @@
+commit-message: "fix(app-platform): upgrade platform tools to use vite and react 18"
+repo: 
+  - dhis2/scheduler-app
+  - dhis2/maintenance-app-beta
+  - dhis2/login-app
+  - dhis2/dashboard-app
+  - dhis2/maps-app
+  - dhis2/data-exchange-app
+# repo-include: /-app/ # this can replace the list of repos to target all apps once we're confident with the script
+repo-exclude: /(app-hub|capture-app|social-media-video-app|dashboard-classic-app|core-resource-app|maps-climate-pilot-app|dhis2-android-skeleton-app|metadata-integrity-app|who-data-quality-app|gf-adex-flow-app)/
+draft: true
+clone-dir: .
+# token: X # add GitHub token here or pass it to the command with GITHUB_TOKEN=XXX
+log-level: debug
+branch: upgrade-vite-react
+conflict-strategy: replace
+pr-body: This is a test PR to see if we can automate upgrading app-platform. Relates to https://github.com/dhis2/app-platform/pull/887.
+
