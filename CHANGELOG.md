@@ -1,3 +1,10 @@
+## [11.7.4](https://github.com/dhis2/app-platform/compare/v11.7.3...v11.7.4) (2024-10-22)
+
+
+### Bug Fixes
+
+* bump typescript version used in app shell ([8ebb2e8](https://github.com/dhis2/app-platform/commit/8ebb2e8dc46e2747b71226906bf0565eb041bb66))
+
 ## [11.7.3](https://github.com/dhis2/app-platform/compare/v11.7.2...v11.7.3) (2024-10-21)
 
 
