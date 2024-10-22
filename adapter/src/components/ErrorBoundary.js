@@ -59,6 +59,9 @@ export class ErrorBoundary extends Component {
                 this.props.onPluginError(error)
             }
         }
+        if (this.props.loginApp) {
+            console.error(error)
+        }
         this.setState({
             error,
             errorInfo,
@@ -96,6 +99,10 @@ export class ErrorBoundary extends Component {
         const { children, fullscreen, onRetry, loginApp, baseURL } = this.props
 
         if (this.state.error) {
+            if (loginApp && baseURL) {
+                this.handleSafeLoginRedirect()
+            }
+
             if (this.props.plugin) {
                 return (
                     <>
@@ -136,15 +143,6 @@ export class ErrorBoundary extends Component {
                         <h1 className="message">
                             {i18n.t('Something went wrong')}
                         </h1>
-                        {loginApp && baseURL && (
-                            <div className="retry">
-                                <UIButton
-                                    onClick={this.handleSafeLoginRedirect}
-                                >
-                                    {i18n.t('Redirect to safe login mode')}
-                                </UIButton>
-                            </div>
-                        )}
                         {onRetry && (
                             <div className="retry">
                                 <UIButton onClick={onRetry}>
