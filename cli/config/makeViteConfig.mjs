@@ -18,7 +18,7 @@ import dynamicImport from 'vite-plugin-dynamic-import'
  * Vite normally throws an error when JSX syntax is used in a file without a
  * .jsx or .tsx extension. This is by design, in order to improve transform
  * performance by not parsing JS files for JSX.
- * 
+ *
  * This plugin and the `optimizeDeps` options in this config object,
  * along with the `jsxRuntime: 'classic'` option in the React plugin of the main
  * config, can enable support for JSX in .js files. This config object is
@@ -28,20 +28,22 @@ import dynamicImport from 'vite-plugin-dynamic-import'
  * todo: deprecate -- this config has a performance cost, especially on startup
  */
 const jsxInJsConfig = {
-    plugins: [{
-        name: 'treat-js-files-as-jsx',
-        async transform(code, id) {
-            if (!id.match(/src\/.*\.js$/)) {
-                return null
-            }
-            // Use the exposed transform from vite, instead of directly
-            // transforming with esbuild
-            return transformWithEsbuild(code, id, {
-                loader: 'jsx',
-                jsx: 'automatic',
-            })
+    plugins: [
+        {
+            name: 'treat-js-files-as-jsx',
+            async transform(code, id) {
+                if (!id.match(/src\/.*\.js$/)) {
+                    return null
+                }
+                // Use the exposed transform from vite, instead of directly
+                // transforming with esbuild
+                return transformWithEsbuild(code, id, {
+                    loader: 'jsx',
+                    jsx: 'automatic',
+                })
+            },
         },
-    }],
+    ],
     optimizeDeps: {
         force: true,
         esbuildOptions: { loader: { '.js': 'jsx' } },
@@ -72,8 +74,13 @@ const handleAssetFileNames = ({ name }) => {
 
 /**
  * Setting up static variable replacements at build time.
- * Use individual properties for drop-in replacements instead of a whole
+ * Vite adds env vars (from .env files, user env, and CLI args) to
+ * `import.meta.env`; for backwards compatibility and generalization, we also
+ * add those to `process.env`
+ *
+ * Uses individual properties for drop-in replacements instead of a whole
  * object, which allows for better dead code elimination.
+ *
  * For env vars for now, we keep the behavior in /src/lib/shell/env.js:
  * loading, filtering, and prefixing env vars for CRA.
  * Once we remove support for those variables, we just need:
@@ -86,17 +93,16 @@ const handleAssetFileNames = ({ name }) => {
 const getDefineOptions = (env) => {
     const defineOptions = {}
     Object.entries(env).forEach(([key, val]) => {
-        // 'DHIS2_'-prefixed vars go on import.meta.env
+        // Each `val` should be a string already, but we need to stringify again
+        // for it to appear as a string in the resulting code:
+        // '"value"' here => 'value' in the code
+        const stringifiedVal = JSON.stringify(val)
+
+        defineOptions[`process.env.${key}`] = stringifiedVal
+        // 'DHIS2_'-prefixed vars go on import.meta.env too
         if (key.startsWith('DHIS2_')) {
-            defineOptions[`import.meta.env.${key}`] = JSON.stringify(val)
-            return
+            defineOptions[`import.meta.env.${key}`] = stringifiedVal
         }
-        // For backwards compatibility, add REACT_APP_DHIS2_... and other env
-        // vars to process.env. These env vars have been filtered by getEnv().
-        // They will be statically replaced at build time.
-        // Env vars in this format will be removed in future versions
-        // todo: deprecate in favor of import.meta.env
-        defineOptions[`process.env.${key}`] = JSON.stringify(val)
     })
     return defineOptions
 }
@@ -169,7 +175,7 @@ export default ({ paths, config, env, host, force, allowJsxInJs }) => {
             react({
                 babel: { plugins: ['styled-jsx/babel'] },
                 // todo: deprecate with other jsx-in-js config
-                // This option allows HMR of JSX-in-JS files, 
+                // This option allows HMR of JSX-in-JS files,
                 // but it isn't possible to add with merge config:
                 jsxRuntime: allowJsxInJs ? 'classic' : 'automatic',
             }),
