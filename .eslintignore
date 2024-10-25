@@ -7,4 +7,3 @@ cli/config/templates/init-typescript/entrypoint.tsx
 cli/config/templates/init-typescript/App.test.tsx
 cli/config/templates/init-typescript/global.d.ts
 cli/config/templates/init-typescript/modules.d.ts
-cli/config/templates/init-typescript/eslint.config.js
