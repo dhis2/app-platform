@@ -1,0 +1,393 @@
+From 96a18cee8de3b3693d9158c626e1ac81ef20df40 Mon Sep 17 00:00:00 2001
+From: Mozafar Haider <mozafar@dhis2.org>
+Date: Thu, 24 Oct 2024 10:56:34 +0100
+Subject: [PATCH] fix: manual updates for react/vite migration
+
+---
+ src/__tests__/AppWrapper.spec.jsx                      |  6 +++---
+ .../__tests__/__snapshots__/Filter.spec.jsx.snap       |  1 -
+ src/components/Item/AppItem/__tests__/Item.spec.jsx    |  2 +-
+ .../__tests__/ItemContextMenu.offline.spec.jsx         |  2 +-
+ .../ItemContextMenu/__tests__/ItemContextMenu.spec.jsx |  2 +-
+ .../Visualization/__tests__/Visualization.spec.jsx     |  4 ++--
+ .../Item/VisualizationItem/__tests__/Item.spec.jsx     |  4 ++--
+ src/components/__tests__/App.spec.jsx                  |  6 +++---
+ src/pages/edit/__tests__/ActionsBar.spec.jsx           |  4 ++--
+ src/pages/edit/__tests__/EditDashboard.spec.jsx        | 10 +++++-----
+ src/pages/edit/__tests__/FilterSettingsDialog.spec.jsx |  2 +-
+ src/pages/edit/__tests__/NewDashboard.spec.jsx         |  8 ++++----
+ src/pages/edit/__tests__/TitleBar.spec.jsx             |  2 +-
+ .../__tests__/__snapshots__/ActionsBar.spec.jsx.snap   |  4 ----
+ .../view/TitleBar/__tests__/FilterSelector.spec.jsx    |  2 +-
+ src/pages/view/__tests__/ViewDashboard.spec.jsx        |  8 ++++----
+ 16 files changed, 31 insertions(+), 36 deletions(-)
+
+diff --git a/src/__tests__/AppWrapper.spec.jsx b/src/__tests__/AppWrapper.spec.jsx
+index 65f5cc9e..328ae8dd 100644
+--- a/src/__tests__/AppWrapper.spec.jsx
++++ b/src/__tests__/AppWrapper.spec.jsx
+@@ -13,7 +13,7 @@ jest.mock('@dhis2/app-runtime-adapter-d2', () => {
+ })
+ 
+ jest.mock(
+-    '../components/App',
++    '../components/App.jsx',
+     () =>
+         function MockApp() {
+             return <div />
+@@ -21,14 +21,14 @@ jest.mock(
+ )
+ 
+ jest.mock(
+-    '../components/SystemSettingsProvider.js',
++    '../components/SystemSettingsProvider.jsx',
+     () =>
+         function Mock() {
+             return <div className="SystemSettingsProvider" />
+         }
+ )
+ jest.mock(
+-    '../components/UserSettingsProvider.js',
++    '../components/UserSettingsProvider.jsx',
+     () =>
+         function Mock() {
+             return <div className="UserSettingsProvider" />
+diff --git a/src/components/DashboardsBar/__tests__/__snapshots__/Filter.spec.jsx.snap b/src/components/DashboardsBar/__tests__/__snapshots__/Filter.spec.jsx.snap
+index 5294f62d..b0112475 100644
+--- a/src/components/DashboardsBar/__tests__/__snapshots__/Filter.spec.jsx.snap
++++ b/src/components/DashboardsBar/__tests__/__snapshots__/Filter.spec.jsx.snap
+@@ -47,7 +47,6 @@ exports[`Filter renders with empty filter text 1`] = `
+         type="text"
+         value=""
+       />
+-      
+     </div>
+   </span>
+ </div>
+diff --git a/src/components/Item/AppItem/__tests__/Item.spec.jsx b/src/components/Item/AppItem/__tests__/Item.spec.jsx
+index 0b63f324..fa65fe17 100644
+--- a/src/components/Item/AppItem/__tests__/Item.spec.jsx
++++ b/src/components/Item/AppItem/__tests__/Item.spec.jsx
+@@ -27,7 +27,7 @@ jest.mock('@dhis2/ui', () => {
+ })
+ 
+ jest.mock(
+-    '../../ItemHeader/DeleteItemButton.js',
++    '../../ItemHeader/DeleteItemButton.jsx',
+     () =>
+         function Mock() {
+             return <div className="DeleteItemButton" />
+diff --git a/src/components/Item/VisualizationItem/ItemContextMenu/__tests__/ItemContextMenu.offline.spec.jsx b/src/components/Item/VisualizationItem/ItemContextMenu/__tests__/ItemContextMenu.offline.spec.jsx
+index 8623f317..499b08da 100644
+--- a/src/components/Item/VisualizationItem/ItemContextMenu/__tests__/ItemContextMenu.offline.spec.jsx
++++ b/src/components/Item/VisualizationItem/ItemContextMenu/__tests__/ItemContextMenu.offline.spec.jsx
+@@ -6,7 +6,7 @@ import { useSystemSettings } from '../../../../SystemSettingsProvider.jsx'
+ import WindowDimensionsProvider from '../../../../WindowDimensionsProvider.jsx'
+ import ItemContextMenu from '../ItemContextMenu.jsx'
+ 
+-jest.mock('../../../../SystemSettingsProvider', () => {
++jest.mock('../../../../SystemSettingsProvider.jsx', () => {
+     return {
+         __esModule: true,
+         default: jest.fn((children) => <div>{children}</div>),
+diff --git a/src/components/Item/VisualizationItem/ItemContextMenu/__tests__/ItemContextMenu.spec.jsx b/src/components/Item/VisualizationItem/ItemContextMenu/__tests__/ItemContextMenu.spec.jsx
+index 5796e840..31dee967 100644
+--- a/src/components/Item/VisualizationItem/ItemContextMenu/__tests__/ItemContextMenu.spec.jsx
++++ b/src/components/Item/VisualizationItem/ItemContextMenu/__tests__/ItemContextMenu.spec.jsx
+@@ -6,7 +6,7 @@ import { useSystemSettings } from '../../../../SystemSettingsProvider.jsx'
+ import WindowDimensionsProvider from '../../../../WindowDimensionsProvider.jsx'
+ import ItemContextMenu from '../ItemContextMenu.jsx'
+ 
+-jest.mock('../../../../SystemSettingsProvider', () => {
++jest.mock('../../../../SystemSettingsProvider.jsx', () => {
+     return {
+         __esModule: true,
+         default: jest.fn((children) => <div>{children}</div>),
+diff --git a/src/components/Item/VisualizationItem/Visualization/__tests__/Visualization.spec.jsx b/src/components/Item/VisualizationItem/Visualization/__tests__/Visualization.spec.jsx
+index 81930898..9b7e1051 100644
+--- a/src/components/Item/VisualizationItem/Visualization/__tests__/Visualization.spec.jsx
++++ b/src/components/Item/VisualizationItem/Visualization/__tests__/Visualization.spec.jsx
+@@ -14,7 +14,7 @@ jest.mock('@dhis2/analytics', () => ({
+ }))
+ 
+ jest.mock(
+-    '../LegacyPlugin',
++    '../LegacyPlugin.jsx',
+     () =>
+         function MockLegacyPlugin() {
+             return <div className="legacy-plugin" />
+@@ -22,7 +22,7 @@ jest.mock(
+ )
+ 
+ jest.mock(
+-    '../IframePlugin',
++    '../IframePlugin.jsx',
+     () =>
+         function MockIframePlugin() {
+             return <div className="iframe-plugin" />
+diff --git a/src/components/Item/VisualizationItem/__tests__/Item.spec.jsx b/src/components/Item/VisualizationItem/__tests__/Item.spec.jsx
+index 05e17e9a..f7b1d295 100644
+--- a/src/components/Item/VisualizationItem/__tests__/Item.spec.jsx
++++ b/src/components/Item/VisualizationItem/__tests__/Item.spec.jsx
+@@ -9,7 +9,7 @@ import WindowDimensionsProvider from '../../../WindowDimensionsProvider.jsx'
+ import Item from '../Item.jsx'
+ 
+ jest.mock('../../../../api/fetchVisualization')
+-jest.mock('../../../SystemSettingsProvider')
++jest.mock('../../../SystemSettingsProvider.jsx')
+ jest.mock('../Visualization/plugin', () => {
+     return {
+         pluginIsAvailable: () => true,
+@@ -17,7 +17,7 @@ jest.mock('../Visualization/plugin', () => {
+ })
+ 
+ jest.mock(
+-    '../../ItemHeader/DeleteItemButton.js',
++    '../../ItemHeader/DeleteItemButton.jsx',
+     () =>
+         function Mock() {
+             return <div className="DeleteItemButton" />
+diff --git a/src/components/__tests__/App.spec.jsx b/src/components/__tests__/App.spec.jsx
+index 9124505f..775d9b01 100644
+--- a/src/components/__tests__/App.spec.jsx
++++ b/src/components/__tests__/App.spec.jsx
+@@ -53,7 +53,7 @@ jest.mock('../../api/dataStatistics.js', () => {
+ })
+ 
+ jest.mock(
+-    '../DashboardsBar/DashboardsBar',
++    '../DashboardsBar/DashboardsBar.jsx',
+     () =>
+         function MockDashboardsBar() {
+             return <div>DashboardsBar</div>
+@@ -68,7 +68,7 @@ jest.mock('../../pages/view', () => {
+     }
+ })
+ 
+-jest.mock('../SystemSettingsProvider', () => {
++jest.mock('../SystemSettingsProvider.jsx', () => {
+     return {
+         __esModule: true,
+         default: jest.fn((children) => <div>{children}</div>),
+@@ -78,7 +78,7 @@ jest.mock('../SystemSettingsProvider', () => {
+     }
+ })
+ 
+-jest.mock('../UserSettingsProvider', () => {
++jest.mock('../UserSettingsProvider.jsx', () => {
+     return {
+         __esModule: true,
+         default: jest.fn((children) => <div>{children}</div>),
+diff --git a/src/pages/edit/__tests__/ActionsBar.spec.jsx b/src/pages/edit/__tests__/ActionsBar.spec.jsx
+index da9ee930..c19b22bc 100644
+--- a/src/pages/edit/__tests__/ActionsBar.spec.jsx
++++ b/src/pages/edit/__tests__/ActionsBar.spec.jsx
+@@ -47,7 +47,7 @@ jest.mock('@dhis2/analytics', () => {
+ /* eslint-enable react/prop-types */
+ 
+ jest.mock(
+-    '../FilterSettingsDialog',
++    '../FilterSettingsDialog.jsx',
+     () =>
+         function Mock() {
+             return <div className="mock-filter-settings-dialog" />
+@@ -56,7 +56,7 @@ jest.mock(
+ 
+ /* eslint-disable react/prop-types */
+ jest.mock(
+-    '../../../components/ConfirmActionDialog',
++    '../../../components/ConfirmActionDialog.jsx',
+     () =>
+         function MockConfirmActionDialog({ open }) {
+             return open ? <div className="mock-confirm-action-dialog" /> : null
+diff --git a/src/pages/edit/__tests__/EditDashboard.spec.jsx b/src/pages/edit/__tests__/EditDashboard.spec.jsx
+index 9613488e..fba6362c 100644
+--- a/src/pages/edit/__tests__/EditDashboard.spec.jsx
++++ b/src/pages/edit/__tests__/EditDashboard.spec.jsx
+@@ -27,7 +27,7 @@ jest.mock('@dhis2/ui', () => {
+ /* eslint-enable react/prop-types */
+ 
+ jest.mock(
+-    '../../../components/Notice.js',
++    '../../../components/Notice.jsx',
+     () =>
+         function Mock() {
+             return <div className="Notice" />
+@@ -35,7 +35,7 @@ jest.mock(
+ )
+ 
+ jest.mock(
+-    '../ActionsBar',
++    '../ActionsBar.jsx',
+     () =>
+         function MockActionsBar() {
+             return <div>ActionsBar</div>
+@@ -43,14 +43,14 @@ jest.mock(
+ )
+ 
+ jest.mock(
+-    '../TitleBar',
++    '../TitleBar.jsx',
+     () =>
+         function MockTitleBar() {
+             return <div>TitleBar</div>
+         }
+ )
+ jest.mock(
+-    '../ItemGrid',
++    '../ItemGrid.jsx',
+     () =>
+         function MockEditItemGrid() {
+             return <div>ItemGrid</div>
+@@ -58,7 +58,7 @@ jest.mock(
+ )
+ 
+ jest.mock(
+-    '../../print/PrintLayoutDashboard',
++    '../../print/PrintLayoutDashboard.jsx',
+     () =>
+         function MockLayoutPrintPreview() {
+             return <div>LayoutPrintPreview</div>
+diff --git a/src/pages/edit/__tests__/FilterSettingsDialog.spec.jsx b/src/pages/edit/__tests__/FilterSettingsDialog.spec.jsx
+index 1ce7fabb..af2f3c85 100644
+--- a/src/pages/edit/__tests__/FilterSettingsDialog.spec.jsx
++++ b/src/pages/edit/__tests__/FilterSettingsDialog.spec.jsx
+@@ -52,7 +52,7 @@ jest.mock('@dhis2/ui', () => {
+ })
+ /* eslint-enable react/prop-types, react/no-unknown-property */
+ 
+-jest.mock('../../../modules/useDimensions', () => ({
++jest.mock('../../../modules/useDimensions.js', () => ({
+     __esModule: true,
+     default: () => {
+         return [
+diff --git a/src/pages/edit/__tests__/NewDashboard.spec.jsx b/src/pages/edit/__tests__/NewDashboard.spec.jsx
+index 0afdda30..aff33da3 100644
+--- a/src/pages/edit/__tests__/NewDashboard.spec.jsx
++++ b/src/pages/edit/__tests__/NewDashboard.spec.jsx
+@@ -29,7 +29,7 @@ jest.mock('@dhis2/ui', () => {
+ /* eslint-enable react/prop-types */
+ 
+ jest.mock(
+-    '../ActionsBar',
++    '../ActionsBar.jsx',
+     () =>
+         function MockActionsBar() {
+             return <div>ActionsBar</div>
+@@ -37,14 +37,14 @@ jest.mock(
+ )
+ 
+ jest.mock(
+-    '../TitleBar',
++    '../TitleBar.jsx',
+     () =>
+         function MockTitleBar() {
+             return <div>TitleBar</div>
+         }
+ )
+ jest.mock(
+-    '../ItemGrid',
++    '../ItemGrid.jsx',
+     () =>
+         function MockEditItemGrid() {
+             return <div>ItemGrid</div>
+@@ -52,7 +52,7 @@ jest.mock(
+ )
+ 
+ jest.mock(
+-    '../../print/PrintLayoutDashboard',
++    '../../print/PrintLayoutDashboard.jsx',
+     () =>
+         function MockLayoutPrintPreview() {
+             return <div>LayoutPrintPreview</div>
+diff --git a/src/pages/edit/__tests__/TitleBar.spec.jsx b/src/pages/edit/__tests__/TitleBar.spec.jsx
+index 441e6b9f..b0fbbeb6 100644
+--- a/src/pages/edit/__tests__/TitleBar.spec.jsx
++++ b/src/pages/edit/__tests__/TitleBar.spec.jsx
+@@ -7,7 +7,7 @@ import TitleBar from '../TitleBar.jsx'
+ const mockStore = configureMockStore()
+ 
+ jest.mock(
+-    '../ItemSelector/ItemSelector.js',
++    '../ItemSelector/ItemSelector.jsx',
+     () =>
+         function MockItemSelector() {
+             return <div className="item-selector" />
+diff --git a/src/pages/edit/__tests__/__snapshots__/ActionsBar.spec.jsx.snap b/src/pages/edit/__tests__/__snapshots__/ActionsBar.spec.jsx.snap
+index f1559e69..176feaa8 100644
+--- a/src/pages/edit/__tests__/__snapshots__/ActionsBar.spec.jsx.snap
++++ b/src/pages/edit/__tests__/__snapshots__/ActionsBar.spec.jsx.snap
+@@ -39,8 +39,6 @@ exports[`renders Save and Discard buttons but not translation dialog when new da
+             Filter settings
+           </div>
+         </div>
+-        
+-        
+       </div>
+       <div
+         class="ui-Button"
+@@ -52,8 +50,6 @@ exports[`renders Save and Discard buttons but not translation dialog when new da
+   <div
+     class="mock-filter-settings-dialog"
+   />
+-  
+-  
+ </div>
+ `;
+ 
+diff --git a/src/pages/view/TitleBar/__tests__/FilterSelector.spec.jsx b/src/pages/view/TitleBar/__tests__/FilterSelector.spec.jsx
+index e521ff5b..4b9fe732 100644
+--- a/src/pages/view/TitleBar/__tests__/FilterSelector.spec.jsx
++++ b/src/pages/view/TitleBar/__tests__/FilterSelector.spec.jsx
+@@ -14,7 +14,7 @@ jest.mock('@dhis2/app-runtime', () => ({
+ 
+ /* eslint-disable react/prop-types */
+ jest.mock(
+-    '../../../../components/DropdownButton/DropdownButton.js',
++    '../../../../components/DropdownButton/DropdownButton.jsx',
+     () =>
+         function Mock({ children, ...props }) {
+             return (
+diff --git a/src/pages/view/__tests__/ViewDashboard.spec.jsx b/src/pages/view/__tests__/ViewDashboard.spec.jsx
+index c4596173..18d9c126 100644
+--- a/src/pages/view/__tests__/ViewDashboard.spec.jsx
++++ b/src/pages/view/__tests__/ViewDashboard.spec.jsx
+@@ -30,7 +30,7 @@ jest.mock('@dhis2/app-runtime', () => ({
+ jest.mock('../../../api/fetchDashboard')
+ 
+ jest.mock(
+-    '../../../components/DashboardsBar/DashboardsBar',
++    '../../../components/DashboardsBar/DashboardsBar.jsx',
+     () =>
+         function MockDashboardsBar() {
+             return <div>DashboardsBar</div>
+@@ -38,7 +38,7 @@ jest.mock(
+ )
+ 
+ jest.mock(
+-    '../TitleBar/TitleBar',
++    '../TitleBar/TitleBar.jsx',
+     () =>
+         function MockTitleBar() {
+             return <div>TitleBar</div>
+@@ -46,7 +46,7 @@ jest.mock(
+ )
+ 
+ jest.mock(
+-    '../FilterBar/FilterBar',
++    '../FilterBar/FilterBar.jsx',
+     () =>
+         function MockFilterBar() {
+             return <div>MockFilterBar</div>
+@@ -54,7 +54,7 @@ jest.mock(
+ )
+ 
+ jest.mock(
+-    '../ItemGrid',
++    '../ItemGrid.jsx',
+     () =>
+         function MockItemGrid() {
+             return <div>MockItemGrid</div>
+-- 
+2.34.1
+

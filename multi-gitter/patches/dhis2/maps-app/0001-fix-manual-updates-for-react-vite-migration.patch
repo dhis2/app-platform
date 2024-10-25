@@ -1,0 +1,39 @@
+From 0b18ae2cb82caac655784d596787f48e785ef048 Mon Sep 17 00:00:00 2001
+From: Mozafar Haider <mozafar@dhis2.org>
+Date: Thu, 24 Oct 2024 15:57:02 +0100
+Subject: [PATCH] fix: manual updates for react/vite migration
+
+---
+ src/util/__tests__/dataDownload.spec.js | 2 +-
+ src/util/time.js                        | 2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/src/util/__tests__/dataDownload.spec.js b/src/util/__tests__/dataDownload.spec.js
+index 1d259492..8efbada6 100644
+--- a/src/util/__tests__/dataDownload.spec.js
++++ b/src/util/__tests__/dataDownload.spec.js
+@@ -5,7 +5,7 @@ jest.mock('file-saver', () => ({ saveAs: jest.fn() }))
+ 
+ jest.mock('../earthEngine.js', () => ({ hasClasses: jest.fn() }))
+ 
+-global.Blob = function (content, options) {
++window.Blob = function (content, options) {
+     return { content, options }
+ }
+ 
+diff --git a/src/util/time.js b/src/util/time.js
+index e4d305b5..03ce5090 100644
+--- a/src/util/time.js
++++ b/src/util/time.js
+@@ -53,7 +53,7 @@ const fallbackDateFormat = (dateString) => dateString.substr(0, 10)
+  * Returns true if the Internationalization API is supported
+  * @returns {Boolean}
+  */
+-const hasIntlSupport = typeof global.Intl !== 'undefined' && Intl.DateTimeFormat
++const hasIntlSupport = typeof window.Intl !== 'undefined' && Intl.DateTimeFormat
+ 
+ /**
+  * Formats a date string or timestamp to the default display format: 13 Aug 2018 (en locale)
+-- 
+2.34.1
+
