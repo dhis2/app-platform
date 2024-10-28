@@ -76,7 +76,11 @@ const handleAssetFileNames = ({ name }) => {
  * Setting up static variable replacements at build time.
  * Vite adds env vars (from .env files, user env, and CLI args) to
  * `import.meta.env`; for backwards compatibility and generalization, we also
- * add those to `process.env`
+ * add those to `process.env`.
+ *
+ * Note that variables added to `import.meta.env` here will be available in
+ * index.html, e.g. import.meta.env.DHIS2_APP_NAME will populate
+ * %DHIS2_APP_NAME% in HTML
  *
  * Uses individual properties for drop-in replacements instead of a whole
  * object, which allows for better dead code elimination.
