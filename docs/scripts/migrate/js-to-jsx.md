@@ -53,6 +53,8 @@ The script will then crawl through all `.js` _and_ `.jsx` files in `src` (or acc
 
 The script crawls through `.snap` files, and if the test file that created that snapshot has been renamed, the snapshot file name will be updated too. This ensures that the snapshots will still be useful, instead of needing to be created from scratch the base test file has been renamed.
 
+Note that, with the changes from React 18, you can expect some minor discrepancies to turn up in the snapshots, namely new classname hashes or whitespace differences. These shouldn't cause any functional changes and are okay to approve.
+
 This step assumes that snapshot files are saved at `./__snapshots__/<testFileName>.snap`, relative to the test file that created them.
 
 ### Updating `d2.config.js`
