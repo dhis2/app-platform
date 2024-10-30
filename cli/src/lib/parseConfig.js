@@ -1,12 +1,6 @@
 const { reporter, chalk } = require('@dhis2/cli-helpers-engine')
 const fs = require('fs-extra')
-const {
-    defaultsDeep,
-    cloneDeep,
-    has,
-    isPlainObject,
-    defaults,
-} = require('lodash')
+const { cloneDeep, has, isPlainObject, defaults } = require('lodash')
 const parseAuthorString = require('parse-author')
 
 const requiredConfigFields = {
@@ -75,7 +69,7 @@ const validateConfig = (config) => {
 const parseConfigObjects = (
     config = {},
     pkg = {},
-    { defaultsLib, defaultsApp, defaultsPWA } = {}
+    { defaultsLib, defaultsApp } = {}
 ) => {
     config.type = config.type || 'app'
     const { type } = config
@@ -84,13 +78,6 @@ const parseConfigObjects = (
     const defaultsToUse = type === 'lib' ? defaultsLib : defaultsApp
     // Use shallow defaults to not add unnecessary entrypoints
     config = defaults(config, defaultsToUse)
-
-    // Add PWA defaults to apps: since these options are fairly nested, adding
-    // them as defaults here saves some optional chaining/value checking
-    // (todo: may be unnecessary)
-    if (isApp(type)) {
-        config = defaultsDeep(config, defaultsPWA)
-    }
 
     config.name = config.name || pkg.name
     config.version = config.version || pkg.version

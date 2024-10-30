@@ -154,7 +154,7 @@ const handler = async ({
                 })
                 await build(viteConfig)
 
-                if (config.pwa.enabled) {
+                if (config.pwa?.enabled) {
                     reporter.info('Compiling service worker...')
                     await compileServiceWorker({ env, paths, mode })
 
