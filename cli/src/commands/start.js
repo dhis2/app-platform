@@ -126,7 +126,7 @@ const handler = async ({
 
             const env = getEnv({ config, publicUrl: '.' })
 
-            if (config.pwa.enabled) {
+            if (config.pwa?.enabled) {
                 reporter.info('Compiling service worker...')
                 await compileServiceWorker({ env, paths, mode })
                 // don't need to inject precache manifest because no precaching

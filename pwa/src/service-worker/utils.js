@@ -12,7 +12,7 @@ const APP_ADAPTER_URL_PATTERNS = [
     /\/api(\/\d+)?\/me\?fields=id$/, // useVerifyLatestUser
 ]
 
-// '[]' Fallback prevents error when switching from pwa enabled to disabled
+// '[]' Fallback prevents error when undefined
 const APP_SHELL_URL_FILTER_PATTERNS = JSON.parse(
     process.env
         .REACT_APP_DHIS2_APP_PWA_CACHING_PATTERNS_TO_OMIT_FROM_APP_SHELL ||

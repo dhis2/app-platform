@@ -59,10 +59,6 @@ module.exports = (cwd = process.cwd(), { typeScript } = {}) => {
             '../../config/templates/init-typescript/tsconfig.json'
         ),
 
-        initEslint: path.join(
-            __dirname,
-            '../../config/templates/init-typescript/eslint.config.js'
-        ),
         initGlobalDeclaration: path.join(
             __dirname,
             '../../config/templates/init-typescript/global.d.ts'
@@ -78,10 +74,10 @@ module.exports = (cwd = process.cwd(), { typeScript } = {}) => {
                 : '../../config/d2ConfigDefaults.js'
         ),
         babelConfig: path.join(__dirname, '../../config/babel.config.js'),
-        jestConfigDefaults: path.join(__dirname, '../../config/jest.config.js'), // TODO: probably need a different jest.config for TS
+        jestConfigDefaults: path.join(__dirname, '../../config/jest.config.js'),
 
         shellSource,
-        shellSourceEntrypoint: path.join(shellSource, 'src/App.jsx'), // TODO: double check the effect of having TS in shell folder
+        shellSourceEntrypoint: path.join(shellSource, 'src/App.jsx'),
         shellSourcePublic: path.join(shellSource, 'public'),
 
         // destination paths where we copy files to

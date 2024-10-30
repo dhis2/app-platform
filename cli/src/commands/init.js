@@ -160,7 +160,7 @@ const handler = async ({ force, name, cwd, lib, typeScript }) => {
         reporter.info('Installing @dhis2/cli-app-scripts...')
         await exec({
             cmd: 'yarn',
-            args: ['add', '--dev', '@dhis2/cli-app-scripts'],
+            args: ['add', '--dev', '@dhis2/cli-app-scripts@alpha'],
             cwd: paths.base,
         })
     }
@@ -192,10 +192,10 @@ const handler = async ({ force, name, cwd, lib, typeScript }) => {
         fs.copyFileSync(paths.initTSConfig, paths.tsConfig)
 
         reporter.info('install TypeScript as a dev dependency')
-        // ToDO: restrict the major version of TS we install
+
         await exec({
             cmd: 'yarn',
-            args: ['add', 'typescript', '--dev'],
+            args: ['add', 'typescript@^5', '--dev'],
             cwd: paths.base,
         })
 
@@ -203,12 +203,7 @@ const handler = async ({ force, name, cwd, lib, typeScript }) => {
         reporter.info('install type definitions')
         await exec({
             cmd: 'yarn',
-            args: [
-                'add',
-                '@types/react @types/react-dom @types/jest',
-                '@types/eslint',
-                '--dev',
-            ],
+            args: ['add', '@types/react @types/react-dom @types/jest', '--dev'],
             cwd: paths.base,
         })
 
@@ -230,25 +225,6 @@ const handler = async ({ force, name, cwd, lib, typeScript }) => {
             paths.initModulesDeclaration,
             path.join(typesDir, 'modules.d.ts')
         )
-
-        // ToDO: make custom eslint config part of the template (and copy it)
-        // similar to: https://github.com/dhis2/data-exchange-app/pull/79/files#diff-e2954b558f2aa82baff0e30964490d12942e0e251c1aa56c3294de6ec67b7cf5
-        // install dependencies needed for eslint
-        // "@typescript-eslint/eslint-plugin"
-        // "@typescript-eslint/parser"
-
-        reporter.info('setting up eslint configuration')
-        await exec({
-            cmd: 'yarn',
-            args: ['add', 'eslint @eslint/js typescript-eslint', '--dev'],
-            cwd: paths.base,
-        })
-        // copy eslint config
-        fs.copyFileSync(paths.initEslint, paths.eslintConfig)
-
-        // ToDO: we're hardcoding running TS, we need to figure out how to pass the argument from the CLI
-
-        // ToDO: aim to have a TS project that runs with "yarn start" and "yarn build"
     }
 
     const extension = typeScript ? 'ts' : 'js'

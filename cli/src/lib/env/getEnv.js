@@ -29,25 +29,23 @@ const prefixEnvForCRA = (env) =>
         {}
     )
 
+/** Set up variables relevant to the App Shell */
 const getShellEnv = (config) => {
     const shellEnv = {
         name: config.title,
         version: config.version,
         loginApp: config.type === 'login_app' ? 'true' : undefined,
         direction: config.direction,
-        // NB: 'IS_PLUGIN' is added by string replacement in
-        // compiler/entrypoints.js, since env is shared between app and plugin
         requiredProps: config.requiredProps?.join(),
         skipPluginLogic: config.skipPluginLogic ? 'true' : undefined,
         ...getPWAEnvVars(config),
+        // NB: 'IS_PLUGIN' is added by string replacement in
+        // compiler/entrypoints.js, since env is shared between app and plugin
     }
 
-    // Remove undefined values and prefix with DHIS2_APP_
-    const filteredAndPrefixedShellEnv = Object.entries(shellEnv).reduce(
+    // Prefix with DHIS2_APP_
+    const prefixedShellEnv = Object.entries(shellEnv).reduce(
         (newEnv, [key, value]) => {
-            if (typeof value === 'undefined') {
-                return newEnv
-            }
             return {
                 ...newEnv,
                 [`DHIS2_APP_${key.toUpperCase()}`]: value,
@@ -55,7 +53,23 @@ const getShellEnv = (config) => {
         },
         {}
     )
-    return filteredAndPrefixedShellEnv
+    return prefixedShellEnv
+}
+
+/**
+ * 1. Removes keys with `undefined` values to avoid noise
+ * 2. Double-checks to make sure all values are strings
+ */
+const cleanEntries = (env) => {
+    return Object.entries(env).reduce((newEnv, [key, value]) => {
+        if (value === undefined) {
+            return newEnv
+        }
+        return {
+            ...newEnv,
+            [key]: typeof value === 'string' ? value : JSON.stringify(value),
+        }
+    }, {})
 }
 
 module.exports = ({ config, baseUrl, publicUrl }) => {
@@ -63,21 +77,20 @@ module.exports = ({ config, baseUrl, publicUrl }) => {
     const shellEnv = getShellEnv(config)
     const DHIS2_BASE_URL = baseUrl
 
-    const env = {
-        // Legacy env vars; deprecated
+    const env = cleanEntries({
+        // Legacy env var prefix; deprecated
         ...prefixEnvForCRA({
             DHIS2_BASE_URL,
             ...filteredEnv,
             ...shellEnv,
         }),
-        // New form for env vars: import.meta.env.DHIS2_etc
+        // New keys for env vars: process.env.DHIS2_etc
         ...filteredEnv,
         ...shellEnv,
-        NODE_ENV: process.env.NODE_ENV,
         DHIS2_BASE_URL,
-        // todo: deprecated; migrate to import.meta.env.BASE_URL
+        NODE_ENV: process.env.NODE_ENV,
         PUBLIC_URL: publicUrl || '.',
-    }
+    })
 
     if (env.REACT_APP_DHIS2_API_VERSION) {
         reporter.warn(
