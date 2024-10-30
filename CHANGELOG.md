@@ -1,3 +1,10 @@
+# [12.0.0-alpha.21](https://github.com/dhis2/app-platform/compare/v12.0.0-alpha.20...v12.0.0-alpha.21) (2024-10-30)
+
+
+### Bug Fixes
+
+* env refactor for Vite wrap-up [LIBS-690] ([#889](https://github.com/dhis2/app-platform/issues/889)) ([84da4e6](https://github.com/dhis2/app-platform/commit/84da4e6464e8dda752857706c91f2e1ba6ab35af))
+
 # [12.0.0-alpha.20](https://github.com/dhis2/app-platform/compare/v12.0.0-alpha.19...v12.0.0-alpha.20) (2024-10-28)
 
 
