@@ -1,3 +1,10 @@
+## [11.7.5](https://github.com/dhis2/app-platform/compare/v11.7.4...v11.7.5) (2024-11-04)
+
+
+### Bug Fixes
+
+* **publishVersion:** fix maxBodyLength when uploading to appHub ([c5abfd1](https://github.com/dhis2/app-platform/commit/c5abfd10d2ad04c09797cec2c2abb1a823d93dd9))
+
 ## [11.7.4](https://github.com/dhis2/app-platform/compare/v11.7.3...v11.7.4) (2024-10-22)
 
 
