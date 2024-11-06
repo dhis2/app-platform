@@ -113,7 +113,9 @@ export const ServerVersionProvider = ({
                     setSystemInfoState({
                         loading: false,
                         error: undefined,
-                        systemInfo: { version: loginConfig.apiVersion },
+                        systemInfo: {
+                            version: loginConfig.apiVersion ?? '2.41',
+                        },
                     })
                 })
                 .catch((e) => {
