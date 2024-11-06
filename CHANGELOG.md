@@ -1,3 +1,14 @@
+# [12.0.0-alpha.22](https://github.com/dhis2/app-platform/compare/v12.0.0-alpha.21...v12.0.0-alpha.22) (2024-11-06)
+
+
+### Bug Fixes
+
+* **publishVersion:** fix maxBodyLength when uploading to appHub ([c5abfd1](https://github.com/dhis2/app-platform/commit/c5abfd10d2ad04c09797cec2c2abb1a823d93dd9))
+* add @babel/plugin-syntax-dynamic-import as a direct dependency ([#886](https://github.com/dhis2/app-platform/issues/886)) ([8c5ef0c](https://github.com/dhis2/app-platform/commit/8c5ef0c394a6cd639daefaae44c786f4919ebd62))
+* bump typescript version used in app shell ([8ebb2e8](https://github.com/dhis2/app-platform/commit/8ebb2e8dc46e2747b71226906bf0565eb041bb66))
+* provide fallback api version [LIBS-683] ([#877](https://github.com/dhis2/app-platform/issues/877)) ([dc7bdfa](https://github.com/dhis2/app-platform/commit/dc7bdfab893bdf44ad439e49b25ad3611191ad7a))
+* update app-runtime dependency ([74a2165](https://github.com/dhis2/app-platform/commit/74a21655bee64c9ca4e6285486b4fabb8bc76959))
+
 ## [11.7.5](https://github.com/dhis2/app-platform/compare/v11.7.4...v11.7.5) (2024-11-04)
 
 
