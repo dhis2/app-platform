@@ -61,7 +61,6 @@ const handler = async ({
     pack: packAppOutput,
     allowJsxInJs,
 }) => {
-    // todo: we need to infer TypeScript in build command here similar to start
     const paths = makePaths(cwd)
 
     mode = mode || (dev && 'development') || getNodeEnv() || 'production'

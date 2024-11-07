@@ -85,7 +85,7 @@ module.exports = (cwd = process.cwd(), { typeScript } = {}) => {
         package: path.join(base, './package.json'),
         yarnLock: findYarnLock(base, rootDirectory),
         dotenv: path.join(base, './.env'),
-        config: path.join(base, './d2.config.js'), // TODO: double check this works
+        config: path.join(base, './d2.config.js'),
         readme: path.join(base, './README.md'),
         src: path.join(base, './src'),
         public: path.join(base, './public'),
@@ -109,7 +109,7 @@ module.exports = (cwd = process.cwd(), { typeScript } = {}) => {
             './.d2/shell/src/plugin.index.jsx'
         ),
         shellPluginEntrypoint: path.join(base, './.d2/shell/src/Plugin.jsx'),
-        // TODO: look at what to do with service-worker files whether to move to TS or not
+
         shellSrcServiceWorker: path.join(
             base,
             './.d2/shell/src/service-worker.js'
