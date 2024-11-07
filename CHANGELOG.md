@@ -1,3 +1,196 @@
+# [12.0.0-alpha.22](https://github.com/dhis2/app-platform/compare/v12.0.0-alpha.21...v12.0.0-alpha.22) (2024-11-06)
+
+
+### Bug Fixes
+
+* **publishVersion:** fix maxBodyLength when uploading to appHub ([c5abfd1](https://github.com/dhis2/app-platform/commit/c5abfd10d2ad04c09797cec2c2abb1a823d93dd9))
+* add @babel/plugin-syntax-dynamic-import as a direct dependency ([#886](https://github.com/dhis2/app-platform/issues/886)) ([8c5ef0c](https://github.com/dhis2/app-platform/commit/8c5ef0c394a6cd639daefaae44c786f4919ebd62))
+* bump typescript version used in app shell ([8ebb2e8](https://github.com/dhis2/app-platform/commit/8ebb2e8dc46e2747b71226906bf0565eb041bb66))
+* provide fallback api version [LIBS-683] ([#877](https://github.com/dhis2/app-platform/issues/877)) ([dc7bdfa](https://github.com/dhis2/app-platform/commit/dc7bdfab893bdf44ad439e49b25ad3611191ad7a))
+* update app-runtime dependency ([74a2165](https://github.com/dhis2/app-platform/commit/74a21655bee64c9ca4e6285486b4fabb8bc76959))
+
+## [11.7.5](https://github.com/dhis2/app-platform/compare/v11.7.4...v11.7.5) (2024-11-04)
+
+
+### Bug Fixes
+
+* **publishVersion:** fix maxBodyLength when uploading to appHub ([c5abfd1](https://github.com/dhis2/app-platform/commit/c5abfd10d2ad04c09797cec2c2abb1a823d93dd9))
+
+## [11.7.4](https://github.com/dhis2/app-platform/compare/v11.7.3...v11.7.4) (2024-10-22)
+
+
+### Bug Fixes
+
+* bump typescript version used in app shell ([8ebb2e8](https://github.com/dhis2/app-platform/commit/8ebb2e8dc46e2747b71226906bf0565eb041bb66))
+
+## [11.7.3](https://github.com/dhis2/app-platform/compare/v11.7.2...v11.7.3) (2024-10-21)
+
+
+### Bug Fixes
+
+* add @babel/plugin-syntax-dynamic-import as a direct dependency ([#886](https://github.com/dhis2/app-platform/issues/886)) ([8c5ef0c](https://github.com/dhis2/app-platform/commit/8c5ef0c394a6cd639daefaae44c786f4919ebd62))
+
+## [11.7.2](https://github.com/dhis2/app-platform/compare/v11.7.1...v11.7.2) (2024-09-26)
+
+
+### Bug Fixes
+
+* provide fallback api version [LIBS-683] ([#877](https://github.com/dhis2/app-platform/issues/877)) ([dc7bdfa](https://github.com/dhis2/app-platform/commit/dc7bdfab893bdf44ad439e49b25ad3611191ad7a))
+
+## [11.7.1](https://github.com/dhis2/app-platform/compare/v11.7.0...v11.7.1) (2024-08-27)
+
+
+### Bug Fixes
+
+* update app-runtime dependency ([74a2165](https://github.com/dhis2/app-platform/commit/74a21655bee64c9ca4e6285486b4fabb8bc76959))
+
+# [11.7.0](https://github.com/dhis2/app-platform/compare/v11.6.4...v11.7.0) (2024-07-23)
+
+
+### Features
+
+* update boilerplate app code for init command [LIBS-644] ([#866](https://github.com/dhis2/app-platform/issues/866)) ([bd6cfc0](https://github.com/dhis2/app-platform/commit/bd6cfc0d132b40c91b44fcdc715befabf2d7e4cf))
+
+# [12.0.0-alpha.3](https://github.com/dhis2/app-platform/compare/v12.0.0-alpha.2...v12.0.0-alpha.3) (2024-07-08)
+
+
+### Bug Fixes
+
+* **alerts:** ensure hiding works correctly and alerts are not re-added [DHIS2-15438] ([#859](https://github.com/dhis2/app-platform/issues/859)) ([6b11fff](https://github.com/dhis2/app-platform/commit/6b11fff033cc16ed4d2f11caf74e8c18307abc3c))
+* fixed dimensions plugins [LIBS-634] ([#858](https://github.com/dhis2/app-platform/issues/858)) ([1f717f3](https://github.com/dhis2/app-platform/commit/1f717f391b96a88186c897b9b886e11d6168c87c))
+* small text change in changelog ([824dd2f](https://github.com/dhis2/app-platform/commit/824dd2f877d03a7c4d492dff8999e72421297165))
+
+
+### Features
+
+* cleanup plugin error boundary [UX-136] ([#856](https://github.com/dhis2/app-platform/issues/856)) ([de252fe](https://github.com/dhis2/app-platform/commit/de252fef91c5037b8b1c238ce25c7e3b90f7c20e))
+* parse additional namespaces from `d2.config.js` and add to `manifest.webapp` [LIBS-638]  ([#860](https://github.com/dhis2/app-platform/issues/860)) ([62782fe](https://github.com/dhis2/app-platform/commit/62782fed6f59a439ab2ef7f00c7e7d88110a78bf))
+
+# [12.0.0-alpha.2](https://github.com/dhis2/app-platform/compare/v12.0.0-alpha.1...v12.0.0-alpha.2) (2024-06-20)
+
+
+### Bug Fixes
+
+* clean up for plugins [LIBS-620] ([#851](https://github.com/dhis2/app-platform/issues/851)) ([13af3b5](https://github.com/dhis2/app-platform/commit/13af3b5ee862ea4b7952c6a9199505cfe6a1bdaa))
+* do not encode username, password ([#852](https://github.com/dhis2/app-platform/issues/852)) ([2fb4272](https://github.com/dhis2/app-platform/commit/2fb4272130000b383c91d46ba1b3dac44bb13ebf))
+* don't start plugins for apps without a plugin entrypoint ([#850](https://github.com/dhis2/app-platform/issues/850)) ([a89d4cf](https://github.com/dhis2/app-platform/commit/a89d4cf348f7edc0a52b8ab9aacf96f2de939de4))
+
+
+### Features
+
+* parse pluginType from d2 config to add to manifest.webapp ([#849](https://github.com/dhis2/app-platform/issues/849)) ([c1dae23](https://github.com/dhis2/app-platform/commit/c1dae238b92183922962811a52ab50d1b73e7995))
+* start plugin and app separately [LIBS-391] [LIBS-392] ([#848](https://github.com/dhis2/app-platform/issues/848)) ([82003e7](https://github.com/dhis2/app-platform/commit/82003e73fce995a83318c623da6028d9975e6686))
+
+## [11.4.2](https://github.com/dhis2/app-platform/compare/v11.4.1...v11.4.2) (2024-06-18)
+
+
+### Bug Fixes
+
+* do not encode username, password ([#852](https://github.com/dhis2/app-platform/issues/852)) ([2fb4272](https://github.com/dhis2/app-platform/commit/2fb4272130000b383c91d46ba1b3dac44bb13ebf))
+
+## [11.4.1](https://github.com/dhis2/app-platform/compare/v11.4.0...v11.4.1) (2024-06-06)
+
+
+### Bug Fixes
+
+* clean up for plugins [LIBS-620] ([#851](https://github.com/dhis2/app-platform/issues/851)) ([13af3b5](https://github.com/dhis2/app-platform/commit/13af3b5ee862ea4b7952c6a9199505cfe6a1bdaa))
+
+# [11.4.0](https://github.com/dhis2/app-platform/compare/v11.3.1...v11.4.0) (2024-06-04)
+
+
+### Features
+
+* parse pluginType from d2 config to add to manifest.webapp ([#849](https://github.com/dhis2/app-platform/issues/849)) ([c1dae23](https://github.com/dhis2/app-platform/commit/c1dae238b92183922962811a52ab50d1b73e7995))
+
+## [11.3.1](https://github.com/dhis2/app-platform/compare/v11.3.0...v11.3.1) (2024-06-03)
+
+
+### Bug Fixes
+
+* do not start plugins for apps without a plugin entrypoint ([#850](https://github.com/dhis2/app-platform/issues/850)) ([a89d4cf](https://github.com/dhis2/app-platform/commit/a89d4cf348f7edc0a52b8ab9aacf96f2de939de4))
+
+# [11.3.0](https://github.com/dhis2/app-platform/compare/v11.2.2...v11.3.0) (2024-05-30)
+
+
+### Features
+
+* start plugin and app separately [LIBS-391] [LIBS-392] ([#848](https://github.com/dhis2/app-platform/issues/848)) ([82003e7](https://github.com/dhis2/app-platform/commit/82003e73fce995a83318c623da6028d9975e6686))
+
+## [11.2.2](https://github.com/dhis2/app-platform/compare/v11.2.1...v11.2.2) (2024-05-06)
+
+
+### Bug Fixes
+
+* allow apps to opt out of plugin logic [LIBS-579] ([#833](https://github.com/dhis2/app-platform/issues/833)) ([d450758](https://github.com/dhis2/app-platform/commit/d450758ef2e7cde7bf45a19e97f0e262a0e5f3d8))
+
+## [11.2.1](https://github.com/dhis2/app-platform/compare/v11.2.0...v11.2.1) (2024-04-29)
+
+
+### Bug Fixes
+
+* handle new login endpoints [LIBS-600] ([#846](https://github.com/dhis2/app-platform/issues/846)) ([4512825](https://github.com/dhis2/app-platform/commit/4512825bab1a58be78ed7183763c4e0568489fab))
+
+# [11.2.0](https://github.com/dhis2/app-platform/compare/v11.1.1...v11.2.0) (2024-04-25)
+
+
+### Features
+
+* enable login app type ([#845](https://github.com/dhis2/app-platform/issues/845)) ([2586e38](https://github.com/dhis2/app-platform/commit/2586e38327700eef210906dea7d0bd951dc9c24b))
+
+## [11.1.1](https://github.com/dhis2/app-platform/compare/v11.1.0...v11.1.1) (2024-04-09)
+
+
+### Bug Fixes
+
+* **deps:** upgrade @dhis2/app-runtime and @dhis2/ui for peer deps fixes ([#842](https://github.com/dhis2/app-platform/issues/842)) ([2804527](https://github.com/dhis2/app-platform/commit/280452785ab1404e124d7ae6c9b886e241f2e826))
+
+# [11.1.0](https://github.com/dhis2/app-platform/compare/v11.0.0...v11.1.0) (2024-03-25)
+
+
+### Features
+
+* support core-injected base url ([#836](https://github.com/dhis2/app-platform/issues/836)) ([3f1ca71](https://github.com/dhis2/app-platform/commit/3f1ca71a871037316f130f960108c689c36365ba))
+
+# [11.0.0](https://github.com/dhis2/app-platform/compare/v10.5.0...v11.0.0) (2024-03-05)
+
+
+### chore
+
+* **deps:** update shell to ui@9 ([#824](https://github.com/dhis2/app-platform/issues/824)) ([b6a12fa](https://github.com/dhis2/app-platform/commit/b6a12faee7e48764a341dfadc36c991fbab37ec2))
+
+
+### BREAKING CHANGES
+
+* **deps:** Updated major version of UI
+
+# [10.6.0-alpha.3](https://github.com/dhis2/app-platform/compare/v10.6.0-alpha.2...v10.6.0-alpha.3) (2024-03-21)
+
+
+### Features
+
+* enable publishing login_app apps ([93093ca](https://github.com/dhis2/app-platform/commit/93093ca9ce286801e0c0a9bb421ae847be0fd8e6))
+
+# [10.6.0-alpha.2](https://github.com/dhis2/app-platform/compare/v10.6.0-alpha.1...v10.6.0-alpha.2) (2024-03-20)
+
+
+### Features
+
+* add redirect to safe login mode for login apps ([#835](https://github.com/dhis2/app-platform/issues/835)) ([ba26ada](https://github.com/dhis2/app-platform/commit/ba26adaab450eaeda19c3b29410275ac563d370b))
+
+# [10.6.0-alpha.1](https://github.com/dhis2/app-platform/compare/v10.5.0...v10.6.0-alpha.1) (2024-03-05)
+
+
+### Features
+
+* updates for login_app type [LIBS-405]  ([#831](https://github.com/dhis2/app-platform/issues/831)) ([0cc2fbd](https://github.com/dhis2/app-platform/commit/0cc2fbd5b633b9b8953ba29d8450f93b0037d458))
+
+# [10.5.0](https://github.com/dhis2/app-platform/compare/v10.4.1...v10.5.0) (2024-02-19)
+
+
+### Features
+
+* changes to support right-to-left ([#830](https://github.com/dhis2/app-platform/issues/830)) ([6d5433c](https://github.com/dhis2/app-platform/commit/6d5433c017f6c776c379e2397eba78731c96c8f1)), closes [#825](https://github.com/dhis2/app-platform/issues/825) [#826](https://github.com/dhis2/app-platform/issues/826)
+
 ## [10.4.1](https://github.com/dhis2/app-platform/compare/v10.4.0...v10.4.1) (2024-01-30)
 
 

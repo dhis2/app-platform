@@ -14,9 +14,11 @@ const AppWrapper = ({
     plugin,
     onPluginError,
     clearPluginError,
+    direction: configDirection,
     reportPWAUpdateStatus,
 }) => {
-    const { loading: localeLoading } = useCurrentUserLocale()
+    const { loading: localeLoading, direction: localeDirection } =
+        useCurrentUserLocale(configDirection)
     const { loading: latestUserLoading } = useVerifyLatestUser()
 
     if (localeLoading || latestUserLoading) {
@@ -35,7 +37,9 @@ const AppWrapper = ({
                         plugin={true}
                         onPluginError={onPluginError}
                         onRetry={() => {
-                            clearPluginError()
+                            if (clearPluginError) {
+                                clearPluginError()
+                            }
                             window.location.reload()
                         }}
                     >
@@ -50,7 +54,9 @@ const AppWrapper = ({
     return (
         <div className="app-shell-adapter">
             <style jsx>{styles}</style>
-            <ConnectedHeaderBar />
+            <div dir={localeDirection}>
+                <ConnectedHeaderBar />
+            </div>
             <div className="app-shell-app">
                 <ErrorBoundary onRetry={() => window.location.reload()}>
                     {children}
@@ -64,6 +70,7 @@ const AppWrapper = ({
 AppWrapper.propTypes = {
     children: PropTypes.node,
     clearPluginError: PropTypes.func,
+    direction: PropTypes.oneOf(['ltr', 'rtl', 'auto']),
     plugin: PropTypes.bool,
     reportPWAUpdateStatus: PropTypes.func,
     onPluginError: PropTypes.func,

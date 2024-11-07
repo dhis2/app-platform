@@ -3,6 +3,7 @@ import PropTypes from 'prop-types'
 import React from 'react'
 import { AppWrapper } from './components/AppWrapper.js'
 import { ErrorBoundary } from './components/ErrorBoundary.js'
+import { LoginAppWrapper } from './components/LoginAppWrapper.js'
 import { PWALoadingBoundary } from './components/PWALoadingBoundary.js'
 import { ServerVersionProvider } from './components/ServerVersionProvider.js'
 
@@ -11,6 +12,7 @@ const AppAdapter = ({
     appVersion,
     url,
     apiVersion,
+    direction,
     pwaEnabled,
     plugin,
     parentAlertsAdd,
@@ -18,38 +20,67 @@ const AppAdapter = ({
     onPluginError,
     clearPluginError,
     reportPWAUpdateStatus,
+    loginApp,
     children,
-}) => (
-    <ErrorBoundary
-        plugin={plugin}
-        fullscreen
-        onRetry={checkForSWUpdateAndReload}
-    >
-        <OfflineInterfaceProvider>
-            <PWALoadingBoundary>
+}) => {
+    if (loginApp) {
+        return (
+            <ErrorBoundary
+                fullscreen
+                onRetry={() => {
+                    window.location.reload()
+                }}
+                plugin={false}
+                loginApp={true}
+                baseURL={url}
+            >
                 <ServerVersionProvider
                     appName={appName}
                     appVersion={appVersion}
                     url={url}
                     apiVersion={apiVersion}
                     pwaEnabled={pwaEnabled}
-                    plugin={plugin}
-                    parentAlertsAdd={parentAlertsAdd}
-                    showAlertsInPlugin={showAlertsInPlugin}
+                    loginApp={loginApp}
+                    plugin={false}
                 >
-                    <AppWrapper
-                        plugin={plugin}
-                        onPluginError={onPluginError}
-                        clearPluginError={clearPluginError}
-                        reportPWAUpdateStatus={reportPWAUpdateStatus}
-                    >
-                        {children}
-                    </AppWrapper>
+                    <LoginAppWrapper>{children}</LoginAppWrapper>
                 </ServerVersionProvider>
-            </PWALoadingBoundary>
-        </OfflineInterfaceProvider>
-    </ErrorBoundary>
-)
+            </ErrorBoundary>
+        )
+    }
+    return (
+        <ErrorBoundary
+            plugin={plugin}
+            fullscreen
+            onRetry={checkForSWUpdateAndReload}
+        >
+            <OfflineInterfaceProvider>
+                <PWALoadingBoundary>
+                    <ServerVersionProvider
+                        appName={appName}
+                        appVersion={appVersion}
+                        url={url}
+                        apiVersion={apiVersion}
+                        pwaEnabled={pwaEnabled}
+                        plugin={plugin}
+                        parentAlertsAdd={parentAlertsAdd}
+                        showAlertsInPlugin={showAlertsInPlugin}
+                    >
+                        <AppWrapper
+                            plugin={plugin}
+                            onPluginError={onPluginError}
+                            clearPluginError={clearPluginError}
+                            direction={direction}
+                            reportPWAUpdateStatus={reportPWAUpdateStatus}
+                        >
+                            {children}
+                        </AppWrapper>
+                    </ServerVersionProvider>
+                </PWALoadingBoundary>
+            </OfflineInterfaceProvider>
+        </ErrorBoundary>
+    )
+}
 
 AppAdapter.propTypes = {
     appName: PropTypes.string.isRequired,
@@ -57,11 +88,13 @@ AppAdapter.propTypes = {
     apiVersion: PropTypes.number,
     children: PropTypes.element,
     clearPluginError: PropTypes.func,
+    direction: PropTypes.oneOf(['ltr', 'rtl', 'auto']),
+    loginApp: PropTypes.bool,
     parentAlertsAdd: PropTypes.func,
     plugin: PropTypes.bool,
     pwaEnabled: PropTypes.bool,
     reportPWAUpdateStatus: PropTypes.func,
-    showAlertsInPlugin: PropTypes.func,
+    showAlertsInPlugin: PropTypes.bool,
     url: PropTypes.string,
     onPluginError: PropTypes.func,
 }

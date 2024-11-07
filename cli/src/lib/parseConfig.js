@@ -1,12 +1,17 @@
 const { reporter, chalk } = require('@dhis2/cli-helpers-engine')
 const fs = require('fs-extra')
-const { defaultsDeep, cloneDeep, has, isPlainObject } = require('lodash')
+const { cloneDeep, has, isPlainObject, defaults } = require('lodash')
 const parseAuthorString = require('parse-author')
 
 const requiredConfigFields = {
-    app: ['name', 'version', 'title', 'entryPoints.app'],
+    app: ['name', 'version', 'title'],
+    login_app: ['name', 'version', 'title', 'entryPoints.app'],
     lib: ['name', 'version', 'entryPoints.lib'],
 }
+
+const appTypes = ['app', 'login_app']
+
+const isApp = (type) => appTypes.includes(type)
 
 const parseAuthor = (author) => {
     if (isPlainObject(author)) {
@@ -43,24 +48,36 @@ const validateConfig = (config) => {
             )
         }
     })
+
+    const { pluginType } = config
+    if (pluginType && !/^[A-Z0-9-_]+$/.test(pluginType)) {
+        throw new Error(
+            `Field ${chalk.bold(
+                'pluginType'
+            )} must contain only the characters A-Z (uppercase), 0-9, -, or _. Got: ${chalk.bold(
+                `"${pluginType}"`
+            )}`
+        )
+    }
+
+    // entrypoints are validated in compiler/entrypoints.js
+    // authorities and datastore namespaces are validated in generateManifests.js
+
     return true
 }
 
 const parseConfigObjects = (
     config = {},
     pkg = {},
-    { defaultsLib, defaultsApp, defaultsPWA } = {}
+    { defaultsLib, defaultsApp } = {}
 ) => {
-    const type = config.type || 'app'
+    config.type = config.type || 'app'
+    const { type } = config
     reporter.debug(`Type identified : ${chalk.bold(type)}`)
 
-    const defaults = type === 'lib' ? defaultsLib : defaultsApp
-    config = defaultsDeep(config, defaults)
-
-    // Add PWA defaults to apps
-    if (type === 'app') {
-        config = defaultsDeep(config, defaultsPWA)
-    }
+    const defaultsToUse = type === 'lib' ? defaultsLib : defaultsApp
+    // Use shallow defaults to not add unnecessary entrypoints
+    config = defaults(config, defaultsToUse)
 
     config.name = config.name || pkg.name
     config.version = config.version || pkg.version
@@ -85,7 +102,6 @@ const parseConfig = (paths) => {
             reporter.debug('Loading d2 config at', paths.config)
             const importedConfig = require(paths.config)
             // Make sure not to overwrite imported object
-            // (need to use it later in generateManifest)
             config = cloneDeep(importedConfig)
             reporter.debug('loaded', config)
         }
@@ -93,11 +109,8 @@ const parseConfig = (paths) => {
             pkg = fs.readJsonSync(paths.package)
         }
 
-        const parsedConfig = parseConfigObjects(config, pkg, {
-            defaultsLib: require(paths.configDefaultsLib),
-            defaultsApp: require(paths.configDefaultsApp),
-            defaultsPWA: require(paths.configDefaultsPWA),
-        })
+        const configDefaults = require(paths.configDefaults)
+        const parsedConfig = parseConfigObjects(config, pkg, configDefaults)
 
         validateConfig(parsedConfig)
 
@@ -110,5 +123,5 @@ const parseConfig = (paths) => {
 }
 
 module.exports = parseConfig
-
 module.exports.parseConfigObjects = parseConfigObjects
+module.exports.isApp = isApp

@@ -135,8 +135,6 @@ const handler = async ({ cwd = process.cwd(), timeout, ...params }) => {
         exit(1)
     }
 
-    const appUrl = constructAppUrl(dhis2Config.baseUrl, config, serverVersion)
-
     try {
         reporter.print('Uploading app bundle...')
         await client.post('/api/apps', formData, {
@@ -152,6 +150,15 @@ const handler = async ({ cwd = process.cwd(), timeout, ...params }) => {
         dumpHttpError('Failed to upload app, HTTP error', e.response)
         exit(1)
     }
+
+    // todo: modify for multiple/named plugins
+    const appUrl = constructAppUrl({
+        baseUrl: dhis2Config.baseUrl,
+        config,
+        serverVersion,
+        // if there is not an app entry point, use the plugin URL
+        plugin: !config.entryPoints.app && config.entryPoints.plugin,
+    })
 
     reporter.debug(`Testing app launch url at ${appUrl}...`)
     try {

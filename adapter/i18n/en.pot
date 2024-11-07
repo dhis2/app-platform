@@ -5,8 +5,8 @@ msgstr ""
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1)\n"
-"POT-Creation-Date: 2023-02-08T14:36:41.461Z\n"
-"PO-Revision-Date: 2023-02-08T14:36:41.461Z\n"
+"POT-Creation-Date: 2024-06-21T08:27:55.991Z\n"
+"PO-Revision-Date: 2024-06-21T08:27:55.991Z\n"
 
 msgid "Save your data"
 msgstr "Save your data"
@@ -39,11 +39,20 @@ msgstr "An error occurred in the DHIS2 application."
 msgid "Technical details copied to clipboard"
 msgstr "Technical details copied to clipboard"
 
+msgid "There was a problem loading this plugin"
+msgstr "There was a problem loading this plugin"
+
+msgid "Copy debug info to clipboard"
+msgstr "Copy debug info to clipboard"
+
 msgid "Try again"
 msgstr "Try again"
 
 msgid "Something went wrong"
 msgstr "Something went wrong"
+
+msgid "Redirect to safe login mode"
+msgstr "Redirect to safe login mode"
 
 msgid "Hide technical details"
 msgstr "Hide technical details"
@@ -57,8 +66,26 @@ msgstr "The following information may be requested by technical support."
 msgid "Copy technical details to clipboard"
 msgstr "Copy technical details to clipboard"
 
+msgid "Signing in..."
+msgstr "Signing in..."
+
+msgid "Sign in"
+msgstr "Sign in"
+
+msgid "Going to app..."
+msgstr "Going to app..."
+
+msgid "Go to app"
+msgstr "Go to app"
+
 msgid "Please sign in"
 msgstr "Please sign in"
+
+msgid "Specify server"
+msgstr "Specify server"
+
+msgid "Could not log in"
+msgstr "Could not log in"
 
 msgid "Server"
 msgstr "Server"
@@ -68,6 +95,3 @@ msgstr "Username"
 
 msgid "Password"
 msgstr "Password"
-
-msgid "Sign in"
-msgstr "Sign in"

@@ -1,6 +1,6 @@
 {
     "name": "@dhis2/pwa",
-    "version": "10.4.1",
+    "version": "12.0.0-alpha.22",
     "description": "",
     "license": "BSD-3-Clause",
     "publishConfig": {
@@ -13,14 +13,13 @@
         "deploy": "d2-app-scripts deploy"
     },
     "devDependencies": {
-        "@dhis2/cli-app-scripts": "10.4.1"
+        "@dhis2/cli-app-scripts": "12.0.0-alpha.22"
     },
     "dependencies": {
         "idb": "^6.0.0",
-        "workbox-core": "^6.1.5",
-        "workbox-precaching": "^6.1.5",
-        "workbox-routing": "^6.1.5",
-        "workbox-strategies": "^6.1.5"
+        "workbox-precaching": "^7.1.0",
+        "workbox-routing": "^7.1.0",
+        "workbox-strategies": "^7.1.0"
     },
     "peerDependencies": {
         "prop-types": "^15",

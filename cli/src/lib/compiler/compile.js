@@ -4,19 +4,17 @@ const { reporter, prettyPrint } = require('@dhis2/cli-helpers-engine')
 const chokidar = require('chokidar')
 const fs = require('fs-extra')
 const makeBabelConfig = require('../../../config/makeBabelConfig.js')
+const { isApp } = require('../parseConfig')
 const {
     verifyEntrypoints,
     createAppEntrypointWrapper,
     createPluginEntrypointWrapper,
 } = require('./entrypoints.js')
-const {
-    extensionPattern,
-    normalizeExtension,
-} = require('./extensionHelpers.js')
+const { extensionPattern } = require('./extensionHelpers.js')
 
 const watchFiles = ({ inputDir, outputDir, processFileCallback, watch }) => {
     const compileFile = async (source) => {
-        const relative = normalizeExtension(path.relative(inputDir, source))
+        const relative = path.relative(inputDir, source)
         const destination = path.join(outputDir, relative)
         reporter.debug(
             `File ${relative} changed or added... dest: `,
@@ -67,14 +65,16 @@ const compile = async ({
     mode = 'development',
     watch = false,
 }) => {
-    const isApp = config.type === 'app'
+    const isAppType = isApp(config.type)
 
     verifyEntrypoints({ config, paths })
-    if (isApp) {
-        await createAppEntrypointWrapper({
-            entrypoint: config.entryPoints.app,
-            paths,
-        })
+    if (isAppType) {
+        if (config.entryPoints.app) {
+            await createAppEntrypointWrapper({
+                entrypoint: config.entryPoints.app,
+                paths,
+            })
+        }
         if (config.entryPoints.plugin) {
             await createPluginEntrypointWrapper({
                 entrypoint: config.entryPoints.plugin,
@@ -83,13 +83,13 @@ const compile = async ({
         }
     }
 
-    const outDir = isApp
+    const outDir = isAppType
         ? paths.shellApp
         : path.join(paths.buildOutput, moduleType)
     fs.removeSync(outDir)
     fs.ensureDirSync(outDir)
 
-    if (isApp) {
+    if (isAppType) {
         fs.removeSync(paths.shellPublic)
         fs.copySync(paths.shellSourcePublic, paths.shellPublic)
     }
@@ -124,10 +124,11 @@ const compile = async ({
         watchFiles({
             inputDir: paths.src,
             outputDir: outDir,
-            processFileCallback: compileFile,
+            // todo: handle lib compilations with Vite
+            processFileCallback: isAppType ? copyFile : compileFile,
             watch,
         }),
-        isApp &&
+        isAppType &&
             watchFiles({
                 inputDir: paths.public,
                 outputDir: paths.shellPublic,
