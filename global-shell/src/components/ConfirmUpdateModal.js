@@ -8,6 +8,7 @@ import {
 } from '@dhis2/ui'
 import PropTypes from 'prop-types'
 import React from 'react'
+// eslint-disable-next-line import/no-unresolved
 import i18n from '../locales/index.js'
 
 export function ConfirmUpdateModal({ clientsCount, onCancel, onConfirm }) {
