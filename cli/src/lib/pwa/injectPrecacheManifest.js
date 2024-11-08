@@ -47,9 +47,9 @@ module.exports = function injectPrecacheManifest(paths, config) {
             // slow down service worker installation
             '**/moment-locales/*',
             '**/*.map',
-            ...config.pwa.caching.globsToOmitFromPrecache,
+            ...config.pwa?.caching?.globsToOmitFromPrecache ?? [],
         ],
-        additionalManifestEntries: config.pwa.caching.additionalManifestEntries,
+        additionalManifestEntries: config.pwa?.caching?.additionalManifestEntries,
         injectionPoint: 'self.__WB_MANIFEST',
         // Skip revision hashing for files with hash or semver in name:
         // (see https://regex101.com/r/z4Hy9k/3/ for RegEx details)
