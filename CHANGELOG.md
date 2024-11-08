@@ -1,3 +1,10 @@
+# [12.0.0-alpha.23](https://github.com/dhis2/app-platform/compare/v12.0.0-alpha.22...v12.0.0-alpha.23) (2024-11-08)
+
+
+### Bug Fixes
+
+* **service-worker:** handle undefined config vars in injectPrecacheManifest ([a90a4e0](https://github.com/dhis2/app-platform/commit/a90a4e06b25cdecfaf31f24dc51f28c98f20d122))
+
 # [12.0.0-alpha.22](https://github.com/dhis2/app-platform/compare/v12.0.0-alpha.21...v12.0.0-alpha.22) (2024-11-06)
 
 
