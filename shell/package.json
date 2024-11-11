@@ -16,10 +16,8 @@
     },
     "dependencies": {
         "@dhis2/app-adapter": "12.0.0-alpha.23",
-        "@dhis2/app-runtime": "^3.11.1",
         "@dhis2/d2-i18n": "^1.1.1",
         "@dhis2/pwa": "12.0.0-alpha.23",
-        "@dhis2/ui": "^9.11.7",
         "classnames": "^2.2.6",
         "moment": "^2.29.1",
         "post-robot": "^10.0.46",
@@ -30,6 +28,10 @@
         "styled-jsx": "^4.0.1",
         "typeface-roboto": "^0.0.75",
         "typescript": "^5.6.3"
+    },
+    "peerDependencies": {
+        "@dhis2/ui": ">=9",
+        "@dhis2/app-runtime": "^3.11.1"
     },
     "scripts": {
         "analyze": "source-map-explorer 'build/assets/*.js'"
