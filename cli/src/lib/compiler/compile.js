@@ -10,7 +10,7 @@ const {
     createAppEntrypointWrapper,
     createPluginEntrypointWrapper,
 } = require('./entrypoints.js')
-const { extensionPattern } = require('./extensionHelpers.js')
+const { extensionPattern, normalizeExtension } = require('./extensionHelpers.js')
 
 const watchFiles = ({ inputDir, outputDir, processFileCallback, watch }) => {
     const compileFile = async (source) => {
@@ -106,7 +106,11 @@ const compile = async ({
                     source,
                     babelConfig
                 )
-                await fs.writeFile(destination, result.code)
+                
+                // Always write .js files
+                const jsDestination = normalizeExtension(destination)
+
+                await fs.writeFile(jsDestination, result.code)
             } catch (err) {
                 reporter.dumpErr(err)
                 reporter.error(
