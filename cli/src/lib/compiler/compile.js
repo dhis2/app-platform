@@ -97,7 +97,11 @@ const compile = async ({
     const babelConfig = makeBabelConfig({ moduleType, mode })
 
     const copyFile = async (source, destination) => {
-        reporter.debug(`Copying ${source} to ${destination}`)
+        reporter.debug(
+            `Copying ${prettyPrint.relativePath(
+                source
+            )} to ${prettyPrint.relativePath(destination)}`
+        )
         await fs.copy(source, destination)
     }
     const compileFile = async (source, destination) => {
@@ -112,7 +116,11 @@ const compile = async ({
                 const jsDestination = normalizeExtension(destination)
 
                 reporter.debug(
-                    `Compiled ${source} with Babel, saving to ${jsDestination}`
+                    `Compiled ${prettyPrint.relativePath(
+                        source
+                    )} with Babel, saving to ${prettyPrint.relativePath(
+                        jsDestination
+                    )}`
                 )
 
                 await fs.writeFile(jsDestination, result.code)
