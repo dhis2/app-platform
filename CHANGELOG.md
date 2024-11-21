@@ -1,3 +1,10 @@
+# [12.0.0-alpha.24](https://github.com/dhis2/app-platform/compare/v12.0.0-alpha.23...v12.0.0-alpha.24) (2024-11-21)
+
+
+### Bug Fixes
+
+* normalize to .js extensions when compiling libraries ([#893](https://github.com/dhis2/app-platform/issues/893)) ([58b33a8](https://github.com/dhis2/app-platform/commit/58b33a812ba22e58a966a535c432dafea4cb8880))
+
 # [12.0.0-alpha.23](https://github.com/dhis2/app-platform/compare/v12.0.0-alpha.22...v12.0.0-alpha.23) (2024-11-08)
 
 
