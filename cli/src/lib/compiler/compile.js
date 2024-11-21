@@ -10,16 +10,16 @@ const {
     createAppEntrypointWrapper,
     createPluginEntrypointWrapper,
 } = require('./entrypoints.js')
-const { extensionPattern, normalizeExtension } = require('./extensionHelpers.js')
+const {
+    extensionPattern,
+    normalizeExtension,
+} = require('./extensionHelpers.js')
 
 const watchFiles = ({ inputDir, outputDir, processFileCallback, watch }) => {
-    const compileFile = async (source) => {
+    const processFile = async (source) => {
         const relative = path.relative(inputDir, source)
         const destination = path.join(outputDir, relative)
-        reporter.debug(
-            `File ${relative} changed or added... dest: `,
-            path.relative(inputDir, destination)
-        )
+        reporter.debug(`File ${relative} changed or added...`)
         await fs.ensureDir(path.dirname(destination))
         await processFileCallback(source, destination)
     }
@@ -43,8 +43,8 @@ const watchFiles = ({ inputDir, outputDir, processFileCallback, watch }) => {
                 }
                 resolve()
             })
-            .on('add', compileFile)
-            .on('change', compileFile)
+            .on('add', processFile)
+            .on('change', processFile)
             .on('unlink', removeFile)
             .on('error', (error) => {
                 reporter.debugErr('Chokidar error:', error)
@@ -97,6 +97,7 @@ const compile = async ({
     const babelConfig = makeBabelConfig({ moduleType, mode })
 
     const copyFile = async (source, destination) => {
+        reporter.debug(`Copying ${source} to ${destination}`)
         await fs.copy(source, destination)
     }
     const compileFile = async (source, destination) => {
@@ -106,9 +107,13 @@ const compile = async ({
                     source,
                     babelConfig
                 )
-                
+
                 // Always write .js files
                 const jsDestination = normalizeExtension(destination)
+
+                reporter.debug(
+                    `Compiled ${source} with Babel, saving to ${jsDestination}`
+                )
 
                 await fs.writeFile(jsDestination, result.code)
             } catch (err) {
