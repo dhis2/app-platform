@@ -1,3 +1,10 @@
+# [12.0.0-alpha.25](https://github.com/dhis2/app-platform/compare/v12.0.0-alpha.24...v12.0.0-alpha.25) (2024-11-21)
+
+
+### Bug Fixes
+
+* clear only required build dirs ([#894](https://github.com/dhis2/app-platform/issues/894)) ([179305f](https://github.com/dhis2/app-platform/commit/179305ff268a215f0bd0ea1f8edd39f3e3ecbba3))
+
 # [12.0.0-alpha.24](https://github.com/dhis2/app-platform/compare/v12.0.0-alpha.23...v12.0.0-alpha.24) (2024-11-21)
 
 
