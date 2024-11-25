@@ -1,10 +1,9 @@
-import { checkForSWUpdateAndReload } from '@dhis2/pwa'
+import { checkForSWUpdateAndReload, OfflineInterfaceProvider } from '@dhis2/pwa'
 import PropTypes from 'prop-types'
 import React from 'react'
 import { AppWrapper } from './components/AppWrapper.js'
 import { ErrorBoundary } from './components/ErrorBoundary.js'
 import { LoginAppWrapper } from './components/LoginAppWrapper.js'
-import { OfflineInterfaceProvider } from './components/OfflineInterfaceContext.js'
 import { PWALoadingBoundary } from './components/PWALoadingBoundary.js'
 import { ServerVersionProvider } from './components/ServerVersionProvider.js'
 
@@ -20,6 +19,7 @@ const AppAdapter = ({
     showAlertsInPlugin,
     onPluginError,
     clearPluginError,
+    reportPWAUpdateStatus,
     loginApp,
     children,
 }) => {
@@ -71,6 +71,7 @@ const AppAdapter = ({
                             onPluginError={onPluginError}
                             clearPluginError={clearPluginError}
                             direction={direction}
+                            reportPWAUpdateStatus={reportPWAUpdateStatus}
                         >
                             {children}
                         </AppWrapper>
@@ -92,6 +93,7 @@ AppAdapter.propTypes = {
     parentAlertsAdd: PropTypes.func,
     plugin: PropTypes.bool,
     pwaEnabled: PropTypes.bool,
+    reportPWAUpdateStatus: PropTypes.func,
     showAlertsInPlugin: PropTypes.bool,
     url: PropTypes.string,
     onPluginError: PropTypes.func,
