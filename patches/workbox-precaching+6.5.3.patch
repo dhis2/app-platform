@@ -1,0 +1,57 @@
+diff --git a/node_modules/workbox-precaching/PrecacheController.js b/node_modules/workbox-precaching/PrecacheController.js
+index e00975e..b728b6a 100644
+--- a/node_modules/workbox-precaching/PrecacheController.js
++++ b/node_modules/workbox-precaching/PrecacheController.js
+@@ -150,6 +150,7 @@ class PrecacheController {
+         return waitUntil(event, async () => {
+             const installReportPlugin = new PrecacheInstallReportPlugin();
+             this.strategy.plugins.push(installReportPlugin);
++            const failedUrls = []
+             // Cache entries one at a time.
+             // See https://github.com/GoogleChrome/workbox/issues/2528
+             for (const [url, cacheKey] of this._urlsToCacheKeys) {
+@@ -164,12 +165,43 @@ class PrecacheController {
+                     params: { cacheKey },
+                     request,
+                     event,
+-                }));
++                }))
++                // DHIS2: Catch precaching errors to provide a more thorough 
++                // error message
++                .catch(err => {
++                    failedUrls.push(url)
++                    console.error(`Error when attempting to fetch and cache URL ${url}:\n`, err)
++                });
+             }
+             const { updatedURLs, notUpdatedURLs } = installReportPlugin;
+             if (process.env.NODE_ENV !== 'production') {
+                 printInstallDetails(updatedURLs, notUpdatedURLs);
+             }
++            // DHIS2: Log failed requests to give clear feedback, and throw 
++            // error to abort installation
++            if (failedUrls.length > 0) {
++                const appVersion = process.env.REACT_APP_DHIS2_APP_VERSION
++                const appName = process.env.REACT_APP_DHIS2_APP_NAME
++                const errorMessage = 
++                    `The following assets were unable to be precached when ` +
++                    `attempting to install ${appName} version ${appVersion}, ` +
++                    `so the installation has been aborted:\n` + 
++                    `${failedUrls.reduce((acc, curr) => acc + ` * ${curr}\n`, '')}\n` +
++                    `If another version of the app is installed in the browser, ` +
++                    `you will continue to see that version. If not, you will ` +
++                    `see version ${appVersion}, but caching and offline ` +
++                    `features will be unavailable, and the app may not be ` +
++                    `fully functional due to the missing files. You can find ` +
++                    `the app version that's currently active at the bottom ` +
++                    `of the user profile menu.\n\n` +
++                    `[FOR TECHNICAL USERS]: If another version is installed ` +
++                    `and you would like to attempt to view version ` +
++                    `${appVersion} (knowing the above caveats), you may use ` +
++                    `your browser's developer tools to find the service worker ` +
++                    `that's currently active for this app and unregister it.`
++                throw new Error(errorMessage)
++            }
++
+             return { updatedURLs, notUpdatedURLs };
+         });
+     }
