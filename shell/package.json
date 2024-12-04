@@ -16,10 +16,10 @@
     },
     "dependencies": {
         "@dhis2/app-adapter": "12.0.0-alpha.25",
-        "@dhis2/app-runtime": "^3.11.1",
+        "@dhis2/app-runtime": "^3.12.0",
         "@dhis2/d2-i18n": "^1.1.1",
         "@dhis2/pwa": "12.0.0-alpha.25",
-        "@dhis2/ui": "^9.11.7",
+        "@dhis2/ui": "^10.1.6",
         "classnames": "^2.2.6",
         "moment": "^2.29.1",
         "post-robot": "^10.0.46",
