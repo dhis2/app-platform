@@ -1,3 +1,10 @@
+# [12.0.0-alpha.26](https://github.com/dhis2/app-platform/compare/v12.0.0-alpha.25...v12.0.0-alpha.26) (2024-12-06)
+
+
+### Bug Fixes
+
+* **deps:** upgrade app-runtime and ui ([#895](https://github.com/dhis2/app-platform/issues/895)) ([8ed0ec3](https://github.com/dhis2/app-platform/commit/8ed0ec3b2e3468d256c7ca5f335c43fcfd040ef6))
+
 # [12.0.0-alpha.25](https://github.com/dhis2/app-platform/compare/v12.0.0-alpha.24...v12.0.0-alpha.25) (2024-11-21)
 
 

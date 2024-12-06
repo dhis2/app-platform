@@ -1,6 +1,6 @@
 {
     "name": "@dhis2/app-adapter",
-    "version": "12.0.0-alpha.25",
+    "version": "12.0.0-alpha.26",
     "repository": {
         "type": "git",
         "url": "https://github.com/amcgee/dhis2-app-platform",
@@ -21,11 +21,11 @@
         "build"
     ],
     "dependencies": {
-        "@dhis2/pwa": "12.0.0-alpha.25",
+        "@dhis2/pwa": "12.0.0-alpha.26",
         "moment": "^2.24.0"
     },
     "devDependencies": {
-        "@dhis2/cli-app-scripts": "12.0.0-alpha.25",
+        "@dhis2/cli-app-scripts": "12.0.0-alpha.26",
         "@testing-library/react": "^16.0.1",
         "@testing-library/dom": "^10.4.0",
         "enzyme": "^3.11.0",
