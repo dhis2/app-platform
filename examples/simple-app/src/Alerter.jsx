@@ -1,6 +1,7 @@
 import { useAlert } from '@dhis2/app-runtime'
 import { InputField, CheckboxField, Button } from '@dhis2/ui'
 import React, { useState } from 'react'
+import styles from './Alerter.module.css'
 
 export const Alerter = () => {
     const [message, setMessage] = useState('')
@@ -12,7 +13,7 @@ export const Alerter = () => {
     )
 
     return (
-        <div>
+        <div className={styles.flexContainer}>
             <InputField
                 placeholder="Type alert message"
                 value={message}
@@ -25,14 +26,6 @@ export const Alerter = () => {
             />
             <Button onClick={() => show(message)}>Show alert</Button>
             <Button onClick={hide}>Hide alert</Button>
-            <style jsx>{`
-                div {
-                    display: flex;
-                    align-items: center;
-                    justify-content: space-between;
-                    width: 500px;
-                }
-            `}</style>
         </div>
     )
 }

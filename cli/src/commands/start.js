@@ -161,11 +161,12 @@ const handler = async ({
             })
             const server = await createServer(viteConfig)
 
-            const location = config.entryPoints.plugin
-                ? config.entryPoints.app
+            let location = ''
+            if (config.entryPoints.plugin) {
+                location = config.entryPoints.app
                     ? ' at / and /plugin.html'
                     : ' at /plugin.html'
-                : ''
+            }
 
             reporter.print(
                 `The app ${chalk.bold(

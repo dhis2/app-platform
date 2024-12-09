@@ -152,6 +152,7 @@ const handler = async ({ cwd = process.cwd(), timeout, ...params }) => {
     }
 
     // todo: modify for multiple/named plugins
+    // https://dhis2.atlassian.net/browse/LIBS-394
     const appUrl = constructAppUrl({
         baseUrl: dhis2Config.baseUrl,
         config,
