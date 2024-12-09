@@ -17,9 +17,7 @@ const PluginResizeInner = ({
         if (divRef && divRef.current && resizePluginHeight) {
             const resizeObserver = new ResizeObserver(() => {
                 // the additional pixels currently account for possible horizontal scroll bar
-                if (resizePluginHeight) {
-                    resizePluginHeight(divRef.current.offsetHeight + 20)
-                }
+                resizePluginHeight(divRef.current.offsetHeight + 20)
             })
             resizeObserver.observe(divRef.current)
         }
