@@ -15,13 +15,14 @@ const PluginResizeInner = ({
     const innerDivRef = useRef()
     useEffect(() => {
         if (divRef && divRef.current && resizePluginHeight) {
+            const container = divRef.current
             const resizeObserver = new ResizeObserver(() => {
                 // the additional pixels currently account for possible horizontal scroll bar
-                resizePluginHeight(divRef.current.offsetHeight + 20)
+                resizePluginHeight(container.offsetHeight + 20)
             })
-            resizeObserver.observe(divRef.current)
+            resizeObserver.observe(container)
             return () => {
-                resizeObserver.unobserve(divRef.current);
+                resizeObserver.unobserve(container);
                 resizeObserver.disconnect();
             };
         }
