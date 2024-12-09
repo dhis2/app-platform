@@ -20,6 +20,10 @@ const PluginResizeInner = ({
                 resizePluginHeight(divRef.current.offsetHeight + 20)
             })
             resizeObserver.observe(divRef.current)
+            return () => {
+                resizeObserver.unobserve(divRef.current);
+                resizeObserver.disconnect();
+            };
         }
     }, [resizePluginHeight])
 
