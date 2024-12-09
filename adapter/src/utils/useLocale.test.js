@@ -1,6 +1,6 @@
 import { useDataQuery } from '@dhis2/app-runtime'
 import i18n from '@dhis2/d2-i18n'
-import { renderHook } from '@testing-library/react-hooks'
+import { renderHook, waitFor } from '@testing-library/react'
 import moment from 'moment'
 import { useCurrentUserLocale } from './useLocale.js'
 
@@ -84,7 +84,7 @@ describe('formerly problematic locales', () => {
         useDataQuery.mockReturnValue({
             data: { userSettings: { keyUiLocale: 'pt_BR' } },
         })
-        const { result, waitFor } = renderHook(() => useCurrentUserLocale())
+        const { result } = renderHook(() => useCurrentUserLocale())
 
         expect(result.current.direction).toBe('ltr')
         // Notice different locale formats
@@ -109,7 +109,7 @@ describe('formerly problematic locales', () => {
         useDataQuery.mockReturnValue({
             data: { userSettings: { keyUiLocale: 'ar_EG' } },
         })
-        const { result, waitFor } = renderHook(() => useCurrentUserLocale())
+        const { result } = renderHook(() => useCurrentUserLocale())
 
         expect(result.current.direction).toBe('rtl')
         expect(result.current.locale.baseName).toBe('ar-EG')
@@ -127,7 +127,7 @@ describe('formerly problematic locales', () => {
         useDataQuery.mockReturnValue({
             data: { userSettings: { keyUiLocale: 'uz_UZ_Cyrl' } },
         })
-        const { result, waitFor } = renderHook(() => useCurrentUserLocale())
+        const { result } = renderHook(() => useCurrentUserLocale())
 
         expect(result.current.direction).toBe('ltr')
         expect(result.current.locale.baseName).toBe('uz-Cyrl-UZ')
@@ -141,7 +141,7 @@ describe('formerly problematic locales', () => {
         useDataQuery.mockReturnValue({
             data: { userSettings: { keyUiLocale: 'uz_UZ_Latn' } },
         })
-        const { result, waitFor } = renderHook(() => useCurrentUserLocale())
+        const { result } = renderHook(() => useCurrentUserLocale())
 
         expect(result.current.direction).toBe('ltr')
         expect(result.current.locale.baseName).toBe('uz-Latn-UZ')
@@ -166,7 +166,7 @@ describe('other userSettings cases', () => {
                 userSettings: { keyUiLocale: 'en', keyUiLanguageTag: 'pt-BR' },
             },
         })
-        const { result, waitFor } = renderHook(() => useCurrentUserLocale())
+        const { result } = renderHook(() => useCurrentUserLocale())
 
         expect(result.current.direction).toBe('ltr')
         expect(result.current.locale.baseName).toBe('pt-BR')
@@ -180,7 +180,7 @@ describe('other userSettings cases', () => {
         useDataQuery.mockReturnValue({
             data: { userSettings: {} },
         })
-        const { result, waitFor } = renderHook(() => useCurrentUserLocale())
+        const { result } = renderHook(() => useCurrentUserLocale())
 
         expect(result.current.direction).toBe('rtl')
         expect(result.current.locale.baseName).toBe('ar-EG')
@@ -194,7 +194,7 @@ describe('other userSettings cases', () => {
         useDataQuery.mockReturnValue({
             data: { userSettings: { keyUiLocale: 'shouldCauseError' } },
         })
-        const { result, waitFor } = renderHook(() => useCurrentUserLocale())
+        const { result } = renderHook(() => useCurrentUserLocale())
 
         expect(result.current.direction).toBe('rtl')
         expect(result.current.locale.baseName).toBe('ar-EG')
