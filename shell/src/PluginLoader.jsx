@@ -22,9 +22,9 @@ const PluginResizeInner = ({
             })
             resizeObserver.observe(container)
             return () => {
-                resizeObserver.unobserve(container);
-                resizeObserver.disconnect();
-            };
+                resizeObserver.unobserve(container)
+                resizeObserver.disconnect()
+            }
         }
     }, [resizePluginHeight])
 
