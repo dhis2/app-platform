@@ -16,6 +16,16 @@ const getAppJestConfig = ({ jestConfigPath, paths }) => {
     }
 }
 
+const cleanRest = (rest) => {
+    const clonedRest = { ...rest }
+    // These properties are not valid Jest CLI arguments
+    delete clonedRest._
+    delete clonedRest.docsite
+    delete clonedRest['$0']
+    delete clonedRest.getCache
+    return clonedRest
+}
+
 const handler = async ({
     verbose,
     cwd,
@@ -25,6 +35,7 @@ const handler = async ({
     watch,
     watchAll,
     jestConfig: jestConfigPath,
+    ...rest
 }) => {
     const paths = makePaths(cwd)
 
@@ -65,6 +76,7 @@ const handler = async ({
                     watchAll: (!ci && watchAll) || undefined,
                     ci,
                     verbose: verbose,
+                    ...cleanRest(rest),
                 },
                 [paths.base]
             )
