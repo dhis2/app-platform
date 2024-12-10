@@ -142,6 +142,7 @@ const compile = async ({
             inputDir: paths.src,
             outputDir: outDir,
             // todo: handle lib compilations with Vite
+            // https://dhis2.atlassian.net/browse/LIBS-722
             processFileCallback: isAppType ? copyFile : compileFile,
             watch,
         }),

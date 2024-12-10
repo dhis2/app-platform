@@ -2,7 +2,7 @@ import { useDataQuery } from '@dhis2/app-runtime'
 import moment from 'moment'
 import React from 'react'
 import { Alerter } from './Alerter.jsx'
-import style from './App.style.js'
+import styles from './App.module.css'
 import i18n from './locales/index.js'
 
 const query = {
@@ -14,8 +14,7 @@ const query = {
 const Component = () => {
     const { error, loading, data } = useDataQuery(query)
     return (
-        <div>
-            <style jsx>{style}</style>
+        <div className={styles.appContainer}>
             {error && <span>ERROR</span>}
             {loading && <span>...</span>}
             {data && (
