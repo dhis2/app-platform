@@ -1,3 +1,11 @@
+# [12.0.0-alpha.27](https://github.com/dhis2/app-platform/compare/v12.0.0-alpha.26...v12.0.0-alpha.27) (2024-12-10)
+
+
+### Bug Fixes
+
+* **init:** update bootstrap script branch ([#896](https://github.com/dhis2/app-platform/issues/896)) ([33c261a](https://github.com/dhis2/app-platform/commit/33c261a1f33b02b46605b48260987e5d09920227))
+* **plugin:** clean up resize observer and handle sonarqube warnings ([#898](https://github.com/dhis2/app-platform/issues/898)) ([f113dd5](https://github.com/dhis2/app-platform/commit/f113dd5a1ddea58a2f3e94a15c7075a95fee823e))
+
 # [12.0.0-alpha.26](https://github.com/dhis2/app-platform/compare/v12.0.0-alpha.25...v12.0.0-alpha.26) (2024-12-06)
 
 
