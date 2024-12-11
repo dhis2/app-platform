@@ -1,17 +1,16 @@
 const path = require('path')
 const { reporter, chalk } = require('@dhis2/cli-helpers-engine')
 const fs = require('fs-extra')
+const bootstrapShell = require('../lib/bootstrapShell')
 const { compile } = require('../lib/compiler')
+const { loadEnvFiles, getEnv } = require('../lib/env')
 const exitOnCatch = require('../lib/exitOnCatch')
 const generateManifests = require('../lib/generateManifests')
 const i18n = require('../lib/i18n')
-const loadEnvFiles = require('../lib/loadEnvFiles')
 const parseConfig = require('../lib/parseConfig')
 const { isApp } = require('../lib/parseConfig')
 const makePaths = require('../lib/paths')
-const makePlugin = require('../lib/plugin')
-const { injectPrecacheManifest } = require('../lib/pwa')
-const makeShell = require('../lib/shell')
+const { injectPrecacheManifest, compileServiceWorker } = require('../lib/pwa')
 const { validatePackage } = require('../lib/validatePackage')
 const { handler: pack } = require('./pack.js')
 
@@ -31,20 +30,22 @@ const getNodeEnv = () => {
 const printBuildParam = (key, value) => {
     reporter.print(chalk.green(` - ${key} :`), chalk.yellow(value))
 }
-const setAppParameters = (standalone, config) => {
-    process.env.PUBLIC_URL = process.env.PUBLIC_URL || '.'
-    printBuildParam('PUBLIC_URL', process.env.PUBLIC_URL)
+const getAppParameters = (standalone, config) => {
+    const publicUrl = process.env.PUBLIC_URL || '.'
+    printBuildParam('PUBLIC_URL', publicUrl)
 
     if (
         standalone === false ||
         (typeof standalone === 'undefined' && !config.standalone)
     ) {
         const defaultBase = config.coreApp ? `..` : `../../..`
-        process.env.DHIS2_BASE_URL = process.env.DHIS2_BASE_URL || defaultBase
+        const baseUrl = process.env.DHIS2_BASE_URL || defaultBase
 
-        printBuildParam('DHIS2_BASE_URL', process.env.DHIS2_BASE_URL)
+        printBuildParam('DHIS2_BASE_URL', baseUrl)
+        return { publicUrl, baseUrl }
     } else {
         printBuildParam('DHIS2_BASE_URL', '<standalone>')
+        return { publicUrl }
     }
 }
 
@@ -58,6 +59,7 @@ const handler = async ({
     verify,
     force,
     pack: packAppOutput,
+    allowJsxInJs,
 }) => {
     const paths = makePaths(cwd)
 
@@ -69,14 +71,9 @@ const handler = async ({
     printBuildParam('Mode', mode)
 
     const config = parseConfig(paths)
-    const shell = makeShell({ config, paths })
-    const plugin = makePlugin({ config, paths })
-
-    if (isApp(config.type)) {
-        setAppParameters(standalone, config)
-    }
-
-    await fs.remove(paths.buildOutput)
+    const appParameters = isApp(config.type)
+        ? getAppParameters(standalone, config)
+        : null
 
     await exitOnCatch(
         async () => {
@@ -109,7 +106,7 @@ const handler = async ({
 
             if (isApp(config.type)) {
                 reporter.info('Bootstrapping local appShell...')
-                await shell.bootstrap({ shell: shellSource, force })
+                await bootstrapShell({ paths, shell: shellSource, force })
             }
 
             reporter.info(
@@ -129,16 +126,35 @@ const handler = async ({
                 reporter.info('Generating manifests...')
                 await generateManifests(paths, config, process.env.PUBLIC_URL)
 
-                // CRA Manages service worker compilation here
                 reporter.info('Building appShell...')
-                await shell.build()
-
-                if (config.entryPoints.plugin) {
-                    reporter.info('Building plugin...')
-                    await plugin.build()
+                // These imports are done asynchronously to allow Vite to use its
+                // ESM build of its Node API (the CJS build will be removed in v6)
+                // https://vitejs.dev/guide/troubleshooting.html#vite-cjs-node-api-deprecated
+                const { build } = await import('vite')
+                const { default: createConfig } = await import(
+                    '../../config/makeViteConfig.mjs'
+                )
+                const env = getEnv({ config, ...appParameters })
+                if (allowJsxInJs) {
+                    reporter.warn(
+                        'Adding Vite config to allow JSX syntax in .js files. This is deprecated and will be removed in future versions.'
+                    )
+                    reporter.warn(
+                        'Consider using the migration script `yarn d2-app-scripts migrate js-to-jsx` to rename your files to use .jsx extensions.'
+                    )
                 }
+                const viteConfig = createConfig({
+                    paths,
+                    config,
+                    env,
+                    allowJsxInJs,
+                })
+                await build(viteConfig)
 
-                if (config.pwa.enabled) {
+                if (config.pwa?.enabled) {
+                    reporter.info('Compiling service worker...')
+                    await compileServiceWorker({ env, paths, mode })
+
                     reporter.info(
                         'Injecting supplementary precache manifest...'
                     )
@@ -165,7 +181,10 @@ const handler = async ({
         },
         {
             name: 'build',
-            onError: () => reporter.error('Build script failed'),
+            onError: (err) => {
+                reporter.error(err)
+                reporter.error('Build script failed')
+            },
         }
     )
 
@@ -175,6 +194,7 @@ const handler = async ({
             process.exit(1)
         }
 
+        await fs.remove(paths.buildAppOutput)
         await fs.copy(paths.shellBuildOutput, paths.buildAppOutput)
 
         if (packAppOutput) {
@@ -227,6 +247,11 @@ const command = {
             description:
                 'Build in standalone mode (overrides the d2.config.js setting)',
             default: undefined,
+        },
+        allowJsxInJs: {
+            type: 'boolean',
+            description:
+                'Add Vite config to handle JSX in .js files. DEPRECATED: Will be removed in @dhis2/cli-app-scripts v13. Consider using the migration script `d2-app-scripts migrate js-to-jsx` to avoid needing this option',
         },
     },
     handler,

@@ -16,13 +16,10 @@ const {
 } = require('./extensionHelpers.js')
 
 const watchFiles = ({ inputDir, outputDir, processFileCallback, watch }) => {
-    const compileFile = async (source) => {
-        const relative = normalizeExtension(path.relative(inputDir, source))
+    const processFile = async (source) => {
+        const relative = path.relative(inputDir, source)
         const destination = path.join(outputDir, relative)
-        reporter.debug(
-            `File ${relative} changed or added... dest: `,
-            path.relative(inputDir, destination)
-        )
+        reporter.debug(`File ${relative} changed or added...`)
         await fs.ensureDir(path.dirname(destination))
         await processFileCallback(source, destination)
     }
@@ -46,8 +43,8 @@ const watchFiles = ({ inputDir, outputDir, processFileCallback, watch }) => {
                 }
                 resolve()
             })
-            .on('add', compileFile)
-            .on('change', compileFile)
+            .on('add', processFile)
+            .on('change', processFile)
             .on('unlink', removeFile)
             .on('error', (error) => {
                 reporter.debugErr('Chokidar error:', error)
@@ -72,10 +69,12 @@ const compile = async ({
 
     verifyEntrypoints({ config, paths })
     if (isAppType) {
-        await createAppEntrypointWrapper({
-            entrypoint: config.entryPoints.app,
-            paths,
-        })
+        if (config.entryPoints.app) {
+            await createAppEntrypointWrapper({
+                entrypoint: config.entryPoints.app,
+                paths,
+            })
+        }
         if (config.entryPoints.plugin) {
             await createPluginEntrypointWrapper({
                 entrypoint: config.entryPoints.plugin,
@@ -98,6 +97,11 @@ const compile = async ({
     const babelConfig = makeBabelConfig({ moduleType, mode })
 
     const copyFile = async (source, destination) => {
+        reporter.debug(
+            `Copying ${prettyPrint.relativePath(
+                source
+            )} to ${prettyPrint.relativePath(destination)}`
+        )
         await fs.copy(source, destination)
     }
     const compileFile = async (source, destination) => {
@@ -107,7 +111,19 @@ const compile = async ({
                     source,
                     babelConfig
                 )
-                await fs.writeFile(destination, result.code)
+
+                // Always write .js files
+                const jsDestination = normalizeExtension(destination)
+
+                reporter.debug(
+                    `Compiled ${prettyPrint.relativePath(
+                        source
+                    )} with Babel, saving to ${prettyPrint.relativePath(
+                        jsDestination
+                    )}`
+                )
+
+                await fs.writeFile(jsDestination, result.code)
             } catch (err) {
                 reporter.dumpErr(err)
                 reporter.error(
@@ -125,7 +141,9 @@ const compile = async ({
         watchFiles({
             inputDir: paths.src,
             outputDir: outDir,
-            processFileCallback: compileFile,
+            // todo: handle lib compilations with Vite
+            // https://dhis2.atlassian.net/browse/LIBS-722
+            processFileCallback: isAppType ? copyFile : compileFile,
             watch,
         }),
         isAppType &&

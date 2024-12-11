@@ -69,31 +69,31 @@ const writeGitignore = (gitignoreFile, sections) => {
     fs.writeFileSync(gitignoreFile, gitignore.stringify(sections, format))
 }
 
-const handler = async ({ force, name, cwd, lib }) => {
+const handler = async ({ force, name, cwd, lib, typeScript }) => {
+    // create the folder where the template will be generated
     cwd = cwd || process.cwd()
     cwd = path.join(cwd, name)
     fs.mkdirpSync(cwd)
-    const paths = makePaths(cwd)
+    const paths = makePaths(cwd, { typeScript })
 
+    reporter.info('checking d2.config exists')
     if (fs.existsSync(paths.config) && !force) {
         reporter.warn(
             'A config file already exists, use --force to overwrite it'
         )
     } else {
-        reporter.info('Importing d2.config.js defaults')
+        reporter.info('Importing d2.config defaults')
         fs.copyFileSync(
-            lib ? paths.configDefaultsLib : paths.configDefaultsApp,
+            lib ? paths.initConfigLib : paths.initConfigApp,
             paths.config
         )
+        reporter.debug(' copied default d2.config')
     }
 
     if (!fs.existsSync(paths.package)) {
         reporter.info('No package.json found, creating one...')
 
-        const pkg = require(path.join(
-            __dirname,
-            '../../config/init.package.json'
-        ))
+        const pkg = require(paths.initPackageJson)
         pkg.name = name
         fs.writeJSONSync(paths.package, pkg, {
             spaces: 2,
@@ -186,7 +186,50 @@ const handler = async ({ force, name, cwd, lib }) => {
         })
     }
 
-    const entrypoint = lib ? 'src/index.js' : 'src/App.js'
+    if (typeScript) {
+        // copy tsconfig
+        reporter.info('Copying tsconfig')
+        fs.copyFileSync(paths.initTSConfig, paths.tsConfig)
+
+        reporter.info('install TypeScript as a dev dependency')
+
+        await exec({
+            cmd: 'yarn',
+            args: ['add', 'typescript@^5', '--dev'],
+            cwd: paths.base,
+        })
+
+        // install any other TS dependencies needed
+        reporter.info('install type definitions')
+        await exec({
+            cmd: 'yarn',
+            args: ['add', '@types/react @types/react-dom @types/jest', '--dev'],
+            cwd: paths.base,
+        })
+
+        // add global.d.ts to get rid of CSS module errors
+        // something like https://github.com/dhis2/data-exchange-app/pull/79/files#diff-858566d2d4cf06579a908cb85f587c5752fa0fa6a47d579277749006e86f0834
+        // (but maybe something better)
+        // also look at copying src/custom.d.ts https://github.com/dhis2/data-exchange-app/pull/79/files#diff-5f2ca1b1541dc3023f81543689da349e59b97c708462dd8da4640b399362edc7
+        reporter.info('add declaration files')
+        const typesDir = path.join(paths.base, 'types')
+
+        if (!fs.existsSync(typesDir)) {
+            fs.mkdirpSync(typesDir)
+        }
+        fs.copyFileSync(
+            paths.initGlobalDeclaration,
+            path.join(typesDir, 'global.d.ts')
+        )
+        fs.copyFileSync(
+            paths.initModulesDeclaration,
+            path.join(typesDir, 'modules.d.ts')
+        )
+    }
+
+    const extension = typeScript ? 'ts' : 'js'
+
+    const entrypoint = lib ? `src/index.${extension}x` : `src/App.${extension}x`
 
     if (fs.existsSync(path.join(paths.base, entrypoint))) {
         reporter.warn(
@@ -195,18 +238,15 @@ const handler = async ({ force, name, cwd, lib }) => {
     } else {
         reporter.info(`Creating entrypoint ${chalk.bold(entrypoint)}`)
         fs.mkdirpSync(path.join(paths.base, 'src'))
-        fs.copyFileSync(
-            path.join(__dirname, '../../config/init.entrypoint.js'),
-            path.join(paths.base, entrypoint)
-        )
+        fs.copyFileSync(paths.initEntrypoint, path.join(paths.base, entrypoint))
 
         if (!lib) {
             fs.copyFileSync(
-                path.join(__dirname, '../../config/init.App.test.js'),
-                path.join(paths.base, 'src/App.test.js')
+                paths.initAppTestJsx,
+                path.join(paths.base, `src/App.test.${extension}x`)
             )
             fs.copyFileSync(
-                path.join(__dirname, '../../config/init.App.module.css'),
+                paths.initAppModuleCss,
                 path.join(paths.base, 'src/App.module.css')
             )
         }
@@ -221,7 +261,7 @@ const handler = async ({ force, name, cwd, lib }) => {
         reporter.warn('A README already exists, use --force to overwrite it')
     } else {
         reporter.info('Writing README...')
-        fs.copyFileSync(paths.readmeDefault, paths.readme)
+        fs.copyFileSync(paths.initReadme, paths.readme)
     }
 
     reporter.print('')
@@ -245,6 +285,12 @@ const command = {
         },
         lib: {
             description: 'Create a library',
+            type: 'boolean',
+            default: false,
+        },
+        typeScript: {
+            alias: ['typescript', 'ts'],
+            description: 'Use TypeScript template',
             type: 'boolean',
             default: false,
         },

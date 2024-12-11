@@ -21,7 +21,7 @@ jobs:
             - uses: actions/checkout@v2
             - uses: actions/setup-node@v1
               with:
-                  node-version: 14.x
+                  node-version: 18.x
 
             - uses: c-hive/gha-yarn-cache@v1
             - run: yarn install --frozen-lockfile
@@ -43,7 +43,7 @@ jobs:
             - uses: actions/checkout@v2
             - uses: actions/setup-node@v1
               with:
-                  node-version: 14.x
+                  node-version: 18.x
 
             - uses: c-hive/gha-yarn-cache@v1
             - run: yarn install --frozen-lockfile
@@ -59,7 +59,7 @@ jobs:
             - uses: actions/checkout@v2
             - uses: actions/setup-node@v1
               with:
-                  node-version: 14.x
+                  node-version: 18.x
 
             - uses: actions/download-artifact@v4
               with:
@@ -81,7 +81,7 @@ jobs:
                   token: ${{env.GH_TOKEN}}
             - uses: actions/setup-node@v1
               with:
-                  node-version: 14.x
+                  node-version: 18.x
 
             - uses: actions/download-artifact@v4
               with:
@@ -89,6 +89,10 @@ jobs:
 
             - uses: c-hive/gha-yarn-cache@v1
             - run: yarn install --frozen-lockfile
+
+            # If npm > v7, the semantic release action below modifies yarn.lock
+            # upon release (since it runs `npm version ___`)
+            - run: npm install -g npm@^6
 
             - uses: dhis2/action-semantic-release@master
               with:

@@ -1,6 +1,6 @@
 {
     "name": "pwa-app",
-    "version": "11.7.5",
+    "version": "12.0.0-alpha.29",
     "description": "",
     "license": "BSD-3-Clause",
     "private": true,
@@ -15,7 +15,7 @@
     "peerDependencies": {
         "@dhis2/app-runtime": "*",
         "@dhis2/d2-i18n": "*",
-        "react": "^16.8",
-        "react-dom": "^16.8"
+        "react": "^18",
+        "react-dom": "^18"
     }
 }
