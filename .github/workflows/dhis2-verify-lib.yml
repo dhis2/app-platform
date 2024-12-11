@@ -81,11 +81,7 @@ jobs:
                   token: ${{env.GH_TOKEN}}
             - uses: actions/setup-node@v1
               with:
-                  # Higher Node versions introduce npm > 7, which ends up
-                  # changing yarn.lock when the semantic release action runs
-                  # (specifically the `npm version` script).
-                  # Apps need Node 18 to run, but aren't being run in this step
-                  node-version: 14.x
+                  node-version: 18.x
 
             - uses: actions/download-artifact@v4
               with:
