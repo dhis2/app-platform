@@ -1,3 +1,10 @@
+# [12.0.0-alpha.29](https://github.com/dhis2/app-platform/compare/v12.0.0-alpha.28...v12.0.0-alpha.29) (2024-12-11)
+
+
+### Bug Fixes
+
+* **deps:** use npm v6 before publishing ([01ad502](https://github.com/dhis2/app-platform/commit/01ad502f039b917e53268fb8b9ec73f14ccf84bc))
+
 # [12.0.0-alpha.28](https://github.com/dhis2/app-platform/compare/v12.0.0-alpha.27...v12.0.0-alpha.28) (2024-12-11)
 
 
