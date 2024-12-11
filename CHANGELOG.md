@@ -1,3 +1,10 @@
+# [12.0.0-alpha.28](https://github.com/dhis2/app-platform/compare/v12.0.0-alpha.27...v12.0.0-alpha.28) (2024-12-11)
+
+
+### Bug Fixes
+
+* **deps:** upgrade react to 18 in example apps ([#900](https://github.com/dhis2/app-platform/issues/900)) ([7fd16d7](https://github.com/dhis2/app-platform/commit/7fd16d7fa347a804d9c78ae86976859fef54632b))
+
 # [12.0.0-alpha.27](https://github.com/dhis2/app-platform/compare/v12.0.0-alpha.26...v12.0.0-alpha.27) (2024-12-10)
 
 
