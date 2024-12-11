@@ -15,7 +15,7 @@
     "peerDependencies": {
         "@dhis2/app-runtime": "*",
         "@dhis2/d2-i18n": "*",
-        "react": "^16.8",
-        "react-dom": "^16.8"
+        "react": "^18",
+        "react-dom": "^18"
     }
 }
