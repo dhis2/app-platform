@@ -100,6 +100,7 @@ module.exports = (cwd = process.cwd(), { typeScript } = {}) => {
         shell: path.join(base, './.d2/shell'),
         shellSrc: path.join(base, './.d2/shell/src'),
         shellAppEntrypoint: path.join(base, './.d2/shell/src/App.jsx'),
+        shellAppBundleEntrypoint: path.join(base, './.d2/shell/src/index.jsx'),
         shellAppDirname,
         shellApp: path.join(base, `./.d2/shell/${shellAppDirname}`),
         shellIndexHtml: path.join(base, './.d2/shell/index.html'),
@@ -152,6 +153,7 @@ module.exports = (cwd = process.cwd(), { typeScript } = {}) => {
 
         launchPath: 'index.html',
         pluginLaunchPath: 'plugin.html',
+        pluginifiedAppLaunchPath: 'app.html',
     }
 
     reporter.debug('PATHS', paths)
