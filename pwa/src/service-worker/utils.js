@@ -11,13 +11,8 @@ const APP_ADAPTER_URL_PATTERNS = [
     /\/api(\/\d+)?\/userSettings/, // useLocale
     /\/api(\/\d+)?\/me\?fields=id$/, // useVerifyLatestUser
 ]
-// Note that the CRA precache manifest files start with './'
-// TODO: Make this extensible with a d2.config.js option
-export const CRA_MANIFEST_EXCLUDE_PATTERNS = [
-    /^\.\/static\/js\/moment-locales\//,
-]
 
-// '[]' Fallback prevents error when switching from pwa enabled to disabled
+// '[]' Fallback prevents error when undefined
 const APP_SHELL_URL_FILTER_PATTERNS = JSON.parse(
     process.env
         .REACT_APP_DHIS2_APP_PWA_CACHING_PATTERNS_TO_OMIT_FROM_APP_SHELL ||
