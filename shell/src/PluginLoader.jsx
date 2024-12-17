@@ -55,11 +55,11 @@ const PluginResizeInner = ({
 
 PluginResizeInner.propTypes = {
     D2App: PropTypes.object,
+    clientWidth: PropTypes.string,
     config: PropTypes.object,
     propsFromParent: PropTypes.object,
     resizePluginHeight: PropTypes.func,
     resizePluginWidth: PropTypes.func,
-    clientWidth: PropTypes.string,
 }
 
 const PluginInner = ({
@@ -93,11 +93,11 @@ const PluginInner = ({
 
 PluginInner.propTypes = {
     D2App: PropTypes.object,
+    clientWidth: PropTypes.string,
     config: PropTypes.object,
     propsFromParent: PropTypes.object,
     resizePluginHeight: PropTypes.func,
     resizePluginWidth: PropTypes.func,
-    clientWidth: PropTypes.string,
 }
 
 export const PluginLoader = ({ config, requiredProps, D2App }) => {
