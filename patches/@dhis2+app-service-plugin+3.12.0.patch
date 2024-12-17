@@ -1,0 +1,82 @@
+diff --git a/node_modules/@dhis2/app-service-plugin/build/cjs/Plugin.js b/node_modules/@dhis2/app-service-plugin/build/cjs/Plugin.js
+index ffd1cf0..811ee66 100644
+--- a/node_modules/@dhis2/app-service-plugin/build/cjs/Plugin.js
++++ b/node_modules/@dhis2/app-service-plugin/build/cjs/Plugin.js
+@@ -38,6 +38,8 @@ const Plugin = _ref3 => {
+     pluginShortName,
+     height,
+     width,
++    className,
++    clientWidth,
+     ...propsToPassNonMemoized
+   } = _ref3;
+   const iframeRef = (0, _react.useRef)(null);
+@@ -79,7 +81,8 @@ const Plugin = _ref3 => {
+         setPluginHeight: !height ? setPluginHeight : null,
+         setPluginWidth: !width ? setPluginWidth : null,
+         setInErrorState,
+-        setCommunicationReceived
++        setCommunicationReceived,
++        clientWidth
+       };
+ 
+       // if iframe has not sent initial request, set up a listener
+@@ -116,7 +119,8 @@ const Plugin = _ref3 => {
+     return /*#__PURE__*/_react.default.createElement("iframe", {
+       ref: iframeRef,
+       src: pluginSource,
+-      width: width !== null && width !== void 0 ? width : resizedWidth + 'px',
++      className: className,
++      width: clientWidth ? resizedWidth : width !== null && width !== void 0 ? width : '100%',
+       height: height !== null && height !== void 0 ? height : resizedHeight + 'px',
+       style: {
+         border: 'none'
+diff --git a/node_modules/@dhis2/app-service-plugin/build/es/Plugin.js b/node_modules/@dhis2/app-service-plugin/build/es/Plugin.js
+index f3d29cd..a387414 100644
+--- a/node_modules/@dhis2/app-service-plugin/build/es/Plugin.js
++++ b/node_modules/@dhis2/app-service-plugin/build/es/Plugin.js
+@@ -29,6 +29,8 @@ export const Plugin = _ref3 => {
+     pluginShortName,
+     height,
+     width,
++    className,
++    clientWidth,
+     ...propsToPassNonMemoized
+   } = _ref3;
+   const iframeRef = useRef(null);
+@@ -70,7 +72,8 @@ export const Plugin = _ref3 => {
+         setPluginHeight: !height ? setPluginHeight : null,
+         setPluginWidth: !width ? setPluginWidth : null,
+         setInErrorState,
+-        setCommunicationReceived
++        setCommunicationReceived,
++        clientWidth
+       };
+ 
+       // if iframe has not sent initial request, set up a listener
+@@ -107,7 +110,8 @@ export const Plugin = _ref3 => {
+     return /*#__PURE__*/React.createElement("iframe", {
+       ref: iframeRef,
+       src: pluginSource,
+-      width: width !== null && width !== void 0 ? width : resizedWidth + 'px',
++      className: className,
++      width: clientWidth ? resizedWidth : width !== null && width !== void 0 ? width : '100%',
+       height: height !== null && height !== void 0 ? height : resizedHeight + 'px',
+       style: {
+         border: 'none'
+diff --git a/node_modules/@dhis2/app-service-plugin/build/types/Plugin.d.ts b/node_modules/@dhis2/app-service-plugin/build/types/Plugin.d.ts
+index f216e23..2321e66 100644
+--- a/node_modules/@dhis2/app-service-plugin/build/types/Plugin.d.ts
++++ b/node_modules/@dhis2/app-service-plugin/build/types/Plugin.d.ts
+@@ -1,8 +1,10 @@
+ /// <reference types="react" />
+-export declare const Plugin: ({ pluginSource, pluginShortName, height, width, ...propsToPassNonMemoized }: {
++export declare const Plugin: ({ pluginSource, pluginShortName, height, width, className, clientWidth, ...propsToPassNonMemoized }: {
+     pluginSource?: string | undefined;
+     pluginShortName?: string | undefined;
+     height?: string | number | undefined;
+     width?: string | number | undefined;
++    className?: string | undefined;
++    clientWidth?: string | number | undefined;
+     propsToPass: any;
+ }) => JSX.Element;
