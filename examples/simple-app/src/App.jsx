@@ -13,6 +13,7 @@ const query = {
 
 const Component = () => {
     const { error, loading, data } = useDataQuery(query)
+
     return (
         <div className={styles.appContainer}>
             {error && <span>ERROR</span>}
