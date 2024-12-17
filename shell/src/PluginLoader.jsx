@@ -24,8 +24,8 @@ const PluginResizeInner = ({
                 // })
 
                 if (resizePluginHeight) {
-                    // the additional pixels currently account for possible horizontal scroll bar
-                    resizePluginHeight(resizeDivRef.current.offsetHeight + 20)
+                    // offsetHeight takes into account possible scrollbar size
+                    resizePluginHeight(resizeDivRef.current.offsetHeight)
                 }
                 if (resizePluginWidth) {
                     resizePluginWidth(resizeDivRef.current.scrollWidth)
