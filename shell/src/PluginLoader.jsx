@@ -10,58 +10,44 @@ const PluginResizeInner = ({
     propsFromParent,
     resizePluginHeight,
     resizePluginWidth,
+    clientWidth,
 }) => {
-    const divRef = useRef()
-    const innerDivRef = useRef()
+    const resizeDivRef = useRef()
+
     useEffect(() => {
-        if (divRef && divRef.current && resizePluginHeight) {
-            const container = divRef.current
+        if (resizeDivRef?.current) {
             const resizeObserver = new ResizeObserver(() => {
-                // the additional pixels currently account for possible horizontal scroll bar
-                resizePluginHeight(container.offsetHeight + 20)
+                // console.log('in here', {
+                //     w: resizeDivRef.current.offsetWidth,
+                //     h: resizeDivRef.current.offsetHeight,
+                //     element: resizeDivRef.current,
+                // })
+
+                if (resizePluginHeight) {
+                    // the additional pixels currently account for possible horizontal scroll bar
+                    resizePluginHeight(resizeDivRef.current.offsetHeight + 20)
+                }
+                if (resizePluginWidth) {
+                    resizePluginWidth(resizeDivRef.current.scrollWidth)
+                }
             })
-            resizeObserver.observe(container)
+
+            resizeObserver.observe(resizeDivRef.current)
+
             return () => {
-                resizeObserver.unobserve(container)
+                resizeObserver.unobserve(resizeDivRef.current)
                 resizeObserver.disconnect()
             }
         }
-    }, [resizePluginHeight])
+    }, [resizePluginHeight, resizePluginWidth])
 
-    const previousWidth = useRef()
-
-    const resetWidth = useCallback(() => {
-        const currentWidth = innerDivRef.current?.scrollWidth
-        if (resizePluginWidth && currentWidth) {
-            if (
-                previousWidth.current &&
-                Math.abs(currentWidth - previousWidth.current) > 20
-            ) {
-                resizePluginWidth(currentWidth + 20)
-            }
-            previousWidth.current = currentWidth
-        }
-        requestAnimationFrame(resetWidth)
-    }, [resizePluginWidth])
-
-    useEffect(() => {
-        if (resizePluginWidth) {
-            requestAnimationFrame(resetWidth)
-        }
-    }, [resetWidth, resizePluginWidth])
-
-    // inner div disables margin collapsing which would prevent computing correct height
     return (
-        <div ref={divRef}>
-            <div>
-                <div id="innerDiv" ref={innerDivRef}>
-                    <D2App
-                        config={config}
-                        resizePluginWidth={resizePluginWidth}
-                        {...propsFromParent}
-                    />
-                </div>
-            </div>
+        <div id="resizeDiv" ref={resizeDivRef} style={{ width: clientWidth }}>
+            <D2App
+                config={config}
+                resizePluginWidth={resizePluginWidth}
+                {...propsFromParent}
+            />
         </div>
     )
 }
@@ -80,6 +66,7 @@ const PluginInner = ({
     propsFromParent,
     resizePluginHeight,
     resizePluginWidth,
+    clientWidth,
 }) => {
     if (!resizePluginHeight && !resizePluginWidth) {
         return (
@@ -97,6 +84,7 @@ const PluginInner = ({
             propsFromParent={propsFromParent}
             resizePluginHeight={resizePluginHeight}
             resizePluginWidth={resizePluginWidth}
+            clientWidth={clientWidth}
         />
     )
 }
@@ -118,6 +106,7 @@ export const PluginLoader = ({ config, requiredProps, D2App }) => {
     const [clearPluginError, setClearPluginError] = useState(() => () => {})
     const [resizePluginHeight, setResizePluginHeight] = useState(null)
     const [resizePluginWidth, setResizePluginWidth] = useState(null)
+    const [clientWidth, setClientWidth] = useState(null)
 
     const receivePropsFromParent = useCallback(
         (event) => {
@@ -132,6 +121,7 @@ export const PluginLoader = ({ config, requiredProps, D2App }) => {
                 width,
                 setPluginWidth,
                 onError,
+                clientWidth,
                 ...explicitlyPassedProps
             } = receivedProps
 
@@ -178,7 +168,13 @@ export const PluginLoader = ({ config, requiredProps, D2App }) => {
             }
 
             if (!width && setPluginWidth) {
-                setResizePluginWidth(() => (width) => setPluginWidth(width))
+                setResizePluginWidth(() => (width) => {
+                    setPluginWidth(width)
+                })
+            }
+
+            if (clientWidth) {
+                setClientWidth(clientWidth)
             }
         },
         [
@@ -247,6 +243,7 @@ export const PluginLoader = ({ config, requiredProps, D2App }) => {
                     propsFromParent={propsFromParent}
                     resizePluginHeight={resizePluginHeight}
                     resizePluginWidth={resizePluginWidth}
+                    clientWidth={clientWidth}
                 />
             </React.Suspense>
         </AppAdapter>
