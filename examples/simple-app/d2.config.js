@@ -9,6 +9,7 @@ const config = {
 
     entryPoints: {
         app: './src/App.jsx',
+        plugin: './src/Plugin.tsx',
     },
 
     dataStoreNamespace: 'testapp-namespace',

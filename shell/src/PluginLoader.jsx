@@ -17,11 +17,11 @@ const PluginResizeInner = ({
     useEffect(() => {
         if (resizeDivRef?.current) {
             const resizeObserver = new ResizeObserver(() => {
-                // console.log('in here', {
-                //     w: resizeDivRef.current.offsetWidth,
-                //     h: resizeDivRef.current.offsetHeight,
-                //     element: resizeDivRef.current,
-                // })
+                console.log('in here', {
+                    w: resizeDivRef.current.offsetWidth,
+                    h: resizeDivRef.current.offsetHeight,
+                    element: resizeDivRef.current,
+                })
 
                 if (resizePluginHeight) {
                     // offsetHeight takes into account possible scrollbar size
