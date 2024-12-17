@@ -16,26 +16,27 @@ const PluginResizeInner = ({
 
     useEffect(() => {
         if (resizeDivRef?.current) {
+            const resizeDiv = resizeDivRef.current
             const resizeObserver = new ResizeObserver(() => {
                 console.log('in here', {
-                    w: resizeDivRef.current.offsetWidth,
-                    h: resizeDivRef.current.offsetHeight,
-                    element: resizeDivRef.current,
+                    w: resizeDiv.offsetWidth,
+                    h: resizeDiv.offsetHeight,
+                    element: resizeDiv,
                 })
 
                 if (resizePluginHeight) {
                     // offsetHeight takes into account possible scrollbar size
-                    resizePluginHeight(resizeDivRef.current.offsetHeight)
+                    resizePluginHeight(resizeDiv.offsetHeight)
                 }
                 if (resizePluginWidth) {
-                    resizePluginWidth(resizeDivRef.current.scrollWidth)
+                    resizePluginWidth(resizeDiv.scrollWidth)
                 }
             })
 
-            resizeObserver.observe(resizeDivRef.current)
+            resizeObserver.observe(resizeDiv)
 
             return () => {
-                resizeObserver.unobserve(resizeDivRef.current)
+                resizeObserver.unobserve(resizeDiv)
                 resizeObserver.disconnect()
             }
         }
@@ -58,6 +59,7 @@ PluginResizeInner.propTypes = {
     propsFromParent: PropTypes.object,
     resizePluginHeight: PropTypes.func,
     resizePluginWidth: PropTypes.func,
+    clientWidth: PropTypes.string,
 }
 
 const PluginInner = ({
@@ -95,6 +97,7 @@ PluginInner.propTypes = {
     propsFromParent: PropTypes.object,
     resizePluginHeight: PropTypes.func,
     resizePluginWidth: PropTypes.func,
+    clientWidth: PropTypes.string,
 }
 
 export const PluginLoader = ({ config, requiredProps, D2App }) => {
