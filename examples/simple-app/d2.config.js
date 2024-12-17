@@ -8,7 +8,8 @@ const config = {
     // standalone: true, // Don't bake-in a DHIS2 base URL, allow the user to choose
 
     entryPoints: {
-        app: './src/App.jsx',
+        // todo: edit these after testing plugin changes
+        app: './src/PluginTester.jsx',
         plugin: './src/Plugin.tsx',
     },
 

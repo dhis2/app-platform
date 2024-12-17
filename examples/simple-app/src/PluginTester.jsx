@@ -16,7 +16,7 @@ const Block = () => (
 
 const pSrc = 'http://localhost:3000/plugin.html'
 
-export const PluginTester = () => {
+const PluginTester = () => {
     const [flexContainerHeight, setFlexContainerHeight] = React.useState(333)
 
     return (
@@ -115,3 +115,5 @@ export const PluginTester = () => {
         </div>
     )
 }
+
+export default PluginTester
