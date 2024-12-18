@@ -24,10 +24,12 @@ const PluginTester = () => {
             {/* Todo: 1. Container-driven default */}
             <p>
                 Container-driven default. Expectation: fills container width,
-                height = content height. Margins should work: plugin + margins
-                should fit in viewport and not stretch outside
+                height = content height. A wrapper div is needed to make margins
+                work the same as width = auto, but that affects 
             </p>
-            <Plugin pluginSource={pSrc} className={styles.margin} />
+            <div className={styles.margin}>
+                <Plugin pluginSource={pSrc} />
+            </div>
 
             {/* 2. Height = 100% */}
             {/* Currently working */}
