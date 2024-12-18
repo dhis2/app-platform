@@ -169,15 +169,16 @@ export const PluginLoader = ({ config, requiredProps, D2App }) => {
                 setShowAlertsInPlugin(Boolean(showAlertsInPlugin))
             }
 
-            // if the plugin does not have a fixed/defined height, set up the
-            // callback to send the size of the plugin's contents up to the
-            // parent.
+            console.log({ width, height })
+
+            // if these resize callbacks are defined, then that dimension isn't
+            // fixed or container-driven; add them to the props list here
             // It will be called by a resize observer in ResizePluginInner
-            if (!height && setPluginHeight) {
+            if (setPluginHeight) {
                 setResizePluginHeight(() => (height) => setPluginHeight(height))
             }
             // same as height
-            if (!width && setPluginWidth) {
+            if (setPluginWidth) {
                 setResizePluginWidth(() => (width) => {
                     setPluginWidth(width)
                 })
