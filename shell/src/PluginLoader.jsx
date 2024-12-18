@@ -18,6 +18,7 @@ const PluginResizeInner = ({
         if (resizeDivRef?.current) {
             const resizeDiv = resizeDivRef.current
             const resizeObserver = new ResizeObserver(() => {
+                // todo: remove
                 console.log('in here', {
                     w: resizeDiv.offsetWidth,
                     h: resizeDiv.offsetHeight,
@@ -70,6 +71,8 @@ const PluginInner = ({
     resizePluginWidth,
     clientWidth,
 }) => {
+    // if a resize function isn't defined, that value is container-driven and
+    // doesn't resizing. If neither are defined, then don't need the ResizeInner
     if (!resizePluginHeight && !resizePluginWidth) {
         return (
             <D2App
@@ -166,10 +169,14 @@ export const PluginLoader = ({ config, requiredProps, D2App }) => {
                 setShowAlertsInPlugin(Boolean(showAlertsInPlugin))
             }
 
+            // if the plugin does not have a fixed/defined height, set up the
+            // callback to send the size of the plugin's contents up to the
+            // parent.
+            // It will be called by a resize observer in ResizePluginInner
             if (!height && setPluginHeight) {
                 setResizePluginHeight(() => (height) => setPluginHeight(height))
             }
-
+            // same as height
             if (!width && setPluginWidth) {
                 setResizePluginWidth(() => (width) => {
                     setPluginWidth(width)
