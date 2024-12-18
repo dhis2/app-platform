@@ -169,8 +169,6 @@ export const PluginLoader = ({ config, requiredProps, D2App }) => {
                 setShowAlertsInPlugin(Boolean(showAlertsInPlugin))
             }
 
-            console.log({ width, height })
-
             // if these resize callbacks are defined, then that dimension isn't
             // fixed or container-driven; add them to the props list here
             // It will be called by a resize observer in ResizePluginInner

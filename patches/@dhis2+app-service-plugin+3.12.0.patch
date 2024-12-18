@@ -1,5 +1,5 @@
 diff --git a/node_modules/@dhis2/app-service-plugin/build/cjs/Plugin.js b/node_modules/@dhis2/app-service-plugin/build/cjs/Plugin.js
-index ffd1cf0..e9515dd 100644
+index ffd1cf0..9994d97 100644
 --- a/node_modules/@dhis2/app-service-plugin/build/cjs/Plugin.js
 +++ b/node_modules/@dhis2/app-service-plugin/build/cjs/Plugin.js
 @@ -38,6 +38,8 @@ const Plugin = _ref3 => {
@@ -11,9 +11,30 @@ index ffd1cf0..e9515dd 100644
      ...propsToPassNonMemoized
    } = _ref3;
    const iframeRef = (0, _react.useRef)(null);
-@@ -79,7 +81,8 @@ const Plugin = _ref3 => {
+@@ -54,7 +56,14 @@ const Plugin = _ref3 => {
+   const [communicationReceived, setCommunicationReceived] = (0, _react.useState)(false);
+   const [prevCommunicationReceived, setPrevCommunicationReceived] = (0, _react.useState)(false);
+   const [inErrorState, setInErrorState] = (0, _react.useState)(false);
++  // height and width values to be set by callbacks passed to the plugin
++  // (these default sizes will be quickly overwritten by the plugin)
++  // in order to behave like a normal block element, by default, the height
++  // will be set by plugin contents, this state will be used
+   const [resizedHeight, setPluginHeight] = (0, _react.useState)(150);
++  // ...and by default, plugin width will be defined by the container
++  // (width = 100%), so this state won't be used unless the `clientWidth`
++  // prop is used to have plugin width defined by plugin contents
+   const [resizedWidth, setPluginWidth] = (0, _react.useState)(500);
+ 
+   // since we do not know what props are passed, the dependency array has to be keys of whatever is standard prop
+@@ -76,10 +85,13 @@ const Plugin = _ref3 => {
+       const iframeProps = {
+         ...memoizedPropsToPass,
+         alertsAdd,
++        // if a dimension is specified or container driven, don't send
++        // a resize callback to the plugin
          setPluginHeight: !height ? setPluginHeight : null,
-         setPluginWidth: !width ? setPluginWidth : null,
+-        setPluginWidth: !width ? setPluginWidth : null,
++        setPluginWidth: !width && clientWidth ? setPluginWidth : null,
          setInErrorState,
 -        setCommunicationReceived
 +        setCommunicationReceived,
@@ -21,7 +42,7 @@ index ffd1cf0..e9515dd 100644
        };
  
        // if iframe has not sent initial request, set up a listener
-@@ -112,17 +115,18 @@ const Plugin = _ref3 => {
+@@ -112,17 +124,21 @@ const Plugin = _ref3 => {
        appShortName: pluginShortName
      });
    }
@@ -42,9 +63,12 @@ index ffd1cf0..e9515dd 100644
 +  return /*#__PURE__*/_react.default.createElement("iframe", {
 +    ref: iframeRef,
 +    src: pluginSource,
-+    className: className,
++    className: className
++    // if clientWidth is set, then we want width to be set by plugin.
++    // otherwise, 
++    ,
 +    width: clientWidth ? resizedWidth : width !== null && width !== void 0 ? width : '100%',
-+    height: height !== null && height !== void 0 ? height : resizedHeight + 'px',
++    height: height !== null && height !== void 0 ? height : resizedHeight,
 +    style: {
 +      border: 'none'
 +    }
@@ -53,7 +77,7 @@ index ffd1cf0..e9515dd 100644
  exports.Plugin = Plugin;
 \ No newline at end of file
 diff --git a/node_modules/@dhis2/app-service-plugin/build/es/Plugin.js b/node_modules/@dhis2/app-service-plugin/build/es/Plugin.js
-index f3d29cd..6470e0f 100644
+index f3d29cd..9878c4c 100644
 --- a/node_modules/@dhis2/app-service-plugin/build/es/Plugin.js
 +++ b/node_modules/@dhis2/app-service-plugin/build/es/Plugin.js
 @@ -29,6 +29,8 @@ export const Plugin = _ref3 => {
@@ -65,9 +89,30 @@ index f3d29cd..6470e0f 100644
      ...propsToPassNonMemoized
    } = _ref3;
    const iframeRef = useRef(null);
-@@ -70,7 +72,8 @@ export const Plugin = _ref3 => {
+@@ -45,7 +47,14 @@ export const Plugin = _ref3 => {
+   const [communicationReceived, setCommunicationReceived] = useState(false);
+   const [prevCommunicationReceived, setPrevCommunicationReceived] = useState(false);
+   const [inErrorState, setInErrorState] = useState(false);
++  // height and width values to be set by callbacks passed to the plugin
++  // (these default sizes will be quickly overwritten by the plugin)
++  // in order to behave like a normal block element, by default, the height
++  // will be set by plugin contents, this state will be used
+   const [resizedHeight, setPluginHeight] = useState(150);
++  // ...and by default, plugin width will be defined by the container
++  // (width = 100%), so this state won't be used unless the `clientWidth`
++  // prop is used to have plugin width defined by plugin contents
+   const [resizedWidth, setPluginWidth] = useState(500);
+ 
+   // since we do not know what props are passed, the dependency array has to be keys of whatever is standard prop
+@@ -67,10 +76,13 @@ export const Plugin = _ref3 => {
+       const iframeProps = {
+         ...memoizedPropsToPass,
+         alertsAdd,
++        // if a dimension is specified or container driven, don't send
++        // a resize callback to the plugin
          setPluginHeight: !height ? setPluginHeight : null,
-         setPluginWidth: !width ? setPluginWidth : null,
+-        setPluginWidth: !width ? setPluginWidth : null,
++        setPluginWidth: !width && clientWidth ? setPluginWidth : null,
          setInErrorState,
 -        setCommunicationReceived
 +        setCommunicationReceived,
@@ -75,7 +120,7 @@ index f3d29cd..6470e0f 100644
        };
  
        // if iframe has not sent initial request, set up a listener
-@@ -103,16 +106,17 @@ export const Plugin = _ref3 => {
+@@ -103,16 +115,20 @@ export const Plugin = _ref3 => {
        appShortName: pluginShortName
      });
    }
@@ -96,9 +141,12 @@ index f3d29cd..6470e0f 100644
 +  return /*#__PURE__*/React.createElement("iframe", {
 +    ref: iframeRef,
 +    src: pluginSource,
-+    className: className,
++    className: className
++    // if clientWidth is set, then we want width to be set by plugin.
++    // otherwise, 
++    ,
 +    width: clientWidth ? resizedWidth : width !== null && width !== void 0 ? width : '100%',
-+    height: height !== null && height !== void 0 ? height : resizedHeight + 'px',
++    height: height !== null && height !== void 0 ? height : resizedHeight,
 +    style: {
 +      border: 'none'
 +    }
