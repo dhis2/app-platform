@@ -18,13 +18,6 @@ const PluginResizeInner = ({
         if (resizeDivRef?.current) {
             const resizeDiv = resizeDivRef.current
             const resizeObserver = new ResizeObserver(() => {
-                // todo: remove
-                console.log('in here', {
-                    w: resizeDiv.offsetWidth,
-                    h: resizeDiv.offsetHeight,
-                    element: resizeDiv,
-                })
-
                 if (resizePluginHeight) {
                     // offsetHeight takes into account possible scrollbar size
                     resizePluginHeight(resizeDiv.offsetHeight)
