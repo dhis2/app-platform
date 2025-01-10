@@ -43,6 +43,9 @@ const PluginResizeInner = ({
         }
     }, [resizePluginHeight, resizePluginWidth])
 
+    // For the width to be content-driven, the clientWidth needs to be specified
+    // so that width is not just 'auto'. Then, when content resizes, it will
+    // actually trigger the resize observer, updating the parent's iframe size
     return (
         <div id="resizeDiv" ref={resizeDivRef} style={{ width: clientWidth }}>
             <D2App
@@ -72,7 +75,8 @@ const PluginInner = ({
     clientWidth,
 }) => {
     // if a resize function isn't defined, that value is container-driven and
-    // doesn't resizing. If neither are defined, then don't need the ResizeInner
+    // doesn't need resizing. 
+    // If neither are defined, then don't need the ResizeInner
     if (!resizePluginHeight && !resizePluginWidth) {
         return (
             <D2App
@@ -112,7 +116,7 @@ export const PluginLoader = ({ config, requiredProps, D2App }) => {
     const [clearPluginError, setClearPluginError] = useState(() => () => {})
     const [resizePluginHeight, setResizePluginHeight] = useState(null)
     const [resizePluginWidth, setResizePluginWidth] = useState(null)
-    const [clientWidth, setClientWidth] = useState(null)
+    const [pluginClientWidth, setPluginClientWidth] = useState(null)
 
     const receivePropsFromParent = useCallback(
         (event) => {
@@ -122,9 +126,7 @@ export const PluginLoader = ({ config, requiredProps, D2App }) => {
                 setCommunicationReceived,
                 alertsAdd,
                 showAlertsInPlugin,
-                height,
                 setPluginHeight,
-                width,
                 setPluginWidth,
                 onError,
                 clientWidth,
@@ -170,7 +172,7 @@ export const PluginLoader = ({ config, requiredProps, D2App }) => {
             }
 
             // if these resize callbacks are defined, then that dimension isn't
-            // fixed or container-driven; add them to the props list here
+            // fixed or container-driven; add them to the props list here.
             // It will be called by a resize observer in ResizePluginInner
             if (setPluginHeight) {
                 setResizePluginHeight(() => (height) => setPluginHeight(height))
@@ -183,7 +185,7 @@ export const PluginLoader = ({ config, requiredProps, D2App }) => {
             }
 
             if (clientWidth) {
-                setClientWidth(clientWidth)
+                setPluginClientWidth(clientWidth)
             }
         },
         [
@@ -252,7 +254,7 @@ export const PluginLoader = ({ config, requiredProps, D2App }) => {
                     propsFromParent={propsFromParent}
                     resizePluginHeight={resizePluginHeight}
                     resizePluginWidth={resizePluginWidth}
-                    clientWidth={clientWidth}
+                    clientWidth={pluginClientWidth}
                 />
             </React.Suspense>
         </AppAdapter>
