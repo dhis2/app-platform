@@ -21,7 +21,7 @@ const PluginTester = () => {
 
     return (
         <div>
-            {/* Todo: 1. Container-driven default */}
+            {/* 1. Container-driven default */}
             <p>
                 Container-driven default. Expectation: fills container width,
                 height = content height. A wrapper div is needed to make margins
@@ -55,8 +55,7 @@ const PluginTester = () => {
             </p>
             <Plugin pluginSource={pSrc} height="222px" width="444px" />
 
-            {/* Todo: 4. Content-driven option */}
-            {/* To do: error screen breaks sizing */}
+            {/* 4. Content-driven option */}
             <p>
                 Content-driven size. Expectation: width is defined by content;
                 iframe grows and shrinks
@@ -66,8 +65,6 @@ const PluginTester = () => {
                 // width="max-content" -- optional API format
                 clientWidth="max-content"
             />
-
-            {/* Todo: is there a time when we would need to specify height? 🤔 */}
 
             {/* 5. Flex horizontal */}
             {/* Currently working */}
@@ -87,7 +84,7 @@ const PluginTester = () => {
                 <Block />
             </div>
 
-            {/* Todo: 6. Flex vertical */}
+            {/* 6. Flex vertical */}
             {/* Currently working; height is still getting set by the resize observer, but className styles are overriding them */}
             <p>
                 Flex vertical. Expectation: iframe resizes vertically according
