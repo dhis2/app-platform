@@ -67,8 +67,8 @@ const PluginInner = ({
     resizePluginWidth,
     clientWidth,
 }) => {
-    // if a resize function isn't defined, that value is container-driven and
-    // doesn't need resizing. 
+    // If a resize function isn't defined, that value is container-driven and
+    // doesn't need resizing.
     // If neither are defined, then don't need the ResizeInner
     if (!resizePluginHeight && !resizePluginWidth) {
         return (

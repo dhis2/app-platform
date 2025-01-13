@@ -25,7 +25,8 @@ const PluginTester = () => {
             <p>
                 Container-driven default. Expectation: fills container width,
                 height = content height. A wrapper div is needed to make margins
-                work the same as width = auto, but that affects 
+                work the same as width = auto. Decided not to build that into
+                the plugin component since it affects flex behavior
             </p>
             <div className={styles.margin}>
                 <Plugin pluginSource={pSrc} />
