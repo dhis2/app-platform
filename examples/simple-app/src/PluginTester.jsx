@@ -63,7 +63,6 @@ const PluginTester = () => {
             </p>
             <Plugin
                 pluginSource={pSrc}
-                // width="max-content" -- optional API format
                 clientWidth="max-content"
             />
 

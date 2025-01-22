@@ -74,7 +74,6 @@ const PluginInner = ({
         return (
             <D2App
                 config={config}
-                resizePluginWidth={resizePluginWidth}
                 {...propsFromParent}
             />
         )
