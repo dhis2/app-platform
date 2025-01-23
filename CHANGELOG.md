@@ -1,3 +1,10 @@
+# [12.1.0](https://github.com/dhis2/app-platform/compare/v12.0.0...v12.1.0) (2025-01-23)
+
+
+### Features
+
+* plugin sizing updates ([#902](https://github.com/dhis2/app-platform/issues/902)) ([1136e0d](https://github.com/dhis2/app-platform/commit/1136e0d7abf9f51be6bd05a444f6654163a452f9))
+
 # [12.0.0](https://github.com/dhis2/app-platform/compare/v11.7.5...v12.0.0) (2024-12-13)
 
 
