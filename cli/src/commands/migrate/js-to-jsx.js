@@ -79,6 +79,11 @@ const resolveImportSource = ({
     return isRenamed ? importSourceWithExtension + 'x' : importSource
 }
 
+const isJestMock = (callee) =>
+    callee.type === 'MemberExpression' &&
+    callee.object?.name === 'jest' &&
+    callee.property?.name === 'mock'
+
 const updateImports = async ({
     filepath,
     renamedFiles,
