@@ -79,6 +79,11 @@ const resolveImportSource = ({
     return isRenamed ? importSourceWithExtension + 'x' : importSource
 }
 
+const isJestMock = (callee) =>
+    callee.type === 'MemberExpression' &&
+    callee.object?.name === 'jest' &&
+    callee.property?.name === 'mock'
+
 const updateImports = async ({
     filepath,
     renamedFiles,
@@ -124,6 +129,45 @@ const updateImports = async ({
                     )
                     reporter.debug(
                         `    Replacing ${importSource} => ${newImportSource}`
+                    )
+                    newCode = newCode.replace(
+                        rawImportSource,
+                        newRawImportSource
+                    )
+                    contentUpdated = true
+                }
+            },
+            // Triggers on function calls -- we're looking for `jest.mock()`
+            CallExpression: (astPath) => {
+                const { callee } = astPath.node
+                if (!isJestMock(callee)) {
+                    return
+                }
+
+                const mockFileSource = astPath.node.arguments[0].value
+                if (!mockFileSource.startsWith('.')) {
+                    return // It's not a relative import; skip this one
+                }
+
+                const newMockFileSource = resolveImportSource({
+                    filepath,
+                    importSource: mockFileSource,
+                    renamedFiles,
+                    skipUpdatingImportsWithoutExtension,
+                })
+
+                // Since generating code from babel doesn't respect formatting,
+                // update imports with just string replacement
+                if (newMockFileSource !== mockFileSource) {
+                    // updating & replacing the raw value, which includes quotes,
+                    // ends up being more precise and avoids side effects
+                    const rawImportSource = astPath.node.arguments[0].extra.raw
+                    const newRawImportSource = rawImportSource.replace(
+                        mockFileSource,
+                        newMockFileSource
+                    )
+                    reporter.debug(
+                        `    Replacing ${mockFileSource} => ${newMockFileSource}`
                     )
                     newCode = newCode.replace(
                         rawImportSource,
