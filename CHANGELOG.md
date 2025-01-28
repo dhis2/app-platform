@@ -1,3 +1,10 @@
+# [12.2.0](https://github.com/dhis2/app-platform/compare/v12.1.0...v12.2.0) (2025-01-28)
+
+
+### Features
+
+* update jest.mock imports with migrate js-to-jsx script ([#905](https://github.com/dhis2/app-platform/issues/905)) ([1d67a77](https://github.com/dhis2/app-platform/commit/1d67a77acb0537db88c8fb3a85af7ba14015cee6))
+
 # [12.1.0](https://github.com/dhis2/app-platform/compare/v12.0.0...v12.1.0) (2025-01-23)
 
 
