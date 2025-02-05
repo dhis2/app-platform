@@ -26,9 +26,8 @@ const dependencies = [
     ...Object.keys(packageFile.devDependencies),
 ]
 
-// ToDO: change from alpha to main once merged
 console.info('upgrading cli-app-scripts')
-execSync('yarn add --dev "@dhis2/cli-app-scripts@alpha"', { stdio: 'inherit' })
+execSync('yarn add --dev "@dhis2/cli-app-scripts"', { stdio: 'inherit' })
 
 console.info('upgrading cli-style')
 execSync('yarn add --dev "@dhis2/cli-style"', { stdio: 'inherit' })
@@ -67,7 +66,7 @@ resolutionsToRemove.forEach((resolution) => {
 })
 // ToDO: double check if we also need to bump react-router
 
-execSync(`yarn add package.json && yarn d2-style apply --staged`)
+execSync(`git add package.json && yarn d2-style apply --staged`)
 
 execSync('npx yarn-deduplicate yarn.lock && yarn', { stdio: 'inherit' })
 execSync(
@@ -200,5 +199,4 @@ execSync('git add README.md && yarn d2-style apply --staged', {
  * - are the changes for tests helpful?
  * - some apps still don't have a PR preview - it would be nice to add that to make testing apps easier
  * - typescript apps (like maintenance) need to be revisited after the changes to cli-style eslint are done
- *   and dhis/ui alpha is merged to main
  */
