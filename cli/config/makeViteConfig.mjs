@@ -159,6 +159,7 @@ export default ({ paths, config, env, host, force, allowJsxInJs }) => {
 
         build: {
             outDir: 'build',
+            sourcemap: true,
             rollupOptions: {
                 input: getBuildInputs(config, paths),
                 output: {
