@@ -1,3 +1,10 @@
+# [12.3.0](https://github.com/dhis2/app-platform/compare/v12.2.0...v12.3.0) (2025-02-06)
+
+
+### Features
+
+* **vite:** add source maps to build ([#906](https://github.com/dhis2/app-platform/issues/906)) ([9f265fc](https://github.com/dhis2/app-platform/commit/9f265fc45117312c41518231a8eed8d123d26d4f))
+
 # [12.2.0](https://github.com/dhis2/app-platform/compare/v12.1.0...v12.2.0) (2025-01-28)
 
 
