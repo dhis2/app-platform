@@ -60,15 +60,16 @@ module.exports = async ({
         await client.post(uploadAppUrl, formData, {
             headers: formData.getHeaders(),
             timeout: timeout * 1000,
+            maxBodyLength: Infinity,
+            maxContentLength: Infinity,
         })
 
         reporter.info(`Successfully published ${name} with version ${version}`)
     } catch (e) {
         if (e.isAxiosError) {
             dumpHttpError('Failed to upload app, HTTP error', e.response)
-        } else {
-            reporter.error(e)
         }
+        reporter.error(e)
         exit(1)
     }
 }

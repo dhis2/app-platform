@@ -1,3 +1,197 @@
+# [12.3.0](https://github.com/dhis2/app-platform/compare/v12.2.0...v12.3.0) (2025-02-06)
+
+
+### Features
+
+* **vite:** add source maps to build ([#906](https://github.com/dhis2/app-platform/issues/906)) ([9f265fc](https://github.com/dhis2/app-platform/commit/9f265fc45117312c41518231a8eed8d123d26d4f))
+
+# [12.2.0](https://github.com/dhis2/app-platform/compare/v12.1.0...v12.2.0) (2025-01-28)
+
+
+### Features
+
+* update jest.mock imports with migrate js-to-jsx script ([#905](https://github.com/dhis2/app-platform/issues/905)) ([1d67a77](https://github.com/dhis2/app-platform/commit/1d67a77acb0537db88c8fb3a85af7ba14015cee6))
+
+# [12.1.0](https://github.com/dhis2/app-platform/compare/v12.0.0...v12.1.0) (2025-01-23)
+
+
+### Features
+
+* plugin sizing updates ([#902](https://github.com/dhis2/app-platform/issues/902)) ([1136e0d](https://github.com/dhis2/app-platform/commit/1136e0d7abf9f51be6bd05a444f6654163a452f9))
+
+# [12.0.0](https://github.com/dhis2/app-platform/compare/v11.7.5...v12.0.0) (2024-12-13)
+
+
+### Bug Fixes
+
+* **deps:** upgrade app-runtime and ui ([#895](https://github.com/dhis2/app-platform/issues/895)) ([8ed0ec3](https://github.com/dhis2/app-platform/commit/8ed0ec3b2e3468d256c7ca5f335c43fcfd040ef6))
+* **deps:** upgrade react to 18 in example apps ([#900](https://github.com/dhis2/app-platform/issues/900)) ([7fd16d7](https://github.com/dhis2/app-platform/commit/7fd16d7fa347a804d9c78ae86976859fef54632b))
+* **deps:** use npm v6 before publishing ([01ad502](https://github.com/dhis2/app-platform/commit/01ad502f039b917e53268fb8b9ec73f14ccf84bc))
+* **init:** update bootstrap script branch ([#896](https://github.com/dhis2/app-platform/issues/896)) ([33c261a](https://github.com/dhis2/app-platform/commit/33c261a1f33b02b46605b48260987e5d09920227))
+* **plugin:** clean up resize observer and handle sonarqube warnings ([#898](https://github.com/dhis2/app-platform/issues/898)) ([f113dd5](https://github.com/dhis2/app-platform/commit/f113dd5a1ddea58a2f3e94a15c7075a95fee823e))
+* alerts from plugins [LIBS-695] ([#881](https://github.com/dhis2/app-platform/issues/881)) ([21be0d2](https://github.com/dhis2/app-platform/commit/21be0d225c67a8af67dc43d7bfe306cfa1dd0008))
+* allow serving files from cwd node_modules ([0233949](https://github.com/dhis2/app-platform/commit/023394975c4e0cd719698160946908b342b580b2))
+* base url env & refactor [LIBS-635] ([#872](https://github.com/dhis2/app-platform/issues/872)) ([7f19259](https://github.com/dhis2/app-platform/commit/7f19259c470e590201d7ec9e58d84892b1d418cd))
+* bump ui library ([#882](https://github.com/dhis2/app-platform/issues/882)) ([1ae9569](https://github.com/dhis2/app-platform/commit/1ae9569691771b372e477d6f122ae4e7e2190bf7))
+* clear only required build dirs ([#894](https://github.com/dhis2/app-platform/issues/894)) ([179305f](https://github.com/dhis2/app-platform/commit/179305ff268a215f0bd0ea1f8edd39f3e3ecbba3))
+* env refactor for Vite wrap-up [LIBS-690] ([#889](https://github.com/dhis2/app-platform/issues/889)) ([84da4e6](https://github.com/dhis2/app-platform/commit/84da4e6464e8dda752857706c91f2e1ba6ab35af))
+* injectPrecacheManifest warning logging ([a0d266e](https://github.com/dhis2/app-platform/commit/a0d266ed456053f37023c80f8dcfd36b3dee0d49))
+* normalize to .js extensions when compiling libraries ([#893](https://github.com/dhis2/app-platform/issues/893)) ([58b33a8](https://github.com/dhis2/app-platform/commit/58b33a812ba22e58a966a535c432dafea4cb8880))
+* **service-worker:** handle undefined config vars in injectPrecacheManifest ([a90a4e0](https://github.com/dhis2/app-platform/commit/a90a4e06b25cdecfaf31f24dc51f28c98f20d122))
+* correct app shell paths ([#883](https://github.com/dhis2/app-platform/issues/883)) ([a1af71c](https://github.com/dhis2/app-platform/commit/a1af71cf56d3a01d57abfb1e3d2e477e4edea03d))
+* handle jsx in js support [LIBS-633] ([#871](https://github.com/dhis2/app-platform/issues/871)) ([595a35d](https://github.com/dhis2/app-platform/commit/595a35df88ed2c2b43decf78a0259398eac07a33))
+* increase precache max file size to 3 MB ([b20ed22](https://github.com/dhis2/app-platform/commit/b20ed22f6f2f4c615f712de3047d5f2d8c77d638))
+* remove custom eslint from TS template ([71cef4b](https://github.com/dhis2/app-platform/commit/71cef4b335be3a697926e7cacd2641d35a6adb4d))
+* update deps ([1e7ce93](https://github.com/dhis2/app-platform/commit/1e7ce938ebc9ee8e7c680d2b29fbc4fbb401c8fd))
+* update workbox deps to avoid deprecation warnings ([9a81c4a](https://github.com/dhis2/app-platform/commit/9a81c4a21e78be9c1d5fcb76db53e379583c7190))
+* use strings for 'boolean' env vars ([eaf5e66](https://github.com/dhis2/app-platform/commit/eaf5e66e4d655dc9709c34c04addcbe7b330f4fc))
+
+
+### Features
+
+* create initial TS template ([#868](https://github.com/dhis2/app-platform/issues/868)) ([2795f79](https://github.com/dhis2/app-platform/commit/2795f79ff0c060aab0169faa3611c3e0f9d871a3))
+* enable HMR for .js files ([5f4683c](https://github.com/dhis2/app-platform/commit/5f4683ced150eafa9633b08e004662715d1a842c))
+* handle plugins with Vite [LIBS-610] ([#863](https://github.com/dhis2/app-platform/issues/863)) ([ca5be0d](https://github.com/dhis2/app-platform/commit/ca5be0dae4dafc1b100648ec5de65d517593490e))
+* jsx migration script ([#869](https://github.com/dhis2/app-platform/issues/869)) ([7764f49](https://github.com/dhis2/app-platform/commit/7764f49b6a73edce636abdf246c326ab7b848d52))
+* migrate snap files too ([#878](https://github.com/dhis2/app-platform/issues/878)) ([521f483](https://github.com/dhis2/app-platform/commit/521f483433dd6f2a06ff5b2ba2c0c3433d0d2df1))
+* replace CRA with Vite [LIBS-598] ([#847](https://github.com/dhis2/app-platform/issues/847)) ([3dd0e59](https://github.com/dhis2/app-platform/commit/3dd0e5938dda443751cb1a5627226a6ecf13377c))
+* upgrade react to v18 ([#876](https://github.com/dhis2/app-platform/issues/876)) ([77ecf10](https://github.com/dhis2/app-platform/commit/77ecf1039cd4eafb5b5ef604706db6ca062f45df))
+* **init:** set direction: 'auto' and import locales for new apps [LIBS-645] ([#867](https://github.com/dhis2/app-platform/issues/867)) ([4eda4a9](https://github.com/dhis2/app-platform/commit/4eda4a9287ee9d1abe93c5f82647c3a028939bb3))
+
+
+### BREAKING CHANGES
+
+* require react version 18
+
+* fix: pin react version to 18
+
+* test: update test and test libraries for react 18
+* Supported Node versions are 18.x or 20+
+
+* ci: upgrade Node version
+
+* fix: always add PWA_ENABLED to app env for better static analysis
+
+* chore: pause precache manifest injection
+
+* fix: building SW without CRA
+
+* chore: comment update
+
+* fix: group moment locales in their own dir
+
+* refactor: clean up precache injection
+
+* fix: locale utils and handling moment in jest
+
+* fix: compile correctly after merging changes
+
+* chore: comment in compile.js
+
+* chore: some clean-up
+
+* chore: comments
+
+* fix: use port 3000 for the dev server
+
+* fix: improve moment locale chunk naming
+
+* chore: remove CRA
+
+* fix: use mjs build of Vite
+
+* fix: bump cli-style for CRA fix
+
+* feat: use interactive dev server output from Vite
+
+* fix: make dev server port configurable
+
+* chore: remove old index.html
+
+* fix: env tweaks
+
+# [12.0.0-alpha.29](https://github.com/dhis2/app-platform/compare/v12.0.0-alpha.28...v12.0.0-alpha.29) (2024-12-11)
+
+
+### Bug Fixes
+
+* **deps:** use npm v6 before publishing ([01ad502](https://github.com/dhis2/app-platform/commit/01ad502f039b917e53268fb8b9ec73f14ccf84bc))
+
+# [12.0.0-alpha.28](https://github.com/dhis2/app-platform/compare/v12.0.0-alpha.27...v12.0.0-alpha.28) (2024-12-11)
+
+
+### Bug Fixes
+
+* **deps:** upgrade react to 18 in example apps ([#900](https://github.com/dhis2/app-platform/issues/900)) ([7fd16d7](https://github.com/dhis2/app-platform/commit/7fd16d7fa347a804d9c78ae86976859fef54632b))
+
+# [12.0.0-alpha.27](https://github.com/dhis2/app-platform/compare/v12.0.0-alpha.26...v12.0.0-alpha.27) (2024-12-10)
+
+
+### Bug Fixes
+
+* **init:** update bootstrap script branch ([#896](https://github.com/dhis2/app-platform/issues/896)) ([33c261a](https://github.com/dhis2/app-platform/commit/33c261a1f33b02b46605b48260987e5d09920227))
+* **plugin:** clean up resize observer and handle sonarqube warnings ([#898](https://github.com/dhis2/app-platform/issues/898)) ([f113dd5](https://github.com/dhis2/app-platform/commit/f113dd5a1ddea58a2f3e94a15c7075a95fee823e))
+
+# [12.0.0-alpha.26](https://github.com/dhis2/app-platform/compare/v12.0.0-alpha.25...v12.0.0-alpha.26) (2024-12-06)
+
+
+### Bug Fixes
+
+* **deps:** upgrade app-runtime and ui ([#895](https://github.com/dhis2/app-platform/issues/895)) ([8ed0ec3](https://github.com/dhis2/app-platform/commit/8ed0ec3b2e3468d256c7ca5f335c43fcfd040ef6))
+
+# [12.0.0-alpha.25](https://github.com/dhis2/app-platform/compare/v12.0.0-alpha.24...v12.0.0-alpha.25) (2024-11-21)
+
+
+### Bug Fixes
+
+* clear only required build dirs ([#894](https://github.com/dhis2/app-platform/issues/894)) ([179305f](https://github.com/dhis2/app-platform/commit/179305ff268a215f0bd0ea1f8edd39f3e3ecbba3))
+
+# [12.0.0-alpha.24](https://github.com/dhis2/app-platform/compare/v12.0.0-alpha.23...v12.0.0-alpha.24) (2024-11-21)
+
+
+### Bug Fixes
+
+* normalize to .js extensions when compiling libraries ([#893](https://github.com/dhis2/app-platform/issues/893)) ([58b33a8](https://github.com/dhis2/app-platform/commit/58b33a812ba22e58a966a535c432dafea4cb8880))
+
+# [12.0.0-alpha.23](https://github.com/dhis2/app-platform/compare/v12.0.0-alpha.22...v12.0.0-alpha.23) (2024-11-08)
+
+
+### Bug Fixes
+
+* **service-worker:** handle undefined config vars in injectPrecacheManifest ([a90a4e0](https://github.com/dhis2/app-platform/commit/a90a4e06b25cdecfaf31f24dc51f28c98f20d122))
+
+# [12.0.0-alpha.22](https://github.com/dhis2/app-platform/compare/v12.0.0-alpha.21...v12.0.0-alpha.22) (2024-11-06)
+
+
+### Bug Fixes
+
+* **publishVersion:** fix maxBodyLength when uploading to appHub ([c5abfd1](https://github.com/dhis2/app-platform/commit/c5abfd10d2ad04c09797cec2c2abb1a823d93dd9))
+* add @babel/plugin-syntax-dynamic-import as a direct dependency ([#886](https://github.com/dhis2/app-platform/issues/886)) ([8c5ef0c](https://github.com/dhis2/app-platform/commit/8c5ef0c394a6cd639daefaae44c786f4919ebd62))
+* bump typescript version used in app shell ([8ebb2e8](https://github.com/dhis2/app-platform/commit/8ebb2e8dc46e2747b71226906bf0565eb041bb66))
+* provide fallback api version [LIBS-683] ([#877](https://github.com/dhis2/app-platform/issues/877)) ([dc7bdfa](https://github.com/dhis2/app-platform/commit/dc7bdfab893bdf44ad439e49b25ad3611191ad7a))
+* update app-runtime dependency ([74a2165](https://github.com/dhis2/app-platform/commit/74a21655bee64c9ca4e6285486b4fabb8bc76959))
+
+## [11.7.5](https://github.com/dhis2/app-platform/compare/v11.7.4...v11.7.5) (2024-11-04)
+
+
+### Bug Fixes
+
+* **publishVersion:** fix maxBodyLength when uploading to appHub ([c5abfd1](https://github.com/dhis2/app-platform/commit/c5abfd10d2ad04c09797cec2c2abb1a823d93dd9))
+
+## [11.7.4](https://github.com/dhis2/app-platform/compare/v11.7.3...v11.7.4) (2024-10-22)
+
+
+### Bug Fixes
+
+* bump typescript version used in app shell ([8ebb2e8](https://github.com/dhis2/app-platform/commit/8ebb2e8dc46e2747b71226906bf0565eb041bb66))
+
+## [11.7.3](https://github.com/dhis2/app-platform/compare/v11.7.2...v11.7.3) (2024-10-21)
+
+
+### Bug Fixes
+
+* add @babel/plugin-syntax-dynamic-import as a direct dependency ([#886](https://github.com/dhis2/app-platform/issues/886)) ([8c5ef0c](https://github.com/dhis2/app-platform/commit/8c5ef0c394a6cd639daefaae44c786f4919ebd62))
+
 ## [11.7.2](https://github.com/dhis2/app-platform/compare/v11.7.1...v11.7.2) (2024-09-26)
 
 
@@ -19,61 +213,35 @@
 
 * update boilerplate app code for init command [LIBS-644] ([#866](https://github.com/dhis2/app-platform/issues/866)) ([bd6cfc0](https://github.com/dhis2/app-platform/commit/bd6cfc0d132b40c91b44fcdc715befabf2d7e4cf))
 
-## [11.6.4](https://github.com/dhis2/app-platform/compare/v11.6.3...v11.6.4) (2024-07-19)
-
-
-### Bug Fixes
-
-* use i18next-scanner v3 for better i18next compatibility ([#864](https://github.com/dhis2/app-platform/issues/864)) ([84a5a59](https://github.com/dhis2/app-platform/commit/84a5a59747eef82ec85eb602cfef9040efc8fd8a))
-
-## [11.6.3](https://github.com/dhis2/app-platform/compare/v11.6.2...v11.6.3) (2024-07-16)
-
-
-### Bug Fixes
-
-* **deps:** update i18next-scanner version to support old plurals format again ([#861](https://github.com/dhis2/app-platform/issues/861)) ([d0e433b](https://github.com/dhis2/app-platform/commit/d0e433bf0ca213641770e68cf8beb0780570e5c3))
-
-## [11.6.2](https://github.com/dhis2/app-platform/compare/v11.6.1...v11.6.2) (2024-07-10)
-
-
-### Bug Fixes
-
-* plugin boundary retry if plugin logic is skipped ([#862](https://github.com/dhis2/app-platform/issues/862)) ([01a3160](https://github.com/dhis2/app-platform/commit/01a3160242a8352f0bcde229b3e860e396ff5be5))
-
-## [11.6.1](https://github.com/dhis2/app-platform/compare/v11.6.0...v11.6.1) (2024-07-05)
+# [12.0.0-alpha.3](https://github.com/dhis2/app-platform/compare/v12.0.0-alpha.2...v12.0.0-alpha.3) (2024-07-08)
 
 
 ### Bug Fixes
 
 * **alerts:** ensure hiding works correctly and alerts are not re-added [DHIS2-15438] ([#859](https://github.com/dhis2/app-platform/issues/859)) ([6b11fff](https://github.com/dhis2/app-platform/commit/6b11fff033cc16ed4d2f11caf74e8c18307abc3c))
-
-# [11.6.0](https://github.com/dhis2/app-platform/compare/v11.5.1...v11.6.0) (2024-07-03)
-
-
-### Features
-
-* parse additional namespaces from `d2.config.js` and add to `manifest.webapp` [LIBS-638]  ([#860](https://github.com/dhis2/app-platform/issues/860)) ([62782fe](https://github.com/dhis2/app-platform/commit/62782fed6f59a439ab2ef7f00c7e7d88110a78bf))
-
-## [11.5.1](https://github.com/dhis2/app-platform/compare/v11.5.0...v11.5.1) (2024-07-01)
-
-
-### Bug Fixes
-
 * fixed dimensions plugins [LIBS-634] ([#858](https://github.com/dhis2/app-platform/issues/858)) ([1f717f3](https://github.com/dhis2/app-platform/commit/1f717f391b96a88186c897b9b886e11d6168c87c))
-
-# [11.5.0](https://github.com/dhis2/app-platform/compare/v11.4.3...v11.5.0) (2024-06-24)
+* small text change in changelog ([824dd2f](https://github.com/dhis2/app-platform/commit/824dd2f877d03a7c4d492dff8999e72421297165))
 
 
 ### Features
 
 * cleanup plugin error boundary [UX-136] ([#856](https://github.com/dhis2/app-platform/issues/856)) ([de252fe](https://github.com/dhis2/app-platform/commit/de252fef91c5037b8b1c238ce25c7e3b90f7c20e))
+* parse additional namespaces from `d2.config.js` and add to `manifest.webapp` [LIBS-638]  ([#860](https://github.com/dhis2/app-platform/issues/860)) ([62782fe](https://github.com/dhis2/app-platform/commit/62782fed6f59a439ab2ef7f00c7e7d88110a78bf))
 
-## [11.4.3](https://github.com/dhis2/app-platform/compare/v11.4.2...v11.4.3) (2024-06-24)
+# [12.0.0-alpha.2](https://github.com/dhis2/app-platform/compare/v12.0.0-alpha.1...v12.0.0-alpha.2) (2024-06-20)
 
 
 ### Bug Fixes
 
-* small text change in changelog ([824dd2f](https://github.com/dhis2/app-platform/commit/824dd2f877d03a7c4d492dff8999e72421297165))
+* clean up for plugins [LIBS-620] ([#851](https://github.com/dhis2/app-platform/issues/851)) ([13af3b5](https://github.com/dhis2/app-platform/commit/13af3b5ee862ea4b7952c6a9199505cfe6a1bdaa))
+* do not encode username, password ([#852](https://github.com/dhis2/app-platform/issues/852)) ([2fb4272](https://github.com/dhis2/app-platform/commit/2fb4272130000b383c91d46ba1b3dac44bb13ebf))
+* don't start plugins for apps without a plugin entrypoint ([#850](https://github.com/dhis2/app-platform/issues/850)) ([a89d4cf](https://github.com/dhis2/app-platform/commit/a89d4cf348f7edc0a52b8ab9aacf96f2de939de4))
+
+
+### Features
+
+* parse pluginType from d2 config to add to manifest.webapp ([#849](https://github.com/dhis2/app-platform/issues/849)) ([c1dae23](https://github.com/dhis2/app-platform/commit/c1dae238b92183922962811a52ab50d1b73e7995))
+* start plugin and app separately [LIBS-391] [LIBS-392] ([#848](https://github.com/dhis2/app-platform/issues/848)) ([82003e7](https://github.com/dhis2/app-platform/commit/82003e73fce995a83318c623da6028d9975e6686))
 
 ## [11.4.2](https://github.com/dhis2/app-platform/compare/v11.4.1...v11.4.2) (2024-06-18)
 

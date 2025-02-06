@@ -132,9 +132,10 @@ export const setMomentLocale = async (locale) => {
 
     for (const localeName of localeNameOptions) {
         try {
-            await import(
-                /* webpackChunkName: "moment-locales/[request]" */ `moment/locale/${localeName}`
-            )
+            // Since Vite prefers importing the ESM form of moment, we need
+            // to import the ESM form of the locales here to use the same
+            // moment instance
+            await import(`moment/dist/locale/${localeName}`)
             moment.locale(localeName)
             break
         } catch {
