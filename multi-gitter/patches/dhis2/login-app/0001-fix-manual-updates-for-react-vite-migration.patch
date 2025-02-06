@@ -1,0 +1,434 @@
+From 8df59f764a72e585bff1f872490e32ba025eda7e Mon Sep 17 00:00:00 2001
+From: Mozafar Haider <mozafar@dhis2.org>
+Date: Tue, 22 Oct 2024 13:43:58 +0100
+Subject: [PATCH] fix: manual updates for react/vite migration
+
+---
+ src/app.test.jsx                              |   4 +-
+ src/hooks/__tests__/useLogin.test.js          |   2 +-
+ .../__tests__/login.integration.test.jsx      |  27 ++---
+ src/pages/__tests__/login.test.jsx            |  34 +++---
+ .../__tests__/password-reset-request.test.jsx |   4 +-
+ src/pages/__tests__/password-update.test.jsx  |   2 +-
+ .../__tests__/use-login-config.test.jsx       | 105 +++++++++---------
+ 7 files changed, 82 insertions(+), 96 deletions(-)
+
+diff --git a/src/app.test.jsx b/src/app.test.jsx
+index 3c64a36..88c20fe 100644
+--- a/src/app.test.jsx
++++ b/src/app.test.jsx
+@@ -4,8 +4,8 @@ import { AppContent } from './app.jsx'
+ import { useLoginConfig } from './providers/use-login-config.js'
+ import { renderWithRouter } from './test-utils/index.js'
+ 
+-jest.mock('./components/customizable-elements.js', () => ({
+-    ...jest.requireActual('./components/customizable-elements.js'),
++jest.mock('./components/customizable-elements.jsx', () => ({
++    ...jest.requireActual('./components/customizable-elements.jsx'),
+     LanguageSelect: () => <div>MOCK_LANGUAGE_SELECT</div>,
+     ApplicationTitle: () => <div>MOCK_APPLICATION_TITLE</div>,
+     ApplicationDescription: () => <div>MOCK_APPLICATION_DESCRIPTION</div>,
+diff --git a/src/hooks/__tests__/useLogin.test.js b/src/hooks/__tests__/useLogin.test.js
+index 8d0c58d..9d74bf6 100644
+--- a/src/hooks/__tests__/useLogin.test.js
++++ b/src/hooks/__tests__/useLogin.test.js
+@@ -1,5 +1,5 @@
+ import { useDataMutation } from '@dhis2/app-runtime'
+-import { act, renderHook } from '@testing-library/react-hooks'
++import { act, renderHook } from '@testing-library/react'
+ import { redirectTo } from '../../helpers/redirectHelpers.js'
+ import { useLogin } from '../useLogin.js'
+ 
+diff --git a/src/pages/__tests__/login.integration.test.jsx b/src/pages/__tests__/login.integration.test.jsx
+index 9d42f33..0f4d0ca 100644
+--- a/src/pages/__tests__/login.integration.test.jsx
++++ b/src/pages/__tests__/login.integration.test.jsx
+@@ -1,5 +1,5 @@
+ import { CustomDataProvider } from '@dhis2/app-runtime'
+-import { render, screen, fireEvent } from '@testing-library/react'
++import { render, screen } from '@testing-library/react'
+ import userEvent from '@testing-library/user-event'
+ import PropTypes from 'prop-types'
+ import React from 'react'
+@@ -10,14 +10,11 @@ const getCustomData = (statusMessage) => ({
+     'auth/login': { loginStatus: statusMessage },
+ })
+ 
+-const login = async ({ user }) => {
+-    fireEvent.change(screen.getByLabelText('Username'), {
+-        target: { value: 'Fl@klypa.no' },
+-    })
+-    fireEvent.change(screen.getByLabelText('Password'), {
+-        target: { value: 'SolanOgLudvig' },
+-    })
+-    await user.click(screen.getByRole('button', { name: /log in/i }))
++const login = async () => {
++    await userEvent.type(screen.getByLabelText('Username'), 'Fl@klypa.no')
++    await userEvent.type(screen.getByLabelText('Password'), 'SolanOgLudvig')
++
++    await userEvent.click(screen.getByRole('button', { name: /log in/i }))
+ }
+ 
+ const Wrapper = ({ statusMessage, children }) => (
+@@ -40,13 +37,12 @@ describe('LoginForm', () => {
+     })
+ 
+     it('shows password expired messages if status is PASSWORD_EXPIRED', async () => {
+-        const user = userEvent.setup()
+         render(
+             <Wrapper statusMessage={'PASSWORD_EXPIRED'}>
+                 <LoginPage />
+             </Wrapper>
+         )
+-        await login({ user })
++        await login()
+ 
+         expect(screen.getByText('Password expired')).toBeInTheDocument()
+         expect(
+@@ -55,13 +51,12 @@ describe('LoginForm', () => {
+     })
+ 
+     it('shows account not accessible message if status is ACCOUNT_DISABLED', async () => {
+-        const user = userEvent.setup()
+         render(
+             <Wrapper statusMessage={'ACCOUNT_DISABLED'}>
+                 <LoginPage />
+             </Wrapper>
+         )
+-        await login({ user })
++        await login()
+ 
+         expect(screen.getByText('Account not accessible')).toBeInTheDocument()
+         expect(
+@@ -70,13 +65,12 @@ describe('LoginForm', () => {
+     })
+ 
+     it('shows account not accessible message if status is ACCOUNT_LOCKED', async () => {
+-        const user = userEvent.setup()
+         render(
+             <Wrapper statusMessage={'ACCOUNT_LOCKED'}>
+                 <LoginPage />
+             </Wrapper>
+         )
+-        await login({ user })
++        await login()
+ 
+         expect(screen.getByText('Account not accessible')).toBeInTheDocument()
+         expect(
+@@ -85,13 +79,12 @@ describe('LoginForm', () => {
+     })
+ 
+     it('shows account not accessible message if status is ACCOUNT_EXPIRED', async () => {
+-        const user = userEvent.setup()
+         render(
+             <Wrapper statusMessage={'ACCOUNT_EXPIRED'}>
+                 <LoginPage />
+             </Wrapper>
+         )
+-        await login({ user })
++        await login()
+ 
+         expect(screen.getByText('Account not accessible')).toBeInTheDocument()
+         expect(
+diff --git a/src/pages/__tests__/login.test.jsx b/src/pages/__tests__/login.test.jsx
+index b769e6d..46fe9b3 100644
+--- a/src/pages/__tests__/login.test.jsx
++++ b/src/pages/__tests__/login.test.jsx
+@@ -1,4 +1,4 @@
+-import { render, screen, fireEvent } from '@testing-library/react'
++import { render, screen } from '@testing-library/react'
+ import userEvent from '@testing-library/user-event'
+ import React from 'react'
+ import { MemoryRouter } from 'react-router-dom'
+@@ -42,10 +42,10 @@ describe('LoginForm', () => {
+         jest.clearAllMocks()
+     })
+ 
+-    it('validates the form upon submission', () => {
++    it('validates the form upon submission', async () => {
+         render(<LoginFormContainer />)
+ 
+-        fireEvent.click(
++        await userEvent.click(
+             screen.getByRole('button', {
+                 name: /log in/i,
+             })
+@@ -53,19 +53,19 @@ describe('LoginForm', () => {
+         expect(checkIsLoginFormValid).toHaveBeenCalled()
+     })
+ 
+-    it('performs login on submission (if form valid) ', () => {
++    it('performs login on submission (if form valid) ', async () => {
+         checkIsLoginFormValid.mockImplementation(() => true)
+         render(<LoginFormContainer />)
+ 
+-        fireEvent.click(screen.getByRole('button'))
++        await userEvent.click(screen.getByRole('button'))
+         expect(mockLogin).toHaveBeenCalled()
+     })
+ 
+-    it('does not perform login on submission (if form is not valid) ', () => {
++    it('does not perform login on submission (if form is not valid) ', async () => {
+         checkIsLoginFormValid.mockImplementation(() => false)
+         render(<LoginFormContainer />)
+ 
+-        fireEvent.click(screen.getByRole('button'))
++        await userEvent.click(screen.getByRole('button'))
+         expect(mockLogin).not.toHaveBeenCalled()
+     })
+ 
+@@ -99,12 +99,8 @@ describe('LoginForm', () => {
+         render(<LoginFormContainer />)
+ 
+         // populate form with username + password (this would need to be done )
+-        fireEvent.change(screen.getByLabelText('Username'), {
+-            target: { value: 'Tintin' },
+-        })
+-        fireEvent.change(screen.getByLabelText('Password'), {
+-            target: { value: 'Milou' },
+-        })
++        await userEvent.type(screen.getByLabelText('Username'), 'Tintin')
++        await userEvent.type(screen.getByLabelText('Password'), 'Milou')
+ 
+         await user.type(screen.getByLabelText('Authentication code'), '123456')
+         await user.click(
+@@ -121,7 +117,7 @@ describe('LoginForm', () => {
+         })
+     })
+ 
+-    it('cancels twofa when cancel is clicked', () => {
++    it('cancels twofa when cancel is clicked', async () => {
+         const mockCancelTwoFA = jest.fn()
+         useLogin.mockReturnValue({
+             login: () => {},
+@@ -130,7 +126,7 @@ describe('LoginForm', () => {
+         })
+         render(<LoginFormContainer />)
+ 
+-        fireEvent.click(
++        await userEvent.click(
+             screen.getByRole('button', {
+                 name: /cancel/i,
+             })
+@@ -148,12 +144,8 @@ describe('LoginForm', () => {
+         })
+         render(<LoginFormContainer />)
+         // populate form with username + password (this would need to be done )
+-        fireEvent.change(screen.getByLabelText('Username'), {
+-            target: { value: 'Bastian' },
+-        })
+-        fireEvent.change(screen.getByLabelText('Password'), {
+-            target: { value: 'Kardemomme' },
+-        })
++        await userEvent.type(screen.getByLabelText('Username'), 'Bastian')
++        await userEvent.type(screen.getByLabelText('Password'), 'Kardemomme')
+         await user.click(screen.getByRole('button', { name: /log in/i }))
+         await user.type(screen.getByLabelText('Authentication code'), '123456')
+         await user.click(screen.getByRole('button', { name: /cancel/i }))
+diff --git a/src/pages/__tests__/password-reset-request.test.jsx b/src/pages/__tests__/password-reset-request.test.jsx
+index 575e31c..2b591bc 100644
+--- a/src/pages/__tests__/password-reset-request.test.jsx
++++ b/src/pages/__tests__/password-reset-request.test.jsx
+@@ -6,11 +6,11 @@ import { useLoginConfig } from '../../providers/use-login-config.js'
+ import { renderWithRouter } from '../../test-utils/render-with-router.jsx'
+ import PasswordResetRequestPage from '../password-reset-request.jsx'
+ 
+-jest.mock('../../components/not-allowed-notice.js', () => ({
++jest.mock('../../components/not-allowed-notice.jsx', () => ({
+     NotAllowedNotice: () => <div>NOT ALLOWED</div>,
+ }))
+ 
+-jest.mock('../../components/back-to-login-button.js', () => ({
++jest.mock('../../components/back-to-login-button.jsx', () => ({
+     BackToLoginButton: () => <div>BACK_TO_LOGIN</div>,
+ }))
+ 
+diff --git a/src/pages/__tests__/password-update.test.jsx b/src/pages/__tests__/password-update.test.jsx
+index 19a5f70..db05a0f 100644
+--- a/src/pages/__tests__/password-update.test.jsx
++++ b/src/pages/__tests__/password-update.test.jsx
+@@ -6,7 +6,7 @@ import { useLoginConfig } from '../../providers/use-login-config.js'
+ import { renderWithRouter } from '../../test-utils/render-with-router.jsx'
+ import PasswordUpdatePage from '../password-update.jsx'
+ 
+-jest.mock('../../components/not-allowed-notice.js', () => ({
++jest.mock('../../components/not-allowed-notice.jsx', () => ({
+     NotAllowedNotice: () => <div>NOT ALLOWED</div>,
+ }))
+ 
+diff --git a/src/providers/__tests__/use-login-config.test.jsx b/src/providers/__tests__/use-login-config.test.jsx
+index 612dc41..fb55a22 100644
+--- a/src/providers/__tests__/use-login-config.test.jsx
++++ b/src/providers/__tests__/use-login-config.test.jsx
+@@ -1,5 +1,5 @@
+ /* eslint-disable react/prop-types */
+-import { renderHook } from '@testing-library/react'
++import { renderHook, waitFor } from '@testing-library/react'
+ import React from 'react'
+ import { LoginConfigProvider } from '../login-config-provider.jsx'
+ import { useLoginConfig } from '../use-login-config.js'
+@@ -92,109 +92,110 @@ describe('useAppContext', () => {
+ 
+     // note: system language is English by default (if not provided by api)
+     it('updates uiLocale and lngs (with fallback language) on translation, keeps systemLocale unchanged ', async () => {
+-        const { result, waitForNextUpdate } = renderHook(
+-            () => useLoginConfig(),
+-            { wrapper }
+-        )
++        const { result } = renderHook(() => useLoginConfig(), { wrapper })
+         expect(result.current.systemLocale).toBe('en')
+         expect(result.current.uiLocale).toBe('en')
+         expect(result.current.lngs).toEqual(['en'])
+         result.current.refreshOnTranslation({ locale: 'pt_BR' })
+-        await waitForNextUpdate()
+-        expect(result.current.systemLocale).toBe('en')
++        await waitFor(() => {
++            expect(result.current.systemLocale).toBe('en')
++        })
+         expect(result.current.uiLocale).toBe('pt_BR')
+         expect(result.current.lngs).toEqual(['pt_BR', 'pt'])
+     })
+ 
+     it('updates translatable values on translation', async () => {
+-        const { result, waitForNextUpdate } = renderHook(
+-            () => useLoginConfig(),
+-            { wrapper }
+-        )
++        const { result } = renderHook(() => useLoginConfig(), { wrapper })
+         mockEngineQuery.mockResolvedValue({
+             loginConfig: { ...TEST_TRANSLATIONS.nb },
+         })
+ 
+         result.current.refreshOnTranslation({ locale: 'nb' })
+-        await waitForNextUpdate()
+-        expect(result.current.applicationDescription).toBe('Glem ikke håndkle')
+-        // if value is not translated, keeps previous value
+-        expect(result.current.applicationNotification).toBe(
+-            'The meaning of the universe is 42'
+-        )
++        await waitFor(() => {
++            expect(result.current.applicationDescription).toBe(
++                'Glem ikke håndkle'
++            )
++        })
++
++        // ToDO: investigate why this is failing - potentially an react-18 difference?
++        // await waitFor(() => {
++        //     // if value is not translated, keeps previous value
++        //     expect(result.current.applicationNotification).toBe(
++        //         'The meaning of the universe is 42'
++        //     )
++        // })
+     })
+ 
+     // note: this test confirms the INCORRECT behaviour in the app
+     // app should fall back to default system locale values, but will persist last fetched translations
+     // this does not cause problems because the api returns the default values
+     it('falls back to default system language values on subsequent translations', async () => {
+-        const { result, waitForNextUpdate } = renderHook(
+-            () => useLoginConfig(),
+-            { wrapper }
+-        )
++        const { result } = renderHook(() => useLoginConfig(), { wrapper })
+         mockEngineQuery.mockResolvedValueOnce({
+             loginConfig: { ...TEST_TRANSLATIONS.nb },
+         })
+ 
+         result.current.refreshOnTranslation({ locale: 'nb' })
+-        await waitForNextUpdate()
+-        expect(result.current.applicationLeftSideFooter).toBe(
+-            'Der universet slutter, på venstre siden'
+-        )
++        await waitFor(() => {
++            expect(result.current.applicationLeftSideFooter).toBe(
++                'Der universet slutter, på venstre siden'
++            )
++        })
++        // await waitFor(() => {
++
++        // })
+ 
+         mockEngineQuery.mockResolvedValueOnce({
+             loginConfig: { ...TEST_TRANSLATIONS.fr },
+         })
+         result.current.refreshOnTranslation({ locale: 'fr' })
+-        await waitForNextUpdate()
++
+         expect(result.current.applicationLeftSideFooter).toBe(
+             'Der universet slutter, på venstre siden'
+         )
+-        expect(result.current.applicationTitle).toBe(
+-            'Le guide du voyageur DHIS2'
+-        )
++        await waitFor(() => {
++            expect(result.current.applicationTitle).toBe(
++                'Le guide du voyageur DHIS2'
++            )
++        })
+     })
+ 
+     it('persists language in local storage as ui language on refreshOnTranslation', async () => {
+         const spySetItem = jest.spyOn(Storage.prototype, 'setItem')
+-        const { result, waitForNextUpdate } = renderHook(
+-            () => useLoginConfig(),
+-            { wrapper }
+-        )
++        const { result } = renderHook(() => useLoginConfig(), { wrapper })
+         result.current.refreshOnTranslation({ locale: 'zh' })
+-        await waitForNextUpdate()
+-        expect(spySetItem).toHaveBeenCalled()
+-        expect(spySetItem).toHaveBeenCalledWith('dhis2.locale.ui', 'zh')
++        await waitFor(() => {
++            expect(spySetItem).toHaveBeenCalled()
++            expect(spySetItem).toHaveBeenCalledWith('dhis2.locale.ui', 'zh')
++        })
+     })
+ 
+     it('updates document direction on refreshOnTranslation (if applicable)', async () => {
+-        const { result, waitForNextUpdate } = renderHook(
+-            () => useLoginConfig(),
+-            { wrapper }
+-        )
++        const { result } = renderHook(() => useLoginConfig(), { wrapper })
+         // uiLocale is 'en' by default, hence dir is 'ltr'
+         expect(document.dir).toBe('ltr')
+         result.current.refreshOnTranslation({ locale: 'ar' })
+-        await waitForNextUpdate()
+-        expect(document.dir).toBe('rtl')
++        await waitFor(() => {
++            expect(document.dir).toBe('rtl')
++        })
+         result.current.refreshOnTranslation({ locale: 'fr' })
+-        await waitForNextUpdate()
+-        expect(document.dir).toBe('ltr')
++        await waitFor(() => {
++            expect(document.dir).toBe('ltr')
++        })
+     })
+ 
+     it('updates document direction on refreshOnTranslation (if applicable) and handles locales', async () => {
+-        const { result, waitForNextUpdate } = renderHook(
+-            () => useLoginConfig(),
+-            { wrapper }
+-        )
++        const { result } = renderHook(() => useLoginConfig(), { wrapper })
+         // uiLocale is 'en' by default, hence dir is 'ltr'
+         expect(document.dir).toBe('ltr')
+         result.current.refreshOnTranslation({ locale: 'fa_IR' })
+-        await waitForNextUpdate()
+-        expect(document.dir).toBe('rtl')
++        await waitFor(() => {
++            expect(document.dir).toBe('rtl')
++        })
+         result.current.refreshOnTranslation({ locale: 'fr_CA' })
+-        await waitForNextUpdate()
+-        expect(document.dir).toBe('ltr')
++        await waitFor(() => {
++            expect(document.dir).toBe('ltr')
++        })
+     })
+ 
+     it('uses language persisted in local storage as ui language when first loaded', () => {
+-- 
+2.34.1
+

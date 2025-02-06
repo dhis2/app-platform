@@ -1,0 +1,360 @@
+From 4d1f2cbc3518c0299207b0c2b4a8066bbd4f4111 Mon Sep 17 00:00:00 2001
+From: Mozafar Haider <mozafar@dhis2.org>
+Date: Tue, 22 Oct 2024 17:01:40 +0100
+Subject: [PATCH] fix: manual updates for react/vite migration
+
+---
+ .eslintrc.js                                  |  9 +++++++--
+ .../use-job-type-parameters.test.jsx          | 20 +++++++------------
+ src/hooks/job-types/use-job-type.test.jsx     |  8 ++++----
+ src/hooks/job-types/use-job-types.test.jsx    |  6 +++---
+ .../use-jobs-and-queues.test.jsx              | 12 +++++------
+ src/hooks/jobs/use-job-by-id.test.jsx         |  4 ++--
+ src/hooks/jobs/use-jobs.test.jsx              |  6 +++---
+ .../use-parameter-option.test.jsx             | 11 ++++------
+ .../use-parameter-options.test.jsx            |  6 +++---
+ src/hooks/queueables/use-queueables.test.jsx  |  4 ++--
+ src/hooks/queues/use-queue-by-name.test.jsx   |  4 ++--
+ 11 files changed, 43 insertions(+), 47 deletions(-)
+
+diff --git a/.eslintrc.js b/.eslintrc.js
+index 1e033a3..464d27e 100644
+--- a/.eslintrc.js
++++ b/.eslintrc.js
+@@ -44,7 +44,12 @@ module.exports = {
+     },
+     overrides: [
+         {
+-            files: ['*.test.js', '**/__tests__/*.js'],
++            files: [
++                '*.test.js',
++                '**/__tests__/*.js',
++                '*.test.jsx',
++                '**/__tests__/*.jsx',
++            ],
+             rules: {
+                 'i18next/no-literal-string': 'off',
+                 'react/prop-types': 'off',
+@@ -62,7 +67,7 @@ module.exports = {
+             },
+         },
+         {
+-            files: ['cypress/**/*.js'],
++            files: ['cypress/**/*.js', 'cypress/**/*.jsx'],
+             rules: {
+                 'import/no-unassigned-import': 'off',
+                 'import/no-unused-modules': 'off',
+diff --git a/src/hooks/job-types/use-job-type-parameters.test.jsx b/src/hooks/job-types/use-job-type-parameters.test.jsx
+index 073ea43..0571d18 100644
+--- a/src/hooks/job-types/use-job-type-parameters.test.jsx
++++ b/src/hooks/job-types/use-job-type-parameters.test.jsx
+@@ -1,5 +1,5 @@
+ import React from 'react'
+-import { renderHook } from '@testing-library/react'
++import { renderHook, waitFor } from '@testing-library/react'
+ import { CustomDataProvider } from '@dhis2/app-runtime'
+ import useJobTypeParameters from './use-job-type-parameters'
+ 
+@@ -16,12 +16,9 @@ describe('useJobTypeParameters', () => {
+             <CustomDataProvider data={data}>{children}</CustomDataProvider>
+         )
+ 
+-        const { result, waitFor } = renderHook(
+-            () => useJobTypeParameters(jobType),
+-            {
+-                wrapper,
+-            }
+-        )
++        const { result } = renderHook(() => useJobTypeParameters(jobType), {
++            wrapper,
++        })
+ 
+         await waitFor(() => {
+             expect(result.current).toMatchObject({
+@@ -43,12 +40,9 @@ describe('useJobTypeParameters', () => {
+             <CustomDataProvider data={data}>{children}</CustomDataProvider>
+         )
+ 
+-        const { result, waitFor } = renderHook(
+-            () => useJobTypeParameters(jobType),
+-            {
+-                wrapper,
+-            }
+-        )
++        const { result } = renderHook(() => useJobTypeParameters(jobType), {
++            wrapper,
++        })
+ 
+         await waitFor(() => {
+             expect(result.current).toMatchObject({
+diff --git a/src/hooks/job-types/use-job-type.test.jsx b/src/hooks/job-types/use-job-type.test.jsx
+index a5d4f0a..c737681 100644
+--- a/src/hooks/job-types/use-job-type.test.jsx
++++ b/src/hooks/job-types/use-job-type.test.jsx
+@@ -1,5 +1,5 @@
+ import React from 'react'
+-import { renderHook } from '@testing-library/react'
++import { renderHook, waitFor } from '@testing-library/react'
+ import { CustomDataProvider } from '@dhis2/app-runtime'
+ import useJobType from './use-job-type'
+ 
+@@ -16,7 +16,7 @@ describe('useJobType', () => {
+             <CustomDataProvider data={data}>{children}</CustomDataProvider>
+         )
+ 
+-        const { result, waitFor } = renderHook(() => useJobType(jobType), {
++        const { result } = renderHook(() => useJobType(jobType), {
+             wrapper,
+         })
+ 
+@@ -40,7 +40,7 @@ describe('useJobType', () => {
+             <CustomDataProvider data={data}>{children}</CustomDataProvider>
+         )
+ 
+-        const { result, waitFor } = renderHook(() => useJobType(jobType), {
++        const { result } = renderHook(() => useJobType(jobType), {
+             wrapper,
+         })
+ 
+@@ -66,7 +66,7 @@ describe('useJobType', () => {
+             <CustomDataProvider data={data}>{children}</CustomDataProvider>
+         )
+ 
+-        const { result, waitFor } = renderHook(() => useJobType(jobType), {
++        const { result } = renderHook(() => useJobType(jobType), {
+             wrapper,
+         })
+ 
+diff --git a/src/hooks/job-types/use-job-types.test.jsx b/src/hooks/job-types/use-job-types.test.jsx
+index 25c856a..9d970d3 100644
+--- a/src/hooks/job-types/use-job-types.test.jsx
++++ b/src/hooks/job-types/use-job-types.test.jsx
+@@ -1,5 +1,5 @@
+ import React from 'react'
+-import { renderHook } from '@testing-library/react'
++import { renderHook, waitFor } from '@testing-library/react'
+ import { CustomDataProvider } from '@dhis2/app-runtime'
+ import useJobTypes from './use-job-types'
+ 
+@@ -11,7 +11,7 @@ describe('useJobTypes', () => {
+             <CustomDataProvider data={data}>{children}</CustomDataProvider>
+         )
+ 
+-        const { result, waitFor } = renderHook(() => useJobTypes(), {
++        const { result } = renderHook(() => useJobTypes(), {
+             wrapper,
+         })
+ 
+@@ -34,7 +34,7 @@ describe('useJobTypes', () => {
+             <CustomDataProvider data={data}>{children}</CustomDataProvider>
+         )
+ 
+-        const { result, waitFor } = renderHook(() => useJobTypes(), {
++        const { result } = renderHook(() => useJobTypes(), {
+             wrapper,
+         })
+ 
+diff --git a/src/hooks/jobs-and-queues/use-jobs-and-queues.test.jsx b/src/hooks/jobs-and-queues/use-jobs-and-queues.test.jsx
+index 2656eb4..2ce832c 100644
+--- a/src/hooks/jobs-and-queues/use-jobs-and-queues.test.jsx
++++ b/src/hooks/jobs-and-queues/use-jobs-and-queues.test.jsx
+@@ -1,5 +1,5 @@
+ import React from 'react'
+-import { renderHook } from '@testing-library/react'
++import { renderHook, waitFor } from '@testing-library/react'
+ import { CustomDataProvider } from '@dhis2/app-runtime'
+ import useJobsAndQueues from './use-jobs-and-queues'
+ 
+@@ -11,7 +11,7 @@ describe('useJobsAndQueues', () => {
+             <CustomDataProvider data={data}>{children}</CustomDataProvider>
+         )
+ 
+-        const { result, waitFor } = renderHook(() => useJobsAndQueues(), {
++        const { result } = renderHook(() => useJobsAndQueues(), {
+             wrapper,
+         })
+ 
+@@ -40,7 +40,7 @@ describe('useJobsAndQueues', () => {
+             <CustomDataProvider data={data}>{children}</CustomDataProvider>
+         )
+ 
+-        const { result, waitFor } = renderHook(() => useJobsAndQueues(), {
++        const { result } = renderHook(() => useJobsAndQueues(), {
+             wrapper,
+         })
+ 
+@@ -60,7 +60,7 @@ describe('useJobsAndQueues', () => {
+             <CustomDataProvider data={data}>{children}</CustomDataProvider>
+         )
+ 
+-        const { result, waitFor } = renderHook(() => useJobsAndQueues(), {
++        const { result } = renderHook(() => useJobsAndQueues(), {
+             wrapper,
+         })
+ 
+@@ -80,7 +80,7 @@ describe('useJobsAndQueues', () => {
+             <CustomDataProvider data={data}>{children}</CustomDataProvider>
+         )
+ 
+-        const { result, waitFor } = renderHook(() => useJobsAndQueues(), {
++        const { result } = renderHook(() => useJobsAndQueues(), {
+             wrapper,
+         })
+ 
+@@ -99,7 +99,7 @@ describe('useJobsAndQueues', () => {
+             <CustomDataProvider data={data}>{children}</CustomDataProvider>
+         )
+ 
+-        const { result, waitFor } = renderHook(() => useJobsAndQueues(), {
++        const { result } = renderHook(() => useJobsAndQueues(), {
+             wrapper,
+         })
+ 
+diff --git a/src/hooks/jobs/use-job-by-id.test.jsx b/src/hooks/jobs/use-job-by-id.test.jsx
+index d4a4ef5..8643246 100644
+--- a/src/hooks/jobs/use-job-by-id.test.jsx
++++ b/src/hooks/jobs/use-job-by-id.test.jsx
+@@ -1,5 +1,5 @@
+ import React from 'react'
+-import { renderHook } from '@testing-library/react'
++import { renderHook, waitFor } from '@testing-library/react'
+ import { CustomDataProvider } from '@dhis2/app-runtime'
+ import useJobById from './use-job-by-id'
+ 
+@@ -15,7 +15,7 @@ describe('useJobById', () => {
+             <CustomDataProvider data={data}>{children}</CustomDataProvider>
+         )
+ 
+-        const { result, waitFor } = renderHook(() => useJobById(id), {
++        const { result } = renderHook(() => useJobById(id), {
+             wrapper,
+         })
+ 
+diff --git a/src/hooks/jobs/use-jobs.test.jsx b/src/hooks/jobs/use-jobs.test.jsx
+index 274e099..41e0f90 100644
+--- a/src/hooks/jobs/use-jobs.test.jsx
++++ b/src/hooks/jobs/use-jobs.test.jsx
+@@ -1,5 +1,5 @@
+ import React from 'react'
+-import { renderHook } from '@testing-library/react'
++import { renderHook, waitFor } from '@testing-library/react'
+ import { CustomDataProvider } from '@dhis2/app-runtime'
+ import useJobs from './use-jobs'
+ 
+@@ -16,7 +16,7 @@ describe('useJobs', () => {
+             <CustomDataProvider data={data}>{children}</CustomDataProvider>
+         )
+ 
+-        const { result, waitFor } = renderHook(() => useJobs(), {
++        const { result } = renderHook(() => useJobs(), {
+             wrapper,
+         })
+ 
+@@ -39,7 +39,7 @@ describe('useJobs', () => {
+             <CustomDataProvider data={data}>{children}</CustomDataProvider>
+         )
+ 
+-        const { result, waitFor } = renderHook(() => useJobs(), {
++        const { result } = renderHook(() => useJobs(), {
+             wrapper,
+         })
+ 
+diff --git a/src/hooks/parameter-options/use-parameter-option.test.jsx b/src/hooks/parameter-options/use-parameter-option.test.jsx
+index 99634df..3d25972 100644
+--- a/src/hooks/parameter-options/use-parameter-option.test.jsx
++++ b/src/hooks/parameter-options/use-parameter-option.test.jsx
+@@ -1,5 +1,5 @@
+ import React from 'react'
+-import { renderHook } from '@testing-library/react'
++import { renderHook, waitFor } from '@testing-library/react'
+ import { CustomDataProvider } from '@dhis2/app-runtime'
+ import useParameterOption from './use-parameter-option'
+ 
+@@ -24,12 +24,9 @@ describe('useParameterOption', () => {
+             <CustomDataProvider data={data}>{children}</CustomDataProvider>
+         )
+ 
+-        const { result, waitFor } = renderHook(
+-            () => useParameterOption(parameter),
+-            {
+-                wrapper,
+-            }
+-        )
++        const { result } = renderHook(() => useParameterOption(parameter), {
++            wrapper,
++        })
+ 
+         await waitFor(() => {
+             expect(result.current).toMatchObject({
+diff --git a/src/hooks/parameter-options/use-parameter-options.test.jsx b/src/hooks/parameter-options/use-parameter-options.test.jsx
+index ce40c7b..bfef2fe 100644
+--- a/src/hooks/parameter-options/use-parameter-options.test.jsx
++++ b/src/hooks/parameter-options/use-parameter-options.test.jsx
+@@ -1,5 +1,5 @@
+ import React from 'react'
+-import { renderHook } from '@testing-library/react'
++import { renderHook, waitFor } from '@testing-library/react'
+ import { CustomDataProvider } from '@dhis2/app-runtime'
+ import useParameterOptions from './use-parameter-options'
+ 
+@@ -22,7 +22,7 @@ describe('useParameterOptions', () => {
+             <CustomDataProvider data={data}>{children}</CustomDataProvider>
+         )
+ 
+-        const { result, waitFor } = renderHook(() => useParameterOptions(), {
++        const { result } = renderHook(() => useParameterOptions(), {
+             wrapper,
+         })
+ 
+@@ -61,7 +61,7 @@ describe('useParameterOptions', () => {
+             <CustomDataProvider data={data}>{children}</CustomDataProvider>
+         )
+ 
+-        const { result, waitFor } = renderHook(() => useParameterOptions(), {
++        const { result } = renderHook(() => useParameterOptions(), {
+             wrapper,
+         })
+ 
+diff --git a/src/hooks/queueables/use-queueables.test.jsx b/src/hooks/queueables/use-queueables.test.jsx
+index bf13af0..511b891 100644
+--- a/src/hooks/queueables/use-queueables.test.jsx
++++ b/src/hooks/queueables/use-queueables.test.jsx
+@@ -1,5 +1,5 @@
+ import React from 'react'
+-import { renderHook } from '@testing-library/react'
++import { renderHook, waitFor } from '@testing-library/react'
+ import { CustomDataProvider } from '@dhis2/app-runtime'
+ import useQueueables from './use-queueables'
+ 
+@@ -16,7 +16,7 @@ describe('useQueueables', () => {
+             <CustomDataProvider data={data}>{children}</CustomDataProvider>
+         )
+ 
+-        const { result, waitFor } = renderHook(() => useQueueables(), {
++        const { result } = renderHook(() => useQueueables(), {
+             wrapper,
+         })
+ 
+diff --git a/src/hooks/queues/use-queue-by-name.test.jsx b/src/hooks/queues/use-queue-by-name.test.jsx
+index 6fa98b9..da6a82c 100644
+--- a/src/hooks/queues/use-queue-by-name.test.jsx
++++ b/src/hooks/queues/use-queue-by-name.test.jsx
+@@ -1,5 +1,5 @@
+ import React from 'react'
+-import { renderHook } from '@testing-library/react'
++import { renderHook, waitFor } from '@testing-library/react'
+ import { CustomDataProvider } from '@dhis2/app-runtime'
+ import useQueueByName from './use-queue-by-name'
+ 
+@@ -11,7 +11,7 @@ describe('useQueueByName', () => {
+             <CustomDataProvider data={data}>{children}</CustomDataProvider>
+         )
+ 
+-        const { result, waitFor } = renderHook(() => useQueueByName('name'), {
++        const { result } = renderHook(() => useQueueByName('name'), {
+             wrapper,
+         })
+ 
+-- 
+2.34.1
+
