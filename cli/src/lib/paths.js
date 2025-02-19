@@ -150,8 +150,6 @@ module.exports = (cwd = process.cwd(), { typeScript } = {}) => {
             'bundle',
             '{name}-{version}.zip'
         ),
-        buildLibBundleFile: '{name}-{version}.zip',
-        buildLibBundleOutput: path.join(base),
 
         launchPath: 'index.html',
         pluginLaunchPath: 'plugin.html',

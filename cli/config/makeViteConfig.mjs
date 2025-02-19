@@ -25,7 +25,7 @@ import dynamicImport from 'vite-plugin-dynamic-import'
  * merged with the main config if the `--allowJsxInJs` flag is passed
  * to the CLI
  *
- * todo: deprecate -- this config has a performance cost, especially on startup
+ * ! deprecated -- this config has a performance cost, especially on startup
  */
 const jsxInJsConfig = {
     plugins: [
@@ -159,6 +159,7 @@ export default ({ paths, config, env, host, force, allowJsxInJs }) => {
 
         build: {
             outDir: 'build',
+            sourcemap: true,
             rollupOptions: {
                 input: getBuildInputs(config, paths),
                 output: {
@@ -178,7 +179,7 @@ export default ({ paths, config, env, host, force, allowJsxInJs }) => {
             dynamicImport(),
             react({
                 babel: { plugins: ['styled-jsx/babel'] },
-                // todo: deprecate with other jsx-in-js config
+                // ! deprecated with other jsx-in-js config
                 // This option allows HMR of JSX-in-JS files,
                 // but it isn't possible to add with merge config:
                 jsxRuntime: allowJsxInJs ? 'classic' : 'automatic',

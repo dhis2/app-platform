@@ -75,8 +75,6 @@ const handler = async ({
         ? getAppParameters(standalone, config)
         : null
 
-    await fs.remove(paths.buildOutput)
-
     await exitOnCatch(
         async () => {
             if (
@@ -198,6 +196,7 @@ const handler = async ({
             process.exit(1)
         }
 
+        await fs.remove(paths.buildAppOutput)
         await fs.copy(paths.shellBuildOutput, paths.buildAppOutput)
 
         if (packAppOutput) {

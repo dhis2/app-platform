@@ -160,7 +160,7 @@ const handler = async ({ force, name, cwd, lib, typeScript }) => {
         reporter.info('Installing @dhis2/cli-app-scripts...')
         await exec({
             cmd: 'yarn',
-            args: ['add', '--dev', '@dhis2/cli-app-scripts@alpha'],
+            args: ['add', '--dev', '@dhis2/cli-app-scripts'],
             cwd: paths.base,
         })
     }

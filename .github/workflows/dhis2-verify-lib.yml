@@ -90,6 +90,10 @@ jobs:
             - uses: c-hive/gha-yarn-cache@v1
             - run: yarn install --frozen-lockfile
 
+            # If npm > v7, the semantic release action below modifies yarn.lock
+            # upon release (since it runs `npm version ___`)
+            - run: npm install -g npm@^6
+
             - uses: dhis2/action-semantic-release@master
               with:
                   publish-npm: true
