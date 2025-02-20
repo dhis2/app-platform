@@ -69,6 +69,8 @@ export function setUpServiceWorker() {
         const indexHtmlManifestEntry = precacheManifest.find(({ url }) =>
             url.endsWith('index.html')
         )
+        // Make sure that this request doesn't redirect to a global shell
+        indexHtmlManifestEntry.url += '?redirect=false'
         precache([indexHtmlManifestEntry])
 
         // Custom strategy for handling app navigation, specifically to allow
@@ -99,7 +101,8 @@ export function setUpServiceWorker() {
             // Return true to signal that we want to use the handler.
             return true
         }
-        const indexUrl = process.env.PUBLIC_URL + '/index.html'
+        // Above, the index entry had the redirect param added:
+        const indexUrl = process.env.PUBLIC_URL + '/index.html?redirect=false'
         const navigationRouteHandler = ({ request }) => {
             return fetch(request)
                 .then((response) => {
