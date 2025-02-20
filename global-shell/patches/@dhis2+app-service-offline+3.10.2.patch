@@ -1,0 +1,511 @@
+diff --git a/node_modules/@dhis2/app-service-offline/build/cjs/lib/dhis2-connection-status/use-ping-query.js b/node_modules/@dhis2/app-service-offline/build/cjs/lib/dhis2-connection-status/use-ping-query.js
+index 96bb1ee..67ce614 100644
+--- a/node_modules/@dhis2/app-service-offline/build/cjs/lib/dhis2-connection-status/use-ping-query.js
++++ b/node_modules/@dhis2/app-service-offline/build/cjs/lib/dhis2-connection-status/use-ping-query.js
+@@ -16,6 +16,6 @@ function usePingQuery() {
+   } = (0, _appServiceConfig.useConfig)(); // This endpoint doesn't need any extra headers or handling since it's
+   // public. It doesn't extend the user session. See DHIS2-14531
+ 
+-  const ping = (0, _react.useCallback)(() => fetch(baseUrl + '/api/ping'), [baseUrl]);
++  const ping = (0, _react.useCallback)(() => fetch(new URL('./api/ping', baseUrl).href), [baseUrl]);
+   return ping;
+ }
+\ No newline at end of file
+diff --git a/node_modules/@dhis2/app-service-offline/build/es/lib/dhis2-connection-status/use-ping-query.js b/node_modules/@dhis2/app-service-offline/build/es/lib/dhis2-connection-status/use-ping-query.js
+index 40a0323..702ded5 100644
+--- a/node_modules/@dhis2/app-service-offline/build/es/lib/dhis2-connection-status/use-ping-query.js
++++ b/node_modules/@dhis2/app-service-offline/build/es/lib/dhis2-connection-status/use-ping-query.js
+@@ -7,6 +7,6 @@ export function usePingQuery() {
+   } = useConfig(); // This endpoint doesn't need any extra headers or handling since it's
+   // public. It doesn't extend the user session. See DHIS2-14531
+ 
+-  const ping = useCallback(() => fetch(baseUrl + '/api/ping'), [baseUrl]);
++  const ping = useCallback(() => fetch(new URL('./api/ping', baseUrl).href), [baseUrl]);
+   return ping;
+ }
+\ No newline at end of file
+diff --git a/node_modules/@dhis2/app-service-offline/build/types/index.d.ts b/node_modules/@dhis2/app-service-offline/build/types/index.d.ts
+deleted file mode 100644
+index 17a9933..0000000
+--- a/node_modules/@dhis2/app-service-offline/build/types/index.d.ts
++++ /dev/null
+@@ -1,7 +0,0 @@
+-export { OfflineProvider } from './lib/offline-provider';
+-export { CacheableSection, useCacheableSection } from './lib/cacheable-section';
+-export { useCachedSections } from './lib/cacheable-section-state';
+-export { useNetworkStatus as useOnlineStatus } from './lib/network-status';
+-export { useOnlineStatusMessage, useSetOnlineStatusMessage, useOnlineStatusMessageValue, } from './lib/online-status-message';
+-export { clearSensitiveCaches } from './lib/clear-sensitive-caches';
+-export { useDhis2ConnectionStatus } from './lib/dhis2-connection-status';
+diff --git a/node_modules/@dhis2/app-service-offline/build/types/lib/cacheable-section-state.d.ts b/node_modules/@dhis2/app-service-offline/build/types/lib/cacheable-section-state.d.ts
+deleted file mode 100644
+index 8e5a820..0000000
+--- a/node_modules/@dhis2/app-service-offline/build/types/lib/cacheable-section-state.d.ts
++++ /dev/null
+@@ -1,66 +0,0 @@
+-import PropTypes from 'prop-types';
+-import React from 'react';
+-import { GlobalStateStore, RecordingState } from '../types';
+-interface CachedSectionsById {
+-    [index: string]: {
+-        lastUpdated: Date;
+-    };
+-}
+-/**
+- * Create a store for Cacheable Section state.
+- * Expected to be used in app adapter
+- */
+-export declare function createCacheableSectionStore(): GlobalStateStore;
+-/**
+- * Provides context for a global state context which will track cached
+- * sections' status and cacheable sections' recording states, which will
+- * determine how that component will render. The provider will be a part of
+- * the OfflineProvider.
+- */
+-export declare function CacheableSectionProvider({ children, }: {
+-    children: React.ReactNode;
+-}): JSX.Element;
+-export declare namespace CacheableSectionProvider {
+-    var propTypes: {
+-        children: PropTypes.Requireable<PropTypes.ReactNodeLike>;
+-    };
+-}
+-interface RecordingStateControls {
+-    recordingState: RecordingState;
+-    setRecordingState: (newState: RecordingState) => void;
+-    removeRecordingState: () => void;
+-}
+-/**
+- * Uses an optimized global state to manage 'recording state' values without
+- * unnecessarily rerendering all consuming components
+- *
+- * @param {String} id - ID of the cacheable section to track
+- * @returns {Object} { recordingState: String, setRecordingState: Function, removeRecordingState: Function}
+- */
+-export declare function useRecordingState(id: string): RecordingStateControls;
+-interface CachedSectionsControls {
+-    cachedSections: CachedSectionsById;
+-    removeById: (id: string) => Promise<boolean>;
+-    syncCachedSections: () => Promise<void>;
+-}
+-/**
+- * Uses global state to manage an object of cached sections' statuses
+- *
+- * @returns {Object} { cachedSections: Object, removeSection: Function }
+- */
+-export declare function useCachedSections(): CachedSectionsControls;
+-interface CachedSectionControls {
+-    lastUpdated: Date;
+-    isCached: boolean;
+-    remove: () => Promise<boolean>;
+-    syncCachedSections: () => Promise<void>;
+-}
+-/**
+- * Uses global state to manage the cached status of just one section, which
+- * prevents unnecessary rerenders of consuming components
+- *
+- * @param {String} id
+- * @returns {Object} { lastUpdated: Date, remove: Function }
+- */
+-export declare function useCachedSection(id: string): CachedSectionControls;
+-export {};
+diff --git a/node_modules/@dhis2/app-service-offline/build/types/lib/cacheable-section.d.ts b/node_modules/@dhis2/app-service-offline/build/types/lib/cacheable-section.d.ts
+deleted file mode 100644
+index e2ec580..0000000
+--- a/node_modules/@dhis2/app-service-offline/build/types/lib/cacheable-section.d.ts
++++ /dev/null
+@@ -1,52 +0,0 @@
+-import PropTypes from 'prop-types';
+-import React from 'react';
+-import { RecordingState } from '../types';
+-interface CacheableSectionStartRecordingOptions {
+-    recordingTimeoutDelay?: number;
+-    onStarted?: () => void;
+-    onCompleted?: () => void;
+-    onError?: (err: Error) => void;
+-}
+-export declare type CacheableSectionStartRecording = (options?: CacheableSectionStartRecordingOptions) => Promise<any>;
+-interface CacheableSectionControls {
+-    recordingState: RecordingState;
+-    startRecording: CacheableSectionStartRecording;
+-    lastUpdated: Date | undefined;
+-    isCached: boolean;
+-    remove: () => Promise<boolean>;
+-}
+-/**
+- * Returns the main controls for a cacheable section and manages recording
+- * state, which affects the render state of the CacheableSection component.
+- * Also returns the cached status of the section, which come straight from
+- * the `useCachedSection` hook.
+- *
+- * @param {String} id
+- * @returns {Object}
+- */
+-export declare function useCacheableSection(id: string): CacheableSectionControls;
+-interface CacheableSectionProps {
+-    id: string;
+-    loadingMask: JSX.Element;
+-    children: React.ReactNode;
+-}
+-/**
+- * Used to wrap the relevant component to be recorded and saved offline.
+- * Depending on the recording state of the section, this wrapper will
+- * render its children, not render its children while recording is pending,
+- * or RErerender the chilren to force data fetching to record by the service
+- * worker.
+- *
+- * During recording, a loading mask provided by props is also rendered that is
+- * intended to prevent other interaction with the app that might interfere
+- * with the recording process.
+- */
+-export declare function CacheableSection({ id, loadingMask, children, }: CacheableSectionProps): JSX.Element;
+-export declare namespace CacheableSection {
+-    var propTypes: {
+-        id: PropTypes.Validator<string>;
+-        children: PropTypes.Requireable<PropTypes.ReactNodeLike>;
+-        loadingMask: PropTypes.Requireable<PropTypes.ReactNodeLike>;
+-    };
+-}
+-export {};
+diff --git a/node_modules/@dhis2/app-service-offline/build/types/lib/clear-sensitive-caches.d.ts b/node_modules/@dhis2/app-service-offline/build/types/lib/clear-sensitive-caches.d.ts
+deleted file mode 100644
+index 186683a..0000000
+--- a/node_modules/@dhis2/app-service-offline/build/types/lib/clear-sensitive-caches.d.ts
++++ /dev/null
+@@ -1,16 +0,0 @@
+-export declare const SECTIONS_DB = "sections-db";
+-export declare const SECTIONS_STORE = "sections-store";
+-declare global {
+-    interface IDBFactory {
+-        databases(): Promise<[{
+-            name: string;
+-            version: number;
+-        }]>;
+-    }
+-}
+-/**
+- * Used to clear caches and 'sections-db' IndexedDB when a user logs out or a
+- * different user logs in to prevent someone from accessing a different user's
+- * caches. Should be able to be used in a non-PWA app.
+- */
+-export declare function clearSensitiveCaches(dbName?: string): Promise<any>;
+diff --git a/node_modules/@dhis2/app-service-offline/build/types/lib/dhis2-connection-status/dev-debug-log.d.ts b/node_modules/@dhis2/app-service-offline/build/types/lib/dhis2-connection-status/dev-debug-log.d.ts
+deleted file mode 100644
+index f8b41f7..0000000
+--- a/node_modules/@dhis2/app-service-offline/build/types/lib/dhis2-connection-status/dev-debug-log.d.ts
++++ /dev/null
+@@ -1,9 +0,0 @@
+-/**
+- * This can be used to log info if the `dhis2.debugConnectionStatus` value
+- * in localStorage is set to a truthy value during development.
+- * Set the value manually and refresh the page to see the logs.
+- *
+- * The behavior of the connection status can be quite hard to inspect without
+- * logs, but the logs are quite chatty and should be omitted normally.
+- */
+-export declare function devDebugLog(...args: any[]): void;
+diff --git a/node_modules/@dhis2/app-service-offline/build/types/lib/dhis2-connection-status/dhis2-connection-status.d.ts b/node_modules/@dhis2/app-service-offline/build/types/lib/dhis2-connection-status/dhis2-connection-status.d.ts
+deleted file mode 100644
+index 6bf430d..0000000
+--- a/node_modules/@dhis2/app-service-offline/build/types/lib/dhis2-connection-status/dhis2-connection-status.d.ts
++++ /dev/null
+@@ -1,28 +0,0 @@
+-import PropTypes from 'prop-types';
+-import React from 'react';
+-declare type AppName = string | undefined;
+-export declare const getLastConnectedKey: (appName?: AppName) => string;
+-export interface Dhis2ConnectionStatus {
+-    isConnected: boolean;
+-    isDisconnected: boolean;
+-    lastConnected: Date | null;
+-}
+-/**
+- * Provides a boolean indicating client's connection to the DHIS2 server,
+- * which is different from connection to the internet.
+- *
+- * The context provider subscribes to messages from the SW tracking successes
+- * and failures of requests to the DHIS2 server to determine connection status,
+- * and then will initiate periodic pings if there are no incidental requests in
+- * order to check the connection consistently
+- */
+-export declare const Dhis2ConnectionStatusProvider: {
+-    ({ children, }: {
+-        children: React.ReactNode;
+-    }): JSX.Element;
+-    propTypes: {
+-        children: PropTypes.Requireable<PropTypes.ReactNodeLike>;
+-    };
+-};
+-export declare const useDhis2ConnectionStatus: () => Dhis2ConnectionStatus;
+-export {};
+diff --git a/node_modules/@dhis2/app-service-offline/build/types/lib/dhis2-connection-status/index.d.ts b/node_modules/@dhis2/app-service-offline/build/types/lib/dhis2-connection-status/index.d.ts
+deleted file mode 100644
+index c364d9a..0000000
+--- a/node_modules/@dhis2/app-service-offline/build/types/lib/dhis2-connection-status/index.d.ts
++++ /dev/null
+@@ -1 +0,0 @@
+-export { useDhis2ConnectionStatus, Dhis2ConnectionStatusProvider, } from './dhis2-connection-status';
+diff --git a/node_modules/@dhis2/app-service-offline/build/types/lib/dhis2-connection-status/is-ping-available.d.ts b/node_modules/@dhis2/app-service-offline/build/types/lib/dhis2-connection-status/is-ping-available.d.ts
+deleted file mode 100644
+index 99e2c1f..0000000
+--- a/node_modules/@dhis2/app-service-offline/build/types/lib/dhis2-connection-status/is-ping-available.d.ts
++++ /dev/null
+@@ -1,14 +0,0 @@
+-import { Version } from '@dhis2/app-service-config';
+-/**
+- * Checks the server version to see if the /api/ping endpoint is available for
+- * this version.
+- *
+- * The endpoint was released for versions 2.37.10, 2.38.4, 2.39.2, and 2.40.0
+- * (see DHIS2-14531). All versions below that are considered unsupported
+- *
+- * If the patchVersion is undefined, it's assumed to be a dev server that's
+- * newer than the fix versions listed above
+- *
+- * Major versions above 2 aren't supported 🤷‍♂️
+- */
+-export declare function isPingAvailable(serverVersion: Version): boolean;
+diff --git a/node_modules/@dhis2/app-service-offline/build/types/lib/dhis2-connection-status/smart-interval.d.ts b/node_modules/@dhis2/app-service-offline/build/types/lib/dhis2-connection-status/smart-interval.d.ts
+deleted file mode 100644
+index 2d9e902..0000000
+--- a/node_modules/@dhis2/app-service-offline/build/types/lib/dhis2-connection-status/smart-interval.d.ts
++++ /dev/null
+@@ -1,18 +0,0 @@
+-export declare const DEFAULT_INITIAL_DELAY_MS: number;
+-export declare const DEFAULT_MAX_DELAY_MS: number;
+-export declare const DEFAULT_INCREMENT_FACTOR = 1.5;
+-export interface SmartInterval {
+-    clear: () => void;
+-    pause: () => void;
+-    resume: () => void;
+-    invokeCallbackImmediately: () => void;
+-    snooze: () => void;
+-    reset: () => void;
+-}
+-export default function createSmartInterval({ initialDelay, maxDelay, delayIncrementFactor, initialPauseValue, callback, }?: {
+-    initialDelay?: number | undefined;
+-    maxDelay?: number | undefined;
+-    delayIncrementFactor?: number | undefined;
+-    initialPauseValue?: boolean | undefined;
+-    callback?: (() => void) | undefined;
+-}): SmartInterval;
+diff --git a/node_modules/@dhis2/app-service-offline/build/types/lib/dhis2-connection-status/use-ping-query.d.ts b/node_modules/@dhis2/app-service-offline/build/types/lib/dhis2-connection-status/use-ping-query.d.ts
+deleted file mode 100644
+index e1a13bc..0000000
+--- a/node_modules/@dhis2/app-service-offline/build/types/lib/dhis2-connection-status/use-ping-query.d.ts
++++ /dev/null
+@@ -1 +0,0 @@
+-export declare function usePingQuery(): () => Promise<any>;
+diff --git a/node_modules/@dhis2/app-service-offline/build/types/lib/global-state-service.d.ts b/node_modules/@dhis2/app-service-offline/build/types/lib/global-state-service.d.ts
+deleted file mode 100644
+index 5204897..0000000
+--- a/node_modules/@dhis2/app-service-offline/build/types/lib/global-state-service.d.ts
++++ /dev/null
+@@ -1,16 +0,0 @@
+-import PropTypes from 'prop-types';
+-import React from 'react';
+-import { GlobalStateStore, GlobalStateStoreMutateMethod, GlobalStateMutation, GlobalStateStoreMutationCreator } from '../types';
+-export declare const createStore: (initialState?: {}) => GlobalStateStore;
+-export declare const GlobalStateProvider: {
+-    ({ store, children, }: {
+-        store: GlobalStateStore;
+-        children: React.ReactNode;
+-    }): JSX.Element;
+-    propTypes: {
+-        children: PropTypes.Requireable<PropTypes.ReactNodeLike>;
+-        store: PropTypes.Requireable<PropTypes.InferProps<{}>>;
+-    };
+-};
+-export declare const useGlobalState: (selector?: (state: any) => any) => [any, GlobalStateStoreMutateMethod];
+-export declare function useGlobalStateMutation<Type>(mutationCreator: GlobalStateStoreMutationCreator<Type>): GlobalStateMutation<Type>;
+diff --git a/node_modules/@dhis2/app-service-offline/build/types/lib/network-status.d.ts b/node_modules/@dhis2/app-service-offline/build/types/lib/network-status.d.ts
+deleted file mode 100644
+index 0814dd5..0000000
+--- a/node_modules/@dhis2/app-service-offline/build/types/lib/network-status.d.ts
++++ /dev/null
+@@ -1,25 +0,0 @@
+-declare type milliseconds = number;
+-interface NetworkStatusOptions {
+-    debounceDelay?: milliseconds;
+-}
+-export interface NetworkStatus {
+-    online: boolean;
+-    offline: boolean;
+-    lastOnline: Date | null;
+-}
+-/**
+- * Returns the browser's online status. Updates in response to 'online' and
+- * 'offline' events. By default, debounces updates to once every second to
+- * avoid UI flicker, but that delay can be configured with the
+- * `options.debounceDelay` param.
+- *
+- * On state change, updates the `dhis2.lastOnline` property in local storage
+- * for consuming apps to format and display. Returns `lastOnline` as `null` if
+- * online or as a Date if offline.
+- *
+- * @param {Object} [options]
+- * @param {Number} [options.debounceDelay] - Timeout delay to debounce updates, in ms
+- * @returns {Object} `{ online: boolean, offline: boolean, lastOnline: Date | null }`
+- */
+-export declare function useNetworkStatus(options?: NetworkStatusOptions): NetworkStatus;
+-export {};
+diff --git a/node_modules/@dhis2/app-service-offline/build/types/lib/offline-interface.d.ts b/node_modules/@dhis2/app-service-offline/build/types/lib/offline-interface.d.ts
+deleted file mode 100644
+index 1c88f50..0000000
+--- a/node_modules/@dhis2/app-service-offline/build/types/lib/offline-interface.d.ts
++++ /dev/null
+@@ -1,26 +0,0 @@
+-import PropTypes from 'prop-types';
+-import React from 'react';
+-import { OfflineInterface } from '../types';
+-interface OfflineInterfaceProviderInput {
+-    offlineInterface: OfflineInterface;
+-    children: React.ReactNode;
+-}
+-/**
+- * Receives an OfflineInterface instance as a prop (presumably from the app
+- * adapter) and provides it as context for other offline tools.
+- *
+- * On mount, it initializes the offline interface, which (among other things)
+- * checks for service worker updates and, if updates are ready, prompts the
+- * user with an alert to skip waiting and reload the page to use new content.
+- */
+-export declare function OfflineInterfaceProvider({ offlineInterface, children, }: OfflineInterfaceProviderInput): JSX.Element;
+-export declare namespace OfflineInterfaceProvider {
+-    var propTypes: {
+-        children: PropTypes.Requireable<PropTypes.ReactNodeLike>;
+-        offlineInterface: PropTypes.Requireable<PropTypes.InferProps<{
+-            init: PropTypes.Requireable<(...args: any[]) => any>;
+-        }>>;
+-    };
+-}
+-export declare function useOfflineInterface(): OfflineInterface;
+-export {};
+diff --git a/node_modules/@dhis2/app-service-offline/build/types/lib/offline-provider.d.ts b/node_modules/@dhis2/app-service-offline/build/types/lib/offline-provider.d.ts
+deleted file mode 100644
+index ebe8c93..0000000
+--- a/node_modules/@dhis2/app-service-offline/build/types/lib/offline-provider.d.ts
++++ /dev/null
+@@ -1,18 +0,0 @@
+-import PropTypes from 'prop-types';
+-import React from 'react';
+-import { OfflineInterface } from '../types';
+-interface OfflineProviderInput {
+-    offlineInterface?: OfflineInterface;
+-    children?: React.ReactNode;
+-}
+-/** A context provider for all the relevant offline contexts */
+-export declare function OfflineProvider({ offlineInterface, children, }: OfflineProviderInput): JSX.Element;
+-export declare namespace OfflineProvider {
+-    var propTypes: {
+-        children: PropTypes.Requireable<PropTypes.ReactNodeLike>;
+-        offlineInterface: PropTypes.Requireable<PropTypes.InferProps<{
+-            pwaEnabled: PropTypes.Requireable<boolean>;
+-        }>>;
+-    };
+-}
+-export {};
+diff --git a/node_modules/@dhis2/app-service-offline/build/types/lib/online-status-message.d.ts b/node_modules/@dhis2/app-service-offline/build/types/lib/online-status-message.d.ts
+deleted file mode 100644
+index 14804a7..0000000
+--- a/node_modules/@dhis2/app-service-offline/build/types/lib/online-status-message.d.ts
++++ /dev/null
+@@ -1,12 +0,0 @@
+-import React, { ReactElement, ReactNode } from 'react';
+-declare type SetOnlineStatusMessage = (message: ReactNode) => void;
+-export declare const OnlineStatusMessageProvider: ({ children, }: {
+-    children: ReactNode;
+-}) => ReactElement;
+-export declare const useOnlineStatusMessageValue: () => React.ReactNode;
+-export declare const useSetOnlineStatusMessage: () => SetOnlineStatusMessage;
+-export declare const useOnlineStatusMessage: () => {
+-    onlineStatusMessage: React.ReactNode;
+-    setOnlineStatusMessage: SetOnlineStatusMessage;
+-};
+-export {};
+diff --git a/node_modules/@dhis2/app-service-offline/build/types/types.d.ts b/node_modules/@dhis2/app-service-offline/build/types/types.d.ts
+deleted file mode 100644
+index 6bbb710..0000000
+--- a/node_modules/@dhis2/app-service-offline/build/types/types.d.ts
++++ /dev/null
+@@ -1,46 +0,0 @@
+-export declare type RecordingState = 'default' | 'pending' | 'error' | 'recording';
+-export interface GlobalStateStoreMutation {
+-    (state: any): any;
+-}
+-export interface GlobalStateStoreMutationCreator<Type> {
+-    (...args: Type[]): GlobalStateStoreMutation;
+-}
+-export interface GlobalStateMutation<Type> {
+-    (...args: Type[]): void;
+-}
+-export interface GlobalStateStoreMutateMethod {
+-    (mutation: GlobalStateStoreMutation): void;
+-}
+-export interface GlobalStateStore {
+-    getState: () => any;
+-    subscribe: (callback: (state: any) => void) => void;
+-    unsubscribe: (callback: (state: any) => void) => void;
+-    mutate: GlobalStateStoreMutateMethod;
+-}
+-interface StartRecording {
+-    (params: {
+-        sectionId: string;
+-        recordingTimeoutDelay: number;
+-        onStarted: () => void;
+-        onCompleted: () => void;
+-        onError: (err: Error) => void;
+-    }): Promise<undefined>;
+-}
+-export interface IndexedDBCachedSection {
+-    sectionId: string;
+-    lastUpdated: Date;
+-    requests: number;
+-}
+-export interface OfflineInterface {
+-    readonly pwaEnabled: boolean;
+-    readonly latestIsConnected: boolean | null;
+-    subscribeToDhis2ConnectionStatus: ({ onUpdate, }: {
+-        onUpdate: ({ isConnected }: {
+-            isConnected: boolean;
+-        }) => void;
+-    }) => () => void;
+-    startRecording: StartRecording;
+-    getCachedSections: () => Promise<IndexedDBCachedSection[]>;
+-    removeSection: (id: string) => Promise<boolean>;
+-}
+-export {};
+diff --git a/node_modules/@dhis2/app-service-offline/build/types/utils/render-counter.d.ts b/node_modules/@dhis2/app-service-offline/build/types/utils/render-counter.d.ts
+deleted file mode 100644
+index 4bc61ca..0000000
+--- a/node_modules/@dhis2/app-service-offline/build/types/utils/render-counter.d.ts
++++ /dev/null
+@@ -1,10 +0,0 @@
+-/// <reference types="react" />
+-interface RenderCounts {
+-    [index: string]: number;
+-}
+-export declare const RenderCounter: ({ id, countsObj, }: {
+-    id: string;
+-    countsObj: RenderCounts;
+-}) => JSX.Element;
+-export declare const resetRenderCounts: (renderCounts: RenderCounts) => void;
+-export {};
+diff --git a/node_modules/@dhis2/app-service-offline/build/types/utils/test-mocks.d.ts b/node_modules/@dhis2/app-service-offline/build/types/utils/test-mocks.d.ts
+deleted file mode 100644
+index f814230..0000000
+--- a/node_modules/@dhis2/app-service-offline/build/types/utils/test-mocks.d.ts
++++ /dev/null
+@@ -1,12 +0,0 @@
+-/// <reference types="jest" />
+-export declare const successfulRecordingMock: jest.Mock<any, any>;
+-export declare const errorRecordingMock: jest.Mock<any, any>;
+-export declare const failedMessageRecordingMock: jest.Mock<any, any>;
+-export declare const mockOfflineInterface: {
+-    pwaEnabled: boolean;
+-    latestIsConnected: boolean;
+-    startRecording: jest.Mock<any, any>;
+-    getCachedSections: jest.Mock<any, any>;
+-    removeSection: jest.Mock<any, any>;
+-    subscribeToDhis2ConnectionStatus: jest.Mock<any, any>;
+-};

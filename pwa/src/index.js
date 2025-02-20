@@ -10,3 +10,8 @@ export {
     REGISTRATION_STATE_FIRST_ACTIVATION,
 } from './lib/registration.js'
 export { getBaseUrlByAppName, setBaseUrlByAppName } from './lib/base-url-db.js'
+export {
+    OfflineInterfaceProvider,
+    useOfflineInterface,
+} from './react/OfflineInterfaceContext.js'
+export { usePWAUpdateState } from './react/usePWAUpdateState.js'
