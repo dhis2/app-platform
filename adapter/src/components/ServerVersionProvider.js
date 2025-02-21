@@ -11,13 +11,10 @@ import { parseDHIS2ServerVersion, parseVersion } from '../utils/parseVersion.js'
 import { LoadingMask } from './LoadingMask.js'
 import { LoginModal } from './LoginModal.js'
 
-// Save this location so that it's usable after client-side navigations
-const originalWindowLocation = new URL(window.location)
-
 export const ServerVersionProvider = ({
     appName,
     appVersion,
-    url, // url from env vars
+    url, // url from env vars or index.html interpolation
     apiVersion,
     pwaEnabled,
     plugin,
@@ -184,9 +181,6 @@ export const ServerVersionProvider = ({
         return <LoadingMask />
     }
 
-    // Make sure the base URL is absolute to avoid errors with relative URLs after
-    // client-side navigation/route changes
-    const absoluteBaseUrl = new URL(baseUrl, originalWindowLocation).href
     const serverVersion = parseDHIS2ServerVersion(systemInfo.version)
     const realApiVersion = serverVersion.minor
 
@@ -195,7 +189,7 @@ export const ServerVersionProvider = ({
             config={{
                 appName,
                 appVersion: parseVersion(appVersion),
-                baseUrl: absoluteBaseUrl,
+                baseUrl,
                 apiVersion: apiVersion || realApiVersion,
                 serverVersion,
                 systemInfo,
