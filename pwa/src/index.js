@@ -1,5 +1,6 @@
 export { setUpServiceWorker } from './service-worker/set-up-service-worker.js'
 export { OfflineInterface } from './offline-interface/offline-interface.js'
+export { PWAUpdateOfflineInterface } from './offline-interface/pwa-update-offline-interface.js'
 export {
     checkForUpdates,
     checkForSWUpdateAndReload,
