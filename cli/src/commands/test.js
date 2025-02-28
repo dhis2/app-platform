@@ -78,8 +78,10 @@ const handler = async ({
         },
         {
             name: 'test',
-            onError: () =>
-                reporter.error('Test script exited with non-zero exit code'),
+            onError: (e) => {
+                reporter.error(e)
+                reporter.error('Test script exited with non-zero exit code')
+            },
         }
     )
 }
