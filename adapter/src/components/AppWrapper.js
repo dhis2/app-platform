@@ -6,7 +6,6 @@ import { Alerts } from './Alerts.js'
 import { ConnectedHeaderBar } from './ConnectedHeaderBar.js'
 import { ErrorBoundary } from './ErrorBoundary.js'
 import { LoadingMask } from './LoadingMask.js'
-import { PluginPWAUpdateManager } from './PluginPWAUpdateManager.js'
 import { styles } from './styles/AppWrapper.style.js'
 
 const AppWrapper = ({
@@ -15,7 +14,6 @@ const AppWrapper = ({
     onPluginError,
     clearPluginError,
     direction: configDirection,
-    reportPWAUpdateStatus,
 }) => {
     const { loading: localeLoading, direction: localeDirection } =
         useCurrentUserLocale(configDirection)
@@ -29,9 +27,6 @@ const AppWrapper = ({
         return (
             <div className="app-shell-adapter">
                 <style jsx>{styles}</style>
-                <PluginPWAUpdateManager
-                    reportPWAUpdateStatus={reportPWAUpdateStatus}
-                />
                 <div className="app-shell-app">
                     <ErrorBoundary
                         plugin={true}
@@ -72,7 +67,6 @@ AppWrapper.propTypes = {
     clearPluginError: PropTypes.func,
     direction: PropTypes.oneOf(['ltr', 'rtl', 'auto']),
     plugin: PropTypes.bool,
-    reportPWAUpdateStatus: PropTypes.func,
     onPluginError: PropTypes.func,
 }
 

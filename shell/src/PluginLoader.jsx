@@ -106,7 +106,6 @@ export const PluginLoader = ({ config, requiredProps, D2App }) => {
     // on the iframe element to resize the plugin
     const [resizePluginHeight, setResizePluginHeight] = useState(null)
     const [resizePluginWidth, setResizePluginWidth] = useState(null)
-    const [reportPWAUpdateStatus, setReportPWAUpdateStatus] = useState(null)
     // This value will be used as the 'width' property of the div wrapping the
     // app inside the plugin. Gets set by a prop from the parent.
     // See the Plugin docs or the PluginResizeInner component for more info
@@ -123,12 +122,10 @@ export const PluginLoader = ({ config, requiredProps, D2App }) => {
                 setPluginHeight,
                 setPluginWidth,
                 onError,
-                reportPWAUpdateStatus,
                 clientWidth: clientWidthFromParent,
                 ...explicitlyPassedProps
             } = receivedProps
 
-            console.log('in pluginLoader callback', { receivedProps })
             setPropsFromParent(explicitlyPassedProps)
 
             // check for required props
@@ -183,10 +180,6 @@ export const PluginLoader = ({ config, requiredProps, D2App }) => {
             if (clientWidthFromParent) {
                 setClientWidth(clientWidthFromParent)
             }
-
-            if (reportPWAUpdateStatus) {
-                setReportPWAUpdateStatus(() => reportPWAUpdateStatus)
-            }
         },
         [
             requiredProps,
@@ -238,7 +231,6 @@ export const PluginLoader = ({ config, requiredProps, D2App }) => {
             showAlertsInPlugin={showAlertsInPlugin}
             onPluginError={onPluginError}
             clearPluginError={clearPluginError}
-            reportPWAUpdateStatus={reportPWAUpdateStatus}
             {...config}
         >
             <React.Suspense

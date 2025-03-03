@@ -19,7 +19,6 @@ const AppAdapter = ({
     showAlertsInPlugin,
     onPluginError,
     clearPluginError,
-    reportPWAUpdateStatus,
     loginApp,
     children,
 }) => {
@@ -71,7 +70,6 @@ const AppAdapter = ({
                             onPluginError={onPluginError}
                             clearPluginError={clearPluginError}
                             direction={direction}
-                            reportPWAUpdateStatus={reportPWAUpdateStatus}
                         >
                             {children}
                         </AppWrapper>
@@ -93,7 +91,6 @@ AppAdapter.propTypes = {
     parentAlertsAdd: PropTypes.func,
     plugin: PropTypes.bool,
     pwaEnabled: PropTypes.bool,
-    reportPWAUpdateStatus: PropTypes.func,
     showAlertsInPlugin: PropTypes.bool,
     url: PropTypes.string,
     onPluginError: PropTypes.func,
