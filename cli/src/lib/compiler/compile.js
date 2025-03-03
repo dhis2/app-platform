@@ -96,8 +96,6 @@ const compile = async ({
 
     const babelConfig = makeBabelConfig({ moduleType, mode, isAppType })
 
-    console.log({ babelConfig })
-
     const copyFile = async (source, destination) => {
         reporter.debug(
             `Copying ${prettyPrint.relativePath(
