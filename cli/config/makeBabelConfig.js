@@ -15,9 +15,36 @@ const getBabelModuleType = (moduleType) => {
             return false
     }
 }
-const makeBabelConfig = ({ moduleType, mode }) => {
+const makeBabelConfig = ({ moduleType, mode, isAppType }) => {
     const isTest = mode === 'test'
 
+    const styledJsxConfig = {
+        env: {
+            production: {
+                plugins: [
+                    [require('styled-jsx/babel'), { optimizeForSpeed: true }],
+                ],
+            },
+            development: {
+                plugins: [
+                    [require('styled-jsx/babel'), { optimizeForSpeed: true }],
+                ],
+            },
+            test: {
+                plugins: [require('styled-jsx/babel-test')],
+            },
+        },
+    }
+
+    // Minimal transpiling for apps
+    if (isAppType) {
+        return {
+            presets: ['@babel/preset-typescript'],
+            ...styledJsxConfig,
+        }
+    }
+
+    // More for libs
     return {
         presets: [
             require('@babel/preset-react'),
@@ -53,21 +80,7 @@ const makeBabelConfig = ({ moduleType, mode }) => {
             // Adds support for default value using ?? operator
             require('@babel/plugin-proposal-nullish-coalescing-operator'),
         ],
-        env: {
-            production: {
-                plugins: [
-                    [require('styled-jsx/babel'), { optimizeForSpeed: true }],
-                ],
-            },
-            development: {
-                plugins: [
-                    [require('styled-jsx/babel'), { optimizeForSpeed: true }],
-                ],
-            },
-            test: {
-                plugins: [require('styled-jsx/babel-test')],
-            },
-        },
+        ...styledJsxConfig,
     }
 }
 

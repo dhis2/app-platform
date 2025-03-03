@@ -94,7 +94,9 @@ const compile = async ({
         fs.copySync(paths.shellSourcePublic, paths.shellPublic)
     }
 
-    const babelConfig = makeBabelConfig({ moduleType, mode })
+    const babelConfig = makeBabelConfig({ moduleType, mode, isAppType })
+
+    console.log({ babelConfig })
 
     const copyFile = async (source, destination) => {
         reporter.debug(
@@ -112,18 +114,20 @@ const compile = async ({
                     babelConfig
                 )
 
-                // Always write .js files
-                const jsDestination = normalizeExtension(destination)
+                // Always write .js files for libraries; don't change for apps
+                const resolvedDestination = isAppType
+                    ? destination
+                    : normalizeExtension(destination)
 
                 reporter.debug(
                     `Compiled ${prettyPrint.relativePath(
                         source
                     )} with Babel, saving to ${prettyPrint.relativePath(
-                        jsDestination
+                        resolvedDestination
                     )}`
                 )
 
-                await fs.writeFile(jsDestination, result.code)
+                await fs.writeFile(resolvedDestination, result.code)
             } catch (err) {
                 reporter.dumpErr(err)
                 reporter.error(
@@ -143,7 +147,7 @@ const compile = async ({
             outputDir: outDir,
             // todo: handle lib compilations with Vite
             // https://dhis2.atlassian.net/browse/LIBS-722
-            processFileCallback: isAppType ? copyFile : compileFile,
+            processFileCallback: compileFile,
             watch,
         }),
         isAppType &&
