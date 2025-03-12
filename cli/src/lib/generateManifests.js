@@ -139,6 +139,8 @@ module.exports = (paths, config, publicUrl) => {
         background_color: '#ffffff',
 
         scope: publicUrl,
+
+        shortcuts: config.shortcuts,
     }
 
     reporter.debug('Generated manifest.json', manifestJson)
