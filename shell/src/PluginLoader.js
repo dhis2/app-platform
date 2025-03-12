@@ -196,7 +196,7 @@ export const PluginLoader = ({ config, requiredProps, D2App }) => {
     useEffect(() => {
         // make first request for props to communicate that iframe is ready
         postRobot
-            .send(window.top, 'getPropsFromParent')
+            .send(window.parent, 'getPropsFromParent')
             .then(receivePropsFromParent)
             .catch((err) => {
                 console.error(err)
@@ -207,7 +207,7 @@ export const PluginLoader = ({ config, requiredProps, D2App }) => {
         // set up listener to listen for subsequent sends from parent window
         const listener = postRobot.on(
             'updated',
-            { window: window.top },
+            { window: window.parent },
             (event) => {
                 receivePropsFromParent(event)
             }
