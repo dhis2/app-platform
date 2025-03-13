@@ -1,3 +1,10 @@
+## [11.8.1](https://github.com/dhis2/app-platform/compare/v11.8.0...v11.8.1) (2025-03-13)
+
+
+### Bug Fixes
+
+* **plugin-pwa:** fix pwa installations and plugins for global shell [11.x] ([#911](https://github.com/dhis2/app-platform/issues/911)) ([47aba5e](https://github.com/dhis2/app-platform/commit/47aba5e8034de6ac62c3c747f01c88877e057e60))
+
 # [11.8.0](https://github.com/dhis2/app-platform/compare/v11.7.5...v11.8.0) (2025-01-23)
 
 
