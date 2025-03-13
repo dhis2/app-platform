@@ -43,6 +43,8 @@ const generate = async ({ input, output, namespace, paths }) => {
     writeTemplate(outFile, { locales, langs, namespace })
 
     reporter.debug(`[i18n-generate] Generating translation .json files...`)
+
+    const manifestTranslations = []
     const promises = files.map(async (f) => {
         const ext = path.extname(f)
         const lang = path.basename(f, ext)
@@ -61,11 +63,53 @@ const generate = async ({ input, output, namespace, paths }) => {
 
             const translationsPath = path.join(target, 'translations.json')
             fs.writeFileSync(translationsPath, json, { encoding: 'utf8' })
+
+            /**
+             * Generating the manifest translation strings that will end up in build/app/manifest.webapp.translations.json
+             * and will be consumed by the backend to translate shortcuts and other app-related fields
+             *
+             * The output is an array of objects that look like this (format mainly to be easily consumed in Java side):
+             * @example [
+             *  {
+             *      "locale": "en",
+             *      "translations": {
+             *          "APP_TITLE": "App Management",
+             *          "APP_DESCRIPTION": "The Application Management App provides the ability to upload webapps in .zip files, as well as installing apps directly from the official DHIS 2 App Store",
+             *          "SHORTCUT_Apps Home": "Apps Home",
+             *          "SHORTCUT_App hub": "App hub"
+             * },
+             * // other locales
+             * ]
+             */
+            const manifestTranslation = {
+                locale: lang,
+                translations: {},
+            }
+
+            try {
+                for (const [key, value] of Object.entries(JSON.parse(json))) {
+                    if (key.match(/__MANIFEST_/)) {
+                        // removing the initial prefix and the context description at the end of the key
+                        const keyCleaned = key
+                            ?.replace(/__MANIFEST_/, '')
+                            .replace(/_[^_]+$/, '')
+                        manifestTranslation.translations[keyCleaned] = value
+                    }
+                }
+            } catch (err) {
+                reporter.warn(
+                    'error generating manifest.webapp.translations.json'
+                )
+                reporter.warn(err)
+            }
+
+            manifestTranslations.push(manifestTranslation)
         }
     })
 
     await Promise.all(promises)
-    return true
+
+    return { manifestTranslations }
 }
 
 module.exports = generate
