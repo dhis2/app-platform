@@ -1,3 +1,10 @@
+# [12.5.0](https://github.com/dhis2/app-platform/compare/v12.4.0...v12.5.0) (2025-03-18)
+
+
+### Features
+
+* extract and generate translation strings for manifest ([e5078f1](https://github.com/dhis2/app-platform/commit/e5078f1ef2f03ff981f0ea5732c0ebe599567e13))
+
 # [12.4.0](https://github.com/dhis2/app-platform/compare/v12.3.0...v12.4.0) (2025-03-12)
 
 
