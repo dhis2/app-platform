@@ -195,16 +195,12 @@ export function register(config) {
             }
         }
 
-        // todo: remove console logs
-
+        // Wait until assets have loaded to avoid bogging down network with
+        // precache requests
         if (document.readyState === 'complete') {
-            console.log('[Registration] document readyState = complete')
             handleLoad()
         } else {
-            window.addEventListener('load', () => {
-                console.log('[Registration] Handle load')
-                handleLoad()
-            })
+            window.addEventListener('load', handleLoad)
         }
     }
 }
