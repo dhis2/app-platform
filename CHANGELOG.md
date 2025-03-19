@@ -1,3 +1,10 @@
+## [12.5.1](https://github.com/dhis2/app-platform/compare/v12.5.0...v12.5.1) (2025-03-19)
+
+
+### Bug Fixes
+
+* **pwa:** ensure service worker registration triggers on page load ([#915](https://github.com/dhis2/app-platform/issues/915)) ([82c3f26](https://github.com/dhis2/app-platform/commit/82c3f26dea199aff803c0cb7ba43882161fe84ea))
+
 # [12.5.0](https://github.com/dhis2/app-platform/compare/v12.4.0...v12.5.0) (2025-03-18)
 
 
