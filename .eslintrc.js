@@ -9,6 +9,7 @@ module.exports = {
         'import/extensions': 'off',
         'react/no-unknown-property': ['error', { ignore: ['jsx'] }],
     },
+    ignorePatterns: ['index.d.ts'],
     overrides: [
         {
             files: ['*.test.js'],
