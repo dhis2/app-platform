@@ -1,3 +1,10 @@
+## [11.8.2](https://github.com/dhis2/app-platform/compare/v11.8.1...v11.8.2) (2025-03-28)
+
+
+### Bug Fixes
+
+* set default target for links to _top so they work in global shell ([#916](https://github.com/dhis2/app-platform/issues/916)) ([6c4be8f](https://github.com/dhis2/app-platform/commit/6c4be8fcde6fae6d5249ffdcb0362fb5b7e62907))
+
 ## [11.8.1](https://github.com/dhis2/app-platform/compare/v11.8.0...v11.8.1) (2025-03-13)
 
 
