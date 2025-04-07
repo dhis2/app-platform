@@ -108,7 +108,15 @@ export function setUpServiceWorker() {
         // Above, the index entry had the redirect param added:
         const indexUrl = process.env.PUBLIC_URL + '/index.html?redirect=false'
         const navigationRouteHandler = ({ request }) => {
-            return fetch(request)
+            let requestToUse = request
+            // If in an iframe, set custom header to let the backend know not to
+            // redirect this request to the global shell
+            if (request.destination === 'iframe') {
+                const newHeaders = new Headers(request.headers)
+                newHeaders.append('X-Requested-With', 'iframe')
+                requestToUse = new Request(request, { headers: newHeaders })
+            }
+            return fetch(requestToUse)
                 .then((response) => {
                     if (response.type === 'opaqueredirect' || !response.ok) {
                         // It's sending a redirect to the login page,
