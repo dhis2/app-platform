@@ -1,3 +1,30 @@
+## [12.5.1](https://github.com/dhis2/app-platform/compare/v12.5.0...v12.5.1) (2025-03-19)
+
+
+### Bug Fixes
+
+* **pwa:** ensure service worker registration triggers on page load ([#915](https://github.com/dhis2/app-platform/issues/915)) ([82c3f26](https://github.com/dhis2/app-platform/commit/82c3f26dea199aff803c0cb7ba43882161fe84ea))
+
+# [12.5.0](https://github.com/dhis2/app-platform/compare/v12.4.0...v12.5.0) (2025-03-18)
+
+
+### Features
+
+* extract and generate translation strings for manifest ([e5078f1](https://github.com/dhis2/app-platform/commit/e5078f1ef2f03ff981f0ea5732c0ebe599567e13))
+
+# [12.4.0](https://github.com/dhis2/app-platform/compare/v12.3.0...v12.4.0) (2025-03-12)
+
+
+### Bug Fixes
+
+* surface error when 'd2-app-scripts test' fails ([2ca9a89](https://github.com/dhis2/app-platform/commit/2ca9a894fcf6706a22a8d8d31d09f2a01f319a51))
+* **plugin-pwa:** fix pwa installations and plugins in global shell ([#910](https://github.com/dhis2/app-platform/issues/910)) ([e96e114](https://github.com/dhis2/app-platform/commit/e96e11469a79540b186bd0da070b51fece423743))
+
+
+### Features
+
+* copy shortcuts to manifest.webapp file ([f45c357](https://github.com/dhis2/app-platform/commit/f45c35742e1099aa6f84d35d3e70d98176fc20a8))
+
 # [12.3.0](https://github.com/dhis2/app-platform/compare/v12.2.0...v12.3.0) (2025-02-06)
 
 

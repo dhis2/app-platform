@@ -92,12 +92,15 @@ const handler = async ({
             }
 
             reporter.info('Generating internationalization strings...')
+
+            // extracting the po and pot files from src/ to i18n folder
             await i18n.extract({
                 input: paths.src,
                 output: paths.i18nStrings,
                 paths,
             })
-            await i18n.generate({
+
+            const { manifestTranslations } = await i18n.generate({
                 input: paths.i18nStrings,
                 output: paths.i18nLocales,
                 namespace: 'default',
@@ -150,6 +153,16 @@ const handler = async ({
                     allowJsxInJs,
                 })
                 await build(viteConfig)
+
+                const translationsPath = path.join(
+                    paths.shellBuildOutput,
+                    'manifest.webapp.translations.json'
+                )
+                fs.writeFileSync(
+                    translationsPath,
+                    JSON.stringify(manifestTranslations, null, 2),
+                    { encoding: 'utf8' }
+                )
 
                 if (config.pwa?.enabled) {
                     reporter.info('Compiling service worker...')

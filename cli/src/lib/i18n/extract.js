@@ -3,6 +3,7 @@ const { reporter, chalk } = require('@dhis2/cli-helpers-engine')
 const fs = require('fs-extra')
 const { i18nextToPot, gettextToI18next } = require('i18next-conv')
 const scanner = require('i18next-scanner')
+const parseConfig = require('../parseConfig')
 const { checkDirectoryExists, walkDirectory, arrayEqual } = require('./helpers')
 
 const extract = async ({ input, output, paths }) => {
@@ -46,6 +47,43 @@ const extract = async ({ input, output, paths }) => {
     Object.keys(parsed.en.translation).forEach(
         (str) => (en[str] = parsed.en.translation[str])
     )
+
+    /**
+     * Here we add some strings to the pot file based on the d2 config. These are prefixed with __MANIFEST to minimise the chance of collison with other strings, and suffixed with a context string that helps translators know what the key refers to
+     *
+     * The pot file ends up with fields like:
+     *
+     *
+     * msgctxt "Application title"
+     * msgid "__MANIFEST_APP_TITLE"
+     * msgstr "App Management"
+     *
+     * msgctxt "Application description"
+     * msgid "__MANIFEST_APP_DESCRIPTION"
+     * msgstr ""
+     * "The Application Management App provides .."
+     *
+     * msgctxt "Title for shortcut used by command palette"
+     * msgid "__MANIFEST_SHORTCUT_Apps Home"
+     * msgstr "Apps Home"
+     */
+    try {
+        reporter.debug(
+            'Extracting manifest strings (title, description and shortcuts) for translation'
+        )
+        const configContents = parseConfig(paths)
+        en['__MANIFEST_APP_TITLE_Application title'] = configContents.title
+        en['__MANIFEST_APP_DESCRIPTION_Application description'] =
+            configContents.description
+        configContents.shortcuts?.forEach((shortcut) => {
+            en[
+                `__MANIFEST_SHORTCUT_${shortcut?.name}_Title for shortcut used by command palette`
+            ] = shortcut?.name
+        })
+    } catch (err) {
+        reporter.warn('error extracting manifest translations strings')
+        reporter.warn(err)
+    }
 
     if (Object.keys(en).length === 0) {
         reporter.print(

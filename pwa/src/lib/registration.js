@@ -160,7 +160,7 @@ export function register(config) {
             return
         }
 
-        window.addEventListener('load', () => {
+        const handleLoad = () => {
             // By compiling the dev SW to the 'public' dir, this URL works in
             // both dev and production modes
             const swUrl = new URL('service-worker.js', publicUrl)
@@ -182,7 +182,15 @@ export function register(config) {
                 // Is not localhost. Just register service worker
                 registerValidSW(swUrl, config)
             }
-        })
+        }
+
+        // Wait until assets have loaded to avoid bogging down network with
+        // precache requests
+        if (document.readyState === 'complete') {
+            handleLoad()
+        } else {
+            window.addEventListener('load', handleLoad)
+        }
     }
 }
 
