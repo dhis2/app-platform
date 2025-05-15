@@ -1,3 +1,10 @@
+# [12.6.0](https://github.com/dhis2/app-platform/compare/v12.5.1...v12.6.0) (2025-05-15)
+
+
+### Features
+
+* add typescript hints for d2 config ([#914](https://github.com/dhis2/app-platform/issues/914)) ([7723fdd](https://github.com/dhis2/app-platform/commit/7723fddd097aea79dc8dfd68b2c84d921c2743d2))
+
 ## [12.5.1](https://github.com/dhis2/app-platform/compare/v12.5.0...v12.5.1) (2025-03-19)
 
 
