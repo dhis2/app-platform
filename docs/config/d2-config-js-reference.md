@@ -7,6 +7,19 @@ The default export from `d2.config.js` should be a JSON-srializable object.
 
 All properties are technically optional, but it is recommended to set them explicitly.
 
+It's possible to get TypeScript/Intellisense hints for `d2.config.js` by using this decorator: (available in `@dhis2/cli-app-scripts` > 12.6.0)
+
+```js
+// d2.config.js
+
+/** @type {import('@dhis2/cli-app-scripts').D2Config} */
+const config = {
+    type: 'app',
+    ...
+}
+module.exports = config
+```
+
 ## Supported Properties
 
 The following configuration properties are supported:
