@@ -1,3 +1,10 @@
+## [12.6.1](https://github.com/dhis2/app-platform/compare/v12.6.0...v12.6.1) (2025-06-01)
+
+
+### Bug Fixes
+
+* update babel/core and preset to support TS named exports ([#921](https://github.com/dhis2/app-platform/issues/921)) ([eb8d1e6](https://github.com/dhis2/app-platform/commit/eb8d1e6082b1aa827137d7274908297e5ff65a2a))
+
 # [12.6.0](https://github.com/dhis2/app-platform/compare/v12.5.1...v12.6.0) (2025-05-15)
 
 
