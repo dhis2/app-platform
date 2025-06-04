@@ -1,3 +1,10 @@
+## [12.6.2](https://github.com/dhis2/app-platform/compare/v12.6.1...v12.6.2) (2025-06-04)
+
+
+### Bug Fixes
+
+* update app-runtime version in the shell ([8109bc1](https://github.com/dhis2/app-platform/commit/8109bc186b1f82efe1e450c2a9d760366a523563))
+
 ## [12.6.1](https://github.com/dhis2/app-platform/compare/v12.6.0...v12.6.1) (2025-06-01)
 
 
