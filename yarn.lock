@@ -2000,45 +2000,45 @@
     classnames "^2.3.1"
     prop-types "^15.7.2"
 
-"@dhis2/app-runtime@^3.12.0":
-  version "3.12.0"
-  resolved "https://registry.npmjs.org/@dhis2/app-runtime/-/app-runtime-3.12.0.tgz"
-  integrity sha512-qAR6y2V+KERtylLWHXpld39QBbYCBubQ5G79Hhqta/wcNbKrkHCCfurGWL29CGcPD/MVDnkAE5K68v+iBAQigA==
+"@dhis2/app-runtime@^3.14.3":
+  version "3.14.3"
+  resolved "https://registry.yarnpkg.com/@dhis2/app-runtime/-/app-runtime-3.14.3.tgz#1a7ab99bd78bd5c8df5cdccc3a54fae3e0a77aea"
+  integrity sha512-LsVSJFFuyzXMiiZQhTnGZ+rEaspRookVSsYhUo9dmFXIwpXgmwDOpt3nnMuE3hoNd9Jb/hi55+APFOcP+cZLiA==
   dependencies:
-    "@dhis2/app-service-alerts" "3.12.0"
-    "@dhis2/app-service-config" "3.12.0"
-    "@dhis2/app-service-data" "3.12.0"
-    "@dhis2/app-service-offline" "3.12.0"
-    "@dhis2/app-service-plugin" "3.12.0"
+    "@dhis2/app-service-alerts" "3.14.3"
+    "@dhis2/app-service-config" "3.14.3"
+    "@dhis2/app-service-data" "3.14.3"
+    "@dhis2/app-service-offline" "3.14.3"
+    "@dhis2/app-service-plugin" "3.14.3"
 
-"@dhis2/app-service-alerts@3.12.0":
-  version "3.12.0"
-  resolved "https://registry.npmjs.org/@dhis2/app-service-alerts/-/app-service-alerts-3.12.0.tgz"
-  integrity sha512-Ucyx8pOuwJ2MfVt7JFl0LWb9kkZV867joS+LVNKBLnEtZP+xpTofQvSJb5C/1UAVKFd/Fv+yrvpysygmQmgCCg==
+"@dhis2/app-service-alerts@3.14.3":
+  version "3.14.3"
+  resolved "https://registry.yarnpkg.com/@dhis2/app-service-alerts/-/app-service-alerts-3.14.3.tgz#6f3bee534042cac2a786ec3f2aa6a9926765a776"
+  integrity sha512-lFiD9GccEJTBSJ0uc64hNDXMtShaffuwl1is91OY8PQ/DGuFsHaVSYV6QoaoXhM5hosNk1UfFXBvy1zjrMK4Cg==
 
-"@dhis2/app-service-config@3.12.0":
-  version "3.12.0"
-  resolved "https://registry.npmjs.org/@dhis2/app-service-config/-/app-service-config-3.12.0.tgz"
-  integrity sha512-FzoiBkpJbebeFPEZcyzu4b5W7xh8zlKJIY/qNXM+ylYxv3yGh08GhBDxhexNanluoq9ch8Wxrfit2pHgnAom2A==
+"@dhis2/app-service-config@3.14.3":
+  version "3.14.3"
+  resolved "https://registry.yarnpkg.com/@dhis2/app-service-config/-/app-service-config-3.14.3.tgz#5e89b320b887495356630af85c34a9b3440eac30"
+  integrity sha512-cC41iyiq65WVOdJojxco+/I/yUwIa0vmFWBEaL9HJX2+mrkRyHAXCZzesmFayd8pgfmVOIOCi1lZaac73CpM2Q==
 
-"@dhis2/app-service-data@3.12.0":
-  version "3.12.0"
-  resolved "https://registry.npmjs.org/@dhis2/app-service-data/-/app-service-data-3.12.0.tgz"
-  integrity sha512-uSGyiQx1DAAQc0gIIpH6EIVpkpV+bMHN9p26qNpPDYIwbQDGy6/gLi7eiig18mLJ2k11//kNtg3fGcFk3M3uVg==
+"@dhis2/app-service-data@3.14.3":
+  version "3.14.3"
+  resolved "https://registry.yarnpkg.com/@dhis2/app-service-data/-/app-service-data-3.14.3.tgz#fe9e170fabea1fe91a3c97e3b8c161b16bb57b5d"
+  integrity sha512-6ydOuIso4Wrfa/S1xV7jP7waPwOjJjAiAl03u+JhZ+0k5YFqf/Wk+VfhCep6CBwxT/HapwE2bS3D4Lkk6SVzQw==
   dependencies:
     "@tanstack/react-query" "^4.36.1"
 
-"@dhis2/app-service-offline@3.12.0":
-  version "3.12.0"
-  resolved "https://registry.npmjs.org/@dhis2/app-service-offline/-/app-service-offline-3.12.0.tgz"
-  integrity sha512-GUEBymqTAGdyIPOw+ZRZ1YQdCzczagytZh2e+goG/phiUqslUUOjB1cVjBVLjf7XZ17KCTCJnfOHBVdcPz8q7Q==
+"@dhis2/app-service-offline@3.14.3":
+  version "3.14.3"
+  resolved "https://registry.yarnpkg.com/@dhis2/app-service-offline/-/app-service-offline-3.14.3.tgz#6b2cedf6d68d27db9d128cb73a75988d0a5cc83d"
+  integrity sha512-qN0hkTIv4IDd4N/vY0RaYsUfXaphVfQr49Z/kbOOTPpblXn2hSvYUQg8hyp0YIMX/zn4sMSRC2g8I9rbyM29Dg==
   dependencies:
     lodash "^4.17.21"
 
-"@dhis2/app-service-plugin@3.12.0":
-  version "3.12.0"
-  resolved "https://registry.npmjs.org/@dhis2/app-service-plugin/-/app-service-plugin-3.12.0.tgz"
-  integrity sha512-tzIpQFExFWi5rU2PrwauF0Cp3eP7DzRFem4lnke+qdU3T+x94pCxY8eaMrrr4trq0B6pO4/TikNDjXvw4O+RHQ==
+"@dhis2/app-service-plugin@3.14.3":
+  version "3.14.3"
+  resolved "https://registry.yarnpkg.com/@dhis2/app-service-plugin/-/app-service-plugin-3.14.3.tgz#87f9ab20be535a97cb212b23487e02c4ed128eff"
+  integrity sha512-w7/+HohFpWeKtHRoAqsaoM8St+0rlQZL23YxHevKZOHF+2TkYg9+piUdw2BzNBUOgMPRceIfDhNJUfPeJRu0WA==
   dependencies:
     post-robot "^10.0.46"
 
