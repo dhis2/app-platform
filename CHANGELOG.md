@@ -1,3 +1,10 @@
+## [12.6.3](https://github.com/dhis2/app-platform/compare/v12.6.2...v12.6.3) (2025-06-05)
+
+
+### Bug Fixes
+
+* **shell:** add html base element for link targets ([#920](https://github.com/dhis2/app-platform/issues/920)) ([d577df9](https://github.com/dhis2/app-platform/commit/d577df9218f5319914d286132e64e92ae9140153))
+
 ## [12.6.2](https://github.com/dhis2/app-platform/compare/v12.6.1...v12.6.2) (2025-06-04)
 
 
