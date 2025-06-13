@@ -1,10 +1,10 @@
 import {
+    useOfflineInterface,
     REGISTRATION_STATE_WAITING,
     REGISTRATION_STATE_FIRST_ACTIVATION,
 } from '@dhis2/pwa'
 import PropTypes from 'prop-types'
 import { useEffect, useState } from 'react'
-import { useOfflineInterface } from './OfflineInterfaceContext'
 
 export const PWALoadingBoundary = ({ children }) => {
     const [pwaReady, setPWAReady] = useState(false)
