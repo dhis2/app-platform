@@ -5,11 +5,19 @@ msgstr ""
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1)\n"
-"POT-Creation-Date: 2019-10-02T21:55:28.107Z\n"
-"PO-Revision-Date: 2019-10-02T21:55:28.107Z\n"
+"POT-Creation-Date: 2025-06-16T09:46:24.381Z\n"
+"PO-Revision-Date: 2025-06-16T09:46:24.381Z\n"
 
 msgid "Hello {{name}}"
-msgstr ""
+msgstr "Hello {{name}}"
 
 msgid "Have a great {{dayOfTheWeek}}!"
-msgstr ""
+msgstr "Have a great {{dayOfTheWeek}}!"
+
+msgctxt "Application title"
+msgid "__MANIFEST_APP_TITLE"
+msgstr "Simple Example App"
+
+msgctxt "Application description"
+msgid "__MANIFEST_APP_DESCRIPTION"
+msgstr "This is a simple example application"
