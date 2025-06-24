@@ -19,14 +19,13 @@
         "@dhis2/app-runtime": "^3.14.3",
         "@dhis2/d2-i18n": "^1.1.1",
         "@dhis2/pwa": "12.6.2",
-        "@dhis2/ui": "^10.1.7",
+        "@dhis2/ui": "^10.7.4",
         "classnames": "^2.2.6",
         "moment": "^2.29.1",
         "post-robot": "^10.0.46",
         "prop-types": "^15.7.2",
         "react": "^18",
         "react-dom": "^18",
-        "source-map-explorer": "^2.1.0",
         "styled-jsx": "^4.0.1",
         "typeface-roboto": "^0.0.75",
         "typescript": "^5.6.3"
@@ -37,6 +36,7 @@
     "devDependencies": {
         "enzyme": "^3.10.0",
         "enzyme-adapter-react-16": "^1.14.0",
-        "react-test-renderer": "^16.8.6"
+        "react-test-renderer": "^16.8.6",
+        "source-map-explorer": "^2.5.3"
     }
 }

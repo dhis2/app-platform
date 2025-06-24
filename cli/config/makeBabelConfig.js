@@ -45,13 +45,13 @@ const makeBabelConfig = ({ moduleType, mode }) => {
 
             // Adds support for arrow-function class properties
             // class { handleClick = () => { } }
-            require('@babel/plugin-proposal-class-properties'),
+            require('@babel/plugin-transform-class-properties'),
 
             // Adds syntax support for optional chaining (?.)
-            require('@babel/plugin-proposal-optional-chaining'),
+            require('@babel/plugin-transform-optional-chaining'),
 
             // Adds support for default value using ?? operator
-            require('@babel/plugin-proposal-nullish-coalescing-operator'),
+            require('@babel/plugin-transform-nullish-coalescing-operator'),
         ],
         env: {
             production: {
