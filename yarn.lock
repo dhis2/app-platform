@@ -2637,7 +2637,6 @@
     react-dom "^18"
     styled-jsx "^4.0.1"
     typeface-roboto "^0.0.75"
-    typescript "^5.6.3"
 
 "@dhis2/cli-helpers-engine@^1.5.0":
   version "1.5.0"
@@ -12077,11 +12076,6 @@ typeface-roboto@^0.0.75:
   version "0.0.75"
   resolved "https://registry.npmjs.org/typeface-roboto/-/typeface-roboto-0.0.75.tgz"
   integrity sha512-VrR/IiH00Z1tFP4vDGfwZ1esNqTiDMchBEXYY9kilT6wRGgFoCAlgkEUMHb1E3mB0FsfZhv756IF0+R+SFPfdg==
-
-typescript@^5.6.3:
-  version "5.6.3"
-  resolved "https://registry.npmjs.org/typescript/-/typescript-5.6.3.tgz"
-  integrity sha512-hjcS1mhfuyi4WW8IWtjP7brDrG2cuDZukyrYrSauoXGNgx0S7zceP07adYkJycEr56BOUTNPzbInooiN3fn1qw==
 
 typical@^2.4.2, typical@^2.6.0, typical@^2.6.1:
   version "2.6.1"
