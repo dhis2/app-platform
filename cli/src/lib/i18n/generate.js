@@ -83,17 +83,23 @@ const generate = async ({ input, output, namespace, paths }) => {
              */
             const manifestTranslation = {
                 locale: lang,
-                translations: {},
+                shortcuts: {},
             }
 
             try {
                 for (const [key, value] of Object.entries(JSON.parse(json))) {
-                    if (key.match(/__MANIFEST_/)) {
+                    if (key.match(/__MANIFEST_SHORTCUT_/)) {
                         // removing the initial prefix and the context description at the end of the key
                         const keyCleaned = key
-                            ?.replace(/__MANIFEST_/, '')
+                            ?.replace(/__MANIFEST_SHORTCUT_/, '')
                             .replace(/_[^_]+$/, '')
-                        manifestTranslation.translations[keyCleaned] = value
+                        manifestTranslation.shortcuts[keyCleaned] = value
+                    }
+                    if (key.match(/__MANIFEST_APP_/)) {
+                        const keyCleaned = key
+                            ?.replace(/__MANIFEST_APP_/, '')
+                            .replace(/_[^_]+$/, '')
+                        manifestTranslation[keyCleaned?.toLowerCase()] = value
                     }
                 }
             } catch (err) {
