@@ -172,11 +172,7 @@ const handler = async ({ force, name, cwd, lib, typeScript }) => {
 
         await exec({
             cmd: 'yarn',
-            args: [
-                'add',
-                '--dev',
-                'file:/home/mozafar/code/dhis/app-platform/cli',
-            ],
+            args: ['add', '--dev', '@dhis2/cli-app-scripts'],
             cwd: paths.base,
         })
     }

@@ -30,7 +30,7 @@
         "@babel/preset-env": "^7.27.2",
         "@babel/preset-react": "^7.0.0",
         "@babel/preset-typescript": "^7.27.1",
-        "@dhis2/app-shell": "file:/home/mozafar/code/dhis/app-platform/shell",
+        "@dhis2/app-shell": "12.6.2",
         "@dhis2/cli-helpers-engine": "^3.2.2",
         "@jest/core": "^29.7.0",
         "@pmmmwh/react-refresh-webpack-plugin": "^0.5.4",
