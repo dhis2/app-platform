@@ -32,7 +32,7 @@
         "@babel/preset-typescript": "^7.27.1",
         "@dhis2/app-shell": "12.6.2",
         "@dhis2/cli-helpers-engine": "^3.2.2",
-        "@jest/core": "^29.7.0",
+        "@jest/core": "^27.0.6",
         "@pmmmwh/react-refresh-webpack-plugin": "^0.5.4",
         "@vitejs/plugin-react": "^4.2.1",
         "@yarnpkg/lockfile": "^1.1.0",
