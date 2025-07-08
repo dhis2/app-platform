@@ -1,16 +1,18 @@
+const path = require('path')
 const { reporter, chalk } = require('@dhis2/cli-helpers-engine')
 const detectPort = require('detect-port')
+const fs = require('fs-extra')
+const bootstrapShell = require('../lib/bootstrapShell')
 const { compile } = require('../lib/compiler')
+const { loadEnvFiles, getEnv } = require('../lib/env')
 const exitOnCatch = require('../lib/exitOnCatch')
 const generateManifests = require('../lib/generateManifests')
 const i18n = require('../lib/i18n')
-const loadEnvFiles = require('../lib/loadEnvFiles')
 const parseConfig = require('../lib/parseConfig')
+const { isApp } = require('../lib/parseConfig')
 const makePaths = require('../lib/paths')
-const makePlugin = require('../lib/plugin')
 const createProxyServer = require('../lib/proxy')
 const { compileServiceWorker } = require('../lib/pwa')
-const makeShell = require('../lib/shell')
 const { validatePackage } = require('../lib/validatePackage')
 
 const defaultPort = 3000
@@ -22,18 +24,27 @@ const handler = async ({
     shell: shellSource,
     proxy,
     proxyPort,
+    host,
+    allowJsxInJs,
 }) => {
-    const paths = makePaths(cwd)
+    // infer whether this is a TS project based on whether it contains a tsconfig
+    const typeScript = fs.existsSync(
+        path.join(cwd ?? process.cwd(), './tsconfig.json')
+    )
+
+    if (typeScript) {
+        reporter.debug('starting a TypeScript project')
+    }
+
+    const paths = makePaths(cwd, { typeScript })
 
     const mode = 'development'
     process.env.BABEL_ENV = process.env.NODE_ENV = mode
     loadEnvFiles(paths, mode)
 
     const config = parseConfig(paths)
-    const shell = makeShell({ config, paths })
-    const plugin = makePlugin({ config, paths })
 
-    if (config.type !== 'app') {
+    if (!isApp(config.type)) {
         reporter.error(
             `The command ${chalk.bold(
                 'd2-app-scripts start'
@@ -65,7 +76,7 @@ const handler = async ({
         })
     }
 
-    await exitOnCatch(
+    return await exitOnCatch(
         async () => {
             if (!(await validatePackage({ config, paths, offerFix: false }))) {
                 reporter.print(
@@ -92,7 +103,7 @@ const handler = async ({
             })
 
             reporter.info('Bootstrapping local appShell...')
-            await shell.bootstrap({ shell: shellSource, force })
+            await bootstrapShell({ paths, shell: shellSource, force })
 
             reporter.info(`Building app ${chalk.bold(config.name)}...`)
             await compile({
@@ -113,40 +124,67 @@ const handler = async ({
                 )
             }
 
-            if (config.pwa.enabled) {
+            const env = getEnv({ config, publicUrl: '.' })
+
+            if (config.pwa?.enabled) {
                 reporter.info('Compiling service worker...')
-                await compileServiceWorker({
-                    config,
-                    paths,
-                    mode: 'development',
-                })
+                await compileServiceWorker({ env, paths, mode })
+                // don't need to inject precache manifest because no precaching
+                // is done in development environments
             }
 
             reporter.print('')
             reporter.info('Starting development server...')
+
+            // These imports are done asynchronously to allow Vite to use its
+            // ESM build of its Node API (the CJS build will be removed in v6)
+            // https://vitejs.dev/guide/troubleshooting.html#vite-cjs-node-api-deprecated
+            const { createServer } = await import('vite')
+            const { default: createConfig } = await import(
+                '../../config/makeViteConfig.mjs'
+            )
+            if (allowJsxInJs) {
+                reporter.warn(
+                    'Adding Vite config to allow JSX syntax in .js files. This is deprecated and will be removed in future versions.'
+                )
+                reporter.warn(
+                    'Consider using the migration script `yarn d2-app-scripts migrate js-to-jsx` to rename your files to use .jsx extensions.'
+                )
+            }
+            const viteConfig = createConfig({
+                config,
+                paths,
+                env,
+                host,
+                force,
+                allowJsxInJs,
+            })
+            const server = await createServer(viteConfig)
+
+            let location = ''
+            if (config.entryPoints.plugin) {
+                location = config.entryPoints.app
+                    ? ' at / and /plugin.html'
+                    : ' at /plugin.html'
+            }
+
             reporter.print(
                 `The app ${chalk.bold(
                     config.name
-                )} is now available on port ${newPort}`
+                )} is now available on port ${newPort}${location}`
             )
             reporter.print('')
+            await server.listen({ port: newPort })
 
-            const shellStartPromise = shell.start({ port: newPort })
-
-            if (config.entryPoints.plugin) {
-                const pluginPort = await detectPort(newPort + 1)
-                reporter.print(
-                    `The plugin is now available on port ${pluginPort}`
-                )
-                reporter.print('')
-
-                await Promise.all([
-                    shellStartPromise,
-                    plugin.start({ port: pluginPort }),
-                ])
-            } else {
-                await shellStartPromise
-            }
+            // Avoids clunky exit after Ctrl-C with bindCLIShortcuts:
+            // (q+Enter works great with the CLI shortcuts either way)
+            process.on('SIGINT', async function () {
+                await server.close()
+                process.exit(0)
+            })
+            // Useful CLI output and interaction:
+            server.printUrls()
+            server.bindCLIShortcuts({ print: true })
         },
         {
             name: 'start',
@@ -163,10 +201,16 @@ const command = {
     aliases: 's',
     desc: 'Start a development server running a DHIS2 app within the DHIS2 app-shell',
     builder: {
+        force: {
+            type: 'boolean',
+            description:
+                'Force updating the app shell; normally, this is only done when a new version of @dhis2/cli-app-scripts is detected. Also passes the --force option to the Vite server to reoptimize dependencies',
+        },
         port: {
             alias: 'p',
             type: 'number',
             description: 'The port to use when running the development server',
+            default: defaultPort,
         },
         proxy: {
             alias: 'P',
@@ -177,6 +221,16 @@ const command = {
             type: 'number',
             description: 'The port to use when running the proxy',
             default: 8080,
+        },
+        host: {
+            type: 'boolean|string',
+            description:
+                'Exposes the server on the local network. Can optionally provide an address to use. [boolean or string]',
+        },
+        allowJsxInJs: {
+            type: 'boolean',
+            description:
+                'Add Vite config to handle JSX in .js files. DEPRECATED: Will be removed in @dhis2/cli-app-scripts v13. Consider using the migration script `d2-app-scripts migrate js-to-jsx` to avoid needing this option',
         },
     },
     handler,

@@ -2,8 +2,8 @@ const path = require('path')
 const { reporter } = require('@dhis2/cli-helpers-engine')
 const { runCLI } = require('@jest/core')
 const fs = require('fs-extra')
+const { loadEnvFiles } = require('../lib/env')
 const exitOnCatch = require('../lib/exitOnCatch')
-const loadEnvFiles = require('../lib/loadEnvFiles')
 const makePaths = require('../lib/paths')
 
 const getAppJestConfig = ({ jestConfigPath, paths }) => {
@@ -78,8 +78,10 @@ const handler = async ({
         },
         {
             name: 'test',
-            onError: () =>
-                reporter.error('Test script exited with non-zero exit code'),
+            onError: (e) => {
+                reporter.error(e)
+                reporter.error('Test script exited with non-zero exit code')
+            },
         }
     )
 }

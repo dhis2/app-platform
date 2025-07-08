@@ -7,7 +7,8 @@ import css from 'styled-jsx/css'
 const grey900 = '#21934',
     grey500 = '#a0adba',
     grey200 = '#f3f5f7',
-    primary600 = '#147cd7'
+    primary600 = '#147cd7',
+    grey600 = '#6C7787'
 
 export default css`
     button {
@@ -86,5 +87,16 @@ export default css`
 
     button:focus::after {
         border-color: ${primary600};
+    }
+
+    .pluginButton {
+        /*small*/
+        height: 28px;
+        padding: 0 6px;
+        font-size: 14px;
+        line-height: 16px;
+
+        /*text color for plugin error*/
+        color: ${grey600};
     }
 `

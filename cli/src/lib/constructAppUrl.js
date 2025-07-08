@@ -1,4 +1,9 @@
-module.exports.constructAppUrl = (baseUrl, config, serverVersion) => {
+module.exports.constructAppUrl = ({
+    baseUrl,
+    config,
+    serverVersion,
+    plugin,
+}) => {
     let appUrl = baseUrl
 
     const isModernServer = serverVersion.major >= 2 && serverVersion.minor >= 35
@@ -18,6 +23,9 @@ module.exports.constructAppUrl = (baseUrl, config, serverVersion) => {
     // Prior to core version 2.35, installed applications did not properly serve "pretty" urls (`/` vs `/index.html`)
     if (!isModernServer) {
         appUrl += 'index.html'
+    } else if (plugin) {
+        // (this and isModernServer should be mutually exclusive conditions)
+        appUrl += 'plugin.html'
     }
 
     // Clean up any double slashes

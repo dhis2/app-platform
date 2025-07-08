@@ -5,7 +5,9 @@ const bgColor = '#F4F6F8',
     primaryTextColor = '#000000',
     secondaryTextColor = '#494949',
     errorColor = '#D32F2F',
-    grey050 = '#FBFCFD'
+    grey050 = '#FBFCFD',
+    grey100 = '#F8F9FA',
+    grey600 = '#6C7787'
 
 export default css`
     .mask {
@@ -99,5 +101,31 @@ export default css`
         line-height: 1.2;
         color: ${errorColor};
         font-family: Menlo, Courier, monospace !important;
+    }
+
+    .pluginBoundary {
+        background-color: ${grey100};
+        height: 100vh;
+        width: 100vw;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding-block-start: 16px;
+    }
+
+    .pluginErrorMessage {
+        margin-block-start: 8px;
+        color: ${grey600};
+    }
+
+    .pluginErrorCopy {
+        margin-block-start: 8px;
+        color: ${grey600};
+        text-decoration: underline;
+        font-size: 14px;
+    }
+
+    .pluginRetry {
+        margin-block-start: 16px;
     }
 `

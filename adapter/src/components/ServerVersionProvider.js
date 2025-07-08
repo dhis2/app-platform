@@ -14,6 +14,10 @@ export const ServerVersionProvider = ({
     url, // url from env vars
     apiVersion,
     pwaEnabled,
+    plugin,
+    parentAlertsAdd,
+    showAlertsInPlugin,
+    loginApp,
     children,
 }) => {
     const offlineInterface = useOfflineInterface()
@@ -100,6 +104,29 @@ export const ServerVersionProvider = ({
                 ? state
                 : { loading: true, error: undefined, systemInfo: undefined }
         )
+
+        // version is available from api/loginConfig
+        if (loginApp) {
+            const requestLogin = get(`${baseUrl}/api/loginConfig`)
+            requestLogin
+                .then((loginConfig) => {
+                    setSystemInfoState({
+                        loading: false,
+                        error: undefined,
+                        systemInfo: {
+                            version: loginConfig.apiVersion ?? '2.41',
+                        },
+                    })
+                })
+                .catch((e) => {
+                    setSystemInfoState({
+                        loading: false,
+                        error: e,
+                        systemInfo: undefined,
+                    })
+                })
+            return
+        }
         const request = get(`${baseUrl}/api/system/info`)
         request
             .then((systemInfo) => {
@@ -122,7 +149,7 @@ export const ServerVersionProvider = ({
         return () => {
             request.abort()
         }
-    }, [appName, baseUrl])
+    }, [appName, baseUrl, loginApp])
 
     useEffect(() => {
         if (pwaEnabled) {
@@ -134,7 +161,13 @@ export const ServerVersionProvider = ({
 
     // This needs to come before 'loading' case to show modal at correct times
     if (systemInfoState.error || baseUrlState.error) {
-        return <LoginModal appName={appName} baseUrl={baseUrl} />
+        return (
+            <LoginModal
+                appName={appName}
+                baseUrl={baseUrl}
+                loginApp={loginApp}
+            />
+        )
     }
 
     if (
@@ -159,7 +192,10 @@ export const ServerVersionProvider = ({
                 systemInfo,
                 pwaEnabled,
             }}
-            offlineInterface={offlineInterface}
+            offlineInterface={loginApp ? null : offlineInterface}
+            plugin={plugin}
+            parentAlertsAdd={parentAlertsAdd}
+            showAlertsInPlugin={showAlertsInPlugin}
         >
             {children}
         </Provider>
@@ -171,6 +207,10 @@ ServerVersionProvider.propTypes = {
     appVersion: PropTypes.string.isRequired,
     apiVersion: PropTypes.number,
     children: PropTypes.element,
+    loginApp: PropTypes.bool,
+    parentAlertsAdd: PropTypes.func,
+    plugin: PropTypes.bool,
     pwaEnabled: PropTypes.bool,
+    showAlertsInPlugin: PropTypes.bool,
     url: PropTypes.string,
 }

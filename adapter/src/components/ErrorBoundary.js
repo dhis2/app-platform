@@ -8,17 +8,34 @@ import styles from './styles/ErrorBoundary.style.js'
 // In order to avoid using @dhis2/ui components in the error boundary - as anything
 // that breaks within it will not be caught properly - we define a component
 // with the same styles as Button
-const UIButton = ({ children, onClick }) => (
+const UIButton = ({ children, onClick, plugin }) => (
     <>
         <style jsx>{buttonStyles}</style>
-        <button onClick={onClick}>{children}</button>
+        <button className={plugin ? 'pluginButton' : null} onClick={onClick}>
+            {children}
+        </button>
     </>
 )
 
 UIButton.propTypes = {
     children: PropTypes.node.isRequired,
     onClick: PropTypes.func.isRequired,
+    plugin: PropTypes.bool,
 }
+
+const InfoIcon24 = () => (
+    <svg
+        height="24"
+        viewBox="0 0 24 24"
+        width="24"
+        xmlns="http://www.w3.org/2000/svg"
+    >
+        <path
+            d="m12 2c5.5228475 0 10 4.4771525 10 10s-4.4771525 10-10 10-10-4.4771525-10-10 4.4771525-10 10-10zm0 2c-4.418278 0-8 3.581722-8 8s3.581722 8 8 8 8-3.581722 8-8-3.581722-8-8-8zm1 7v6h-2v-6zm-1-4c.5522847 0 1 .44771525 1 1s-.4477153 1-1 1-1-.44771525-1-1 .4477153-1 1-1z"
+            fill="#A0ADBA"
+        ></path>
+    </svg>
+)
 
 const translatedErrorHeading = i18n.t(
     'An error occurred in the DHIS2 application.'
@@ -36,6 +53,12 @@ export class ErrorBoundary extends Component {
     }
 
     componentDidCatch(error, errorInfo) {
+        if (this.props.plugin) {
+            if (this.props.onPluginError) {
+                console.error(error)
+                this.props.onPluginError(error)
+            }
+        }
         this.setState({
             error,
             errorInfo,
@@ -55,9 +78,57 @@ export class ErrorBoundary extends Component {
         })
     }
 
+    handleCopyErrorDetailsPlugin = ({ error, errorInfo }) => {
+        const errorDetails = `${error}\n${error?.stack}\n${errorInfo?.componentStack}`
+        navigator.clipboard.writeText(errorDetails).then(() => {
+            alert(i18n.t('Technical details copied to clipboard'))
+        })
+    }
+
+    handleSafeLoginRedirect = () => {
+        window.location.href =
+            this.props.baseURL +
+            (this.props.baseURL.endsWith('/') ? '' : '/') +
+            'dhis-web-commons/security/login.action'
+    }
+
     render() {
-        const { children, fullscreen, onRetry } = this.props
+        const { children, fullscreen, onRetry, loginApp, baseURL } = this.props
+
         if (this.state.error) {
+            if (this.props.plugin) {
+                return (
+                    <>
+                        <style jsx>{styles}</style>
+                        <div className="pluginBoundary">
+                            <InfoIcon24 />
+                            <div className="pluginErrorMessage">
+                                {i18n.t(
+                                    'There was a problem loading this plugin'
+                                )}
+                            </div>
+                            <div
+                                className="pluginErrorCopy"
+                                onClick={() => {
+                                    this.handleCopyErrorDetailsPlugin({
+                                        error: this.state.error,
+                                        errorInfo: this.state.errorInfo,
+                                    })
+                                }}
+                            >
+                                {i18n.t('Copy debug info to clipboard')}
+                            </div>
+                            {onRetry && (
+                                <div className="pluginRetry">
+                                    <UIButton onClick={onRetry} plugin>
+                                        {i18n.t('Try again')}
+                                    </UIButton>
+                                </div>
+                            )}
+                        </div>
+                    </>
+                )
+            }
             return (
                 <div className={cx('mask', { fullscreen })}>
                     <style jsx>{styles}</style>
@@ -65,6 +136,15 @@ export class ErrorBoundary extends Component {
                         <h1 className="message">
                             {i18n.t('Something went wrong')}
                         </h1>
+                        {loginApp && baseURL && (
+                            <div className="retry">
+                                <UIButton
+                                    onClick={this.handleSafeLoginRedirect}
+                                >
+                                    {i18n.t('Redirect to safe login mode')}
+                                </UIButton>
+                            </div>
+                        )}
                         {onRetry && (
                             <div className="retry">
                                 <UIButton onClick={onRetry}>
@@ -118,6 +198,10 @@ export class ErrorBoundary extends Component {
 
 ErrorBoundary.propTypes = {
     children: PropTypes.node.isRequired,
+    baseURL: PropTypes.string,
     fullscreen: PropTypes.bool,
+    loginApp: PropTypes.bool,
+    plugin: PropTypes.bool,
+    onPluginError: PropTypes.func,
     onRetry: PropTypes.func,
 }

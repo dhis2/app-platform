@@ -8,18 +8,50 @@ import { ErrorBoundary } from './ErrorBoundary.js'
 import { LoadingMask } from './LoadingMask.js'
 import { styles } from './styles/AppWrapper.style.js'
 
-export const AppWrapper = ({ children, plugin }) => {
-    const { loading: localeLoading } = useCurrentUserLocale()
+const AppWrapper = ({
+    children,
+    plugin,
+    onPluginError,
+    clearPluginError,
+    direction: configDirection,
+}) => {
+    const { loading: localeLoading, direction: localeDirection } =
+        useCurrentUserLocale(configDirection)
     const { loading: latestUserLoading } = useVerifyLatestUser()
 
     if (localeLoading || latestUserLoading) {
         return <LoadingMask />
     }
 
+    if (plugin) {
+        return (
+            <div className="app-shell-adapter">
+                <style jsx>{styles}</style>
+                <div className="app-shell-app">
+                    <ErrorBoundary
+                        plugin={true}
+                        onPluginError={onPluginError}
+                        onRetry={() => {
+                            if (clearPluginError) {
+                                clearPluginError()
+                            }
+                            window.location.reload()
+                        }}
+                    >
+                        {children}
+                    </ErrorBoundary>
+                </div>
+                <Alerts />
+            </div>
+        )
+    }
+
     return (
         <div className="app-shell-adapter">
             <style jsx>{styles}</style>
-            {!plugin && <ConnectedHeaderBar />}
+            <div dir={localeDirection}>
+                <ConnectedHeaderBar />
+            </div>
             <div className="app-shell-app">
                 <ErrorBoundary onRetry={() => window.location.reload()}>
                     {children}
@@ -32,5 +64,10 @@ export const AppWrapper = ({ children, plugin }) => {
 
 AppWrapper.propTypes = {
     children: PropTypes.node,
+    clearPluginError: PropTypes.func,
+    direction: PropTypes.oneOf(['ltr', 'rtl', 'auto']),
     plugin: PropTypes.bool,
+    onPluginError: PropTypes.func,
 }
+
+export { AppWrapper }

@@ -17,7 +17,10 @@ Global Options:
   --config       Path to JSON config file
 
 Options:
-  --cwd    working directory to use (defaults to cwd)
-  --force  Overwrite existing files and configurations[boolean] [default: false]
-  --lib    Create a library                           [boolean] [default: false]
+  --cwd                             working directory to use (defaults to cwd)
+  --force                           Overwrite existing files and configurations
+                                                      [boolean] [default: false]
+  --lib                             Create a library  [boolean] [default: false]
+  --typeScript, --typescript, --ts  Use TypeScript template
+                                                      [boolean] [default: false]
 ```

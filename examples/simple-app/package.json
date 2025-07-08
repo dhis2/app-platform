@@ -1,6 +1,6 @@
 {
     "name": "simple-app",
-    "version": "10.3.10",
+    "version": "12.6.4",
     "repository": "https://github.com/amcgee/dhis2-app-platform",
     "author": "Austin McGee <austin@dhis2.org>",
     "license": "BSD-3-Clause",
@@ -15,7 +15,7 @@
         "@dhis2/app-runtime": "*",
         "@dhis2/d2-i18n": "*",
         "moment": "*",
-        "react": "^16.8",
-        "react-dom": "^16.8"
+        "react": "^18",
+        "react-dom": "^18"
     }
 }
