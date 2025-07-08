@@ -1,3 +1,10 @@
+## [12.6.5-beta.1](https://github.com/dhis2/app-platform/compare/v12.6.4...v12.6.5-beta.1) (2025-07-08)
+
+
+### Bug Fixes
+
+* get rid of warnings shown on initialising new d2 projects ([#927](https://github.com/dhis2/app-platform/issues/927)) ([b51e3c9](https://github.com/dhis2/app-platform/commit/b51e3c98ca29419c24fd5bfddb5707868e826486))
+
 ## [12.6.4](https://github.com/dhis2/app-platform/compare/v12.6.3...v12.6.4) (2025-07-01)
 
 
