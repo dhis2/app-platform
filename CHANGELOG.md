@@ -1,3 +1,10 @@
+## [12.6.5-beta.2](https://github.com/dhis2/app-platform/compare/v12.6.5-beta.1...v12.6.5-beta.2) (2025-07-09)
+
+
+### Bug Fixes
+
+* require a minimum peer dependency of app-runtime ([#928](https://github.com/dhis2/app-platform/issues/928)) ([75c32ae](https://github.com/dhis2/app-platform/commit/75c32ae224e166f460512ec11e786d377cf94bea))
+
 ## [12.6.5-beta.1](https://github.com/dhis2/app-platform/compare/v12.6.4...v12.6.5-beta.1) (2025-07-08)
 
 
