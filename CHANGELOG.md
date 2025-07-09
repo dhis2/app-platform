@@ -1,3 +1,10 @@
+## [12.6.5-beta.3](https://github.com/dhis2/app-platform/compare/v12.6.5-beta.2...v12.6.5-beta.3) (2025-07-09)
+
+
+### Bug Fixes
+
+* **temp:** use cli-app-scripts@beta ([51e3334](https://github.com/dhis2/app-platform/commit/51e3334ecc4615bc54b1542fed514647f0d966e9))
+
 ## [12.6.5-beta.2](https://github.com/dhis2/app-platform/compare/v12.6.5-beta.1...v12.6.5-beta.2) (2025-07-09)
 
 
