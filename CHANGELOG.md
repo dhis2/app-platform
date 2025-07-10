@@ -1,3 +1,15 @@
+## [12.6.5-beta.4](https://github.com/dhis2/app-platform/compare/v12.6.5-beta.3...v12.6.5-beta.4) (2025-07-10)
+
+
+### Bug Fixes
+
+* force publish version ([a2d0e9a](https://github.com/dhis2/app-platform/commit/a2d0e9a1591e749989768f059a7bb28835cda095))
+
+
+### Reverts
+
+* revert i18next-conv and i18next-scanner versions ([413046d](https://github.com/dhis2/app-platform/commit/413046d24374de8cee92e5e540cc2ff6c5a545b9))
+
 ## [12.6.5-beta.3](https://github.com/dhis2/app-platform/compare/v12.6.5-beta.2...v12.6.5-beta.3) (2025-07-09)
 
 
