@@ -1,3 +1,10 @@
+## [12.6.5-beta.5](https://github.com/dhis2/app-platform/compare/v12.6.5-beta.4...v12.6.5-beta.5) (2025-07-11)
+
+
+### Bug Fixes
+
+* **deps:** higher UI version for header bar fixes ([#930](https://github.com/dhis2/app-platform/issues/930)) ([8049070](https://github.com/dhis2/app-platform/commit/80490704a53c53bb04742822678577552c35a52e))
+
 ## [12.6.5-beta.4](https://github.com/dhis2/app-platform/compare/v12.6.5-beta.3...v12.6.5-beta.4) (2025-07-10)
 
 
