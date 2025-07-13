@@ -1,6 +1,6 @@
 {
     "name": "@dhis2/app-adapter",
-    "version": "12.6.4",
+    "version": "12.6.5-beta.5",
     "repository": {
         "type": "git",
         "url": "https://github.com/amcgee/dhis2-app-platform",
@@ -21,11 +21,11 @@
         "build"
     ],
     "dependencies": {
-        "@dhis2/pwa": "12.6.4",
+        "@dhis2/pwa": "12.6.5-beta.5",
         "moment": "^2.24.0"
     },
     "devDependencies": {
-        "@dhis2/cli-app-scripts": "12.6.4",
+        "@dhis2/cli-app-scripts": "12.6.5-beta.5",
         "@testing-library/react": "^16.0.1",
         "@testing-library/dom": "^10.4.0",
         "enzyme": "^3.11.0",
@@ -40,12 +40,12 @@
     "peerDependencies": {
         "@dhis2/app-runtime": "^3.11.1",
         "@dhis2/d2-i18n": "^1",
-        "@dhis2/ui": ">=10.1.7",
+        "@dhis2/ui": ">=10.7.1",
         "classnames": "^2",
         "moment": "^2",
         "prop-types": "^15",
-        "react": "^18",
-        "react-dom": "^18",
+        "react": "^16.8.6 || ^18",
+        "react-dom": "^16.8.6 || ^18",
         "styled-jsx": "^4"
     },
     "jest": {

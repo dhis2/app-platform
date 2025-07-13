@@ -1,3 +1,43 @@
+## [12.6.5-beta.5](https://github.com/dhis2/app-platform/compare/v12.6.5-beta.4...v12.6.5-beta.5) (2025-07-11)
+
+
+### Bug Fixes
+
+* **deps:** higher UI version for header bar fixes ([#930](https://github.com/dhis2/app-platform/issues/930)) ([8049070](https://github.com/dhis2/app-platform/commit/80490704a53c53bb04742822678577552c35a52e))
+
+## [12.6.5-beta.4](https://github.com/dhis2/app-platform/compare/v12.6.5-beta.3...v12.6.5-beta.4) (2025-07-10)
+
+
+### Bug Fixes
+
+* force publish version ([a2d0e9a](https://github.com/dhis2/app-platform/commit/a2d0e9a1591e749989768f059a7bb28835cda095))
+
+
+### Reverts
+
+* revert i18next-conv and i18next-scanner versions ([413046d](https://github.com/dhis2/app-platform/commit/413046d24374de8cee92e5e540cc2ff6c5a545b9))
+
+## [12.6.5-beta.3](https://github.com/dhis2/app-platform/compare/v12.6.5-beta.2...v12.6.5-beta.3) (2025-07-09)
+
+
+### Bug Fixes
+
+* **temp:** use cli-app-scripts@beta ([51e3334](https://github.com/dhis2/app-platform/commit/51e3334ecc4615bc54b1542fed514647f0d966e9))
+
+## [12.6.5-beta.2](https://github.com/dhis2/app-platform/compare/v12.6.5-beta.1...v12.6.5-beta.2) (2025-07-09)
+
+
+### Bug Fixes
+
+* require a minimum peer dependency of app-runtime ([#928](https://github.com/dhis2/app-platform/issues/928)) ([75c32ae](https://github.com/dhis2/app-platform/commit/75c32ae224e166f460512ec11e786d377cf94bea))
+
+## [12.6.5-beta.1](https://github.com/dhis2/app-platform/compare/v12.6.4...v12.6.5-beta.1) (2025-07-08)
+
+
+### Bug Fixes
+
+* get rid of warnings shown on initialising new d2 projects ([#927](https://github.com/dhis2/app-platform/issues/927)) ([b51e3c9](https://github.com/dhis2/app-platform/commit/b51e3c98ca29419c24fd5bfddb5707868e826486))
+
 ## [12.6.4](https://github.com/dhis2/app-platform/compare/v12.6.3...v12.6.4) (2025-07-01)
 
 
