@@ -17,6 +17,7 @@
     -   [Types - `app`, `lib`](config/types)
     -   [`d2.config.js` Reference](config/d2-config-js-reference.md)
     -   [Environment Variables](config/environment)
+    -   [Extending Vite Config](config/extending-vite-config.md)
 -   [**Usage**](usage.md)
     -   [Dependencies](usage/dependencies)
     -   [CSS](usage/css)
