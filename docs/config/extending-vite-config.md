@@ -2,7 +2,7 @@
 
 It's possible to extend the App Platform's Vite configuration if necessary. This could be useful to externalize dependencies, set import aliases, or configure output chunks, among other things.
 
-There are two ways to provide Vite config extensions using the `viteConfigExtensions` property in `d2.config.js`. Either way, the resulting config will be merged onto the App Platform's base config using Vite's `mergeConfig()` function.
+There are two ways to provide Vite config extensions using the `viteConfigExtensions` property in `d2.config.js`. Either way, the resulting config will be merged onto the App Platform's [base config](https://github.com/dhis2/app-platform/blob/master/cli/config/makeViteConfig.mjs) using Vite's `mergeConfig()` function.
 
 1. You can provide an Object as the value of the `viteConfigExtensions` option. This approach is useful for more simple config options.
 2. You can provide an absolute path to a [Vite config file](https://vite.dev/config/), and the config will be read with Vite's [`loadConfigFromFile()` function](https://vite.dev/guide/api-javascript.html#loadconfigfromfile). This is useful more advanced config, or if you want to take advantage of Vite's useful helper functions.
