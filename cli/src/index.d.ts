@@ -1,3 +1,5 @@
+import type { UserConfig } from "vite"
+
 /**
  * The DHIS2 application platform configuration file is d2.config.js.
  * It should be placed in the root directory of your project, next to package.json
@@ -194,5 +196,19 @@ export type D2Config = {
              */
             globsToOmitFromPrecache: string[]
         }
+
+        /**
+         * Vite config options that can be merged onto the App Platform's base
+         * Vite config.
+         * 
+         * The value can be either an **Object** following Vite's `UserConfig`
+         * type, which may be appropriate for a simple set of options;
+         * or an **absolute path to a file** that follows the same rules as Vite
+         * configuration files, which can be useful for more complex options.
+         * https://vite.dev/config/
+         * 
+         * See the platform config docs for more detail and examples.
+         */
+        viteConfigExtensions?: UserConfig | string
     }>
 }
