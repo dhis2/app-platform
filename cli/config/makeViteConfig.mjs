@@ -5,6 +5,7 @@ import {
     mergeConfig,
     searchForWorkspaceRoot,
     transformWithEsbuild,
+    loadConfigFromFile,
 } from 'vite'
 import dynamicImport from 'vite-plugin-dynamic-import'
 
@@ -131,23 +132,19 @@ const resolveExtraViteConfig = async (config, mode) => {
 
     // If it's a string, it should be a path -- import config from there
     if (typeof viteConfigExtensions === 'string') {
-        const extensions = (await import(viteConfigExtensions)).default
-
-        if (typeof extensions === 'function') {
-            // If the returned value is a function, apply the ConfigEnv that
-            // Vite normally provides to the user's config.
-            // The ConfigEnv is not normally granted when using Vite's
-            // JavaScript API, so recreate those values here:
-            const configEnv = {
-                mode: mode,
-                command: mode === 'production' ? 'build' : 'serve',
-                isSsrBuild: false,
-                isPreview: false,
-            }
-            return extensions(configEnv)
+        // The ConfigEnv is not normally granted when using Vite's
+        // JavaScript API, so recreate those values here:
+        const configEnv = {
+            mode: mode,
+            command: mode === 'production' ? 'build' : 'serve',
+            isSsrBuild: false,
+            isPreview: false,
         }
-
-        return extensions
+        const { config: configFromFile } = await loadConfigFromFile(
+            configEnv,
+            viteConfigExtensions
+        )
+        return configFromFile
     }
 
     // Otherwise, it should be an object that's ready to go
