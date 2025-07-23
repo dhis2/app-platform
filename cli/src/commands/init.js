@@ -177,7 +177,7 @@ const handler = async ({ force, pkgManager = 'yarn', name, cwd, lib, typeScript 
 
         await exec({
             cmd: pkgManager,
-            args: [installCmd, '-D', 'alpha'], // todo: update to alpha/main channel
+            args: [installCmd, '-D', '@dhis2/cli-app-scripts@alpha'], // todo: update to alpha/main channel
             cwd: paths.base,
         })
     }
