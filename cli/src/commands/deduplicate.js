@@ -6,6 +6,10 @@ const { listDuplicates, fixDuplicates } = require('../lib/yarnDeduplicate')
 const handler = async ({ cwd }) => {
     const paths = makePaths(cwd)
 
+    if (paths.pnpmLock !== null) {
+        return true;
+    }
+
     if (paths.yarnLock === null) {
         exit(1, 'Could not find yarn.lock')
     }

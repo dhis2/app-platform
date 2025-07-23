@@ -1,0 +1,12 @@
+hoistPattern:
+  - "@dhis2/ui"
+  - "typeface-roboto"
+  - "@dhis2/app-adapter"
+  - "prop-types"
+  - "@dhis2/d2-i18n"
+  - "post-robot"
+
+onlyBuiltDependencies:
+  - "@dhis2/cli-helpers-engine"
+  - core-js-pure
+  - esbuild

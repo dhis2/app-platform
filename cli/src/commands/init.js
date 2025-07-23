@@ -69,7 +69,8 @@ const writeGitignore = (gitignoreFile, sections) => {
     fs.writeFileSync(gitignoreFile, gitignore.stringify(sections, format))
 }
 
-const handler = async ({ force, name, cwd, lib, typeScript }) => {
+const handler = async ({ force, pkgManager = 'yarn', name, cwd, lib, typeScript }) => {
+    const installCmd = pkgManager === 'npm' ? 'install' : 'add'
     // create the folder where the template will be generated
     cwd = cwd || process.cwd()
     cwd = path.join(cwd, name)
@@ -142,6 +143,10 @@ const handler = async ({ force, name, cwd, lib, typeScript }) => {
         spaces: 2,
     })
 
+    if(pkgManager === 'pnpm') {
+            fs.copySync(paths.initPnpmWorkspace, paths.pnpmWorkspace)
+    }
+    
     if (
         !force &&
         ((pkg.devDependencies &&
@@ -159,20 +164,20 @@ const handler = async ({ force, name, cwd, lib, typeScript }) => {
     } else {
         reporter.info('Installing @dhis2/cli-app-scripts...')
         await exec({
-            cmd: 'yarn',
-            args: ['add', 'react@^18'],
+            cmd: pkgManager,
+            args: [installCmd, 'react@^18'],
             cwd: paths.base,
         })
 
         await exec({
-            cmd: 'yarn',
-            args: ['add', 'react-dom@^18'],
+            cmd: pkgManager,
+            args: [installCmd, 'react-dom@^18'],
             cwd: paths.base,
         })
 
         await exec({
-            cmd: 'yarn',
-            args: ['add', '--dev', '@dhis2/cli-app-scripts'],
+            cmd: pkgManager,
+            args: [installCmd, '-D', 'alpha'], // todo: update to alpha/main channel
             cwd: paths.base,
         })
     }
@@ -192,8 +197,8 @@ const handler = async ({ force, name, cwd, lib, typeScript }) => {
     } else {
         reporter.info('Installing @dhis2/app-runtime...')
         await exec({
-            cmd: 'yarn',
-            args: ['add', '@dhis2/app-runtime'],
+            cmd: pkgManager,
+            args: [installCmd, '@dhis2/app-runtime'],
             cwd: paths.base,
         })
     }
@@ -206,16 +211,16 @@ const handler = async ({ force, name, cwd, lib, typeScript }) => {
         reporter.info('install TypeScript as a dev dependency')
 
         await exec({
-            cmd: 'yarn',
-            args: ['add', 'typescript@^5', '--dev'],
+            cmd: pkgManager,
+            args: [installCmd, 'typescript@^5', '-D'],
             cwd: paths.base,
         })
 
         // install any other TS dependencies needed
         reporter.info('install type definitions')
         await exec({
-            cmd: 'yarn',
-            args: ['add', '@types/react @types/react-dom @types/jest', '--dev'],
+            cmd: pkgManager,
+            args: [installCmd, '@types/react @types/react-dom @types/jest', '-D'],
             cwd: paths.base,
         })
 
@@ -281,7 +286,7 @@ const handler = async ({ force, name, cwd, lib, typeScript }) => {
     const cdCmd = name != '.' ? `cd ${name} && ` : ''
     reporter.print(
         `Run ${chalk.bold(
-            `${cdCmd}yarn start`
+            `${cdCmd}${pkgManager} start`
         )} to launch your new DHIS2 application`
     )
 }
@@ -306,6 +311,11 @@ const command = {
             type: 'boolean',
             default: false,
         },
+        pkgManager: {
+            description: 'Package manager to use (pnpm, yarn, npm)',
+            type: 'string',
+            default: 'yarn'
+        }
     },
     handler,
 }
