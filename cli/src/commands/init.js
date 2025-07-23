@@ -69,7 +69,7 @@ const writeGitignore = (gitignoreFile, sections) => {
     fs.writeFileSync(gitignoreFile, gitignore.stringify(sections, format))
 }
 
-const handler = async ({ force, pkgManager = 'yarn', name, cwd, lib, typeScript }) => {
+const handler = async ({ force, pkgManager = 'pnpm', name, cwd, lib, typeScript }) => {
     const installCmd = pkgManager === 'npm' ? 'install' : 'add'
     // create the folder where the template will be generated
     cwd = cwd || process.cwd()
@@ -314,7 +314,7 @@ const command = {
         pkgManager: {
             description: 'Package manager to use (pnpm, yarn, npm)',
             type: 'string',
-            default: 'yarn'
+            default: 'pnpm'
         }
     },
     handler,
