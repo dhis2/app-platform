@@ -1,3 +1,10 @@
+# [12.7.0-alpha.3](https://github.com/dhis2/app-platform/compare/v12.7.0-alpha.2...v12.7.0-alpha.3) (2025-07-23)
+
+
+### Bug Fixes
+
+* default to pnpm as a package manager ([2fb963f](https://github.com/dhis2/app-platform/commit/2fb963fba2d66646c0cb204410661bd60e4b797f))
+
 # [12.7.0-alpha.2](https://github.com/dhis2/app-platform/compare/v12.7.0-alpha.1...v12.7.0-alpha.2) (2025-07-23)
 
 
