@@ -1,3 +1,10 @@
+# [12.7.0-alpha.2](https://github.com/dhis2/app-platform/compare/v12.7.0-alpha.1...v12.7.0-alpha.2) (2025-07-23)
+
+
+### Bug Fixes
+
+* correct cli-app-script link ([1d889ff](https://github.com/dhis2/app-platform/commit/1d889ffb0ba67ad53d128d647fb581339e0bd413))
+
 # [12.7.0-alpha.1](https://github.com/dhis2/app-platform/compare/v12.6.4...v12.7.0-alpha.1) (2025-07-23)
 
 
