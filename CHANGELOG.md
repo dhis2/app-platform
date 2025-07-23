@@ -1,3 +1,15 @@
+# [12.7.0-alpha.1](https://github.com/dhis2/app-platform/compare/v12.6.4...v12.7.0-alpha.1) (2025-07-23)
+
+
+### Bug Fixes
+
+* **deps:** get rid of warnings shown on initialising new d2 projects ([#929](https://github.com/dhis2/app-platform/issues/929)) ([f5b499f](https://github.com/dhis2/app-platform/commit/f5b499fc867e76adb88d3a1838e1fa7163e49de7)), closes [#927](https://github.com/dhis2/app-platform/issues/927) [#927](https://github.com/dhis2/app-platform/issues/927) [#928](https://github.com/dhis2/app-platform/issues/928) [#928](https://github.com/dhis2/app-platform/issues/928) [#930](https://github.com/dhis2/app-platform/issues/930) [#930](https://github.com/dhis2/app-platform/issues/930)
+
+
+### Features
+
+* support pnpm and other package managers ([9c81f35](https://github.com/dhis2/app-platform/commit/9c81f35ac1b00613d0d26ed79c4d33454fcf6296))
+
 ## [12.6.5-beta.5](https://github.com/dhis2/app-platform/compare/v12.6.5-beta.4...v12.6.5-beta.5) (2025-07-11)
 
 
