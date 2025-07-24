@@ -79,7 +79,7 @@ const handler = async ({ force, pnpm, npm, name, cwd, lib, typeScript }) => {
     }
 
     reporter.info(
-        `initialising a new project using "${pkgManager}" as a package manager.`
+        `Initialising a new project using "${pkgManager}" as a package manager.`
     )
 
     if (!pnpm) {
@@ -93,7 +93,7 @@ const handler = async ({ force, pnpm, npm, name, cwd, lib, typeScript }) => {
     fs.mkdirpSync(cwd)
     const paths = makePaths(cwd, { typeScript })
 
-    reporter.info('checking d2.config exists')
+    reporter.info('Checking d2.config exists')
     if (fs.existsSync(paths.config) && !force) {
         reporter.warn(
             'A config file already exists, use --force to overwrite it'
