@@ -1,3 +1,10 @@
+# [12.7.0-alpha.5](https://github.com/dhis2/app-platform/compare/v12.7.0-alpha.4...v12.7.0-alpha.5) (2025-07-24)
+
+
+### Bug Fixes
+
+* add styled-jsx to hoisted dependencies ([9e692bc](https://github.com/dhis2/app-platform/commit/9e692bc2c1c680e3069b522a42e64569d9423e92))
+
 # [12.7.0-alpha.4](https://github.com/dhis2/app-platform/compare/v12.7.0-alpha.3...v12.7.0-alpha.4) (2025-07-24)
 
 
