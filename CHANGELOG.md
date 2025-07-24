@@ -1,3 +1,10 @@
+# [12.7.0-alpha.9](https://github.com/dhis2/app-platform/compare/v12.7.0-alpha.8...v12.7.0-alpha.9) (2025-07-24)
+
+
+### Bug Fixes
+
+* capitalise log messages ([e480586](https://github.com/dhis2/app-platform/commit/e48058619c9d04d51597c8446e40d233b0944ef3))
+
 # [12.7.0-alpha.8](https://github.com/dhis2/app-platform/compare/v12.7.0-alpha.7...v12.7.0-alpha.8) (2025-07-24)
 
 
