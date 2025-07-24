@@ -1,3 +1,10 @@
+# [12.7.0-alpha.4](https://github.com/dhis2/app-platform/compare/v12.7.0-alpha.3...v12.7.0-alpha.4) (2025-07-24)
+
+
+### Bug Fixes
+
+* change hoist options for phantom app-shell dependencies ([ac9aa78](https://github.com/dhis2/app-platform/commit/ac9aa78f71ea55fcff65191e510086c8fe7b4dc2))
+
 # [12.7.0-alpha.3](https://github.com/dhis2/app-platform/compare/v12.7.0-alpha.2...v12.7.0-alpha.3) (2025-07-23)
 
 
