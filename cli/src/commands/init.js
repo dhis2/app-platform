@@ -326,13 +326,13 @@ const command = {
             description:
                 'Use pnpm (instead of the default yarn 1) as a Package manager',
             type: 'boolean',
-            default: false,
+            default: undefined,
         },
         npm: {
             description:
                 'Use npm (instead of the default yarn 1) as a Package manager',
             type: 'boolean',
-            default: false,
+            default: undefined,
             conflicts: 'pnpm',
         },
     },
