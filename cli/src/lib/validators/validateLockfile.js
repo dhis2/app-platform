@@ -1,5 +1,6 @@
 const fs = require('fs')
 const { reporter, prompt, exec } = require('@dhis2/cli-helpers-engine')
+const { isPnpmProject, isNpmProject } = require('../packageManagers')
 const { listDuplicates, fixDuplicates } = require('../yarnDeduplicate')
 
 const singletonDependencies = [
@@ -17,7 +18,7 @@ const listSingletonDuplicates = (yarnLock) =>
     })
 
 exports.validateLockfile = async (pkg, { paths, offerFix = false }) => {
-    if (paths.yarnLock === null && paths.pnpmLock === null) {
+    if (paths.yarnLock === null && !isPnpmProject() && !isNpmProject()) {
         reporter.warn('Could not find yarn.lock')
         return false
     }
@@ -25,12 +26,13 @@ exports.validateLockfile = async (pkg, { paths, offerFix = false }) => {
     const yarnLock = paths.yarnLock
         ? fs.readFileSync(paths.yarnLock, 'utf8')
         : null
-    const pnpmLock = paths.pnpmLock
-        ? fs.readFileSync(paths.pnpmLock, 'utf8')
-        : null
 
     // Yarn v2 and above deduplicate dependencies automatically
-    if (!yarnLock?.includes?.('# yarn lockfile v1') || pnpmLock) {
+    if (
+        !yarnLock?.includes?.('# yarn lockfile v1') ||
+        isPnpmProject() ||
+        isNpmProject()
+    ) {
         return true
     }
 

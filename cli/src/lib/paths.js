@@ -29,6 +29,17 @@ const findPnpmLock = (base, rootDirectory) => {
     return findPnpmLock(path.dirname(base), rootDirectory)
 }
 
+const findNpmLock = (base, rootDirectory) => {
+    if (base === rootDirectory) {
+        return null
+    }
+    const pnpmLock = path.join(base, './package-lock.json')
+    if (fs.existsSync(pnpmLock)) {
+        return pnpmLock
+    }
+    return findNpmLock(path.dirname(base), rootDirectory)
+}
+
 module.exports = (cwd = process.cwd(), { typeScript } = {}) => {
     const base = path.resolve(cwd)
     const rootDirectory = path.parse(cwd).root
@@ -113,6 +124,7 @@ module.exports = (cwd = process.cwd(), { typeScript } = {}) => {
         pnpmWorkspace: path.join(base, './pnpm-workspace.yaml'),
 
         pnpmLock: findPnpmLock(base, rootDirectory),
+        npmLock: findNpmLock(base, rootDirectory),
 
         d2: path.join(base, './.d2/'),
         appOutputFilename: 'App.jsx',

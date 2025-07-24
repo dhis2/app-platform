@@ -1,12 +1,14 @@
 const fs = require('fs')
 const { reporter, chalk, exit } = require('@dhis2/cli-helpers-engine')
+const { isPnpmProject, isNpmProject } = require('../lib/packageManagers')
 const makePaths = require('../lib/paths')
 const { listDuplicates, fixDuplicates } = require('../lib/yarnDeduplicate')
 
 const handler = async ({ cwd }) => {
     const paths = makePaths(cwd)
 
-    if (paths.pnpmLock !== null) {
+    // no yarn deduplication needed for pnpm projects
+    if (isPnpmProject() || isNpmProject()) {
         return true
     }
 

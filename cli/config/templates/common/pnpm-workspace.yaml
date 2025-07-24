@@ -1,3 +1,5 @@
+# These hoists are needed for @dhis2/app-shell since it uses directly some libraries that were hoisted by yarn 1
+# This is a better alternative than pnpm's shamefullyHoist https://pnpm.io/settings#shamefullyhoist until we update the way that @dhis2/app-shell works
 publicHoistPattern:
   - "@dhis2/ui"
   - "typeface-roboto"
