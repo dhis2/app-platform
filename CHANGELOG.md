@@ -1,3 +1,11 @@
+# [12.7.0-alpha.13](https://github.com/dhis2/app-platform/compare/v12.7.0-alpha.12...v12.7.0-alpha.13) (2025-07-24)
+
+
+### Bug Fixes
+
+* force alpha release to npm ([78a2e69](https://github.com/dhis2/app-platform/commit/78a2e69e51c81891f7811f40760d12409117a4f7))
+* **deps:** deduplicate dependencies ([#931](https://github.com/dhis2/app-platform/issues/931)) ([b255039](https://github.com/dhis2/app-platform/commit/b255039dc4441b6300dd5923f3eb75435fe82d20))
+
 # [12.7.0-alpha.12](https://github.com/dhis2/app-platform/compare/v12.7.0-alpha.11...v12.7.0-alpha.12) (2025-07-24)
 
 
