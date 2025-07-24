@@ -78,6 +78,15 @@ const handler = async ({ force, pnpm, npm, name, cwd, lib, typeScript }) => {
         pkgManager = 'npm'
     }
 
+    reporter.info(
+        `initialising a new project using "${pkgManager}" as a package manager.`
+    )
+
+    if (!pnpm) {
+        reporter.warn(
+            'We recommend using "pnpm" as a package manager for new projects. You can do so by passing the argument --pnpm (i.e. d2 app scripts init --pnpm). This will become the default in future versions of d2 CLI.'
+        )
+    }
     // create the folder where the template will be generated
     cwd = cwd || process.cwd()
     cwd = path.join(cwd, name)
