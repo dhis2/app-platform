@@ -1,4 +1,4 @@
-hoistPattern:
+publicHoistPattern:
   - "@dhis2/ui"
   - "typeface-roboto"
   - "@dhis2/app-adapter"
