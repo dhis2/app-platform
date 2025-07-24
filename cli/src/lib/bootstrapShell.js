@@ -69,7 +69,7 @@ const bootstrapShell = ({ paths, shell, force = false }) => {
     reporter.debug(
         `Bootstrapping appShell. Source: "${srcNodeModules}" - Destination: "${destNodeModules}"`
     )
-    if (fs.exists(srcNodeModules)) {
+    if (fs.existsSync(srcNodeModules)) {
         reporter.debug(
             `Linking ${path.relative(
                 paths.base,
