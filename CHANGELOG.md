@@ -1,3 +1,10 @@
+# [12.7.0-alpha.11](https://github.com/dhis2/app-platform/compare/v12.7.0-alpha.10...v12.7.0-alpha.11) (2025-07-24)
+
+
+### Bug Fixes
+
+* race condition with symlinks ([fe2d496](https://github.com/dhis2/app-platform/commit/fe2d49618ce7181b321a8b9de5e80ea594ec3427))
+
 # [12.7.0-alpha.10](https://github.com/dhis2/app-platform/compare/v12.7.0-alpha.9...v12.7.0-alpha.10) (2025-07-24)
 
 
