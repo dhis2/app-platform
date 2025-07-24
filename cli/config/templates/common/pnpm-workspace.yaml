@@ -5,6 +5,7 @@ publicHoistPattern:
   - "prop-types"
   - "@dhis2/d2-i18n"
   - "post-robot"
+  - "styled-jsx"
 
 onlyBuiltDependencies:
   - "@dhis2/cli-helpers-engine"
