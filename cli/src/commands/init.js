@@ -112,6 +112,11 @@ const handler = async ({ force, pnpm, npm, name, cwd, lib, typeScript }) => {
 
         const pkg = require(paths.initPackageJson)
         pkg.name = name
+        if (pnpm) {
+            pkg.packageManager = 'pnpm@10.13.1'
+        } else if (npm) {
+            pkg.packageManager = 'npm@10.8.2'
+        }
         fs.writeJSONSync(paths.package, pkg, {
             spaces: 2,
         })
