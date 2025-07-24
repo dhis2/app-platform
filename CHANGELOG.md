@@ -1,3 +1,10 @@
+# [12.7.0-alpha.7](https://github.com/dhis2/app-platform/compare/v12.7.0-alpha.6...v12.7.0-alpha.7) (2025-07-24)
+
+
+### Bug Fixes
+
+* default args to undefined not 'false' to avoid conflict ([2b54a06](https://github.com/dhis2/app-platform/commit/2b54a064ebb2f8379575ff8833c26cdb025d3bd5))
+
 # [12.7.0-alpha.6](https://github.com/dhis2/app-platform/compare/v12.7.0-alpha.5...v12.7.0-alpha.6) (2025-07-24)
 
 
