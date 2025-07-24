@@ -1,3 +1,10 @@
+# [12.7.0-alpha.6](https://github.com/dhis2/app-platform/compare/v12.7.0-alpha.5...v12.7.0-alpha.6) (2025-07-24)
+
+
+### Bug Fixes
+
+* change cli option for package manager to boolean '--pnpm' ([e971c3d](https://github.com/dhis2/app-platform/commit/e971c3dfe2360f59a9a56214aed6e0fda1c2fcdf))
+
 # [12.7.0-alpha.5](https://github.com/dhis2/app-platform/compare/v12.7.0-alpha.4...v12.7.0-alpha.5) (2025-07-24)
 
 
