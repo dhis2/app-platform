@@ -7,7 +7,7 @@ const handler = async ({ cwd }) => {
     const paths = makePaths(cwd)
 
     if (paths.pnpmLock !== null) {
-        return true;
+        return true
     }
 
     if (paths.yarnLock === null) {

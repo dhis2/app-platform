@@ -65,11 +65,11 @@ const handler = async ({
 
     const isPnpm = paths.pnpmLock !== null
     const pkgCommand = isPnpm ? 'pnpm' : 'yarn'
-     
+
     mode = mode || (dev && 'development') || getNodeEnv() || 'production'
     process.env.BABEL_ENV = process.env.NODE_ENV = mode
     loadEnvFiles(paths, mode)
-    
+
     reporter.print(chalk.green.bold('Build parameters:'))
     printBuildParam('Mode', mode)
 

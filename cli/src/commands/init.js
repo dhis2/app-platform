@@ -69,8 +69,15 @@ const writeGitignore = (gitignoreFile, sections) => {
     fs.writeFileSync(gitignoreFile, gitignore.stringify(sections, format))
 }
 
-const handler = async ({ force, pkgManager = 'pnpm', name, cwd, lib, typeScript }) => {
-    const installCmd = pkgManager === 'npm' ? 'install' : 'add'
+const handler = async ({ force, pnpm, npm, name, cwd, lib, typeScript }) => {
+    const installCmd = npm ? 'install' : 'add'
+    let pkgManager = 'yarn'
+    if (pnpm) {
+        pkgManager = 'pnpm'
+    } else if (npm) {
+        pkgManager = 'npm'
+    }
+
     // create the folder where the template will be generated
     cwd = cwd || process.cwd()
     cwd = path.join(cwd, name)
@@ -143,10 +150,10 @@ const handler = async ({ force, pkgManager = 'pnpm', name, cwd, lib, typeScript 
         spaces: 2,
     })
 
-    if(pkgManager === 'pnpm') {
-            fs.copySync(paths.initPnpmWorkspace, paths.pnpmWorkspace)
+    if (pnpm) {
+        fs.copySync(paths.initPnpmWorkspace, paths.pnpmWorkspace)
     }
-    
+
     if (
         !force &&
         ((pkg.devDependencies &&
@@ -220,7 +227,11 @@ const handler = async ({ force, pkgManager = 'pnpm', name, cwd, lib, typeScript 
         reporter.info('install type definitions')
         await exec({
             cmd: pkgManager,
-            args: [installCmd, '@types/react @types/react-dom @types/jest', '-D'],
+            args: [
+                installCmd,
+                '@types/react @types/react-dom @types/jest',
+                '-D',
+            ],
             cwd: paths.base,
         })
 
@@ -311,11 +322,19 @@ const command = {
             type: 'boolean',
             default: false,
         },
-        pkgManager: {
-            description: 'Package manager to use (pnpm, yarn, npm)',
-            type: 'string',
-            default: 'pnpm'
-        }
+        pnpm: {
+            description:
+                'Use pnpm (instead of the default yarn 1) as a Package manager',
+            type: 'boolean',
+            default: false,
+        },
+        npm: {
+            description:
+                'Use npm (instead of the default yarn 1) as a Package manager',
+            type: 'boolean',
+            default: false,
+            conflicts: 'pnpm',
+        },
     },
     handler,
 }
