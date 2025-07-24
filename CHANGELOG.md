@@ -1,3 +1,11 @@
+# [12.7.0-alpha.10](https://github.com/dhis2/app-platform/compare/v12.7.0-alpha.9...v12.7.0-alpha.10) (2025-07-24)
+
+
+### Bug Fixes
+
+* ensure app-shell symlink is created to avoid race conditon ([223350e](https://github.com/dhis2/app-platform/commit/223350efe7031fcfee52997dfe74fcb478286893))
+* ensure npm works as well as pnpm ([2975d2e](https://github.com/dhis2/app-platform/commit/2975d2e14007133eb1cfe0b09091459ef49da177))
+
 # [12.7.0-alpha.9](https://github.com/dhis2/app-platform/compare/v12.7.0-alpha.8...v12.7.0-alpha.9) (2025-07-24)
 
 
