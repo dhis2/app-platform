@@ -1,3 +1,10 @@
+# [12.7.0-alpha.8](https://github.com/dhis2/app-platform/compare/v12.7.0-alpha.7...v12.7.0-alpha.8) (2025-07-24)
+
+
+### Bug Fixes
+
+* recommend the use of 'pnpm' as a warning on init command ([e0cda6d](https://github.com/dhis2/app-platform/commit/e0cda6d9f1a8ec8ad6d2b301637529d3d0badba9))
+
 # [12.7.0-alpha.7](https://github.com/dhis2/app-platform/compare/v12.7.0-alpha.6...v12.7.0-alpha.7) (2025-07-24)
 
 
