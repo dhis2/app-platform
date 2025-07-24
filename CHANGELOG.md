@@ -1,3 +1,10 @@
+# [12.7.0-alpha.12](https://github.com/dhis2/app-platform/compare/v12.7.0-alpha.11...v12.7.0-alpha.12) (2025-07-24)
+
+
+### Bug Fixes
+
+* add corepack packageManager field ([acb4ac0](https://github.com/dhis2/app-platform/commit/acb4ac0877747a4bf433230469d333404198bd8b))
+
 # [12.7.0-alpha.11](https://github.com/dhis2/app-platform/compare/v12.7.0-alpha.10...v12.7.0-alpha.11) (2025-07-24)
 
 
