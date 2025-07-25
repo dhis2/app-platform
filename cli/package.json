@@ -15,6 +15,10 @@
         "access": "public"
     },
     "main": "src/index.js",
+    "exports": {
+        ".": "./src/index.js",
+        "./init": "./src/commands/init.js"
+    },
     "files": [
         "bin",
         "config",
