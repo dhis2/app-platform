@@ -1,3 +1,10 @@
+# [12.7.0-alpha.14](https://github.com/dhis2/app-platform/compare/v12.7.0-alpha.13...v12.7.0-alpha.14) (2025-07-25)
+
+
+### Bug Fixes
+
+* expose init command in the package ([cc8b7f5](https://github.com/dhis2/app-platform/commit/cc8b7f563c0a10681c367bf5f98638c5f42ee79b))
+
 # [12.7.0-alpha.13](https://github.com/dhis2/app-platform/compare/v12.7.0-alpha.12...v12.7.0-alpha.13) (2025-07-24)
 
 
