@@ -18,6 +18,28 @@ const findYarnLock = (base, rootDirectory) => {
     return findYarnLock(path.dirname(base), rootDirectory)
 }
 
+const findPnpmLock = (base, rootDirectory) => {
+    if (base === rootDirectory) {
+        return null
+    }
+    const pnpmLock = path.join(base, './pnpm-lock.yaml')
+    if (fs.existsSync(pnpmLock)) {
+        return pnpmLock
+    }
+    return findPnpmLock(path.dirname(base), rootDirectory)
+}
+
+const findNpmLock = (base, rootDirectory) => {
+    if (base === rootDirectory) {
+        return null
+    }
+    const pnpmLock = path.join(base, './package-lock.json')
+    if (fs.existsSync(pnpmLock)) {
+        return pnpmLock
+    }
+    return findNpmLock(path.dirname(base), rootDirectory)
+}
+
 module.exports = (cwd = process.cwd(), { typeScript } = {}) => {
     const base = path.resolve(cwd)
     const rootDirectory = path.parse(cwd).root
@@ -67,6 +89,11 @@ module.exports = (cwd = process.cwd(), { typeScript } = {}) => {
             __dirname,
             '../../config/templates/init-typescript/modules.d.ts'
         ),
+        initPnpmWorkspace: path.join(
+            __dirname,
+            '../../config/templates/common/pnpm-workspace.yaml'
+        ),
+
         configDefaults: path.join(
             __dirname,
             typeScript
@@ -94,6 +121,10 @@ module.exports = (cwd = process.cwd(), { typeScript } = {}) => {
         i18nLocales: path.join(base, './src/locales'),
         tsConfig: path.join(base, './tsconfig.json'),
         eslintConfig: path.join(base, './eslint.config.js'),
+        pnpmWorkspace: path.join(base, './pnpm-workspace.yaml'),
+
+        pnpmLock: findPnpmLock(base, rootDirectory),
+        npmLock: findNpmLock(base, rootDirectory),
 
         d2: path.join(base, './.d2/'),
         appOutputFilename: 'App.jsx',
