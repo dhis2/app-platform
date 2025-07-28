@@ -1,5 +1,3 @@
-const path = require('path')
-
 /** @type {import('@dhis2/cli-app-scripts').D2Config} */
 const config = {
     id: 'ASDF1234', // This must match the AppHub ID to successfully publish
@@ -30,7 +28,7 @@ const config = {
 
     minDHIS2Version: '2.35',
 
-    viteConfigExtensions: path.join(__dirname, 'viteConfigExtensions.mjs'),
+    viteConfigExtensions: './viteConfigExtensions.mjs',
 }
 
 module.exports = config
