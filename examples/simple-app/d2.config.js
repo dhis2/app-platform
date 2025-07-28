@@ -1,3 +1,4 @@
+/** @type {import('@dhis2/cli-app-scripts').D2Config} */
 const config = {
     id: 'ASDF1234', // This must match the AppHub ID to successfully publish
     name: 'simple-app',
@@ -26,6 +27,8 @@ const config = {
     ],
 
     minDHIS2Version: '2.35',
+
+    viteConfigExtensions: './viteConfigExtensions.mjs',
 }
 
 module.exports = config
