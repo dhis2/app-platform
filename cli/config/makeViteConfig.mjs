@@ -1,3 +1,4 @@
+import path from 'path'
 import { reporter } from '@dhis2/cli-helpers-engine'
 import react from '@vitejs/plugin-react'
 import {
@@ -126,12 +127,15 @@ const getBuildInputs = (config, paths) => {
 
 /** @typedef {import('../src/index').D2Config} D2Config */
 /** @param {D2Config} config */
+/** @param {any} paths */
 /** @param {'development' | 'production'} mode */
-const resolveExtraViteConfig = async (config, mode) => {
+const resolveExtraViteConfig = async (config, paths, mode) => {
     const { viteConfigExtensions } = config
 
     // If it's a string, it should be a path -- import config from there
     if (typeof viteConfigExtensions === 'string') {
+        // Handles absolute or relative path for viteConfigExtensions
+        const filepath = path.resolve(paths.base, viteConfigExtensions)
         // The ConfigEnv is not normally granted when using Vite's
         // JavaScript API, so recreate those values here:
         const configEnv = {
@@ -142,7 +146,7 @@ const resolveExtraViteConfig = async (config, mode) => {
         }
         const { config: configFromFile } = await loadConfigFromFile(
             configEnv,
-            viteConfigExtensions
+            filepath
         )
         return configFromFile
     }
@@ -245,7 +249,7 @@ export default async ({
     let finalConfig = appPlatformConfig
     // If user defined extra Vite config, apply that
     if (config.viteConfigExtensions) {
-        const extraConfig = await resolveExtraViteConfig(config, mode)
+        const extraConfig = await resolveExtraViteConfig(config, paths, mode)
         finalConfig = mergeConfig(appPlatformConfig, extraConfig)
     }
 
