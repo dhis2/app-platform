@@ -203,7 +203,7 @@ export type D2Config = {
          *
          * The value can be either an **Object** following Vite's `UserConfig`
          * type, which may be appropriate for a simple set of options;
-         * or an **absolute path to a file** that follows the same rules as Vite
+         * or an **path to a file** that follows the same rules as Vite
          * configuration files, which can be useful for more complex options.
          * https://vite.dev/config/
          *
