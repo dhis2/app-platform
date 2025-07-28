@@ -1,3 +1,10 @@
+# [12.7.0-alpha.15](https://github.com/dhis2/app-platform/compare/v12.7.0-alpha.14...v12.7.0-alpha.15) (2025-07-28)
+
+
+### Bug Fixes
+
+* hoist dependencies needed for plugins and PWAs ([fa91bc5](https://github.com/dhis2/app-platform/commit/fa91bc503a98e4fab6176165b9c169ba04ed06e4))
+
 # [12.7.0-alpha.14](https://github.com/dhis2/app-platform/compare/v12.7.0-alpha.13...v12.7.0-alpha.14) (2025-07-25)
 
 
