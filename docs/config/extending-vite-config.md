@@ -21,6 +21,8 @@ Using a config file lets you take advantage of Vite's `defineConfig()` and [`loa
 
 :::note
 The config file uses an `.mjs` extension so that it can import the `defineConfig()` helper from `vite`, which only supports an ES Module build.
+
+If you're using TypeScript, you can use an `.mts` extension.
 :::
 
 ```js filename='viteConfigExtensions.mjs'
