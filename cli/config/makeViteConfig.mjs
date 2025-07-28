@@ -1,9 +1,12 @@
+import path from 'path'
+import { reporter } from '@dhis2/cli-helpers-engine'
 import react from '@vitejs/plugin-react'
 import {
     defineConfig,
     mergeConfig,
     searchForWorkspaceRoot,
     transformWithEsbuild,
+    loadConfigFromFile,
 } from 'vite'
 import dynamicImport from 'vite-plugin-dynamic-import'
 
@@ -122,8 +125,57 @@ const getBuildInputs = (config, paths) => {
     return inputs
 }
 
+/** @typedef {import('../src/index').D2Config} D2Config */
+/** @param {D2Config} config */
+/** @param {any} paths */
+/** @param {'development' | 'production'} mode */
+const resolveExtraViteConfig = async (config, paths, mode) => {
+    const { viteConfigExtensions } = config
+
+    // If it's a string, it should be a path -- import config from there
+    if (typeof viteConfigExtensions === 'string') {
+        // Handles absolute or relative path for viteConfigExtensions
+        const filepath = path.resolve(paths.base, viteConfigExtensions)
+        // The ConfigEnv is not normally granted when using Vite's
+        // JavaScript API, so recreate those values here:
+        const configEnv = {
+            mode: mode,
+            command: mode === 'production' ? 'build' : 'serve',
+            isSsrBuild: false,
+            isPreview: false,
+        }
+        const { config: configFromFile } = await loadConfigFromFile(
+            configEnv,
+            filepath
+        )
+        return configFromFile
+    }
+
+    // Otherwise, it should be an object that's ready to go
+    return viteConfigExtensions
+}
+
 // https://vitejs.dev/config/
-export default ({ paths, config, env, host, force, allowJsxInJs }) => {
+/**
+ * @param {{
+ *   paths: any;
+ *   config: D2Config;
+ *   env: any;
+ *   mode: 'development' | 'production';
+ *   host?: string;
+ *   force?: boolean;
+ *   allowJsxInJs?: boolean;
+ * }} options
+ */
+export default async ({
+    paths,
+    config,
+    env,
+    mode,
+    host,
+    force,
+    allowJsxInJs,
+}) => {
     const baseConfig = defineConfig({
         // Need to specify the location of the app root, since this CLI command
         // gets run in a different directory than the bootstrapped app
@@ -189,5 +241,18 @@ export default ({ paths, config, env, host, force, allowJsxInJs }) => {
         optimizeDeps: { force },
     })
 
-    return allowJsxInJs ? mergeConfig(baseConfig, jsxInJsConfig) : baseConfig
+    // Add config if "JSX in .js files" support is needed
+    const appPlatformConfig = allowJsxInJs
+        ? mergeConfig(baseConfig, jsxInJsConfig)
+        : baseConfig
+
+    let finalConfig = appPlatformConfig
+    // If user defined extra Vite config, apply that
+    if (config.viteConfigExtensions) {
+        const extraConfig = await resolveExtraViteConfig(config, paths, mode)
+        finalConfig = mergeConfig(appPlatformConfig, extraConfig)
+    }
+
+    reporter.debug('Final Vite config:', finalConfig)
+    return finalConfig
 }

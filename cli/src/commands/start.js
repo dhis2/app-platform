@@ -42,6 +42,7 @@ const handler = async ({
     process.env.BABEL_ENV = process.env.NODE_ENV = mode
     loadEnvFiles(paths, mode)
 
+    /** @type {import('../index').D2Config} */
     const config = parseConfig(paths)
 
     if (!isApp(config.type)) {
@@ -151,10 +152,11 @@ const handler = async ({
                     'Consider using the migration script `yarn d2-app-scripts migrate js-to-jsx` to rename your files to use .jsx extensions.'
                 )
             }
-            const viteConfig = createConfig({
+            const viteConfig = await createConfig({
                 config,
                 paths,
                 env,
+                mode,
                 host,
                 force,
                 allowJsxInJs,

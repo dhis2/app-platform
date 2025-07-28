@@ -1,4 +1,11 @@
-# [12.7.0-alpha.15](https://github.com/dhis2/app-platform/compare/v12.7.0-alpha.14...v12.7.0-alpha.15) (2025-07-28)
+# [12.7.0](https://github.com/dhis2/app-platform/compare/v12.6.5...v12.7.0) (2025-07-28)
+
+
+### Features
+
+* add option for custom Vite config extensions ([#932](https://github.com/dhis2/app-platform/issues/932)) ([40a406f](https://github.com/dhis2/app-platform/commit/40a406ff33e7f5b9a84664c1d097b23f74d40afa))
+
+## [12.6.5](https://github.com/dhis2/app-platform/compare/v12.6.4...v12.6.5) (2025-07-14)
 
 
 ### Bug Fixes

@@ -73,6 +73,7 @@ const handler = async ({
     reporter.print(chalk.green.bold('Build parameters:'))
     printBuildParam('Mode', mode)
 
+    /** @type {import('../index').D2Config} */
     const config = parseConfig(paths)
     const appParameters = isApp(config.type)
         ? getAppParameters(standalone, config)
@@ -150,10 +151,11 @@ const handler = async ({
                         `Consider using the migration script \`${pkgCommand} d2-app-scripts migrate js-to-jsx\` to rename your files to use .jsx extensions.`
                     )
                 }
-                const viteConfig = createConfig({
+                const viteConfig = await createConfig({
                     paths,
                     config,
                     env,
+                    mode,
                     allowJsxInJs,
                 })
                 await build(viteConfig)
