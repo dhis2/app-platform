@@ -5,7 +5,11 @@ It's possible to extend the App Platform's Vite configuration if necessary. This
 There are two ways to provide Vite config extensions using the `viteConfigExtensions` property in `d2.config.js`. Either way, the resulting config will be merged onto the App Platform's [base config](https://github.com/dhis2/app-platform/blob/master/cli/config/makeViteConfig.mjs) using Vite's `mergeConfig()` function.
 
 1. You can provide an Object as the value of the `viteConfigExtensions` option. This approach is useful for more simple config options.
-2. You can provide an absolute path to a [Vite config file](https://vite.dev/config/), and the config will be read with Vite's [`loadConfigFromFile()` function](https://vite.dev/guide/api-javascript.html#loadconfigfromfile). This is useful more advanced config, or if you want to take advantage of Vite's useful helper functions.
+2. You can provide a path to a [Vite config file](https://vite.dev/config/), and the config will be read with Vite's [`loadConfigFromFile()` function](https://vite.dev/guide/api-javascript.html#loadconfigfromfile). This is useful more advanced config, or if you want to take advantage of Vite's useful helper functions.
+
+:::tip
+To inspect the final Vite config after merging custom options, you can add the `--debug` flag when you run `d2-app-scripts start` or `d2-app-scripts build` to see the final config logged.
+:::
 
 ## Example: Using a config file
 
@@ -20,6 +24,7 @@ The config file uses an `.mjs` extension so that it can import the `defineConfig
 :::
 
 ```js filename='viteConfigExtensions.mjs'
+import path from 'path'
 import { defineConfig } from 'vite'
 
 const viteConfig = defineConfig(async (configEnv) => {
@@ -27,6 +32,8 @@ const viteConfig = defineConfig(async (configEnv) => {
     return {
         // In dev environments, don't clear the terminal after files update
         clearScreen: mode !== 'development',
+        // Use an import alias: import from '@/' anywhere instead of 'src/'
+        resolve: { alias: { '@': path.resolve(__dirname, 'src') } },
         // ...other config options here
     }
 })
@@ -36,17 +43,11 @@ export default viteConfig
 
 ### Using the Vite config file in `d2.config.js`
 
-Add the absolute path to your Vite config file as the value to `viteConfigExtensions` in `d2.config.js`.
+Add the path to your Vite config file as the value to `viteConfigExtensions` in `d2.config.js`.
 
-:::info
-It can be helpful to use `path.join(__dirname, 'myExtensionsFile.mjs')` to get the absolute file path to your config file.
-:::
+The path can be relative or absolute. If it's relative, it will be resolved relative to the current working directory, or the location provided to the `cwd` option when running the script.
 
 ```js filename='d2.config.js'
-// highlight-start
-const path = require('path')
-// highlight-end
-
 const config = {
     name: 'simple-app',
     direction: 'auto',
@@ -56,7 +57,7 @@ const config = {
     },
 
     // highlight-start
-    viteConfigExtensions: path.join(__dirname, 'viteConfigExtensions.mjs'),
+    viteConfigExtensions: './viteConfigExtensions.mjs',
     // highlight-end
 }
 
