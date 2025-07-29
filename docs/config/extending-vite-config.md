@@ -66,7 +66,7 @@ const config = {
 module.exports = config
 ```
 
-### Example: Simple config object
+## Example: Simple config object
 
 The object should match Vite's [`UserConfig` interface](https://vite.dev/config/#config-intellisense).
 
