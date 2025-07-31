@@ -17,7 +17,7 @@ const getShellVersion = (shellDir) => {
     return '0'
 }
 
-const bootstrapShell = async ({ paths, shell, force = false }) => {
+const bootstrapShell = ({ paths, shell, force = false }) => {
     const source = shell ? path.resolve(shell) : paths.shellSource,
         dest = paths.shell
 
@@ -48,15 +48,15 @@ const bootstrapShell = async ({ paths, shell, force = false }) => {
         }
 
         reporter.print(chalk.dim('Removing existing directory...'))
-        await fs.remove(dest)
+        fs.removeSync(dest)
     }
 
     reporter.debug(`Bootstrapping appShell from ${source} to ${dest}`)
-    await fs.ensureDir(dest)
+    fs.ensureDirSync(dest)
 
     reporter.print(chalk.dim('Copying appShell to temporary directory...'))
 
-    await fs.copy(source, dest, {
+    fs.copySync(source, dest, {
         dereference: true,
         filter: (src) =>
             src.indexOf('node_modules', source.length) === -1 &&
@@ -66,14 +66,17 @@ const bootstrapShell = async ({ paths, shell, force = false }) => {
 
     const srcNodeModules = path.join(source, 'node_modules')
     const destNodeModules = path.join(dest, 'node_modules')
-    if (fs.exists(srcNodeModules)) {
+    reporter.debug(
+        `Bootstrapping appShell. Source: "${srcNodeModules}" - Destination: "${destNodeModules}"`
+    )
+    if (fs.existsSync(srcNodeModules)) {
         reporter.debug(
             `Linking ${path.relative(
                 paths.base,
                 destNodeModules
             )} to ${path.relative(paths.base, srcNodeModules)}...`
         )
-        await fs.ensureSymlink(srcNodeModules, destNodeModules)
+        fs.ensureSymlinkSync(srcNodeModules, destNodeModules)
     }
 }
 

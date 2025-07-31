@@ -1,3 +1,29 @@
+# [12.8.0-alpha.1](https://github.com/dhis2/app-platform/compare/v12.7.0...v12.8.0-alpha.1) (2025-07-28)
+
+
+### Bug Fixes
+
+* add corepack packageManager field ([acb4ac0](https://github.com/dhis2/app-platform/commit/acb4ac0877747a4bf433230469d333404198bd8b))
+* add styled-jsx to hoisted dependencies ([9e692bc](https://github.com/dhis2/app-platform/commit/9e692bc2c1c680e3069b522a42e64569d9423e92))
+* capitalise log messages ([e480586](https://github.com/dhis2/app-platform/commit/e48058619c9d04d51597c8446e40d233b0944ef3))
+* change cli option for package manager to boolean '--pnpm' ([e971c3d](https://github.com/dhis2/app-platform/commit/e971c3dfe2360f59a9a56214aed6e0fda1c2fcdf))
+* change hoist options for phantom app-shell dependencies ([ac9aa78](https://github.com/dhis2/app-platform/commit/ac9aa78f71ea55fcff65191e510086c8fe7b4dc2))
+* correct cli-app-script link ([1d889ff](https://github.com/dhis2/app-platform/commit/1d889ffb0ba67ad53d128d647fb581339e0bd413))
+* default args to undefined not 'false' to avoid conflict ([2b54a06](https://github.com/dhis2/app-platform/commit/2b54a064ebb2f8379575ff8833c26cdb025d3bd5))
+* default to pnpm as a package manager ([2fb963f](https://github.com/dhis2/app-platform/commit/2fb963fba2d66646c0cb204410661bd60e4b797f))
+* ensure app-shell symlink is created to avoid race conditon ([223350e](https://github.com/dhis2/app-platform/commit/223350efe7031fcfee52997dfe74fcb478286893))
+* ensure npm works as well as pnpm ([2975d2e](https://github.com/dhis2/app-platform/commit/2975d2e14007133eb1cfe0b09091459ef49da177))
+* expose init command in the package ([cc8b7f5](https://github.com/dhis2/app-platform/commit/cc8b7f563c0a10681c367bf5f98638c5f42ee79b))
+* force alpha release to npm ([78a2e69](https://github.com/dhis2/app-platform/commit/78a2e69e51c81891f7811f40760d12409117a4f7))
+* hoist dependencies needed for plugins and PWAs ([fa91bc5](https://github.com/dhis2/app-platform/commit/fa91bc503a98e4fab6176165b9c169ba04ed06e4))
+* race condition with symlinks ([fe2d496](https://github.com/dhis2/app-platform/commit/fe2d49618ce7181b321a8b9de5e80ea594ec3427))
+* recommend the use of 'pnpm' as a warning on init command ([e0cda6d](https://github.com/dhis2/app-platform/commit/e0cda6d9f1a8ec8ad6d2b301637529d3d0badba9))
+
+
+### Features
+
+* support pnpm and other package managers ([9c81f35](https://github.com/dhis2/app-platform/commit/9c81f35ac1b00613d0d26ed79c4d33454fcf6296))
+
 # [12.7.0](https://github.com/dhis2/app-platform/compare/v12.6.5...v12.7.0) (2025-07-28)
 
 
@@ -10,8 +36,112 @@
 
 ### Bug Fixes
 
+* hoist dependencies needed for plugins and PWAs ([fa91bc5](https://github.com/dhis2/app-platform/commit/fa91bc503a98e4fab6176165b9c169ba04ed06e4))
+
+# [12.7.0-alpha.14](https://github.com/dhis2/app-platform/compare/v12.7.0-alpha.13...v12.7.0-alpha.14) (2025-07-25)
+
+
+### Bug Fixes
+
+* expose init command in the package ([cc8b7f5](https://github.com/dhis2/app-platform/commit/cc8b7f563c0a10681c367bf5f98638c5f42ee79b))
+
+# [12.7.0-alpha.13](https://github.com/dhis2/app-platform/compare/v12.7.0-alpha.12...v12.7.0-alpha.13) (2025-07-24)
+
+
+### Bug Fixes
+
+* force alpha release to npm ([78a2e69](https://github.com/dhis2/app-platform/commit/78a2e69e51c81891f7811f40760d12409117a4f7))
 * **deps:** deduplicate dependencies ([#931](https://github.com/dhis2/app-platform/issues/931)) ([b255039](https://github.com/dhis2/app-platform/commit/b255039dc4441b6300dd5923f3eb75435fe82d20))
+
+# [12.7.0-alpha.12](https://github.com/dhis2/app-platform/compare/v12.7.0-alpha.11...v12.7.0-alpha.12) (2025-07-24)
+
+
+### Bug Fixes
+
+* add corepack packageManager field ([acb4ac0](https://github.com/dhis2/app-platform/commit/acb4ac0877747a4bf433230469d333404198bd8b))
+
+# [12.7.0-alpha.11](https://github.com/dhis2/app-platform/compare/v12.7.0-alpha.10...v12.7.0-alpha.11) (2025-07-24)
+
+
+### Bug Fixes
+
+* race condition with symlinks ([fe2d496](https://github.com/dhis2/app-platform/commit/fe2d49618ce7181b321a8b9de5e80ea594ec3427))
+
+# [12.7.0-alpha.10](https://github.com/dhis2/app-platform/compare/v12.7.0-alpha.9...v12.7.0-alpha.10) (2025-07-24)
+
+
+### Bug Fixes
+
+* ensure app-shell symlink is created to avoid race conditon ([223350e](https://github.com/dhis2/app-platform/commit/223350efe7031fcfee52997dfe74fcb478286893))
+* ensure npm works as well as pnpm ([2975d2e](https://github.com/dhis2/app-platform/commit/2975d2e14007133eb1cfe0b09091459ef49da177))
+
+# [12.7.0-alpha.9](https://github.com/dhis2/app-platform/compare/v12.7.0-alpha.8...v12.7.0-alpha.9) (2025-07-24)
+
+
+### Bug Fixes
+
+* capitalise log messages ([e480586](https://github.com/dhis2/app-platform/commit/e48058619c9d04d51597c8446e40d233b0944ef3))
+
+# [12.7.0-alpha.8](https://github.com/dhis2/app-platform/compare/v12.7.0-alpha.7...v12.7.0-alpha.8) (2025-07-24)
+
+
+### Bug Fixes
+
+* recommend the use of 'pnpm' as a warning on init command ([e0cda6d](https://github.com/dhis2/app-platform/commit/e0cda6d9f1a8ec8ad6d2b301637529d3d0badba9))
+
+# [12.7.0-alpha.7](https://github.com/dhis2/app-platform/compare/v12.7.0-alpha.6...v12.7.0-alpha.7) (2025-07-24)
+
+
+### Bug Fixes
+
+* default args to undefined not 'false' to avoid conflict ([2b54a06](https://github.com/dhis2/app-platform/commit/2b54a064ebb2f8379575ff8833c26cdb025d3bd5))
+
+# [12.7.0-alpha.6](https://github.com/dhis2/app-platform/compare/v12.7.0-alpha.5...v12.7.0-alpha.6) (2025-07-24)
+
+
+### Bug Fixes
+
+* change cli option for package manager to boolean '--pnpm' ([e971c3d](https://github.com/dhis2/app-platform/commit/e971c3dfe2360f59a9a56214aed6e0fda1c2fcdf))
+
+# [12.7.0-alpha.5](https://github.com/dhis2/app-platform/compare/v12.7.0-alpha.4...v12.7.0-alpha.5) (2025-07-24)
+
+
+### Bug Fixes
+
+* add styled-jsx to hoisted dependencies ([9e692bc](https://github.com/dhis2/app-platform/commit/9e692bc2c1c680e3069b522a42e64569d9423e92))
+
+# [12.7.0-alpha.4](https://github.com/dhis2/app-platform/compare/v12.7.0-alpha.3...v12.7.0-alpha.4) (2025-07-24)
+
+
+### Bug Fixes
+
+* change hoist options for phantom app-shell dependencies ([ac9aa78](https://github.com/dhis2/app-platform/commit/ac9aa78f71ea55fcff65191e510086c8fe7b4dc2))
+
+# [12.7.0-alpha.3](https://github.com/dhis2/app-platform/compare/v12.7.0-alpha.2...v12.7.0-alpha.3) (2025-07-23)
+
+
+### Bug Fixes
+
+* default to pnpm as a package manager ([2fb963f](https://github.com/dhis2/app-platform/commit/2fb963fba2d66646c0cb204410661bd60e4b797f))
+
+# [12.7.0-alpha.2](https://github.com/dhis2/app-platform/compare/v12.7.0-alpha.1...v12.7.0-alpha.2) (2025-07-23)
+
+
+### Bug Fixes
+
+* correct cli-app-script link ([1d889ff](https://github.com/dhis2/app-platform/commit/1d889ffb0ba67ad53d128d647fb581339e0bd413))
+
+# [12.7.0-alpha.1](https://github.com/dhis2/app-platform/compare/v12.6.4...v12.7.0-alpha.1) (2025-07-23)
+
+
+### Bug Fixes
+
 * **deps:** get rid of warnings shown on initialising new d2 projects ([#929](https://github.com/dhis2/app-platform/issues/929)) ([f5b499f](https://github.com/dhis2/app-platform/commit/f5b499fc867e76adb88d3a1838e1fa7163e49de7)), closes [#927](https://github.com/dhis2/app-platform/issues/927) [#927](https://github.com/dhis2/app-platform/issues/927) [#928](https://github.com/dhis2/app-platform/issues/928) [#928](https://github.com/dhis2/app-platform/issues/928) [#930](https://github.com/dhis2/app-platform/issues/930) [#930](https://github.com/dhis2/app-platform/issues/930)
+
+
+### Features
+
+* support pnpm and other package managers ([9c81f35](https://github.com/dhis2/app-platform/commit/9c81f35ac1b00613d0d26ed79c4d33454fcf6296))
 
 ## [12.6.5-beta.5](https://github.com/dhis2/app-platform/compare/v12.6.5-beta.4...v12.6.5-beta.5) (2025-07-11)
 

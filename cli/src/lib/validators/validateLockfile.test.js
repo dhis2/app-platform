@@ -4,6 +4,12 @@ const { validateLockfile } = require('./validateLockfile')
 
 jest.mock('fs')
 jest.mock('@dhis2/cli-helpers-engine')
+jest.mock('../packageManagers', () => {
+    return {
+        isPnpmProject: () => false,
+        isNpmProject: () => false,
+    }
+})
 
 describe('validateLockfile', () => {
     afterEach(() => {
