@@ -66,7 +66,7 @@ const bootstrapShell = async ({ paths, shell, force = false }) => {
 
     const srcNodeModules = path.join(source, 'node_modules')
     const destNodeModules = path.join(dest, 'node_modules')
-    if (fs.exists(srcNodeModules)) {
+    if (fs.existsSync(srcNodeModules)) {
         reporter.debug(
             `Linking ${path.relative(
                 paths.base,
