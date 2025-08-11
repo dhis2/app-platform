@@ -1,3 +1,10 @@
+## [12.7.1](https://github.com/dhis2/app-platform/compare/v12.7.0...v12.7.1) (2025-08-11)
+
+
+### Bug Fixes
+
+* **cli:** avoid symlink error ([#936](https://github.com/dhis2/app-platform/issues/936)) ([e757614](https://github.com/dhis2/app-platform/commit/e757614a6c094f829de5d8639814c7b7f22807a8))
+
 # [12.7.0](https://github.com/dhis2/app-platform/compare/v12.6.5...v12.7.0) (2025-07-28)
 
 
