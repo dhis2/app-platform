@@ -1,3 +1,10 @@
+## [12.7.2](https://github.com/dhis2/app-platform/compare/v12.7.1...v12.7.2) (2025-08-12)
+
+
+### Bug Fixes
+
+* use _top for base link target instead of _blank ([#937](https://github.com/dhis2/app-platform/issues/937)) ([431d1cb](https://github.com/dhis2/app-platform/commit/431d1cb235937cd10545af81e4124c0533e76c85))
+
 ## [12.7.1](https://github.com/dhis2/app-platform/compare/v12.7.0...v12.7.1) (2025-08-11)
 
 
