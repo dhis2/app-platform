@@ -1,3 +1,10 @@
+# [12.8.0](https://github.com/dhis2/app-platform/compare/v12.7.2...v12.8.0) (2025-09-15)
+
+
+### Features
+
+* **cli:** add babel support for private class properties and methods using # prefix (for libraries and jest) ([#938](https://github.com/dhis2/app-platform/issues/938)) ([2a94eb3](https://github.com/dhis2/app-platform/commit/2a94eb379a4eaf1557a6446b85485ab9f76c668f))
+
 ## [12.7.2](https://github.com/dhis2/app-platform/compare/v12.7.1...v12.7.2) (2025-08-12)
 
 
