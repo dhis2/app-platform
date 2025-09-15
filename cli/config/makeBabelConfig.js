@@ -52,6 +52,10 @@ const makeBabelConfig = ({ moduleType, mode }) => {
 
             // Adds support for default value using ?? operator
             require('@babel/plugin-transform-nullish-coalescing-operator'),
+
+            // Adds support for private class properties and methods using # prefix
+            '@babel/plugin-transform-private-methods',
+            '@babel/plugin-transform-private-property-in-object',
         ],
         env: {
             production: {
