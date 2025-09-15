@@ -8,7 +8,7 @@ import type { UserConfig } from 'vite'
  *
  * @see https://developers.dhis2.org/docs/app-platform/config/d2-config-js-reference
  */
-export type D2Config = {
+export type D2Config = Partial<{
     /**
      * The ID of the app on the App Hub (https://apps.dhis2.org). Used when publishing the app to the App Hub with d2 app scripts publish. See this guide to learn how to set up continuous delivery.
      *
@@ -211,4 +211,4 @@ export type D2Config = {
          */
         viteConfigExtensions?: UserConfig | string
     }>
-}
+}>
