@@ -1,5 +1,9 @@
 const path = require('path')
-const { reporter, chalk, exec } = require('@dhis2/cli-helpers-engine')
+const {
+    reporter: baseReporter,
+    chalk,
+    exec,
+} = require('@dhis2/cli-helpers-engine')
 const fs = require('fs-extra')
 const gitignore = require('parse-gitignore')
 const makePaths = require('../lib/paths')
@@ -69,7 +73,11 @@ const writeGitignore = (gitignoreFile, sections) => {
     fs.writeFileSync(gitignoreFile, gitignore.stringify(sections, format))
 }
 
-const handler = async ({ force, pnpm, npm, name, cwd, lib, typeScript }) => {
+const handler = async (yargs) => {
+    const { force, pnpm, npm, name, cwd: initialCwd, lib, typeScript } = yargs
+
+    const reporter = yargs.reporter ?? baseReporter
+
     const installCmd = npm ? 'install' : 'add'
     let pkgManager = 'yarn'
     if (pnpm) {
@@ -88,7 +96,7 @@ const handler = async ({ force, pnpm, npm, name, cwd, lib, typeScript }) => {
         )
     }
     // create the folder where the template will be generated
-    cwd = cwd || process.cwd()
+    let cwd = initialCwd || process.cwd()
     cwd = path.join(cwd, name)
     fs.mkdirpSync(cwd)
     const paths = makePaths(cwd, { typeScript })

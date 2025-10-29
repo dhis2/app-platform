@@ -14,3 +14,5 @@ The issue tracker can be found in [DHIS2 JIRA](https://dhis2.atlassian.net)
 under the [LIBS](https://dhis2.atlassian.net/browse/LIBS) project.
 
 To report an issue create a ticket using the proper type (bug, feature) depending on your use case. You can create a new ticket by clicking `Create` on top of JIRA, then proceed to select the `LIBS` project and then define the ticket type. Make sure to select `app-platform` components drop-down accordingly.
+
+test
