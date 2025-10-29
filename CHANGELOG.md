@@ -1,3 +1,10 @@
+# [12.8.0-alpha.2](https://github.com/dhis2/app-platform/compare/v12.8.0-alpha.1...v12.8.0-alpha.2) (2025-10-29)
+
+
+### Bug Fixes
+
+* allow passing a reporter to init command ([ca36333](https://github.com/dhis2/app-platform/commit/ca363332a64d7a55da2516e31d3ee1a4b26bec4d))
+
 # [12.8.0-alpha.1](https://github.com/dhis2/app-platform/compare/v12.7.0...v12.8.0-alpha.1) (2025-07-28)
 
 
