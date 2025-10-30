@@ -1,3 +1,10 @@
+# [12.9.0](https://github.com/dhis2/app-platform/compare/v12.8.0...v12.9.0) (2025-10-30)
+
+
+### Features
+
+* show app and server version in error boundary ([#940](https://github.com/dhis2/app-platform/issues/940)) ([470b092](https://github.com/dhis2/app-platform/commit/470b0926598bfb5e12977054f934281d366a82e6))
+
 # [12.8.0](https://github.com/dhis2/app-platform/compare/v12.7.2...v12.8.0) (2025-09-15)
 
 
