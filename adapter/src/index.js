@@ -33,6 +33,8 @@ const AppAdapter = ({
                 plugin={false}
                 loginApp={true}
                 baseURL={url}
+                appName={appName}
+                appVersion={appVersion}
             >
                 <ServerVersionProvider
                     appName={appName}
@@ -53,6 +55,8 @@ const AppAdapter = ({
             plugin={plugin}
             fullscreen
             onRetry={checkForSWUpdateAndReload}
+            appName={appName}
+            appVersion={appVersion}
         >
             <OfflineInterfaceProvider>
                 <PWALoadingBoundary>
