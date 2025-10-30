@@ -9,7 +9,7 @@ import { styles } from './styles/AppWrapper.style.js'
 
 export const LoginAppWrapper = ({ children }) => {
     const { loading: localeLoading } = useSystemDefaultLocale()
-    const { baseUrl } = useConfig()
+    const { baseUrl, appName, appVersion, serverVersion } = useConfig()
     // cannot check current user for a loginApp (no api/me)
 
     if (localeLoading) {
@@ -24,6 +24,9 @@ export const LoginAppWrapper = ({ children }) => {
                     onRetry={() => window.location.reload()}
                     loginApp={true}
                     baseURL={baseUrl}
+                    appName={appName}
+                    appVersion={appVersion?.full}
+                    serverVersion={serverVersion?.full}
                 >
                     {children}
                 </ErrorBoundary>

@@ -81,10 +81,16 @@ export class ErrorBoundary extends Component {
     handleCopyErrorDetailsPlugin = ({
         error,
         errorInfo,
+        appName,
         appVersion,
-        apiVersion,
+        serverVersion,
     }) => {
-        const errorDetails = `DHIS2 version: ${apiVersion}\n App version: ${appVersion}\n${error}\n${error?.stack}\n${errorInfo?.componentStack}`
+        const serverDetails = serverVersion
+            ? `DHIS2 version: ${serverVersion}`
+            : ''
+        const appDetails =
+            appVersion && appName ? `${appName} ${appVersion}` : ''
+        const errorDetails = `${serverDetails}\n${appDetails}\n\n${error}\n${error?.stack}\n${errorInfo?.componentStack}`
         navigator.clipboard.writeText(errorDetails).then(() => {
             alert(i18n.t('Technical details copied to clipboard'))
         })
@@ -104,8 +110,9 @@ export class ErrorBoundary extends Component {
             onRetry,
             loginApp,
             baseURL,
+            appName,
             appVersion,
-            apiVersion,
+            serverVersion,
         } = this.props
 
         if (this.state.error) {
@@ -126,17 +133,12 @@ export class ErrorBoundary extends Component {
                                     this.handleCopyErrorDetailsPlugin({
                                         error: this.state.error,
                                         errorInfo: this.state.errorInfo,
-                                        apiVersion: apiVersion,
-                                        appVersion: appVersion,
+                                        appName,
+                                        appVersion,
+                                        serverVersion,
                                     })
                                 }}
                             >
-                                <p>
-                                    {apiVersion &&
-                                        `DHIS2 Version: ${apiVersion}\n`}
-                                    {appVersion &&
-                                        `App Version: ${appVersion}\n`}
-                                </p>
                                 {i18n.t('Copy debug info to clipboard')}
                             </div>
                             {onRetry && (
@@ -203,10 +205,11 @@ export class ErrorBoundary extends Component {
                                 className="errorDetails"
                                 ref={this.errorDetailsRef}
                             >
-                                {apiVersion &&
-                                    `DHIS2 Version: ${this.props.apiVersion}\n`}
-                                {appVersion &&
-                                    `App Version: ${this.props.appVersion}\n`}
+                                {serverVersion &&
+                                    `DHIS2 Version: ${serverVersion}\n`}
+                                {appVersion && appName
+                                    ? `${appName} ${appVersion}\n`
+                                    : ''}
                                 {`\n`}
                                 {`${this.state.error}\n`}
                                 {this.state.error.stack}
@@ -224,12 +227,13 @@ export class ErrorBoundary extends Component {
 
 ErrorBoundary.propTypes = {
     children: PropTypes.node.isRequired,
-    apiVersion: PropTypes.number,
+    appName: PropTypes.string,
     appVersion: PropTypes.string,
     baseURL: PropTypes.string,
     fullscreen: PropTypes.bool,
     loginApp: PropTypes.bool,
     plugin: PropTypes.bool,
+    serverVersion: PropTypes.string,
     onPluginError: PropTypes.func,
     onRetry: PropTypes.func,
 }
