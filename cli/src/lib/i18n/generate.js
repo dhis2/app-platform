@@ -15,6 +15,31 @@ const writeTemplate = (outFile, data) => {
     fs.writeFileSync(outFile, localesTemplate(data))
 }
 
+const parseJavaLocale = (locale) => {
+    const [language, region, script] = locale.split('_')
+
+    let languageTag = language
+    if (script) {
+        languageTag += `-${script}`
+    }
+    if (region) {
+        languageTag += `-${region}`
+    }
+
+    return new Intl.Locale(languageTag)
+}
+
+const parseLocale = (locale) => {
+    try {
+        if (locale.match(/_/)) {
+            return parseJavaLocale(locale)
+        }
+        return new Intl.locale(locale)
+    } catch (err) {
+        return locale
+    }
+}
+
 const generate = async ({ input, output, namespace, paths }) => {
     if (!checkDirectoryExists(input)) {
         const relativeInput = './' + path.relative(paths.base, input)
@@ -40,7 +65,15 @@ const generate = async ({ input, output, namespace, paths }) => {
         .map((lang) => langToLocale[lang])
 
     const outFile = path.join(dst, 'index.js')
-    writeTemplate(outFile, { locales, langs, namespace })
+
+    // construct a map of java language codes (ar_EG) to BCP-417 standard codes (ar-EG)
+    const standardLanguageCodes = langs.reduce((prev, current) => {
+        const val = { ...prev }
+        val[current] = parseLocale(current)
+        return val
+    }, {})
+
+    writeTemplate(outFile, { locales, langs, namespace, standardLanguageCodes })
 
     reporter.debug(`[i18n-generate] Generating translation .json files...`)
 
