@@ -51,60 +51,11 @@ export const parseLocale = (userSettings) => {
 }
 
 /**
- * Test locales for available translation files -- if they're not found,
- * try less-specific versions.
- * Both "Java Locale.toString()" and BCP 47 language tag formats are tested
  * @param {Intl.Locale} locale
  */
 export const setI18nLocale = (locale) => {
-    const { language, script, region } = locale
-
-    const localeStringOptions = []
-    if (script && region) {
-        localeStringOptions.push(
-            `${language}_${region}_${script}`,
-            `${language}-${script}-${region}` // NB: different order
-        )
-    }
-    if (region) {
-        localeStringOptions.push(
-            `${language}_${region}`,
-            `${language}-${region}`
-        )
-    }
-    if (script) {
-        localeStringOptions.push(
-            `${language}_${script}`,
-            `${language}-${script}`
-        )
-    }
-    localeStringOptions.push(language)
-
-    let localeStringWithTranslations
-    const unsuccessfulLocaleStrings = []
-    for (const localeString of localeStringOptions) {
-        if (i18n.hasResourceBundle(localeString, I18N_NAMESPACE)) {
-            localeStringWithTranslations = localeString
-            break
-        }
-        unsuccessfulLocaleStrings.push(localeString)
-        // even though the localeString === language will be the default below,
-        // it still tested here to provide feedback if translation files
-        // are not found
-    }
-
-    if (unsuccessfulLocaleStrings.length > 0) {
-        console.log(
-            `Translations for locale(s) ${unsuccessfulLocaleStrings.join(
-                ', '
-            )} not found`
-        )
-    }
-
-    // if no translation files are found, still try to fall back to `language`
-    const finalLocaleString = localeStringWithTranslations || language
-    i18n.changeLanguage(finalLocaleString)
-    console.log('🗺 Global d2-i18n locale initialized:', finalLocaleString)
+    i18n.changeLanguage(locale?.baseName ?? 'en')
+    console.log('🗺 Global d2-i18n locale initialized:', locale?.baseName)
 }
 
 /**
