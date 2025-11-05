@@ -1,3 +1,10 @@
+## [12.9.1](https://github.com/dhis2/app-platform/compare/v12.9.0...v12.9.1) (2025-11-05)
+
+
+### Bug Fixes
+
+* use BCP-47 language tags for locale keys ([9ff9b14](https://github.com/dhis2/app-platform/commit/9ff9b147f22deff0f654da95a130f4b92619713f))
+
 # [12.9.0](https://github.com/dhis2/app-platform/compare/v12.8.0...v12.9.0) (2025-10-30)
 
 
