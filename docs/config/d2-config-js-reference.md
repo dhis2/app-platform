@@ -43,7 +43,7 @@ The following configuration properties are supported:
 |  **customAuthorities**   |        _Array(string)_        |                   | An array of custom authorities to create when installing the app, these do not provide security protections in the DHIS2 REST API but can be assigned to user roles and used to modify the interface displayed to a user - see the [webapp manifest docs](https://docs.dhis2.org/en/develop/loading-apps.html)            |
 |   **minDHIS2Version**    |           _string_            |                   | The minimum DHIS2 version the App supports (eg. '2.35'). Required when uploading an app to the App Hub. The app's major version in the app's package.json needs to be increased when changing this property.                                                                                                              |
 |   **maxDHIS2Version**    |           _string_            |                   | The maximum DHIS2 version the App supports.                                                                                                                                                                                                                                                                               |
-|      **shortcuts**       |        _Array(object)_        |                   | An array of shortcuts to specific pages within an application that get added to the command palette, which can be configured as shown [here](#shortcuts-configuration). To add shortcuts to your app, check this [guide](./adding-shortcuts.md).                                                                          |
+|      **shortcuts**       |        _Array(object)_        |                   | An array of shortcuts to specific pages within an application that get added to the app menu/command palette, which can be configured as shown [here](./adding-shortcuts.md).                                                                                                                                             |
 |       **coreApp**        |           _boolean_           | **false**         | **ADVANCED** If true, build an app artifact to be included as a root-level core application                                                                                                                                                                                                                               |
 |      **standalone**      |           _boolean_           | **false**         | **ADVANCED** If true, do NOT include a static BaseURL in the production app artifact. This includes the `Server` field in the login dialog, which is usually hidden and pre-configured in production.                                                                                                                     |
 |         **pwa**          |           _object_            |                   | **ADVANCED** Opts into and configures PWA settings for this app. Read more about the options in [the PWA docs](../pwa).                                                                                                                                                                                                   |
@@ -115,28 +115,3 @@ const config = {
     ],
 }
 ```
-
-## Shortcuts Configuration
-
-The `shortcuts` configuration allows you to set up shortcuts to the pages within your application that will be available in the command palette.
-
-You do this by declaring two properties for each shortcuts object, i.e. a _url_ and a _name_.
-
--   `url`: this is the relative path to the app page, i.e. what comes after the `#` symbol
--   `name`: this is the shortcut name that will appear in the command palette
-
-This is an example of what this would look like in your config file.
-
-```js
-const config = {
-    // ...
-    shortcuts: [
-        {
-            url: '#/<relative-path-to-page>',
-            name: '<shortcut-name>',
-        },
-    ],
-}
-```
-
-Note: This feature is available for v42+.
