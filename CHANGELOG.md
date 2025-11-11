@@ -1,3 +1,10 @@
+## [12.9.2](https://github.com/dhis2/app-platform/compare/v12.9.1...v12.9.2) (2025-11-11)
+
+
+### Bug Fixes
+
+* update type for D2Config to be partial ([#922](https://github.com/dhis2/app-platform/issues/922)) ([e44c520](https://github.com/dhis2/app-platform/commit/e44c520379080f6c53e0b6f2102d16391f563992))
+
 ## [12.9.1](https://github.com/dhis2/app-platform/compare/v12.9.0...v12.9.1) (2025-11-05)
 
 
