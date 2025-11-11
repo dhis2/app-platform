@@ -29,6 +29,7 @@ export function ConnectedHeaderBar() {
                 appName={appName}
                 updateAvailable={updateAvailable}
                 onApplyAvailableUpdate={confirmReload}
+                skipI18n
             />
             {confirmationRequired ? (
                 <ConfirmUpdateModal
