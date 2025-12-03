@@ -153,7 +153,7 @@ export const ServerVersionProvider = ({
             })
 
         const userInfoRequest = get(`${baseUrl}/api/me`)
-        userInfoRequest 
+        userInfoRequest
             .then((userInfo) => {
                 setUserInfoState({
                     loading: false,
