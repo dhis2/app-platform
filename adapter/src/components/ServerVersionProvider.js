@@ -31,10 +31,16 @@ export const ServerVersionProvider = ({
         error: undefined,
         baseUrl: url,
     })
+    const [userInfoState, setUserInfoState] = useState({
+        loading: true,
+        error: undefined,
+        userInfo: undefined,
+    })
     // Skip this loading step in non-pwa apps
     const [offlineInterfaceLoading, setOfflineInterfaceLoading] =
         useState(pwaEnabled)
     const { systemInfo } = systemInfoState
+    const { userInfo } = userInfoState
     const { baseUrl } = baseUrlState
 
     useEffect(() => {
@@ -146,8 +152,28 @@ export const ServerVersionProvider = ({
                 })
             })
 
+        const userInfoRequest = get(`${baseUrl}/api/me`)
+        userInfoRequest 
+            .then((userInfo) => {
+                setUserInfoState({
+                    loading: false,
+                    error: undefined,
+                    userInfo: userInfo,
+                })
+            })
+            .catch((e) => {
+                // Todo: If this is a network error, the app cannot load -- handle that gracefully here
+                // if (e === 'Network error') { ... }
+                setUserInfoState({
+                    loading: false,
+                    error: e,
+                    userInfo: undefined,
+                })
+            })
+
         return () => {
             request.abort()
+            userInfoRequest.abort()
         }
     }, [appName, baseUrl, loginApp])
 
@@ -160,7 +186,7 @@ export const ServerVersionProvider = ({
     }, [offlineInterface, pwaEnabled])
 
     // This needs to come before 'loading' case to show modal at correct times
-    if (systemInfoState.error || baseUrlState.error) {
+    if (systemInfoState.error || userInfoState.error || baseUrlState.error) {
         return (
             <LoginModal
                 appName={appName}
@@ -172,6 +198,7 @@ export const ServerVersionProvider = ({
 
     if (
         systemInfoState.loading ||
+        userInfoState.loading ||
         baseUrlState.loading ||
         offlineInterfaceLoading
     ) {
@@ -192,6 +219,7 @@ export const ServerVersionProvider = ({
                 systemInfo,
                 pwaEnabled,
             }}
+            userInfo={userInfo}
             offlineInterface={loginApp ? null : offlineInterface}
             plugin={plugin}
             parentAlertsAdd={parentAlertsAdd}
