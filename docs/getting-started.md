@@ -18,8 +18,8 @@ The baseline features built-in to any platform application include:
     -   App-shell encapsulation
     -   Publication & Release
 
--   Application runtime support ([`@dhis2/app-runtime`](https://runtime.dhis2.nu))
-    -   UI Components ([@dhis2/ui](https://ui.dhis2.nu))
+-   Application runtime support ([`@dhis2/app-runtime`](https://developers.dhis2.org/docs/app-runtime/getting-started))
+    -   UI Components ([@dhis2/ui](https://developers.dhis2.org/docs/ui/webcomponents/))
     -   API Data fetching
     -   Translations
     -   Configuration

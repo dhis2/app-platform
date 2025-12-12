@@ -2,7 +2,7 @@
 
 Single-dependency build, start, and test scripts for the DHIS2 App Platform
 
-See [platform.dhis2.nu](https://platform.dhis2.nu) for complete documentation.
+See [the reference docs on the Developer Portal](https://developers.dhis2.org/docs/app-platform/) for complete documentation.
 
 ```sh
 > yarn add --dev @dhis2/cli-app-scripts
