@@ -1,3 +1,10 @@
+# [12.10.0](https://github.com/dhis2/app-platform/compare/v12.9.2...v12.10.0) (2025-12-17)
+
+
+### Features
+
+* add user info fetching to ServerVersionProvider ([ac5cc96](https://github.com/dhis2/app-platform/commit/ac5cc962088c02c80a2989135429fd30cffc5d52))
+
 ## [12.9.2](https://github.com/dhis2/app-platform/compare/v12.9.1...v12.9.2) (2025-11-11)
 
 
