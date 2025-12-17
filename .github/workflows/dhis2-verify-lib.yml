@@ -1,6 +1,9 @@
 name: 'dhis2: verify (lib)'
 
-on: push
+on:
+    push:
+    pull_request:
+        types: ['opened', 'edited', 'reopened', 'labeled']
 
 concurrency:
     group: ${{ github.workflow}}-${{ github.ref }}
