@@ -1,3 +1,10 @@
+## [12.10.1](https://github.com/dhis2/app-platform/compare/v12.10.0...v12.10.1) (2026-01-06)
+
+
+### Bug Fixes
+
+* additionalNamespaces type in d2config ([309a12e](https://github.com/dhis2/app-platform/commit/309a12e943a224f5f0be25879439c5f4d072d45b))
+
 # [12.10.0](https://github.com/dhis2/app-platform/compare/v12.9.2...v12.10.0) (2025-12-17)
 
 
