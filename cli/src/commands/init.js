@@ -69,14 +69,31 @@ const writeGitignore = (gitignoreFile, sections) => {
     fs.writeFileSync(gitignoreFile, gitignore.stringify(sections, format))
 }
 
-const handler = async ({ force, name, cwd, lib, typeScript }) => {
+const handler = async ({ force, pnpm, npm, name, cwd, lib, typeScript }) => {
+    const installCmd = npm ? 'install' : 'add'
+    let pkgManager = 'yarn'
+    if (pnpm) {
+        pkgManager = 'pnpm'
+    } else if (npm) {
+        pkgManager = 'npm'
+    }
+
+    reporter.info(
+        `Initialising a new project using "${pkgManager}" as a package manager.`
+    )
+
+    if (!pnpm) {
+        reporter.warn(
+            'We recommend using "pnpm" as a package manager for new projects. You can do so by passing the argument --pnpm (i.e. d2 app scripts init --pnpm). This will become the default in future versions of d2 CLI.'
+        )
+    }
     // create the folder where the template will be generated
     cwd = cwd || process.cwd()
     cwd = path.join(cwd, name)
     fs.mkdirpSync(cwd)
     const paths = makePaths(cwd, { typeScript })
 
-    reporter.info('checking d2.config exists')
+    reporter.info('Checking d2.config exists')
     if (fs.existsSync(paths.config) && !force) {
         reporter.warn(
             'A config file already exists, use --force to overwrite it'
@@ -95,6 +112,11 @@ const handler = async ({ force, name, cwd, lib, typeScript }) => {
 
         const pkg = require(paths.initPackageJson)
         pkg.name = name
+        if (pnpm) {
+            pkg.packageManager = 'pnpm@10.13.1'
+        } else if (npm) {
+            pkg.packageManager = 'npm@10.8.2'
+        }
         fs.writeJSONSync(paths.package, pkg, {
             spaces: 2,
         })
@@ -142,6 +164,10 @@ const handler = async ({ force, name, cwd, lib, typeScript }) => {
         spaces: 2,
     })
 
+    if (pnpm) {
+        fs.copySync(paths.initPnpmWorkspace, paths.pnpmWorkspace)
+    }
+
     if (
         !force &&
         ((pkg.devDependencies &&
@@ -159,20 +185,20 @@ const handler = async ({ force, name, cwd, lib, typeScript }) => {
     } else {
         reporter.info('Installing @dhis2/cli-app-scripts...')
         await exec({
-            cmd: 'yarn',
-            args: ['add', 'react@^18'],
+            cmd: pkgManager,
+            args: [installCmd, 'react@^18'],
             cwd: paths.base,
         })
 
         await exec({
-            cmd: 'yarn',
-            args: ['add', 'react-dom@^18'],
+            cmd: pkgManager,
+            args: [installCmd, 'react-dom@^18'],
             cwd: paths.base,
         })
 
         await exec({
-            cmd: 'yarn',
-            args: ['add', '--dev', '@dhis2/cli-app-scripts'],
+            cmd: pkgManager,
+            args: [installCmd, '-D', '@dhis2/cli-app-scripts@alpha'], // todo: update to alpha/main channel
             cwd: paths.base,
         })
     }
@@ -192,8 +218,8 @@ const handler = async ({ force, name, cwd, lib, typeScript }) => {
     } else {
         reporter.info('Installing @dhis2/app-runtime...')
         await exec({
-            cmd: 'yarn',
-            args: ['add', '@dhis2/app-runtime'],
+            cmd: pkgManager,
+            args: [installCmd, '@dhis2/app-runtime'],
             cwd: paths.base,
         })
     }
@@ -206,16 +232,20 @@ const handler = async ({ force, name, cwd, lib, typeScript }) => {
         reporter.info('install TypeScript as a dev dependency')
 
         await exec({
-            cmd: 'yarn',
-            args: ['add', 'typescript@^5', '--dev'],
+            cmd: pkgManager,
+            args: [installCmd, 'typescript@^5', '-D'],
             cwd: paths.base,
         })
 
         // install any other TS dependencies needed
         reporter.info('install type definitions')
         await exec({
-            cmd: 'yarn',
-            args: ['add', '@types/react @types/react-dom @types/jest', '--dev'],
+            cmd: pkgManager,
+            args: [
+                installCmd,
+                '@types/react @types/react-dom @types/jest',
+                '-D',
+            ],
             cwd: paths.base,
         })
 
@@ -281,7 +311,7 @@ const handler = async ({ force, name, cwd, lib, typeScript }) => {
     const cdCmd = name != '.' ? `cd ${name} && ` : ''
     reporter.print(
         `Run ${chalk.bold(
-            `${cdCmd}yarn start`
+            `${cdCmd}${pkgManager} start`
         )} to launch your new DHIS2 application`
     )
 }
@@ -305,6 +335,19 @@ const command = {
             description: 'Use TypeScript template',
             type: 'boolean',
             default: false,
+        },
+        pnpm: {
+            description:
+                'Use pnpm (instead of the default yarn 1) as a Package manager',
+            type: 'boolean',
+            default: undefined,
+        },
+        npm: {
+            description:
+                'Use npm (instead of the default yarn 1) as a Package manager',
+            type: 'boolean',
+            default: undefined,
+            conflicts: 'pnpm',
         },
     },
     handler,

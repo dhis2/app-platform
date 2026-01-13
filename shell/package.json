@@ -1,6 +1,6 @@
 {
     "name": "@dhis2/app-shell",
-    "version": "12.10.1",
+    "version": "12.11.0-alpha.1",
     "engines": {
         "node": "^18.0.0 || >=20.0.0"
     },
@@ -15,10 +15,10 @@
         "access": "public"
     },
     "dependencies": {
-        "@dhis2/app-adapter": "12.10.1",
+        "@dhis2/app-adapter": "12.11.0-alpha.1",
         "@dhis2/app-runtime": "^3.14.3",
         "@dhis2/d2-i18n": "^1.1.1",
-        "@dhis2/pwa": "12.10.1",
+        "@dhis2/pwa": "12.11.0-alpha.1",
         "@dhis2/ui": "^10.7.8",
         "classnames": "^2.2.6",
         "moment": "^2.29.1",
