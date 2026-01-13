@@ -1,3 +1,4 @@
+import { useConfig } from '@dhis2/app-runtime'
 import PropTypes from 'prop-types'
 import React from 'react'
 import { useCurrentUserLocale } from '../utils/useLocale.js'
@@ -18,6 +19,7 @@ const AppWrapper = ({
     const { loading: localeLoading, direction: localeDirection } =
         useCurrentUserLocale(configDirection)
     const { loading: latestUserLoading } = useVerifyLatestUser()
+    const { appName, appVersion, serverVersion } = useConfig()
 
     if (localeLoading || latestUserLoading) {
         return <LoadingMask />
@@ -37,6 +39,9 @@ const AppWrapper = ({
                             }
                             window.location.reload()
                         }}
+                        appName={appName}
+                        appVersion={appVersion?.full}
+                        serverVersion={serverVersion?.full}
                     >
                         {children}
                     </ErrorBoundary>
@@ -53,7 +58,12 @@ const AppWrapper = ({
                 <ConnectedHeaderBar />
             </div>
             <div className="app-shell-app">
-                <ErrorBoundary onRetry={() => window.location.reload()}>
+                <ErrorBoundary
+                    onRetry={() => window.location.reload()}
+                    appName={appName}
+                    appVersion={appVersion?.full}
+                    serverVersion={serverVersion?.full}
+                >
                     {children}
                 </ErrorBoundary>
             </div>

@@ -22,9 +22,9 @@ jest.mock('@dhis2/d2-i18n', () => {
         // These cases match translation files we have
         hasResourceBundle: jest.fn((localeString) => {
             switch (localeString) {
-                case 'uz_UZ_Cyrl':
-                case 'uz_UZ_Latn':
-                case 'pt_BR':
+                case 'uz-Cyrl-UZ':
+                case 'uz-Latn-UZ':
+                case 'pt-BR':
                 case 'ar':
                 case 'en':
                     return true
@@ -89,7 +89,7 @@ describe('formerly problematic locales', () => {
         expect(result.current.direction).toBe('ltr')
         // Notice different locale formats
         expect(result.current.locale.baseName).toBe('pt-BR')
-        expect(i18n.changeLanguage).toHaveBeenCalledWith('pt_BR')
+        expect(i18n.changeLanguage).toHaveBeenCalledWith('pt-BR')
         // Dynamic imports of Moment locales is asynchronous
         await waitFor(() => {
             expect(moment.locale).toHaveBeenCalledWith('pt-br')
@@ -98,12 +98,7 @@ describe('formerly problematic locales', () => {
 
     // For ar_EG (Arabic in Egypt), before fixes:
     // 1. i18n.dir didn't work because it needs a BCP47-formatted string
-    // 2. Setting the i18next language didn't work because there are not translation
-    // files for it (as of now, Jan 2024). This behavior is mocked above with
-    // `i18n.hasResourceBundle()`
-    // [Recent fixes allow for a fallback to simpler locales, e.g. 'ar',
-    // for much better support]
-    // 3. The Moment locale didn't work, both because of formatting and failing to
+    // 2. The Moment locale didn't work, both because of formatting and failing to
     // fall back to simpler locales
     test('ar_EG locale', async () => {
         useDataQuery.mockReturnValue({
@@ -113,8 +108,8 @@ describe('formerly problematic locales', () => {
 
         expect(result.current.direction).toBe('rtl')
         expect(result.current.locale.baseName).toBe('ar-EG')
-        // Notice fallbacks
-        expect(i18n.changeLanguage).toHaveBeenCalledWith('ar')
+
+        expect(i18n.changeLanguage).toHaveBeenCalledWith('ar-EG')
         await waitFor(() => {
             expect(moment.locale).toHaveBeenCalledWith('ar')
         })
@@ -131,7 +126,7 @@ describe('formerly problematic locales', () => {
 
         expect(result.current.direction).toBe('ltr')
         expect(result.current.locale.baseName).toBe('uz-Cyrl-UZ')
-        expect(i18n.changeLanguage).toHaveBeenCalledWith('uz_UZ_Cyrl')
+        expect(i18n.changeLanguage).toHaveBeenCalledWith('uz-Cyrl-UZ')
         await waitFor(() => {
             expect(moment.locale).toHaveBeenCalledWith('uz')
         })
@@ -145,7 +140,7 @@ describe('formerly problematic locales', () => {
 
         expect(result.current.direction).toBe('ltr')
         expect(result.current.locale.baseName).toBe('uz-Latn-UZ')
-        expect(i18n.changeLanguage).toHaveBeenCalledWith('uz_UZ_Latn')
+        expect(i18n.changeLanguage).toHaveBeenCalledWith('uz-Latn-UZ')
         await waitFor(() => {
             expect(moment.locale).toHaveBeenCalledWith('uz-latn')
         })
@@ -170,7 +165,7 @@ describe('other userSettings cases', () => {
 
         expect(result.current.direction).toBe('ltr')
         expect(result.current.locale.baseName).toBe('pt-BR')
-        expect(i18n.changeLanguage).toHaveBeenCalledWith('pt_BR')
+        expect(i18n.changeLanguage).toHaveBeenCalledWith('pt-BR')
         await waitFor(() => {
             expect(moment.locale).toHaveBeenCalledWith('pt-br')
         })
@@ -184,7 +179,7 @@ describe('other userSettings cases', () => {
 
         expect(result.current.direction).toBe('rtl')
         expect(result.current.locale.baseName).toBe('ar-EG')
-        expect(i18n.changeLanguage).toHaveBeenCalledWith('ar')
+        expect(i18n.changeLanguage).toHaveBeenCalledWith('ar-EG')
         await waitFor(() => {
             expect(moment.locale).toHaveBeenCalledWith('ar')
         })
@@ -192,13 +187,20 @@ describe('other userSettings cases', () => {
 
     test('keyUiLocale is nonsense (should fall back to browser language)', async () => {
         useDataQuery.mockReturnValue({
-            data: { userSettings: { keyUiLocale: 'shouldCauseError' } },
+            data: {
+                userSettings: {
+                    keyUiLocale: 'shouldCauseError',
+                    keyUiLanguageTag: 'shouldCauseError',
+                },
+            },
         })
         const { result } = renderHook(() => useCurrentUserLocale())
 
         expect(result.current.direction).toBe('rtl')
         expect(result.current.locale.baseName).toBe('ar-EG')
-        expect(i18n.changeLanguage).toHaveBeenCalledWith('ar')
+
+        // falling back to mocked browser language
+        expect(i18n.changeLanguage).toHaveBeenCalledWith('ar-EG')
         await waitFor(() => {
             expect(moment.locale).toHaveBeenCalledWith('ar')
         })

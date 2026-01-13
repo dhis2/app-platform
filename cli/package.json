@@ -1,6 +1,6 @@
 {
     "name": "@dhis2/cli-app-scripts",
-    "version": "12.8.0-alpha.3",
+    "version": "12.10.1",
     "engines": {
         "node": "^18.0.0 || >=20.0.0"
     },
@@ -31,10 +31,12 @@
         "@babel/plugin-transform-class-properties": "^7.27.1",
         "@babel/plugin-transform-nullish-coalescing-operator": "^7.27.1",
         "@babel/plugin-transform-optional-chaining": "^7.27.1",
+        "@babel/plugin-transform-private-methods": "^7.27.1",
+        "@babel/plugin-transform-private-property-in-object": "^7.27.1",
         "@babel/preset-env": "^7.27.2",
         "@babel/preset-react": "^7.0.0",
         "@babel/preset-typescript": "^7.27.1",
-        "@dhis2/app-shell": "12.8.0-alpha.3",
+        "@dhis2/app-shell": "12.10.1",
         "@dhis2/cli-helpers-engine": "^3.2.2",
         "@jest/core": "^27.0.6",
         "@pmmmwh/react-refresh-webpack-plugin": "^0.5.4",

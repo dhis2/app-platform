@@ -6,7 +6,7 @@
 
 Unified application architecture and build pipeline to simplify and standardize application development within the DHIS2 ecosystem.
 
-See [platform.dhis2.nu](https://platform.dhis2.nu) for documentation.
+See [the reference docs on the Developer Portal](https://developers.dhis2.org/docs/app-platform/) for documentation.
 
 ## Report an issue
 

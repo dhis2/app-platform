@@ -25,7 +25,7 @@ The config file uses an `.mjs` extension so that it can import the `defineConfig
 If you're using TypeScript, you can use an `.mts` extension.
 :::
 
-```js filename='viteConfigExtensions.mjs'
+```js title='viteConfigExtensions.mjs'
 import path from 'path'
 import { defineConfig } from 'vite'
 
@@ -49,7 +49,7 @@ Add the path to your Vite config file as the value to `viteConfigExtensions` in 
 
 The path can be relative or absolute. If it's relative, it will be resolved relative to the current working directory, or the location provided to the `cwd` option when running the script.
 
-```js filename='d2.config.js'
+```js title='d2.config.js'
 const config = {
     name: 'simple-app',
     direction: 'auto',
@@ -66,11 +66,11 @@ const config = {
 module.exports = config
 ```
 
-### Example: Simple config object
+## Example: Simple config object
 
 The object should match Vite's [`UserConfig` interface](https://vite.dev/config/#config-intellisense).
 
-```js filename='d2.config.js'
+```js title='d2.config.js'
 const config = {
     name: 'simple-app',
     direction: 'auto',

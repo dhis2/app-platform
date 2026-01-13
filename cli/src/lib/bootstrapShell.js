@@ -66,9 +66,6 @@ const bootstrapShell = ({ paths, shell, force = false }) => {
 
     const srcNodeModules = path.join(source, 'node_modules')
     const destNodeModules = path.join(dest, 'node_modules')
-    reporter.debug(
-        `Bootstrapping appShell. Source: "${srcNodeModules}" - Destination: "${destNodeModules}"`
-    )
     if (fs.existsSync(srcNodeModules)) {
         reporter.debug(
             `Linking ${path.relative(

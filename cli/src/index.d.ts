@@ -8,7 +8,7 @@ import type { UserConfig } from 'vite'
  *
  * @see https://developers.dhis2.org/docs/app-platform/config/d2-config-js-reference
  */
-export type D2Config = {
+export type D2Config = Partial<{
     /**
      * The ID of the app on the App Hub (https://apps.dhis2.org). Used when publishing the app to the App Hub with d2 app scripts publish. See this guide to learn how to set up continuous delivery.
      *
@@ -102,8 +102,32 @@ export type D2Config = {
 
     /**
      * An array of additional datastore namespaces that should be associated with the app. For each, the user can specify the authorities required to read/write. See more in the Additional datastore namespaces section below.
+     *
+     * @example
+     * additionalNamespaces: [
+     *   { namespace: 'extra1', authorities: ['F_READ_AND_WRITE'] },
+     *   { namespace: 'extra2', readAuthorities: ['F_READ'], writeAuthorities: ['F_WRITE'] }
+     * ]
      */
-    additionalNamespaces: string[]
+
+    additionalNamespaces: Array<{
+        /**
+         * The namespace identifier
+         */
+        namespace: string
+        /**
+         * Authorities required for both read and write operations
+         */
+        authorities?: string[]
+        /**
+         * Authorities required for read operations
+         */
+        readAuthorities?: string[]
+        /**
+         * Authorities required for write operations
+         */
+        writeAuthorities?: string[]
+    }>
 
     /**
      * An array of custom authorities to create when installing the app, these do not provide security protections in the DHIS2 REST API but can be assigned to user roles and used to modify the interface displayed to a user - see the webapp manifest docs
@@ -196,19 +220,19 @@ export type D2Config = {
              */
             globsToOmitFromPrecache: string[]
         }
-
-        /**
-         * Vite config options that can be merged onto the App Platform's base
-         * Vite config.
-         *
-         * The value can be either an **Object** following Vite's `UserConfig`
-         * type, which may be appropriate for a simple set of options;
-         * or an **path to a file** that follows the same rules as Vite
-         * configuration files, which can be useful for more complex options.
-         * https://vite.dev/config/
-         *
-         * See the platform config docs for more detail and examples.
-         */
-        viteConfigExtensions?: UserConfig | string
     }>
-}
+
+    /**
+     * Vite config options that can be merged onto the App Platform's base
+     * Vite config.
+     *
+     * The value can be either an **Object** following Vite's `UserConfig`
+     * type, which may be appropriate for a simple set of options;
+     * or an **path to a file** that follows the same rules as Vite
+     * configuration files, which can be useful for more complex options.
+     * https://vite.dev/config/
+     *
+     * See the platform config docs for more detail and examples.
+     */
+    viteConfigExtensions?: UserConfig | string
+}>

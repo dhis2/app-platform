@@ -14,7 +14,9 @@ import {{ lang }}Translations from './{{ lang }}/translations.json'
 
 const namespace = '{{ namespace }}'
 {{#each langs as |lang key|}}
+
 i18n.addResources('{{ lang }}', namespace, {{ lang }}Translations)
+i18n.addResources('{{ lookup ../standardLanguageCodes lang }}', namespace, {{ lang }}Translations)
 {{/each}}
 
 export default i18n
