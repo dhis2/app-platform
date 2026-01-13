@@ -1,3 +1,15 @@
+## [12.10.2](https://github.com/dhis2/app-platform/compare/v12.10.1...v12.10.2) (2026-01-13)
+
+
+### Bug Fixes
+
+* rerun pipeline ([#949](https://github.com/dhis2/app-platform/issues/949)) ([d83ca2d](https://github.com/dhis2/app-platform/commit/d83ca2d15335a4a8a619c6ad1c0c5a964c2cce8f))
+
+
+### Features
+
+* decouple cli-app-scripts from yarn ([#933](https://github.com/dhis2/app-platform/issues/933)) ([71648a2](https://github.com/dhis2/app-platform/commit/71648a29d0becefa4d1025063735b0cec2a1ab20)), closes [#927](https://github.com/dhis2/app-platform/issues/927) [#927](https://github.com/dhis2/app-platform/issues/927) [#928](https://github.com/dhis2/app-platform/issues/928) [#928](https://github.com/dhis2/app-platform/issues/928) [#930](https://github.com/dhis2/app-platform/issues/930) [#930](https://github.com/dhis2/app-platform/issues/930) [#931](https://github.com/dhis2/app-platform/issues/931)
+
 # [12.11.0-alpha.1](https://github.com/dhis2/app-platform/compare/v12.10.1...v12.11.0-alpha.1) (2026-01-13)
 
 
