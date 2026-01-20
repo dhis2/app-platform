@@ -11,7 +11,7 @@ If the current `@dhis2/cli-app-scripts` version is less than 12, see the migrati
 
 ## Configuration:
 
-In your [`d2.config.js`](<(./d2-config-js-reference.md)>), add a `shortcuts` key with an array of objects pointing to specific pages in your app, with each containing two parameters.
+In your [`d2.config.js`](./d2-config-js-reference.md), add a `shortcuts` key with an array of objects pointing to specific pages in your app, with each containing two parameters.
 
 -   `url`: this is the hash route portion of the path to the app page, i.e. what comes after (and including) the `#` symbol
 

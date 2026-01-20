@@ -63,6 +63,7 @@ function compileServiceWorker({ env, paths, mode }) {
             }
 
             if (stats.hasErrors()) {
+                reporter.error(JSON.stringify(info.errors, null, 2))
                 info.errors.forEach(logErr)
                 reject('Service worker compilation error')
                 return
