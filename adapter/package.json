@@ -39,8 +39,8 @@
     },
     "peerDependencies": {
         "@dhis2/app-runtime": "^3.11.1",
-        "@dhis2/d2-i18n": "^1",
-        "@dhis2/ui": ">=10.7.1",
+        "@dhis2/d2-i18n": "^1.2.0",
+        "@dhis2/ui": ">=10.9.2",
         "classnames": "^2",
         "moment": "^2",
         "prop-types": "^15",
