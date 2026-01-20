@@ -1,3 +1,10 @@
+## [12.10.3](https://github.com/dhis2/app-platform/compare/v12.10.2...v12.10.3) (2026-01-20)
+
+
+### Bug Fixes
+
+* **LIBS-799:** skip header i18n initialisation ([#943](https://github.com/dhis2/app-platform/issues/943)) ([e7db953](https://github.com/dhis2/app-platform/commit/e7db9539a73b0438ad2480c3bc1868048aeae237))
+
 ## [12.10.2](https://github.com/dhis2/app-platform/compare/v12.10.1...v12.10.2) (2026-01-13)
 
 
