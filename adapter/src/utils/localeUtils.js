@@ -2,17 +2,23 @@ import i18n from '@dhis2/d2-i18n'
 import moment from 'moment'
 
 // Init i18n namespace
-const I18N_NAMESPACE = 'default'
+export const I18N_NAMESPACE = 'default'
 i18n.setDefaultNamespace(I18N_NAMESPACE)
 
 /**
  * userSettings.keyUiLocale is expected to be formatted by Java's
- * Locale.toString():
+ * Locale.toString()... kind of: <language>[_<REGION>[_<Script>]]
+ * https://github.com/dhis2/dhis2-core/pull/22819
  * https://docs.oracle.com/javase/8/docs/api/java/util/Locale.html#toString--
  * We can assume there are no Variants or Extensions to locales used by DHIS2
- * @param {Intl.Locale} locale
+ *
+ * Note: if a BCP 47 language tag-formatted locale is provided for the `locale`
+ * argument, this function happens to work as well
+ *
+ * @param {string} locale
+ * @returns Intl.Locale
  */
-const parseJavaLocale = (locale) => {
+const parseDhis2Locale = (locale) => {
     const [language, region, script] = locale.split('_')
 
     let languageTag = language
@@ -38,7 +44,7 @@ export const parseLocale = (userSettings) => {
         }
         // legacy property
         if (userSettings.keyUiLocale) {
-            return parseJavaLocale(userSettings.keyUiLocale)
+            return parseDhis2Locale(userSettings.keyUiLocale)
         }
     } catch (err) {
         console.error('Unable to parse locale from user settings:', {

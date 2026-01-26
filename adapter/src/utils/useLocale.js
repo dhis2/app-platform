@@ -1,6 +1,7 @@
 import { useDataQuery } from '@dhis2/app-runtime'
 import i18n from '@dhis2/d2-i18n'
 import { useState, useEffect, useMemo } from 'react'
+import { useCustomTranslations } from './customTranslations.js'
 import {
     setI18nLocale,
     parseLocale,
@@ -9,6 +10,7 @@ import {
 } from './localeUtils.js'
 
 const useLocale = ({ userSettings, configDirection }) => {
+    const getCustomTranslations = useCustomTranslations()
     const [result, setResult] = useState({
         locale: undefined,
         direction: undefined,
@@ -21,6 +23,10 @@ const useLocale = ({ userSettings, configDirection }) => {
 
         const locale = parseLocale(userSettings)
 
+        // Asynchronous
+        getCustomTranslations({ locale, dhis2Locale: userSettings.keyUiLocale })
+
+        // Synchronous -- will resolve before state is set and the child app is rendered
         setI18nLocale(locale)
         setMomentLocale(locale)
 
@@ -30,7 +36,7 @@ const useLocale = ({ userSettings, configDirection }) => {
         document.documentElement.setAttribute('lang', locale.baseName)
 
         setResult({ locale, direction: localeDirection })
-    }, [userSettings, configDirection])
+    }, [userSettings, configDirection, getCustomTranslations])
 
     return result
 }
