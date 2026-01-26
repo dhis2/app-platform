@@ -10,6 +10,7 @@ import { ServerVersionProvider } from './components/ServerVersionProvider.js'
 
 const AppAdapter = ({
     appName,
+    appUrlSlug,
     appVersion,
     url,
     apiVersion,
@@ -38,6 +39,7 @@ const AppAdapter = ({
             >
                 <ServerVersionProvider
                     appName={appName}
+                    appUrlSlug={appUrlSlug}
                     appVersion={appVersion}
                     url={url}
                     apiVersion={apiVersion}
@@ -62,6 +64,7 @@ const AppAdapter = ({
                 <PWALoadingBoundary>
                     <ServerVersionProvider
                         appName={appName}
+                        appUrlSlug={appUrlSlug}
                         appVersion={appVersion}
                         url={url}
                         apiVersion={apiVersion}
@@ -87,6 +90,7 @@ const AppAdapter = ({
 
 AppAdapter.propTypes = {
     appName: PropTypes.string.isRequired,
+    appUrlSlug: PropTypes.string.isRequired,
     appVersion: PropTypes.string.isRequired,
     apiVersion: PropTypes.number,
     children: PropTypes.element,
