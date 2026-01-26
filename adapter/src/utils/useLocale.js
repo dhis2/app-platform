@@ -1,12 +1,12 @@
 import { useDataQuery } from '@dhis2/app-runtime'
 import i18n from '@dhis2/d2-i18n'
 import { useState, useEffect, useMemo } from 'react'
+import { useCustomTranslations } from './customTranslations.js'
 import {
     setI18nLocale,
     parseLocale,
     setDocumentDirection,
     setMomentLocale,
-    useCustomTranslations,
 } from './localeUtils.js'
 
 const useLocale = ({ userSettings, configDirection }) => {
@@ -22,7 +22,7 @@ const useLocale = ({ userSettings, configDirection }) => {
         }
 
         const locale = parseLocale(userSettings)
-        
+
         // Asynchronous
         getCustomTranslations({ locale, dhis2Locale: userSettings.keyUiLocale })
 
