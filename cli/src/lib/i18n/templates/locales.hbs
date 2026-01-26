@@ -13,10 +13,13 @@ import {{ lang }}Translations from './{{ lang }}/translations.json'
 {{/each}}
 
 const namespace = '{{ namespace }}'
+
+// Use 'deep' = true and 'overwrite' = false to add to, but not overwrite,
+// custom translations from the datastore (added by the app adapter)
 {{#each langs as |lang key|}}
 
-i18n.addResources('{{ lang }}', namespace, {{ lang }}Translations)
-i18n.addResources('{{ lookup ../standardLanguageCodes lang }}', namespace, {{ lang }}Translations)
+i18n.addResourceBundle('{{ lang }}', namespace, {{ lang }}Translations, true, false)
+i18n.addResourceBundle('{{ lookup ../standardLanguageCodes lang }}', namespace, {{ lang }}Translations, true, false)
 {{/each}}
 
 export default i18n
