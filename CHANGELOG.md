@@ -1,3 +1,10 @@
+## [12.10.4](https://github.com/dhis2/app-platform/compare/v12.10.3...v12.10.4) (2026-02-03)
+
+
+### Bug Fixes
+
+* pass quiet to silent for jest options ([b93efd9](https://github.com/dhis2/app-platform/commit/b93efd9f76d68d2f60357dec4fc3bf866c52d6d8))
+
 ## [12.10.3](https://github.com/dhis2/app-platform/compare/v12.10.2...v12.10.3) (2026-01-20)
 
 
