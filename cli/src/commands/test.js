@@ -18,6 +18,7 @@ const getAppJestConfig = ({ jestConfigPath, paths }) => {
 
 const handler = async ({
     verbose,
+    quiet: silent,
     cwd,
     testRegex,
     updateSnapshot,
@@ -65,6 +66,7 @@ const handler = async ({
                     watchAll: (!ci && watchAll) || undefined,
                     ci,
                     verbose: verbose,
+                    silent,
                 },
                 [paths.base]
             )
