@@ -1,5 +1,6 @@
 import AppAdapter from '@dhis2/app-adapter'
 import { Layer, layers, CenteredContent, CircularLoader } from '@dhis2/ui'
+import postRobot from 'post-robot'
 import PropTypes from 'prop-types'
 import React from 'react'
 import { PluginLoader } from './PluginLoader.jsx'
@@ -89,6 +90,25 @@ const Plugin = ({ config }) => {
 
 Plugin.propTypes = {
     config: PropTypes.object,
+}
+
+const { fetch: originalFetch } = window
+
+// Todo: patching fetch should be enough for our Data Engine and lot of implementations,
+// but maybe patch XmlHttpRequest as well? for libraries like axios
+window.fetch = async (...args) => {
+    const [resource, config] = args
+    const response = await originalFetch(resource, config)
+    // ? is there a better way to check we're in global shell
+    if (window != window.top) {
+        // ToDo: This is notifying the shell with the URL and status of the API  call
+        // For session handling, the status should be enough, but resource might come handy
+        postRobot.send(window.top, 'notifyShell', {
+            resource,
+            status: response.status,
+        })
+    }
+    return response
 }
 
 const AppOrPlugin = () => {
