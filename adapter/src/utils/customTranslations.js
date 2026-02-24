@@ -1,4 +1,4 @@
-import { useConfig, useDataQuery } from '@dhis2/app-runtime'
+import { useConfig, useDataEngine } from '@dhis2/app-runtime'
 import i18n from '@dhis2/d2-i18n'
 import { useCallback } from 'react'
 import { I18N_NAMESPACE } from './localeUtils'
@@ -21,11 +21,7 @@ const customTranslationsQuery = {
  */
 export const useCustomTranslations = () => {
     const { appUrlSlug } = useConfig()
-    const { refetch } = useDataQuery(customTranslationsQuery, {
-        lazy: true,
-        // dhis2locale should be sent as a variable at query time
-        variables: { appUrlSlug },
-    })
+    const engine = useDataEngine()
 
     const getCustomTranslations = useCallback(
         /**
@@ -39,10 +35,8 @@ export const useCustomTranslations = () => {
                 return
             }
             try {
-                const data = await refetch({ dhis2Locale })
-                console.log('adding datastore resources', {
-                    basename: locale.baseName,
-                    tx: data.customTranslations,
+                const data = await engine.query(customTranslationsQuery, {
+                    variables: { appUrlSlug, dhis2Locale },
                 })
                 i18n.addResourceBundle(
                     locale?.baseName ?? 'en',
@@ -51,16 +45,13 @@ export const useCustomTranslations = () => {
                     true, // 'deep' -- add keys in this bundle to existing translations
                     true // 'overwrite' -- overwrite already existing keys
                 )
-                console.log({
-                    rb: i18n.getResourceBundle(locale.baseName, I18N_NAMESPACE),
-                })
             } catch {
                 console.log(
                     `No custom translations found in the datastore for this app and locale (looked for the key ${appUrlSlug}--${dhis2Locale} in the custom-translations namespace)`
                 )
             }
         },
-        [refetch, appUrlSlug]
+        [engine, appUrlSlug]
     )
 
     return getCustomTranslations
