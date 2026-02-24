@@ -9,7 +9,11 @@ import {
     setMomentLocale,
 } from './localeUtils.js'
 
-const useLocale = ({ userSettings, configDirection }) => {
+const useLocale = ({
+    userSettings,
+    configDirection,
+    customTranslationsEnabled,
+}) => {
     const getCustomTranslations = useCustomTranslations()
     const [result, setResult] = useState({
         locale: undefined,
@@ -23,8 +27,13 @@ const useLocale = ({ userSettings, configDirection }) => {
 
         const locale = parseLocale(userSettings)
 
-        // Asynchronous
-        getCustomTranslations({ locale, dhis2Locale: userSettings.keyUiLocale })
+        // Asynchronous - check datastore for custom translations if enabled
+        const customTranslationsPromise = customTranslationsEnabled
+            ? getCustomTranslations({
+                  locale,
+                  dhis2Locale: userSettings.keyUiLocale,
+              })
+            : Promise.resolve()
 
         // Synchronous -- will resolve before state is set and the child app is rendered
         setI18nLocale(locale)
@@ -35,8 +44,15 @@ const useLocale = ({ userSettings, configDirection }) => {
         setDocumentDirection({ localeDirection, configDirection })
         document.documentElement.setAttribute('lang', locale.baseName)
 
-        setResult({ locale, direction: localeDirection })
-    }, [userSettings, configDirection, getCustomTranslations])
+        customTranslationsPromise.then(() => {
+            setResult({ locale, direction: localeDirection })
+        })
+    }, [
+        userSettings,
+        configDirection,
+        getCustomTranslations,
+        customTranslationsEnabled,
+    ])
 
     return result
 }
@@ -45,6 +61,10 @@ const settingsQuery = {
     userSettings: {
         resource: 'userSettings',
     },
+    customTranslationsEnabled: {
+        // TODO: Use new setting
+        resource: 'systemSettings', // /keyCustomTranslationsEnabled
+    },
 }
 // note: userSettings.keyUiLocale is expected to be in the Java format,
 // e.g. 'ar', 'ar_IQ', 'uz_UZ_Cyrl', etc.
@@ -52,6 +72,7 @@ export const useCurrentUserLocale = (configDirection) => {
     const { loading, error, data } = useDataQuery(settingsQuery)
     const { locale, direction } = useLocale({
         userSettings: data && data.userSettings,
+        customTranslationsEnabled: data && data.customTranslationsEnabled,
         configDirection,
     })
 
