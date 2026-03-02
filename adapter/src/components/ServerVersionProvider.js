@@ -10,6 +10,7 @@ import { useOfflineInterface } from './OfflineInterfaceContext.js'
 
 export const ServerVersionProvider = ({
     appName,
+    appUrlSlug,
     appVersion,
     url, // url from env vars
     apiVersion,
@@ -210,6 +211,7 @@ export const ServerVersionProvider = ({
         <Provider
             config={{
                 appName,
+                appUrlSlug,
                 appVersion: parseVersion(appVersion),
                 baseUrl,
                 apiVersion: apiVersion || realApiVersion,
@@ -230,6 +232,7 @@ export const ServerVersionProvider = ({
 
 ServerVersionProvider.propTypes = {
     appName: PropTypes.string.isRequired,
+    appUrlSlug: PropTypes.string.isRequired,
     appVersion: PropTypes.string.isRequired,
     apiVersion: PropTypes.number,
     children: PropTypes.element,

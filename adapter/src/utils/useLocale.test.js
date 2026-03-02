@@ -57,7 +57,10 @@ test('happy path initial load with en language', async () => {
     })
     const { result } = renderHook(() => useCurrentUserLocale())
 
-    expect(result.current.loading).toBe(false)
+    // Now that custom translations are checked, setting the locale is asynchronous
+    await waitFor(() => {
+        expect(result.current.loading).toBe(false)
+    })
     expect(result.current.locale.baseName).toBe('en')
     expect(result.current.direction).toBe('ltr')
     expect(i18n.changeLanguage).toHaveBeenCalledWith('en')
@@ -86,7 +89,9 @@ describe('formerly problematic locales', () => {
         })
         const { result } = renderHook(() => useCurrentUserLocale())
 
-        expect(result.current.direction).toBe('ltr')
+        await waitFor(() => {
+            expect(result.current.direction).toBe('ltr')
+        })
         // Notice different locale formats
         expect(result.current.locale.baseName).toBe('pt-BR')
         expect(i18n.changeLanguage).toHaveBeenCalledWith('pt-BR')
@@ -106,7 +111,9 @@ describe('formerly problematic locales', () => {
         })
         const { result } = renderHook(() => useCurrentUserLocale())
 
-        expect(result.current.direction).toBe('rtl')
+        await waitFor(() => {
+            expect(result.current.direction).toBe('rtl')
+        })
         expect(result.current.locale.baseName).toBe('ar-EG')
 
         expect(i18n.changeLanguage).toHaveBeenCalledWith('ar-EG')
@@ -124,7 +131,9 @@ describe('formerly problematic locales', () => {
         })
         const { result } = renderHook(() => useCurrentUserLocale())
 
-        expect(result.current.direction).toBe('ltr')
+        await waitFor(() => {
+            expect(result.current.direction).toBe('ltr')
+        })
         expect(result.current.locale.baseName).toBe('uz-Cyrl-UZ')
         expect(i18n.changeLanguage).toHaveBeenCalledWith('uz-Cyrl-UZ')
         await waitFor(() => {
@@ -138,7 +147,9 @@ describe('formerly problematic locales', () => {
         })
         const { result } = renderHook(() => useCurrentUserLocale())
 
-        expect(result.current.direction).toBe('ltr')
+        await waitFor(() => {
+            expect(result.current.direction).toBe('ltr')
+        })
         expect(result.current.locale.baseName).toBe('uz-Latn-UZ')
         expect(i18n.changeLanguage).toHaveBeenCalledWith('uz-Latn-UZ')
         await waitFor(() => {
@@ -163,7 +174,9 @@ describe('other userSettings cases', () => {
         })
         const { result } = renderHook(() => useCurrentUserLocale())
 
-        expect(result.current.direction).toBe('ltr')
+        await waitFor(() => {
+            expect(result.current.direction).toBe('ltr')
+        })
         expect(result.current.locale.baseName).toBe('pt-BR')
         expect(i18n.changeLanguage).toHaveBeenCalledWith('pt-BR')
         await waitFor(() => {
@@ -177,7 +190,9 @@ describe('other userSettings cases', () => {
         })
         const { result } = renderHook(() => useCurrentUserLocale())
 
-        expect(result.current.direction).toBe('rtl')
+        await waitFor(() => {
+            expect(result.current.direction).toBe('rtl')
+        })
         expect(result.current.locale.baseName).toBe('ar-EG')
         expect(i18n.changeLanguage).toHaveBeenCalledWith('ar-EG')
         await waitFor(() => {
@@ -196,7 +211,9 @@ describe('other userSettings cases', () => {
         })
         const { result } = renderHook(() => useCurrentUserLocale())
 
-        expect(result.current.direction).toBe('rtl')
+        await waitFor(() => {
+            expect(result.current.direction).toBe('rtl')
+        })
         expect(result.current.locale.baseName).toBe('ar-EG')
 
         // falling back to mocked browser language
@@ -214,59 +231,69 @@ describe('config direction is respected for the document direction', () => {
         })
         const { result } = renderHook(() => useCurrentUserLocale())
 
-        expect(result.current.direction).toBe('rtl')
+        await waitFor(() => {
+            expect(result.current.direction).toBe('rtl')
+        })
         expect(document.documentElement.setAttribute).toHaveBeenCalledWith(
             'dir',
             'ltr'
         )
     })
 
-    test('rtl will be used for the document if configured, even for an ltr language', () => {
+    test('rtl will be used for the document if configured, even for an ltr language', async () => {
         useDataQuery.mockReturnValue({
             data: { userSettings: { keyUiLocale: 'en' } },
         })
         const { result } = renderHook(() => useCurrentUserLocale('rtl'))
 
-        expect(result.current.direction).toBe('ltr')
+        await waitFor(() => {
+            expect(result.current.direction).toBe('ltr')
+        })
         expect(document.documentElement.setAttribute).toHaveBeenCalledWith(
             'dir',
             'rtl'
         )
     })
 
-    test('if auto is used, document dir will match the language dir (ltr)', () => {
+    test('if auto is used, document dir will match the language dir (ltr)', async () => {
         useDataQuery.mockReturnValue({
             data: { userSettings: { keyUiLocale: 'en' } },
         })
         const { result } = renderHook(() => useCurrentUserLocale('auto'))
 
-        expect(result.current.direction).toBe('ltr')
+        await waitFor(() => {
+            expect(result.current.direction).toBe('ltr')
+        })
         expect(document.documentElement.setAttribute).toHaveBeenCalledWith(
             'dir',
             'ltr'
         )
     })
 
-    test('if auto is used, document dir will match the language dir (ltr)', () => {
+    test('if auto is used, document dir will match the language dir (ltr)', async () => {
         useDataQuery.mockReturnValue({
             data: { userSettings: { keyUiLocale: 'ar' } },
         })
         const { result } = renderHook(() => useCurrentUserLocale('auto'))
 
-        expect(result.current.direction).toBe('rtl')
+        await waitFor(() => {
+            expect(result.current.direction).toBe('rtl')
+        })
         expect(document.documentElement.setAttribute).toHaveBeenCalledWith(
             'dir',
             'rtl'
         )
     })
 
-    test('nonstandard config directions fall back to ltr', () => {
+    test('nonstandard config directions fall back to ltr', async () => {
         useDataQuery.mockReturnValue({
             data: { userSettings: { keyUiLocale: 'ar' } },
         })
         const { result } = renderHook(() => useCurrentUserLocale('whoopslol'))
 
-        expect(result.current.direction).toBe('rtl')
+        await waitFor(() => {
+            expect(result.current.direction).toBe('rtl')
+        })
         expect(document.documentElement.setAttribute).toHaveBeenCalledWith(
             'dir',
             'ltr'

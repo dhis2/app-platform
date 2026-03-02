@@ -7,7 +7,7 @@ const getPWAEnvVars = require('./getPWAEnvVars')
  */
 const filterEnv = () =>
     Object.keys(process.env)
-        .filter((key) => key.indexOf('DHIS2_') === 0)
+        .filter((key) => key.startsWith('DHIS2_'))
         .reduce(
             (out, key) => ({
                 ...out,
@@ -33,6 +33,11 @@ const prefixEnvForCRA = (env) =>
 const getShellEnv = (config) => {
     const shellEnv = {
         name: config.title,
+        // Added after 'name' key was already taken by the above (config.title):
+        url_slug: config.name,
+        // Currently an alias for 'name', but can be used to switch 'name'
+        // to config.name (it would be nice for these to match d2 config)
+        title: config.title,
         version: config.version,
         loginApp: config.type === 'login_app' ? 'true' : undefined,
         direction: config.direction,
