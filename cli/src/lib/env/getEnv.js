@@ -7,7 +7,7 @@ const getPWAEnvVars = require('./getPWAEnvVars')
  */
 const filterEnv = () =>
     Object.keys(process.env)
-        .filter((key) => key.indexOf('DHIS2_') === 0)
+        .filter((key) => key.startsWith('DHIS2_'))
         .reduce(
             (out, key) => ({
                 ...out,

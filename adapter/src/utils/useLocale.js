@@ -113,7 +113,7 @@ export const useCurrentUserLocale = (configDirection) => {
         customTranslationsQuery.data?.info
 
     const { locale, direction } = useLocale({
-        userSettings: data && data.userSettings,
+        userSettings: data?.userSettings,
         customTranslationsInfo,
         configDirection,
     })
