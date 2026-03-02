@@ -1,3 +1,10 @@
+# [12.11.0-beta.1](https://github.com/dhis2/app-platform/compare/v12.10.4...v12.11.0-beta.1) (2026-03-02)
+
+
+### Features
+
+* load custom translations from datastore ([#950](https://github.com/dhis2/app-platform/issues/950)) ([6053917](https://github.com/dhis2/app-platform/commit/6053917fcb4cc34b223829b668513b052fd431cb))
+
 ## [12.10.4](https://github.com/dhis2/app-platform/compare/v12.10.3...v12.10.4) (2026-02-03)
 
 
