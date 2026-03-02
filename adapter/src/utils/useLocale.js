@@ -104,7 +104,7 @@ export const useCurrentUserLocale = (configDirection) => {
         // Below v43, don't run this query
         lazy: !customTranslationsAvailable,
         // If there's an error, it could be because the datastore isn't set up
-        onError: () => console.log('Custom translations not available.'),
+        onError: () => console.debug('Custom translations not available.'),
     })
 
     const customTranslationsInfo =
