@@ -97,7 +97,7 @@ const CUSTOM_TRANSLATIONS_QUERY = {
 // e.g. 'ar', 'ar_IQ', 'uz_UZ_Cyrl', etc.
 export const useCurrentUserLocale = (configDirection) => {
     const { serverVersion } = useConfig()
-    const customTranslationsAvailable = serverVersion.minor >= 43
+    const customTranslationsAvailable = serverVersion?.minor >= 43
 
     const { loading, error, data } = useDataQuery(USER_SETTINGS_QUERY)
     const customTranslationsQuery = useDataQuery(CUSTOM_TRANSLATIONS_QUERY, {
@@ -124,7 +124,7 @@ export const useCurrentUserLocale = (configDirection) => {
     }
 
     return {
-        loading: loading || customTranslationsQuery.loading || !locale,
+        loading: loading || !locale,
         locale,
         direction,
     }
