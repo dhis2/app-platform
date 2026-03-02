@@ -12,6 +12,13 @@
 
 * load custom translations from datastore ([#950](https://github.com/dhis2/app-platform/issues/950)) ([e0e616f](https://github.com/dhis2/app-platform/commit/e0e616f7010f9b79c0acc453faf65fc0406ce5b9))
 
+# [12.11.0-alpha.1](https://github.com/dhis2/app-platform/compare/v12.10.4...v12.11.0-alpha.1) (2026-03-02)
+
+
+### Features
+
+* load custom translations from datastore ([#950](https://github.com/dhis2/app-platform/issues/950)) ([e0e616f](https://github.com/dhis2/app-platform/commit/e0e616f7010f9b79c0acc453faf65fc0406ce5b9))
+
 ## [12.10.4](https://github.com/dhis2/app-platform/compare/v12.10.3...v12.10.4) (2026-02-03)
 
 
