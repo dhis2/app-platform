@@ -6,7 +6,7 @@ import { I18N_NAMESPACE } from './localeUtils'
 const customTranslationsQuery = {
     customTranslations: {
         resource: 'dataStore/custom-translations',
-        id: ({ appUrlSlug, dhis2Locale }) => `${appUrlSlug}--${dhis2Locale}`,
+        id: ({ appUrlSlug, dhis2Locale }) => `${appUrlSlug}__${dhis2Locale}`,
     },
 }
 /**
@@ -46,8 +46,8 @@ export const useCustomTranslations = () => {
                     true // 'overwrite' -- overwrite already existing keys
                 )
             } catch {
-                console.log(
-                    `No custom translations found in the datastore for this app and locale (looked for the key ${appUrlSlug}--${dhis2Locale} in the custom-translations namespace)`
+                console.warning(
+                    `No custom translations found in the datastore for this app and locale (looked for the key ${appUrlSlug}__${dhis2Locale} in the custom-translations namespace)`
                 )
             }
         },
