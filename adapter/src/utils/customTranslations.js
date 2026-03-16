@@ -23,35 +23,77 @@ export const useCustomTranslations = () => {
     const { appUrlSlug } = useConfig()
     const engine = useDataEngine()
 
+    /**
+     * Checks contents of the "controller" key of the datastore.
+     * If it's empty, malformatted, or doesn't contain the combination of
+     * this app + current locale, don't look for custom translations
+     */
+    const getShouldFetchCustomTranslations = useCallback(
+        ({ dhis2Locale, customTranslationsInfo }) => {
+            let shouldFetchCustomTranslations = false
+            if (customTranslationsInfo) {
+                try {
+                    // In the `custom-translations/controller` data store key,
+                    // is there configured an object { [appUrlSlug]: dhis2Locale[] }
+                    // that includes the current dhis2Locale in the array?
+                    shouldFetchCustomTranslations =
+                        customTranslationsInfo[appUrlSlug]?.includes(
+                            dhis2Locale
+                        )
+                    if (!shouldFetchCustomTranslations) {
+                        console.debug(
+                            'Custom translations not found in controller for this app and locale.'
+                        )
+                    }
+                } catch (err) {
+                    console.error('Error parsing custom translation controller')
+                    console.error(err)
+                }
+            }
+            return shouldFetchCustomTranslations
+        },
+        [appUrlSlug]
+    )
+
     const getCustomTranslations = useCallback(
         /**
-         * Checks the datastore for custom translations and loads them if found
+         * If relevant, checks the datastore for custom translations
+         * and loads them if found
          * @param {Object} params
          * @param {Intl.Locale} params.locale - The parsed locale in BCP47 format
          * @param {string} params.dhis2Locale - The locale in DHIS2 format
+         * @param {Object} params.customTranslationsInfo - The contents of the "controller" key
          */
-        async ({ locale, dhis2Locale }) => {
-            if (!dhis2Locale) {
+        async ({ locale, dhis2Locale, customTranslationsInfo }) => {
+            if (
+                !dhis2Locale ||
+                !locale.baseName ||
+                !getShouldFetchCustomTranslations({
+                    dhis2Locale,
+                    customTranslationsInfo,
+                })
+            ) {
                 return
             }
+
             try {
                 const data = await engine.query(customTranslationsQuery, {
                     variables: { appUrlSlug, dhis2Locale },
                 })
                 i18n.addResourceBundle(
-                    locale?.baseName ?? 'en',
+                    locale?.baseName,
                     I18N_NAMESPACE,
                     data.customTranslations,
                     true, // 'deep' -- add keys in this bundle to existing translations
                     true // 'overwrite' -- overwrite already existing keys
                 )
             } catch {
-                console.warning(
+                console.warn(
                     `No custom translations found in the datastore for this app and locale (looked for the key ${appUrlSlug}__${dhis2Locale} in the custom-translations namespace)`
                 )
             }
         },
-        [engine, appUrlSlug]
+        [engine, appUrlSlug, getShouldFetchCustomTranslations]
     )
 
     return getCustomTranslations

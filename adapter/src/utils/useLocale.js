@@ -29,29 +29,12 @@ const useLocale = ({
         const locale = parseLocale(userSettings)
         const dhis2Locale = userSettings.keyUiLocale
 
-        let shouldFetchCustomTranslations = false
-        if (customTranslationsInfo) {
-            try {
-                // In the `custom-translations/controller` data store key,
-                // is there configured an object { [appUrlSlug]: dhis2Locale[] }
-                // that includes the current dhis2Locale in the array?
-                shouldFetchCustomTranslations =
-                    customTranslationsInfo[appUrlSlug]?.includes(dhis2Locale)
-                if (!shouldFetchCustomTranslations) {
-                    console.debug(
-                        'Custom translations not found in controller for this app and locale.'
-                    )
-                }
-            } catch (err) {
-                console.error('Error parsing custom translation controller')
-                console.error(err)
-            }
-        }
-
         // Asynchronous - check datastore for custom translations if enabled
-        const customTranslationsPromise = shouldFetchCustomTranslations
-            ? getCustomTranslations({ locale, dhis2Locale })
-            : Promise.resolve()
+        const customTranslationsPromise = getCustomTranslations({
+            locale,
+            dhis2Locale,
+            customTranslationsInfo,
+        })
 
         // Synchronous -- will resolve before state is set and the child app is rendered
         setI18nLocale(locale)
