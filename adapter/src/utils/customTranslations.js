@@ -76,21 +76,31 @@ export const useCustomTranslations = () => {
                 return
             }
 
+            let translationsData
             try {
-                const data = await engine.query(customTranslationsQuery, {
+                translationsData = await engine.query(customTranslationsQuery, {
                     variables: { appUrlSlug, dhis2Locale },
                 })
+            } catch {
+                console.error(
+                    `No custom translations found in the datastore for this app and locale (looked for the key ${appUrlSlug}__${dhis2Locale} in the custom-translations namespace)`
+                )
+                return
+            }
+
+            try {
                 i18n.addResourceBundle(
-                    locale?.baseName,
+                    locale.baseName,
                     I18N_NAMESPACE,
-                    data.customTranslations,
+                    translationsData.customTranslations,
                     true, // 'deep' -- add keys in this bundle to existing translations
                     true // 'overwrite' -- overwrite already existing keys
                 )
-            } catch {
-                console.warn(
-                    `No custom translations found in the datastore for this app and locale (looked for the key ${appUrlSlug}__${dhis2Locale} in the custom-translations namespace)`
+            } catch (err) {
+                console.error(
+                    `Error loading resources for custom-translations/${appUrlSlug}__${dhis2Locale}`
                 )
+                console.error(err)
             }
         },
         [engine, appUrlSlug, getShouldFetchCustomTranslations]
