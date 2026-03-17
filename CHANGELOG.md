@@ -1,3 +1,11 @@
+# [12.11.0](https://github.com/dhis2/app-platform/compare/v12.10.4...v12.11.0) (2026-03-17)
+
+
+### Features
+
+* load custom translations from data store ([#953](https://github.com/dhis2/app-platform/issues/953)) ([af406ab](https://github.com/dhis2/app-platform/commit/af406ab9a5200cac6a266df924d988511d599f5e)), closes [#950](https://github.com/dhis2/app-platform/issues/950) [#950](https://github.com/dhis2/app-platform/issues/950)
+* rerun ci pipeline ([2f1f81e](https://github.com/dhis2/app-platform/commit/2f1f81eb64246dc325fbf721fa82d1a395dc213b))
+
 # [12.11.0-beta.2](https://github.com/dhis2/app-platform/compare/v12.11.0-beta.1...v12.11.0-beta.2) (2026-03-17)
 
 
