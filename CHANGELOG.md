@@ -1,3 +1,18 @@
+# [12.11.0-beta.2](https://github.com/dhis2/app-platform/compare/v12.11.0-beta.1...v12.11.0-beta.2) (2026-03-17)
+
+
+### Bug Fixes
+
+* separate error messages for fetching and loading translations ([4fb3703](https://github.com/dhis2/app-platform/commit/4fb37033d28b442c93a83f8ef0861d286f65f62c))
+* use right console method, refactor custom translations hook ([0edc993](https://github.com/dhis2/app-platform/commit/0edc993ad10ebaae0434e6b14262d18bf22d5abe))
+
+# [12.11.0-beta.1](https://github.com/dhis2/app-platform/compare/v12.10.4...v12.11.0-beta.1) (2026-03-02)
+
+
+### Features
+
+* load custom translations from datastore ([#950](https://github.com/dhis2/app-platform/issues/950)) ([6053917](https://github.com/dhis2/app-platform/commit/6053917fcb4cc34b223829b668513b052fd431cb))
+
 ## [12.10.4](https://github.com/dhis2/app-platform/compare/v12.10.3...v12.10.4) (2026-02-03)
 
 
