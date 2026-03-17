@@ -1,15 +1,15 @@
-commit-message: "fix(app-platform): support for loading custom translations from the data store"
-repo: 
-  - dhis2/capture-app
-  - dhis2/aggregate-data-entry-app
-  - dhis2/dashboard-app
-  - dhis2/data-visualizer-app
-  - dhis2/maps-app
-  - dhis2/line-listing-app
-  # - dhis2/scheduler-app
-  # - dhis2/maintenance-app-beta
-  # - dhis2/login-app
-  # - dhis2/data-exchange-app
+commit-message: 'fix(app-platform): support for loading custom translations from the data store'
+repo:
+    - dhis2/capture-app
+    - dhis2/aggregate-data-entry-app
+    - dhis2/dashboard-app
+    - dhis2/data-visualizer-app
+    - dhis2/maps-app
+    - dhis2/line-listing-app
+    # - dhis2/scheduler-app
+    # - dhis2/maintenance-app-beta
+    # - dhis2/login-app
+    # - dhis2/data-exchange-app
 # repo-include: /-app/ # this can replace the list of repos to target all apps once we're confident with the script
 # repo-exclude: /(app-hub|capture-app|social-media-video-app|dashboard-classic-app|core-resource-app|maps-climate-pilot-app|dhis2-android-skeleton-app|metadata-integrity-app|who-data-quality-app|gf-adex-flow-app)/
 # draft: true
@@ -18,5 +18,5 @@ clone-dir: .
 log-level: debug
 branch: upgrade-cli-app-scripts-custom-translations
 conflict-strategy: replace
-pr-body: This dependency bump adds the features for custom translation packs -- see https://dhis2.atlassian.net/browse/LIBS-773 and https://github.com/dhis2/app-platform/pull/950. For demos, see https://dhis2.atlassian.net/browse/LIBS-773?focusedCommentId=236884
+pr-body: This dependency bump adds the features for custom translation packs -- see https://dhis2.atlassian.net/browse/LIBS-773 and https://github.com/dhis2/app-platform/pull/950. For demos, see https://dhis2.atlassian.net/browse/LIBS-773?focusedCommentId=236884. Base PR - https://github.com/dhis2/app-platform/pull/956
 git-type: cmd
