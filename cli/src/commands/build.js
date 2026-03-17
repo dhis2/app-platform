@@ -135,6 +135,8 @@ const handler = async ({
                 await generateManifests(paths, config, process.env.PUBLIC_URL)
 
                 reporter.info('Building appShell...')
+                // todo: handle pluginified app
+
                 // These imports are done asynchronously to allow Vite to use its
                 // ESM build of its Node API (the CJS build will be removed in v6)
                 // https://vitejs.dev/guide/troubleshooting.html#vite-cjs-node-api-deprecated
