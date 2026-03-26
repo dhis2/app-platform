@@ -24,6 +24,7 @@ const handler = async ({
     shell: shellSource,
     proxy,
     proxyPort,
+    pluginifyApp, // todo: workshop this flag name
     host,
     allowJsxInJs,
 }) => {
@@ -136,6 +137,10 @@ const handler = async ({
 
             reporter.print('')
             reporter.info('Starting development server...')
+
+            if (pluginifyApp) {
+                // todo: handle pluginified app (and in 'location' below too)
+            }
 
             // These imports are done asynchronously to allow Vite to use its
             // ESM build of its Node API (the CJS build will be removed in v6)
