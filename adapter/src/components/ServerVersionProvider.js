@@ -3,6 +3,7 @@ import { getBaseUrlByAppName, setBaseUrlByAppName } from '@dhis2/pwa'
 import PropTypes from 'prop-types'
 import React, { useEffect, useState } from 'react'
 import { get } from '../utils/api.js'
+import { getBaseUrl } from '../utils/getBaseUrl.js'
 import { parseDHIS2ServerVersion, parseVersion } from '../utils/parseVersion.js'
 import { LoadingMask } from './LoadingMask.js'
 import { LoginModal } from './LoginModal.js'
@@ -206,6 +207,8 @@ export const ServerVersionProvider = ({
 
     const serverVersion = parseDHIS2ServerVersion(systemInfo.version)
     const realApiVersion = serverVersion.minor
+    // ultimately, use an absolute URL based on hosted location
+    const finalBaseUrl = getBaseUrl(baseUrl)
 
     return (
         <Provider
@@ -213,7 +216,7 @@ export const ServerVersionProvider = ({
                 appName,
                 appUrlSlug,
                 appVersion: parseVersion(appVersion),
-                baseUrl,
+                baseUrl: finalBaseUrl,
                 apiVersion: apiVersion || realApiVersion,
                 serverVersion,
                 systemInfo,
