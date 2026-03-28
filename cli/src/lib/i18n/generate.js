@@ -1,6 +1,7 @@
 const path = require('path')
 const { reporter, chalk } = require('@dhis2/cli-helpers-engine')
 const fs = require('fs-extra')
+const GettextParser = require('gettext-parser')
 const handlebars = require('handlebars')
 const { gettextToI18next } = require('i18next-conv')
 const { checkDirectoryExists } = require('./helpers')
@@ -38,6 +39,50 @@ const parseLocale = (locale) => {
     } catch (err) {
         return locale
     }
+}
+
+/**
+ * For .pot files, msgstr values for plural entries may be empty (standard
+ * template format, or after round-tripping through a translation platform).
+ * gettextToI18next converts empty msgstr to empty strings in the JSON, which
+ * causes i18next to miss these translations at runtime.
+ *
+ * This function fills in empty msgstr values with the source text (msgid for
+ * singular, msgid_plural for plural forms) so that the English locale always
+ * has usable translation values.
+ */
+const fillEmptyPotMsgstr = (potContent) => {
+    const parsed = GettextParser.po.parse(potContent)
+    let modified = false
+
+    for (const context of Object.values(parsed.translations)) {
+        for (const entry of Object.values(context)) {
+            if (!entry.msgid) {
+                continue
+            }
+
+            if (entry.msgid_plural) {
+                if (!entry.msgstr[0]) {
+                    entry.msgstr[0] = entry.msgid
+                    modified = true
+                }
+                if (!entry.msgstr[1]) {
+                    entry.msgstr[1] = entry.msgid_plural
+                    modified = true
+                }
+            } else {
+                if (!entry.msgstr[0]) {
+                    entry.msgstr[0] = entry.msgid
+                    modified = true
+                }
+            }
+        }
+    }
+
+    if (modified) {
+        return GettextParser.po.compile(parsed).toString()
+    }
+    return potContent
 }
 
 const generate = async ({ input, output, namespace, paths }) => {
@@ -88,7 +133,12 @@ const generate = async ({ input, output, namespace, paths }) => {
 
         if (ext === '.po' || ext === '.pot') {
             const filePath = path.join(input, f)
-            const contents = fs.readFileSync(filePath, 'utf8')
+            let contents = fs.readFileSync(filePath, 'utf8')
+
+            if (ext === '.pot') {
+                contents = fillEmptyPotMsgstr(contents)
+            }
+
             const json = await gettextToI18next(lang, contents)
 
             const target = path.join(dst, lang)
