@@ -1,3 +1,10 @@
+## [12.11.1](https://github.com/dhis2/app-platform/compare/v12.11.0...v12.11.1) (2026-05-19)
+
+
+### Bug Fixes
+
+* **i18n:** extract manifest translation strings on start command ([#958](https://github.com/dhis2/app-platform/issues/958)) ([0d7ac89](https://github.com/dhis2/app-platform/commit/0d7ac89ab20d89c725950b0f4cdfb627ee3021ae))
+
 # [12.11.0](https://github.com/dhis2/app-platform/compare/v12.10.4...v12.11.0) (2026-03-17)
 
 
