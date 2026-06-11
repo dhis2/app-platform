@@ -87,6 +87,11 @@ jobs:
                   node-version: 18.x
                   cache: 'yarn'
 
+            - uses: dhis2/action-commit-signing@v1
+              with:
+                  ssh-signing-key: ${{ secrets.DHIS2_BOT_SSH_SIGNING_KEY }}
+                  ssh-signing-key-passphrase: ${{ secrets.DHIS2_BOT_SSH_SIGNING_PASSPHRASE }}
+
             - uses: actions/download-artifact@v4
               with:
                   name: lib-build
