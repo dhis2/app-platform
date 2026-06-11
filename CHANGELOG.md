@@ -1,3 +1,10 @@
+## [12.11.2](https://github.com/dhis2/app-platform/compare/v12.11.1...v12.11.2) (2026-06-11)
+
+
+### Bug Fixes
+
+* bundle source code in package (and set up signed commits) ([#960](https://github.com/dhis2/app-platform/issues/960)) ([e83334f](https://github.com/dhis2/app-platform/commit/e83334f1baba045e8a3b89f56a441672dacedd3b))
+
 ## [12.11.1](https://github.com/dhis2/app-platform/compare/v12.11.0...v12.11.1) (2026-05-19)
 
 
