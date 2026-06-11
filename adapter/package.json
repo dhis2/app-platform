@@ -18,7 +18,8 @@
         "require": "./build/cjs/index.js"
     },
     "files": [
-        "build"
+        "build",
+        "src"
     ],
     "dependencies": {
         "@dhis2/pwa": "12.11.1",
