@@ -6,7 +6,7 @@ const scanner = require('i18next-scanner')
 const parseConfig = require('../parseConfig')
 const { checkDirectoryExists, walkDirectory, arrayEqual } = require('./helpers')
 
-const extract = async ({ input, output, paths, isApp }) => {
+const extract = async ({ input, output, paths }) => {
     const relativeInput = './' + path.relative(paths.base, input)
     if (!checkDirectoryExists(input)) {
         reporter.error(
@@ -67,12 +67,12 @@ const extract = async ({ input, output, paths, isApp }) => {
      * msgid "__MANIFEST_SHORTCUT_Apps Home"
      * msgstr "Apps Home"
      */
-    if (isApp) {
+    const configContents = parseConfig(paths)
+    if (configContents.entryPoints?.app) {
         try {
             reporter.debug(
                 'Extracting manifest strings (title, description and shortcuts) for translation'
             )
-            const configContents = parseConfig(paths)
             en['__MANIFEST_APP_TITLE_Application title'] = configContents.title
             en['__MANIFEST_APP_DESCRIPTION_Application description'] =
                 configContents.description

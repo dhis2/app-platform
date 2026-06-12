@@ -95,7 +95,6 @@ const handler = async ({
                 input: paths.src,
                 output: paths.i18nStrings,
                 paths,
-                isApp: isApp(config.type),
             })
             await i18n.generate({
                 input: paths.i18nStrings,

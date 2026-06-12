@@ -102,7 +102,6 @@ const handler = async ({
                 input: paths.src,
                 output: paths.i18nStrings,
                 paths,
-                isApp: isApp(config.type),
             })
 
             const { manifestTranslations } = await i18n.generate({
