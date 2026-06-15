@@ -1,3 +1,10 @@
+## [12.11.3](https://github.com/dhis2/app-platform/compare/v12.11.2...v12.11.3) (2026-06-15)
+
+
+### Bug Fixes
+
+* **i18n:** emit manifest strings from config in standalone extract ([#961](https://github.com/dhis2/app-platform/issues/961)) ([5562b0f](https://github.com/dhis2/app-platform/commit/5562b0f2714f54b6438ec224ac5eefe14e62a3ff))
+
 ## [12.11.2](https://github.com/dhis2/app-platform/compare/v12.11.1...v12.11.2) (2026-06-11)
 
 
