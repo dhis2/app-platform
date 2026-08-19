@@ -18,6 +18,12 @@ jest.mock('../../utils/api.js', () => ({
     get: jest.fn(),
 }))
 
+// LoginModal imports the generated `src/locales` module, which is gitignored and
+// absent in CI. It is not exercised here, so keep it out of the module graph.
+jest.mock('../LoginModal.js', () => ({
+    LoginModal: () => null,
+}))
+
 const abortableResolve = (value) => {
     const promise = Promise.resolve(value)
     promise.abort = jest.fn()
