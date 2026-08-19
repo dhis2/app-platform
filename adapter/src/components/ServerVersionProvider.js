@@ -1,7 +1,7 @@
 import { Provider } from '@dhis2/app-runtime'
 import { getBaseUrlByAppName, setBaseUrlByAppName } from '@dhis2/pwa'
 import PropTypes from 'prop-types'
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useMemo, useState } from 'react'
 import { get } from '../utils/api.js'
 import { parseDHIS2ServerVersion, parseVersion } from '../utils/parseVersion.js'
 import { LoadingMask } from './LoadingMask.js'
@@ -43,6 +43,35 @@ export const ServerVersionProvider = ({
     const { systemInfo } = systemInfoState
     const { userInfo } = userInfoState
     const { baseUrl } = baseUrlState
+    const serverVersion = useMemo(
+        () =>
+            systemInfo?.version
+                ? parseDHIS2ServerVersion(systemInfo.version)
+                : undefined,
+        [systemInfo?.version]
+    )
+    const config = useMemo(
+        () => ({
+            appName,
+            appUrlSlug,
+            appVersion: parseVersion(appVersion),
+            baseUrl,
+            apiVersion: apiVersion || serverVersion?.minor,
+            serverVersion,
+            systemInfo,
+            pwaEnabled,
+        }),
+        [
+            appName,
+            appUrlSlug,
+            appVersion,
+            baseUrl,
+            apiVersion,
+            serverVersion,
+            systemInfo,
+            pwaEnabled,
+        ]
+    )
 
     useEffect(() => {
         // if URL prop is not set, set state to error to show login modal.
@@ -204,21 +233,9 @@ export const ServerVersionProvider = ({
         return <LoadingMask />
     }
 
-    const serverVersion = parseDHIS2ServerVersion(systemInfo.version)
-    const realApiVersion = serverVersion.minor
-
     return (
         <Provider
-            config={{
-                appName,
-                appUrlSlug,
-                appVersion: parseVersion(appVersion),
-                baseUrl,
-                apiVersion: apiVersion || realApiVersion,
-                serverVersion,
-                systemInfo,
-                pwaEnabled,
-            }}
+            config={config}
             userInfo={userInfo}
             offlineInterface={loginApp ? null : offlineInterface}
             plugin={plugin}
