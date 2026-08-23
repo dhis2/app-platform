@@ -1,3 +1,10 @@
+## [12.11.4](https://github.com/dhis2/app-platform/compare/v12.11.3...v12.11.4) (2026-08-23)
+
+
+### Bug Fixes
+
+* **adapter:** stabilize config object ([#962](https://github.com/dhis2/app-platform/issues/962)) ([370439c](https://github.com/dhis2/app-platform/commit/370439cdef4612939d051d97035930dd58cd4fc9))
+
 ## [12.11.3](https://github.com/dhis2/app-platform/compare/v12.11.2...v12.11.3) (2026-06-15)
 
 
