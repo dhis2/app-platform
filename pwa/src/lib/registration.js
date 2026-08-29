@@ -28,14 +28,28 @@ export async function getRegistrationState() {
     }
 }
 
-export async function checkForUpdates({ onUpdate }) {
-    if (!('serviceWorker' in navigator)) {
+/**
+ * Can receive a specific SW instance to check for updates on, e.g. for a
+ * plugin window. Defaults to this window's navigator.serviceWorker.
+ * onUpdate is called with `{ registration }`
+ */
+export async function checkForUpdates({ onUpdate, targetServiceWorker }) {
+    if (!('serviceWorker' in navigator) && !targetServiceWorker) {
         return
     }
+    const serviceWorker = targetServiceWorker || navigator.serviceWorker
 
-    const registration = await navigator.serviceWorker.getRegistration()
+    let registration = await serviceWorker.getRegistration()
     if (registration === undefined) {
-        return
+        // This could have raced before the call to `serviceWorker.register()`;
+        // wait and try again. Testing with a 20x CPU throttling in Chrome,
+        // 500 ms works on an M3 max macbook pro
+        await new Promise((r) => setTimeout(r, 500))
+        registration = await serviceWorker.getRegistration()
+        if (registration === undefined) {
+            // Still didn't find it; probably not a PWA app.
+            return
+        }
     }
 
     function handleWaitingSW() {
@@ -67,31 +81,28 @@ export async function checkForUpdates({ onUpdate }) {
     // callback doesn't get called in that case. Handle that here:
     if (registration.waiting) {
         handleWaitingSW()
-    } else if (
-        registration.active &&
-        navigator.serviceWorker.controller === null
-    ) {
+    } else if (registration.active && serviceWorker.controller === null) {
         handleFirstSWActivation()
     }
 
     function handleInstallingWorker() {
         const installingWorker = registration.installing
         if (installingWorker) {
-            installingWorker.onstatechange = () => {
+            installingWorker.addEventListener('statechange', () => {
                 if (
                     installingWorker.state === 'installed' &&
-                    navigator.serviceWorker.controller
+                    serviceWorker.controller
                 ) {
                     // SW is waiting to become active
                     handleWaitingSW()
                 } else if (
                     installingWorker.state === 'activated' &&
-                    !navigator.serviceWorker.controller
+                    !serviceWorker.controller
                 ) {
                     // First SW is installed and active
                     handleFirstSWActivation()
                 }
-            }
+            })
         }
     }
 
@@ -101,7 +112,7 @@ export async function checkForUpdates({ onUpdate }) {
     }
 
     // If a new service worker will be installed:
-    registration.onupdatefound = handleInstallingWorker
+    registration.addEventListener('updatefound', handleInstallingWorker)
 }
 
 /**
