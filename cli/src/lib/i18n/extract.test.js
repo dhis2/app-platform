@@ -69,4 +69,26 @@ describe('i18n extract', () => {
         const en = getExtractedStrings()
         expect(Object.keys(en)).toEqual(['Hello'])
     })
+
+    it('omits manifest keys whose config value is missing', async () => {
+        parseConfig.mockReturnValue({
+            shortcuts: [{ name: 'Apps Home' }, { url: '/no-name' }],
+            entryPoints: { app: './src/App' },
+        })
+
+        await extract({ input: paths.src, output: '/app/i18n', paths })
+
+        const en = getExtractedStrings()
+        expect(Object.keys(en)).not.toContain(
+            '__MANIFEST_APP_TITLE_Application title'
+        )
+        expect(Object.keys(en)).not.toContain(
+            '__MANIFEST_APP_DESCRIPTION_Application description'
+        )
+        expect(
+            Object.keys(en).filter((k) => k.startsWith('__MANIFEST_SHORTCUT_'))
+        ).toEqual([
+            '__MANIFEST_SHORTCUT_Apps Home_Title for shortcut used by command palette',
+        ])
+    })
 })

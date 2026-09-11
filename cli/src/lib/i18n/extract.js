@@ -73,13 +73,22 @@ const extract = async ({ input, output, paths }) => {
             reporter.debug(
                 'Extracting manifest strings (title, description and shortcuts) for translation'
             )
-            en['__MANIFEST_APP_TITLE_Application title'] = configContents.title
-            en['__MANIFEST_APP_DESCRIPTION_Application description'] =
-                configContents.description
+            // Assigning undefined creates a phantom key that JSON.stringify drops,
+            // which breaks the arrayEqual check and causes a rewrite on every run.
+            if (configContents.title) {
+                en['__MANIFEST_APP_TITLE_Application title'] =
+                    configContents.title
+            }
+            if (configContents.description) {
+                en['__MANIFEST_APP_DESCRIPTION_Application description'] =
+                    configContents.description
+            }
             configContents.shortcuts?.forEach((shortcut) => {
-                en[
-                    `__MANIFEST_SHORTCUT_${shortcut?.name}_Title for shortcut used by command palette`
-                ] = shortcut?.name
+                if (shortcut?.name) {
+                    en[
+                        `__MANIFEST_SHORTCUT_${shortcut.name}_Title for shortcut used by command palette`
+                    ] = shortcut.name
+                }
             })
         } catch (err) {
             reporter.warn('error extracting manifest translations strings')
