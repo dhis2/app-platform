@@ -1,3 +1,10 @@
+## [12.11.5](https://github.com/dhis2/app-platform/compare/v12.11.4...v12.11.5) (2026-09-11)
+
+
+### Bug Fixes
+
+* **i18n:** skip extracting phantom manifest keys ([#963](https://github.com/dhis2/app-platform/issues/963)) ([60b3b23](https://github.com/dhis2/app-platform/commit/60b3b23f3f16abd381a95bd57be37cc624f5bfbd))
+
 ## [12.11.4](https://github.com/dhis2/app-platform/compare/v12.11.3...v12.11.4) (2026-08-23)
 
 
