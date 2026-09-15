@@ -5,8 +5,8 @@ msgstr ""
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1)\n"
-"POT-Creation-Date: 2024-06-21T08:27:55.991Z\n"
-"PO-Revision-Date: 2024-06-21T08:27:55.991Z\n"
+"POT-Creation-Date: 2024-08-28T09:08:40.219Z\n"
+"PO-Revision-Date: 2024-08-28T09:08:40.219Z\n"
 
 msgid "Save your data"
 msgstr "Save your data"
@@ -50,9 +50,6 @@ msgstr "Try again"
 
 msgid "Something went wrong"
 msgstr "Something went wrong"
-
-msgid "Redirect to safe login mode"
-msgstr "Redirect to safe login mode"
 
 msgid "Hide technical details"
 msgstr "Hide technical details"
