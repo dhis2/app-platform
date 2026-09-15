@@ -1,7 +1,7 @@
 import { useConfig } from '@dhis2/app-runtime'
+import { usePWAUpdateState } from '@dhis2/pwa'
 import { HeaderBar } from '@dhis2/ui'
 import React from 'react'
-import { usePWAUpdateState } from '../utils/usePWAUpdateState'
 import { ConfirmUpdateModal } from './ConfirmUpdateModal'
 
 /**

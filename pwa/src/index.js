@@ -1,5 +1,6 @@
 export { setUpServiceWorker } from './service-worker/set-up-service-worker.js'
 export { OfflineInterface } from './offline-interface/offline-interface.js'
+export { PWAUpdateOfflineInterface } from './offline-interface/pwa-update-offline-interface.js'
 export {
     checkForUpdates,
     checkForSWUpdateAndReload,
@@ -10,3 +11,8 @@ export {
     REGISTRATION_STATE_FIRST_ACTIVATION,
 } from './lib/registration.js'
 export { getBaseUrlByAppName, setBaseUrlByAppName } from './lib/base-url-db.js'
+export {
+    OfflineInterfaceProvider,
+    useOfflineInterface,
+} from './react/OfflineInterfaceContext.js'
+export { usePWAUpdateState } from './react/usePWAUpdateState.js'
