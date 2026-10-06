@@ -35,6 +35,12 @@ const extract = async ({ input, output, paths }) => {
     })
     /* eslint-enable max-params */
 
+    // i18next-scanner v3 derives plural suffixes from whichever i18next it
+    // resolves. i18next >= 24 dropped `compatibilityJSON: 'v3'`, which the
+    // scanner relies on, leaving no suffixes and silently dropping every
+    // string that uses `count`. Set the English (v3-style) suffixes by hand.
+    parser.pluralSuffixes.en = ['', '_plural']
+
     reporter.debug(`[i18n-extract] Parsing ${files.length} files...`)
 
     files.forEach((filePath) => {
