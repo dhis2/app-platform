@@ -1,3 +1,10 @@
+## [12.11.6](https://github.com/dhis2/app-platform/compare/v12.11.5...v12.11.6) (2026-10-07)
+
+
+### Bug Fixes
+
+* **i18n:** enable transifex for the adapter ([#965](https://github.com/dhis2/app-platform/issues/965)) ([0d21626](https://github.com/dhis2/app-platform/commit/0d21626ebfcfd0453187c70740e9c8eb585bf4e9))
+
 ## [12.11.5](https://github.com/dhis2/app-platform/compare/v12.11.4...v12.11.5) (2026-09-11)
 
 
