@@ -1,16 +1,16 @@
 # Translators:
 # Philip Larsen Donnelly, 2026
 # Andres Miguel Rubio, 2026
-# easylin <lin_xd@126.com>, 2026
 # Viktor Varland <viktor@dhis2.org>, 2026
 # 晓东 林 <13981924470@126.com>, 2026
+# easylin <lin_xd@126.com>, 2026
 # 
 msgid ""
 msgstr ""
 "Project-Id-Version: i18next-conv\n"
 "POT-Creation-Date: 2024-06-21T08:27:55.991Z\n"
 "PO-Revision-Date: 2026-10-07 14:34+0000\n"
-"Last-Translator: 晓东 林 <13981924470@126.com>, 2026\n"
+"Last-Translator: easylin <lin_xd@126.com>, 2026\n"
 "Language-Team: Chinese (https://app.transifex.com/hisp-uio/teams/100509/zh/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
@@ -19,36 +19,36 @@ msgstr ""
 "Plural-Forms: nplurals=1; plural=0;\n"
 
 msgid "Save your data"
-msgstr ""
+msgstr "保存您的数据"
 
 msgid ""
 "Updating will reload all {{n}} open instances of this app, and any unsaved "
 "data will be lost. Save any data you need to, then click 'Reload' when "
 "ready."
-msgstr ""
+msgstr "更新后，{{n}} 中所有已打开的该应用实例都将被重新加载，任何未保存的数据都将丢失。请先保存所需数据，准备就绪后点击“重新加载”。"
 
 msgid ""
 "Updating will reload all open instances of this app, and any unsaved data "
 "will be lost. Save any data you need to, then click 'Reload' when ready."
-msgstr ""
+msgstr "更新后，该应用的所有已打开实例都将被重新加载，任何未保存的数据都将丢失。请先保存所需数据，准备就绪后点击“重新加载”。"
 
 msgid "Cancel"
 msgstr "取消"
 
 msgid "Reload"
-msgstr ""
+msgstr "重新加载"
 
 msgid "An error occurred in the DHIS2 application."
-msgstr ""
+msgstr "DHIS2 应用程序中发生了错误。"
 
 msgid "Technical details copied to clipboard"
-msgstr ""
+msgstr "技术细节已复制到剪贴板"
 
 msgid "There was a problem loading this plugin"
-msgstr ""
+msgstr "加载此插件时出现问题"
 
 msgid "Copy debug info to clipboard"
-msgstr ""
+msgstr "将调试信息复制到剪贴板"
 
 msgid "Try again"
 msgstr "再试一次"
@@ -57,7 +57,7 @@ msgid "Something went wrong"
 msgstr "出问题了"
 
 msgid "Redirect to safe login mode"
-msgstr ""
+msgstr "重定向至安全登录模式"
 
 msgid "Hide technical details"
 msgstr "隐藏技术细节"
@@ -69,28 +69,28 @@ msgid "The following information may be requested by technical support."
 msgstr "下列信息可能技术支持需要"
 
 msgid "Copy technical details to clipboard"
-msgstr ""
+msgstr "将技术细节复制到剪贴板"
 
 msgid "Signing in..."
-msgstr ""
+msgstr "正在登录..."
 
 msgid "Sign in"
 msgstr "登录"
 
 msgid "Going to app..."
-msgstr ""
+msgstr "正在打开应用……"
 
 msgid "Go to app"
-msgstr ""
+msgstr "前往应用"
 
 msgid "Please sign in"
-msgstr ""
+msgstr "请登录"
 
 msgid "Specify server"
-msgstr ""
+msgstr "指定服务器"
 
 msgid "Could not log in"
-msgstr ""
+msgstr "无法登录"
 
 msgid "Server"
 msgstr "服务器"
