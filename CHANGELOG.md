@@ -1,3 +1,10 @@
+## [12.11.7](https://github.com/dhis2/app-platform/compare/v12.11.6...v12.11.7) (2026-10-12)
+
+
+### Bug Fixes
+
+* **i18n:** restore extraction of plural strings with i18next v24+ ([#964](https://github.com/dhis2/app-platform/issues/964)) ([1b60da5](https://github.com/dhis2/app-platform/commit/1b60da54ecb6c0516f59309b4fd459068e52e5cc))
+
 ## [12.11.6](https://github.com/dhis2/app-platform/compare/v12.11.5...v12.11.6) (2026-10-07)
 
 
