@@ -33,6 +33,7 @@ beforeEach(() => {
     scanner.Parser.mockImplementation(() => ({
         parseFuncFromString: () => ({ get: () => undefined }),
         get: () => ({ en: { translation: { Hello: 'Hello' } } }),
+        pluralSuffixes: {},
     }))
 })
 
@@ -90,5 +91,29 @@ describe('i18n extract', () => {
         ).toEqual([
             '__MANIFEST_SHORTCUT_Apps Home_Title for shortcut used by command palette',
         ])
+    })
+})
+
+// Runs the real scanner and i18next-conv, so this depends on the i18next
+// version the scanner resolves. i18next >= 24 used to break plural extraction
+describe('i18n extract plurals', () => {
+    const { Parser } = jest.requireActual('i18next-scanner')
+    const conv = jest.requireActual('i18next-conv')
+
+    beforeEach(() => {
+        parseConfig.mockReturnValue({ entryPoints: {} })
+        fs.readFileSync.mockReturnValue(
+            "i18n.t('And {{count}} other', { count: n, defaultValue_plural: 'And {{count}} others' })"
+        )
+        scanner.Parser.mockImplementation((options) => new Parser(options))
+        i18nextToPot.mockImplementation(conv.i18nextToPot)
+    })
+
+    it('writes strings with a count as msgid_plural entries', async () => {
+        await extract({ input: paths.src, output: '/app/i18n', paths })
+
+        const pot = fs.writeFileSync.mock.calls[0][1]
+        expect(pot).toContain('msgid "And {{count}} other"\nmsgid_plural')
+        expect(pot).toContain('msgstr[1] "And {{count}} others"')
     })
 })
