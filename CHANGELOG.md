@@ -1,3 +1,10 @@
+## [12.11.8](https://github.com/dhis2/app-platform/compare/v12.11.7...v12.11.8) (2026-10-15)
+
+
+### Bug Fixes
+
+* **deps:** bump @dhis2/ui to 10.19.3 and @dhis2/app-runtime to 3.17.4 in app-shell ([#967](https://github.com/dhis2/app-platform/issues/967)) ([3a3a47c](https://github.com/dhis2/app-platform/commit/3a3a47c5a83dbda69a6095d9bcaadec44b35b2c2))
+
 ## [12.11.7](https://github.com/dhis2/app-platform/compare/v12.11.6...v12.11.7) (2026-10-12)
 
 
