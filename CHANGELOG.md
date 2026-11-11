@@ -1,3 +1,10 @@
+## [12.11.9](https://github.com/dhis2/app-platform/compare/v12.11.8...v12.11.9) (2026-11-11)
+
+
+### Bug Fixes
+
+* **translations:** sync translations from transifex (master) ([#966](https://github.com/dhis2/app-platform/issues/966)) ([244c6f9](https://github.com/dhis2/app-platform/commit/244c6f9b47254019b1447a98ec8528ba9506bf07))
+
 ## [12.11.8](https://github.com/dhis2/app-platform/compare/v12.11.7...v12.11.8) (2026-10-15)
 
 
