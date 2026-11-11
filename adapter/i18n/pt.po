@@ -1,0 +1,104 @@
+# Translators:
+# António Fernando Macaringue, 2026
+# Shelsea Chumaio, 2026
+# Martins Matola, 2026
+# Andres Miguel Rubio, 2026
+# Sheila André <sandre@saudigitus.org>, 2026
+# Carlos Macaneta, 2026
+# Ge Joao <gsimango@saudigitus.org>, 2026
+# 
+msgid ""
+msgstr ""
+"Project-Id-Version: i18next-conv\n"
+"POT-Creation-Date: 2024-06-21T08:27:55.991Z\n"
+"PO-Revision-Date: 2026-10-07 14:34+0000\n"
+"Last-Translator: Ge Joao <gsimango@saudigitus.org>, 2026\n"
+"Language-Team: Portuguese (https://app.transifex.com/hisp-uio/teams/100509/pt/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: pt\n"
+"Plural-Forms: nplurals=3; plural=(n == 0 || n == 1) ? 0 : n != 0 && n % 1000000 == 0 ? 1 : 2;\n"
+
+msgid "Save your data"
+msgstr ""
+
+msgid ""
+"Updating will reload all {{n}} open instances of this app, and any unsaved "
+"data will be lost. Save any data you need to, then click 'Reload' when "
+"ready."
+msgstr ""
+
+msgid ""
+"Updating will reload all open instances of this app, and any unsaved data "
+"will be lost. Save any data you need to, then click 'Reload' when ready."
+msgstr ""
+
+msgid "Cancel"
+msgstr "Cancelar"
+
+msgid "Reload"
+msgstr ""
+
+msgid "An error occurred in the DHIS2 application."
+msgstr ""
+
+msgid "Technical details copied to clipboard"
+msgstr ""
+
+msgid "There was a problem loading this plugin"
+msgstr ""
+
+msgid "Copy debug info to clipboard"
+msgstr ""
+
+msgid "Try again"
+msgstr "Tentar novamente"
+
+msgid "Something went wrong"
+msgstr "Algo correu mal"
+
+msgid "Redirect to safe login mode"
+msgstr ""
+
+msgid "Hide technical details"
+msgstr "Ocultar detalhes técnicos"
+
+msgid "Show technical details"
+msgstr "Mostrar detalhes técnicos"
+
+msgid "The following information may be requested by technical support."
+msgstr "As informações a seguir podem ser solicitadas pelo suporte técnico."
+
+msgid "Copy technical details to clipboard"
+msgstr ""
+
+msgid "Signing in..."
+msgstr ""
+
+msgid "Sign in"
+msgstr "Entrar "
+
+msgid "Going to app..."
+msgstr ""
+
+msgid "Go to app"
+msgstr ""
+
+msgid "Please sign in"
+msgstr ""
+
+msgid "Specify server"
+msgstr ""
+
+msgid "Could not log in"
+msgstr ""
+
+msgid "Server"
+msgstr "Servidor"
+
+msgid "Username"
+msgstr "Nome de utilizador"
+
+msgid "Password"
+msgstr "Palavra-passe"
