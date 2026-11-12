@@ -97,7 +97,15 @@ PluginInner.propTypes = {
 export const PluginLoader = ({ config, requiredProps, D2App }) => {
     const [propsFromParent, setPropsFromParent] = useState({})
     const [propsThatAreMissing, setPropsThatAreMissing] = useState([])
-    const [parentAlertsAdd, setParentAlertsAdd] = useState(() => () => {})
+    // post-robot creates a new proxy for alertsAdd on every message from the
+    // host. Keep the latest one in a ref, and pass AppAdapter one function
+    // that calls it and never changes, so that useAlert's `show` doesn't
+    // change identity inside plugins
+    const alertsAddRef = useRef()
+    const parentAlertsAdd = useCallback(
+        (alert, alertRef) => alertsAddRef.current?.(alert, alertRef),
+        []
+    )
     const [showAlertsInPlugin, setShowAlertsInPlugin] = useState(false)
     const [onPluginError, setOnPluginError] = useState(() => () => {})
     const [clearPluginError, setClearPluginError] = useState(() => () => {})
@@ -155,9 +163,7 @@ export const PluginLoader = ({ config, requiredProps, D2App }) => {
             }
 
             if (alertsAdd) {
-                setParentAlertsAdd(
-                    () => (alert, alertRef) => alertsAdd(alert, alertRef)
-                )
+                alertsAddRef.current = alertsAdd
             }
 
             if (showAlertsInPlugin) {
@@ -185,7 +191,6 @@ export const PluginLoader = ({ config, requiredProps, D2App }) => {
             requiredProps,
             setOnPluginError,
             setClearPluginError,
-            setParentAlertsAdd,
             setShowAlertsInPlugin,
             setResizePluginHeight,
             setResizePluginWidth,
