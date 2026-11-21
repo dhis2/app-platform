@@ -21,6 +21,11 @@
         "workbox-routing": "^7.1.0",
         "workbox-strategies": "^7.1.0"
     },
+    "peerDependencies": {
+        "prop-types": "^15",
+        "react": "^16.8",
+        "react-dom": "^16.8"
+    },
     "main": "./build/cjs/index.js",
     "module": "./build/es/index.js",
     "exports": {
